@@ -1,0 +1,11 @@
+﻿@model Instatus.Web.IWebView
+
+<ul>
+    <li>
+        Feeds
+        <ul>
+            <li>@Html.ActionLink("RSS", FeedAction)</li>
+            <li>@Html.ActionLink("ATOM", FeedAction, new { format = "Atom" })</li>
+        </ul>
+    </li>
+</ul>

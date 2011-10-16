@@ -1,0 +1,22 @@
+﻿@model IWebView
+
+@{
+    var key = ((object)Model.CurrentRow).GetKey();
+    var routeData = new { id = key };
+    var commandButton = new { target = "_blank" };    
+}
+
+@Html.ActionLink("Details", "Details", routeData, commandButton)
+
+@if (Model.Can(WebAction.Edit))
+{
+    @Html.ActionLink("Edit", "Edit", routeData, commandButton)
+}
+                    
+@if (Model.Can(WebAction.Delete))
+{
+    using (Html.BeginForm("Delete", ViewContext.RouteData.ControllerName(), routeData))
+    {
+        <button type="submit">Delete</button>
+    }
+}

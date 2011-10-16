@@ -1,0 +1,13 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace Instatus.Validation
+{
+    public class ValidationPatterns
+    {
+        public const string EmailAddress = @"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$";
+        public const string Slug = @"^[a-z0-9-]+$";
+    }
+}

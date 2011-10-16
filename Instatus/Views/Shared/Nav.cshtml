@@ -1,0 +1,9 @@
+﻿@model SiteMapNodeCollection
+
+<ul>
+    @foreach (SiteMapNode node in Model)
+    {
+        var className = node.Key == ViewContext.RouteData.Slug() ? "current" : string.Empty;
+        <li><a @Html.Attr("class", className) href="@Url.Content(node.Url)">@node.Title</a></li>
+    }
+</ul>

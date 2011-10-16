@@ -1,0 +1,10 @@
+﻿@{
+    Layout = "~/Views/Shared/_Scaffold.cshtml";
+    ViewBag.Title = Model.ToString();
+}
+
+@using (Html.BeginForm())
+{
+    <button type="submit">Save Changes</button>
+    @Html.EditorForModel()
+}

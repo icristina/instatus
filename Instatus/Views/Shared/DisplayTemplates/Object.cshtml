@@ -1,0 +1,15 @@
+﻿@if (Model == null) {
+    @ViewData.ModelMetadata.NullDisplayText
+}
+else if (ViewData.TemplateInfo.TemplateDepth > 1) {
+    @ViewData.ModelMetadata.SimpleDisplayText
+}
+else 
+{
+    <dl>
+        @foreach (var prop in ViewData.ModelMetadata.Properties.Where(pm => pm.ShowForDisplay && !ViewData.TemplateInfo.Visited(pm))) {
+            <dt>@prop.GetDisplayName()</dt>
+            <dd>@Html.Display(prop.PropertyName)</dd>
+        }    
+    </dl>
+}

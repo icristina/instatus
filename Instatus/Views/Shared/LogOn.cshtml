@@ -1,0 +1,16 @@
+﻿@{
+    Layout = "~/Views/Shared/_Scaffold.cshtml";
+    ViewBag.Title = "Log On";
+}
+
+@using (Html.BeginForm()) {
+    <label>
+        <b>Email Address</b>
+        <input type="email" name="email" />
+    </label>
+    <label>
+        <b>Password</b>
+        <input type="password" name="password" />
+    </label>
+    <button type="submit">Log On</button>
+}

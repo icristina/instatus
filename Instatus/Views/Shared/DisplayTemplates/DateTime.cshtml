@@ -1,0 +1,6 @@
+﻿@model DateTime?
+
+@if (Model.HasValue)
+{
+    <time>@Model.Value.ToLongDateString()</time>
+}

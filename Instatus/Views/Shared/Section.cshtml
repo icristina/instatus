@@ -1,0 +1,7 @@
+﻿@model WebSection
+
+<section>
+    @Html.Tag("h1", Model.Heading)
+    @Html.Tag("h2", Model.SubHeading)
+    @Html.Content(Model.Body)
+</section>

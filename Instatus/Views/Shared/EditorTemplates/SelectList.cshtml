@@ -1,0 +1,10 @@
+﻿@model SelectList
+
+@{
+    ViewData.TemplateInfo.HtmlFieldPrefix = null;
+
+    var htmlFieldName = ViewData.ModelMetadata.AdditionalValues.ContainsKey("ColumnName") ?
+        ViewData.ModelMetadata.AdditionalValues["ColumnName"].ToString() : "Selected" + ViewData.ModelMetadata.PropertyName; 
+}
+
+@Html.DropDownList(htmlFieldName, Model)

@@ -1,0 +1,19 @@
+﻿@model MultiSelectList
+
+@{
+    ViewData.TemplateInfo.HtmlFieldPrefix = null;
+
+    var htmlFieldName = ViewData.ModelMetadata.AdditionalValues.ContainsKey("ColumnName") ?
+        ViewData.ModelMetadata.AdditionalValues["ColumnName"].ToString() : "Selected" + ViewData.ModelMetadata.PropertyName;       
+}
+
+@foreach(var item in Model) {
+    <label>
+        <input type="checkbox" name="@htmlFieldName" value="@item.Value"
+            @if(item.Selected) {
+                @:checked    
+            }
+            />
+        @item.Text  
+    </label>
+}

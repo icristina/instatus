@@ -1,0 +1,40 @@
+﻿@model IWebView
+
+<span id="paging">
+    @Html.Paging()
+</span>
+@if (Model.Query.IsDateView)
+{
+    var startDate = Model.Query.StartDate.Value;    
+    <span id="date">
+        <a href="@Url.Action("Index", Model.Query.WithStartDate(startDate.Previous(Model.Query.Mode)).ToRouteValueDictionary())">
+            @Html.LeftArrow()
+        </a> 
+        @Model.Query.StartDate.Value.ToString(Model.Query.Mode)
+        <a href="@Url.Action("Index", Model.Query.WithStartDate(startDate.Next(Model.Query.Mode)).ToRouteValueDictionary())">
+            @Html.RightArrow()
+        </a>    
+    </span>
+}
+<span id="actions">
+    @if (Model.Can(WebAction.Create))
+    {
+        @Html.ActionLink("Create", "Create", null, new { target = "_blank" })
+    }
+</span>
+@if (!Model.Filter.IsEmpty())
+{
+    using (Html.BeginNamedForm("filter"))
+    {
+        @Html.DropDownList("filter", Model.Filter)
+        <button type="submit">Filter</button>
+    }
+}  
+@if (!Model.Mode.IsEmpty())
+{
+    using (Html.BeginNamedForm("mode"))
+    {
+        @Html.DropDownList("mode", Model.Mode)
+        <button type="submit">Mode</button>
+    }
+} 

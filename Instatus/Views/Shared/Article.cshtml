@@ -1,0 +1,13 @@
+﻿@model Instatus.Models.Article
+
+@{
+    ViewBag.Title = Model.Name;
+}
+
+<h1>@Model.Name</h1>
+
+@if (Model.Document != null)
+{
+    @Html.Raw(Model.Document.Body)
+    @Html.Parts();
+}

@@ -1,0 +1,141 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.IO;
+using System.Runtime.Serialization;
+using System.Globalization;
+using System.Data.Entity.Design.PluralizationServices;
+using System.Text.RegularExpressions;
+using System.Web.Helpers;
+using System.Text;
+
+namespace Instatus
+{
+    public static class StringExtensions
+    {
+        public static string DefaultLocale = "en-GB";
+        public static StringComparison DefaultComparison = StringComparison.OrdinalIgnoreCase;
+
+        public static string ToSingular(this string text)
+        {
+            return PluralizationService.CreateService(new CultureInfo(DefaultLocale)).Singularize(text);
+        }
+
+        public static string ToPlural(this string text, int count = 0)
+        {
+            return count == 1 ? text : PluralizationService.CreateService(new CultureInfo(DefaultLocale)).Pluralize(text);
+        }
+
+        public static string ToCamelCase(this string text)
+        {
+            return string.IsNullOrEmpty(text) ? string.Empty : text.Substring(0, 1).ToLower() + text.Substring(1);
+        }
+
+        public static string ToPascalCase(this string text)
+        {
+            return string.IsNullOrEmpty(text) ? string.Empty : text.Substring(0, 1).ToUpper() + text.Substring(1);
+        }
+
+        public static string ToCapitalized(this string text)
+        {
+            return string.IsNullOrEmpty(text) ? string.Empty : text.Substring(0, 1).ToUpper() + text.Substring(1).ToLower();
+        }
+
+        public static string RemoveDoubleSpaces(this string text)
+        {
+            return Regex.Replace(text, @"\s{2,}", " ").Trim();
+        }
+
+        public static string RemoveHtml(this string text)
+        {
+            return Regex.Replace(text, "<[^<>]*>", "");
+        }
+
+        public static string RemoveSpecialCharacters(this string text)
+        {
+            return Regex.Replace(text, @"[^a-z0-9\-\s]", "");
+        }
+
+        public static string ToEncrypted(this string text)
+        {           
+            return Crypto.Hash(text);
+        }
+
+        public static string SubstringAfter(this string text, string match)
+        {
+            return text.Substring(text.LastIndexOf(match) + match.Length);
+        }
+
+        public static string SubstringBefore(this string text, string match)
+        {
+            return text.Substring(0, text.LastIndexOf(match));
+        }
+
+        public static bool Match(this string text, object match)
+        {
+            return text.Equals(match.ToString(), DefaultComparison);
+        }
+
+        public static string MaxLength(this string text, int maxLength, bool elipsis = false)
+        {
+            var suffix = elipsis ? "&elip;" : "";
+            return text.Length > maxLength ? text.Substring(0, maxLength - 1) + suffix : text;
+        }
+
+        public static string ToSlug(this string text)
+        {
+            var slug = text
+                            .ToLower()
+                            .RemoveDoubleSpaces()
+                            .RemoveHtml()
+                            .RemoveSpecialCharacters()
+                            .MaxLength(80)
+                            .Trim();
+
+            slug = Regex.Replace(slug, @"\s+", "-");
+            
+            return slug;
+        }
+
+        public static T AsEnum<T>(this string text)
+        {
+            return (T)Enum.Parse(typeof(T), text, true);
+        }
+
+        public static DateTime? AsDateTime(this string text)
+        {
+            DateTime dateTime;
+            DateTime.TryParse(text, out dateTime);
+
+            if(dateTime == DateTime.MinValue) return null;
+
+            return dateTime;
+        }
+
+        public static List<string> ToList(this string text, char character = ',', bool toLowerCase = false, bool removeDuplicates = true)
+        {
+            var list = new List<string>();
+
+            if (text.IsEmpty())
+                return list;
+            
+            foreach(var item in text.Trim().Split(character)) {
+                var trimmedItem = item.Trim();
+
+                if (toLowerCase)
+                    trimmedItem = trimmedItem.ToLower();
+
+                if (!trimmedItem.IsEmpty() && !(removeDuplicates && list.Contains(trimmedItem)))
+                    list.Add(trimmedItem);
+            }
+
+            return list;
+        }
+
+        public static StringBuilder AppendSpace(this StringBuilder stringBuilder)
+        {
+            return stringBuilder.Append(" ");
+        }
+    }
+}

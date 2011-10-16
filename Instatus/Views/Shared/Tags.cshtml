@@ -1,0 +1,22 @@
+﻿@model Instatus.Web.IWebView
+
+<ul>
+    <li>
+        @if (Model.Tags.SelectedValue.IsEmpty())
+        {
+            @:All tags
+        }
+        else
+        {
+            @Html.ActionLink("All tags", "Index")
+        }
+        <ul>
+            @foreach (var tag in Model.Tags)
+            {
+                <li>
+                    @Html.ActionLinkOrText(tag.Selected, tag.Text, IndexAction, Model.Query.WithTag(tag.Value).ToRouteValueDictionary())
+                </li>
+            }            
+        </ul>
+    </li>
+</ul>

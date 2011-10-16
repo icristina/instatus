@@ -1,0 +1,23 @@
+﻿@model IWebView
+
+<section>
+    <nav>
+        @Html.Paging()
+    </nav>
+    @foreach (Instatus.Models.Page page in Model)
+    {
+        <article>
+            <a href="@Url.RouteUrl(Instatus.Areas.Microsite.MicrositeAreaRegistration.PageRouteName, new { slug = page.Slug })">
+                <h1>@page.Name</h1>
+                <dl>
+                    <dd>Published</dd>
+                    <dt>@page.CreatedTime.ToString()</dt>
+                    @if(page.User != null) {
+                        <dt>Author</dt>
+                        <dd>@page.User.FullName</dd>
+                    }
+                </dl>      
+            </a>
+        </article>
+    }
+</section>

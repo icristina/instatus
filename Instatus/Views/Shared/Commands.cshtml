@@ -1,0 +1,13 @@
+﻿@model IWebView
+
+@if (!Model.Commands.IsEmpty())
+{
+    foreach (var command in Model.Commands.OfType<IWebCommand>())
+    {
+        var link = command.GetLink(Model.CurrentRow, Url);
+        if (link != null)
+        {
+            <a href="@link.Uri">@link.Title</a>
+        }
+    }
+}

@@ -1,0 +1,36 @@
+﻿@model string
+
+@Html.TextArea("", new { hidden = "hidden" })
+
+<div contenteditable>
+    @if (Model.IsEmpty())
+    {
+        <p>&nbsp;</p>
+    }
+    else
+    {
+        @Html.Raw(Model)
+    }
+</div>
+
+<script>
+    $('[contenteditable]').bind('changed', function () {
+        var textarea = $(this).prev('textarea');
+        var text = $(this).text();
+        var html = $(this).html();
+
+        if ($.trim(text).length == 0) {
+            textarea.val('');
+        } else {
+            textarea.val(html);
+        }
+    });
+
+    $('.placeholder').one('click', function () {
+        $(this).text('');
+    });
+
+    $('form').submit(function () {
+        $(this).find('[contenteditable]').trigger('changed');
+    });
+</script>

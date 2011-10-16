@@ -1,0 +1,40 @@
+﻿@model IWebView
+
+@{
+    Layout = "~/Views/Shared/_Scaffold.cshtml";
+}
+
+<menu>
+    @Html.Partial("Menu", Model)
+</menu>
+<table>
+    <thead>
+        <tr>
+            <td>Id</td>
+            <td>Name</td>
+            <td>Actions</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var entry in Model)
+        {
+            Model.CurrentRow = entry;
+            <tr>
+                <td>
+                    @entry.GetKey()
+                </td>
+                <td>@Html.Raw(entry.ToString())</td>
+                <td>
+                    @Html.Partial("Actions", Model)
+                    @Html.Partial("Commands", Model)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@if (!Model.Navigation.IsEmpty())
+{
+    <nav>
+        @Html.Partial("Nav", Model.Navigation)
+    </nav>
+}
