@@ -172,6 +172,11 @@ namespace Instatus
             return target;
         }
 
+        public static T MapTo<T>(this object graph, bool recursive = false)
+        {
+            return Activator.CreateInstance<T>().ApplyValues(graph, recursive);
+        }
+
         public static bool IsSimpleType(this Type type)
         {
             return type.IsPrimitive || type.IsValueType || type.IsAssignableFrom(typeof(string)) || type.IsAssignableFrom(typeof(DateTime?));

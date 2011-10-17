@@ -7,16 +7,19 @@ using System.ServiceModel;
 using System.ServiceModel.Activation;
 using System.ServiceModel.Web;
 using System.Runtime.Serialization;
+using Instatus.Models;
+using Instatus.Web;
 
 namespace Instatus.Areas.Wordpress
 {
+    // %USERPROFILE%\Local Settings\Application Data\Windows Live Writer\
     [ServiceContract]
     [ServiceBehavior(IncludeExceptionDetailInFaults = true)]
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     public class BlogService
     {
-        [OperationContract(Action = "wp.getUsersBlogs")]
-        public BlogInfo[] GetUsersBlogs(string username, string password)
+        [OperationContract(Action = "blogger.getUsersBlogs")]
+        public BlogInfo[] GetUsersBlogs(string appKey, string username, string password)
         {
             using(var db = BaseDataContext.Instance()) {
                 return db.Applications.Select(a => new BlogInfo()
@@ -24,7 +27,16 @@ namespace Instatus.Areas.Wordpress
                     blogid = a.Slug,
                     blogName = a.Name,
                     isAdmin = true
-                }).ToArray();
+                })
+                .ToList()
+                .Select(a =>
+                {
+                    var blogInfo = a;
+                    a.url = Paths.BaseUri.ToString();
+                    a.xmlrpc = a.url + "/weblog";
+                    return blogInfo;
+                })
+                .ToArray();
             }
         }
 
@@ -34,22 +46,23 @@ namespace Instatus.Areas.Wordpress
             return null;
         }
 
-        //[XmlRpcMethod("wp.getCategories")]
-        public WordpressCategory[] GetCategories(int blogId, string username, string password)
+        [OperationContract(Action = "wp.getCategories")]
+        public WordpressCategory[] GetCategories(string blogId, string username, string password)
         {
-            return null;
+            using (var db = BaseDataContext.Instance())
+            {
+                return db.Tags.Select(t => new WordpressCategory()
+                {
+                    categoryId = t.Id,
+                    categoryName = t.Name
+                }).ToArray();
+            }
         }
 
         //[XmlRpcMethod("wp.newCategory")]
         public int NewCategory(string blogid, string username, string password, WordpressCategoryRequest category)
         {
             return 0;
-        }
-        
-        //[XmlRpcMethod("blogger.getUsersBlogs")]
-        public BlogInfo[] GetUsersBlogs(string appKey, string username, string password)
-        {
-            return null;
         }
 
         //[XmlRpcMethod("blogger.deletePost")]
@@ -59,15 +72,27 @@ namespace Instatus.Areas.Wordpress
         }
 
         //[XmlRpcMethod("metaWeblog.getCategories")]
-        public MetaWeblogCategory[] GetCategories(string blogid, string username, string password)
-        {
-            return null;
-        }
+        //public MetaWeblogCategory[] GetCategories(string blogid, string username, string password)
+        //{
+        //    return null;
+        //}
 
-        //[XmlRpcMethod("metaWeblog.newPost")]
-        public string NewPost(string blogid, string username, string password, MetaWeblogPost post, bool publish)
+        [OperationContract(Action = "metaWeblog.newPost")]
+        public string NewPost(string blogid, string username, string password, MetaWeblogPost metaWeblogPost, bool publish)
         {
-            return null;
+            using (var db = BaseDataContext.Instance())
+            {
+                var post = new Post()
+                {
+                    Name = metaWeblogPost.title,
+                    Description = metaWeblogPost.description,
+                    CreatedTime = metaWeblogPost.dateCreated.HasValue ? metaWeblogPost.dateCreated.Value : DateTime.Now,
+                    Status = publish ? WebStatus.Published.ToString() : WebStatus.Draft.ToString(),
+                };
+                db.Pages.Add(post);
+                db.SaveChanges();
+                return post.Id.ToString();
+            }
         }
 
         //[XmlRpcMethod("metaWeblog.getPost")]
@@ -233,7 +258,8 @@ namespace Instatus.Areas.Wordpress
 
     public class MetaWeblogCategory
     {
-        public string categoryid { get; set; }
+        public string categoryId { get; set; }
+        public string categoryName { get; set; }
         public string title { get; set; }
     }
 }

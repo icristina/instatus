@@ -70,8 +70,12 @@ namespace Instatus
                     var environment = ConfigurationManager.AppSettings.Value<string>("Environment");
                     using (var db = BaseDataContext.Instance())
                     {
-                        var domain = db.Domains.First(d => d.Environment == environment);
-                        baseUri = new Uri(domain.Uri);
+                        var domain = db.Domains.FirstOrDefault(d => d.Environment == environment);
+
+                        if (!domain.IsEmpty())
+                            baseUri = new Uri(domain.Uri);
+                        else if (HttpContext.Current.Request != null)
+                            baseUri = new Uri(HttpContext.Current.Request.BaseUri());
                     }
                 }
 
