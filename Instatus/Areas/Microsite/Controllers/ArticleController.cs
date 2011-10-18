@@ -14,7 +14,7 @@ namespace Instatus.Areas.Microsite.Controllers
     {
         public ActionResult Details(string slug = "home")
         {
-            ViewData.Model = Context.GetPage<Article>(slug);
+            ViewData.Model = Context.GetPage<Page>(slug);
             return View("Article");
         }
 

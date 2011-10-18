@@ -9,6 +9,7 @@ using System.ServiceModel.Web;
 using System.Runtime.Serialization;
 using Instatus.Models;
 using Instatus.Web;
+using System.Web.Security;
 
 namespace Instatus.Areas.Wordpress
 {
@@ -21,22 +22,20 @@ namespace Instatus.Areas.Wordpress
         [OperationContract(Action = "blogger.getUsersBlogs")]
         public BlogInfo[] GetUsersBlogs(string appKey, string username, string password)
         {
+            if (!Membership.ValidateUser(username, password)) return null;
+            
             using(var db = BaseDataContext.Instance()) {
-                return db.Applications.Select(a => new BlogInfo()
-                {
-                    blogid = a.Slug,
-                    blogName = a.Name,
-                    isAdmin = true
-                })
-                .ToList()
-                .Select(a =>
-                {
-                    var blogInfo = a;
-                    a.url = Paths.BaseUri.ToString();
-                    a.xmlrpc = a.url + "/weblog";
-                    return blogInfo;
-                })
-                .ToArray();
+                return db.Applications
+                    .ToList()
+                    .Select(a => new BlogInfo()
+                    {
+                        blogid = a.Slug,
+                        blogName = a.Name,
+                        isAdmin = true,
+                        url = Paths.BaseUri.ToString(),
+                        xmlrpc = Paths.BaseUri.ToString() + "/weblog"
+                    })
+                    .ToArray();
             }
         }
 
@@ -49,6 +48,8 @@ namespace Instatus.Areas.Wordpress
         [OperationContract(Action = "wp.getCategories")]
         public WordpressCategory[] GetCategories(string blogId, string username, string password)
         {
+            if (!Membership.ValidateUser(username, password)) return null;
+            
             using (var db = BaseDataContext.Instance())
             {
                 return db.Tags.Select(t => new WordpressCategory()
@@ -80,14 +81,17 @@ namespace Instatus.Areas.Wordpress
         [OperationContract(Action = "metaWeblog.newPost")]
         public string NewPost(string blogid, string username, string password, MetaWeblogPost metaWeblogPost, bool publish)
         {
+            if (!Membership.ValidateUser(username, password)) return null;
+            
             using (var db = BaseDataContext.Instance())
             {
                 var post = new Post()
                 {
+                    Slug = metaWeblogPost.title.ToSlug(),
                     Name = metaWeblogPost.title,
                     Description = metaWeblogPost.description,
                     CreatedTime = metaWeblogPost.dateCreated.HasValue ? metaWeblogPost.dateCreated.Value : DateTime.Now,
-                    Status = publish ? WebStatus.Published.ToString() : WebStatus.Draft.ToString(),
+                    Status = publish ? WebStatus.Published.ToString() : WebStatus.Draft.ToString()
                 };
                 db.Pages.Add(post);
                 db.SaveChanges();
@@ -95,10 +99,24 @@ namespace Instatus.Areas.Wordpress
             }
         }
 
-        //[XmlRpcMethod("metaWeblog.getPost")]
+        [OperationContract(Action = "metaWeblog.getPost")]
         public MetaWeblogPost GetPost(string postid, string username, string password)
         {
-            return null;
+            if (!Membership.ValidateUser(username, password)) return null;
+            
+            using (var db = BaseDataContext.Instance())
+            {
+                var id = postid.AsInteger();
+                var post = db.Pages.Find(id);
+
+                return new MetaWeblogPost()
+                {
+                    postid = post.Id.ToString(),
+                    title = post.Name,
+                    description = post.Description,
+                    dateCreated = post.CreatedTime
+                };
+            }
         }
 
         //[XmlRpcMethod("metaWeblog.getRecentPosts")]
@@ -107,9 +125,46 @@ namespace Instatus.Areas.Wordpress
             return null;
         }
 
-        //[XmlRpcMethod("metaWeblog.editPost")]
-        public bool EditPost(string postid, string username, string password, MetaWeblogPost post, bool publish)
+        [OperationContract(Action = "metaWeblog.editPost")]
+        public bool EditPost(string postid, string username, string password, MetaWeblogPost metaWeblogPost, bool publish)
         {
+            if (!Membership.ValidateUser(username, password)) return false;
+
+            using (var db = BaseDataContext.Instance())
+            {
+                var id = postid.AsInteger();
+                var post = db.Pages.Find(id);
+
+                post.Slug = metaWeblogPost.title.ToSlug();
+                post.Name = metaWeblogPost.title;
+                post.Description = metaWeblogPost.description;
+                post.Status = publish ? WebStatus.Published.ToString() : WebStatus.Draft.ToString();
+
+                db.SaveChanges();
+            }
+
+            return true;
+        }
+
+        [OperationContract(Action = "mt.setPostCategories")]
+        public bool SetPostCategories(string postid, string username, string password, MetaWeblogCategory[] categories)
+        {
+            if (!Membership.ValidateUser(username, password)) return false;
+
+            using (var db = BaseDataContext.Instance())
+            {
+                var id = postid.AsInteger();
+                var post = db.Pages.Find(id);
+
+                if (post == null) return false;
+
+                var tagIds = categories.Select(c => c.categoryId.AsInteger());
+
+                post.Tags = BindingHelpers.UpdateList<Tag, int>(db.Tags, post.Tags, tagIds);
+
+                db.SaveChanges();
+            }
+
             return true;
         }
     }

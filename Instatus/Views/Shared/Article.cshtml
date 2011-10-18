@@ -1,4 +1,4 @@
-﻿@model Instatus.Models.Article
+﻿@model Instatus.Models.Page
 
 @{
     ViewBag.Title = Model.Name;
@@ -6,8 +6,10 @@
 
 <h1>@Model.Name</h1>
 
+@Html.Content(Model.Description)
+
 @if (Model.Document != null)
 {
-    @Html.Raw(Model.Document.Body)
+    @Html.Content(Model.Document.Body)
     @Html.Parts();
 }

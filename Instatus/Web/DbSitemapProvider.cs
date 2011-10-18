@@ -9,6 +9,11 @@ namespace Instatus.Web
 {
     public class DbSitemapProvider : SiteMapProvider
     {
+        public static Func<Page, bool> IsNavigable = p =>
+        {
+            return p.Priority >= 0;
+        };
+        
         public override SiteMapNode FindSiteMapNode(string rawUrl)
         {
             throw new NotImplementedException();
@@ -20,6 +25,8 @@ namespace Instatus.Web
             {
                 var nodes = db.GetPage<Page>(node.Key, new string[] { "Related" })
                                 .Related
+                                .OfType<Article>()
+                                .Where(IsNavigable)
                                 .Select(p => p.ToSiteMapNode(this))
                                 .ToArray();
 

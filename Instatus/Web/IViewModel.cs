@@ -30,10 +30,8 @@ namespace Instatus.Web
         }
     }
 
-    public class BaseViewModel<TModel, TContext> : BaseViewModel<TModel>
+    public static class BindingHelpers
     {
-        public TContext Context { get; set; }
-
         public static ICollection<T> UpdateList<T, TKey>(IDbSet<T> set, ICollection<T> list, IEnumerable<TKey> selected) where T : class
         {
             if (selected.IsEmpty())
@@ -71,6 +69,16 @@ namespace Instatus.Web
             }
 
             return list;
+        }
+    }
+
+    public class BaseViewModel<TModel, TContext> : BaseViewModel<TModel>
+    {
+        public TContext Context { get; set; }
+
+        public ICollection<T> UpdateList<T, TKey>(IDbSet<T> set, ICollection<T> list, IEnumerable<TKey> selected) where T : class
+        {
+            return BindingHelpers.UpdateList<T, TKey>(set, list, selected);
         }
     }
 }
