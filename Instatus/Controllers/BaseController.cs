@@ -40,8 +40,15 @@ namespace Instatus.Controllers
             }
         }
 
+        public const string ReturnUrlParameter = "returnUrl";
+
         public ActionResult RedirectToIndex()
         {
+            var returnUrl = Request.Params[ReturnUrlParameter];
+            
+            if (!returnUrl.IsEmpty())
+                return Redirect(returnUrl);
+            
             return RedirectToAction("Index");
         }
 

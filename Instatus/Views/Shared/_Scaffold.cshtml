@@ -4,6 +4,7 @@
     <title>@ViewBag.Title</title>
     @Html.Stylesheet("scaffold.css")
     @Html.Scripts("modernizr.js", "jquery.js", "respond.js", "innershiv.js")
+    @RenderSection("head", false) 
 </head>
 <body>
     @RenderBody()

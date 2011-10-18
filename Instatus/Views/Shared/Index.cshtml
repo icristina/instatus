@@ -4,6 +4,10 @@
     Layout = "~/Views/Shared/_Scaffold.cshtml";
 }
 
+@section head {
+    <link rel="self" href="@Url.Action("Index", Model.Query.ToRouteValueDictionary())" />
+}
+
 <menu>
     @Html.Partial("Menu", Model)
 </menu>
