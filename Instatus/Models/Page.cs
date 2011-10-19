@@ -71,6 +71,7 @@ namespace Instatus.Models
         public WebDocument Document { get; set; }
 
         [NotMapped]
+        [IgnoreDataMember]
         public dynamic Extensions { get; set; }
 
         [IgnoreDataMember]
