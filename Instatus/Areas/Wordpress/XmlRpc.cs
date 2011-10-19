@@ -60,6 +60,36 @@ namespace Instatus.Areas.Wordpress
             }
         }
 
+        [OperationContract(Action = "wp.getPageList")]
+        public WordpressPage[] GetPageList(string blogId, string username, string password)
+        {
+            if (!Membership.ValidateUser(username, password)) return null;
+
+            using (var db = BaseDataContext.Instance())
+            {
+                return db.Pages.OfType<Article>().Select(p => new WordpressPage()
+                {
+                    page_id = p.Id,
+                    page_title = p.Name
+                }).ToArray();
+            }
+        }
+
+        [OperationContract(Action = "wp.newPage")]
+        public int NewPage(string blogid, string username, string password, WordpressPage wordpressPage)
+        {
+            using (var db = BaseDataContext.Instance())
+            {
+                var article = new Article()
+                {
+                    Name = wordpressPage.title
+                };
+                
+                db.Pages.Add(article);
+                return article.Id;
+            }
+        }
+
         //[XmlRpcMethod("wp.newCategory")]
         public int NewCategory(string blogid, string username, string password, WordpressCategoryRequest category)
         {
@@ -271,6 +301,7 @@ namespace Instatus.Areas.Wordpress
         // list
         public int userid { get; set; }
         public int page_id { get; set; }
+        public string page_title { get; set; }
         public string page_status { get; set; }
         public string link { get; set; }
         public string permaLink { get; set; }
