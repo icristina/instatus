@@ -68,18 +68,28 @@ namespace Instatus.Data
             return Date(DateTime.Now, DateTime.Now.AddMonths(months));
         }
 
-        public static object LoadXml(Type t, string virtualPath, IEnumerable<Type> knownTypes)
+        public static object LoadXml(Type t, string virtualPath, IEnumerable<Type> knownTypes = null)
         {
             using (var fs = new FileStream(HostingEnvironment.MapPath(virtualPath), FileMode.Open, FileAccess.Read))
             {
-                DataContractSerializer ser = new DataContractSerializer(t, knownTypes);
-                return ser.ReadObject(fs);
+                return LoadXml(t, fs, knownTypes);
             }
         }
 
-        public static T LoadXml<T>(string virtualPath, IEnumerable<Type> knownTypes)
+        public static object LoadXml(Type t, Stream stream, IEnumerable<Type> knownTypes = null)
+        {
+            DataContractSerializer ser = new DataContractSerializer(t, knownTypes);
+            return ser.ReadObject(stream);
+        }
+
+        public static T LoadXml<T>(string virtualPath, IEnumerable<Type> knownTypes = null)
         {
             return (T)LoadXml(typeof(T), virtualPath, knownTypes);
+        }
+
+        public static T LoadXml<T>(Stream stream, IEnumerable<Type> knownTypes = null)
+        {
+            return (T)LoadXml(typeof(T), stream, knownTypes);
         }
 
         public static DataTable LoadCsv(string virtualPath)

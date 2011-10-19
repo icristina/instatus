@@ -16,16 +16,27 @@ namespace Instatus.Services
     {       
         public static string BasePath = "~/LocalStorage/";
 
-        public string Save(string contentType, string slug, Stream stream)
+        private void EnsureFolderExists()
+        {
+            var folderPath = HostingEnvironment.MapPath(BasePath);
+            
+            if (!Directory.Exists(folderPath))
+                Directory.CreateDirectory(folderPath);
+        }
+
+        private string GetRelativePath(string contentType, string slug)
         {
             var extension = WebContentTypes.GetExtension(contentType);
             var fileName = string.Format("{0}.{1}", slug ?? Generator.TimeStamp(), extension);
-            var relativePath = BasePath + fileName;
-            var absolutePath = HostingEnvironment.MapPath(relativePath);
-            var folderPath = HostingEnvironment.MapPath(BasePath);
+            return BasePath + fileName;
+        }
 
-            if (!Directory.Exists(folderPath))
-                Directory.CreateDirectory(folderPath);
+        public string Save(string contentType, string slug, Stream stream)
+        {
+            var relativePath = GetRelativePath(contentType, slug);
+            var absolutePath = HostingEnvironment.MapPath(relativePath);
+
+            EnsureFolderExists();
 
             using (var fs = new FileStream(absolutePath, FileMode.Create, FileAccess.Write))
             {
@@ -35,6 +46,11 @@ namespace Instatus.Services
             }
 
             return relativePath;
+        }
+
+        public Stream Stream(string key)
+        {
+            return new FileStream(HostingEnvironment.MapPath(key), FileMode.Open, FileAccess.Read);
         }
     }
 }

@@ -9,5 +9,6 @@ namespace Instatus.Services
     public interface IBlobService
     {
         string Save(string contentType, string slug, Stream stream);
+        Stream Stream(string key);
     }
 }

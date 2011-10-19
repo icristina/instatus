@@ -10,6 +10,7 @@ using Instatus.Web;
 using System.Web.Mvc;
 using System.ComponentModel.Composition;
 using System.Web.Routing;
+using System.IO;
 
 namespace Instatus.Data
 {   
@@ -158,7 +159,7 @@ namespace Instatus.Data
                     .Expand(customExpansions)
                     .Where(p => p.Slug == slug)
                     .OfType<T>()
-                    .Single();
+                    .FirstOrDefault();
         }
 
         public IOrderedQueryable<T> GetPages<T>(WebExpression filter) where T : Page
@@ -243,6 +244,31 @@ namespace Instatus.Data
                 Sort = sort,
                 Expand = expand
             });
+        }
+
+        public void LoadArticles(Stream stream)
+        {
+            var articles = Generator.LoadXml<List<Article>>(stream);
+
+            foreach (var loaded in articles)
+            {
+                var article = GetPage<Article>(loaded.Slug);
+
+                if (article == null)
+                {
+                    Pages.Add(loaded);
+                }
+                else
+                {
+                    article.Name = loaded.Name;
+                    article.Document = loaded.Document;
+
+                    if (loaded.Priority != 0)
+                        article.Priority = article.Priority;
+                }
+            }
+
+            SaveChanges();
         }
     }
 

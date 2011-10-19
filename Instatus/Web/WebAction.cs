@@ -7,6 +7,7 @@ namespace Instatus.Web
 {
     public enum WebAction
     {
+        Custom,
         Index,
         Details,
         Edit,

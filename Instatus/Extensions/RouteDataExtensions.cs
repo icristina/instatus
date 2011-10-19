@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Routing;
+using Instatus.Web;
+using System.Web.Mvc;
 
 namespace Instatus
 {
@@ -31,6 +33,11 @@ namespace Instatus
         public static string Slug(this RouteData routeData)
         {
             return routeData.Values["slug"].AsString();
+        }
+
+        public static WebAction WebAction(this ActionDescriptor actionDescriptor)
+        {
+            return actionDescriptor.ActionName.AsEnum<WebAction>();
         }
     }
 }
