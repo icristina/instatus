@@ -6,7 +6,7 @@
     @Html.Scripts("modernizr.js", "jquery.js", "respond.js", "innershiv.js")
     @RenderSection("head", false) 
 </head>
-<body>
+<body @Html.Attr("id", ViewContext.RouteData.ToUniqueId()) @Html.Attr("class", ViewContext.RouteData.ToClassName())>
     @RenderBody()
     @Html.Scripts("scaffold.js")
 </body>

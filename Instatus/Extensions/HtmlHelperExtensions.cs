@@ -260,7 +260,7 @@ namespace Instatus
                     }
                     else
                     {
-                        link = html.ActionLink(label, BaseViewPage<T>.IndexAction, query.WithPageIndex(i).ToRouteValueDictionary());
+                        link = html.ActionLink(label, WebAction.Index.ToString(), query.WithPageIndex(i).ToRouteValueDictionary());
                     }
 
                     sb.Append(link);
@@ -300,7 +300,7 @@ namespace Instatus
                 if (!tags.First().Equals(tag))
                     sb.Append(seperator);
 
-                sb.Append(html.ActionLinkOrText(webView.Tags.SelectedValue.AsString().Equals(tag.Name), tag.Name, BaseViewPage<T>.IndexAction, webView.Query.WithTag(tag.Name)));
+                sb.Append(html.ActionLinkOrText(webView.Tags.SelectedValue.AsString().Equals(tag.Name), tag.Name, WebAction.Index.ToString(), webView.Query.WithTag(tag.Name)));
             }
 
             return new MvcHtmlString(sb.ToString());

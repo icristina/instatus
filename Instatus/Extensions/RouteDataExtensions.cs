@@ -39,5 +39,21 @@ namespace Instatus
         {
             return actionDescriptor.ActionName.AsEnum<WebAction>();
         }
+
+        public static string ToUniqueId(this RouteData routeData)
+        {
+            var id = routeData.Values["id"] ?? routeData.Values["slug"] ?? string.Empty;
+            return id.ToString();
+        }
+
+        public static string ToClassName(this RouteData routeData)
+        {
+            return string.Format("{0} {1} {2}",
+                    routeData.AreaName().ToCamelCase(),
+                    routeData.ControllerName().ToCamelCase(),
+                    routeData.ActionName().ToCamelCase())
+                    .Trim()
+                    .RemoveDoubleSpaces();
+        }
     }
 }

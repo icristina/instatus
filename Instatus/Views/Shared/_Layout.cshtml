@@ -6,7 +6,7 @@
     @Html.Stylesheet("site.css")
     @Html.Scripts("modernizr.js", "jquery.js", "respond.js", "innershiv.js")
 </head>
-<body>
+<body @Html.Attr("id", ViewContext.RouteData.ToUniqueId()) @Html.Attr("class", ViewContext.RouteData.ToClassName())>
     @RenderBody()
     @Html.Scripts("app.js")
 </body>
