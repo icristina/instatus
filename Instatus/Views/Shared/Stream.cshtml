@@ -1,9 +1,12 @@
 ﻿@model IWebView
 
 <section>
-    <nav>
-        @Html.Paging()
-    </nav>
+    @if (Model.Query.Mode == WebMode.PagedList)
+    {
+        <nav>
+            @Html.Paging()
+        </nav>
+    }
     @foreach (Instatus.Models.Page page in Model)
     {
         <article>

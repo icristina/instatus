@@ -10,6 +10,7 @@ namespace Instatus.Web
     {
         public string Heading { get; set; }
         public string SubHeading { get; set; }
+        public string Abstract { get; set; }
         public string Body { get; set; }
         public ICollection<WebLink> Links { get; set; }
         public ICollection<WebPart> Parts { get; set; }
@@ -19,6 +20,7 @@ namespace Instatus.Web
         {
             Links = new List<WebLink>();
             Parts = new List<WebPart>();
+            Parameters = new List<WebParameter>();
         }
     }
 }

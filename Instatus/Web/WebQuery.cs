@@ -43,7 +43,7 @@ namespace Instatus.Web
             PageSize = 10;
             MaxPageCount = 10;
             Sort = WebSort.Recency;
-            Mode = WebMode.List;
+            Mode = WebMode.PagedList;
             CountTotal = true;
         }
 
