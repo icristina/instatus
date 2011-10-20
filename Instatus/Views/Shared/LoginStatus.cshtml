@@ -1,0 +1,15 @@
+﻿@{
+    Layout = null;
+}
+
+<span id="account">
+    @if (User.Identity.IsAuthenticated)
+    {
+        <span id="user">@User.Identity.Name</span>
+        @Html.ActionLink("Sign Out", "LogOut", "Account", new { area = "Auth" }, new { id = "logout" })
+    }
+    else
+    {
+        @Html.ActionLink("Sign In", "LogOn", "Account", new { area = "Auth" }, new { id = "logon" })
+    }
+</span>

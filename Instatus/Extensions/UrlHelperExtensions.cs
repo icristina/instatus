@@ -41,7 +41,7 @@ namespace Instatus
                         var descriptor = new ReflectedControllerDescriptor(controllerType);
                         var descriptionAttribute = descriptor.GetAttribute<DescriptionAttribute>();
 
-                        if (!isNavigable(descriptor) || !descriptor.HasAction(actionName))
+                        if (!isNavigable(descriptor) || !descriptor.HasAction(actionName) || descriptionAttribute == null)
                             return null;
 
                         var url = urlHelper.Action(actionName, descriptor.ControllerName);

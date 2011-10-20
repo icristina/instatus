@@ -36,9 +36,9 @@
         }
     </tbody>
 </table>
-@if (!Model.Navigation.IsEmpty())
-{
-    <nav>
+<nav>
+    <nav>  
         @Html.Partial("Nav", Model.Navigation)
+        @Html.Partial("LoginStatus")
     </nav>
-}
+</nav>
