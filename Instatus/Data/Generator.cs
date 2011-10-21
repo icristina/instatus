@@ -68,6 +68,13 @@ namespace Instatus.Data
             return Date(DateTime.Now, DateTime.Now.AddMonths(months));
         }
 
+        public static string LoadTextFile(string virtualPath)
+        {
+            using(var fs = File.OpenText(HostingEnvironment.MapPath(virtualPath))) {
+                return fs.ReadToEnd();
+            }
+        }
+
         public static object LoadXml(Type t, string virtualPath, IEnumerable<Type> knownTypes = null)
         {
             using (var fs = new FileStream(HostingEnvironment.MapPath(virtualPath), FileMode.Open, FileAccess.Read))

@@ -125,7 +125,7 @@ namespace Instatus.Areas.Facebook
         {
             get
             {
-                return string.Format("http://apps.facebook.com/{0}", Credential.Name);
+                return string.Format("https://apps.facebook.com/{0}", Credential.Name);
             }
         }
 

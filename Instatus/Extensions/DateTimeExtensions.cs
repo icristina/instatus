@@ -66,5 +66,45 @@ namespace Instatus
                     return date.ToString("dddd dd MMMM yyyy");
             }
         }
+
+        // http://www.dotnetperls.com/pretty-date
+        // http://www.blackbeltcoder.com/Articles/time/a-friendly-datetime-formatter
+        public static string ToRelativeString(this DateTime date)
+        {
+            var now = DateTime.Now;
+            var timespan = now.Subtract(date);
+
+            var hour = 60 * 60;
+            var day = hour * 24;
+
+            if (timespan.TotalDays == 0)
+            {
+                if (timespan.TotalSeconds < 60)
+                    return "just now";
+
+                if (timespan.TotalSeconds < 120)
+                    return "1 minute ago";
+
+                if (timespan.TotalSeconds < hour)
+                    return string.Format("{0} minutes ago", timespan.TotalMinutes);
+
+                if (timespan.TotalSeconds < day)
+                    return string.Format("{0} hours ago", timespan.TotalHours);
+            }
+            
+            if (timespan.TotalDays == 1)
+                return "yesterday";
+
+            if (timespan.TotalDays < 7)
+                return string.Format("{0} days ago", timespan.TotalDays);
+
+            if (timespan.TotalDays < 31)
+                return string.Format("{0} weeks ago", Math.Ceiling((double)timespan.TotalDays / 7));
+
+            if (date.Year == now.Year)
+                return date.ToString("MMM d");
+
+            return date.ToString("MMM d, yyyy");
+        }
     }
 }

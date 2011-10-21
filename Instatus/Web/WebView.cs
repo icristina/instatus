@@ -21,6 +21,7 @@ namespace Instatus.Web
         bool Can(object action);
         SiteMapNodeCollection Navigation { get; }
         dynamic CurrentRow { get; set; }
+        WebDocument Document { get; }
     }
 
     public class WebView<T> : PagedCollection<T>, IWebView

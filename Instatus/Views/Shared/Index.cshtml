@@ -42,3 +42,9 @@
         @Html.Partial("LoginStatus")
     </nav>
 </nav>
+@if (!Model.Document.IsEmpty() && !Model.Document.Body.IsEmpty())
+{
+    <aside>
+        @Html.Content(Model.Document.Body)
+    </aside>
+}
