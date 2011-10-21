@@ -74,29 +74,26 @@ namespace Instatus
             var now = DateTime.Now;
             var timespan = now.Subtract(date);
 
-            var hour = 60 * 60;
-            var day = hour * 24;
-
-            if (timespan.TotalDays == 0)
+            if (timespan.TotalDays < 1)
             {
                 if (timespan.TotalSeconds < 60)
                     return "just now";
 
-                if (timespan.TotalSeconds < 120)
+                if (timespan.TotalMinutes < 2)
                     return "1 minute ago";
 
-                if (timespan.TotalSeconds < hour)
-                    return string.Format("{0} minutes ago", timespan.TotalMinutes);
+                if (timespan.TotalMinutes < 60)
+                    return string.Format("{0} minutes ago", Math.Ceiling(timespan.TotalMinutes));
 
-                if (timespan.TotalSeconds < day)
-                    return string.Format("{0} hours ago", timespan.TotalHours);
+                if (timespan.TotalHours < 24)
+                    return string.Format("{0} hours ago", Math.Ceiling(timespan.TotalHours));
             }
             
-            if (timespan.TotalDays == 1)
+            if (timespan.TotalDays < 2)
                 return "yesterday";
 
             if (timespan.TotalDays < 7)
-                return string.Format("{0} days ago", timespan.TotalDays);
+                return string.Format("{0} days ago", Math.Ceiling(timespan.TotalDays));
 
             if (timespan.TotalDays < 31)
                 return string.Format("{0} weeks ago", Math.Ceiling((double)timespan.TotalDays / 7));
