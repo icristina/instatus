@@ -15,12 +15,12 @@ namespace Instatus
     {
         public static string Absolute(string virtualPath)
         {
-            return Paths.Absolute(virtualPath);
+            return WebPaths.Absolute(virtualPath);
         }
         
         public static string Resize(this UrlHelper urlHelper, WebSize size, string virtualPath)
         {
-            return urlHelper.Content(Paths.Resize(size, virtualPath));
+            return urlHelper.Content(WebPaths.Resize(size, virtualPath));
         }
 
         public static SiteMapNodeCollection SitemapNodes(this UrlHelper urlHelper, Func<ControllerDescriptor, bool> isNavigable = null, string actionName = "Index")
@@ -57,57 +57,6 @@ namespace Instatus
         public static string Page(this UrlHelper urlHelper, string slug)
         {
             return urlHelper.RouteUrl(MicrositeAreaRegistration.PageRouteName, new { slug = slug });
-        }
-    }
-
-    public static class Paths
-    {
-        private static Uri baseUri;
-        
-        public static Uri BaseUri {
-            get {
-                if(baseUri.IsEmpty()) {
-                    var environment = ConfigurationManager.AppSettings.Value<string>("Environment");
-                    using (var db = BaseDataContext.Instance())
-                    {
-                        var domain = db.Domains.FirstOrDefault(d => d.Environment == environment);
-
-                        if (!domain.IsEmpty())
-                            baseUri = new Uri(domain.Uri);
-                        else if (HttpContext.Current.Request != null)
-                            baseUri = new Uri(HttpContext.Current.Request.BaseUri());
-                    }
-                }
-
-                return baseUri;
-            }
-        }
-
-        public static string Absolute(Uri baseUri, string virtualPath)
-        {
-            return new Uri(baseUri, VirtualPathUtility.ToAbsolute(virtualPath)).ToString();
-        }
-
-        public static string Absolute(string baseUri, string virtualPath)
-        {
-            return Absolute(new Uri(baseUri), virtualPath);
-        }
-
-        public static string Absolute(string virtualPath)
-        {
-            return Absolute(BaseUri, virtualPath);
-        }
-
-        public static string Resize(WebSize size, string virtualPath)
-        {
-            var extensionStartIndex = virtualPath.LastIndexOf('.');
-            var suffix = string.Format("-{0}", size.ToString().ToLower());
-            return virtualPath.Insert(extensionStartIndex, suffix);
-        }
-
-        public static string ResizeAbsolute(WebSize size, string virtualPath)
-        {
-            return Absolute(Resize(size, virtualPath));
         }
     }
 }

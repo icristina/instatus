@@ -32,8 +32,8 @@ namespace Instatus.Areas.Wordpress
                         blogid = a.Slug,
                         blogName = a.Name,
                         isAdmin = true,
-                        url = Paths.BaseUri.ToString(),
-                        xmlrpc = Paths.BaseUri.ToString() + "/weblog"
+                        url = WebPaths.BaseUri.ToString(),
+                        xmlrpc = WebPaths.BaseUri.ToString() + "/weblog"
                     })
                     .ToArray();
             }

@@ -10,6 +10,7 @@ using System.Text;
 using System.Web.Routing;
 using Instatus.Models;
 using Instatus.Web;
+using Instatus.Services;
 
 namespace Instatus
 {
@@ -23,7 +24,7 @@ namespace Instatus
         
         public static MvcHtmlString ReturnUrl<T>(this HtmlHelper<T> html, string returnUrl = null)
         {
-            return html.Hidden("returnUrl", returnUrl ?? html.ViewContext.RequestContext.HttpContext.Request.RawUrl);
+            return html.Hidden(HtmlConstants.ReturnUrl, returnUrl ?? html.ViewContext.RequestContext.HttpContext.Request.RawUrl);
         }
         
         public static MvcHtmlString Tag<T>(this HtmlHelper<T> html, string tagName, object value)
@@ -74,6 +75,12 @@ namespace Instatus
             }
         }
 
+        public static MvcHtmlString PageLink<T>(this HtmlHelper<T> html, string linkText, string slug)
+        {
+            var urlHelper = new UrlHelper(html.ViewContext.RequestContext);
+            return html.Anchor(linkText, urlHelper.Page(slug));
+        }
+
         public static MvcHtmlString ActiveText<T>(this HtmlHelper<T> html, string text)
         {
             var tag = new TagBuilder("b");
@@ -115,7 +122,7 @@ namespace Instatus
             if (markup.IsEmpty())
                 return null;
 
-            return markup.Contains("<p") ? new MvcHtmlString(markup) : new MvcHtmlString(string.Format("<p>{0}</p>", markup));
+            return new MvcHtmlString(new MarkupTemplateService().Process(null, markup));
         }
 
         public static MvcForm BeginAuthenticatedForm<T>(this HtmlHelper<T> html, string actionName, string controllerName, string areaName)
@@ -198,6 +205,19 @@ namespace Instatus
                 {
                     sb.Append(html.Stream(part as WebStream));
                 }
+                else if (part is WebPartial)
+                {
+                    var webPartial = (WebPartial)part;
+
+                    if (webPartial.ActionName.IsEmpty())
+                    {
+                        sb.Append(html.Partial(webPartial.ViewName));
+                    }
+                    else
+                    {
+                        sb.Append(html.Action(webPartial.ActionName, new { viewName = webPartial.ViewName, controller = "home", area = "" }));
+                    }
+                } 
                 else
                 {
                     sb.Append(html.Partial(part.ViewName ?? "Section", part as WebSection));

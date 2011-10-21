@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using System.Runtime.Serialization;
 
 namespace Instatus.Web
 {
-    public class WebPartial : WebPart
+    public class HtmlConstants
     {
-        public string ActionName { get; set; }
+        public const string ReturnUrl = "returnUrl";
     }
 }

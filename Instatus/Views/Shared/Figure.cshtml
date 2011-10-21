@@ -1,0 +1,13 @@
+﻿@model WebSection
+
+@{
+    var webLink = Model.Links.First();   
+}
+
+<figure>
+    <img src="@WebPaths.Absolute(webLink.Uri)" />
+    <figcaption>
+        @Html.Tag("b", webLink.Title)
+        @webLink.Description
+    </figcaption>
+</figure>

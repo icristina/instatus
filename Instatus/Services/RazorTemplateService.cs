@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using System.IO;
 using System.ComponentModel.Composition;
+using Instatus.Web;
 
 namespace Instatus.Services
 {
@@ -20,7 +21,7 @@ namespace Instatus.Services
             var routeData = new RouteData();
 
             context.HttpContext = new HttpContextWrapper(new HttpContext(
-                new HttpRequest("", Paths.BaseUri.ToString(), ""),
+                new HttpRequest("", WebPaths.BaseUri.ToString(), ""),
                 new HttpResponse(new StringWriter())
             ));
             

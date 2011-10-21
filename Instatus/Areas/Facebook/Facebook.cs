@@ -44,6 +44,11 @@ namespace Instatus.Areas.Facebook
             return client.DownloadString(uri);
         }
 
+        public static string Picture(object resource, PictureSize size)
+        {
+            return string.Format("https://graph.facebook.com/{0}/picture?type={1}", resource, size.ToString().ToLower());
+        }
+
         public static dynamic Request(object resource, string accessToken = null, object connection = null)
         {
             var response = InternalRequest(resource, accessToken, connection);
@@ -270,6 +275,13 @@ namespace Instatus.Areas.Facebook
             {
                 return null;
             }            
+        }
+
+        public enum PictureSize {
+            Square,
+            Small,
+            Normal,
+            Large
         }
 
         public enum Connection
