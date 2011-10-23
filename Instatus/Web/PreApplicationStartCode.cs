@@ -35,6 +35,7 @@ namespace Instatus.Web
             // modules
             DynamicModuleUtility.RegisterModule(typeof(ConfigurationModule));
             DynamicModuleUtility.RegisterModule(typeof(PermanentRedirectModule));
+            DynamicModuleUtility.RegisterModule(typeof(HttpTraceModule));
 
             // routes
             RouteTable.Routes.IgnoreRoute("{resource}.axd/{*pathInfo}");

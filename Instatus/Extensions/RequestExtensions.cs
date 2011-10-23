@@ -24,11 +24,5 @@ namespace Instatus
         {
             return HttpContext.Current.Request.BaseUri();
         }
-
-        public static string Body(this HttpRequestBase request)
-        {
-            request.InputStream.Position = 0;
-            return new StreamReader(request.InputStream).ReadToEnd();
-        }
     }
 }

@@ -19,7 +19,7 @@ namespace Instatus.Web
                 var message = new StringBuilder();
                 var request = filterContext.HttpContext.Request;
 
-                message.AppendSection("Request Body", request.Body());
+                message.AppendSection("Request Body", request.InputStream.CopyToString());
                 message.AppendSection("Server Variables", request.ServerVariables["ALL_RAW"]);
 
                 db.Logs.Add(new Log()

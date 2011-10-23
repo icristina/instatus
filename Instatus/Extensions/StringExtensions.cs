@@ -98,9 +98,14 @@ namespace Instatus
             return slug;
         }
 
-        public static T AsEnum<T>(this string text)
+        public static T AsEnum<T>(this string text) where T : struct
         {
-            return (T)Enum.Parse(typeof(T), text, true);
+            T value;
+
+            if (Enum.TryParse<T>(text, true, out value))
+                return value;
+            
+            return new T();
         }
 
         public static DateTime? AsDateTime(this string text)

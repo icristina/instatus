@@ -21,8 +21,8 @@ namespace Instatus.Services
                 return WebPaths.Absolute(m.Value);
             });
 
-            // require paragraph tag
-            if (!markup.Contains("<p"))
+            // require block level container
+            if (!markup.Contains("<"))
             {
                 markup = string.Format("<p>{0}</p>", markup);
             }                
