@@ -45,12 +45,6 @@ namespace Instatus.Areas.Wordpress
             return GetUsersBlogs(null, username, password);
         }
 
-        //[XmlRpcMethod("wp.getComments")]
-        public WordpressComment[] GetComments(int blogId, string username, string password, WordpressCommentQuery query)
-        {
-            return null;
-        }
-
         [OperationContract(Action = "wp.getCategories")]
         public WordpressCategory[] GetCategories(int blogId, string username, string password)
         {
@@ -178,13 +172,32 @@ namespace Instatus.Areas.Wordpress
 
             using (var db = BaseDataContext.Instance())
             {
-                var id = postid.AsInteger();
-                var post = db.Pages.Find(id);
+                var post = db.Pages.Find(postid);
 
                 post.Slug = metaWeblogPost.title.ToSlug();
                 post.Name = metaWeblogPost.title;
                 post.Description = metaWeblogPost.description;
                 post.Status = publish ? WebStatus.Published.ToString() : WebStatus.Draft.ToString();
+
+                db.SaveChanges();
+            }
+
+            return true;
+        }
+
+        [OperationContract(Action = "wp.editPage")]
+        public bool EditPage(int blogid, int pageid, string username, string password, WordpressPage wordpressPage)
+        {
+            if (!Membership.ValidateUser(username, password)) return false;
+
+            using (var db = BaseDataContext.Instance())
+            {
+                var page = db.Pages.Find(pageid);
+
+                page.Slug = wordpressPage.title.ToSlug();
+                page.Name = wordpressPage.title;
+                page.Description = wordpressPage.description;
+                page.Status = wordpressPage.page_status == "publish" ? WebStatus.Published.ToString() : WebStatus.Draft.ToString();
 
                 db.SaveChanges();
             }
@@ -212,6 +225,25 @@ namespace Instatus.Areas.Wordpress
             }
 
             return true;
+        }
+
+        [OperationContract(Action = "wp.getComments")]
+        public WordpressComment[] GetComments(int blogid, string username, string password, WordpressCommentQuery commentQuery)
+        {
+            if (!Membership.ValidateUser(username, password)) return null;
+
+            using (var db = BaseDataContext.Instance())
+            {
+                return db.Messages
+                        .OfType<Comment>()
+                        .ToList()
+                        .Select(c => new WordpressComment()
+                        {
+                            post_id = "0",
+                            content = c.Body
+                        })
+                        .ToArray();
+            }
         }
     }
 
