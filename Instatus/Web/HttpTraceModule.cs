@@ -36,11 +36,11 @@ namespace Instatus.Web
 
                     if (request.ContentLength > 0)
                     {
-                        File.AppendAllText(filePath, string.Format("{1} {2}{0}{3}{0}{0}", Environment.NewLine, request.HttpMethod, uri, request.InputStream.CopyToString()));
+                        File.AppendAllText(filePath, string.Format("{1} ({2}) {3}{0}{4}{0}{0}", Environment.NewLine, request.HttpMethod, request.ContentType, uri, request.InputStream.CopyToString()));
                     }
                     else
                     {
-                        File.AppendAllText(filePath, string.Format("{1} {2}{0}{0}", Environment.NewLine, request.HttpMethod, uri));
+                        File.AppendAllText(filePath, string.Format("{1} ({2}) {3}{0}{0}", Environment.NewLine, request.HttpMethod, request.ContentType, uri));
                     }
 
                     break;

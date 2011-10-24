@@ -236,6 +236,7 @@
     <Compile Include="Web\WebSort.cs" />
     <Compile Include="Web\WebView.cs" />
     <Compile Include="Web\PermanentRedirectModule.cs" />
+    <Compile Include="Web\XmlRpcValueProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\_ViewStart.cshtml" />
