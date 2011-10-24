@@ -103,7 +103,7 @@ namespace Instatus.Controllers
         [NonAction]
         public new ActionResult View()
         {                      
-            if (RouteData.ActionName().Match("Details") && ViewData.Model == null)
+            if (RouteData.WebAction().Equals(WebAction.Details) && ViewData.Model.IsEmpty())
                 return HttpNotFound();
 
             if (Request.IsAjaxRequest())
