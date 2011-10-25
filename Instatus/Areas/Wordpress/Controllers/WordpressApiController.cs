@@ -51,7 +51,7 @@ namespace Instatus.Areas.Wordpress.Controllers
                 .ToList()
                 .Select(a => new BlogInfo()
                 {
-                    Blogid = a.Slug,
+                    Blogid = a.Id.ToString(),
                     BlogName = a.Name,
                     IsAdmin = true,
                     Url = WebPaths.BaseUri.ToString(),
@@ -69,7 +69,7 @@ namespace Instatus.Areas.Wordpress.Controllers
         }
 
         [ActionName("wp.getPages")]
-        public ActionResult GetPages(int blogId, string username, string password, int maxPages)
+        public ActionResult Wordpress_GetPages(int blogId, string username, string password, int maxPages)
         {
             Authenticate(username, password);
 
@@ -86,7 +86,7 @@ namespace Instatus.Areas.Wordpress.Controllers
         }
 
         [ActionName("wp.getCategories")]
-        public ActionResult GetCategories(int blogId, string username, string password)
+        public ActionResult Wordpress_GetCategories(int blogId, string username, string password)
         {
             Authenticate(username, password);
 
@@ -102,7 +102,7 @@ namespace Instatus.Areas.Wordpress.Controllers
         }
 
         [ActionName("metaWeblog.getRecentPosts")]
-        public ActionResult GetRecentPosts(int blogid, string username, string password, int numberOfPosts)
+        public ActionResult MetaWeblog_GetRecentPosts(int blogid, string username, string password, int numberOfPosts)
         {
             Authenticate(username, password);
 
@@ -123,7 +123,7 @@ namespace Instatus.Areas.Wordpress.Controllers
         }
 
         [ActionName("metaWeblog.editPost")]
-        public ActionResult EditPost(int postid, string username, string password, MetaWeblogPost metaWeblogPost)
+        public ActionResult MetaWeblog_EditPost(int postid, string username, string password, MetaWeblogPost metaWeblogPost)
         {
             Authenticate(username, password);
 
@@ -140,7 +140,7 @@ namespace Instatus.Areas.Wordpress.Controllers
         }
 
         [ActionName("metaWeblog.newPost")]
-        public ActionResult NewPost(int blogid, string username, string password, MetaWeblogPost metaWeblogPost, bool publish)
+        public ActionResult MetaWeblog_NewPost(int blogid, string username, string password, MetaWeblogPost metaWeblogPost, bool publish)
         {
             Authenticate(username, password);
 
@@ -160,7 +160,7 @@ namespace Instatus.Areas.Wordpress.Controllers
         }
 
         [ActionName("metaWeblog.getPost")]
-        public ActionResult GetPost(int postid, string username, string password)
+        public ActionResult MetaWeblog_GetPost(int postid, string username, string password)
         {
             Authenticate(username, password);
 
@@ -178,7 +178,7 @@ namespace Instatus.Areas.Wordpress.Controllers
         }
 
         [ActionName("wp.editPage")]
-        public ActionResult EditPage(int blogid, int pageid, string username, string password, WordpressPage wordpressPage)
+        public ActionResult Wordpress_EditPage(int blogid, int pageid, string username, string password, WordpressPage wordpressPage)
         {
             Authenticate(username, password);
 
@@ -195,7 +195,7 @@ namespace Instatus.Areas.Wordpress.Controllers
         }
 
         [ActionName("wp.getComments")]
-        public ActionResult GetComments(int blogid, string username, string password, WordpressCommentQuery commentQuery)
+        public ActionResult Wordpress_GetComments(int blogid, string username, string password, WordpressCommentQuery commentQuery)
         {
             Authenticate(username, password);
 
@@ -204,8 +204,13 @@ namespace Instatus.Areas.Wordpress.Controllers
                 .ToList()
                 .Select(c => new WordpressComment()
                 {
-                    Post_id = "0",
-                    Content = c.Body
+                    Post_id = c.PageId.ToString(),
+                    Post_title = c.Page.Name,
+                    Content = c.Body,
+                    DateCreated = c.CreatedTime,
+                    Author = c.User.FullName,
+                    Comment_id = c.Id.ToString(),
+                    Status = c.Status.Match(WebStatus.Approved) ? "publish" : "draft"
                 })
                 .ToArray();
 
@@ -213,7 +218,7 @@ namespace Instatus.Areas.Wordpress.Controllers
         }
 
         [ActionName("mt.setPostCategories")]
-        public ActionResult SetPostCategories(int postid, string username, string password, MetaWeblogCategory[] categories)
+        public ActionResult MovableType_SetPostCategories(int postid, string username, string password, MetaWeblogCategory[] categories)
         {
             Authenticate(username, password);
 
