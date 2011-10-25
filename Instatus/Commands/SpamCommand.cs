@@ -33,7 +33,7 @@ namespace Instatus.Commands
             }
         }
 
-        public bool Execute(dynamic viewModel, RouteData routeData, NameValueCollection requestParams)
+        public bool Execute(dynamic viewModel, UrlHelper urlHelper, RouteData routeData, NameValueCollection requestParams)
         {
             var id = routeData.Id();
             var status = requestParams.Value<WebStatus>("status");

@@ -30,7 +30,10 @@ namespace Instatus.Models
 
         public override string ToString()
         {
-            return StartTime.ToLongTimeString();
+            if (EndTime.HasValue)
+                return string.Format("{0} - {1}", StartTime.ToString("f"), EndTime.Value.ToString("f"));
+            
+            return StartTime.ToString("f");
         }
     }
 }

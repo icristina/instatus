@@ -11,6 +11,6 @@ namespace Instatus.Web
     public interface IWebCommand
     {
         WebLink GetLink(dynamic viewModel, UrlHelper urlHelper);
-        bool Execute(dynamic viewModel, RouteData routeData, NameValueCollection requestParams);
+        bool Execute(dynamic viewModel, UrlHelper urlHelper, RouteData routeData, NameValueCollection requestParams);
     }
 }

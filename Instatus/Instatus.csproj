@@ -90,7 +90,9 @@
     <Compile Include="Commands\SpamCommand.cs" />
     <Compile Include="Data\LimitedQueue.cs" />
     <Compile Include="Extensions\ControllerDescriptorExtensions.cs" />
+    <Compile Include="Extensions\BooleanExtensions.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />
+    <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="Extensions\StreamExtensions.cs" />
     <Compile Include="Models\Award.cs" />
     <Compile Include="Models\Brand.cs" />

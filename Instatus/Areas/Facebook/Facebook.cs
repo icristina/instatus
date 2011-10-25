@@ -151,7 +151,7 @@ namespace Instatus.Areas.Facebook
             return new WebClient().DownloadString(uri);
         }
 
-        public static void AppRequest(object resource, string message, string applicationAccessToken)
+        public static void AppRequest(object resource, string message, string applicationAccessToken = null)
         {
             var uri = string.Format("https://graph.facebook.com/{0}/apprequests?message='{1}'&data=''&{2}&method=post",
                 resource,

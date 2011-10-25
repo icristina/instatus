@@ -9,6 +9,7 @@ using System.Data.Entity.Design.PluralizationServices;
 using System.Text.RegularExpressions;
 using System.Web.Helpers;
 using System.Text;
+using System.Web.Mvc;
 
 namespace Instatus
 {
@@ -138,8 +139,25 @@ namespace Instatus
             return list;
         }
 
-        public static StringBuilder AppendSpace(this StringBuilder stringBuilder)
+        public static StringBuilder AppendDelimitedValue(this StringBuilder stringBuilder, object value, string delimiter = " ", bool unique = false)
         {
+            var stringValue = value.ToString();
+            
+            if(unique) {
+                var values = stringBuilder.ToString().Split(new string[] { delimiter }, StringSplitOptions.None);
+
+                if(values.Contains(stringValue))
+                    return stringBuilder;
+            }
+
+            if (stringBuilder.Length > 0)
+                stringBuilder.Append(delimiter);
+
+            return stringBuilder.Append(stringValue);
+        }
+
+        public static StringBuilder AppendSpace(this StringBuilder stringBuilder)
+        {           
             return stringBuilder.Append(" ");
         }
     }

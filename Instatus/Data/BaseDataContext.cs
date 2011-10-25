@@ -11,6 +11,8 @@ using System.Web.Mvc;
 using System.ComponentModel.Composition;
 using System.Web.Routing;
 using System.IO;
+using Instatus;
+using System.Data.Objects;
 
 namespace Instatus.Data
 {   
@@ -19,7 +21,7 @@ namespace Instatus.Data
         public static BaseDataContext Instance() {
             return DependencyResolver.Current.GetService<BaseDataContext>();
         }
-        
+
         public IDbSet<Application> Applications { get; set; }
         public IDbSet<Page> Pages { get; set; }
         public IDbSet<User> Users { get; set; }
@@ -101,6 +103,28 @@ namespace Instatus.Data
         public void MarkAsPublished<T>(int id) where T : class, IUserGeneratedContent
         {
             SetStatus<T>(id, WebStatus.Published);
+        }
+
+        public void LogChange(object resource, string propertyName, object originalValue, object newValue, string uri = null)
+        {
+            var now = DateTime.Now;
+            var user = GetCurrentUser();
+            var description = resource is string ? resource : string.Format("{0} {1}", ObjectContext.GetObjectType(resource.GetType()).Name, resource.GetKey());
+            var message = string.Format("{0} changed {1} from {2} to {3} on {4} at {5}",
+                user.FullName,
+                propertyName,
+                originalValue,
+                newValue,
+                description,
+                now);
+
+            Logs.Add(new Log()
+            {
+                Verb = WebVerb.Change.ToString(),
+                Uri = uri,
+                User = user,
+                Message = message
+            });
         }
 
         public IQueryable<Tag> GetTags(string taxonomyName)
