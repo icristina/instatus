@@ -142,6 +142,25 @@ namespace Instatus.Areas.Facebook
             }
         }
 
+        public static string ApplicationAccessToken(string applicationId = null, string applicationSecret = null)
+        {
+            var uri = string.Format("https://graph.facebook.com/oauth/access_token?client_id={0}&client_secret={1}&grant_type=client_credentials",
+                applicationId ?? Facebook.ApplicationId,
+                applicationSecret ?? Facebook.ApplicationSecret);
+
+            return new WebClient().DownloadString(uri);
+        }
+
+        public static void AppRequest(object resource, string message, string applicationAccessToken)
+        {
+            var uri = string.Format("https://graph.facebook.com/{0}/apprequests?message='{1}'&data=''&{2}&method=post",
+                resource,
+                message,
+                applicationAccessToken ?? Facebook.ApplicationAccessToken());
+
+            new WebClient().UploadString(uri, string.Empty);
+        }
+
         // http://stackoverflow.com/questions/3385593/c-hmacsha256-problem-matching-facebook-signed-request-implementation
         // http://stackoverflow.com/questions/4575932/read-oauth2-0-signed-request-facebook-registration-c-mvc
         // Facebook C# SDK

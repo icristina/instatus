@@ -15,7 +15,7 @@
     <thead>
         <tr>
             <td>Id</td>
-            <td>Name</td>
+            <td>Description</td>
             <td>Actions</td>
         </tr>
     </thead>
@@ -27,7 +27,9 @@
                 <td>
                     @entry.GetKey()
                 </td>
-                <td>@Html.Raw(entry.ToString())</td>
+                <td>
+                    @Html.Partial("Entry", entry)
+                </td>
                 <td>
                     @Html.Partial("Actions", Model)
                     @Html.Partial("Commands", Model)

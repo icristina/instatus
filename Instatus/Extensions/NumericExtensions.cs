@@ -35,6 +35,11 @@ namespace Instatus
             return next == original ? next + 1 : next; // TODO: bug may return same value
         }
 
+        public static string ToPadded(this int number, int length)
+        {
+            return string.Format("{0:D" + length + "}", number);
+        }
+
         public static string ToOrdinal(this int number)
         {
             switch (number % 100)
