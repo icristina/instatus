@@ -40,8 +40,6 @@ namespace Instatus.Web
             // routes
             RouteTable.Routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
             RouteTable.Routes.IgnoreRoute("{location}/{resource}.axd/{*pathInfo}");
-            RouteTable.Routes.IgnoreRoute("{resource}.php/{*pathInfo}");
-            RouteTable.Routes.IgnoreRoute("{location}/{resource}.php/{*pathInfo}");
             RouteTable.Routes.IgnoreRoute("Scripts/{*pathInfo}");
             RouteTable.Routes.IgnoreRoute("Content/{*pathInfo}");
             RouteTable.Routes.IgnoreRoute("favicon.ico");

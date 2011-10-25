@@ -84,8 +84,8 @@
     <Compile Include="Areas\Facebook\Facebook.cs" />
     <Compile Include="Areas\Facebook\FacebookAttribute.cs" />
     <Compile Include="Areas\Microsite\Controllers\RobotsController.cs" />
+    <Compile Include="Areas\Wordpress\Controllers\WordpressApiController.cs" />
     <Compile Include="Areas\Wordpress\WordpressAreaRegistration.cs" />
-    <Compile Include="Areas\Wordpress\XmlRpc.cs" />
     <Compile Include="Commands\BanCommand.cs" />
     <Compile Include="Commands\SpamCommand.cs" />
     <Compile Include="Data\LimitedQueue.cs" />
