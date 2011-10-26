@@ -9,6 +9,7 @@ using System.Web.Security;
 using Instatus.Web;
 using System.Net;
 using Instatus.Models;
+using System.ComponentModel;
 
 namespace Instatus.Areas.Wordpress.Controllers
 {
@@ -23,20 +24,11 @@ namespace Instatus.Areas.Wordpress.Controllers
         [ActionName("system.listMethods")]
         public ActionResult System_ListMethods()
         {
-            ViewData.Model = new string[] {
-                "blogger.getUsersBlogs",
-                "wp.getUsersBlogs",
-                "wp.getPages",
-                "wp.getCategories",
-                "metaWeblog.getRecentPosts",
-                "metaWeblog.editPost",
-                "metaWeblog.newPost",
-                "metaWeblog.getPost",
-                "wp.editPage",
-                "wp.editPost",
-                "wp.getComments",
-                "mt.setPostCategories"
-            };
+            ViewData.Model = GetType()
+                .GetMembers()
+                .Where(m => m.GetCustomAttributes(typeof(ActionNameAttribute), false).Count() > 0)
+                .Select(m => ((ActionNameAttribute)m.GetCustomAttributes(typeof(ActionNameAttribute), false).First()).Name)
+                .ToArray();
             
             return new XmlRpcResult();
         }
@@ -85,6 +77,24 @@ namespace Instatus.Areas.Wordpress.Controllers
             return new XmlRpcResult();
         }
 
+        [ActionName("wp.getPageList")]
+        public ActionResult Wordpress_GetPageList(int blogId, string username, string password)
+        {
+            Authenticate(username, password);
+
+            ViewData.Model = Context
+                .Pages
+                .OfType<Article>()
+                .Select(p => new WordpressPage()
+                {
+                    Page_id = p.Id,
+                    Page_title = p.Name,
+                    DateCreated = p.CreatedTime
+                }).ToArray();
+
+            return new XmlRpcResult();
+        }
+
         [ActionName("wp.getCategories")]
         public ActionResult Wordpress_GetCategories(int blogId, string username, string password)
         {
@@ -99,6 +109,23 @@ namespace Instatus.Areas.Wordpress.Controllers
                 }).ToArray();
 
             return new XmlRpcResult();
+        }
+
+        [ActionName("wp.newCategory")]
+        public ActionResult Wordpress_NewCategory(int blogId, string username, string password, WordpressCategoryRequest wordpressCategory)
+        {
+            Authenticate(username, password);
+
+            var category = new Tag()
+            {
+                Name = wordpressCategory.Name,
+                Slug = wordpressCategory.Slug
+            };
+
+            Context.Tags.Add(category);
+            Context.SaveChanges();
+
+            return new XmlRpcResult(category.Id);
         }
 
         [ActionName("metaWeblog.getRecentPosts")]
@@ -140,7 +167,7 @@ namespace Instatus.Areas.Wordpress.Controllers
         }
 
         [ActionName("metaWeblog.newPost")]
-        public ActionResult MetaWeblog_NewPost(int blogid, string username, string password, MetaWeblogPost metaWeblogPost, bool publish)
+        public ActionResult MetaWeblog_NewPost(int blogid, string username, string password, MetaWeblogPost metaWeblogPost, bool? publish)
         {
             Authenticate(username, password);
 
@@ -150,7 +177,7 @@ namespace Instatus.Areas.Wordpress.Controllers
                 Name = metaWeblogPost.Title,
                 Description = metaWeblogPost.Description,
                 CreatedTime = metaWeblogPost.DateCreated.HasValue ? metaWeblogPost.DateCreated.Value : DateTime.Now,
-                Status = publish ? WebStatus.Published.ToString() : WebStatus.Draft.ToString()
+                Status = publish == false ? WebStatus.Draft.ToString() : WebStatus.Published.ToString()
             };
 
             Context.Pages.Add(post);
@@ -175,6 +202,27 @@ namespace Instatus.Areas.Wordpress.Controllers
             };
 
             return new XmlRpcResult();
+        }
+
+        [ActionName("wp.newPage")]
+        public ActionResult Wordpress_NewPage(int blogid, int pageid, string username, string password, WordpressPage wordpressPage, bool publish)
+        {
+            Authenticate(username, password);
+
+            var article = new Article()
+            {
+                Slug = wordpressPage.Wp_slug,
+                Name = wordpressPage.Title,
+                Document = new WebDocument()
+                {
+                    Body = wordpressPage.Description
+                }
+            };
+
+            Context.Pages.Add(article);
+            Context.SaveChanges();
+
+            return new XmlRpcResult(article.Id);
         }
 
         [ActionName("wp.editPage")]
@@ -218,22 +266,24 @@ namespace Instatus.Areas.Wordpress.Controllers
         }
 
         [ActionName("mt.setPostCategories")]
-        public ActionResult MovableType_SetPostCategories(int postid, string username, string password, MetaWeblogCategory[] categories)
+        public ActionResult MovableType_SetPostCategories(int postid, string username, string password /*, MetaWeblogCategory[] categories */)
         {
-            Authenticate(username, password);
-
-            var post = Context.Pages.Find(postid);
-
-            if (post == null)
-                return new XmlRpcResult(false);
-
-            var tagIds = categories.Select(c => c.CategoryId.AsInteger());
-
-            post.Tags = BindingHelpers.UpdateList<Tag, int>(Context.Tags, post.Tags, tagIds);
-
-            Context.SaveChanges();
-
             return new XmlRpcResult(true);
+
+            //Authenticate(username, password);
+
+            //var post = Context.Pages.Find(postid);
+
+            //if (post == null)
+            //    return new XmlRpcResult(false);
+
+            //var tagIds = categories.Select(c => c.CategoryId.AsInteger());
+
+            //post.Tags = BindingHelpers.UpdateList<Tag, int>(Context.Tags, post.Tags, tagIds);
+
+            //Context.SaveChanges();
+
+            //return new XmlRpcResult(true);
         }
     }
 
