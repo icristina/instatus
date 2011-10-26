@@ -156,18 +156,14 @@ namespace Instatus.Data
         }
 
         public IOrderedQueryable<Activity> GetActivities(
-            int pageSize = 200,
-            int pageIndex = 0,
             string user = null,
             string parent = null,
             string[] expand = null,
             DateTime? startDate = null)
         {
-            return GetActivities(new WebQuery()
+            return GetActivities(new WebExpression()
             {
                 User = user,
-                PageSize = pageSize,
-                PageIndex = pageIndex,
                 Parent = parent,
                 Expand = expand,
                 StartDate = startDate
@@ -211,8 +207,6 @@ namespace Instatus.Data
         }
 
         public IOrderedQueryable<Page> GetPages(
-            int pageSize = 200,
-            int pageIndex = 0,
             WebKind kind = WebKind.Page,
             string[] uri = null,
             WebSort sort = WebSort.Recency,
@@ -225,12 +219,10 @@ namespace Instatus.Data
             string locale = null,
             WebMode mode = WebMode.List)
         {
-            return GetPages(new WebQuery()
+            return GetPages(new WebExpression()
             {
                 Kind = kind,
                 Uri = uri,
-                PageSize = pageSize,
-                PageIndex = pageIndex,
                 Sort = sort,
                 Tag = tag,
                 User = user,
