@@ -20,7 +20,7 @@ namespace Instatus.Web
 
         public WebParameter(string ns, object name, object content)
         {
-            Name = string.Format("{0}:{1}", ns, name);
+            Name = ns.IsEmpty() ? name.ToString() : string.Format("{0}:{1}", ns, name);
             Content = content.ToString();
         }
     }
