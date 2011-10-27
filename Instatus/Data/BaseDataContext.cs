@@ -480,12 +480,18 @@ namespace Instatus.Data
 
         public static IOrderedQueryable<T> SortPages<T>(this IQueryable<T> queryable, WebSort sort) where T : Page
         {
+            var like = WebVerb.Like.ToString();
+            
             switch (sort)
             {
                 case WebSort.Priority:
                     return queryable.OrderBy(p => p.Priority);
                 case WebSort.Alphabetical:
                     return queryable.OrderBy(p => p.Name);
+                case WebSort.Likes:
+                    return queryable.OrderByDescending(p => p.Activities.Where(a => a.Verb == like).Count());
+                case WebSort.Comments:
+                    return queryable.OrderByDescending(p => p.Comments.Count());
                 default:
                     return queryable.OrderByDescending(p => p.PublishedTime);
             }

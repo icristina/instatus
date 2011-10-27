@@ -75,6 +75,17 @@ namespace Instatus
             }
         }
 
+        public static MvcHtmlString ImageLink<T>(this HtmlHelper<T> html, string alternativeText, string contentPath, string actionName, string controllerName = null)
+        {
+            var urlHelper = new UrlHelper(html.ViewContext.RequestContext);
+            var markup = string.Format("<a href=\"{0}\"><img src=\"{1}\" alt=\"{2}\"/></a>", 
+                            urlHelper.Action(actionName, controllerName),
+                            urlHelper.Content(contentPath),
+                            alternativeText);
+
+            return new MvcHtmlString(markup);
+        }
+
         public static MvcHtmlString PageLink<T>(this HtmlHelper<T> html, string linkText, string slug)
         {
             var urlHelper = new UrlHelper(html.ViewContext.RequestContext);
@@ -127,13 +138,13 @@ namespace Instatus
 
         public static MvcForm BeginAuthenticatedForm<T>(this HtmlHelper<T> html, string actionName, string controllerName, string areaName)
         {
-            return html.BeginForm(actionName, controllerName, new { area = areaName }, FormMethod.Post, new { data_authenticate = true } );
+            return html.BeginForm(actionName, controllerName, new { area = areaName }, FormMethod.Post, new { data_auth_required = true } );
         }
 
         public static IDictionary<string, object> RequireAuthentication<T>(this HtmlHelper<T> html)
         {
             return new Dictionary<string, object>() {
-                { "data-authenticate", true }
+                { "data-auth-required", true }
             };
         }
 

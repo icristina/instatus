@@ -11,6 +11,8 @@ namespace Instatus.Web
         Priority,
         Alphabetical,
         Price,
+        Likes,
+        Comments,
         Custom
     }
 }
