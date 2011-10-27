@@ -132,7 +132,13 @@ namespace Instatus.Models
             foreach (var restriction in Restrictions.OrderBy(r => r.Priority))
             {
                 var restrictionEvaluator = restrictionEvaluators.First(s => s.Name == restriction.Name);
-                var restrictionResult = restrictionEvaluator.Evaluate(restrictionContext, restriction.Data);
+
+                if (restrictionEvaluator is IPayload)
+                {
+                    ((IPayload)restrictionEvaluator).Data = restriction.Data;
+                }
+
+                var restrictionResult = restrictionEvaluator.Evaluate(restrictionContext);
 
                 restrictionResults.Add(restrictionResult);
 
@@ -148,6 +154,39 @@ namespace Instatus.Models
             }
 
             return restrictionResults;
+        }
+
+        public Page ProcessIncludes(BaseDataContext dataContext = null)
+        {
+            if (Document == null && Document.Parts == null)
+                return this;
+
+            if (dataContext == null)
+                dataContext = BaseDataContext.Instance();
+
+            // can be fixed size array
+            Document.Parts = new List<WebPart>().Append(Document.Parts);
+
+            foreach (var include in Document.Parts.OfType<WebInclude>().ToList())
+            {
+                Document.Parts.Remove(include);
+                
+                var page = dataContext.GetPage<Page>(include.Uri);
+
+                if (page.Document == null)
+                    break;
+
+                if (page.Document.Body != null)
+                    Document.Parts.Add(new WebSection()
+                    {
+                        Body = page.Document.Body
+                    });
+
+                if (page.Document.Parts != null)
+                    Document.Parts.Append(page.Document.Parts);
+            }
+
+            return this;
         }
     }
 }

@@ -122,5 +122,12 @@ namespace Instatus
             
             return (T)Convert.ChangeType(collection[name], typeof(T));
         }
+
+        public static ICollection<T> Append<T>(this ICollection<T> set, IEnumerable<T> additions) {
+            foreach (var item in additions)
+                set.Add(item);
+
+            return set;
+        }
     }
 }

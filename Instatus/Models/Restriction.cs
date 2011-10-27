@@ -5,6 +5,7 @@ using System.Web;
 using Instatus.Web;
 using System.Web.Security;
 using Instatus.Data;
+using System.Runtime.Serialization;
 
 namespace Instatus.Models
 {
@@ -12,7 +13,7 @@ namespace Instatus.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Data { get; set; }
+        public byte[] Data { get; set; }
         public int Priority { get; set; }
 
         public virtual ICollection<Page> Pages { get; set; }
@@ -26,7 +27,7 @@ namespace Instatus.Models
     public interface IRestrictionEvaluator
     {
         string Name { get; }
-        RestrictionResult Evaluate(RestrictionContext context, string data);
+        RestrictionResult Evaluate(RestrictionContext context);
     }
 
     public class RestrictionResultCollection : List<RestrictionResult>
@@ -109,16 +110,28 @@ namespace Instatus.Models
         public Page Page { get; set; }
     }
 
-    public abstract class BaseRestrictionEvaluator : IRestrictionEvaluator
+    public abstract class BaseRestrictionEvaluator<T> : IRestrictionEvaluator, IPayload
     {
-        private string data;
-        private int priority;
-
         public string Name
         {
             get
             {
                 return GetType().Name;
+            }
+        }
+
+        public int Priority { get; set; }
+        public T Value { get; set; }
+
+        public byte[] Data
+        {
+            get
+            {
+                return Value.Serialize();
+            }
+            set
+            {
+                Value = value.Deserialize<T>();
             }
         }
         
@@ -127,22 +140,14 @@ namespace Instatus.Models
             return new Restriction()
             {
                 Name = Name,
-                Data = data,
-                Priority = priority
+                Data = Data,
+                Priority = Priority
             };
         }
 
-        public virtual RestrictionResult Evaluate(RestrictionContext context, string data)
+        public virtual RestrictionResult Evaluate(RestrictionContext context)
         {
             throw new NotImplementedException();
         }
-
-        public BaseRestrictionEvaluator(int priority, string data)
-        {
-            this.priority = priority;
-            this.data = data;
-        }
-
-        public BaseRestrictionEvaluator() { }
     }
 }

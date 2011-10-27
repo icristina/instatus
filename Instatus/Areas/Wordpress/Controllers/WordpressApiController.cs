@@ -205,7 +205,7 @@ namespace Instatus.Areas.Wordpress.Controllers
         }
 
         [ActionName("wp.newPage")]
-        public ActionResult Wordpress_NewPage(int blogid, int pageid, string username, string password, WordpressPage wordpressPage, bool publish)
+        public ActionResult Wordpress_NewPage(int blogid, string username, string password, WordpressPage wordpressPage, bool? publish)
         {
             Authenticate(username, password);
 

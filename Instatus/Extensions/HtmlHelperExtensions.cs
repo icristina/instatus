@@ -218,7 +218,7 @@ namespace Instatus
                         sb.Append(html.Action(webPartial.ActionName, new { viewName = webPartial.ViewName, controller = "home", area = "" }));
                     }
                 } 
-                else
+                else if (part is WebSection)
                 {
                     sb.Append(html.Partial(part.ViewName ?? "Section", part as WebSection));
                 }

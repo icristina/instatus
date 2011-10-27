@@ -88,6 +88,7 @@
     <Compile Include="Areas\Wordpress\WordpressAreaRegistration.cs" />
     <Compile Include="Commands\BanCommand.cs" />
     <Compile Include="Commands\SpamCommand.cs" />
+    <Compile Include="Data\IPayload.cs" />
     <Compile Include="Data\LimitedQueue.cs" />
     <Compile Include="Extensions\ControllerDescriptorExtensions.cs" />
     <Compile Include="Extensions\BooleanExtensions.cs" />
@@ -103,6 +104,7 @@
     <Compile Include="Services\IZipService.cs" />
     <Compile Include="Services\SimpleTemplateService.cs" />
     <Compile Include="Web\BaseHttpApplication.cs" />
+    <Compile Include="Web\WebInclude.cs" />
     <Compile Include="Web\HttpTraceModule.cs" />
     <Compile Include="Web\ExcludeConstraint.cs" />
     <Compile Include="Web\HtmlConstants.cs" />
