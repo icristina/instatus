@@ -17,6 +17,7 @@ namespace Instatus.Web
         SelectList Tags { get; }
         SelectList Filter { get; }
         SelectList Mode { get; }
+        SelectList Sort { get; }
         ICollection<IWebCommand> Commands { get; }
         bool Can(object action);
         SiteMapNodeCollection Navigation { get; }
@@ -32,6 +33,7 @@ namespace Instatus.Web
         public SelectList Tags { get; set; }
         public SelectList Filter { get; set; }
         public SelectList Mode { get; set; }
+        public SelectList Sort { get; set; }
         public ICollection<WebLink> Links { get; set; }
         public WebQuery Query { get; set; }
         public IList Permissions { get; set; }

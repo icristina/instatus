@@ -1,0 +1,13 @@
+﻿@model SelectList
+
+<ul id="@ViewData.ModelMetadata.PropertyName.ToCamelCase()">
+    @foreach (var item in Model)
+    {
+        <li>
+            @Html.ActionLinkOrText(item.Selected, item.Text, ViewContext.RouteData.ActionName(), 
+                ((WebQuery)ViewBag.Query)
+                    .ToRouteValueDictionary()
+                    .AddNonEmptyValue(ViewData.ModelMetadata.PropertyName.ToCamelCase(), item.Value ?? item.Text))
+        </li>
+    }
+</ul>
