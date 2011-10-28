@@ -14,5 +14,6 @@ namespace Instatus.Web
         public string Description { get; set; }
         public string Rel { get; set; }
         public string ContentType { get; set; }
+        public string Picture { get; set; }
     }
 }

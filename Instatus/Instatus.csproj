@@ -97,6 +97,7 @@
     <Compile Include="Extensions\StreamExtensions.cs" />
     <Compile Include="Models\Award.cs" />
     <Compile Include="Models\Brand.cs" />
+    <Compile Include="Models\Phrase.cs" />
     <Compile Include="Models\Directory.cs" />
     <Compile Include="Models\IUserGeneratedContent.cs" />
     <Compile Include="Models\Review.cs" />
@@ -104,6 +105,7 @@
     <Compile Include="Services\IZipService.cs" />
     <Compile Include="Services\SimpleTemplateService.cs" />
     <Compile Include="Web\BaseHttpApplication.cs" />
+    <Compile Include="Web\DbResourceReader.cs" />
     <Compile Include="Web\WebInclude.cs" />
     <Compile Include="Web\HttpTraceModule.cs" />
     <Compile Include="Web\ExcludeConstraint.cs" />

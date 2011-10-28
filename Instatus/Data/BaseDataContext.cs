@@ -45,6 +45,7 @@ namespace Instatus.Data
         public IDbSet<Taxonomy> Taxonomies { get; set; }
         public IDbSet<Log> Logs { get; set; }
         public IDbSet<Card> Cards { get; set; }
+        public IDbSet<Phrase> Phrases { get; set; }
 
         public User GetUser(IPrincipal user)
         {

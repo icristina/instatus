@@ -13,5 +13,6 @@ namespace Instatus.Models
         public virtual ICollection<Credential> Credentials { get; set; }
         public virtual ICollection<Taxonomy> Taxonomies { get; set; }
         public virtual ICollection<Subscription> Subscriptions { get; set; }
+        public virtual ICollection<Phrase> Phrases { get; set; }
     }
 }
