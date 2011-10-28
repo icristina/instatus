@@ -6,6 +6,7 @@ using System.Data.Entity;
 using System.Data.Objects;
 using System.Text;
 using System.Collections.Specialized;
+using Instatus.Web;
 
 namespace Instatus
 {
@@ -95,7 +96,7 @@ namespace Instatus
             {
                 if (i > 0)
                 {
-                    sb.Append(i < count - 1 ? ", " : " and ");
+                    sb.Append(i < count - 1 ? ", " : string.Format(" {0} ", WebLocalization.And));
                 }
 
                 sb.Append(list[i]);

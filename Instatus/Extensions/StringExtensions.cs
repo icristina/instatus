@@ -10,6 +10,7 @@ using System.Text.RegularExpressions;
 using System.Web.Helpers;
 using System.Text;
 using System.Web.Mvc;
+using Instatus.Web;
 
 namespace Instatus
 {
@@ -17,6 +18,11 @@ namespace Instatus
     {
         public static string DefaultLocale = "en-GB";
         public static StringComparison DefaultComparison = StringComparison.OrdinalIgnoreCase;
+
+        public static string ToLocalized(this string text)
+        {
+            return WebLocalization.Phrase(text);
+        }
 
         public static string ToSingular(this string text)
         {

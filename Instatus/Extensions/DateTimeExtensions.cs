@@ -77,26 +77,26 @@ namespace Instatus
             if (timespan.TotalDays < 1)
             {
                 if (timespan.TotalSeconds < 60)
-                    return "just now";
+                    return WebLocalization.JustNow;
 
                 if (timespan.TotalMinutes < 2)
-                    return "1 minute ago";
+                    return WebLocalization.OneMinuteAgo;
 
                 if (timespan.TotalMinutes < 60)
-                    return string.Format("{0} minutes ago", Math.Ceiling(timespan.TotalMinutes));
+                    return WebLocalization.MinutesAgo(Math.Ceiling(timespan.TotalMinutes));
 
                 if (timespan.TotalHours < 24)
-                    return string.Format("{0} hours ago", Math.Ceiling(timespan.TotalHours));
+                    return WebLocalization.HoursAgo(Math.Ceiling(timespan.TotalHours));
             }
             
             if (timespan.TotalDays < 2)
-                return "yesterday";
+                return WebLocalization.Yesterday;
 
             if (timespan.TotalDays < 7)
-                return string.Format("{0} days ago", Math.Ceiling(timespan.TotalDays));
+                return WebLocalization.DaysAgo(Math.Ceiling(timespan.TotalDays));
 
             if (timespan.TotalDays < 31)
-                return string.Format("{0} weeks ago", Math.Ceiling((double)timespan.TotalDays / 7));
+                return WebLocalization.WeeksAgo(Math.Ceiling((double)timespan.TotalDays / 7));
 
             if (date.Year == now.Year)
                 return date.ToString("MMM d");

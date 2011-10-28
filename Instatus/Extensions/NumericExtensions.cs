@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Instatus.Web;
 
 namespace Instatus
 {
@@ -47,19 +48,19 @@ namespace Instatus
                 case 11:
                 case 12:
                 case 13:
-                    return number.ToString() + "th";
+                    return WebLocalization.OrdinalFourth(number);
             }
 
             switch (number % 10)
             {
                 case 1:
-                    return number.ToString() + "st";
+                    return WebLocalization.OrdinalFirst(number);
                 case 2:
-                    return number.ToString() + "nd";
+                    return WebLocalization.OrdinalSecond(number);
                 case 3:
-                    return number.ToString() + "rd";
+                    return WebLocalization.OrdinalThird(number);
                 default:
-                    return number.ToString() + "th";
+                    return WebLocalization.OrdinalFourth(number);
             }
         }
     }

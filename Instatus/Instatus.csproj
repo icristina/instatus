@@ -188,6 +188,7 @@
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\Coupon.cs" />
     <Compile Include="Models\Offer.cs" />
+    <Compile Include="Web\WebLocalization.cs" />
     <Compile Include="Web\WebMedia.cs" />
     <Compile Include="Web\WebPart.cs" />
     <Compile Include="Web\WebPartial.cs" />

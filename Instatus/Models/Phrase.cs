@@ -22,9 +22,9 @@ namespace Instatus.Models
 
         public Phrase() { }
 
-        public Phrase(string name, string value, string locale = null)
+        public Phrase(object name, string value, string locale = null)
         {
-            Name = name;
+            Name = name.ToString();
             Value = value;
             Locale = locale;
         }

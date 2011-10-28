@@ -8,7 +8,7 @@ using System.Web.WebPages;
 namespace Instatus.Web
 {
     // http://haacked.com/archive/2011/02/21/changing-base-type-of-a-razor-view.aspx
-    public abstract class BaseViewPage<T> : WebViewPage<T>
+    public abstract class BaseViewPage<TViewModel> : WebViewPage<TViewModel>
     {
         public bool IsAdministrator
         {
@@ -24,6 +24,11 @@ namespace Instatus.Web
             {
                 return HttpContext.Current.ApplicationInstance.IsDebug();
             }
+        }
+
+        public class Localize : WebLocalization
+        {
+
         }
     }
 }
