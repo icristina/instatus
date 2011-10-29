@@ -4,12 +4,23 @@
     ViewBag.Title = Model.Name;
 }
 
-<h1>@Model.Name</h1>
-
-@Html.Content(Model.Description)
-
-@if (Model.Document != null)
-{
-    @Html.Content(Model.Document.Body)
-    @Html.Parts();
-}
+<div class="page">
+    <h1>@Model.Name</h1>
+    @if (!Model.Description.IsEmpty())
+    {
+        <div class="description">
+            @Html.Content(Model.Description)        
+        </div>
+    }
+    @if (Model.Document != null)
+    {
+        <div class="document">
+            @Html.Content(Model.Document.Body)
+            @Html.Parts()
+        </div>
+    }
+</div>
+<nav>
+    @Html.Partial("Branding")  
+    @Html.Action("Nav")    
+</nav>

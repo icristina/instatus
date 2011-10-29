@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.WebPages;
+using System.Dynamic;
 
 namespace Instatus.Web
 {
@@ -24,11 +25,6 @@ namespace Instatus.Web
             {
                 return HttpContext.Current.ApplicationInstance.IsDebug();
             }
-        }
-
-        public class Localize : WebLocalization
-        {
-
         }
     }
 }

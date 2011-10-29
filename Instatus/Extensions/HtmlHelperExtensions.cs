@@ -97,6 +97,14 @@ namespace Instatus
             return new MvcHtmlString(markup);
         }
 
+        public static MvcHtmlString SubmitButton<T>(this HtmlHelper<T> html, string text = null)
+        {
+            var tag = new TagBuilder("button");
+            tag.MergeAttribute("type", "submit");
+            tag.SetInnerText(text ?? WebPhrase.Submit);
+            return new MvcHtmlString(tag.ToString());
+        }
+
         public static MvcHtmlString PageLink<T>(this HtmlHelper<T> html, string linkText, string slug)
         {
             var urlHelper = new UrlHelper(html.ViewContext.RequestContext);

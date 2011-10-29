@@ -48,19 +48,19 @@ namespace Instatus
                 case 11:
                 case 12:
                 case 13:
-                    return WebLocalization.OrdinalFourth(number);
+                    return WebPhrase.OrdinalFourth(number);
             }
 
             switch (number % 10)
             {
                 case 1:
-                    return WebLocalization.OrdinalFirst(number);
+                    return WebPhrase.OrdinalFirst(number);
                 case 2:
-                    return WebLocalization.OrdinalSecond(number);
+                    return WebPhrase.OrdinalSecond(number);
                 case 3:
-                    return WebLocalization.OrdinalThird(number);
+                    return WebPhrase.OrdinalThird(number);
                 default:
-                    return WebLocalization.OrdinalFourth(number);
+                    return WebPhrase.OrdinalFourth(number);
             }
         }
     }

@@ -8,7 +8,7 @@
         {
             <li>
                 @Html.Tag("b", link.Title)
-                @Html.Anchor("View", WebPaths.Absolute(link.Uri))
+                @Html.Anchor(WebPhrase.View, WebPath.Absolute(link.Uri))
             </li>
         }
     </ul>

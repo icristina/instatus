@@ -21,7 +21,7 @@ namespace Instatus.Services
             var routeData = new RouteData();
 
             context.HttpContext = new HttpContextWrapper(new HttpContext(
-                new HttpRequest("", WebPaths.BaseUri.ToString(), ""),
+                new HttpRequest("", WebPath.BaseUri.ToString(), ""),
                 new HttpResponse(new StringWriter())
             ));
             

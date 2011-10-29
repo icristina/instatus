@@ -11,7 +11,7 @@ namespace Instatus
     {
         public static string ToLocalizedString(this Enum value)
         {
-            return WebLocalization.Phrase(value, value.ToDescriptiveString());
+            return WebPhrase.Localize(value, value.ToDescriptiveString());
         }
         
         public static string ToDescriptiveString(this Enum value)

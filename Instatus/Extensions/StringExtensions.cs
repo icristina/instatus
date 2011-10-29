@@ -21,7 +21,7 @@ namespace Instatus
 
         public static string ToLocalized(this string text)
         {
-            return WebLocalization.Phrase(text);
+            return WebPhrase.Localize(text);
         }
 
         public static string ToSingular(this string text)

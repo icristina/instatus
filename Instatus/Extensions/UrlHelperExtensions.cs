@@ -15,12 +15,12 @@ namespace Instatus
     {
         public static string Absolute(string virtualPath)
         {
-            return WebPaths.Absolute(virtualPath);
+            return WebPath.Absolute(virtualPath);
         }
         
         public static string Resize(this UrlHelper urlHelper, WebSize size, string virtualPath)
         {
-            return urlHelper.Content(WebPaths.Resize(size, virtualPath));
+            return urlHelper.Content(WebPath.Resize(size, virtualPath));
         }
 
         public static SiteMapNodeCollection SitemapNodes(this UrlHelper urlHelper, Func<ControllerDescriptor, bool> isNavigable = null, string actionName = "Index")

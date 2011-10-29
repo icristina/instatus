@@ -6,17 +6,17 @@
     var commandButton = new { target = "_blank" };    
 }
 
-@Html.ActionLink("Details", "Details", routeData, commandButton)
+@Html.ActionLink(WebPhrase.Details, "Details", routeData, commandButton)
 
 @if (Model.Can(WebAction.Edit))
 {
-    @Html.ActionLink("Edit", "Edit", routeData, commandButton)
+    @Html.ActionLink(WebPhrase.Edit, "Edit", routeData, commandButton)
 }
                     
 @if (Model.Can(WebAction.Delete))
 {
     using (Html.BeginForm("Delete", ViewContext.RouteData.ControllerName(), routeData))
     {
-        <button type="submit">Delete</button>
+        <button type="submit">@WebPhrase.Edit</button>
     }
 }

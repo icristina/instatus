@@ -1,20 +1,20 @@
-﻿@model Instatus.Web.IWebView
+﻿@model IWebView
 
 <ul>
     <li>
         @if (Model.Tags.SelectedValue.IsEmpty())
         {
-            @:All tags
+            @WebPhrase.All
         }
         else
         {
-            @Html.ActionLink("All tags", "Index")
+            @Html.ActionLink(WebPhrase.All, "Index")
         }
         <ul>
             @foreach (var tag in Model.Tags)
             {
                 <li>
-                    @Html.ActionLinkOrText(tag.Selected, tag.Text, IndexAction, Model.Query.WithTag(tag.Value).ToRouteValueDictionary())
+                    @Html.ActionLinkOrText(tag.Selected, tag.Text, ViewContext.RouteData.ActionName(), Model.Query.WithTag(tag.Value).ToRouteValueDictionary())
                 </li>
             }            
         </ul>

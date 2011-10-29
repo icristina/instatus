@@ -10,8 +10,27 @@ namespace Instatus.Web
         Visitor,
         Member,
         Moderator,
+        Author,
         Editor,
         Administrator,
         Developer
+    }
+
+    public static class WebRoleExtensions
+    {
+        public static WebAction[] ToPermissions(this WebRole role)
+        {
+            switch (role)
+            {
+                case WebRole.Member:
+                    return new WebAction[] { WebAction.Index, WebAction.Details };
+                case WebRole.Author:
+                    return new WebAction[] { WebAction.Index, WebAction.Details, WebAction.Edit, WebAction.Create };
+                case WebRole.Editor:
+                    return new WebAction[] { WebAction.Index, WebAction.Details, WebAction.Edit, WebAction.Create, WebAction.Delete };
+                default:
+                    return null;
+            }
+        }
     }
 }

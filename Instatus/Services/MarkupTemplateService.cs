@@ -18,7 +18,7 @@ namespace Instatus.Services
 
             // absolute paths
             markup = Regex.Replace(markup, "~/[^\"]+", delegate(Match m) {
-                return WebPaths.Absolute(m.Value);
+                return WebPath.Absolute(m.Value);
             });
 
             // require block level container

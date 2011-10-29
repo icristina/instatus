@@ -96,7 +96,7 @@ namespace Instatus
             {
                 if (i > 0)
                 {
-                    sb.Append(i < count - 1 ? ", " : string.Format(" {0} ", WebLocalization.And));
+                    sb.Append(i < count - 1 ? ", " : string.Format(" {0} ", WebPhrase.And));
                 }
 
                 sb.Append(list[i]);

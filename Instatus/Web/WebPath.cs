@@ -7,7 +7,7 @@ using Instatus.Data;
 
 namespace Instatus.Web
 {
-    public static class WebPaths
+    public static class WebPath
     {
         private static Uri baseUri;
 

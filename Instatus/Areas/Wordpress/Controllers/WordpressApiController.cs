@@ -46,8 +46,8 @@ namespace Instatus.Areas.Wordpress.Controllers
                     Blogid = a.Id.ToString(),
                     BlogName = a.Name,
                     IsAdmin = true,
-                    Url = WebPaths.BaseUri.ToString(),
-                    Xmlrpc = WebPaths.BaseUri.ToString()
+                    Url = WebPath.BaseUri.ToString(),
+                    Xmlrpc = WebPath.BaseUri.ToString()
                 })
                 .ToArray();
 

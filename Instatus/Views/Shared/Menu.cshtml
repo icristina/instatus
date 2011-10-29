@@ -19,7 +19,7 @@
 <span id="actions">
     @if (Model.Can(WebAction.Create))
     {
-        @Html.ActionLink("Create", "Create", null, new { target = "_blank" })
+        @Html.ActionLink(WebPhrase.Create, "Create", null, new { target = "_blank" })
     }
 </span>
 @if (!Model.Filter.IsEmpty())
@@ -27,7 +27,7 @@
     using (Html.BeginNamedForm("filter"))
     {
         @Html.DropDownList("filter", Model.Filter)
-        <button type="submit">Filter</button>
+        @Html.SubmitButton(WebPhrase.Filter)
     }
 }  
 @if (!Model.Mode.IsEmpty())
@@ -35,6 +35,6 @@
     using (Html.BeginNamedForm("mode"))
     {
         @Html.DropDownList("mode", Model.Mode)
-        <button type="submit">Mode</button>
+        @Html.SubmitButton(WebPhrase.Mode)
     }
 } 

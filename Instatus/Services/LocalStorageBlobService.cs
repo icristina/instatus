@@ -26,7 +26,7 @@ namespace Instatus.Services
 
         private string GetRelativePath(string contentType, string slug)
         {
-            var extension = WebContentTypes.GetExtension(contentType);
+            var extension = WebMimeType.GetExtension(contentType);
             var fileName = string.Format("{0}.{1}", slug ?? Generator.TimeStamp(), extension);
             return BasePath + fileName;
         }

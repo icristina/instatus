@@ -188,7 +188,7 @@
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\Coupon.cs" />
     <Compile Include="Models\Offer.cs" />
-    <Compile Include="Web\WebLocalization.cs" />
+    <Compile Include="Web\WebPhrase.cs" />
     <Compile Include="Web\WebMedia.cs" />
     <Compile Include="Web\WebPart.cs" />
     <Compile Include="Web\WebPartial.cs" />
@@ -205,7 +205,7 @@
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\Restriction.cs" />
     <Compile Include="Models\Schedule.cs" />
-    <Compile Include="Web\WebPaths.cs" />
+    <Compile Include="Web\WebPath.cs" />
     <Compile Include="Web\WebSection.cs" />
     <Compile Include="Models\Tag.cs" />
     <Compile Include="Models\User.cs" />
@@ -369,6 +369,7 @@
     <None Include="README.md" />
     <EmbeddedResource Include="Views\Shared\Entry.cshtml" />
     <EmbeddedResource Include="Views\Shared\DisplayTemplates\LinkList.cshtml" />
+    <EmbeddedResource Include="Views\Shared\Branding.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

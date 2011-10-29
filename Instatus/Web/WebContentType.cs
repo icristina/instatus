@@ -27,7 +27,7 @@ namespace Instatus.Web
         Xml
     }
 
-    public static class WebContentTypes
+    public static class WebMimeType
     {   
         private class Definition {
             public WebContentType ContentType { get; set; }

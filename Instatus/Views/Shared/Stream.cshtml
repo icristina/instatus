@@ -13,10 +13,10 @@
             <a href="@Url.RouteUrl(Instatus.Areas.Microsite.MicrositeAreaRegistration.PageRouteName, new { slug = page.Slug })">
                 <h1>@page.Name</h1>
                 <dl>
-                    <dd>Published</dd>
+                    <dd>@WebPhrase.Published</dd>
                     <dt>@page.CreatedTime.ToString()</dt>
                     @if(page.User != null) {
-                        <dt>Author</dt>
+                        <dt>@WebPhrase.Author</dt>
                         <dd>@page.User.FullName</dd>
                     }
                 </dl>      

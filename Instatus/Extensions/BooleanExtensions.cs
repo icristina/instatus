@@ -11,7 +11,7 @@ namespace Instatus
     {
         public static string ToDescriptiveString(this bool value)
         {
-            return value ? WebLocalization.Yes : WebLocalization.No;
+            return value ? WebPhrase.Yes : WebPhrase.No;
         }
     }
 }
