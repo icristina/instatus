@@ -1,13 +1,12 @@
 ﻿@model IWebView
 
 @{
-    var sectionAttributes = new Dictionary<string, object>();
+    Dictionary<string, object> sectionAttributes = null;
 
     if (ViewContext.IsChildAction && ViewContext.ParentActionViewContext.ViewData.Model is WebSection) {
-        var webSection = (WebSection)ViewContext.ParentActionViewContext.ViewData.Model;
-
-        sectionAttributes.Add("id", webSection.Parameters.GetHtmlId());
-        sectionAttributes.Add("class", webSection.Parameters.GetHtmlClass());   
+        sectionAttributes = ((WebSection)ViewContext.ParentActionViewContext.ViewData.Model)
+            .Parameters
+            .GetHtmlAttributes();
     }    
 }
 

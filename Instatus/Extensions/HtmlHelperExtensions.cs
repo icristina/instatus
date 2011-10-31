@@ -139,6 +139,9 @@ namespace Instatus
 
         public static MvcHtmlString Attr<T>(this HtmlHelper<T> html, IDictionary<string, object> attributes)
         {
+            if (attributes == null)
+                return null;
+            
             var markup = new StringBuilder();
 
             foreach (var attr in attributes)

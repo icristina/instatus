@@ -1,13 +1,24 @@
 ﻿@model WebSection
 
-@{
-    var webLink = Model.Links.First();   
+@helper Figure(WebLink webLink, Dictionary<string, object> attributes) {
+    <figure @Html.Attr(attributes)>
+        <img src="@WebPath.Absolute(webLink.Uri)" />
+        <figcaption>
+            @Html.Tag("b", webLink.Title)
+            @webLink.Description
+        </figcaption>
+    </figure>    
 }
 
-<figure>
-    <img src="@WebPath.Absolute(webLink.Uri)" />
-    <figcaption>
-        @Html.Tag("b", webLink.Title)
-        @webLink.Description
-    </figcaption>
-</figure>
+@if(!Model.Body.IsEmpty()) {
+    <section @Html.Attr(Model.Parameters.GetHtmlAttributes())>
+        @Figure(Model.Links.First(), null)
+        <div>
+            @Html.Tag("h1", Model.Heading)
+            @Html.Tag("h2", Model.SubHeading)
+            @Html.Content(Model.Body)
+        </div>
+    </section>
+} else {
+    @Figure(Model.Links.First(), Model.Parameters.GetHtmlAttributes())
+}

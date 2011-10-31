@@ -1,13 +1,6 @@
 ﻿@model WebSection
 
-@{
-    var sectionAttributes = new Dictionary<string, object>() {
-        { "id", Model.Parameters.GetHtmlId() },
-        { "class", Model.Parameters.GetHtmlClass() }    
-    };
-}
-
-<section @Html.Attr(sectionAttributes)>
+<section @Html.Attr(Model.Parameters.GetHtmlAttributes())>
     @Html.Tag("h1", Model.Heading)
     @Html.Tag("h2", Model.SubHeading)
     @Html.Content(Model.Body)

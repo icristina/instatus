@@ -32,6 +32,14 @@ namespace Instatus.Web
 
     public static class WebParameterExtensions
     {
+        public static Dictionary<string, object> GetHtmlAttributes(this List<WebParameter> parameters)
+        {
+            return new Dictionary<string, object>() {
+                { "id", parameters.GetHtmlId() },
+                { "class", parameters.GetHtmlClass() }    
+            };
+        }
+        
         public static string GetHtmlId(this List<WebParameter> parameters)
         {
             return parameters.GetNamespacedParameter(WebNamespace.Html, "id");
