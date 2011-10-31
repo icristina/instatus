@@ -39,7 +39,7 @@ namespace Instatus.Web
 
         public static string GetHtmlClass(this List<WebParameter> parameters)
         {
-            return parameters.GetNamespacedParameter(WebNamespace.OpenGraph, "class");
+            return parameters.GetNamespacedParameter(WebNamespace.Html, "class");
         }
 
         public static void SetNamespacedParameter(this List<WebParameter> parameters, string ns, string name, string content)
