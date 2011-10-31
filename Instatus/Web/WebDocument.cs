@@ -14,15 +14,69 @@ namespace Instatus.Web
         public string Description { get; set; }
         public string Body { get; set; }
 
-        public ICollection<WebPart> Parts { get; set; }
-        public ICollection<WebLink> Links { get; set; }
-        
-        public WebMetadata Metadata { get; set; }
+        private List<WebLink> links;
 
-        public WebDocument()
+        public List<WebLink> Links {
+            get
+            {
+                if (links == null)
+                    links = new List<WebLink>();
+
+                return links;
+            }
+            set
+            {
+                links = value;
+            }
+        }
+
+        private List<WebPart> parts;
+
+        public List<WebPart> Parts
         {
-            Parts = new List<WebPart>();
-            Links = new List<WebLink>();
+            get
+            {
+                if (parts == null)
+                    parts = new List<WebPart>();
+
+                return parts;
+            }
+            set
+            {
+                parts = value;
+            }
+        }
+        
+        private List<WebParameter> parameters;
+        
+        public List<WebParameter> Parameters {
+            get
+            {
+                if (parameters == null)
+                    parameters = new List<WebParameter>();
+
+                return parameters;
+            }
+            set
+            {
+                parameters = value;
+            }
+        }
+
+        private WebMetadata metadata;
+
+        public WebMetadata Metadata { 
+            get 
+            {
+                if (metadata == null)
+                    metadata = new WebMetadata();
+            
+                return metadata;
+            }
+            set
+            {
+                metadata = value;
+            }
         }
     }
 }

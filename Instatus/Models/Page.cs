@@ -164,9 +164,6 @@ namespace Instatus.Models
             if (dataContext == null)
                 dataContext = BaseDataContext.Instance();
 
-            // can be fixed size array
-            Document.Parts = new List<WebPart>().Append(Document.Parts);
-
             foreach (var include in Document.Parts.OfType<WebInclude>().ToList())
             {
                 Document.Parts.Remove(include);
@@ -179,6 +176,8 @@ namespace Instatus.Models
                 if (page.Document.Body != null)
                     Document.Parts.Add(new WebSection()
                     {
+                        Heading = page.Document.Title,
+                        Abstract = page.Document.Description,
                         Body = page.Document.Body
                     });
 

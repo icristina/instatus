@@ -137,6 +137,18 @@ namespace Instatus
             return html.Init(webProvider.ToString());
         }
 
+        public static MvcHtmlString Attr<T>(this HtmlHelper<T> html, IDictionary<string, object> attributes)
+        {
+            var markup = new StringBuilder();
+
+            foreach (var attr in attributes)
+            {
+                markup.Append(attr.Value.ToAttr(attr.Key));
+            }
+
+            return new MvcHtmlString(markup.ToString());
+        }
+
         public static MvcHtmlString Attr<T>(this HtmlHelper<T> html, string attributeName, object value)
         {
             return value.ToAttr(attributeName);
@@ -231,39 +243,10 @@ namespace Instatus
 
             foreach (var part in page.Document.Parts.Where(p => p.Zone == zoneName))
             {
-                if (part is WebStream)
-                {
-                    sb.Append(html.Stream(part as WebStream));
-                }
-                else if (part is WebPartial)
-                {
-                    var webPartial = (WebPartial)part;
-
-                    if (webPartial.ActionName.IsEmpty())
-                    {
-                        sb.Append(html.Partial(webPartial.ViewName));
-                    }
-                    else
-                    {
-                        sb.Append(html.Action(webPartial.ActionName, new { viewName = webPartial.ViewName, controller = "home", area = "" }));
-                    }
-                } 
-                else if (part is WebSection)
-                {
-                    sb.Append(html.Partial(part.ViewName ?? "Section", part as WebSection));
-                }
+                sb.Append(html.Partial("Part", part));
             }
 
             return new MvcHtmlString(sb.ToString());
-        }
-
-        public static MvcHtmlString Stream<T>(this HtmlHelper<T> html, WebStream stream)
-        {
-            var routeData = stream.Query.ToRouteValueDictionary().AddRequestParams();
-
-            routeData.Add("viewName", stream.ViewName);
-
-            return html.Action("Stream", routeData);
         }
 
         public static MvcHtmlString Paging<T>(this HtmlHelper<T> html, IWebView webView = null, string seperator = "", string absolutePath = "")

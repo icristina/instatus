@@ -12,15 +12,56 @@ namespace Instatus.Web
         public string SubHeading { get; set; }
         public string Abstract { get; set; }
         public string Body { get; set; }
-        public ICollection<WebLink> Links { get; set; }
-        public ICollection<WebPart> Parts { get; set; }
-        public ICollection<WebParameter> Parameters { get; set; }
 
-        public WebSection()
+        private List<WebLink> links;
+
+        public List<WebLink> Links
         {
-            Links = new List<WebLink>();
-            Parts = new List<WebPart>();
-            Parameters = new List<WebParameter>();
+            get
+            {
+                if (links == null)
+                    links = new List<WebLink>();
+
+                return links;
+            }
+            set
+            {
+                links = value;
+            }
+        }
+
+        private List<WebPart> parts;
+
+        public List<WebPart> Parts
+        {
+            get
+            {
+                if (parts == null)
+                    parts = new List<WebPart>();
+
+                return parts;
+            }
+            set
+            {
+                parts = value;
+            }
+        }
+
+        private List<WebParameter> parameters;
+
+        public List<WebParameter> Parameters
+        {
+            get
+            {
+                if (parameters == null)
+                    parameters = new List<WebParameter>();
+
+                return parameters;
+            }
+            set
+            {
+                parameters = value;
+            }
         }
     }
 }
