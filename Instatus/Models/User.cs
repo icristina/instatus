@@ -66,5 +66,10 @@ namespace Instatus.Models
         {
             FullName = fullName;
         }
+
+        public static User From(object entry)
+        {
+            return entry is IUserGeneratedContent ? ((IUserGeneratedContent)entry).User : (User)entry;
+        }
     }
 }

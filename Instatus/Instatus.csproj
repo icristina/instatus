@@ -87,6 +87,8 @@
     <Compile Include="Areas\Wordpress\Controllers\WordpressApiController.cs" />
     <Compile Include="Areas\Wordpress\WordpressAreaRegistration.cs" />
     <Compile Include="Commands\BanCommand.cs" />
+    <Compile Include="Commands\AwardCommand.cs" />
+    <Compile Include="Commands\StatusCommand.cs" />
     <Compile Include="Commands\SpamCommand.cs" />
     <Compile Include="Data\IPayload.cs" />
     <Compile Include="Data\LimitedQueue.cs" />
