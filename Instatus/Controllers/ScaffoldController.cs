@@ -116,6 +116,21 @@ namespace Instatus.Controllers
             return View(viewModel);
         }
 
+        public virtual ICollection<IWebCommand> GetCommands()
+        {
+            return new List<IWebCommand>();
+        }
+
+        [HttpPost]
+        public ActionResult Command(TKey id, string commandName)
+        {
+            var model = set.Find(id);
+            var command = GetCommands().First(c => c.Name == commandName);
+            var result = command.Execute(model, Url, RouteData, Request.Params);
+           
+            return RedirectToAction("Index");
+        }
+
         [HttpPost]
         public ActionResult Delete(TKey id)
         {

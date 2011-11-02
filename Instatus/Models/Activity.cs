@@ -10,7 +10,7 @@ using System.Web.Mvc;
 
 namespace Instatus.Models
 {
-    [KnownType(typeof(Achievement))]
+    [KnownType(typeof(Award))]
     [KnownType(typeof(Highscore))]
     [KnownType(typeof(Checkin))]
     [KnownType(typeof(Coupon))]

@@ -10,6 +10,7 @@ namespace Instatus.Web
 {
     public interface IWebCommand
     {
+        string Name { get; }
         WebLink GetLink(dynamic viewModel, UrlHelper urlHelper);
         bool Execute(dynamic viewModel, UrlHelper urlHelper, RouteData routeData, NameValueCollection requestParams);
     }

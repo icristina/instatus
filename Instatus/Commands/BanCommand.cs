@@ -8,19 +8,30 @@ using Instatus.Web;
 using Instatus.Models;
 using System.Web.Routing;
 using System.Collections.Specialized;
+using Instatus;
 
 namespace Instatus.Commands
 {
     public class BanCommand : IWebCommand
     {
+        public string Name
+        {
+            get
+            {
+                return "Ban";
+            }
+        }
+        
         public WebLink GetLink(dynamic viewModel, UrlHelper urlHelper)
         {
-            if ((viewModel.Status as string).Match(WebStatus.Banned))
+            User user = User.From(viewModel);
+                       
+            if (user.Status.Match(WebStatus.Banned))
             {
                 return new WebLink()
                 {
                     Title = "Unmark as banned",
-                    Uri = urlHelper.Action("Command", new { id = viewModel.Id, status = WebStatus.Approved })
+                    Uri = urlHelper.Action("Command", new { id = viewModel.Id, commandName = Name, commandValue = WebStatus.Approved })
                 };
             }
             else
@@ -28,19 +39,20 @@ namespace Instatus.Commands
                 return new WebLink()
                 {
                     Title = "Mark as banned",
-                    Uri = urlHelper.Action("Command", new { id = viewModel.Id, status = WebStatus.Banned })
+                    Uri = urlHelper.Action("Command", new { id = viewModel.Id, commandName = Name, commandValue = WebStatus.Banned })
                 };
             }
         }
 
         public bool Execute(dynamic viewModel, UrlHelper urlHelper, RouteData routeData, NameValueCollection requestParams)
         {
-            var id = routeData.Id();
-            var status = requestParams.Value<WebStatus>("status");
+            var user = User.From(viewModel);
+            var userId = user != null ? user.Id : routeData.Id();
+            var status = requestParams.Value<WebStatus>("commandValue");
             
             using (var db = BaseDataContext.Instance())
             {
-                db.Users.Find(id).Status = status.ToString();
+                db.Users.Find(userId).Status = status.ToString();
                 db.SaveChanges();
             }
 

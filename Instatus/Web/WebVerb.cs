@@ -24,7 +24,7 @@ namespace Instatus.Web
         Share,
         Subscribe,
 
-        // community level
+        // community
         Reputation,
 
         // gaming
