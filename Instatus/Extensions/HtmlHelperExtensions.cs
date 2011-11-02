@@ -16,10 +16,10 @@ namespace Instatus
 {
     public static class HtmlHelperExtensions
     {
-        public static MvcForm BeginMultipartForm<T>(this HtmlHelper<T> html)
+        public static MvcForm BeginMultipartForm<T>(this HtmlHelper<T> html, string actionName = null, string controllerName = null)
         {
             var routeData = html.ViewContext.RouteData;
-            return html.BeginForm(routeData.ActionName(), routeData.ControllerName(), FormMethod.Post, new { enctype = "multipart/form-data" }); 
+            return html.BeginForm(actionName ?? routeData.ActionName(), controllerName ?? routeData.ControllerName(), FormMethod.Post, new { enctype = "multipart/form-data" }); 
         }
         
         public static MvcHtmlString ReturnUrl<T>(this HtmlHelper<T> html, string returnUrl = null)

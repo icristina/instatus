@@ -112,5 +112,10 @@ namespace Instatus.Web
         {
             return IsInCategory(mimeType, Category.Document);
         }
+
+        public static WebContentType GetContentType(string mimeType)
+        {
+            return definitions.First(d => d.MimeTypes.Any(m => m == mimeType)).ContentType;
+        }
     }
 }

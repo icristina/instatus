@@ -3,6 +3,7 @@
 <section @Html.Attr(Model.Parameters.GetHtmlAttributes())>
     @Html.Tag("h1", Model.Heading)
     @Html.Tag("h2", Model.SubHeading)
+    @Html.Content(Model.Body)
     <ul>
         @foreach (var link in Model.Links)
         {
