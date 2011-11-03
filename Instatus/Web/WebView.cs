@@ -90,6 +90,12 @@ namespace Instatus.Web
             Query = query;
         }
 
+        public WebView(IQueryable<Record<T, WebMetrics>> queryable, Func<Record<T, WebMetrics>, T> projection, WebQuery query)
+            : base(queryable, projection, query.PageSize, query.PageIndex, query.CountTotal)
+        {
+            Query = query;
+        }
+
         private SelectList CreateSelectList<TSelectItem>(IEnumerable<TSelectItem> data, object selectedValue = null, IEnumerable<string> labels = null, string allLabel = "All", string prefix = "") {
             var items = new List<WebParameter>();
 

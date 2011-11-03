@@ -89,7 +89,7 @@ namespace Instatus
         public static MvcHtmlString ImageButton<T>(this HtmlHelper<T> html, string alternativeText, string contentPath, string type = "submit")
         {
             var urlHelper = new UrlHelper(html.ViewContext.RequestContext);
-            var markup = string.Format("<button type=\"{0}\"><img src=\"{1}\" alt=\"{2}\"/></a>",
+            var markup = string.Format("<button type=\"{0}\"><img src=\"{1}\" alt=\"{2}\"/></button>",
                             type,
                             urlHelper.Content(contentPath),
                             alternativeText);

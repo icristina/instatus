@@ -166,5 +166,11 @@ namespace Instatus
         {           
             return stringBuilder.Append(" ");
         }
+
+        public static string TrimOrNull(this string text, int minLength = 1)
+        {
+            text = text.Trim();
+            return text.Length < minLength ? null : text;
+        }
     }
 }

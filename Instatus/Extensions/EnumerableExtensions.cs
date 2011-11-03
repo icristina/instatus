@@ -7,6 +7,7 @@ using System.Data.Objects;
 using System.Text;
 using System.Collections.Specialized;
 using Instatus.Web;
+using Instatus.Models;
 
 namespace Instatus
 {
@@ -129,6 +130,19 @@ namespace Instatus
                 set.Add(item);
 
             return set;
+        }
+
+        public static IDbSet<T> Append<T>(this IDbSet<T> set, IEnumerable<T> additions) where T : class
+        {
+            foreach (var item in additions)
+                set.Add(item);
+
+            return set;
+        }
+
+        public static IEnumerable<T> ByRecency<T>(this IEnumerable<T> content) where T : IUserGeneratedContent
+        {
+            return content.OrderByDescending(c => c.CreatedTime);
         }
     }
 }

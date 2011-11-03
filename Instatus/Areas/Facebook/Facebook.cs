@@ -49,6 +49,11 @@ namespace Instatus.Areas.Facebook
             return string.Format("https://graph.facebook.com/{0}/picture?type={1}", resource, size.ToString().ToLower());
         }
 
+        public static string Profile(object resource)
+        {
+            return string.Format("https://www.facebook.com/{0}", resource);
+        }
+
         public static dynamic Request(object resource, string accessToken = null, object connection = null)
         {
             var response = InternalRequest(resource, accessToken, connection);

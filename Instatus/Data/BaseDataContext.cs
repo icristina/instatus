@@ -147,6 +147,46 @@ namespace Instatus.Data
             return Tags.Where(t => t.Taxonomy.Name == taxonomyName).OrderBy(t => t.Name);
         }
 
+        public bool Like(int id)
+        {
+            var user = GetCurrentUser();
+
+            if (user == null)
+                return false;
+
+            var userId = user.Id;
+            var like = WebVerb.Like.ToString();
+
+            if(Activities.Any(a => a.Verb == like && a.UserId == userId && a.ParentId == id))
+                return false;
+
+            Activities.Add(new Activity()
+            {
+                Verb = like,
+                UserId = userId,
+                ParentId = id
+            });
+
+            return true;
+        }
+
+        public bool Comment(int id, string message)
+        {
+            var user = GetCurrentUser();
+
+            if (user == null)
+                return false;
+
+            Messages.Add(new Comment()
+            {
+                PageId = id,
+                User = user,
+                Body = message
+            });
+
+            return true;
+        }
+
         public IOrderedQueryable<Activity> GetActivities(WebExpression filter)
         {
             return this

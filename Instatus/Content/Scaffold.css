@@ -46,3 +46,18 @@ textarea
 {
     height: 150px;
 }
+
+col.id 
+{
+    width: 10%;
+}
+
+col.description 
+{
+    width: 50%;
+}
+
+col.actions 
+{
+    width: 40%;
+}

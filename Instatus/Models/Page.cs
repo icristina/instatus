@@ -90,7 +90,7 @@ namespace Instatus.Models
 
         public override string ToString()
         {
-            return Name;
+            return Name ?? Description;
         }
 
         public Page()
