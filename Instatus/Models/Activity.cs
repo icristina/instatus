@@ -36,8 +36,9 @@ namespace Instatus.Models
         public int? ParentId { get; set; }
 
         public virtual ICollection<Comment> Comments { get; set; }
-        public virtual ICollection<Activity> Related { get; set; }
         public virtual ICollection<Log> Logs { get; set; }
+
+        public virtual ICollection<Activity> Related { get; set; }
         public virtual ICollection<Activity> ParentActivities { get; set; }
 
         [NotMapped]

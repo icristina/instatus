@@ -59,7 +59,12 @@ namespace Instatus.Commands
             
             using (var db = BaseDataContext.Instance())
             {
-                db.SetStatus<T>(id, status);
+                var entity = db.Set<T>().Find(id);
+                var originalValue = entity.Status;
+
+                entity.Status = status.ToString();
+
+                db.LogChange(entity, "Status", originalValue, status);
                 db.SaveChanges();
             }
 

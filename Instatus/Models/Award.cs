@@ -8,6 +8,9 @@ namespace Instatus.Models
 {
     public class Award : Activity
     {
+        public virtual Achievement Achievement { get; set; }
+        public int? AchievementId { get; set; }        
+        
         public Award()
             : base()
         {

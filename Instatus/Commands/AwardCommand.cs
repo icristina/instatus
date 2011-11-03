@@ -26,16 +26,17 @@ namespace Instatus.Commands
 
         public WebLink GetLink(dynamic viewModel, UrlHelper urlHelper)
         {
-            User user = User.From(viewModel);
-            var award = WebVerb.Award.ToString();
+            User user = User.From(viewModel); 
 
             using (var db = BaseDataContext.Instance())
             {
-                if (!db.Activities.Any(a => a.UserId == user.Id && a.Verb == award && a.Parent.Slug == achievementSlug))
+                var achievement = db.GetPage<Achievement>(achievementSlug);
+                
+                if (!db.Activities.OfType<Award>().Any(a => a.UserId == user.Id && a.AchievementId == achievement.Id))
                 {
                     return new WebLink()
                     {
-                        Title = "Award",
+                        Title = WebPhrase.Flag(achievement.Name),
                         Uri = urlHelper.Action("Command", new { id = viewModel.Id, commandName = Name, commandValue = true })
                     };
                 }
@@ -43,7 +44,7 @@ namespace Instatus.Commands
                 {
                     return new WebLink()
                     {
-                        Title = "Remove award",
+                        Title = WebPhrase.RemoveFlag(achievement.Name),
                         Uri = urlHelper.Action("Command", new { id = viewModel.Id, commandName = Name, commandValue = false })
                     };
                 }                
@@ -66,17 +67,28 @@ namespace Instatus.Commands
                     if (user.Activities == null)
                         user.Activities = new List<Activity>();
 
-                    user.Activities.Add(new Award() {
-                        Parent = achievement
-                    });
+                    var award = new Award()
+                    {
+                        Achievement = achievement
+                    };
+
+                    if (viewModel is Page)
+                    {
+                        award.ParentId = viewModel.Id;
+                    }
+
+                    user.Activities.Add(award);
+
+                    db.LogChange(user, "awarded " + achievement.Name);
                 } else {
                     var award = db
                         .Activities
                         .OfType<Award>()
-                        .Where(a => a.Parent.Slug == achievementSlug)
+                        .Where(a => a.Achievement.Slug == achievementSlug)
                         .OrderByDescending(a => a.CreatedTime)
                         .FirstOrDefault();
 
+                    db.LogChange(user, "removed award " + award.Achievement.Name);
                     db.MarkDeleted(award);
                 }
                 

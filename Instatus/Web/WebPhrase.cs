@@ -65,7 +65,9 @@ namespace Instatus.Web
             OrdinalThird,
             OrdinalFourth,
             Visit,
-            FromAToB
+            FromAToB,
+            Flag,
+            RemoveFlag
         }        
         
         public static string JustNow { get { return Localize(Common.JustNow, "just now"); } }
@@ -114,6 +116,8 @@ namespace Instatus.Web
         public static string OrdinalFourth(int value) { return Format(FormatString.OrdinalFourth, "{0}th", value); }
         public static string Visit(string name) { return Format(FormatString.Visit, "Visit {0}", name); }
         public static string FromAToB(string placeA, string placeB) { return Format(FormatString.FromAToB, "from {0} to {1}", placeA, placeB); }
+        public static string Flag(string name) { return Format(FormatString.Flag, "Mark as {0}", name); }
+        public static string RemoveFlag(string name) { return Format(FormatString.RemoveFlag, "Unmark as {0}", name); }
 
         public static string Localize(object phraseOrKey, string defaultPhrase = null)
         {

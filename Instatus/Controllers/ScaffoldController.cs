@@ -39,7 +39,8 @@ namespace Instatus.Controllers
         }
 
         public virtual void ConfigureWebView(WebView<TModel> webView) {
-
+            webView.Navigation = Url.SitemapNodes();
+            webView.Commands = GetCommands();
         }
 
         public virtual void AttachContext(TViewModel viewModel)
@@ -121,14 +122,13 @@ namespace Instatus.Controllers
             return new List<IWebCommand>();
         }
 
-        [HttpPost]
         public ActionResult Command(TKey id, string commandName)
         {
             var model = set.Find(id);
             var command = GetCommands().First(c => c.Name == commandName);
             var result = command.Execute(model, Url, RouteData, Request.Params);
            
-            return RedirectToAction("Index");
+            return RedirectToIndex();
         }
 
         [HttpPost]
@@ -137,7 +137,7 @@ namespace Instatus.Controllers
             var model = set.Find(id);
             set.Remove(model);
             SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToIndex();
         }
 
         public virtual void CreateSet()

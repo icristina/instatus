@@ -30,7 +30,7 @@ namespace Instatus.Commands
             {
                 return new WebLink()
                 {
-                    Title = "Unmark as banned",
+                    Title = WebPhrase.RemoveFlag("banned"),
                     Uri = urlHelper.Action("Command", new { id = viewModel.Id, commandName = Name, commandValue = WebStatus.Approved })
                 };
             }
@@ -38,7 +38,7 @@ namespace Instatus.Commands
             {
                 return new WebLink()
                 {
-                    Title = "Mark as banned",
+                    Title = WebPhrase.Flag("banned"),
                     Uri = urlHelper.Action("Command", new { id = viewModel.Id, commandName = Name, commandValue = WebStatus.Banned })
                 };
             }

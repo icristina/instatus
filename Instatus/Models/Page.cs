@@ -105,6 +105,7 @@ namespace Instatus.Models
 
         public Page(string name) : this() {
             Name = name;
+            Slug = name.ToSlug();
         }
 
         public SiteMapNode ToSiteMapNode(SiteMapProvider sitemap)

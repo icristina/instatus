@@ -22,6 +22,8 @@ namespace Instatus.Data
             return DependencyResolver.Current.GetService<BaseDataContext>();
         }
 
+        public static bool LoggingEnabled { get; set; }
+
         public IDbSet<Application> Applications { get; set; }
         public IDbSet<Page> Pages { get; set; }
         public IDbSet<User> Users { get; set; }
@@ -73,22 +75,26 @@ namespace Instatus.Data
             
             var page = modelBuilder.Entity<Page>();
             
-            page.HasMany<Page>(p => p.Related).WithMany(p => p.ParentPages).Map(m => m.ToTable("RelatedPages"));
-            page.HasOptional<Application>(p => p.Application).WithMany(a => a.Pages);
-            page.HasMany<Activity>(p => p.Activities).WithOptional(a => a.Parent);
+            page.HasMany(p => p.Related).WithMany(p => p.ParentPages).Map(m => m.ToTable("RelatedPages"));
+            page.HasOptional(p => p.Application).WithMany(a => a.Pages);
+            page.HasMany(p => p.Activities).WithOptional(a => a.Parent);
 
             var activity = modelBuilder.Entity<Activity>();
 
-            activity.HasMany<Activity>(a => a.Related).WithMany(a => a.ParentActivities).Map(m => m.ToTable("RelatedActivities"));
+            activity.HasMany(a => a.Related).WithMany(a => a.ParentActivities).Map(m => m.ToTable("RelatedActivities"));
+            
+            var award = modelBuilder.Entity<Award>();
 
+            award.HasOptional(a => a.Achievement).WithMany(a => a.Awards);
+            
             var message = modelBuilder.Entity<Message>();
 
-            message.HasMany<Message>(m => m.Replies).WithOptional(m => m.InReplyTo);
+            message.HasMany(m => m.Replies).WithOptional(m => m.InReplyTo);
 
             var user = modelBuilder.Entity<User>();
 
-            user.HasMany<User>(u => u.Friends).WithMany(u => u.Relationships).Map(c => c.ToTable("Friends"));
-            user.HasMany<Activity>(u => u.Activities).WithOptional(a => a.User);
+            user.HasMany(u => u.Friends).WithMany(u => u.Relationships).Map(c => c.ToTable("Friends"));
+            user.HasMany(u => u.Activities).WithOptional(a => a.User);
         }
 
         public void SetStatus<T>(int id, WebStatus status) where T : class, IUserGeneratedContent
@@ -106,16 +112,17 @@ namespace Instatus.Data
             SetStatus<T>(id, WebStatus.Published);
         }
 
-        public void LogChange(object resource, string propertyName, object originalValue, object newValue, string uri = null)
+        public void LogChange(object resource, string action, string uri = null)
         {
+            if (!LoggingEnabled)
+                return;
+            
             var now = DateTime.Now;
             var user = GetCurrentUser();
             var description = resource is string ? resource : string.Format("{0} {1}", ObjectContext.GetObjectType(resource.GetType()).Name, resource.GetKey());
-            var message = string.Format("{0} changed {1} from {2} to {3} on {4} at {5}",
+            var message = string.Format("{0} {1} for {2} at {3}",
                 user.FullName,
-                propertyName,
-                originalValue,
-                newValue,
+                action,
                 description,
                 now);
 
@@ -124,8 +131,15 @@ namespace Instatus.Data
                 Verb = WebVerb.Change.ToString(),
                 Uri = uri,
                 User = user,
-                Message = message
+                Message = message,
+                CreatedTime = now
             });
+        }
+
+        public void LogChange(object resource, string propertyName, object originalValue, object newValue, string uri = null)
+        {
+            var action = string.Format("changed {0} from {1} to {2}", propertyName, originalValue, newValue);
+            LogChange(resource, action, uri);
         }
 
         public IQueryable<Tag> GetTags(string taxonomyName)
