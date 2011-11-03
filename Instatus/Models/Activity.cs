@@ -32,13 +32,13 @@ namespace Instatus.Models
         public virtual User User { get; set; }
         public int? UserId { get; set; }
 
-        public virtual Page Parent { get; set; }
-        public int? ParentId { get; set; }
+        public virtual Page Page { get; set; }
+        public int? PageId { get; set; }
 
-        public virtual ICollection<Comment> Comments { get; set; }
+        public virtual ICollection<Message> Replies { get; set; }
         public virtual ICollection<Log> Logs { get; set; }
 
-        public virtual ICollection<Activity> Related { get; set; }
+        public virtual ICollection<Activity> Activities { get; set; }
         public virtual ICollection<Activity> ParentActivities { get; set; }
 
         [NotMapped]
@@ -55,7 +55,7 @@ namespace Instatus.Models
             : this()
         {
             Verb = verb.ToString();
-            Parent = parent;
+            Page = parent;
             User = user;
         }
 

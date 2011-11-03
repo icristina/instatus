@@ -39,7 +39,7 @@ namespace Instatus.Queries
                     .OfType<Award>()
                     .Where(a => a.Verb == reputation)
                     .OrderByDescending(a => a.CreatedTime)
-                    .FirstOrDefault().Parent as Achievement;
+                    .FirstOrDefault().Page as Achievement;
         }
 
         private static Credential Credentials(this User user, WebProvider webProvider)

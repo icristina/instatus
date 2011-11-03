@@ -7,9 +7,6 @@ namespace Instatus.Models
 {
     public class Comment : Message
     {
-        public virtual Page Page { get; set; }
-        public int? PageId { get; set; }
-        
-        public virtual ICollection<Activity> Activities { get; set; }
+
     }
 }

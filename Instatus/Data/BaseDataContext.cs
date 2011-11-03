@@ -77,11 +77,11 @@ namespace Instatus.Data
             
             page.HasMany(p => p.Related).WithMany(p => p.ParentPages).Map(m => m.ToTable("RelatedPages"));
             page.HasOptional(p => p.Application).WithMany(a => a.Pages);
-            page.HasMany(p => p.Activities).WithOptional(a => a.Parent);
+            page.HasMany(p => p.Activities).WithOptional(a => a.Page);
 
             var activity = modelBuilder.Entity<Activity>();
 
-            activity.HasMany(a => a.Related).WithMany(a => a.ParentActivities).Map(m => m.ToTable("RelatedActivities"));
+            activity.HasMany(a => a.Activities).WithMany(a => a.ParentActivities).Map(m => m.ToTable("RelatedActivities"));
             
             var award = modelBuilder.Entity<Award>();
 
@@ -147,7 +147,7 @@ namespace Instatus.Data
             return Tags.Where(t => t.Taxonomy.Name == taxonomyName).OrderBy(t => t.Name);
         }
 
-        public bool Like(int id)
+        public bool Like<T>(int id) where T : class, IUserGeneratedContent
         {
             var user = GetCurrentUser();
 
@@ -156,55 +156,60 @@ namespace Instatus.Data
 
             var userId = user.Id;
             var like = WebVerb.Like.ToString();
+            var content = Set<T>().Find(id);
 
-            if(Activities.Any(a => a.Verb == like && a.UserId == userId && a.ParentId == id))
+            if (content.User.Id == userId) // cannot like own content
                 return false;
 
-            Activities.Add(new Activity()
+            if(content.Activities.Any(a => a.Verb == like && a.UserId == userId)) // duplicate like
+                return false;
+
+            content.Activities.Add(new Activity()
             {
                 Verb = like,
-                UserId = userId,
-                ParentId = id
+                UserId = userId
             });
 
             return true;
         }
 
-        public bool Comment(int id, string message)
+        public bool Comment<T>(int id, string body) where T : class, IUserGeneratedContent
         {
             var user = GetCurrentUser();
 
             if (user == null)
                 return false;
 
-            Messages.Add(new Comment()
+            var content = Set<T>().Find(id);
+
+            content.Replies.Add(new Comment()
             {
                 PageId = id,
                 User = user,
-                Body = message
+                Body = body
             });
 
             return true;
         }
 
-        public IOrderedQueryable<Activity> GetActivities(WebExpression filter)
+        public IOrderedQueryable<Activity> GetActivities(WebExpression filter, WebStatus? status = WebStatus.Published)
         {
             return this
                     .DisableProxiesAndLazyLoading()
                     .Activities
                     .Expand(filter.Expand)
-                    .FilterActivities(filter)
+                    .FilterActivities(filter, status)
                     .SearchActivities(filter)
                     .SortActivities(filter.Sort);            
         }
 
-        public IOrderedQueryable<T> GetActivities<T>(WebExpression filter) where T : Activity
+        public IOrderedQueryable<T> GetActivities<T>(WebExpression filter, WebStatus? status = WebStatus.Published) where T : Activity
         {
             return this
                     .DisableProxiesAndLazyLoading()
                     .Activities
                     .Expand(filter.Expand)
-                    .FilterActivities(filter)
+                    .FilterActivities(filter, status)
                     .SearchActivities(filter)
                     .OfType<T>()
                     .SortActivities(filter.Sort);
@@ -237,25 +242,25 @@ namespace Instatus.Data
                     .FirstOrDefault();
         }
 
-        public IOrderedQueryable<T> GetPages<T>(WebExpression filter) where T : Page
+        public IOrderedQueryable<T> GetPages<T>(WebExpression filter, WebStatus? status = WebStatus.Published) where T : Page
         {
             return this
                     .DisableProxiesAndLazyLoading()
                     .Pages
                     .Expand(filter.Expand)
-                    .FilterPages(filter)
+                    .FilterPages(filter, status)
                     .SearchPages(filter)
                     .OfType<T>()
                     .SortPages(filter.Sort);
         }
 
-        public IOrderedQueryable<Page> GetPages(WebExpression filter)
+        public IOrderedQueryable<Page> GetPages(WebExpression filter, WebStatus? status = WebStatus.Published)
         {
             return this
                     .DisableProxiesAndLazyLoading()
                     .Pages
                     .Expand(filter.Expand)
-                    .FilterPages(filter)
+                    .FilterPages(filter, status)
                     .SearchPages(filter)
                     .OfKind(filter.Kind)
                     .SortPages(filter.Sort);
@@ -290,13 +295,13 @@ namespace Instatus.Data
             });
         }
 
-        public IQueryable<User> GetUsers(WebExpression filter)
+        public IQueryable<User> GetUsers(WebExpression filter, WebStatus? status = WebStatus.Published)
         {
             return this
                     .DisableProxiesAndLazyLoading()
                     .Users
                     .Expand(filter.Expand)
-                    .FilterUsers(filter)
+                    .FilterUsers(filter, status)
                     .SortUsers(filter.Sort);
         }
 
@@ -345,9 +350,15 @@ namespace Instatus.Data
 
     internal static class QueryExtensions
     {
-        public static IQueryable<Activity> FilterActivities(this IQueryable<Activity> queryable, WebExpression filter)
+        public static IQueryable<Activity> FilterActivities(this IQueryable<Activity> queryable, WebExpression filter, WebStatus? webStatus)
         {
             var filtered = queryable;
+
+            if (webStatus.HasValue)
+            {
+                var status = webStatus.ToString();
+                filtered = filtered.Where(p => p.Status == status);
+            }
 
             int userId;
 
@@ -357,7 +368,7 @@ namespace Instatus.Data
             int parentId;
 
             if (!filter.Parent.IsEmpty() && int.TryParse(filter.Parent, out parentId))
-                filtered = filtered.Where(a => a.ParentId == parentId);
+                filtered = filtered.Where(a => a.PageId == parentId);
 
             if (filter.StartDate.HasValue || filter.IsDateView)
             {
@@ -472,9 +483,14 @@ namespace Instatus.Data
             return queryable;
         }
 
-        public static IQueryable<T> FilterPages<T>(this IQueryable<T> queryable, WebExpression filter) where T : Page
+        public static IQueryable<T> FilterPages<T>(this IQueryable<T> queryable, WebExpression filter, WebStatus? webStatus) where T : Page
         {
             var filtered = queryable;
+
+            if(webStatus.HasValue) {
+                var status = webStatus.ToString();
+                filtered = filtered.Where(p => p.Status == status);
+            }
 
             if (!filter.Tag.IsEmpty())
                 filtered = filtered.Where(p => p.Tags.Any(t => t.Name == filter.Tag));
@@ -546,15 +562,21 @@ namespace Instatus.Data
                 case WebSort.Likes:
                     return queryable.OrderByDescending(p => p.Activities.Where(a => a.Verb == like).Count());
                 case WebSort.Comments:
-                    return queryable.OrderByDescending(p => p.Comments.Count());
+                    return queryable.OrderByDescending(p => p.Replies.Count());
                 default:
                     return queryable.OrderByDescending(p => p.PublishedTime);
             }
         }
 
-        public static IQueryable<User> FilterUsers(this IQueryable<User> queryable, WebExpression filter)
+        public static IQueryable<User> FilterUsers(this IQueryable<User> queryable, WebExpression filter, WebStatus? webStatus)
         {
             var filtered = queryable;
+
+            if (webStatus.HasValue)
+            {
+                var status = webStatus.ToString();
+                filtered = filtered.Where(u => u.Status == status);
+            }
 
             if (!filter.Uri.IsEmpty())
                 filtered = filtered.Where(u => u.Credentials.Any(c => filter.Uri.Contains(c.Uri)));

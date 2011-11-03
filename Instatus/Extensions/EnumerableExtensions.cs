@@ -144,5 +144,10 @@ namespace Instatus
         {
             return content.OrderByDescending(c => c.CreatedTime);
         }
+
+        public static IEnumerable<T> ByCreatedTime<T>(this IEnumerable<T> content) where T : IUserGeneratedContent
+        {
+            return content.OrderBy(c => c.CreatedTime);
+        }
     }
 }

@@ -63,14 +63,14 @@ namespace Instatus.Models
                 
                 if (Context.Trigger != null)
                 {
-                    if (Context.Trigger.Related == null)
-                        Context.Trigger.Related = new List<Activity>();
+                    if (Context.Trigger.Activities == null)
+                        Context.Trigger.Activities = new List<Activity>();
 
-                    Context.Trigger.Related.Add(activity);
+                    Context.Trigger.Activities.Add(activity);
                 }
 
-                if(activity.Parent == null)
-                    activity.Parent = Context.Page;
+                if(activity.Page == null)
+                    activity.Page = Context.Page;
 
                 if(activity.User == null)
                     activity.User = Context.User;

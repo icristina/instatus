@@ -10,5 +10,7 @@ namespace Instatus.Models
         string Status { get; set; }
         DateTime CreatedTime { get; set; }
         User User { get; set; }
+        ICollection<Message> Replies { get; set; }
+        ICollection<Activity> Activities { get; set; }
     }
 }

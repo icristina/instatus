@@ -56,7 +56,7 @@ namespace Instatus.Models
         public int? CardId { get; set; }
 
         public virtual ICollection<Tag> Tags { get; set; }
-        public virtual ICollection<Comment> Comments { get; set; }
+        public virtual ICollection<Message> Replies { get; set; }
         public virtual ICollection<Link> Links { get; set; }
         public virtual ICollection<Activity> Activities { get; set; }
         public virtual ICollection<Selection> Selections { get; set; }

@@ -74,7 +74,7 @@ namespace Instatus.Commands
 
                     if (viewModel is Page)
                     {
-                        award.ParentId = viewModel.Id;
+                        award.PageId = viewModel.Id;
                     }
 
                     user.Activities.Add(award);

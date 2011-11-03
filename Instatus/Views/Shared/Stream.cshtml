@@ -19,7 +19,7 @@
     }
     @foreach (Instatus.Models.Page page in Model)
     {
-        <article>
+        <article id="@page.Id">
             <a href="@Url.RouteUrl(Instatus.Areas.Microsite.MicrositeAreaRegistration.PageRouteName, new { slug = page.Slug })">
                 <h1>@page.Name</h1>
                 <dl>

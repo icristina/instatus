@@ -22,10 +22,19 @@ namespace Instatus.Models
         public virtual User User { get; set; }
         public int? UserId { get; set; }
 
+        public virtual Page Page { get; set; }
+        public int? PageId { get; set; }
+
+        public virtual Activity Activity { get; set; }
+        public int? ActivityId { get; set; }
+        
+        public virtual ICollection<Activity> Activities { get; set; }
+
         public virtual Message InReplyTo { get; set; }
         public int? InReplyToId { get; set; }
 
         public virtual ICollection<Message> Replies { get; set; }
+
 
         public Message()
         {
