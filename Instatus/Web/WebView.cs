@@ -96,6 +96,25 @@ namespace Instatus.Web
             Query = query;
         }
 
+        private static Func<Record<T, WebMetrics>, T> defaultProjection = new Func<Record<T, WebMetrics>, T>(p =>
+        {
+            var entry = p.Entry;
+
+            if (entry is IExtensionPoint)
+            {
+                var extensionPoint = ((IExtensionPoint)entry).Extensions;
+                extensionPoint.Metrics = p.Metadata;
+            }
+
+            return entry;
+        });
+
+        public WebView(IQueryable<Record<T, WebMetrics>> queryable, WebQuery query)
+            : base(queryable, defaultProjection, query.PageSize, query.PageIndex, query.CountTotal)
+        {
+            Query = query;
+        }
+
         private SelectList CreateSelectList<TSelectItem>(IEnumerable<TSelectItem> data, object selectedValue = null, IEnumerable<string> labels = null, string allLabel = "All", string prefix = "") {
             var items = new List<WebParameter>();
 

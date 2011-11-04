@@ -124,11 +124,7 @@ namespace Instatus.Controllers
 
         public ActionResult Command(TKey id, string commandName)
         {
-            var model = set.Find(id);
-            var command = GetCommands().First(c => c.Name == commandName);
-            var result = command.Execute(model, Url, RouteData, Request.Params);
-           
-            return RedirectToIndex();
+            return CommandResult(GetCommands(), commandName, set.Find(id));
         }
 
         [HttpPost]

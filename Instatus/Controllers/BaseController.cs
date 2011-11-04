@@ -31,13 +31,20 @@ namespace Instatus.Controllers
     }
     
     public class BaseController : Controller
-    {
+    {                
         public HttpApplication Application
         {
             get
             {
                 return ControllerContext.HttpContext.ApplicationInstance;
             }
+        }
+
+        public ActionResult CommandResult(ICollection<IWebCommand> commands, string commandName, object model)
+        {
+            var command = commands.First(c => c.Name == commandName);
+            command.Execute(model, Url, RouteData, Request.Params);
+            return RedirectToIndex();
         }
 
         public const string ReturnUrlParameter = "returnUrl";
@@ -50,6 +57,11 @@ namespace Instatus.Controllers
                 return Redirect(returnUrl);
             
             return RedirectToAction("Index");
+        }
+
+        public ActionResult RedirectToHome()
+        {
+            return Redirect("/");
         }
 
         public ActionResult ErrorResult()

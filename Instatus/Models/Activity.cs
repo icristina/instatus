@@ -14,7 +14,7 @@ namespace Instatus.Models
     [KnownType(typeof(Highscore))]
     [KnownType(typeof(Checkin))]
     [KnownType(typeof(Coupon))]
-    public class Activity : IUserGeneratedContent
+    public class Activity : IUserGeneratedContent, IExtensionPoint
     {
         public int Id { get; set; }
         public string Uri { get; set; }

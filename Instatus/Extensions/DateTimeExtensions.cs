@@ -8,6 +8,18 @@ namespace Instatus
 {
     public static class DateTimeExtensions
     {
+        // http://stackoverflow.com/questions/9/how-do-i-calculate-someones-age-in-c
+        public static int Age(this DateTime dateOfBirth)
+        {
+            var now = DateTime.Today;
+            var age = now.Year - dateOfBirth.Year;
+            
+            if (dateOfBirth > now.AddYears(-age)) 
+                age--;
+
+            return age;
+        }
+        
         // http://codeclimber.net.nz/archive/2007/07/10/convert-a-unix-timestamp-to-a-.net-datetime.aspx
         public static DateTime ToUnixTime(this double timestamp)
         {

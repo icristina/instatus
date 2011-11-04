@@ -4,12 +4,13 @@ using System.Linq;
 using System.Web;
 using System.Runtime.Serialization;
 using System.Web.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace Instatus.Models
 {
     [KnownType(typeof(Comment))]
     [KnownType(typeof(Review))]
-    public class Message : IUserGeneratedContent
+    public class Message : IUserGeneratedContent, IExtensionPoint
     {
         public int Id { get; set; }
         public string ProviderToken { get; set; }
@@ -35,6 +36,9 @@ namespace Instatus.Models
 
         public virtual ICollection<Message> Replies { get; set; }
 
+        [NotMapped]
+        [IgnoreDataMember]
+        public dynamic Extensions { get; set; }
 
         public Message()
         {
