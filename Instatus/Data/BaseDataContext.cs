@@ -13,6 +13,7 @@ using System.Web.Routing;
 using System.IO;
 using Instatus;
 using System.Data.Objects;
+using Instatus.Queries;
 
 namespace Instatus.Data
 {   
@@ -147,49 +148,99 @@ namespace Instatus.Data
             return Tags.Where(t => t.Taxonomy.Name == taxonomyName).OrderBy(t => t.Name);
         }
 
-        public bool Like<T>(int id) where T : class, IUserGeneratedContent
+        public RecordResult<Post> Post(string message)
+        {
+            return Post(new WebEntry()
+            {
+                Description = message
+            });
+        }
+
+        public RecordResult<Post> Post(WebEntry entry)
         {
             var user = GetCurrentUser();
 
-            if (user == null)
-                return false;
+            if (!user.Can(WebVerb.Post))
+                return RecordResult<Post>.Failed;
+
+            var post = new Post()
+            {
+                Description = entry.Description,
+                User = user
+            };
+
+            Pages.Add(post);
+
+            return new RecordResult<Post>(post);
+        }
+
+        public RecordResult<Activity> Like<T>(int id) where T : class, IUserGeneratedContent
+        {
+            var user = GetCurrentUser();
+
+            if (!user.Can(WebVerb.Like))
+                return RecordResult<Activity>.Failed;
 
             var userId = user.Id;
             var like = WebVerb.Like.ToString();
             var content = Set<T>().Find(id);
 
-            if (content.User.Id == userId) // cannot like own content
-                return false;
+            // Failure:
+            // Like own content
+            // Duplicate Like
+            if (content.User.Id == userId || content.Activities.Any(a => a.Verb == like && a.UserId == userId))
+                return RecordResult<Activity>.Failed;
 
-            if(content.Activities.Any(a => a.Verb == like && a.UserId == userId)) // duplicate like
-                return false;
-
-            content.Activities.Add(new Activity()
+            var activity = new Activity()
             {
                 Verb = like,
-                UserId = userId
-            });
+                User = user
+            };
 
-            return true;
+            content.Activities.Add(activity);
+
+            return new RecordResult<Activity>(activity);
         }
 
-        public bool Comment<T>(int id, string body) where T : class, IUserGeneratedContent
+        public RecordResult<Comment> Comment<T>(int id, string body) where T : class, IUserGeneratedContent
         {
             var user = GetCurrentUser();
 
-            if (user == null)
-                return false;
+            if (!user.Can(WebVerb.Comment))
+                return RecordResult<Comment>.Failed;
 
             var content = Set<T>().Find(id);
 
-            content.Replies.Add(new Comment()
+            var comment = new Comment()
             {
                 PageId = id,
                 User = user,
                 Body = body
-            });
+            };
 
-            return true;
+            Messages.Add(comment);
+
+            return new RecordResult<Comment>(comment);
+        }
+
+        public Offer GetLatestOffer()
+        {
+            var now = DateTime.Now;
+            var published = WebStatus.Published.ToString();
+            
+            return Pages.OfType<Offer>()
+                    .Where(o => o.Dates.Any(d => d.StartTime <= now && (!d.EndTime.HasValue || d.EndTime >= now)) && o.Status == published)
+                    .FirstOrDefault();
+        }
+
+        public T GetLatestAwarded<T>(string achievementSlug) where T : Page
+        {
+            var award = Activities
+                        .OfType<Award>()
+                        .OrderByDescending(a => a.CreatedTime)
+                        .FirstOrDefault();
+           
+            return award.IsEmpty() ? null : (T)award.Page;
         }
 
         public IOrderedQueryable<Activity> GetActivities(WebExpression filter, WebStatus? status = WebStatus.Published)
@@ -556,13 +607,13 @@ namespace Instatus.Data
             switch (sort)
             {
                 case WebSort.Priority:
-                    return queryable.OrderBy(p => p.Priority);
+                    return queryable.OrderBy(p => p.Priority).ThenByDescending(p => p.CreatedTime);
                 case WebSort.Alphabetical:
-                    return queryable.OrderBy(p => p.Name);
+                    return queryable.OrderBy(p => p.Name).ThenByDescending(p => p.CreatedTime);
                 case WebSort.Likes:
-                    return queryable.OrderByDescending(p => p.Activities.Where(a => a.Verb == like).Count());
+                    return queryable.OrderByDescending(p => p.Activities.Where(a => a.Verb == like).Count()).ThenByDescending(p => p.CreatedTime);
                 case WebSort.Comments:
-                    return queryable.OrderByDescending(p => p.Replies.Count());
+                    return queryable.OrderByDescending(p => p.Replies.Count()).ThenByDescending(p => p.CreatedTime);
                 default:
                     return queryable.OrderByDescending(p => p.PublishedTime);
             }

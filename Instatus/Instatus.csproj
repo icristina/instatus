@@ -92,6 +92,7 @@
     <Compile Include="Commands\SpamCommand.cs" />
     <Compile Include="Data\IPayload.cs" />
     <Compile Include="Data\LimitedQueue.cs" />
+    <Compile Include="Data\RecordResult.cs" />
     <Compile Include="Extensions\ControllerDescriptorExtensions.cs" />
     <Compile Include="Extensions\BooleanExtensions.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />

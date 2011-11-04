@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data.SqlTypes;
 
 namespace Instatus.Models
 {
@@ -34,6 +35,13 @@ namespace Instatus.Models
                 return string.Format("{0} - {1}", StartTime.ToString("f"), EndTime.Value.ToString("f"));
             
             return StartTime.ToString("f");
+        }
+
+        public static Schedule Permanent {
+            get
+            {
+                return new Schedule(SqlDateTime.MinValue.Value, SqlDateTime.MaxValue.Value);
+            }
         }
     }
 }

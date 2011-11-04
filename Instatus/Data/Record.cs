@@ -14,7 +14,7 @@ namespace Instatus.Data
 
     public class Record<TModel, TMetadata>
     {
-        public TModel Item { get; set; }
+        public TModel Entry { get; set; }
         public TMetadata Metadata { get; set; }
         public object Associations { get; set; }
     }

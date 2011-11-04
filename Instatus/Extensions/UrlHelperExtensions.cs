@@ -58,5 +58,11 @@ namespace Instatus
         {
             return urlHelper.RouteUrl(MicrositeAreaRegistration.PageRouteName, new { slug = slug });
         }
+
+        public static string Self(this UrlHelper urlHelper, IWebView webView)
+        {
+            var routeData = urlHelper.RequestContext.RouteData;
+            return urlHelper.Action(routeData.ActionName(), routeData.ControllerName(), webView.Query.ToRouteValueDictionary());
+        }
     }
 }

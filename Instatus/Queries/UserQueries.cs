@@ -12,6 +12,16 @@ namespace Instatus.Queries
 {
     public static class UserQueries
     {
+        public static bool Can(this User user, WebVerb verb)
+        {
+            return !(user == null || user.IsBanned());
+        }
+        
+        public static bool IsBanned(this User user)
+        {
+            return user.Status.AsEnum<WebStatus>() == WebStatus.Banned;
+        }
+        
         public static bool IsSelf(this User user)
         {
             var identity = HttpContext.Current.User.Identity;
