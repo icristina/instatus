@@ -24,7 +24,7 @@ namespace Instatus.Areas.Google
 
             WebPart.Catalog.Add(new WebPartial()
             {
-                Zone = WebZone.Head,
+                Zone = WebZone.Scripts,
                 ActionName = "RegisterScripts",
                 Parameters = new List<WebParameter>()
                 {

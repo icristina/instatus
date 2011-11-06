@@ -385,25 +385,26 @@ namespace Instatus.Data
             });
         }
 
-        public void LoadArticles(Stream stream)
+        public void LoadPages(Stream stream)
         {
-            var articles = Generator.LoadXml<List<Article>>(stream);
+            var pages = Generator.LoadXml<List<Page>>(stream);
 
-            foreach (var loaded in articles)
+            foreach (var loaded in pages)
             {
-                var article = GetPage<Article>(loaded.Slug);
+                var page = GetPage<Page>(loaded.Slug);
 
-                if (article == null)
+                if (page == null)
                 {
                     Pages.Add(loaded);
                 }
                 else
                 {
-                    article.Name = loaded.Name;
-                    article.Document = loaded.Document;
+                    page.Name = loaded.Name;
+                    page.Description = loaded.Description;
+                    page.Document = loaded.Document;
 
                     if (loaded.Priority != 0)
-                        article.Priority = article.Priority;
+                        page.Priority = page.Priority;
                 }
             }
 

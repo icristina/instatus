@@ -20,7 +20,7 @@ namespace Instatus.Areas.Microsite.Controllers
             return View();
         }
 
-        public ActionResult LoadArticles(string path)
+        public ActionResult LoadPages(string path)
         {
             Stream stream = null;
             
@@ -33,7 +33,7 @@ namespace Instatus.Areas.Microsite.Controllers
                 stream = new LocalStorageBlobService().Stream(path);
             }
 
-            Context.LoadArticles(stream);
+            Context.LoadPages(stream);
             
             return RedirectToIndex();
         }

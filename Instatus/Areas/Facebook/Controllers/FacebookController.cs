@@ -14,7 +14,7 @@ namespace Instatus.Areas.Facebook.Controllers
     {
         public ActionResult RegisterScripts()
         {
-            ViewData.Model = Context.GetApplicationCredentials(WebProvider.Typekit);
+            ViewData.Model = Context.GetApplicationCredentials(WebProvider.Facebook);
             return PartialView();
         }
     }
