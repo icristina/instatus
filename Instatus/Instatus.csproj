@@ -78,6 +78,9 @@
   <ItemGroup>
     <Compile Include="Areas\Auth\AuthAreaRegistration.cs" />
     <Compile Include="Areas\Auth\Controllers\AccountController.cs" />
+    <Compile Include="Areas\Microsite\Controllers\AdminController.cs" />
+    <Compile Include="Areas\Microsite\Controllers\BlogPostController.cs" />
+    <Compile Include="Areas\Microsite\Controllers\TagController.cs" />
     <Compile Include="Areas\Typekit\Controllers\TypekitController.cs" />
     <Compile Include="Areas\Typekit\TypekitAreaRegistration.cs" />
     <Compile Include="Areas\Facebook\Controllers\CallbackController.cs" />
@@ -376,6 +379,8 @@
   <ItemGroup>
     <EmbeddedResource Include="Areas\Typekit\Views\Shared\RegisterScripts.cshtml" />
     <EmbeddedResource Include="Areas\Typekit\Views\Web.config" />
+    <EmbeddedResource Include="Areas\Microsite\Views\Web.config" />
+    <EmbeddedResource Include="Areas\Microsite\Views\Admin\Index.cshtml" />
     <None Include="README.md" />
     <EmbeddedResource Include="Views\Shared\Entry.cshtml" />
     <EmbeddedResource Include="Views\Shared\DisplayTemplates\LinkList.cshtml" />

@@ -1,12 +1,12 @@
 ﻿@model IWebView
 
 @{
+    WebSection section = null;
     Dictionary<string, object> sectionAttributes = null;
 
     if (ViewContext.IsChildAction && ViewContext.ParentActionViewContext.ViewData.Model is WebSection) {
-        sectionAttributes = ((WebSection)ViewContext.ParentActionViewContext.ViewData.Model)
-            .Parameters
-            .GetHtmlAttributes();
+        section = (WebSection)ViewContext.ParentActionViewContext.ViewData.Model;
+        sectionAttributes = section.Parameters.GetHtmlAttributes();
     }    
 }
 
@@ -16,6 +16,10 @@
         <nav>
             @Html.Paging()
         </nav>
+    }
+    @if(section != null) {
+        @Html.Tag("h1", section.Heading)
+        @Html.Tag("h2", section.SubHeading)      
     }
     @foreach (Instatus.Models.Page page in Model)
     {

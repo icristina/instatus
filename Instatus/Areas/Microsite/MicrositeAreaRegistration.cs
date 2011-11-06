@@ -15,8 +15,6 @@ namespace Instatus.Areas.Microsite
         }
 
         public const string PageRouteName = "Microsite_Page";
-        public const string WidgetRouteName = "Microsite_Widget";
-        public const string RobotsRouteName = "Microsite_Robots";
 
         public override void RegisterArea(AreaRegistrationContext context)
         {
@@ -27,13 +25,13 @@ namespace Instatus.Areas.Microsite
             );
 
             context.MapRoute(
-                WidgetRouteName,
-                "article/{action}/{id}",
+                "Microsite_Default",
+                "Microsite/{controller}/{action}/{id}",
                 new { controller = "Article", action = "Widget", id = UrlParameter.Optional }
             );
 
             context.MapRoute(
-                RobotsRouteName,
+                "Microsite_Robots",
                 "robots.txt",
                 new { controller = "Robots", action = "Index" }
             );

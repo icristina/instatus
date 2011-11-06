@@ -1,0 +1,19 @@
+﻿@{
+    Layout = "~/Views/Shared/_Scaffold.cshtml";    
+    ViewBag.Title = "Admin";
+}
+
+<h1>Admin</h1>
+
+@using (Html.BeginMultipartForm("LoadArticles"))
+{
+    <fieldset>
+        <legend>Server</legend>
+        @Html.TextBox("path")
+    </fieldset>
+    <fieldset>
+        <legend>Upload</legend>
+        @Html.FileInput()
+    </fieldset>
+    @Html.SubmitButton()
+}
