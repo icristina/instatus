@@ -7,7 +7,7 @@ namespace Instatus.Web
 {
     public enum WebZone
     {
-        Meta,
+        Head,
         Header,
         Body,
         Aside,

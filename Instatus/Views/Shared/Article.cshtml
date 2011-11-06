@@ -4,6 +4,10 @@
     ViewBag.Title = Model.Name;
 }
 
+@section head {
+    @Html.Parts(WebZone.Head)
+}
+
 <div class="page">
     <h1>@Model.Name</h1>
     @if (!Model.Description.IsEmpty())
@@ -16,7 +20,7 @@
     {
         <div class="document">
             @Html.Content(Model.Document.Body)
-            @Html.Parts()
+            @Html.Parts(WebZone.Body)
         </div>
     }
 </div>
@@ -24,3 +28,5 @@
     @Html.Partial("Branding")  
     @Html.Action("Nav")    
 </nav>
+
+@Html.Parts(WebZone.Scripts)

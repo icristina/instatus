@@ -16,6 +16,7 @@ namespace Instatus.Web
         Flickr,
         Vimeo,
         YouTube,
-        Amazon
+        Amazon,
+        Typekit
     }
 }

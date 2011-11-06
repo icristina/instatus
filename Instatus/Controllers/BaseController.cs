@@ -84,29 +84,13 @@ namespace Instatus.Controllers
             base.OnActionExecuted(filterContext);
         }
         
-        [ChildActionOnly]
-        public ActionResult RegisterScripts()
-        {           
-            using (var db = BaseDataContext.Instance())
-            {
-                var environment = Application.Setting<string>("Environment");
-                var controllerName = RouteData.ControllerName();
-                var serviceName = RouteData.AreaName().OrDefault(controllerName);
-
-                ViewData.Model = db.Sources
-                    .OfType<Credential>()
-                    .FirstOrDefault(s => s.Provider == serviceName && s.Application != null && s.Environment == environment);
-            }
-
-            return PartialView();
-        }
-
         [NonAction]
-        public ActionResult Article()
+        public ActionResult Article(string slug = null)
         {
             using (var db = BaseDataContext.Instance())
             {
-                ViewData.Model = db.GetPage<Article>(RouteData.ActionName());
+                ViewData.Model = db.GetPage<Page>(slug ?? RouteData.ActionName())
+                                    .ProcessIncludes(db);
             }
 
             return View("Article");

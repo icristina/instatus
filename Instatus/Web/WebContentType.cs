@@ -98,6 +98,11 @@ namespace Instatus.Web
             return definitions.Any(d => d.Category == category && d.MimeTypes.Any(m => m == mimeType));
         }
 
+        public static bool IsContentType(this WebContentType contentType, string mimeType)
+        {
+            return definitions.Any(d => d.ContentType == contentType && d.MimeTypes.Any(m => m == mimeType));
+        }
+
         public static bool IsPhoto(string mimeType)
         {
             return IsInCategory(mimeType, Category.Photo);

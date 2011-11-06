@@ -159,8 +159,10 @@ namespace Instatus.Models
 
         public Page ProcessIncludes(BaseDataContext dataContext = null)
         {
-            if (Document == null && Document.Parts == null)
-                return this;
+            if (Document == null)
+                Document = new WebDocument();
+
+            Document.Parts.AddRange(WebPart.Catalog);
 
             if (dataContext == null)
                 dataContext = BaseDataContext.Instance();

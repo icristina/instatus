@@ -14,11 +14,7 @@ namespace Instatus.Areas.Microsite.Controllers
     {
         public ActionResult Details(string slug = "home")
         {
-            ViewData.Model = Context
-                .GetPage<Page>(slug)
-                .ProcessIncludes(Context);
-
-            return View("Article");
+            return Article(slug);
         }
 
         public ActionResult Stream(WebQuery query, string viewName = "")

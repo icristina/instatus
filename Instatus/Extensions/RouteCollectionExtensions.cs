@@ -7,9 +7,9 @@ using System.Web.Mvc;
 
 namespace Instatus
 {
-    // http://johncoder.com/Post/register-single-area-in-aspnet-mvc2
     public static class RouteCollectionExtensions
     {
+        // http://johncoder.com/Post/register-single-area-in-aspnet-mvc2
         public static void RegisterArea<T>(this RouteCollection routes) where T : AreaRegistration
         {
             var area = Activator.CreateInstance<T>();

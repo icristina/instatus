@@ -223,6 +223,18 @@ namespace Instatus.Data
             return new RecordResult<Comment>(comment);
         }
 
+        public Credential GetApplicationCredentials(WebProvider webProvider, string environment = null)
+        {
+            if (environment == null)
+                environment = HttpContext.Current.ApplicationInstance.Setting<string>("Environment");
+
+            var provider = webProvider.ToString();
+
+            return Sources
+                    .OfType<Credential>()
+                    .FirstOrDefault(s => s.Provider == provider && s.Application != null && s.Environment == environment);
+        }
+
         public Offer GetLatestOffer()
         {
             var now = DateTime.Now;

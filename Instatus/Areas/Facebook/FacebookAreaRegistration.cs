@@ -1,4 +1,6 @@
 ﻿using System.Web.Mvc;
+using Instatus.Web;
+using System.Collections.Generic;
 
 namespace Instatus.Areas.Facebook
 {
@@ -25,6 +27,17 @@ namespace Instatus.Areas.Facebook
                 "Facebook/{controller}/{action}/{id}",
                 new { controller = "Tab", action = "Index", id = UrlParameter.Optional }
             );
+
+            WebPart.Catalog.Add(new WebPartial()
+            {
+                Zone = WebZone.Head,
+                ActionName = "RegisterScripts",
+                Parameters = new List<WebParameter>()
+                {
+                    new WebParameter("area", AreaName),
+                    new WebParameter("controller", "facebook")
+                }
+            });
         }
     }
 }

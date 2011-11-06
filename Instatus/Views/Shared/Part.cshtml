@@ -16,7 +16,17 @@ else if (Model is WebPartial)
     }
     else
     {
-        @Html.Action(webPartial.ActionName, new { viewName = webPartial.ViewName, controller = "home", area = "" })
+        var routeValues = new RouteValueDictionary() {
+            { "viewName", webPartial.ViewName },
+            { "controller", "home" },
+            { "area", "" }    
+        };
+        
+        foreach(var param in webPartial.Parameters) {
+            routeValues.AddNonEmptyValue(param.Name, param.Content);
+        }
+        
+        @Html.Action(webPartial.ActionName, routeValues)
     }
 } 
 else if (Model is WebSection)

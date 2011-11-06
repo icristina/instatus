@@ -46,22 +46,5 @@ namespace Instatus.Web
                 parts = value;
             }
         }
-
-        private List<WebParameter> parameters;
-
-        public List<WebParameter> Parameters
-        {
-            get
-            {
-                if (parameters == null)
-                    parameters = new List<WebParameter>();
-
-                return parameters;
-            }
-            set
-            {
-                parameters = value;
-            }
-        }
     }
 }

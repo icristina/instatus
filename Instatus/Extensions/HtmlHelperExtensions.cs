@@ -126,17 +126,15 @@ namespace Instatus
             tag.SetInnerText(text);
             return new MvcHtmlString(tag.ToString());
         }
+
+        public static MvcHtmlString FileInput<T>(this HtmlHelper<T> html, string name = "file")
+        {
+            var tag = new TagBuilder("input");
+            tag.MergeAttribute("type", "file");
+            tag.MergeAttribute("name", name);
+            return new MvcHtmlString(tag.ToString());
+        }
         
-        public static MvcHtmlString Init<T>(this HtmlHelper<T> html, string serviceName)
-        {
-            return html.Action("RegisterScripts", new { area = serviceName, controller = "home" });
-        }
-
-        public static MvcHtmlString Init<T>(this HtmlHelper<T> html, WebProvider webProvider)
-        {
-            return html.Init(webProvider.ToString());
-        }
-
         public static MvcHtmlString Attr<T>(this HtmlHelper<T> html, IDictionary<string, object> attributes)
         {
             if (attributes == null)
@@ -237,14 +235,22 @@ namespace Instatus
             { DataType.Url, "url" }
         };
 
-        public static MvcHtmlString Parts<T>(this HtmlHelper<T> html, Page page = null, WebZone zoneName = WebZone.Body)
+        public static MvcHtmlString Parts<T>(this HtmlHelper<T> html, WebZone zoneName = WebZone.Body)
         {
-            if(page == null)
-                page = html.ViewData.Model as Page;
+            IEnumerable<WebPart> parts;
+
+            if (html.ViewData.Model is Page)
+            {
+                parts = (html.ViewData.Model as Page).Document.Parts;
+            }
+            else
+            {
+                parts = WebPart.Catalog;
+            }
 
             var sb = new StringBuilder();
 
-            foreach (var part in page.Document.Parts.Where(p => p.Zone == zoneName))
+            foreach (var part in parts.Where(p => p.Zone == zoneName))
             {
                 sb.Append(html.Partial("Part", part));
             }

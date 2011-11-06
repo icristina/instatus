@@ -15,9 +15,9 @@ namespace Instatus
             return Debugger.IsAttached;
         }
         
-        public static T Setting<T>(this HttpApplication application, string name)
+        public static T Setting<T>(this HttpApplication application, object name)
         {                      
-            return ConfigurationManager.AppSettings.Value<T>(name);
+            return ConfigurationManager.AppSettings.Value<T>(name.ToString());
         }
     }
 }

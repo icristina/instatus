@@ -2,23 +2,23 @@
 using Instatus.Web;
 using System.Collections.Generic;
 
-namespace Instatus.Areas.Google
+namespace Instatus.Areas.Typekit
 {
-    public class GoogleAreaRegistration : AreaRegistration
+    public class TypekitAreaRegistration : AreaRegistration
     {
         public override string AreaName
         {
             get
             {
-                return "Google";
+                return "Typekit";
             }
         }
 
         public override void RegisterArea(AreaRegistrationContext context)
         {
             context.MapRoute(
-                "Google_default",
-                "Google/{controller}/{action}/{id}",
+                "Typekit_default",
+                "Typekit/{controller}/{action}/{id}",
                 new { action = "Index", id = UrlParameter.Optional }
             );
 
@@ -29,7 +29,7 @@ namespace Instatus.Areas.Google
                 Parameters = new List<WebParameter>()
                 {
                     new WebParameter("area", AreaName),
-                    new WebParameter("controller", "google")
+                    new WebParameter("controller", "typekit")
                 }
             });
         }
