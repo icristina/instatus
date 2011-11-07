@@ -41,7 +41,15 @@ namespace Instatus.Areas.Facebook
             uri = uri.Query("access_token", accessToken);
             
             var client = new WebClient();
-            return client.DownloadString(uri);
+
+            try
+            {
+                return client.DownloadString(uri);
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         public static string Picture(object resource, PictureSize size)
@@ -102,6 +110,14 @@ namespace Instatus.Areas.Facebook
             }
         }
 
+        public static ICollection<string> Scope
+        {
+            get
+            {
+                return Credential.Claims.ToList();
+            }
+        }
+
         public static string ApplicationName
         {
             get
@@ -153,7 +169,7 @@ namespace Instatus.Areas.Facebook
                 applicationId ?? Facebook.ApplicationId,
                 applicationSecret ?? Facebook.ApplicationSecret);
 
-            return new WebClient().DownloadString(uri);
+            return new WebClient().DownloadString(uri).SubstringAfter("access_token=");
         }
 
         public static void AppRequest(object resource, string message, string applicationAccessToken = null)
@@ -242,15 +258,18 @@ namespace Instatus.Areas.Facebook
             dynamic facebookUser = Facebook.Request("me", accessToken);
             string emailAddress = facebookUser.email;
 
-            if (!emailAddress.IsEmpty())
+            if ((Facebook.Scope.Contains("email") && !emailAddress.IsEmpty()) || facebookUser.first_name != null)
             {
-                FormsAuthentication.SetAuthCookie(emailAddress, true);
+                var credential = new Credential(WebProvider.Facebook, facebookUser.id, accessToken);
+
+                string userName = emailAddress ?? credential.ToUrn();
+                
+                FormsAuthentication.SetAuthCookie(userName, true);
 
                 using (var db = BaseDataContext.Instance())
                 {
                     var user = db.Users.Include(u => u.Credentials).FirstOrDefault(u => u.EmailAddress == emailAddress);
-                    var credential = new Credential(WebProvider.Facebook, facebookUser.id, accessToken);
-
+                    
                     if (user == null)
                     {                       
                         string location = facebookUser.location == null ? string.Empty : facebookUser.location.name;
@@ -264,7 +283,7 @@ namespace Instatus.Areas.Facebook
                                 GivenName = facebookUser.first_name,
                                 FamilyName = facebookUser.last_name
                             },
-                            EmailAddress = facebookUser.email,
+                            EmailAddress = emailAddress,
                             Locale = facebookUser.locale,
                             Location = location,
                             Credentials = new List<Credential>() {

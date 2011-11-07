@@ -48,7 +48,7 @@ namespace Instatus
         
         public static UriBuilder Query(this UriBuilder uriBuilder, string key, object value)
         {
-            return Query(uriBuilder, new NameValueCollection() { { key, value.ToString()  } });
+            return Query(uriBuilder, new NameValueCollection() { { key, value == null ? string.Empty : value.ToString()  } });
         }
 
         public static UriBuilder QueryFormat(this UriBuilder uriBuilder, string key, string format, params object[] values)

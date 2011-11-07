@@ -83,8 +83,6 @@
     <Compile Include="Areas\Microsite\Controllers\TagController.cs" />
     <Compile Include="Areas\Typekit\Controllers\TypekitController.cs" />
     <Compile Include="Areas\Typekit\TypekitAreaRegistration.cs" />
-    <Compile Include="Areas\Facebook\Controllers\CallbackController.cs" />
-    <Compile Include="Areas\Facebook\Controllers\ChannelController.cs" />
     <Compile Include="Areas\Facebook\Controllers\FacebookController.cs" />
     <Compile Include="Areas\Facebook\Facebook.cs" />
     <Compile Include="Areas\Facebook\FacebookAttribute.cs" />
@@ -159,7 +157,6 @@
     <Compile Include="Web\EmbeddedVirtualPathProvider.cs" />
     <Compile Include="Web\DbMembershipProvider.cs" />
     <Compile Include="Web\DbRoleProvider.cs" />
-    <Compile Include="Areas\Facebook\Controllers\TabController.cs" />
     <Compile Include="Areas\Facebook\FacebookAreaRegistration.cs" />
     <Compile Include="Areas\Google\Controllers\GoogleController.cs" />
     <Compile Include="Areas\Google\GoogleAreaRegistration.cs" />

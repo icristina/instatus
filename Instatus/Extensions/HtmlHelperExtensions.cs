@@ -78,8 +78,11 @@ namespace Instatus
         public static MvcHtmlString ImageLink<T>(this HtmlHelper<T> html, string alternativeText, string contentPath, string actionName, string controllerName = null)
         {
             var urlHelper = new UrlHelper(html.ViewContext.RequestContext);
-            var markup = string.Format("<a href=\"{0}\"><img src=\"{1}\" alt=\"{2}\"/></a>", 
+            var routeData = html.ViewContext.RouteData;
+            var markup = string.Format("<a href=\"{0}\" class=\"{1} {2}\"><img src=\"{3}\" alt=\"{4}\"/></a>", 
                             urlHelper.Action(actionName, controllerName),
+                            (controllerName ?? routeData.ControllerName()).ToCamelCase(),
+                            actionName.ToCamelCase(),
                             urlHelper.Content(contentPath),
                             alternativeText);
 

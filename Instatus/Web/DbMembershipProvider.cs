@@ -161,8 +161,8 @@ namespace Instatus.Web
             
             using (var db = BaseDataContext.Instance())
             {
-                var encryptedPassword = password.ToEncrypted();
-                return db.Users.Any(u => u.EmailAddress == username && u.Password == encryptedPassword);
+                var user = db.GetUser(username);                
+                return user != null && user.Password == password.ToEncrypted();
             }
         }
     }

@@ -57,10 +57,10 @@ namespace Instatus.Web
         {
             using (var db = BaseDataContext.Instance())
             {
-                return db.Users
-                    .Where(u => u.EmailAddress == username)
-                    .SelectMany(u => u.Roles.Select(r => r.Name))
-                    .ToArray();
+                return db.GetUser(username)
+                        .Roles
+                        .Select(r => r.Name)
+                        .ToArray();
             }
         }
 

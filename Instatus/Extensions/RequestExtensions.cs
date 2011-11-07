@@ -37,5 +37,10 @@ namespace Instatus
         {
             return request.Files[0].InputStream;
         }
+
+        public static void RedirectToHome(this HttpResponseBase response)
+        {
+            response.Redirect("/");
+        }
     }
 }

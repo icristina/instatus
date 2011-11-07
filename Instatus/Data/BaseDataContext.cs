@@ -52,9 +52,28 @@ namespace Instatus.Data
 
         public User GetUser(IPrincipal user)
         {
-            return Users
+            return GetUser(user.Identity.Name);
+        }
+
+        public User GetUser(string userName)
+        {
+            if (userName.Contains("@"))
+            {
+                return Users
                     .Include(u => u.Credentials)
-                    .FirstOrDefault(u => u.EmailAddress == user.Identity.Name);
+                    .Include(u => u.Roles)
+                    .FirstOrDefault(u => u.EmailAddress == userName);
+            }
+
+            var parts = userName.ToList(':');
+
+            if (parts.Count != 3 || parts[0] != "urn")
+                return null;
+
+            var provider = parts[1].AsEnum<WebProvider>();
+            var uri = parts[2];
+
+            return GetUser(provider, uri);
         }
 
         public User GetCurrentUser()
@@ -67,6 +86,7 @@ namespace Instatus.Data
             var provider = webProvider.ToString();
             return Users
                     .Include(u => u.Credentials)
+                    .Include(u => u.Roles)
                     .FirstOrDefault(u => u.Credentials.Any(c => c.Provider == provider && c.Uri == uri));
         }
 

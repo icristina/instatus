@@ -34,5 +34,10 @@ namespace Instatus.Models
             var features = Features.ToList();
             return features.Any(f => string.Equals(f, name, StringComparison.OrdinalIgnoreCase));
         }
+
+        public string ToUrn()
+        {
+            return string.Format("urn:{0}:{1}", Provider.ToLower(), Uri.ToLower());
+        }
     }
 }

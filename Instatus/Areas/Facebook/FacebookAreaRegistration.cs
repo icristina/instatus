@@ -19,7 +19,7 @@ namespace Instatus.Areas.Facebook
             context.MapRoute(
                 "Facebook_channel",
                 "channel.html",
-                new { controller = "Channel", action = "Index" }
+                new { controller = "Facebook", action = "Channel" }
             );            
             
             context.MapRoute(

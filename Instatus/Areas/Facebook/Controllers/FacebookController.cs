@@ -17,5 +17,20 @@ namespace Instatus.Areas.Facebook.Controllers
             ViewData.Model = Context.GetApplicationCredentials(WebProvider.Facebook);
             return PartialView();
         }
+
+        [HttpPost]
+        public ActionResult Authenticated(string accessToken)
+        {
+            return Facebook.Authenticated(accessToken).IsEmpty() ?
+                ErrorResult() :
+                SuccessResult();
+        }
+
+        public ActionResult Channel()
+        {
+            var protocol = Request.Url.Scheme;
+            var html = string.Format("<script src='{0}://connect.facebook.net/en_US/all.js'></script>", protocol);
+            return Content(html);
+        }
     }
 }
