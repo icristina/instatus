@@ -1,0 +1,7 @@
+C:\Users\Andy\Documents\Visual Studio 2010\Projects\Instatus\Instatus\bin\Instatus.dll
+C:\Users\Andy\Documents\Visual Studio 2010\Projects\Instatus\Instatus\bin\Instatus.pdb
+C:\Users\Andy\Documents\Visual Studio 2010\Projects\Instatus\Instatus\bin\EntityFramework.dll
+C:\Users\Andy\Documents\Visual Studio 2010\Projects\Instatus\Instatus\bin\EntityFramework.xml
+C:\Users\Andy\Documents\Visual Studio 2010\Projects\Instatus\Instatus\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Andy\Documents\Visual Studio 2010\Projects\Instatus\Instatus\obj\Debug\Instatus.dll
+C:\Users\Andy\Documents\Visual Studio 2010\Projects\Instatus\Instatus\obj\Debug\Instatus.pdb

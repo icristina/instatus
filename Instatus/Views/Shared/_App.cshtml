@@ -1,0 +1,12 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";  
+}
+
+@section base_head {
+    @Html.Stylesheet("app.css", "stylesheet/less")
+    @Html.Scripts("less.js", "modernizr.js", "jquery.js", "respond.js", "swfobject.js")
+    @RenderSection("head", false)
+}
+
+@RenderBody()
+@Html.Scripts("app.js")

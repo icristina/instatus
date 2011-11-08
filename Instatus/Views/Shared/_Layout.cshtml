@@ -3,12 +3,9 @@
 <head>
     <meta charset="utf-8" />
     <title>@ViewBag.Title</title>
-    @Html.Stylesheet("app.css", "stylesheet/less")
-    @Html.Scripts("less.js", "modernizr.js", "jquery.js", "respond.js", "innershiv.js", "swfobject.js")
-    @RenderSection("head", false)
+    @RenderSection("base_head")
 </head>
 <body @Html.Attr("id", ViewContext.RouteData.ToUniqueId()) @Html.Attr("class", ViewContext.RouteData.ToClassName())>
     @RenderBody()
-    @Html.Scripts("app.js")    
 </body>
 </html>

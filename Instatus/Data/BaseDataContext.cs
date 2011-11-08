@@ -298,21 +298,6 @@ namespace Instatus.Data
                     .SortActivities(filter.Sort);
         }
 
-        public IOrderedQueryable<Activity> GetActivities(
-            string user = null,
-            string parent = null,
-            string[] expand = null,
-            DateTime? startDate = null)
-        {
-            return GetActivities(new WebExpression()
-            {
-                User = user,
-                Parent = parent,
-                Expand = expand,
-                StartDate = startDate
-            });
-        }
-
         public static string[] DefaultPageExpansions = new string[] { "Restrictions" };
 
         public T GetPage<T>(string slug, string[] customExpansions = null) where T : Page {
@@ -349,35 +334,6 @@ namespace Instatus.Data
                     .SortPages(filter.Sort);
         }
 
-        public IOrderedQueryable<Page> GetPages(
-            WebKind kind = WebKind.Page,
-            string[] uri = null,
-            WebSort sort = WebSort.Recency,
-            string tag = null,
-            string user = null,
-            string[] expand = null,
-            string parent = null,
-            DateTime? startDate = null,
-            string term = null,
-            string locale = null,
-            WebMode mode = WebMode.List)
-        {
-            return GetPages(new WebExpression()
-            {
-                Kind = kind,
-                Uri = uri,
-                Sort = sort,
-                Tag = tag,
-                User = user,
-                Expand = expand,
-                Parent = parent,
-                StartDate = startDate,
-                Term = term,
-                Locale = locale,
-                Mode = mode
-            });
-        }
-
         public IQueryable<User> GetUsers(WebExpression filter, WebStatus? status = WebStatus.Published)
         {
             return this
@@ -386,23 +342,6 @@ namespace Instatus.Data
                     .Expand(filter.Expand)
                     .FilterUsers(filter, status)
                     .SortUsers(filter.Sort);
-        }
-
-        public IQueryable<User> GetUsers(
-            int pageSize = 200, 
-            int pageIndex = 0, 
-            string[] uri = null, 
-            WebSort sort = WebSort.Alphabetical,
-            string[] expand = null)
-        {           
-            return GetUsers(new WebQuery()
-            {
-                Uri = uri,
-                PageSize = pageSize,
-                PageIndex = pageIndex,
-                Sort = sort,
-                Expand = expand
-            });
         }
 
         public void LoadPages(Stream stream)

@@ -1,13 +1,12 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <title>@ViewBag.Title</title>
-    @Html.Stylesheet("scaffold.css")
-    @Html.Scripts("modernizr.js", "jquery.js", "respond.js", "innershiv.js")
-    @RenderSection("head", false) 
-</head>
-<body @Html.Attr("id", ViewContext.RouteData.ToUniqueId()) @Html.Attr("class", ViewContext.RouteData.ToClassName())>
-    @RenderBody()
-    @Html.Scripts("scaffold.js")
-</body>
-</html>
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";  
+}
+
+@section base_head {
+    @Html.Stylesheet("scaffold.css", "stylesheet/less")
+    @Html.Scripts("less.js", "modernizr.js", "jquery.js", "respond.js")
+    @RenderSection("head", false)
+}
+
+@RenderBody()
+@Html.Scripts("scaffold.js")
