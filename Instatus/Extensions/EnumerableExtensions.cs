@@ -8,6 +8,7 @@ using System.Text;
 using System.Collections.Specialized;
 using Instatus.Web;
 using Instatus.Models;
+using System.Collections;
 
 namespace Instatus
 {
@@ -148,6 +149,22 @@ namespace Instatus
         public static IEnumerable<T> ByCreatedTime<T>(this IEnumerable<T> content) where T : IUserGeneratedContent
         {
             return content.OrderBy(c => c.CreatedTime);
+        }
+
+        // http://msmvps.com/blogs/matthieu/archive/2009/04/01/how-to-use-linq-extension-methods-on-non-generic-ienumerable.aspx
+        public static int Count(IEnumerable source)
+        {
+            int count = 0;
+            foreach (var item in source)
+                count++;
+            return count;
+        }
+
+        public static object First(IEnumerable source)
+        {
+            var enumerator = source.GetEnumerator();
+            enumerator.MoveNext();
+            return enumerator.Current;
         }
     }
 }

@@ -49,6 +49,12 @@ namespace Instatus
             return string.IsNullOrEmpty(text) ? string.Empty : text.Substring(0, 1).ToUpper() + text.Substring(1).ToLower();
         }
 
+        // http://stackoverflow.com/questions/155303/net-how-can-you-split-a-caps-delimited-string-into-an-array
+        public static string ToCapitalizedDelimited(this string text)
+        {
+            return Regex.Replace(text, "(\\B[A-Z])", " $1"); // convert CapitalLetters to Capital Letters
+        }
+
         public static string RemoveDoubleSpaces(this string text)
         {
             return Regex.Replace(text, @"\s{2,}", " ").Trim();

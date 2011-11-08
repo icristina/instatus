@@ -11,6 +11,7 @@ using System.Data;
 using System.Data.OleDb;
 using System.Data.Odbc;
 using System.Data.Common;
+using System.Collections;
 
 namespace Instatus.Data
 {
@@ -50,6 +51,13 @@ namespace Instatus.Data
         public static string TimeStamp()
         {
             return DateTime.Now.ToString("yyyyMMddHHmmssffffff");
+        }
+
+        public static DateTime DateOfBirth(int minAge = 16)
+        {
+            var startDate = DateTime.Today.AddYears(-80);
+            var endDate = DateTime.Today.AddYears(-minAge);
+            return Date(startDate, endDate);
         }
 
         public static DateTime Date(DateTime startDate, DateTime endDate)
@@ -124,6 +132,26 @@ namespace Instatus.Data
             return dataTable;
         }
 
+        public static void SaveCsv(IEnumerable records, Stream stream)
+        {
+            if (records == null || CollectionExtensions.Count(records) == 0)
+                return;
+
+            using (var writer = new CsvFileWriter(stream))
+            {
+                var properties = CollectionExtensions.First(records).GetType().GetProperties();
+                var header = properties.Select(p => p.Name.ToCapitalizedDelimited()).ToList();
+
+                writer.WriteRow(header);
+
+                foreach (var record in records)
+                {
+                    var fields = properties.Select(p => p.GetValue(record, null).AsString()).ToList();
+                    writer.WriteRow(fields);                
+                }
+            }
+        }
+
         public static string Password(int length = 6, int specialCharacters = 1)
         {
             return Membership.GeneratePassword(length, specialCharacters);
@@ -196,6 +224,13 @@ namespace Instatus.Data
         internal class CsvRow : List<string>
         {
             public string LineText { get; set; }
+
+            public CsvRow() { }
+            
+            public CsvRow(List<string> items)
+            {
+                this.AddRange(items);
+            }
         }
 
         internal class CsvFileWriter : StreamWriter
@@ -205,9 +240,9 @@ namespace Instatus.Data
             {
             }
 
-            public CsvFileWriter(string filename)
-                : base(filename)
+            public void WriteRow(List<string> fields)
             {
+                WriteRow(new CsvRow(fields));
             }
 
             public void WriteRow(CsvRow row)

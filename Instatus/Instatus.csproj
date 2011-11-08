@@ -80,6 +80,7 @@
     <Compile Include="Areas\Auth\Controllers\AccountController.cs" />
     <Compile Include="Areas\Microsite\Controllers\AdminController.cs" />
     <Compile Include="Areas\Microsite\Controllers\BlogPostController.cs" />
+    <Compile Include="Areas\Microsite\Controllers\ExportController.cs" />
     <Compile Include="Areas\Microsite\Controllers\UserController.cs" />
     <Compile Include="Areas\Microsite\Controllers\TagController.cs" />
     <Compile Include="Areas\Typekit\Controllers\TypekitController.cs" />
@@ -94,6 +95,7 @@
     <Compile Include="Commands\AwardCommand.cs" />
     <Compile Include="Commands\StatusCommand.cs" />
     <Compile Include="Commands\SpamCommand.cs" />
+    <Compile Include="Data\IDataExport.cs" />
     <Compile Include="Data\IPayload.cs" />
     <Compile Include="Data\LimitedQueue.cs" />
     <Compile Include="Data\RecordResult.cs" />
@@ -378,6 +380,7 @@
     <EmbeddedResource Include="Areas\Typekit\Views\Web.config" />
     <EmbeddedResource Include="Areas\Microsite\Views\Web.config" />
     <EmbeddedResource Include="Areas\Microsite\Views\Admin\Index.cshtml" />
+    <EmbeddedResource Include="Areas\Microsite\Views\Export\Index.cshtml" />
     <None Include="README.md" />
     <EmbeddedResource Include="Views\Shared\Entry.cshtml" />
     <EmbeddedResource Include="Views\Shared\DisplayTemplates\LinkList.cshtml" />

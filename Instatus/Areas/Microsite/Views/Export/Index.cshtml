@@ -1,0 +1,17 @@
+﻿@model SelectList
+
+@{
+    Layout = "~/Views/Shared/_Scaffold.cshtml";    
+    ViewBag.Title = "Export";
+}
+
+<h1>Export</h1>
+
+@using (Html.BeginForm("File", "Export"))
+{
+    <fieldset>
+        <legend>Select data</legend>
+        @Html.DropDownList("name", Model)
+    </fieldset>
+    @Html.SubmitButton()
+}
