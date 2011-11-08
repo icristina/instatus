@@ -80,6 +80,7 @@
     <Compile Include="Areas\Auth\Controllers\AccountController.cs" />
     <Compile Include="Areas\Microsite\Controllers\AdminController.cs" />
     <Compile Include="Areas\Microsite\Controllers\BlogPostController.cs" />
+    <Compile Include="Areas\Microsite\Controllers\UserController.cs" />
     <Compile Include="Areas\Microsite\Controllers\TagController.cs" />
     <Compile Include="Areas\Typekit\Controllers\TypekitController.cs" />
     <Compile Include="Areas\Typekit\TypekitAreaRegistration.cs" />

@@ -232,6 +232,12 @@ namespace Instatus.Areas.Facebook
             return signedRequest != null && signedRequest.page != null && signedRequest.page.liked == true;
         }
 
+        public static bool IsPageAdmin()
+        {
+            var signedRequest = SignedRequest();
+            return signedRequest != null && signedRequest.page != null && signedRequest.page.admin == true;
+        }
+
         public static List<string> Friends(string accessToken)
         {
             var ids = new List<string>();
