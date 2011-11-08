@@ -77,6 +77,7 @@ namespace Instatus.Controllers
                 var model = set.Find(id);
                 viewModel.Save(model);
                 SaveChanges();
+
                 return RedirectToAction("Details", new { id = id });
             }
 
@@ -109,6 +110,7 @@ namespace Instatus.Controllers
                 viewModel.Save(model);
                 set.Add(model);
                 SaveChanges();
+
                 return RedirectToAction("Details", new { id = model.GetKey() });
             }
 

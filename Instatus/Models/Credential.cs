@@ -39,5 +39,12 @@ namespace Instatus.Models
         {
             return string.Format("urn:{0}:{1}", Provider.ToLower(), Uri.ToLower());
         }
+
+        public Credential WithEnvironment(WebEnvironment environment)
+        {
+            var credential = (Credential)this.MemberwiseClone();
+            credential.Environment = environment.ToString();
+            return credential;
+        }
     }
 }

@@ -47,16 +47,19 @@ namespace Instatus.Controllers
             return RedirectToIndex();
         }
 
-        public const string ReturnUrlParameter = "returnUrl";
-
         public ActionResult RedirectToIndex()
         {
-            var returnUrl = Request.Params[ReturnUrlParameter];
+            return RedirectToAction("Index", null);
+        }
+
+        public new ActionResult RedirectToAction(string actionName, object values = null)
+        {
+            var returnUrl = Request.Params[HtmlConstants.ReturnUrl];
             
             if (!returnUrl.IsEmpty())
                 return Redirect(returnUrl);
             
-            return RedirectToAction("Index");
+            return base.RedirectToAction(actionName, values);
         }
 
         public ActionResult RedirectToHome()
