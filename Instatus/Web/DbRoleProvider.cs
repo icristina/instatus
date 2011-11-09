@@ -57,8 +57,11 @@ namespace Instatus.Web
         {
             using (var db = BaseDataContext.Instance())
             {
-                return db.GetUser(username)
-                        .Roles
+                var user = db.GetUser(username);
+                
+                if(user == null) return null;
+
+                return user.Roles
                         .Select(r => r.Name)
                         .ToArray();
             }
