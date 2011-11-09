@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
+using Instatus.Web;
 
 namespace Instatus.Models
 {
@@ -19,6 +20,14 @@ namespace Instatus.Models
         public override string ToString()
         {
             return Uri;
+        }
+
+        public Domain() { }
+
+        public Domain(string uri, WebEnvironment environment = WebEnvironment.Production)
+        {
+            Uri = uri;
+            Environment = environment.ToString();
         }
     }
 }

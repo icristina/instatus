@@ -9,7 +9,7 @@
             status = true,
             cookie = true,
             xfbml = Model.HasFeature("xfbml"),
-            channelUrl = WebPath.Absolute(Url.Action("Index", "Channel")),
+            channelUrl = WebPath.Absolute(Url.Action("Channel", "Facebook", new { area = "Facebook" })),
             oauth = true
         },
         scope = Model.Claims 

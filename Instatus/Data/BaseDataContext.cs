@@ -100,6 +100,7 @@ namespace Instatus.Data
         public List<MailAddress> GetMailAddresses(WebRole webRole)
         {
             return GetUsers(webRole)
+                    .ToList()
                     .Select(u => new MailAddress(u.EmailAddress, u.FullName))
                     .ToList();
         }

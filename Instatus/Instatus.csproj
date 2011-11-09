@@ -116,7 +116,7 @@
     <Compile Include="Queries\PageQueries.cs" />
     <Compile Include="Services\MarkupTemplateService.cs" />
     <Compile Include="Services\IZipService.cs" />
-    <Compile Include="Services\MessageBus.cs" />
+    <Compile Include="Services\PubSub.cs" />
     <Compile Include="Services\SimpleTemplateService.cs" />
     <Compile Include="Web\BaseHttpApplication.cs" />
     <Compile Include="Web\DbResourceReader.cs" />
