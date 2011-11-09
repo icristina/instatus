@@ -111,6 +111,7 @@ namespace Instatus.Controllers
                 set.Add(model);
                 SaveChanges();
 
+
                 return RedirectToAction("Details", new { id = model.GetKey() });
             }
 

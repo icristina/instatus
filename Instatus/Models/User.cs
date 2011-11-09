@@ -31,6 +31,9 @@ namespace Instatus.Models
 
         public string Status { get; set; }
 
+        public virtual Source Source { get; set; }
+        public int? SourceId { get; set; }
+
         public virtual ICollection<Role> Roles { get; set; }
         public virtual ICollection<Credential> Credentials { get; set; }
         public virtual ICollection<Page> Pages { get; set; }

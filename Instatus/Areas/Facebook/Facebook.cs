@@ -15,11 +15,20 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Data.Entity;
 using System.Configuration;
+using Instatus.Services;
 
 namespace Instatus.Areas.Facebook
 {
     public static class Facebook
     {
+        static Facebook()
+        {
+            PubSub.Provider.Subscribe<ApplicationReset>(a =>
+            {
+                credential = null;
+            });
+        }
+        
         private static Uri Route(object resource, object connection)
         {
             var route = connection.IsEmpty() ?
@@ -91,7 +100,7 @@ namespace Instatus.Areas.Facebook
         public static Credential Credential
         {
             get
-            {
+            {               
                 if (credential.IsEmpty())
                 {
                     using (var db = BaseDataContext.Instance())

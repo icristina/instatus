@@ -63,7 +63,7 @@ namespace Instatus.Areas.Microsite.Controllers
         }
     }
     
-    [Authorize(Roles = "Administrator")]
+    [Authorize(Roles = "Editor")]
     public class BlogPostController : ScaffoldController<BlogPostViewModel, Post, BaseDataContext, int>
     {
         public override void ConfigureWebView(WebView<Post> webView)

@@ -13,12 +13,13 @@ namespace Instatus.Models
     public class Message : IUserGeneratedContent, IExtensionPoint
     {
         public int Id { get; set; }
-        public string ProviderToken { get; set; }
-        [AllowHtml]
         public string Body { get; set; }
         public string Sender { get; set; }
         public DateTime CreatedTime { get; set; }
         public string Status { get; set; }
+
+        public virtual Source Source { get; set; }
+        public int? SourceId { get; set; }
 
         public virtual User User { get; set; }
         public int? UserId { get; set; }

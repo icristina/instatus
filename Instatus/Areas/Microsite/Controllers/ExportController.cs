@@ -13,7 +13,7 @@ using System.ComponentModel.Composition;
 
 namespace Instatus.Areas.Microsite.Controllers
 {
-    [Authorize(Roles = "Administrator,Moderator")]
+    [Authorize(Roles = "Moderator")]
     [Export]
     [PartCreationPolicy(CreationPolicy.NonShared)]
     public class ExportController : BaseController<BaseDataContext>

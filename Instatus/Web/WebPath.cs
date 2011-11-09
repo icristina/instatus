@@ -4,11 +4,20 @@ using System.Linq;
 using System.Web;
 using System.Configuration;
 using Instatus.Data;
+using Instatus.Services;
 
 namespace Instatus.Web
 {
     public static class WebPath
     {
+        static WebPath()
+        {
+            PubSub.Provider.Subscribe<ApplicationReset>(a =>
+            {
+                baseUri = null;
+            });
+        }                
+        
         private static Uri baseUri;
 
         public static Uri BaseUri

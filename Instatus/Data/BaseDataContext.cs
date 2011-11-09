@@ -14,6 +14,7 @@ using System.IO;
 using Instatus;
 using System.Data.Objects;
 using Instatus.Queries;
+using System.Net.Mail;
 
 namespace Instatus.Data
 {   
@@ -88,6 +89,19 @@ namespace Instatus.Data
                     .Include(u => u.Credentials)
                     .Include(u => u.Roles)
                     .FirstOrDefault(u => u.Credentials.Any(c => c.Provider == provider && c.Uri == uri));
+        }
+
+        public IQueryable<User> GetUsers(WebRole webRole)
+        {
+            var roleName = webRole.ToString();
+            return Users.Where(u => u.Roles.Any(r => r.Name == roleName));
+        }
+
+        public List<MailAddress> GetMailAddresses(WebRole webRole)
+        {
+            return GetUsers(webRole)
+                    .Select(u => new MailAddress(u.EmailAddress, u.FullName))
+                    .ToList();
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

@@ -19,7 +19,7 @@ namespace Instatus.Areas.Microsite.Controllers
         public string Name { get; set; }
     }
     
-    [Authorize(Roles = "Administrator")]
+    [Authorize(Roles = "Editor")]
     public class TagController : ScaffoldController<TagViewModel, Tag, BaseDataContext, int>
     {
         public override void ConfigureWebView(WebView<Tag> webView)

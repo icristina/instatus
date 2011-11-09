@@ -80,6 +80,8 @@
     <Compile Include="Areas\Auth\Controllers\AccountController.cs" />
     <Compile Include="Areas\Microsite\Controllers\AdminController.cs" />
     <Compile Include="Areas\Microsite\Controllers\BlogPostController.cs" />
+    <Compile Include="Areas\Microsite\Controllers\DomainController.cs" />
+    <Compile Include="Areas\Microsite\Controllers\CredentialController.cs" />
     <Compile Include="Areas\Microsite\Controllers\ExportController.cs" />
     <Compile Include="Areas\Microsite\Controllers\UserController.cs" />
     <Compile Include="Areas\Microsite\Controllers\TagController.cs" />
@@ -114,6 +116,7 @@
     <Compile Include="Queries\PageQueries.cs" />
     <Compile Include="Services\MarkupTemplateService.cs" />
     <Compile Include="Services\IZipService.cs" />
+    <Compile Include="Services\MessageBus.cs" />
     <Compile Include="Services\SimpleTemplateService.cs" />
     <Compile Include="Web\BaseHttpApplication.cs" />
     <Compile Include="Web\DbResourceReader.cs" />
