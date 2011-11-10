@@ -140,7 +140,8 @@ namespace Instatus
                 if (!(exclusions != null && exclusions.Contains(property.Name)) && destination != null && destination.CanWrite)
                 {
                     // if int, string or enum set value, if second level in object graph always set value even if complex type
-                    if ((destination.PropertyType.IsSimpleType() || !recursive) && property.PropertyType.IsAssignableFrom(destination.PropertyType))
+                    // nullable types should evaluate to true if check whether destination is assignable from property
+                    if ((destination.PropertyType.IsSimpleType() || !recursive) && destination.PropertyType.IsAssignableFrom(property.PropertyType))
                     {
                         destination.SetValue(target, property.GetValue(source, null), null);
                     }

@@ -32,12 +32,14 @@ namespace Instatus.Areas.Microsite.Controllers
         public string Description { get; set; }
 
         [Column("Tags")]
+        [Display(Name = "Tags")]
         public MultiSelectList TagsList { get; set; }
 
         [ScaffoldColumn(false)]
         public int[] Tags { get; set; }
 
         [Column("Status")]
+        [Display(Name = "Status")]
         public SelectList StatusList { get; set; }
 
         [ScaffoldColumn(false)]
@@ -58,7 +60,7 @@ namespace Instatus.Areas.Microsite.Controllers
 
         public override void Databind()
         {
-            StatusList = new SelectList(new string[] { "Published", "Draft" }, Status);
+            StatusList = new SelectList(new WebStatus[] { WebStatus.Published, WebStatus.Draft }.ToStringList(), Status);
             TagsList = new MultiSelectList(Context.Tags.ToList(), "Id", "Name", Tags);
         }
     }

@@ -151,6 +151,16 @@ namespace Instatus
             return content.OrderBy(c => c.CreatedTime);
         }
 
+        public static List<string> ToStringList(this IEnumerable set)
+        {
+            var list = new List<string>();
+
+            foreach (var item in set)
+                list.Add(item.ToString());
+
+            return list;
+        }
+
         // http://msmvps.com/blogs/matthieu/archive/2009/04/01/how-to-use-linq-extension-methods-on-non-generic-ienumerable.aspx
         public static int Count(IEnumerable source)
         {

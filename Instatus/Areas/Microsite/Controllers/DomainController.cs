@@ -18,7 +18,8 @@ namespace Instatus.Areas.Microsite.Controllers
         public string Environment { get; set; }
         public string Uri { get; set; }
 
-        [Column("Application")]
+        [Column("ApplicationId")]
+        [Display(Name = "Application")]
         public SelectList ApplicationList { get; set; }
 
         [ScaffoldColumn(false)]

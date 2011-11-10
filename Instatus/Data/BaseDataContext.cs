@@ -270,6 +270,15 @@ namespace Instatus.Data
                     .FirstOrDefault(s => s.Provider == provider && s.Application != null && s.Environment == environment);
         }
 
+        public Message GetApplicationMessage()
+        {
+            var published = WebStatus.Published.ToString();
+            return Messages
+                    .Where(m => m.Page is Application && m.Status == published)
+                    .OrderByDescending(m => m.CreatedTime)
+                    .FirstOrDefault();
+        }
+
         public Offer GetLatestOffer()
         {
             var now = DateTime.Now;

@@ -18,12 +18,16 @@ namespace Instatus.Areas.Microsite.Controllers
     {
         public string Name { get; set; }
         public string Uri { get; set; }
+
+        [Display(Name = "Secret")]
         public string UpdatedSecret { get; set; }
+        
         public string Environment { get; set; }
         public string Claims { get; set; }
         public string Provider { get; set; }
 
-        [Column("Application")]
+        [Column("ApplicationId")]
+        [Display(Name = "Application")]
         public SelectList ApplicationList { get; set; }
 
         [ScaffoldColumn(false)]

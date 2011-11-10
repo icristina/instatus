@@ -30,6 +30,7 @@ namespace Instatus.Areas.Microsite.Controllers
         public string UnencryptedPassword { get; set; }
 
         [Column("Roles")]
+        [Display(Name = "Roles")]
         public MultiSelectList RoleList { get; set; }
 
         [ScaffoldColumn(false)]
