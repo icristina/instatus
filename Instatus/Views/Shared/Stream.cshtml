@@ -11,30 +11,32 @@
 }
 
 <section @Html.Attr(sectionAttributes)>
-    @if (Model.Query.Mode == WebMode.PagedList)
-    {
-        <nav>
-            @Html.Paging()
-        </nav>
-    }
-    @if(section != null) {
-        @Html.Tag("h1", section.Heading)
-        @Html.Tag("h2", section.SubHeading)      
-    }
-    @foreach (Instatus.Models.Page page in Model)
-    {
-        <article id="@page.Id">
-            <a href="@Url.RouteUrl(Instatus.Areas.Microsite.MicrositeAreaRegistration.PageRouteName, new { slug = page.Slug })">
-                <h1>@page.Name</h1>
-                <dl>
-                    <dd>@WebPhrase.Published</dd>
-                    <dt>@page.CreatedTime.ToString()</dt>
-                    @if(page.User != null) {
-                        <dt>@WebPhrase.Author</dt>
-                        <dd>@page.User.FullName</dd>
-                    }
-                </dl>      
-            </a>
-        </article>
-    }
+    <div>
+        @if (Model.Query.Mode == WebMode.PagedList)
+        {
+            <nav>
+                @Html.Paging()
+            </nav>
+        }
+        @if(section != null) {
+            @Html.Tag("h1", section.Heading)
+            @Html.Tag("h2", section.SubHeading)      
+        }
+        @foreach (Instatus.Models.Page page in Model)
+        {
+            <article id="@page.Id">
+                <a href="@Url.RouteUrl(Instatus.Areas.Microsite.MicrositeAreaRegistration.PageRouteName, new { slug = page.Slug })">
+                    <h1>@page.Name</h1>
+                    <dl>
+                        <dd>@WebPhrase.Published</dd>
+                        <dt>@page.CreatedTime.ToString()</dt>
+                        @if(page.User != null) {
+                            <dt>@WebPhrase.Author</dt>
+                            <dd>@page.User.FullName</dd>
+                        }
+                    </dl>      
+                </a>
+            </article>
+        }    
+    </div>
 </section>

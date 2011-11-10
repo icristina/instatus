@@ -2,7 +2,9 @@
 
 @helper Figure(WebLink webLink, Dictionary<string, object> attributes) {
     <figure @Html.Attr(attributes)>
-        <img src="@WebPath.Absolute(webLink.Uri)" />
+        <span>
+            <img src="@WebPath.Absolute(webLink.Uri)" />        
+        </span>
         <figcaption>
             @Html.Tag("b", webLink.Title)
             @webLink.Description

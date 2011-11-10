@@ -271,11 +271,12 @@ namespace Instatus.Areas.Facebook
         public static User Authenticated(string accessToken)
         {
             dynamic facebookUser = Facebook.Request("me", accessToken);
+            string facebookId = facebookUser.id;
             string emailAddress = facebookUser.email;
 
             if ((Facebook.Scope.Contains("email") && !emailAddress.IsEmpty()) || facebookUser.first_name != null)
             {
-                var credential = new Credential(WebProvider.Facebook, facebookUser.id, accessToken);
+                var credential = new Credential(WebProvider.Facebook, facebookId, accessToken);
 
                 string userName = emailAddress ?? credential.ToUrn();
                 
@@ -283,7 +284,7 @@ namespace Instatus.Areas.Facebook
 
                 using (var db = BaseDataContext.Instance())
                 {
-                    var user = db.Users.Include(u => u.Credentials).FirstOrDefault(u => u.EmailAddress == emailAddress);
+                    var user = db.GetUser(WebProvider.Facebook, facebookId) ?? db.GetUser(emailAddress);
                     
                     if (user == null)
                     {                       

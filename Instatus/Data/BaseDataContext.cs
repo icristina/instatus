@@ -58,6 +58,9 @@ namespace Instatus.Data
 
         public User GetUser(string userName)
         {
+            if (userName.IsEmpty())
+                return null;
+            
             if (userName.Contains("@"))
             {
                 return Users
@@ -131,6 +134,8 @@ namespace Instatus.Data
 
             user.HasMany(u => u.Friends).WithMany(u => u.Relationships).Map(c => c.ToTable("Friends"));
             user.HasMany(u => u.Activities).WithOptional(a => a.User);
+            user.HasOptional(u => u.Source);
+            user.HasMany(u => u.Credentials).WithOptional(c => c.User);
         }
 
         public void SetStatus<T>(int id, WebStatus status) where T : class, IUserGeneratedContent
