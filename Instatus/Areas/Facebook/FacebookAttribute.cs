@@ -11,18 +11,13 @@ namespace Instatus.Areas.Facebook
     {
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            if (!HttpContext.Current.User.Identity.IsAuthenticated)
+            var signedRequest = Facebook.SignedRequest();
+
+            if (signedRequest != null && signedRequest.oauth_token != null)
             {
-                var signedRequest = Facebook.SignedRequest();
-
-                if (signedRequest != null && signedRequest.oauth_token != null)
-                {
-                    Facebook.Authenticated(signedRequest.oauth_token);
-                    HttpContext.Current.User.RefreshFromFormsCookie();
-                }
+                Facebook.Authenticated(signedRequest.oauth_token);
+                HttpContext.Current.User.RefreshFromFormsCookie();
             }
-
-            base.OnActionExecuting(filterContext);
         }
     }
 }

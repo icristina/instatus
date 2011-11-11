@@ -34,26 +34,22 @@ namespace Instatus.Areas.Microsite.Controllers
             }
 
             Context.LoadPages(stream);
-            
-            return RedirectToIndex();
+
+            ViewData.Model = new List<WebParameter>()
+            {
+                new WebParameter("Loaded", DateTime.Now.ToString())
+            };
+
+            return View("Index");
         }
 
         public ActionResult GenerateHash(string value, string salt)
         {
             ViewData.Model = new List<WebParameter>()
             {
-                new WebParameter() {
-                    Name = "Value",
-                    Content = value
-                },
-                new WebParameter() {
-                    Name = "Secret",
-                    Content = salt
-                },
-                new WebParameter() {
-                    Name = "Hash",
-                    Content = value.ToEncrypted(salt)
-                }
+                new WebParameter("Value", value),
+                new WebParameter("Secret", salt),
+                new WebParameter("Hash", value.ToEncrypted(salt))
             };
 
             return View("Index");
@@ -63,14 +59,8 @@ namespace Instatus.Areas.Microsite.Controllers
         {
             ViewData.Model = new List<WebParameter>()
             {
-                new WebParameter() {
-                    Name = "Date",
-                    Content = date.ToString()
-                },
-                new WebParameter() {
-                    Name = "Unix Timestamp",
-                    Content = date.ToUnixTimestamp().ToString()
-                }
+                new WebParameter("Date", date.ToString()),
+                new WebParameter("Unix Timestamp", date.ToUnixTimestamp().ToString())
             };
 
             return View("Index");
@@ -79,6 +69,18 @@ namespace Instatus.Areas.Microsite.Controllers
         public ActionResult ThrowError(string message)
         {
             throw new Exception(message);
+        }
+
+        public ActionResult ApplicationReset()
+        {
+            PubSub.Provider.Publish(new ApplicationReset());
+            
+            ViewData.Model = new List<WebParameter>()
+            {
+                new WebParameter("Refreshed", DateTime.Now.ToString())
+            };
+            
+            return View("Index");
         }
     }
 }

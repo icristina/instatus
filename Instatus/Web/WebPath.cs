@@ -67,16 +67,21 @@ namespace Instatus.Web
             
             var uri = new Uri(absoluteUrl);
             var uriBuilder = new UriBuilder(uri);
+            var port = HttpContext.Current.Request.Url.Port;
 
             if (HttpContext.Current.Request.IsSecureConnection)
             {
                 uriBuilder.Scheme = "https";
-                uriBuilder.Port = 443;
+
+                if(port == 443)
+                    uriBuilder.Port = 443;
             }
             else
             {
                 uriBuilder.Scheme = "http";
-                uriBuilder.Port = 80;
+
+                if (port == 80)
+                    uriBuilder.Port = 80;
             }
 
             return uriBuilder.Uri.ToString(); // user uri property to ensure :80 or :443 default ports not returned

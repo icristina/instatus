@@ -60,3 +60,9 @@
     </fieldset>
     @Html.SubmitButton()
 }
+
+@using (Html.BeginMultipartForm("ApplicationReset"))
+{
+    <h2>Application Reset</h2>
+    @Html.SubmitButton()
+}

@@ -12,6 +12,12 @@ namespace Instatus.Areas.Facebook.Controllers
 {
     public class FacebookController : BaseController<BaseDataContext>
     {
+        [Authorize(Roles = "Administrator")]
+        public ActionResult Index()
+        {
+            return View();
+        }
+        
         public ActionResult RegisterScripts()
         {
             ViewData.Model = Context.GetApplicationCredentials(WebProvider.Facebook);
