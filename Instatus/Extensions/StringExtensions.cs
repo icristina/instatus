@@ -11,6 +11,7 @@ using System.Web.Helpers;
 using System.Text;
 using System.Web.Mvc;
 using Instatus.Web;
+using System.Web.Security;
 
 namespace Instatus
 {
@@ -73,6 +74,11 @@ namespace Instatus
         public static string ToEncrypted(this string text)
         {           
             return Crypto.Hash(text);
+        }
+
+        public static string ToEncrypted(this string text, string salt)
+        {
+            return FormsAuthentication.HashPasswordForStoringInConfigFile(text + salt, "md5");
         }
 
         public static string SubstringAfter(this string text, string match)

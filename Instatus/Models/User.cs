@@ -58,7 +58,7 @@ namespace Instatus.Models
         public User()
         {
             Password = Generator.Password().ToEncrypted();
-            CreatedTime = DateTime.Now;
+            CreatedTime = DateTime.UtcNow;
             Name = new Name();
             Extensions = new ExpandoObject();
             Status = WebStatus.Approved.ToString();

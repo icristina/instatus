@@ -158,7 +158,7 @@ namespace Instatus.Data
             if (!LoggingEnabled)
                 return;
             
-            var now = DateTime.Now;
+            var now = DateTime.UtcNow;
             var user = GetCurrentUser();
             var description = resource is string ? resource : string.Format("{0} {1}", ObjectContext.GetObjectType(resource.GetType()).Name, resource.GetKey());
             var message = string.Format("{0} {1} for {2} at {3}",
@@ -286,7 +286,7 @@ namespace Instatus.Data
 
         public Offer GetLatestOffer()
         {
-            var now = DateTime.Now;
+            var now = DateTime.UtcNow;
             var published = WebStatus.Published.ToString();
             
             return Pages.OfType<Offer>()

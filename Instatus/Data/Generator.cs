@@ -50,7 +50,7 @@ namespace Instatus.Data
 
         public static string TimeStamp()
         {
-            return DateTime.Now.ToString("yyyyMMddHHmmssffffff");
+            return DateTime.UtcNow.ToString("yyyyMMddHHmmssffffff");
         }
 
         public static DateTime DateOfBirth(int minAge = 16)
@@ -68,12 +68,12 @@ namespace Instatus.Data
 
         public static DateTime HistoricalDate(int months)
         {
-            return Date(DateTime.Now.AddMonths(-months), DateTime.Now);
+            return Date(DateTime.UtcNow.AddMonths(-months), DateTime.UtcNow);
         }
 
         public static DateTime FutureDate(int months)
         {
-            return Date(DateTime.Now, DateTime.Now.AddMonths(months));
+            return Date(DateTime.UtcNow, DateTime.UtcNow.AddMonths(months));
         }
 
         public static string LoadTextFile(string virtualPath)

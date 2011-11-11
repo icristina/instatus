@@ -24,7 +24,7 @@ namespace Instatus.Models
 
         public Log()
         {
-            CreatedTime = DateTime.Now;
+            CreatedTime = DateTime.UtcNow;
         }
 
         public override string ToString()

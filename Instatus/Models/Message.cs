@@ -43,7 +43,7 @@ namespace Instatus.Models
 
         public Message()
         {
-            CreatedTime = DateTime.Now;
+            CreatedTime = DateTime.UtcNow;
         }
 
         public override string ToString()

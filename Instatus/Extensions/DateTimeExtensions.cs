@@ -83,7 +83,7 @@ namespace Instatus
         // http://www.blackbeltcoder.com/Articles/time/a-friendly-datetime-formatter
         public static string ToRelativeString(this DateTime date)
         {
-            var now = DateTime.Now;
+            var now = DateTime.UtcNow;
             var timespan = now.Subtract(date);
 
             if (timespan.TotalDays < 1)

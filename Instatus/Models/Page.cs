@@ -95,9 +95,9 @@ namespace Instatus.Models
 
         public Page()
         {
-            CreatedTime = DateTime.Now;
-            UpdatedTime = DateTime.Now;
-            PublishedTime = DateTime.Now;
+            CreatedTime = DateTime.UtcNow;
+            UpdatedTime = DateTime.UtcNow;
+            PublishedTime = DateTime.UtcNow;
             Extensions = new ExpandoObject();
             Status = WebStatus.Published.ToString();
             Document = new WebDocument();

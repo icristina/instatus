@@ -1,0 +1,9 @@
+﻿@model IEnumerable<Instatus.Web.WebParameter>
+
+@if (!Model.IsEmpty())
+{
+    foreach (var parameter in Model)
+    {
+        <meta name="@parameter.Name" content="@parameter.Content" />
+    }
+}

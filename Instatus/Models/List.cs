@@ -24,7 +24,7 @@ namespace Instatus.Models
 
         public List()
         {
-            CreatedTime = DateTime.Now;
+            CreatedTime = DateTime.UtcNow;
         }
 
         public List(WebListType type, User user) : this()

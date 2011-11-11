@@ -1,12 +1,17 @@
-﻿@{
+﻿@model IEnumerable<Instatus.Web.WebParameter>
+
+@{
     Layout = "~/Views/Shared/_Scaffold.cshtml";    
     ViewBag.Title = "Admin";
 }
+
+@Html.Partial("Parameters", Model)
 
 <h1>Admin</h1>
 
 @using (Html.BeginMultipartForm("LoadPages"))
 {
+    <h2>Load Pages</h2>
     <fieldset>
         <legend>Server</legend>
         @Html.TextBox("path")
@@ -14,6 +19,30 @@
     <fieldset>
         <legend>Upload</legend>
         @Html.FileInput()
+    </fieldset>
+    @Html.SubmitButton()
+}
+
+@using (Html.BeginMultipartForm("GenerateHash"))
+{
+    <h2>Generate Hash</h2>
+    <fieldset>
+        <legend>Value</legend>
+        @Html.TextBox("value")
+    </fieldset>
+    <fieldset>
+        <legend>Salt</legend>
+        @Html.TextBox("salt")
+    </fieldset>
+    @Html.SubmitButton()
+}
+
+@using (Html.BeginMultipartForm("GenerateUnixTimestamp"))
+{
+    <h2>Generate Unix Timestamp</h2>
+    <fieldset>
+        <legend>Date</legend>
+        @Html.TextBox("date", DateTime.UtcNow)
     </fieldset>
     @Html.SubmitButton()
 }

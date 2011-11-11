@@ -60,6 +60,26 @@ namespace Instatus.Web
             return Absolute(BaseUri, virtualPath);
         }
 
+        public static string MatchProtocol(string absoluteUrl)
+        {
+            if (HttpContext.Current.Request == null)
+                return absoluteUrl;            
+            
+            var uri = new Uri(absoluteUrl);
+            var uriBuilder = new UriBuilder(uri);
+
+            if (HttpContext.Current.Request.IsSecureConnection)
+            {
+                uriBuilder.Scheme = "https";
+            }
+            else
+            {
+                uriBuilder.Scheme = "http";
+            }
+
+            return uriBuilder.ToString();
+        }
+
         public static string Resize(WebSize size, string virtualPath)
         {
             var extensionStartIndex = virtualPath.LastIndexOf('.');

@@ -17,7 +17,7 @@ namespace Instatus.Areas.Microsite.Controllers
             var published = Context.Applications.First().PublishedTime;
             var sb = new StringBuilder();
 
-            if (published.HasValue && published.Value > DateTime.Now)
+            if (published.HasValue && published.Value > DateTime.UtcNow)
             {
                 sb.AppendLine("User-agent: *");
                 sb.AppendLine("Disallow: /");

@@ -20,7 +20,7 @@ namespace Instatus.Models
 
         public Selection()
         {
-            CreatedTime = DateTime.Now;
+            CreatedTime = DateTime.UtcNow;
         }
     }
 }

@@ -37,5 +37,43 @@ namespace Instatus.Areas.Microsite.Controllers
             
             return RedirectToIndex();
         }
+
+        public ActionResult GenerateHash(string value, string salt)
+        {
+            ViewData.Model = new List<WebParameter>()
+            {
+                new WebParameter() {
+                    Name = "Value",
+                    Content = value
+                },
+                new WebParameter() {
+                    Name = "Secret",
+                    Content = salt
+                },
+                new WebParameter() {
+                    Name = "Hash",
+                    Content = value.ToEncrypted(salt)
+                }
+            };
+
+            return View("Index");
+        }
+
+        public ActionResult GenerateUnixTimestamp(DateTime date)
+        {
+            ViewData.Model = new List<WebParameter>()
+            {
+                new WebParameter() {
+                    Name = "Date",
+                    Content = date.ToString()
+                },
+                new WebParameter() {
+                    Name = "Unix Timestamp",
+                    Content = date.ToUnixTimestamp().ToString()
+                }
+            };
+
+            return View("Index");
+        }
     }
 }

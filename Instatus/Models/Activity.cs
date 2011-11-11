@@ -46,7 +46,7 @@ namespace Instatus.Models
 
         public Activity()
         {
-            CreatedTime = DateTime.Now;
+            CreatedTime = DateTime.UtcNow;
             Extensions = new ExpandoObject();
             Status = WebStatus.Published.ToString();
         }

@@ -176,7 +176,7 @@ namespace Instatus.Areas.Wordpress.Controllers
                 Slug = metaWeblogPost.Title.ToSlug(),
                 Name = metaWeblogPost.Title,
                 Description = metaWeblogPost.Description,
-                CreatedTime = metaWeblogPost.DateCreated.HasValue ? metaWeblogPost.DateCreated.Value : DateTime.Now,
+                CreatedTime = metaWeblogPost.DateCreated.HasValue ? metaWeblogPost.DateCreated.Value : DateTime.UtcNow,
                 Status = publish == false ? WebStatus.Draft.ToString() : WebStatus.Published.ToString()
             };
 

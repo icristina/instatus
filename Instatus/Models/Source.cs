@@ -20,7 +20,7 @@ namespace Instatus.Models
         public int? PageId { get; set; }
 
         public Source() {
-            CreatedTime = DateTime.Now;
+            CreatedTime = DateTime.UtcNow;
         }
 
         public Source(WebProvider provider, string uri) : this() 
