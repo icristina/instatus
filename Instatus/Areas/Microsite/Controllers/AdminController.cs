@@ -75,5 +75,10 @@ namespace Instatus.Areas.Microsite.Controllers
 
             return View("Index");
         }
+
+        public ActionResult ThrowError(string message)
+        {
+            throw new Exception(message);
+        }
     }
 }

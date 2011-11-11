@@ -16,6 +16,8 @@ namespace Instatus.Areas.Facebook
 
         public override void RegisterArea(AreaRegistrationContext context)
         {
+            GlobalFilters.Filters.Add(new FacebookAttribute());
+            
             context.MapRoute(
                 "Facebook_channel",
                 "channel.html",

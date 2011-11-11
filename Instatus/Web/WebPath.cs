@@ -71,13 +71,15 @@ namespace Instatus.Web
             if (HttpContext.Current.Request.IsSecureConnection)
             {
                 uriBuilder.Scheme = "https";
+                uriBuilder.Port = 443;
             }
             else
             {
                 uriBuilder.Scheme = "http";
+                uriBuilder.Port = 80;
             }
 
-            return uriBuilder.ToString();
+            return uriBuilder.Uri.ToString(); // user uri property to ensure :80 or :443 default ports not returned
         }
 
         public static string Resize(WebSize size, string virtualPath)

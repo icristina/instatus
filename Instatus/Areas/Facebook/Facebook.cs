@@ -280,7 +280,7 @@ namespace Instatus.Areas.Facebook
 
                 string userName = emailAddress ?? credential.ToUrn();
                 
-                FormsAuthentication.SetAuthCookie(userName, true);
+                FormsAuthentication.SetAuthCookie(userName, false); // persistant cookie not required, as signed_request will re-login user
 
                 using (var db = BaseDataContext.Instance())
                 {

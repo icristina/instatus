@@ -16,7 +16,7 @@ namespace Instatus
         }
 
         // http://abadjimarinov.net/blog/2010/01/24/RenewUserInTheSameRequestInAspdotNET.xhtml
-        public static void RefreshFromFormsAuthentication()
+        public static void RefreshFromFormsCookie(this IPrincipal principal)
         {
             HttpCookie authCookie = HttpContext.Current.Request.Cookies[FormsAuthentication.FormsCookieName];
 

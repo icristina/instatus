@@ -5,7 +5,11 @@
     ViewBag.Title = "Admin";
 }
 
-@Html.Partial("Parameters", Model)
+@if (!Model.IsEmpty())
+{
+    <h1>Output</h1>
+    @Html.Partial("Parameters", Model)
+}
 
 <h1>Admin</h1>
 
@@ -43,6 +47,16 @@
     <fieldset>
         <legend>Date</legend>
         @Html.TextBox("date", DateTime.UtcNow)
+    </fieldset>
+    @Html.SubmitButton()
+}
+
+@using (Html.BeginMultipartForm("ThrowError"))
+{
+    <h2>Throw Error</h2>
+    <fieldset>
+        <legend>Error Message</legend>
+        @Html.TextBox("message")
     </fieldset>
     @Html.SubmitButton()
 }
