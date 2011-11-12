@@ -270,6 +270,7 @@
     <EmbeddedResource Include="Scripts\Modernizr.js" />
     <EmbeddedResource Include="Content\Scaffold.css" />
     <EmbeddedResource Include="Content\App.css" />
+    <EmbeddedResource Include="Data\DropTables.sql" />
     <Content Include="Favicon.ico" />
     <EmbeddedResource Include="Scripts\Respond.js" />
     <EmbeddedResource Include="Scripts\Scaffold.js" />

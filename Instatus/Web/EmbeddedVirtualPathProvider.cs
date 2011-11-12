@@ -35,7 +35,7 @@ namespace Instatus.Web
 
         public override VirtualFile GetFile(string virtualPath)
         {
-            if (Previous.FileExists(virtualPath))
+            if (Previous != null && Previous.FileExists(virtualPath))
                 return Previous.GetFile(virtualPath);            
             
             return new EmbeddedVirtualFile(assembly, GetResourceName(virtualPath), virtualPath);
