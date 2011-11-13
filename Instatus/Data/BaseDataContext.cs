@@ -300,7 +300,7 @@ namespace Instatus.Data
                         .OfType<Award>()
                         .OrderByDescending(a => a.CreatedTime)
                         .FirstOrDefault();
-           
+
             return award.IsEmpty() ? null : (T)award.Page;
         }
 

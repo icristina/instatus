@@ -4,6 +4,10 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Instatus;
+using Instatus.Models;
+using Instatus.Services;
+using System.Web.Helpers;
+using Instatus.Areas.Microsite;
 
 namespace Instatus.Areas.Facebook
 {
@@ -13,10 +17,23 @@ namespace Instatus.Areas.Facebook
         {
             var signedRequest = Facebook.SignedRequest();
 
-            if (signedRequest != null && signedRequest.oauth_token != null)
+            if (signedRequest != null)
             {
-                Facebook.Authenticated(signedRequest.oauth_token);
-                HttpContext.Current.User.RefreshFromFormsCookie();
+                if(signedRequest.oauth_token != null) {
+                    Facebook.Authenticated(signedRequest.oauth_token);
+                    HttpContext.Current.User.RefreshFromFormsCookie();
+                }
+
+                // redirect slug in app data
+                if (signedRequest.app_data != null)
+                {
+                    string appData = signedRequest.app_data;
+
+                    if (!appData.Contains("{"))
+                    {
+                        HttpContext.Current.Response.Redirect("/" + MicrositeAreaRegistration.RoutePrefix + "/" + appData);
+                    }
+                }
             }
         }
     }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Dynamic;
 
 namespace Instatus.Web
 {
@@ -14,14 +15,14 @@ namespace Instatus.Web
 
         public WebParameter(object name, object content)
         {
-            Name = name.ToString();
-            Content = content.ToString();
+            Name = name.AsString();
+            Content = content.AsString();
         }
 
         public WebParameter(string ns, object name, object content)
         {
-            Name = ns.IsEmpty() ? name.ToString() : GetNamespacedPropertyName(ns, name.ToString());
-            Content = content.ToString();
+            Name = ns.IsEmpty() ? name.AsString() : GetNamespacedPropertyName(ns, name.AsString());
+            Content = content.AsString();
         }
 
         public static string GetNamespacedPropertyName(string ns, string name)
@@ -73,6 +74,18 @@ namespace Instatus.Web
         {
             var parameter = parameters.FirstOrDefault(p => p.Name == WebParameter.GetNamespacedPropertyName(ns, name));
             return parameter.IsEmpty() ? string.Empty : parameter.Content;
+        }
+
+        public static IDictionary<string, object> GetNamespacedParameters(this List<WebParameter> parameters, string ns)
+        {
+            var dictionary = new Dictionary<string, object>();
+
+            foreach (var parameter in parameters.Where(p => p.Name.StartsWith(ns)))
+            {
+                dictionary[parameter.Name.SubstringAfter(":")] = parameter.Content;
+            }
+
+            return dictionary;
         }
     }
 }

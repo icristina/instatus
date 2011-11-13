@@ -27,7 +27,7 @@ namespace Instatus.Areas.Microsite
             context.MapRoute(
                 "Microsite_Default",
                 "Microsite/{controller}/{action}/{id}",
-                new { controller = "Article", action = "Widget", id = UrlParameter.Optional }
+                new { controller = "Article", action = "Index", id = UrlParameter.Optional }
             );
 
             context.MapRoute(

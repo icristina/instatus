@@ -12,6 +12,12 @@ namespace Instatus.Areas.Microsite.Controllers
 {
     public class ArticleController : BaseController<BaseDataContext>
     {
+        public ActionResult Index()
+        {
+            ViewData.Model = SiteMap.RootNode.ChildNodes;
+            return View("Sitemap");
+        }
+        
         public ActionResult Details(string slug = "home")
         {
             return Article(slug);

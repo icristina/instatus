@@ -12,6 +12,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Web.Hosting;
 using System.Collections.Specialized;
 using System.Web.Routing;
+using System.Web.Script.Serialization;
 
 namespace Instatus
 {
@@ -101,6 +102,9 @@ namespace Instatus
 
         public static string ToJson(this object graph)
         {
+            if (graph is IDictionary<string, object>)
+                return new JavaScriptSerializer().Serialize(graph);
+            
             return Json.Encode(graph);
         }
 

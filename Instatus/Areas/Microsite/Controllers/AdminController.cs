@@ -82,5 +82,17 @@ namespace Instatus.Areas.Microsite.Controllers
             
             return View("Index");
         }
+
+        public ActionResult RequestParams()
+        {
+            var parameters = new List<WebParameter>();
+
+            foreach (var key in Request.Params.AllKeys)
+                parameters.Add(new WebParameter(key, Request.Params[key]));
+
+            ViewData.Model = parameters;
+            
+            return View("Index");
+        }
     }
 }

@@ -181,7 +181,11 @@ namespace Instatus
 
         public static string TrimOrNull(this string text, int minLength = 1)
         {
+            if (text == null)
+                return null;
+            
             text = text.Trim();
+
             return text.Length < minLength ? null : text;
         }
     }

@@ -27,7 +27,7 @@
     @Html.SubmitButton()
 }
 
-@using (Html.BeginMultipartForm("GenerateHash"))
+@using (Html.BeginForm(new { action = "GenerateHash" }))
 {
     <h2>Generate Hash</h2>
     <fieldset>
@@ -41,7 +41,7 @@
     @Html.SubmitButton()
 }
 
-@using (Html.BeginMultipartForm("GenerateUnixTimestamp"))
+@using (Html.BeginForm(new { action = "GenerateUnixTimestamp" }))
 {
     <h2>Generate Unix Timestamp</h2>
     <fieldset>
@@ -51,7 +51,7 @@
     @Html.SubmitButton()
 }
 
-@using (Html.BeginMultipartForm("ThrowError"))
+@using (Html.BeginForm(new { action = "ThrowError" }))
 {
     <h2>Throw Error</h2>
     <fieldset>
@@ -61,8 +61,14 @@
     @Html.SubmitButton()
 }
 
-@using (Html.BeginMultipartForm("ApplicationReset"))
+@using (Html.BeginForm(new { action = "ApplicationReset" }))
 {
     <h2>Application Reset</h2>
+    @Html.SubmitButton()
+}
+
+@using (Html.BeginForm(new { action = "RequestParams" }))
+{
+    <h2>Request Parameters</h2>
     @Html.SubmitButton()
 }
