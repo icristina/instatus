@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using Instatus.Models;
 using Instatus.Data;
+using Instatus.Services;
 
 namespace Instatus.Web
 {
@@ -14,38 +15,36 @@ namespace Instatus.Web
 
         }
 
-        private static string canonical;
-        private static string[] domains;
         private static List<Link> links;
+
+        private List<Link> Links
+        {
+            get
+            {
+                if(links == null) {
+                    using (var db = BaseDataContext.Instance().DisableProxiesAndLazyLoading())
+                    {
+                        links = db.Links.Where(l => l.AlternativeUri != null).ToList();
+                    }
+                }
+
+                return links;
+            }
+        }
 
         public void Init(HttpApplication context)
         {
-            using (var db = BaseDataContext.Instance().DisableProxiesAndLazyLoading())
+            PubSub.Provider.Subscribe<ApplicationReset>(a =>
             {
-                var canonicalDomain = db.Domains.SingleOrDefault(d => d.IsCanonical);
-                
-                if(canonicalDomain != null)
-                    canonical = canonicalDomain.Uri;
-
-                domains = db.Domains.Where(d => !d.IsCanonical).Select(d => d.Uri).ToArray();
-                links = db.Links.Where(l => l.AlternativeUri != null).ToList();
-            }
-
-            context.BeginRequest += new EventHandler(this.Canonical);
+                links = null;
+            });            
+            
             context.BeginRequest += new EventHandler(this.Alternative);
-        }
-
-        private void Canonical(Object source, EventArgs e)
-        {
-            if (domains.Any(d => HttpContext.Current.Request.RawUrl.Contains(d)))
-            {
-                HttpContext.Current.Response.RedirectPermanent(canonical, true);
-            }
         }
 
         private void Alternative(Object source, EventArgs e)
         {
-            var link = links.FirstOrDefault(l => l.Uri == HttpContext.Current.Request.RawUrl);
+            var link = Links.FirstOrDefault(l => l.Uri == HttpContext.Current.Request.RawUrl);
 
             if (link != null)
             {

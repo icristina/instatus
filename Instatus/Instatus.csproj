@@ -80,6 +80,7 @@
     <Compile Include="Areas\Auth\Controllers\AccountController.cs" />
     <Compile Include="Areas\Microsite\Controllers\AdminController.cs" />
     <Compile Include="Areas\Microsite\Controllers\BlogPostController.cs" />
+    <Compile Include="Areas\Microsite\Controllers\LinkController.cs" />
     <Compile Include="Areas\Microsite\Controllers\MessageController.cs" />
     <Compile Include="Areas\Microsite\Controllers\DomainController.cs" />
     <Compile Include="Areas\Microsite\Controllers\CredentialController.cs" />

@@ -17,6 +17,8 @@ namespace Instatus.Web
         Vimeo,
         YouTube,
         Amazon,
-        Typekit
+        Typekit,
+        Omniture,
+        Adobe
     }
 }
