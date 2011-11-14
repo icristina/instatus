@@ -114,6 +114,15 @@ namespace Instatus.Controllers
             return base.View();
         }
 
+        [NonAction]
+        public ActionResult PartialViewOrEmpty()
+        {
+            if (ViewData.Model.IsEmpty())
+                return new EmptyResult();
+
+            return PartialView();
+        }
+
         private string viewName;
 
         [NonAction]
