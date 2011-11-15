@@ -28,7 +28,8 @@ namespace Instatus.Web
             Homepage,
             Error,
             // actions
-            More,
+            LoadMore,
+            ReadMore,
             Submit,
             Expand,
             LogOn,
@@ -67,7 +68,8 @@ namespace Instatus.Web
             Visit,
             FromAToB,
             Flag,
-            RemoveFlag
+            RemoveFlag,
+            PublishedDate
         }        
         
         public static string JustNow { get { return Localize(Common.JustNow, "just now"); } }
@@ -78,7 +80,8 @@ namespace Instatus.Web
         public static string And { get { return Localize(Common.And, "and"); } }
         public static string TermsAndConditions { get { return Localize(Common.TermsAndConditions, "Terms and Conditions"); } }
         public static string PrivacyPolicy { get { return Localize(Common.PrivacyPolicy, "Privacy Policy"); } }
-        public static string More { get { return Localize(Common.More, "More"); } }
+        public static string LoadMore { get { return Localize(Common.LoadMore, "Load More"); } }
+        public static string ReadMore { get { return Localize(Common.ReadMore, "Read More"); } }
         public static string Latest { get { return Localize(Common.Latest, "Latest"); } }
         public static string Expand { get { return Localize(Common.Expand, "Expand"); } }
         public static string Featured { get { return Localize(Common.Featured, "Featured"); } }
@@ -118,6 +121,7 @@ namespace Instatus.Web
         public static string FromAToB(string placeA, string placeB) { return Format(FormatString.FromAToB, "from {0} to {1}", placeA, placeB); }
         public static string Flag(string name) { return Format(FormatString.Flag, "Mark as {0}", name); }
         public static string RemoveFlag(string name) { return Format(FormatString.RemoveFlag, "Unmark as {0}", name); }
+        public static string PublishedDate(DateTime date) { return Format(FormatString.PublishedDate, "{0:dd/MM/yyyy}", date); }
 
         public static string Localize(object phraseOrKey, string defaultPhrase = null)
         {

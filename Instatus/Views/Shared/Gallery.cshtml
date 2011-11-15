@@ -1,0 +1,15 @@
+﻿@model WebSection
+
+<section @Html.Attr(Model.Parameters.GetHtmlAttributes())>
+    @Html.Tag("h1", Model.Heading)
+    @Html.Tag("h2", Model.SubHeading)
+    @Html.Content(Model.Body)
+    <ul class="gallery">
+        @foreach (var link in Model.Links)
+        {
+            <li>
+                @Html.Image(link.Uri, link.Title)
+            </li>
+        }
+    </ul>
+</section>

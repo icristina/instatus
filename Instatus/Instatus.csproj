@@ -87,6 +87,7 @@
     <Compile Include="Areas\Microsite\Controllers\ExportController.cs" />
     <Compile Include="Areas\Microsite\Controllers\UserController.cs" />
     <Compile Include="Areas\Microsite\Controllers\TagController.cs" />
+    <Compile Include="Areas\Microsite\SchemaOrgExtensions.cs" />
     <Compile Include="Areas\Typekit\Controllers\TypekitController.cs" />
     <Compile Include="Areas\Typekit\TypekitAreaRegistration.cs" />
     <Compile Include="Areas\Facebook\Controllers\FacebookController.cs" />
@@ -399,6 +400,7 @@
     <EmbeddedResource Include="Views\Shared\Parameters.cshtml" />
     <EmbeddedResource Include="Views\Shared\MetaTags.cshtml" />
     <EmbeddedResource Include="Views\Shared\Sitemap.cshtml" />
+    <EmbeddedResource Include="Views\Shared\Gallery.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

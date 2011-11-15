@@ -327,7 +327,7 @@ namespace Instatus.Data
                     .SortActivities(filter.Sort);
         }
 
-        public static string[] DefaultPageExpansions = new string[] { "Restrictions" };
+        public static string[] DefaultPageExpansions = new string[] { "Restrictions", "Picture" };
 
         public T GetPage<T>(string slug, string[] customExpansions = null) where T : Page {
             return this.DisableProxiesAndLazyLoading()

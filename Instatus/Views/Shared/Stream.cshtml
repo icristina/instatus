@@ -1,4 +1,6 @@
 ﻿@model IWebView
+           
+@using Instatus.Areas.Microsite 
 
 @{
     WebSection section = null;
@@ -24,17 +26,26 @@
         }
         @foreach (Instatus.Models.Page page in Model)
         {
-            <article id="@page.Id">
-                <a href="@Url.RouteUrl(Instatus.Areas.Microsite.MicrositeAreaRegistration.PageRouteName, new { slug = page.Slug })">
-                    <h1>@page.Name</h1>
+            <article itemscope itemtype="@page.GetSchemaOrgUri()" itemid="@page.Id">
+                <a href="@Url.RouteUrl(MicrositeAreaRegistration.PageRouteName, new { slug = page.Slug })">
+                    <h1 itemprop="name">@page.Name</h1>
+                    @if (!page.Description.IsEmpty())
+                    {
+                        <p itemprop="description">@page.Description</p>
+                    }
+                    @if (!page.Picture.IsEmpty())
+                    {
+                        <img src="@page.Picture.Uri" itemprop="image"/>
+                    }
                     <dl>
-                        <dd>@WebPhrase.Published</dd>
-                        <dt>@page.CreatedTime.ToString()</dt>
+                        <dt>@WebPhrase.Published</dt>
+                        <dd itemprop="datePublished">@WebPhrase.PublishedDate(page.CreatedTime)</dd>
                         @if(page.User != null) {
                             <dt>@WebPhrase.Author</dt>
-                            <dd>@page.User.FullName</dd>
+                            <dd itemprop="author">@page.User.FullName</dd>
                         }
-                    </dl>      
+                    </dl> 
+                    <span class="readMore">@WebPhrase.ReadMore</span>     
                 </a>
             </article>
         }    

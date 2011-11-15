@@ -101,6 +101,15 @@ namespace Instatus
             return new MvcHtmlString(markup);
         }
 
+        public static MvcHtmlString Image<T>(this HtmlHelper<T> html, string contentPath, string text = null)
+        {
+            var urlHelper = new UrlHelper(html.ViewContext.RequestContext);
+            var tag = new TagBuilder("img");
+            tag.MergeAttribute("src", urlHelper.Content(contentPath));
+            tag.MergeAttribute("alt", text);
+            return new MvcHtmlString(tag.ToString());
+        }
+
         public static MvcHtmlString SubmitButton<T>(this HtmlHelper<T> html, string text = null)
         {
             var tag = new TagBuilder("button");
