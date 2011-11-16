@@ -58,7 +58,7 @@ namespace Instatus
 
         public static string RemoveDoubleSpaces(this string text)
         {
-            return Regex.Replace(text, @"\s{2,}", " ").Trim();
+            return Regex.Replace(text, @"\s{1,}", " ").Trim();
         }
 
         public static string RemoveHtml(this string text)
@@ -106,13 +106,14 @@ namespace Instatus
         {
             var slug = text
                             .ToLower()
-                            .RemoveDoubleSpaces()
                             .RemoveHtml()
                             .RemoveSpecialCharacters()
+                            .RemoveDoubleSpaces()
                             .MaxLength(80)
                             .Trim();
 
             slug = Regex.Replace(slug, @"\s+", "-");
+            slug = Regex.Replace(slug, @"\-+", "-");
             
             return slug;
         }
