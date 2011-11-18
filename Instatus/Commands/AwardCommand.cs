@@ -76,6 +76,17 @@ namespace Instatus.Commands
                     {
                         award.PageId = viewModel.Id;
                     }
+                    else if (viewModel is Activity)
+                    {
+                        var parentActivity = db.Activities.Find(viewModel.Id);
+
+                        db.Activities.Attach(parentActivity);
+                        
+                        if (parentActivity.Activities == null)
+                            parentActivity.Activities = new List<Activity>();
+
+                        parentActivity.Activities.Add(award);
+                    }
 
                     user.Activities.Add(award);
 
@@ -89,6 +100,12 @@ namespace Instatus.Commands
                         .FirstOrDefault();
 
                     db.LogChange(user, "removed award " + award.Achievement.Name);
+
+                    foreach (var activity in award.ParentActivities.ToList())
+                    {
+                        award.ParentActivities.Remove(activity);
+                    }
+
                     db.MarkDeleted(award);
                 }
                 
