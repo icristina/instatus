@@ -25,11 +25,14 @@ namespace Instatus.Areas.Microsite.Controllers
         [Required]
         public string Name { get; set; }
 
-        [DisplayName("Body")]
+        [DataType(DataType.MultilineText)]
+        [Required]
+        public string Description { get; set; }
+
         [DataType(DataType.MultilineText)]
         [Required]
         [AllowHtml]
-        public string Description { get; set; }
+        public string Body { get; set; }
 
         [Column("Tags")]
         [Display(Name = "Tags")]
@@ -48,6 +51,7 @@ namespace Instatus.Areas.Microsite.Controllers
         public override void Load(Post model)
         {
             Tags = model.Tags.IsEmpty() ? null : model.Tags.Select(t => t.Id).ToArray();
+            Body = model.Document.Body;
             base.Load(model);
         }
 
@@ -55,6 +59,7 @@ namespace Instatus.Areas.Microsite.Controllers
         {
             model.Tags = UpdateList<Tag, int>(Context.Tags, model.Tags, Tags);
             model.User = Context.GetCurrentUser();
+            model.Document.Body = Body;
             base.Save(model);
         }
 
