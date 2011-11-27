@@ -60,6 +60,11 @@ namespace Instatus.Web
             return Absolute(BaseUri, virtualPath);
         }
 
+        public static string ProtocolRelative(string absoluteUrl)
+        {
+            return HttpContext.Current.Request != null ? "//" + absoluteUrl.SubstringAfter("//") : absoluteUrl; // if web request, allow protocol relative syntax
+        }
+
         public static string MatchProtocol(string absoluteUrl)
         {
             if (HttpContext.Current.Request == null)

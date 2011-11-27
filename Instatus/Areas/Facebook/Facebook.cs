@@ -123,7 +123,7 @@ namespace Instatus.Areas.Facebook
         {
             get
             {
-                return Credential.Claims.ToList();
+                return Credential.Scope.ToList();
             }
         }
 

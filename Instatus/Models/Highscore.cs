@@ -7,6 +7,6 @@ namespace Instatus.Models
 {
     public class Highscore : Activity
     {
-        public int Score { get; set; }
+        
     }
 }

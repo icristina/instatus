@@ -6,7 +6,7 @@ using Instatus.Web;
 
 namespace Instatus.Models
 {
-    public class Photo : Link
+    public class Photo : Media
     {
         public Photo() : base() { }
         public Photo(WebContentType contentType, string uri) : base(contentType, uri) { }

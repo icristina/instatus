@@ -9,6 +9,8 @@ namespace Instatus.Web
     {
         Visitor,
         Member,
+        Tester,
+        Executive,
         Moderator,
         Author,
         Editor,

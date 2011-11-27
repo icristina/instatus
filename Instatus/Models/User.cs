@@ -22,6 +22,7 @@ namespace Instatus.Models
 
         public Name Name { get; set; }
         public string FullName { get; set; }
+        public string DisplayName { get; set; } // ie. short name or alias
 
         public string Locale { get; set; }
         public string Location { get; set; }

@@ -8,7 +8,7 @@ namespace Instatus.Models
 {
     public class Credential : Source
     {
-        public string Claims { get; set; }
+        public string Scope { get; set; }
         public string AccessToken { get; set; }
         public string Secret { get; set; }
         public string Environment { get; set; }

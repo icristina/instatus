@@ -8,6 +8,8 @@ namespace Instatus.Models
 {
     public class Checkin : Activity
     {
+        public Point To { get; set; }
+        
         public Checkin()
             : base()
         {

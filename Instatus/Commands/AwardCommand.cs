@@ -101,9 +101,9 @@ namespace Instatus.Commands
 
                     db.LogChange(user, "removed award " + award.Achievement.Name);
 
-                    foreach (var activity in award.ParentActivities.ToList())
+                    foreach (var activity in award.Parents.ToList())
                     {
-                        award.ParentActivities.Remove(activity);
+                        award.Parents.Remove(activity);
                     }
 
                     db.MarkDeleted(award);

@@ -6,8 +6,10 @@ using Instatus.Web;
 
 namespace Instatus.Models
 {
-    public class Video : Link
+    public class Video : Media
     {
+        public int? Duration { get; set; }
+        
         public Video() : base() { }
         public Video(WebContentType contentType, string uri) : base(contentType, uri) { }
     }

@@ -113,6 +113,8 @@
     <Compile Include="Extensions\StreamExtensions.cs" />
     <Compile Include="Models\Award.cs" />
     <Compile Include="Models\Brand.cs" />
+    <Compile Include="Models\Media.cs" />
+    <Compile Include="Models\Journey.cs" />
     <Compile Include="Models\IExtensionPoint.cs" />
     <Compile Include="Models\Phrase.cs" />
     <Compile Include="Models\Directory.cs" />

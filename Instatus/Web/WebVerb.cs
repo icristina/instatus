@@ -23,6 +23,9 @@ namespace Instatus.Web
         Report,
         Share,
         Subscribe,
+        Journey,
+        Mention,
+        Invite,
 
         // community
         Reputation,

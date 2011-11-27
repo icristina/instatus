@@ -64,8 +64,8 @@ namespace Instatus.Models
         public virtual ICollection<Source> Sources { get; set; }
         public virtual ICollection<Log> Logs { get; set; }
 
-        public virtual ICollection<Page> Related { get; set; }
-        public virtual ICollection<Page> ParentPages { get; set; }
+        public virtual ICollection<Page> Pages { get; set; }
+        public virtual ICollection<Page> Parents { get; set; }
 
         [NotMapped]
         public WebDocument Document { get; set; }

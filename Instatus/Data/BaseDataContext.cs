@@ -114,13 +114,12 @@ namespace Instatus.Data
             
             var page = modelBuilder.Entity<Page>();
             
-            page.HasMany(p => p.Related).WithMany(p => p.ParentPages).Map(m => m.ToTable("RelatedPages"));
-            page.HasOptional(p => p.Application).WithMany(a => a.Pages);
-            page.HasMany(p => p.Activities).WithOptional(a => a.Page);
+            page.HasMany(p => p.Pages).WithMany(p => p.Parents).Map(m => m.ToTable("RelatedPages"));
+            page.HasOptional(p => p.Application).WithMany(a => a.Content);
 
             var activity = modelBuilder.Entity<Activity>();
 
-            activity.HasMany(a => a.Activities).WithMany(a => a.ParentActivities).Map(m => m.ToTable("RelatedActivities"));
+            activity.HasMany(a => a.Activities).WithMany(a => a.Parents).Map(m => m.ToTable("RelatedActivities"));
             
             var award = modelBuilder.Entity<Award>();
 
@@ -553,7 +552,7 @@ namespace Instatus.Data
             int parentId;
 
             if (!filter.Parent.IsEmpty() && int.TryParse(filter.Parent, out parentId))
-                filtered = filtered.Where(p => p.ParentPages.Any(r => r.Id == parentId));
+                filtered = filtered.Where(p => p.Parents.Any(r => r.Id == parentId));
 
             if (!filter.Term.IsEmpty())
                 filtered = filtered.Where(p => p.Name.StartsWith(filter.Term));

@@ -10,12 +10,14 @@ namespace Instatus.Models
 {
     [KnownType(typeof(Photo))]
     [KnownType(typeof(Video))]
+    [KnownType(typeof(Media))]
     public class Link
     {
         public int Id { get; set; }
         public string Name { get; set; }        
         public string Uri { get; set; }
         public string AlternativeUri { get; set; }
+        public string ThumbnailUri { get; set; }
         public string ContentType { get; set; }
         public string Credit { get; set; }
 

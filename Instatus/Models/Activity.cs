@@ -14,6 +14,7 @@ namespace Instatus.Models
     [KnownType(typeof(Highscore))]
     [KnownType(typeof(Checkin))]
     [KnownType(typeof(Coupon))]
+    [KnownType(typeof(Journey))]
     public class Activity : IUserGeneratedContent, IExtensionPoint
     {
         public int Id { get; set; }
@@ -21,10 +22,13 @@ namespace Instatus.Models
         public DateTime CreatedTime { get; set; }
         public string Verb { get; set; }
         public string Message { get; set; }
-        public int? Rating { get; set; }
         public string Permissions { get; set; }
         public string Status { get; set; }
         public string Data { get; set; }
+
+        public int? Rating { get; set; }
+        public int? Score { get; set; }
+        public int? Duration { get; set; }
 
         public virtual Source Source { get; set; }
         public int? SourceId { get; set; }
@@ -39,7 +43,7 @@ namespace Instatus.Models
         public virtual ICollection<Log> Logs { get; set; }
 
         public virtual ICollection<Activity> Activities { get; set; }
-        public virtual ICollection<Activity> ParentActivities { get; set; }
+        public virtual ICollection<Activity> Parents { get; set; }
 
         [NotMapped]
         public dynamic Extensions { get; set; }
