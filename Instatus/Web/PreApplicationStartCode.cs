@@ -34,7 +34,7 @@ namespace Instatus.Web
 
             // modules
             DynamicModuleUtility.RegisterModule(typeof(ConfigurationModule));
-            DynamicModuleUtility.RegisterModule(typeof(PermanentRedirectModule));
+            DynamicModuleUtility.RegisterModule(typeof(RedirectModule));
             DynamicModuleUtility.RegisterModule(typeof(HttpTraceModule));
 
             // routes

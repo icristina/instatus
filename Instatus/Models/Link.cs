@@ -16,10 +16,11 @@ namespace Instatus.Models
         public int Id { get; set; }
         public string Name { get; set; }        
         public string Uri { get; set; }
-        public string AlternativeUri { get; set; }
-        public string ThumbnailUri { get; set; }
+        public string Location { get; set; }
+        public string Picture { get; set; }
         public string ContentType { get; set; }
         public string Credit { get; set; }
+        public int HttpStatusCode { get; set; }
 
         public string Rel { get; set; }
         public int Priority { get; set; }
@@ -33,6 +34,7 @@ namespace Instatus.Models
         {
             ContentType = contentType.ToMimeType();
             Uri = uri;
+            HttpStatusCode = 200;
         }
 
         public override string ToString()

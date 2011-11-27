@@ -23,7 +23,7 @@ namespace Instatus.Areas.Microsite.Controllers
         public string UpdatedSecret { get; set; }
         
         public string Environment { get; set; }
-        public string Claims { get; set; }
+        public string Scope { get; set; }
         public string Provider { get; set; }
 
         [Column("ApplicationId")]

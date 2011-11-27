@@ -19,7 +19,19 @@ namespace Instatus.Areas.Microsite.Controllers
         public string Uri { get; set; }
 
         [Required]
-        public string AlternativeUri { get; set; }
+        public string Location { get; set; }
+
+        [Column("HttpStatusCode")]
+        [Display(Name = "Http Code")]
+        public SelectList HttpStatusCodeList { get; set; }
+
+        [ScaffoldColumn(false)]
+        public int HttpStatusCode { get; set; }
+
+        public override void Databind()
+        {
+            HttpStatusCodeList = new SelectList(new Dictionary<int, string>() { { 301, "Permanent Redirect" }, { 302, "Temporary Redirect" } }, "Key", "Value", HttpStatusCode);
+        }
     }
     
     [Authorize(Roles = "Administrator")]

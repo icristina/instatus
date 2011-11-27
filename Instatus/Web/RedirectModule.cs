@@ -8,7 +8,7 @@ using Instatus.Services;
 
 namespace Instatus.Web
 {
-    public class PermanentRedirectModule : IHttpModule
+    public class RedirectModule : IHttpModule
     {
         public void Dispose()
         {
@@ -24,7 +24,7 @@ namespace Instatus.Web
                 if(links == null) {
                     using (var db = BaseDataContext.Instance().DisableProxiesAndLazyLoading())
                     {
-                        links = db.Links.Where(l => l.AlternativeUri != null).ToList();
+                        links = db.Links.Where(l => l.Location != null && l.HttpStatusCode > 300 && l.HttpStatusCode < 303).ToList();
                     }
                 }
 
@@ -48,7 +48,14 @@ namespace Instatus.Web
 
             if (link != null)
             {
-                HttpContext.Current.Response.RedirectPermanent(link.AlternativeUri, true);
+                if (link.HttpStatusCode == 301)
+                {
+                    HttpContext.Current.Response.RedirectPermanent(link.Location, true);
+                }
+                else if(link.HttpStatusCode == 302)
+                {
+                    HttpContext.Current.Response.Redirect(link.Location, true); // temporary redirect
+                }
             }
         }
     }

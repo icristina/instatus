@@ -10,6 +10,7 @@ namespace Instatus.Models
 {
     [KnownType(typeof(Comment))]
     [KnownType(typeof(Review))]
+    [KnownType(typeof(Note))]
     public class Message : IUserGeneratedContent, IExtensionPoint
     {
         public int Id { get; set; }
