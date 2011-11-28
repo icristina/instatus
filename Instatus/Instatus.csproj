@@ -122,6 +122,7 @@
     <Compile Include="Models\IUserGeneratedContent.cs" />
     <Compile Include="Models\Review.cs" />
     <Compile Include="Queries\PageQueries.cs" />
+    <Compile Include="Services\BaseWcfService.cs" />
     <Compile Include="Services\MarkupTemplateService.cs" />
     <Compile Include="Services\IZipService.cs" />
     <Compile Include="Services\PubSub.cs" />

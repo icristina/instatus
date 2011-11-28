@@ -180,6 +180,15 @@ namespace Instatus
             return stringBuilder.Append(" ");
         }
 
+        public static StringBuilder AppendSection(this StringBuilder sb, string title, string body)
+        {
+            sb.AppendLine();
+            sb.AppendFormat("<section title=\"{0}\">", title);
+            sb.AppendLine(body);
+            sb.AppendLine("</section>");
+            return sb;
+        }
+
         public static string TrimOrNull(this string text, int minLength = 1)
         {
             if (text == null)

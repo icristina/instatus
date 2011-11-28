@@ -66,6 +66,14 @@ namespace Instatus
             }
         }
 
+        public static T AssertNotEmpty<T>(this T graph, string message = "Null reference")
+        {
+            if (graph.IsEmpty())
+                throw new Exception(message);
+
+            return graph;
+        }
+
         public static bool IsEmpty(this object graph)
         {
             return graph == null 

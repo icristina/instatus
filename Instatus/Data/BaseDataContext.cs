@@ -15,6 +15,8 @@ using Instatus;
 using System.Data.Objects;
 using Instatus.Queries;
 using System.Net.Mail;
+using System.Text;
+using System.ServiceModel.Web;
 
 namespace Instatus.Data
 {   
@@ -150,6 +152,42 @@ namespace Instatus.Data
         public void MarkAsPublished<T>(int id) where T : class, IUserGeneratedContent
         {
             SetStatus<T>(id, WebStatus.Published);
+        }
+
+        public void LogError(Exception error)
+        {
+            if (!LoggingEnabled)
+                return;
+
+            var message = new StringBuilder();
+            var uri = string.Empty;
+
+            message.AppendSection("Message", error.Message);
+            message.AppendSection("Stack Trace", error.StackTrace);
+
+            var innerException = error.InnerException;
+
+            if (innerException != null)
+            {
+                message.AppendSection("Inner Exception Message", innerException.Message);
+                message.AppendSection("Inner Exception Stack Trace", innerException.StackTrace);
+            }
+
+            if(WebOperationContext.Current != null) {
+                uri = WebOperationContext.Current.IncomingRequest.UriTemplateMatch.RequestUri.ToString();
+            }
+            else if (HttpContext.Current.Request != null)
+            {
+                message.AppendSection("Server Variables", HttpContext.Current.Request.ServerVariables["ALL_RAW"]);
+                uri = HttpContext.Current.Request.RawUrl;
+            }
+
+            Logs.Add(new Log()
+            {
+                Verb = WebVerb.Error.ToString(),
+                Uri = uri,
+                Message = message.ToString()
+            });
         }
 
         public void LogChange(object resource, string action, string uri = null)
