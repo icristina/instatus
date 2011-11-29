@@ -9,7 +9,7 @@ namespace Instatus.Web
     public class WebSection : WebPart
     {
         public string Heading { get; set; }
-        public string SubHeading { get; set; }
+        public string Strapline { get; set; }
         public string Abstract { get; set; }
         public string Body { get; set; }
 

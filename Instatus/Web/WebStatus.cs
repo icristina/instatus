@@ -7,6 +7,7 @@ namespace Instatus.Web
 {
     public enum WebStatus
     {
+        Template,
         Draft,
         PendingApproval,
         Approved,

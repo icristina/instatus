@@ -401,6 +401,13 @@ namespace Instatus.Data
                     .SortPages(filter.Sort);
         }
 
+        public IOrderedQueryable<T> GetTemplates<T>(string locale = "") where T : Page 
+        {
+            return GetPages<T>(new WebQuery() {
+                Locale = locale
+            });
+        }
+
         public IQueryable<User> GetUsers(WebExpression filter, WebStatus? status = WebStatus.Published)
         {
             return this
