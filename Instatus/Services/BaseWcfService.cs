@@ -17,7 +17,8 @@ namespace Instatus.Services
 {
     // http://stackoverflow.com/questions/895901/exception-logging-for-wcf-services-using-elmah
     // http://codeidol.com/csharp/wcf/Faults/Error-Handling-Extensions/
-    public class BaseWcfService : IServiceBehavior, IErrorHandler
+    // http://stackoverflow.com/questions/1287802/access-request-body-in-a-wcf-restful-service
+    public class BaseWcfService : IServiceBehavior, IErrorHandler, IDispatchMessageInspector
     {
         public void AddBindingParameters(ServiceDescription serviceDescription, ServiceHostBase serviceHostBase, Collection<ServiceEndpoint> endpoints, BindingParameterCollection bindingParameters)
         {
@@ -25,10 +26,14 @@ namespace Instatus.Services
         }
 
         public void ApplyDispatchBehavior(ServiceDescription serviceDescription, ServiceHostBase serviceHostBase)
-        {
-            foreach (ChannelDispatcherBase channelDispatcherBase in serviceHostBase.ChannelDispatchers)
+        {           
+            foreach (ChannelDispatcher channelDispatcher in serviceHostBase.ChannelDispatchers.Cast<ChannelDispatcher>())
             {
-                ((ChannelDispatcher)channelDispatcherBase).ErrorHandlers.Add(this);
+                channelDispatcher.ErrorHandlers.Add(this);  
+            
+                foreach(EndpointDispatcher endpointDispatcher in channelDispatcher.Endpoints) {
+                    endpointDispatcher.DispatchRuntime.MessageInspectors.Add(this);
+                }
             }
         }
 
@@ -56,6 +61,56 @@ namespace Instatus.Services
         {
             return Message.CreateMessage(version, string.Empty, graph, new DataContractJsonSerializer(graph.GetType()));
         }
+
+        public virtual string GetAuthorizationPolicy(Message request)
+        {
+            return HttpUtility.UrlDecode(request.Properties.Via.AbsoluteUri);
+        }
+
+        public virtual string GetAuthorizationHash(Message request)
+        {
+            return HttpUtility.UrlDecode(request.HttpRequestMessageProperty().Headers[HttpRequestHeader.Authorization]);
+        }
+
+        public virtual string GetAuthorizationSecret()
+        {
+            return null;
+        }
+
+        public virtual string GenerateHash(string policy, string secret)
+        {
+            return policy.ToEncrypted(secret);
+        }
+
+        private static LimitedQueue<string> hashes = new LimitedQueue<string>(10000);
+
+        public object AfterReceiveRequest(ref Message request, IClientChannel channel, InstanceContext instanceContext)
+        {
+            var secret = GetAuthorizationSecret();
+            var policy = GetAuthorizationPolicy(request);
+            
+            if (!secret.IsEmpty() && !request.HttpRequestMessageProperty().Method.Match("GET"))
+            {
+                var hash = GetAuthorizationHash(request);
+                
+                if (hashes.Contains(hash))
+                    throw new Exception("Duplicate hash");
+
+                hashes.Enqueue(hash);
+
+                if (!(hash == GenerateHash(policy, secret)))
+                {
+                    throw new Exception("Invalid hash");
+                }
+            }            
+            
+            return null;
+        }
+
+        public void BeforeSendReply(ref Message reply, object correlationState)
+        {
+            
+        }
     }
 
     public static class MessageExtensions
@@ -70,6 +125,11 @@ namespace Instatus.Services
             response.StatusCode = httpStatusCode;
 
             return message;
+        }
+
+        public static HttpRequestMessageProperty HttpRequestMessageProperty(this Message message)
+        {
+            return message.Properties["httpRequest"] as HttpRequestMessageProperty;
         }
     }
 }

@@ -173,13 +173,14 @@ namespace Instatus.Data
                 message.AppendSection("Inner Exception Stack Trace", innerException.StackTrace);
             }
 
-            if(WebOperationContext.Current != null) {
-                uri = WebOperationContext.Current.IncomingRequest.UriTemplateMatch.RequestUri.ToString();
-            }
-            else if (HttpContext.Current.Request != null)
+            if (HttpContext.Current.Request != null)
             {
-                message.AppendSection("Server Variables", HttpContext.Current.Request.ServerVariables["ALL_RAW"]);
                 uri = HttpContext.Current.Request.RawUrl;
+
+                if (WebOperationContext.Current == null)
+                {
+                    message.AppendSection("Server Variables", HttpContext.Current.Request.ServerVariables["ALL_RAW"]);
+                }                
             }
 
             Logs.Add(new Log()
