@@ -198,5 +198,11 @@ namespace Instatus
 
             return text.Length < minLength ? null : text;
         }
+
+        public static bool IsNumeric(this string text)
+        {
+            double num = 0;
+            return Double.TryParse(text, out num);
+        }
     }
 }
