@@ -16,7 +16,8 @@ namespace Instatus.Areas.Microsite
             { typeof(CaseStudy), "NewsArticle" },
             { typeof(Organization), "Organization" },
             { typeof(Place), "Place" },
-            { typeof(Product), "Product" }
+            { typeof(Product), "Product" },
+            { typeof(Address), "Address" }
         };
         
         public static string GetSchemaOrgType(this object graph)

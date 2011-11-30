@@ -1,0 +1,24 @@
+﻿@model WebView<Instatus.Models.Page>
+    
+@using Instatus.Areas.Microsite
+
+<ul>
+    @foreach (var place in Model.Cast<Instatus.Models.Place>())
+    {
+        <li>
+            <a href="#@place.Slug">@place.Name</a>
+        </li>
+    }      
+</ul>
+           
+@foreach(var place in Model.Cast<Instatus.Models.Place>()) {
+    <p id="@place.Slug" itemtype="@place.GetSchemaOrgUri()">
+        <span itemprop="address" itemtype="@place.Address.GetSchemaOrgUri()">
+            <span itemprop="street-address">@place.Address.StreetAddress</span>
+            <span itemprop="locality">@place.Address.Locality</span>
+            <span itemprop="postal-code">@place.Address.PostalCode</span>
+        </span>
+        @WebPhrase.Telephone: <a itemprop="tel" href="tel:@place.Card.Phone">@place.Card.Phone</a><br />
+        <a href="mailto:@place.Card.EmailAddress">@place.Card.EmailAddress</a><br />
+    </p>    
+}
