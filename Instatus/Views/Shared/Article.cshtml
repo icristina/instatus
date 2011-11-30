@@ -8,7 +8,7 @@
     @Html.Parts(WebZone.Head)
 }
 
-<div class="page">
+<div role="main">
     <h1>@Model.Name</h1>
     @if (!Model.Description.IsEmpty())
     {
@@ -24,9 +24,15 @@
         </div>
     }
 </div>
-<nav>
-    @Html.Partial("Branding")  
-    @Html.Action("Nav")    
+<nav role="navigation">
+    <div>
+        @Html.Partial("Branding")  
+        @Html.Action("Nav")        
+    </div>
 </nav>
-
+<footer>
+    <div>
+        @Html.Parts(WebZone.Footer)    
+    </div>
+</footer>
 @Html.Parts(WebZone.Scripts)

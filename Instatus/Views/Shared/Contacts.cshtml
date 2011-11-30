@@ -1,0 +1,22 @@
+﻿@model WebView<Instatus.Models.Page>
+    
+<ul>
+    @foreach (var org in Model.Cast<Instatus.Models.Organization>())
+    {
+        <li>
+            <a href="#@org.Slug">@org.Name</a>
+        </li>
+    }      
+</ul>
+           
+@foreach(var org in Model.Cast<Instatus.Models.Organization>()) {
+    <p id="@org.Slug" itemtype="http://data-vocabulary.org/Organization">
+        <span itemprop="address" itemtype="http://data-vocabulary.org/Address">
+            <span itemprop="street-address">@org.Address.StreetAddress</span>
+            <span itemprop="locality">@org.Address.Locality</span>
+            <span itemprop="postal-code">@org.Address.PostalCode</span>
+        </span>
+        @WebPhrase.Telephone: <a itemprop="tel" href="tel:@org.Card.Phone">@org.Card.Phone</a><br />
+        <a href="mailto:@org.Card.EmailAddress">@org.Card.EmailAddress</a><br />
+    </p>    
+}

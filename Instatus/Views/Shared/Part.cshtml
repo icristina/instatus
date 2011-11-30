@@ -4,7 +4,7 @@
 {
     var stream = (WebStream)Model;
     
-    @Html.Action("Stream", stream.Query.ToRouteValueDictionary().AddRequestParams())
+    @Html.Action("Stream", stream.Query.ToRouteValueDictionary().AddRequestParams().AddNonEmptyValue("viewName", stream.ViewName))
 }
 else if (Model is WebPartial)
 {
