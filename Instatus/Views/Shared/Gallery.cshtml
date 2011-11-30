@@ -2,7 +2,7 @@
 
 <section @Html.Attr(Model.Parameters.GetHtmlAttributes())>
     @Html.Tag("h1", Model.Heading)
-    @Html.Tag("h2", Model.SubHeading)
+    @Html.Tag("h2", Model.Strapline)
     @Html.Content(Model.Body)
     <ul class="gallery">
         @foreach (var link in Model.Links)

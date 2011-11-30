@@ -22,7 +22,7 @@
         }
         @if(section != null) {
             @Html.Tag("h1", section.Heading)
-            @Html.Tag("h2", section.SubHeading)      
+            @Html.Tag("h2", section.Strapline)      
         }
         @foreach (Instatus.Models.Page page in Model)
         {
