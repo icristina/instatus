@@ -17,12 +17,14 @@ namespace Instatus.Areas.Microsite
             { typeof(Organization), "Organization" },
             { typeof(Place), "Place" },
             { typeof(Product), "Product" },
-            { typeof(Address), "Address" }
+            { typeof(Address), "Address" },
+            { typeof(Job), "JobPosting" }
         };
         
         public static string GetSchemaOrgType(this object graph)
         {
-            return schemas[graph.GetType()] ?? "CreativeWork";
+            var type = graph.GetType();
+            return schemas.ContainsKey(type) ? schemas[type] : "CreativeWork";
         }
 
         public static string GetSchemaOrgUri(this object graph)

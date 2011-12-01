@@ -36,6 +36,7 @@ namespace Instatus.Models
         public string Name { get; set; }
         public string Permissions { get; set; }
         public string Description { get; set; }
+        public string Picture { get; set; }
         public int Priority { get; set; }
         public DateTime CreatedTime { get; set; }
         public DateTime? UpdatedTime { get; set; }
@@ -49,11 +50,7 @@ namespace Instatus.Models
         public virtual User User { get; set; }
         public int? UserId { get; set; }
 
-        public virtual Photo Picture { get; set; }
-        public int? PictureId { get; set; }
-
-        public virtual Card Card { get; set; }
-        public int? CardId { get; set; }
+        public Card Card { get; set; }
 
         public virtual ICollection<Tag> Tags { get; set; }
         public virtual ICollection<Message> Replies { get; set; }
@@ -101,6 +98,7 @@ namespace Instatus.Models
             Extensions = new ExpandoObject();
             Status = WebStatus.Published.ToString();
             Document = new WebDocument();
+            Card = new Card();
         }
 
         public Page(string name) : this() {

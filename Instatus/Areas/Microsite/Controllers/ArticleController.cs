@@ -34,5 +34,11 @@ namespace Instatus.Areas.Microsite.Controllers
             ViewData.Model = SiteMap.RootNode.ChildNodes;
             return PartialView();
         }
+
+        public ActionResult Brand()
+        {
+            ViewData.Model = Context.GetCurrentBrand();
+            return PartialView();
+        }
     }
 }

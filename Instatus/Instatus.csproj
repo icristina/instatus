@@ -398,7 +398,7 @@
     <None Include="README.md" />
     <EmbeddedResource Include="Views\Shared\Entry.cshtml" />
     <EmbeddedResource Include="Views\Shared\DisplayTemplates\LinkList.cshtml" />
-    <EmbeddedResource Include="Views\Shared\Branding.cshtml" />
+    <EmbeddedResource Include="Views\Shared\Brand.cshtml" />
     <EmbeddedResource Include="Views\Shared\Part.cshtml" />
     <EmbeddedResource Include="Views\Shared\ValidationSummary.cshtml" />
     <EmbeddedResource Include="Views\Shared\_App.cshtml" />

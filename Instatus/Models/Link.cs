@@ -14,14 +14,14 @@ namespace Instatus.Models
     public class Link
     {
         public int Id { get; set; }
-        public string Name { get; set; }        
+        public string Name { get; set; }
+        public string Description { get; set; }
         public string Uri { get; set; }
         public string Location { get; set; }
         public string Picture { get; set; }
         public string ContentType { get; set; }
         public string Credit { get; set; }
         public int HttpStatusCode { get; set; }
-
         public string Rel { get; set; }
         public int Priority { get; set; }
 

@@ -50,7 +50,6 @@ namespace Instatus.Data
         public IDbSet<Selection> Selections { get; set; }
         public IDbSet<Taxonomy> Taxonomies { get; set; }
         public IDbSet<Log> Logs { get; set; }
-        public IDbSet<Card> Cards { get; set; }
         public IDbSet<Phrase> Phrases { get; set; }
 
         public User GetUser(IPrincipal user)
@@ -108,6 +107,30 @@ namespace Instatus.Data
                     .ToList()
                     .Select(u => new MailAddress(u.EmailAddress, u.FullName))
                     .ToList();
+        }
+
+        public Application GetCurrentApplication()
+        {
+            return Pages.OfType<Application>().First();
+        }
+
+        public Brand GetCurrentBrand()
+        {
+            var brand = Pages
+                    .Include(p => p.Links)
+                    .OfType<Brand>()
+                    .FirstOrDefault(); 
+            
+            if(brand != null)
+                return brand;
+
+            var application = GetCurrentApplication();
+
+            return new Brand()
+            {
+                Name = application.Name,
+                Picture = "~/Content/logo.png"
+            };
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -365,7 +388,7 @@ namespace Instatus.Data
                     .SortActivities(filter.Sort);
         }
 
-        public static string[] DefaultPageExpansions = new string[] { "Restrictions", "Picture" };
+        public static string[] DefaultPageExpansions = new string[] { "Restrictions", "Links" };
 
         public T GetPage<T>(string slug, string[] customExpansions = null) where T : Page {
             return this.DisableProxiesAndLazyLoading()

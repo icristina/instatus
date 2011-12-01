@@ -6,9 +6,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Instatus.Models
 {
+    [ComplexType]
     public class Card
     {
-        public int Id { get; set; }
         public string Title { get; set; }
         public string Phone { get; set; }
         public string Mobile { get; set; }
