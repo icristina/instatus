@@ -9,6 +9,7 @@ namespace Instatus.Web
     {
         Head,
         Header,
+        Figure,
         Body,
         Aside,
         Footer,
