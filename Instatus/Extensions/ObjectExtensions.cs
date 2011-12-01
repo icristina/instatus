@@ -79,6 +79,7 @@ namespace Instatus
             return graph == null 
                 || (graph is string && string.IsNullOrWhiteSpace((string)graph)) 
                 || (graph is ICollection && ((ICollection)graph).Count == 0)
+                || (graph is IEnumerable && CollectionExtensions.Count(((IEnumerable)graph)) == 0)
                 || (graph is DateTime && (DateTime)graph == DateTime.MinValue)
                 || (graph is HttpPostedFileBase && ((HttpPostedFileBase)graph).ContentLength == 0);
         }

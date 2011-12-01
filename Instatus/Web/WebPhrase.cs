@@ -51,6 +51,7 @@ namespace Instatus.Web
             Actions,
             Filter,
             Mode,
+            Tags,
             // phrases
             ErrorMessage
         }        
@@ -108,6 +109,7 @@ namespace Instatus.Web
         public static string Mode { get { return Localize(Common.Mode, "Mode"); } }
         public static string View { get { return Localize(Common.View, "View"); } }
         public static string Play { get { return Localize(Common.Play, "Play"); } }
+        public static string Tags { get { return Localize(Common.Tags, "Tags"); } }
 
         public static string MinutesAgo(double minutes) { return Format(FormatString.MinutesAgo, "{0} minutes ago", minutes); }
         public static string HoursAgo(double hours) { return Format(FormatString.HoursAgo, "{0} hours ago", hours); }

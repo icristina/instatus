@@ -407,6 +407,7 @@
     <EmbeddedResource Include="Views\Shared\Sitemap.cshtml" />
     <EmbeddedResource Include="Views\Shared\Gallery.cshtml" />
     <EmbeddedResource Include="Views\Shared\Places.cshtml" />
+    <EmbeddedResource Include="Views\Shared\Legal.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

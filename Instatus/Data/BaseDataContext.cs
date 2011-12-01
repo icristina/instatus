@@ -388,7 +388,7 @@ namespace Instatus.Data
                     .SortActivities(filter.Sort);
         }
 
-        public static string[] DefaultPageExpansions = new string[] { "Restrictions", "Links" };
+        public static string[] DefaultPageExpansions = new string[] { "Restrictions", "Links", "Tags" };
 
         public T GetPage<T>(string slug, string[] customExpansions = null) where T : Page {
             return this.DisableProxiesAndLazyLoading()
@@ -448,6 +448,8 @@ namespace Instatus.Data
             foreach (var loaded in pages)
             {
                 var page = GetPage<Page>(loaded.Slug);
+                
+                loaded.Tags = loaded.Tags.Synchronize(tag => Tags.FirstOrDefault(t => t.Name == tag.Name));
 
                 if (page == null)
                 {
@@ -458,6 +460,8 @@ namespace Instatus.Data
                     page.Name = loaded.Name;
                     page.Description = loaded.Description;
                     page.Document = loaded.Document;
+                    page.Tags = loaded.Tags;
+                    page.Category = loaded.Category;
 
                     if (loaded.Priority != 0)
                         page.Priority = page.Priority;
@@ -614,6 +618,9 @@ namespace Instatus.Data
 
             if (!filter.Tag.IsEmpty())
                 filtered = filtered.Where(p => p.Tags.Any(t => t.Name == filter.Tag));
+
+            if(!filter.Category.IsEmpty())
+                filtered = filtered.Where(p => p.Category == filter.Category);
 
             if (!filter.Uri.IsEmpty())
                 filtered = filtered.Where(p => p.Sources.Any(s => filter.Uri.Contains(s.Uri)));

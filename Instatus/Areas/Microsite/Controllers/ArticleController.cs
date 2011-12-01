@@ -40,5 +40,22 @@ namespace Instatus.Areas.Microsite.Controllers
             ViewData.Model = Context.GetCurrentBrand();
             return PartialView();
         }
+
+        public ActionResult Legal()
+        {
+            var query = new WebQuery()
+            {
+                Category = "Legal"
+            };
+
+            var brand = Context.GetCurrentBrand();
+
+            ViewData.Model = new WebView<Article>(Context.GetPages<Article>(query), query)
+            {
+                Name = brand.Name
+            };
+
+            return PartialView();
+        }
     }
 }

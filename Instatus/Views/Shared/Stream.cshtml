@@ -35,14 +35,19 @@
                     }
                     @if (!page.Picture.IsEmpty())
                     {
-                        <img src="@page.Picture" itemprop="image"/>
+                        <img src="@WebPath.Absolute(page.Picture)" itemprop="image"/>
                     }
                     <dl>
                         <dt>@WebPhrase.Published</dt>
                         <dd itemprop="datePublished">@WebPhrase.PublishedDate(page.CreatedTime)</dd>
-                        @if(page.User != null) {
+                        @if(!page.User.IsEmpty()) {
                             <dt>@WebPhrase.Author</dt>
                             <dd itemprop="author">@page.User.FullName</dd>
+                        }
+                        @if (!page.Tags.IsEmpty())
+                        {
+                            <dt>@WebPhrase.Tags</dt>
+                            <dd itemprop="keywords">@string.Join(", ", page.Tags.ToStringList())</dd>
                         }
                     </dl> 
                     <span class="readMore">@WebPhrase.ReadMore</span>     

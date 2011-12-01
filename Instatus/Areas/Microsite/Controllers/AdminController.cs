@@ -22,18 +22,18 @@ namespace Instatus.Areas.Microsite.Controllers
 
         public ActionResult LoadPages(string path)
         {
-            Stream stream = null;
-            
             if (Request.HasFile())
             {
-                stream = Request.FileInputStream();
+                using(var stream = Request.FileInputStream()) {
+                    Context.LoadPages(stream);
+                }
             }
             else if (!path.IsEmpty())
             {
-                stream = new LocalStorageBlobService().Stream(path);
+                using(var stream = new LocalStorageBlobService().Stream(path)) {
+                    Context.LoadPages(stream);
+                }
             }
-
-            Context.LoadPages(stream);
 
             ViewData.Model = new List<WebParameter>()
             {

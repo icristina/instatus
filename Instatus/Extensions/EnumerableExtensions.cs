@@ -9,6 +9,7 @@ using System.Collections.Specialized;
 using Instatus.Web;
 using Instatus.Models;
 using System.Collections;
+using System.Linq.Expressions;
 
 namespace Instatus
 {
@@ -159,6 +160,14 @@ namespace Instatus
                 list.Add(item.ToString());
 
             return list;
+        }
+
+        public static ICollection<T> Synchronize<T>(this ICollection<T> source, Func<T, T> existingMatch) where T : class
+        {
+            if (source.IsEmpty())
+                return null;
+            
+            return source.Select(item => existingMatch(item) ?? item).ToList();
         }
 
         // http://msmvps.com/blogs/matthieu/archive/2009/04/01/how-to-use-linq-extension-methods-on-non-generic-ienumerable.aspx

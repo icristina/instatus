@@ -13,6 +13,7 @@ namespace Instatus.Web
         public string[] Expand { get; set; }
         public string Parent { get; set; }
         public string Tag { get; set; }
+        public string Category { get; set; }
         public WebSort Sort { get; set; }
         public WebMode Mode { get; set; }
         public WebKind Kind { get; set; }
@@ -107,7 +108,8 @@ namespace Instatus.Web
                         .AddNonEmptyValue("startDate", StartDate.HasValue ? StartDate.Value.ToString("yyyy-MM-dd") : null)
                         .AddNonEmptyValue("term", Term)
                         .AddNonEmptyValue("expand", string.Join(",", Expand ?? new string[] {}))
-                        .AddNonEmptyValue("filter", Filter);
+                        .AddNonEmptyValue("filter", Filter)
+                        .AddNonEmptyValue("category", Category);
         }
     }
 }
