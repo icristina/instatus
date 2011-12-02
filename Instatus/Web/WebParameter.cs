@@ -72,7 +72,12 @@ namespace Instatus.Web
 
         public static string GetNamespacedParameter(this List<WebParameter> parameters, string ns, string name)
         {
-            var parameter = parameters.FirstOrDefault(p => p.Name == WebParameter.GetNamespacedPropertyName(ns, name));
+            return parameters.GetParameter(WebParameter.GetNamespacedPropertyName(ns, name));
+        }
+
+        public static string GetParameter(this List<WebParameter> parameters, string name)
+        {
+            var parameter = parameters.FirstOrDefault(p => p.Name == name);
             return parameter.IsEmpty() ? string.Empty : parameter.Content;
         }
 

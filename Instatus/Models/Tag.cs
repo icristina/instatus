@@ -43,4 +43,12 @@ namespace Instatus.Models
             return Name;
         }
     }
+
+    public static class TagExtensions
+    {
+        public static ICollection<Tag> FromTaxonomy(this ICollection<Tag> tags, string taxonomyName)
+        {
+            return tags.Where(t => t.Taxonomy.Name == taxonomyName).ToList();
+        }
+    }
 }

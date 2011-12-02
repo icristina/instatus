@@ -8,6 +8,16 @@ namespace Instatus
 {
     public static class NumericExtensions
     {
+        public static int NextIndex(this int i, int count) // zero based, circular
+        {
+            return i == count - 1 ? 0 : i + 1;
+        }
+
+        public static int PreviousIndex(this int i, int count) // zero based, circular
+        {
+            return i == 0 ? count - 1 : i - 1;
+        }
+        
         public static int IncrementPager(this int i, int currentPage, int totalPages, int maxPagerCount)
         {
             var original = i;
