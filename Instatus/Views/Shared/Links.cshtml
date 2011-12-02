@@ -1,0 +1,10 @@
+﻿@model IEnumerable<Instatus.Models.Link>
+
+<ul>
+    @foreach (var link in Model)
+    {
+        <li>
+            <a href="@link.Uri" target="_blank">@link.Name</a>
+        </li>
+    }
+</ul>  

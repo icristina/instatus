@@ -9,10 +9,12 @@
     if (ViewContext.IsChildAction && ViewContext.ParentActionViewContext.ViewData.Model is WebSection) {
         section = (WebSection)ViewContext.ParentActionViewContext.ViewData.Model;
         sectionAttributes = section.Parameters.GetHtmlAttributes();
-    }    
+    }
+
+    sectionAttributes.Append(Model.Query.ToDataAttributeDictionary());
 }
 
-<section @Html.Attr(sectionAttributes)>
+<section@(Html.Attr(sectionAttributes))>
     <div>
         @if (Model.Query.Mode == WebMode.PagedList)
         {
@@ -24,35 +26,49 @@
             @Html.Tag("h1", section.Heading)
             @Html.Tag("h2", section.Strapline)      
         }
-        @foreach (Instatus.Models.Page page in Model)
+        @if (Model.Query.Kind == WebKind.Link)
         {
-            <article itemscope itemtype="@page.GetSchemaOrgUri()" itemid="@page.Id">
-                <a href="@Url.RouteUrl(MicrositeAreaRegistration.PageRouteName, new { slug = page.Slug })">
-                    <h1 itemprop="name">@page.Name</h1>
-                    @if (!page.Description.IsEmpty())
-                    {
-                        <p itemprop="description">@page.Description</p>
-                    }
-                    @if (!page.Picture.IsEmpty())
-                    {
-                        <img src="@WebPath.Absolute(page.Picture)" itemprop="image"/>
-                    }
-                    <dl>
-                        <dt>@WebPhrase.Published</dt>
-                        <dd itemprop="datePublished">@WebPhrase.PublishedDate(page.CreatedTime)</dd>
-                        @if(!page.User.IsEmpty()) {
-                            <dt>@WebPhrase.Author</dt>
-                            <dd itemprop="author">@page.User.FullName</dd>
-                        }
-                        @if (!page.Tags.IsEmpty())
+            @Html.Partial("Links", Model)         
+        }
+        else if (Model.Query.Kind == WebKind.User) {
+            @Html.Partial("Users", Model)            
+        }
+        else if (Model.Query.Kind == WebKind.Place || Model.Query.Kind == WebKind.Organization) {
+            @Html.Partial("Places", Model.Cast<Instatus.Models.Place>())            
+        }
+        else
+        {
+            foreach (Instatus.Models.Page page in Model)
+            {
+                <article itemscope itemtype="@page.GetSchemaOrgUri()" itemid="@page.Id">
+                    <a href="@Url.RouteUrl(MicrositeAreaRegistration.PageRouteName, new { slug = page.Slug })">
+                        <h1 itemprop="name">@page.Name</h1>
+                        @if (!page.Description.IsEmpty())
                         {
-                            <dt>@WebPhrase.Tags</dt>
-                            <dd itemprop="keywords">@string.Join(", ", page.Tags.ToStringList())</dd>
+                            <p itemprop="description">@page.Description</p>
                         }
-                    </dl> 
-                    <span class="readMore">@WebPhrase.ReadMore</span>     
-                </a>
-            </article>
-        }    
+                        @if (!page.Picture.IsEmpty())
+                        {
+                            <img src="@WebPath.Absolute(page.Picture)" itemprop="image"/>
+                        }
+                        <dl>
+                            <dt>@WebPhrase.Published</dt>
+                            <dd itemprop="datePublished">@WebPhrase.PublishedDate(page.CreatedTime)</dd>
+                            @if (!page.User.IsEmpty())
+                            {
+                                <dt>@WebPhrase.Author</dt>
+                                <dd itemprop="author">@page.User.FullName</dd>
+                            }
+                            @if (!page.Tags.IsEmpty())
+                            {
+                                <dt>@WebPhrase.Tags</dt>
+                                <dd itemprop="keywords">@string.Join(", ", page.Tags.ToStringList())</dd>
+                            }
+                        </dl> 
+                        <span class="readMore">@WebPhrase.ReadMore</span>     
+                    </a>
+                </article>
+            }   
+        }
     </div>
 </section>

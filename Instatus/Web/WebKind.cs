@@ -23,6 +23,7 @@ namespace Instatus.Web
         Organization,
         User,
         Message,
-        Status
+        Status,
+        Link
     }
 }

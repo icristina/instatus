@@ -10,7 +10,7 @@ using Instatus.Web;
 
 namespace Instatus.Areas.Microsite.Controllers
 {
-    public class ArticleController : BaseController<BaseDataContext>
+    public class PageController : BaseController<BaseDataContext>
     {
         public ActionResult Index()
         {
@@ -20,13 +20,26 @@ namespace Instatus.Areas.Microsite.Controllers
         
         public ActionResult Details(string slug = "home")
         {
-            return Article(slug);
+            return Page(slug);
         }
 
         public ActionResult Stream(WebQuery query, string viewName = "")
         {
-            ViewData.Model = new WebView<Page>(Context.GetPages(query), query);
+            ViewData.Model = GetStream(query);
             return PartialView(viewName);
+        }
+
+        private object GetStream(WebQuery query)
+        {
+            switch (query.Kind)
+            {
+                case WebKind.Link:
+                    return new WebView<Link>(Context.GetLinks(query), query);
+                case WebKind.User:
+                    return new WebView<User>(Context.GetUsers(query), query);
+                default:
+                    return new WebView<Page>(Context.GetPages(query), query);
+            }
         }
 
         public ActionResult Nav()

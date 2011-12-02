@@ -1,6 +1,6 @@
 ﻿@model WebSection
 
-<section @Html.Attr(Model.Parameters.GetHtmlAttributes())>
+<section@(Html.Attr(Model.Parameters.GetHtmlAttributes()))>
     <div>
         @Html.Tag("h1", Model.Heading)
         @Html.Tag("h2", Model.Strapline)

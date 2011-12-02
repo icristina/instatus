@@ -111,5 +111,15 @@ namespace Instatus.Web
                         .AddNonEmptyValue("filter", Filter)
                         .AddNonEmptyValue("category", Category);
         }
+
+        public Dictionary<string, object> ToDataAttributeDictionary()
+        {
+            return new Dictionary<string, object>()
+                .AddNonEmptyValue("data-query-kind", Kind.ToString().ToCamelCase())
+                .AddNonEmptyValue("data-query-mode", Mode.ToString().ToCamelCase())
+                .AddNonEmptyValue("data-query-pageSize", PageSize)
+                .AddNonEmptyValue("data-query-category", Category.ToCamelCase())
+                .AddNonEmptyValue("data-query-tag", Tag.ToCamelCase());
+        }
     }
 }

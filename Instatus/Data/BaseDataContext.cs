@@ -390,6 +390,16 @@ namespace Instatus.Data
 
         public static string[] DefaultPageExpansions = new string[] { "Restrictions", "Links", "Tags" };
 
+        public Page GetPage(string slug, string[] customExpansions = null)
+        {
+            return this.DisableProxiesAndLazyLoading()
+                    .Pages
+                    .Expand(DefaultPageExpansions)
+                    .Expand(customExpansions)
+                    .Where(p => p.Slug == slug)
+                    .FirstOrDefault();
+        }
+
         public T GetPage<T>(string slug, string[] customExpansions = null) where T : Page {
             return this.DisableProxiesAndLazyLoading()
                     .Pages
@@ -422,6 +432,15 @@ namespace Instatus.Data
                     .SearchPages(filter)
                     .OfKind(filter.Kind)
                     .SortPages(filter.Sort);
+        }
+
+        public IOrderedQueryable<Link> GetLinks(WebExpression filter)
+        {
+            return this
+                    .DisableProxiesAndLazyLoading()
+                    .Links
+                    .FilterLinks(filter)
+                    .SortLinks(filter.Sort);
         }
 
         public IOrderedQueryable<T> GetTemplates<T>(string locale = "") where T : Page 
@@ -462,6 +481,12 @@ namespace Instatus.Data
                     page.Document = loaded.Document;
                     page.Tags = loaded.Tags;
                     page.Category = loaded.Category;
+
+                    if (!loaded.Links.IsEmpty())
+                    {
+                        this.MarkDeleted(page.Links);
+                        page.Links = loaded.Links;
+                    }   
 
                     if (loaded.Priority != 0)
                         page.Priority = page.Priority;
@@ -719,6 +744,27 @@ namespace Instatus.Data
                     return queryable.OrderByDescending(u => u.CreatedTime);
                 default:
                     return queryable.OrderBy(u => u.FullName);
+            }
+        }
+
+        public static IQueryable<Link> FilterLinks(this IQueryable<Link> queryable, WebExpression filter)
+        {
+            var filtered = queryable;
+
+            if (!filter.Category.IsEmpty())
+                filtered = filtered.Where(l => l.Rel == filter.Category);
+
+            return filtered;
+        }
+
+        public static IOrderedQueryable<Link> SortLinks(this IQueryable<Link> queryable, WebSort sort)
+        {
+            switch (sort)
+            {
+                case WebSort.Alphabetical:
+                    return queryable.OrderByDescending(l => l.Name);
+                default:
+                    return queryable.OrderBy(l => l.Priority);
             }
         }
     }

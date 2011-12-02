@@ -21,13 +21,13 @@ namespace Instatus.Areas.Microsite
             context.MapRoute(
                 PageRouteName,
                 RoutePrefix + "/{slug}",
-                new { controller = "Article", action = "Details", slug = UrlParameter.Optional }
+                new { controller = "Page", action = "Details", slug = UrlParameter.Optional }
             );
 
             context.MapRoute(
                 "Microsite_Default",
                 "Microsite/{controller}/{action}/{id}",
-                new { controller = "Article", action = "Index", id = UrlParameter.Optional }
+                new { controller = "Page", action = "Index", id = UrlParameter.Optional }
             );
 
             context.MapRoute(

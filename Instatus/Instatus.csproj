@@ -197,7 +197,7 @@
     <Compile Include="Web\WebConfiguration.cs" />
     <Compile Include="Web\WebContentType.cs" />
     <Compile Include="Controllers\BaseController.cs" />
-    <Compile Include="Areas\Microsite\Controllers\ArticleController.cs" />
+    <Compile Include="Areas\Microsite\Controllers\PageController.cs" />
     <Compile Include="Data\DropTablesInitializer.cs" />
     <Compile Include="Extensions\HtmlHelperExtensions.cs" />
     <Compile Include="Extensions\ObjectExtensions.cs" />
@@ -377,7 +377,7 @@
     <EmbeddedResource Include="Views\Shared\Menu.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\Article.cshtml" />
+    <EmbeddedResource Include="Views\Shared\Page.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Shared\LoginStatus.cshtml" />
@@ -408,6 +408,8 @@
     <EmbeddedResource Include="Views\Shared\Gallery.cshtml" />
     <EmbeddedResource Include="Views\Shared\Places.cshtml" />
     <EmbeddedResource Include="Views\Shared\Legal.cshtml" />
+    <EmbeddedResource Include="Views\Shared\Links.cshtml" />
+    <EmbeddedResource Include="Views\Shared\Users.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

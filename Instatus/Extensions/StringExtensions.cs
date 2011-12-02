@@ -58,7 +58,7 @@ namespace Instatus
 
         public static string RemoveDoubleSpaces(this string text)
         {
-            return Regex.Replace(text, @"\s{1,}", " ").Trim();
+            return Regex.Replace(text, @"\s{1,}", " ");
         }
 
         public static string RemoveHtml(this string text)

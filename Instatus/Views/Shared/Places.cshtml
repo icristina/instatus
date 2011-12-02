@@ -1,4 +1,4 @@
-﻿@model WebView<Instatus.Models.Page>
+﻿@model IEnumerable<Instatus.Models.Place>
     
 @using Instatus.Areas.Microsite
 
@@ -9,8 +9,7 @@
             <a href="#@place.Slug">@place.Name</a>
         </li>
     }      
-</ul>
-           
+</ul>  
 @foreach(var place in Model.Cast<Instatus.Models.Place>()) {
     <p id="@place.Slug" itemtype="@place.GetSchemaOrgUri()">
         <span itemprop="address" itemtype="@place.Address.GetSchemaOrgUri()">

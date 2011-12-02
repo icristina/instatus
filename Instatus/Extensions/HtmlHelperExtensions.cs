@@ -157,10 +157,11 @@ namespace Instatus
 
             foreach (var attr in attributes)
             {
+                markup.AppendSpace();
                 markup.Append(attr.Value.ToAttr(attr.Key));
             }
 
-            return new MvcHtmlString(markup.ToString());
+            return new MvcHtmlString(markup.ToString().RemoveDoubleSpaces());
         }
 
         public static MvcHtmlString Attr<T>(this HtmlHelper<T> html, string attributeName, object value)

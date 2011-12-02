@@ -1,0 +1,10 @@
+﻿@model IEnumerable<Instatus.Models.User>
+
+<ul>
+    @foreach (var user in Model)
+    {
+        <li>
+            @user.FullName
+        </li>
+    }
+</ul>  

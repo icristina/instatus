@@ -60,5 +60,15 @@ namespace Instatus
                     .Trim()
                     .RemoveDoubleSpaces();
         }
+
+        public static Dictionary<string, object> ToDataAttributeDictionary(this RouteData routeData) {
+            return new Dictionary<string, object>()
+                {
+                    { "data-route-id", routeData.ToUniqueId().ToCamelCase() },
+                    { "data-route-area", routeData.AreaName().ToCamelCase() },
+                    { "data-route-controller", routeData.ControllerName().ToCamelCase() },
+                    { "data-route-action", routeData.ActionName().ToCamelCase() }
+                };
+        }
     }
 }

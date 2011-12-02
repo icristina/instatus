@@ -10,6 +10,7 @@ namespace Instatus.Areas.Microsite
     {
         private static Dictionary<Type, string> schemas = new Dictionary<Type, string>()
         {
+            { typeof(Application), "WebPage" },
             { typeof(Article), "WebPage" },
             { typeof(Post), "BlogPost" },
             { typeof(Event), "Event" },

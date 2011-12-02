@@ -88,15 +88,15 @@ namespace Instatus.Controllers
         }
         
         [NonAction]
-        public ActionResult Article(string slug = null)
+        public ActionResult Page(string slug = null)
         {
             using (var db = BaseDataContext.Instance())
             {
-                ViewData.Model = db.GetPage<Page>(slug ?? RouteData.ActionName())
+                ViewData.Model = db.GetPage(slug ?? RouteData.ActionName())
                                     .ProcessIncludes(db);
             }
 
-            return View("Article");
+            return View("Page");
         }
 
         [NonAction]
