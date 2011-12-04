@@ -3,8 +3,8 @@
 <ul>
     @foreach (var user in Model)
     {
-        <li>
-            @user.FullName
+        <li itemscope itemtype="@user.GetItemType()" itemid="@user.Id">
+            <span itemprop="name">@user.FullName</span>
         </li>
     }
 </ul>  

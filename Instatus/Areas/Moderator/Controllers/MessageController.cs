@@ -12,7 +12,7 @@ using System.IO;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 
-namespace Instatus.Areas.Microsite.Controllers
+namespace Instatus.Areas.Moderator.Controllers
 {
     public class MessageViewModel : BaseViewModel<Message, BaseDataContext>
     {
@@ -41,7 +41,7 @@ namespace Instatus.Areas.Microsite.Controllers
         }
     }
     
-    [Authorize(Roles = "Administrator")]
+    [Authorize(Roles = "Moderator")]
     public class MessageController : ScaffoldController<MessageViewModel, Message, BaseDataContext, int>
     {
         public override IOrderedQueryable<Message> Query(IDbSet<Message> set, WebQuery query)

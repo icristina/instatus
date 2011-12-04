@@ -11,7 +11,7 @@ using Instatus.Services;
 using System.IO;
 using System.ComponentModel.DataAnnotations;
 
-namespace Instatus.Areas.Microsite.Controllers
+namespace Instatus.Areas.Editor.Controllers
 {
     public class TagViewModel : BaseViewModel<Tag>
     {

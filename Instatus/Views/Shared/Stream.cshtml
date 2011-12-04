@@ -1,7 +1,5 @@
 ﻿@model IWebView
            
-@using Instatus.Areas.Microsite 
-
 @{
     WebSection section = null;
     Dictionary<string, object> sectionAttributes = null;
@@ -40,8 +38,8 @@
         {
             foreach (Instatus.Models.Page page in Model)
             {
-                <article itemscope itemtype="@page.GetSchemaOrgUri()" itemid="@page.Id">
-                    <a href="@Url.RouteUrl(MicrositeAreaRegistration.PageRouteName, new { slug = page.Slug })">
+                <article itemscope itemtype="@page.GetItemType()" itemid="@page.Id">
+                    <a href="@Url.Page(page.Slug)">
                         <h1 itemprop="name">@page.Name</h1>
                         @if (!page.Description.IsEmpty())
                         {

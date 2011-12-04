@@ -12,7 +12,7 @@ using System.IO;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 
-namespace Instatus.Areas.Microsite.Controllers
+namespace Instatus.Areas.Developer.Controllers
 {
     public class CredentialViewModel : BaseViewModel<Credential, BaseDataContext>
     {

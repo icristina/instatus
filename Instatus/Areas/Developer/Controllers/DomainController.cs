@@ -11,33 +11,30 @@ using Instatus.Services;
 using System.IO;
 using System.ComponentModel.DataAnnotations;
 
-namespace Instatus.Areas.Microsite.Controllers
+namespace Instatus.Areas.Developer.Controllers
 {
-    public class LinkViewModel : BaseViewModel<Link, BaseDataContext>
+    public class DomainViewModel : BaseViewModel<Domain, BaseDataContext>
     {
-        [Required]
+        public string Environment { get; set; }
         public string Uri { get; set; }
 
-        [Required]
-        public string Location { get; set; }
-
-        [Column("HttpStatusCode")]
-        [Display(Name = "Http Code")]
-        public SelectList HttpStatusCodeList { get; set; }
+        [Column("ApplicationId")]
+        [Display(Name = "Application")]
+        public SelectList ApplicationList { get; set; }
 
         [ScaffoldColumn(false)]
-        public int HttpStatusCode { get; set; }
+        public int ApplicationId { get; set; }
 
         public override void Databind()
         {
-            HttpStatusCodeList = new SelectList(new Dictionary<int, string>() { { 301, "Permanent Redirect" }, { 302, "Temporary Redirect" } }, "Key", "Value", HttpStatusCode);
+            ApplicationList = new SelectList(Context.Applications.ToList(), "Id", "Name", ApplicationId);
         }
     }
     
     [Authorize(Roles = "Administrator")]
-    public class LinkController : ScaffoldController<LinkViewModel, Link, BaseDataContext, int>
+    public class DomainController : ScaffoldController<DomainViewModel, Domain, BaseDataContext, int>
     {
-        public override void ConfigureWebView(WebView<Link> webView)
+        public override void ConfigureWebView(WebView<Domain> webView)
         {
             webView.Permissions = WebRole.Administrator.ToPermissions();
             base.ConfigureWebView(webView);

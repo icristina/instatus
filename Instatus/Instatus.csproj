@@ -78,17 +78,20 @@
   <ItemGroup>
     <Compile Include="Areas\Auth\AuthAreaRegistration.cs" />
     <Compile Include="Areas\Auth\Controllers\AccountController.cs" />
-    <Compile Include="Areas\Microsite\Controllers\AdminController.cs" />
-    <Compile Include="Areas\Microsite\Controllers\BlogPostController.cs" />
-    <Compile Include="Areas\Microsite\Controllers\LogController.cs" />
-    <Compile Include="Areas\Microsite\Controllers\LinkController.cs" />
-    <Compile Include="Areas\Microsite\Controllers\MessageController.cs" />
-    <Compile Include="Areas\Microsite\Controllers\DomainController.cs" />
-    <Compile Include="Areas\Microsite\Controllers\CredentialController.cs" />
-    <Compile Include="Areas\Microsite\Controllers\ExportController.cs" />
-    <Compile Include="Areas\Microsite\Controllers\UserController.cs" />
-    <Compile Include="Areas\Microsite\Controllers\TagController.cs" />
+    <Compile Include="Areas\Developer\DeveloperAreaRegistration.cs" />
+    <Compile Include="Areas\Developer\Controllers\DashboardController.cs" />
+    <Compile Include="Areas\Editor\EditorAreaRegistration.cs" />
+    <Compile Include="Areas\Editor\Controller\BlogPostController.cs" />
+    <Compile Include="Areas\Developer\Controllers\LogController.cs" />
+    <Compile Include="Areas\Developer\Controllers\LinkController.cs" />
+    <Compile Include="Areas\Moderator\Controllers\MessageController.cs" />
+    <Compile Include="Areas\Developer\Controllers\DomainController.cs" />
+    <Compile Include="Areas\Developer\Controllers\CredentialController.cs" />
+    <Compile Include="Areas\Moderator\Controllers\ExportController.cs" />
+    <Compile Include="Areas\Developer\Controllers\UserController.cs" />
+    <Compile Include="Areas\Editor\Controller\TagController.cs" />
     <Compile Include="Areas\Microsite\SchemaOrgExtensions.cs" />
+    <Compile Include="Areas\Moderator\ModeratorAreaRegistration.cs" />
     <Compile Include="Areas\Typekit\Controllers\TypekitController.cs" />
     <Compile Include="Areas\Typekit\TypekitAreaRegistration.cs" />
     <Compile Include="Areas\Facebook\Controllers\FacebookController.cs" />
@@ -410,10 +413,10 @@
     <EmbeddedResource Include="Views\Shared\Legal.cshtml" />
     <EmbeddedResource Include="Views\Shared\Links.cshtml" />
     <EmbeddedResource Include="Views\Shared\Users.cshtml" />
-    <EmbeddedResource Include="Views\Actions.cshtml" />
     <EmbeddedResource Include="Views\Shared\Subscribe.cshtml" />
     <EmbeddedResource Include="Views\Shared\List.cshtml" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

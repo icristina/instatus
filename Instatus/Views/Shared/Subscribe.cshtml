@@ -1,4 +1,4 @@
-﻿@using (Html.BeginForm())
+﻿@using (Html.BeginForm("Index", "Home", FormMethod.Post, new { id = "subscribe" }))
 {
     <fieldset>
         <legend>@WebPhrase.Subscribe</legend>

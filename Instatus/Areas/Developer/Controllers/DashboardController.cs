@@ -10,10 +10,10 @@ using Instatus.Web;
 using Instatus.Services;
 using System.IO;
 
-namespace Instatus.Areas.Microsite.Controllers
+namespace Instatus.Areas.Developer.Controllers
 {
     [Authorize(Roles = "Administrator")]
-    public class AdminController : BaseController<BaseDataContext>
+    public class DashboardController : BaseController<BaseDataContext>
     {
         public ActionResult Index()
         {

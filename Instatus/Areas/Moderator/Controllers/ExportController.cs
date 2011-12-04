@@ -11,7 +11,7 @@ using Instatus.Services;
 using System.IO;
 using System.ComponentModel.Composition;
 
-namespace Instatus.Areas.Microsite.Controllers
+namespace Instatus.Areas.Moderator.Controllers
 {
     [Authorize(Roles = "Moderator")]
     [Export]

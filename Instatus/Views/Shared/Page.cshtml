@@ -1,7 +1,5 @@
 ﻿@model Instatus.Models.Page
 
-@using Instatus.Areas.Microsite
-
 @{
     ViewBag.Title = Model.Name;
 }
@@ -10,7 +8,7 @@
     @Html.Parts(WebZone.Head)
 }
 
-<div role="main" itemscope itemtype="@Model.GetSchemaOrgUri()" itemid="@Model.Id">
+<div role="main" itemscope itemtype="@Model.GetItemType()" itemid="@Model.Id">
     <h1 itemprop="name">@Model.Name</h1>
     @if (!Model.Description.IsEmpty())
     {

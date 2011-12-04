@@ -1,7 +1,5 @@
 ﻿@model IEnumerable<Instatus.Models.Place>
     
-@using Instatus.Areas.Microsite
-
 <ul>
     @foreach (var place in Model.Cast<Instatus.Models.Place>())
     {
@@ -11,8 +9,8 @@
     }      
 </ul>  
 @foreach(var place in Model.Cast<Instatus.Models.Place>()) {
-    <p id="@place.Slug" itemtype="@place.GetSchemaOrgUri()">
-        <span itemprop="address" itemtype="@place.Address.GetSchemaOrgUri()">
+    <p id="@place.Slug" itemscope itemtype="@place.GetItemType()" itemid="@place.Id">
+        <span itemprop="address" itemtype="@place.Address.GetItemType()">
             <span itemprop="street-address">@place.Address.StreetAddress</span>
             <span itemprop="locality">@place.Address.Locality</span>
             <span itemprop="postal-code">@place.Address.PostalCode</span>

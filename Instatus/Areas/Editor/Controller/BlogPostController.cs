@@ -13,7 +13,7 @@ using Instatus;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace Instatus.Areas.Microsite.Controllers
+namespace Instatus.Areas.Editor.Controllers
 {
     public class BlogPostViewModel : BaseViewModel<Post, BaseDataContext>
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using Instatus.Models;
 
-namespace Instatus.Areas.Microsite
+namespace Instatus
 {
     public static class SchemaOrgExtensions
     {
@@ -19,18 +19,20 @@ namespace Instatus.Areas.Microsite
             { typeof(Place), "Place" },
             { typeof(Product), "Product" },
             { typeof(Address), "Address" },
-            { typeof(Job), "JobPosting" }
+            { typeof(Job), "JobPosting" },
+            { typeof(User), "Person" },
+            { typeof(Profile), "Person" }
         };
         
-        public static string GetSchemaOrgType(this object graph)
+        private static string GetTypeName(this object graph)
         {
             var type = graph.GetType();
             return schemas.ContainsKey(type) ? schemas[type] : "CreativeWork";
         }
 
-        public static string GetSchemaOrgUri(this object graph)
+        public static string GetItemType(this object graph)
         {
-            return @"http://schema.org/" + GetSchemaOrgType(graph);
+            return @"http://schema.org/" + GetTypeName(graph);
         }
     }
 }
