@@ -92,8 +92,11 @@ namespace Instatus.Controllers
         {
             using (var db = BaseDataContext.Instance())
             {
-                ViewData.Model = db.GetPage(slug ?? RouteData.ActionName())
+                var page = db.GetPage(slug ?? RouteData.ActionName())
                                     .ProcessIncludes(db);
+
+                TempData["page"] = page;
+                ViewData.Model = page;
             }
 
             return View("Page");

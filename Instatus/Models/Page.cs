@@ -155,12 +155,21 @@ namespace Instatus.Models
             return restrictionResults;
         }
 
-        public Page ProcessIncludes(BaseDataContext dataContext = null)
+        public Page ProcessIncludes(BaseDataContext dataContext = null, RouteData routeData = null)
         {
             if (Document == null)
                 Document = new WebDocument();
 
-            Document.Parts.AddRange(WebPart.Catalog);
+            var scope = new List<string>() { GetType().Name };
+
+            if(routeData != null) {
+                scope.Add(routeData.ActionName());
+                scope.Add(routeData.AreaName());
+                scope.Add(routeData.ToUniqueId());
+            }
+
+            // include WebParts that are unscoped or scope matches routeData parameter
+            Document.Parts.AddRange(WebPart.Catalog.Where(p => p.Scope.IsEmpty() || scope.Contains(p.Scope)));
 
             if (dataContext == null)
                 dataContext = BaseDataContext.Instance();

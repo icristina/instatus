@@ -108,6 +108,11 @@ namespace Instatus
             return sb.ToString();
         }
 
+        public static string ToDelimited(this IEnumerable source, string delimiter = ",")
+        {
+            return string.Join(delimiter, source.ToStringList());
+        }
+
         public static IQueryable<T> Expand<T>(this IQueryable<T> set, string[] paths) where T : class
         {
             IQueryable<T> queryable = set;

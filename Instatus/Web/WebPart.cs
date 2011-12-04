@@ -16,6 +16,7 @@ namespace Instatus.Web
     {
         public string ViewName { get; set; }
         public WebZone Zone { get; set; }
+        public string Scope { get; set; } // actionName, areaName, slug or kind
 
         private List<WebParameter> parameters;
 

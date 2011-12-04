@@ -12,7 +12,7 @@ else if (Model is WebPartial)
 
     if (webPartial.ActionName.IsEmpty())
     {
-        @Html.Partial(webPartial.ViewName)
+        @Html.Partial(webPartial.ViewName, TempData["page"])
     }
     else
     {

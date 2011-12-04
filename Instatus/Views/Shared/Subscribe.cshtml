@@ -1,0 +1,10 @@
+﻿@using (Html.BeginForm())
+{
+    <fieldset>
+        <legend>@WebPhrase.Subscribe</legend>
+        <label>
+            @Html.TextBox("emailAddress", null, new { type = "email", placeholder = WebPhrase.EmailAddress })
+        </label>
+    </fieldset>
+    @Html.SubmitButton()
+}

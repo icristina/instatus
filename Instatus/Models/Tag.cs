@@ -5,6 +5,7 @@ using System.Web;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Dynamic;
+using Instatus.Models;
 
 namespace Instatus.Models
 {
@@ -43,12 +44,20 @@ namespace Instatus.Models
             return Name;
         }
     }
+}
 
+namespace Instatus
+{
     public static class TagExtensions
     {
-        public static ICollection<Tag> FromTaxonomy(this ICollection<Tag> tags, string taxonomyName)
+        public static IEnumerable<Tag> ByTaxonomy(this ICollection<Tag> tags, string taxonomyName)
         {
-            return tags.Where(t => t.Taxonomy.Name == taxonomyName).ToList();
+            return tags.Where(t => t.Taxonomy.Name == taxonomyName);
+        }
+
+        public static string Term(this ICollection<Tag> tags, string taxonomyName)
+        {
+            return tags.ByTaxonomy(taxonomyName).Select(t => t.Name).FirstOrDefault();
         }
     }
 }

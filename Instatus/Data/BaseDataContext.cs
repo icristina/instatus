@@ -388,7 +388,7 @@ namespace Instatus.Data
                     .SortActivities(filter.Sort);
         }
 
-        public static string[] DefaultPageExpansions = new string[] { "Restrictions", "Links", "Tags" };
+        public static string[] DefaultPageExpansions = new string[] { "Restrictions", "Links", "Tags.Taxonomy", "User" };
 
         public Page GetPage(string slug, string[] customExpansions = null)
         {
@@ -490,10 +490,27 @@ namespace Instatus.Data
 
                     if (loaded.Priority != 0)
                         page.Priority = page.Priority;
-                }
-            }
 
-            SaveChanges();
+                    if (loaded is Application)
+                    {
+                        var application = (Application)loaded;
+                        
+                        application.Taxonomies = application.Taxonomies.Synchronize(tn => Taxonomies.FirstOrDefault(t => t.Name == tn.Name));
+
+                        if (!application.Taxonomies.IsEmpty())
+                        {
+                            foreach (var taxonomy in application.Taxonomies)
+                            {
+                                taxonomy.Tags = taxonomy.Tags.Synchronize(tag => Tags.FirstOrDefault(t => t.Name == tag.Name));
+                            }
+                        }
+
+                        ((Application)page).Taxonomies = application.Taxonomies;
+                    }
+                }
+
+                SaveChanges();
+            }
         }
     }
 
