@@ -1,9 +1,16 @@
 ﻿@model WebSection
 
-<section@(Html.Attr(Model.Parameters.GetHtmlAttributes()))>
-    <div>
-        @Html.Tag("h1", Model.Heading)
-        @Html.Tag("h2", Model.Strapline)
-        @Html.Content(Model.Body)    
-    </div>
-</section>
+@if (Model.Zone == WebZone.Header)
+{
+    @Html.Content(Model.Body)
+}
+else
+{
+    <section@(Html.Attr(Model.Parameters.GetHtmlAttributes()))>
+        <div>
+            @Html.Tag("h1", Model.Heading)
+            @Html.Tag("h2", Model.Strapline)
+            @Html.Content(Model.Body)    
+        </div>
+    </section>
+}

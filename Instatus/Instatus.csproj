@@ -394,10 +394,11 @@
   <ItemGroup>
     <EmbeddedResource Include="Areas\Typekit\Views\Shared\RegisterScripts.cshtml" />
     <EmbeddedResource Include="Areas\Typekit\Views\Web.config" />
-    <EmbeddedResource Include="Areas\Microsite\Views\Web.config" />
-    <EmbeddedResource Include="Areas\Microsite\Views\Admin\Index.cshtml" />
-    <EmbeddedResource Include="Areas\Microsite\Views\Export\Index.cshtml" />
+    <EmbeddedResource Include="Areas\Developer\Views\Web.config" />
+    <EmbeddedResource Include="Areas\Developer\Views\Dashboard\Index.cshtml" />
+    <EmbeddedResource Include="Areas\Moderator\Views\Export\Index.cshtml" />
     <EmbeddedResource Include="Areas\Facebook\Views\Facebook\Index.cshtml" />
+    <EmbeddedResource Include="Areas\Moderator\Views\Web.config" />
     <None Include="README.md" />
     <EmbeddedResource Include="Views\Shared\Entry.cshtml" />
     <EmbeddedResource Include="Views\Shared\DisplayTemplates\LinkList.cshtml" />

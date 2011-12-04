@@ -9,7 +9,12 @@
 }
 
 <div role="main" itemscope itemtype="@Model.GetItemType()" itemid="@Model.Id">
-    <h1 itemprop="name">@Model.Name</h1>
+    <header>
+        <h1 itemprop="name">@Model.Name</h1>  
+        <div>
+            @Html.Parts(WebZone.Header)          
+        </div>
+    </header>
     @if (!Model.Description.IsEmpty())
     {
         <div itemprop="description">

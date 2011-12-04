@@ -505,7 +505,11 @@ namespace Instatus.Data
                             }
                         }
 
-                        ((Application)page).Taxonomies = application.Taxonomies;
+                        var existingApplication = (Application)page;
+
+                        Entry(existingApplication).Collection(a => a.Taxonomies).Load();
+                        existingApplication.Taxonomies.Clear();
+                        existingApplication.Taxonomies = application.Taxonomies;
                     }
                 }
 
