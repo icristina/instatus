@@ -17,6 +17,7 @@ using Instatus.Queries;
 using System.Net.Mail;
 using System.Text;
 using System.ServiceModel.Web;
+using System.Linq.Expressions;
 
 namespace Instatus.Data
 {   
@@ -505,16 +506,22 @@ namespace Instatus.Data
                             }
                         }
 
-                        var existingApplication = (Application)page;
-
-                        Entry(existingApplication).Collection(a => a.Taxonomies).Load();
-                        existingApplication.Taxonomies.Clear();
-                        existingApplication.Taxonomies = application.Taxonomies;
+                        Entry((Application)page).Replace(a => a.Taxonomies, application.Taxonomies);
                     }
                 }
 
                 SaveChanges();
             }
+        }
+    }
+
+    internal static class DbEntryExtensions
+    {
+        public static void Replace<T, TNavigation>(this DbEntityEntry<T> entry, Expression<Func<T, ICollection<TNavigation>>> predicate, ICollection<TNavigation> navigation) where TNavigation : class where T : class
+        {
+            entry.Collection(predicate).Load();
+            entry.Collection(predicate).CurrentValue.Clear();
+            entry.Collection(predicate).CurrentValue = navigation;
         }
     }
 
