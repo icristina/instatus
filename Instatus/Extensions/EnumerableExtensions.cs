@@ -175,6 +175,17 @@ namespace Instatus
             return source.Select(item => existingMatch(item) ?? item).ToList();
         }
 
+        public static string ToPositionString<T>(this IEnumerable<T> source, T item, string first = "first", string last = "last") where T : class
+        {
+            if(source.First() == item)
+                return first;
+
+            if(source.Last() == item)
+                return last;
+
+            return string.Empty;
+        }
+
         // http://msmvps.com/blogs/matthieu/archive/2009/04/01/how-to-use-linq-extension-methods-on-non-generic-ienumerable.aspx
         public static int Count(IEnumerable source)
         {

@@ -204,5 +204,17 @@ namespace Instatus
             double num = 0;
             return Double.TryParse(text, out num);
         }
+
+        public static string ToHtmlEntites(this string text)
+        {
+            var sb = new StringBuilder();
+
+            foreach (char character in text)
+            {
+                sb.AppendFormat("&#{0};", (int)character);
+            }
+
+            return sb.ToString();
+        }
     }
 }
