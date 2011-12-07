@@ -22,25 +22,46 @@ namespace Instatus.Areas.Developer.Controllers
 
         public ActionResult LoadPages(string path)
         {
-            if (Request.HasFile())
+            using (var stream = GetStream(path))
             {
-                using(var stream = Request.FileInputStream()) {
-                    Context.LoadPages(stream);
-                }
-            }
-            else if (!path.IsEmpty())
-            {
-                using(var stream = new LocalStorageBlobService().Stream(path)) {
-                    Context.LoadPages(stream);
-                }
+                Context.LoadPages(stream);
             }
 
-            ViewData.Model = new List<WebParameter>()
-            {
-                new WebParameter("Loaded", DateTime.Now.ToString())
-            };
+            SetResult("Loaded Pages");
 
             return View("Index");
+        }
+
+        public ActionResult LoadParts(string path)
+        {
+            using (var stream = GetStream(path))
+            {
+                WebPart.Catalog.Clear();
+                WebPart.Catalog.AddRange(Generator.LoadXml<List<WebPart>>(stream));
+            }
+
+            SetResult("Loaded Parts");
+
+            return View("Index");
+        }
+
+        private void SetResult(string message)
+        {
+            ViewData.Model = new List<WebParameter>()
+            {
+                new WebParameter(message, DateTime.Now.ToString())
+            };
+        }
+
+        private Stream GetStream(string path)
+        {
+            if (Request.HasFile())
+                return Request.FileInputStream();
+
+            if (!path.IsEmpty())
+                return new LocalStorageBlobService().Stream(path);
+
+            return null;
         }
 
         public ActionResult GenerateHash(string value, string salt)
@@ -74,11 +95,8 @@ namespace Instatus.Areas.Developer.Controllers
         public ActionResult ApplicationReset()
         {
             PubSub.Provider.Publish(new ApplicationReset());
-            
-            ViewData.Model = new List<WebParameter>()
-            {
-                new WebParameter("Refreshed", DateTime.Now.ToString())
-            };
+
+            SetResult("Application Reset");
             
             return View("Index");
         }

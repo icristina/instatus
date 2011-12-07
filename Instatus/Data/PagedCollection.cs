@@ -44,18 +44,6 @@ namespace Instatus.Data
             }   
         }
 
-        public PagedCollection(IQueryable<Record<T, WebMetrics>> queryable, Func<Record<T, WebMetrics>, T> mapping, int pageSize = 10, int pageIndex = 0, bool count = false)
-            : base(queryable.Skip(pageIndex * pageSize).Take(pageSize).ToList().Select(mapping).ToList())
-        {
-            PageSize = pageSize;
-            PageIndex = pageIndex;
-
-            if (count)
-            {
-                TotalItemCount = queryable.Count();
-            }
-        }
-
         public PagedCollection(IQueryable<T> queryable, int pageSize = 10, int pageIndex = 0, bool count = false) 
             : base(queryable.Skip(pageIndex * pageSize).Take(pageSize).ToList())
         {

@@ -36,41 +36,23 @@ namespace Instatus.Web
         public static Dictionary<string, object> GetHtmlAttributes(this List<WebParameter> parameters)
         {
             return new Dictionary<string, object>() {
-                { "id", parameters.GetHtmlId() },
-                { "class", parameters.GetHtmlClass() }    
+                { "id", parameters.GetParameter(WebNamespace.Html, "id") },
+                { "class", parameters.GetParameter(WebNamespace.Html, "class") }    
             };
         }
-        
-        public static string GetHtmlId(this List<WebParameter> parameters)
-        {
-            return parameters.GetNamespacedParameter(WebNamespace.Html, "id");
-        }
 
-        public static string GetHtmlClass(this List<WebParameter> parameters)
-        {
-            return parameters.GetNamespacedParameter(WebNamespace.Html, "class");
-        }
-
-        public static void SetNamespacedParameter(this List<WebParameter> parameters, string ns, string name, string content)
+        public static void SetParameter(this List<WebParameter> parameters, string ns, string name, object content)
         {
             var parameter = parameters.FirstOrDefault(p => p.Name == WebParameter.GetNamespacedPropertyName(ns, name));
-
-            if (parameter == null)
-            {
-                parameters.Add(new WebParameter(ns, name, content));
-            }
-            else
-            {
-                parameter.Content = content;
-            }
+            parameters.ReplaceOrAdd(parameter, new WebParameter(ns, name, content));
         }
 
-        public static string GetNamespacedParameter(this List<WebParameter> parameters, WebNamespace ns, string name)
+        public static string GetParameter(this List<WebParameter> parameters, WebNamespace ns, string name)
         {
-            return parameters.GetNamespacedParameter(ns.ToDescriptiveString(), name);
+            return parameters.GetParameter(ns.ToDescriptiveString(), name);
         }
 
-        public static string GetNamespacedParameter(this List<WebParameter> parameters, string ns, string name)
+        public static string GetParameter(this List<WebParameter> parameters, string ns, string name)
         {
             return parameters.GetParameter(WebParameter.GetNamespacedPropertyName(ns, name));
         }
@@ -81,7 +63,7 @@ namespace Instatus.Web
             return parameter.IsEmpty() ? string.Empty : parameter.Content;
         }
 
-        public static IDictionary<string, object> GetNamespacedParameters(this List<WebParameter> parameters, string ns)
+        public static IDictionary<string, object> GetParameterSet(this List<WebParameter> parameters, string ns)
         {
             var dictionary = new Dictionary<string, object>();
 

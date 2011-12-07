@@ -27,6 +27,20 @@
     @Html.SubmitButton()
 }
 
+@using (Html.BeginMultipartForm("LoadParts"))
+{
+    <h2>Load Parts</h2>
+    <fieldset>
+        <legend>Server</legend>
+        @Html.TextBox("path")
+    </fieldset>
+    <fieldset>
+        <legend>Upload</legend>
+        @Html.FileInput()
+    </fieldset>
+    @Html.SubmitButton()
+}
+
 @using (Html.BeginForm(new { action = "GenerateHash" }))
 {
     <h2>Generate Hash</h2>

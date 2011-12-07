@@ -186,6 +186,20 @@ namespace Instatus
             return string.Empty;
         }
 
+        public static void ReplaceOrAdd<T>(this IList<T> source, T original, T replacement)
+        {
+            if (original.IsEmpty() || !source.Contains(original))
+            {
+                source.Add(replacement);
+            }
+            else
+            {
+                var index = source.IndexOf(original);
+                source.Remove(original);
+                source.Insert(index, replacement);
+            }
+        }
+
         // http://msmvps.com/blogs/matthieu/archive/2009/04/01/how-to-use-linq-extension-methods-on-non-generic-ienumerable.aspx
         public static int Count(IEnumerable source)
         {

@@ -26,6 +26,7 @@ namespace Instatus.Web
         Journey,
         Mention,
         Invite,
+        Friend,
 
         // community
         Reputation,

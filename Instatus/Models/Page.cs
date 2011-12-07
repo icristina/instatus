@@ -71,6 +71,9 @@ namespace Instatus.Models
         [IgnoreDataMember]
         public dynamic Extensions { get; set; }
 
+        [NotMapped]
+        public Dictionary<WebVerb, WebStatistic> Insights { get; private set; }
+
         [IgnoreDataMember]
         [ScaffoldColumn(false)]
         public byte[] Data
@@ -99,6 +102,7 @@ namespace Instatus.Models
             Status = WebStatus.Published.ToString();
             Document = new WebDocument();
             Card = new Card();
+            Insights = new Dictionary<WebVerb, WebStatistic>();
         }
 
         public Page(string name) : this() {

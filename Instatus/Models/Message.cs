@@ -5,6 +5,7 @@ using System.Web;
 using System.Runtime.Serialization;
 using System.Web.Mvc;
 using System.ComponentModel.DataAnnotations;
+using Instatus.Web;
 
 namespace Instatus.Models
 {
@@ -42,9 +43,13 @@ namespace Instatus.Models
         [IgnoreDataMember]
         public dynamic Extensions { get; set; }
 
+        [NotMapped]
+        public Dictionary<WebVerb, WebStatistic> Insights { get; private set; }
+
         public Message()
         {
             CreatedTime = DateTime.UtcNow;
+            Insights = new Dictionary<WebVerb, WebStatistic>();
         }
 
         public override string ToString()
