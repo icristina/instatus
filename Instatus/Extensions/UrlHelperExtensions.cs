@@ -8,6 +8,7 @@ using Instatus.Data;
 using System.Configuration;
 using System.ComponentModel;
 using Instatus.Areas.Microsite;
+using Instatus.Areas.Microsite.Controllers;
 
 namespace Instatus
 {
@@ -56,6 +57,9 @@ namespace Instatus
 
         public static string Page(this UrlHelper urlHelper, string slug)
         {
+            if (slug == PageController.HomeSlug)
+                return urlHelper.RouteUrl(MicrositeAreaRegistration.RootRouteName);
+            
             return urlHelper.RouteUrl(MicrositeAreaRegistration.PageRouteName, new { slug = slug });
         }
 

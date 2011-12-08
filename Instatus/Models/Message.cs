@@ -44,12 +44,12 @@ namespace Instatus.Models
         public dynamic Extensions { get; set; }
 
         [NotMapped]
-        public Dictionary<WebVerb, WebStatistic> Insights { get; private set; }
+        public Dictionary<WebVerb, WebInsight> Insights { get; private set; }
 
         public Message()
         {
             CreatedTime = DateTime.UtcNow;
-            Insights = new Dictionary<WebVerb, WebStatistic>();
+            Insights = new Dictionary<WebVerb, WebInsight>();
         }
 
         public override string ToString()

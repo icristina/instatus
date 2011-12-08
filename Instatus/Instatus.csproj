@@ -198,7 +198,6 @@
     <Compile Include="Web\LogErrorAttribute.cs" />
     <Compile Include="Web\PackageVirtualPathProvider.cs" />
     <Compile Include="Web\HttpTraceAttribute.cs" />
-    <Compile Include="Web\WebConfiguration.cs" />
     <Compile Include="Web\WebContentType.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Areas\Microsite\Controllers\PageController.cs" />
@@ -247,7 +246,6 @@
     <Compile Include="Data\BaseDataContext.cs" />
     <Compile Include="Web\WebEnvironment.cs" />
     <Compile Include="Web\WebListType.cs" />
-    <Compile Include="Web\WebMetadata.cs" />
     <Compile Include="Web\WebParameter.cs" />
     <Compile Include="Web\WebVariable.cs" />
     <Compile Include="Web\WebPermission.cs" />
@@ -255,7 +253,7 @@
     <Compile Include="Web\WebEntry.cs" />
     <Compile Include="Web\WebRole.cs" />
     <Compile Include="Web\WebSize.cs" />
-    <Compile Include="Web\WebStatistic.cs" />
+    <Compile Include="Web\WebInsight.cs" />
     <Compile Include="Web\WebStatus.cs" />
     <Compile Include="Web\WebVerb.cs" />
     <Compile Include="Web\WebZone.cs" />

@@ -62,21 +62,5 @@ namespace Instatus.Web
                 parameters = value;
             }
         }
-
-        private WebMetadata metadata;
-
-        public WebMetadata Metadata { 
-            get 
-            {
-                if (metadata == null)
-                    metadata = new WebMetadata();
-            
-                return metadata;
-            }
-            set
-            {
-                metadata = value;
-            }
-        }
     }
 }

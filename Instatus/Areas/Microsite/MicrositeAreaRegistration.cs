@@ -14,10 +14,17 @@ namespace Instatus.Areas.Microsite
             }
         }
 
+        public const string RootRouteName = "Microsite_Root";
         public const string PageRouteName = "Microsite_Page";
 
         public override void RegisterArea(AreaRegistrationContext context)
         {
+            context.MapRoute(
+                RootRouteName,
+                "",
+                new { controller = "Page", action = "Details" }
+            );
+            
             context.MapRoute(
                 PageRouteName,
                 RoutePrefix + "/{slug}",

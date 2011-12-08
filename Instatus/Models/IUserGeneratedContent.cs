@@ -13,6 +13,6 @@ namespace Instatus.Models
         User User { get; set; }
         ICollection<Message> Replies { get; set; }
         ICollection<Activity> Activities { get; set; }
-        Dictionary<WebVerb, WebStatistic> Insights { get; }
+        Dictionary<WebVerb, WebInsight> Insights { get; }
     }
 }

@@ -49,14 +49,14 @@ namespace Instatus.Models
         public dynamic Extensions { get; set; }
 
         [NotMapped]
-        public Dictionary<WebVerb, WebStatistic> Insights { get; private set; }
+        public Dictionary<WebVerb, WebInsight> Insights { get; private set; }
 
         public Activity()
         {
             CreatedTime = DateTime.UtcNow;
             Extensions = new ExpandoObject();
             Status = WebStatus.Published.ToString();
-            Insights = new Dictionary<WebVerb, WebStatistic>();
+            Insights = new Dictionary<WebVerb, WebInsight>();
         }
 
         public Activity(WebVerb verb, Page parent, User user = null)

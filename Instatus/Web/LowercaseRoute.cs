@@ -36,14 +36,21 @@ namespace Instatus.Web
         {
             var virtualPathData = base.GetVirtualPath(requestContext, values);
 
-            if (virtualPathData != null && virtualPathData.VirtualPath.Contains('?'))
+            if (virtualPathData != null)
             {
-                var path = virtualPathData.VirtualPath.SubstringBefore("?");
-                var query = virtualPathData.VirtualPath.SubstringAfter("?");
+                if (virtualPathData.VirtualPath.Contains('?'))
+                {
+                    var path = virtualPathData.VirtualPath.SubstringBefore("?");
+                    var query = virtualPathData.VirtualPath.SubstringAfter("?");
 
-                virtualPathData.VirtualPath = string.Format("{0}?{1}", path.ToLowerInvariant(), query);
+                    virtualPathData.VirtualPath = string.Format("{0}?{1}", path.ToLowerInvariant(), query);
+                }
+                else
+                {
+                    virtualPathData.VirtualPath = virtualPathData.VirtualPath.ToLowerInvariant();
+                }
             }
-            
+
             return virtualPathData;
         }
     }
@@ -106,8 +113,8 @@ namespace Instatus
 
             return route;
         }
-    }    
-    
+    }
+
     public static class LowercaseAreaRegistrationContextExtensions
     {
         public static Route MapRouteLowercase(this AreaRegistrationContext context, string name, string url)

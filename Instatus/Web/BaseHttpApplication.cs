@@ -20,5 +20,10 @@ namespace Instatus.Web
         {
             return HttpApplicationExtensions.Setting<T>(this, name);
         }
+
+        public bool IsEnabled(string name, bool ensureDebug = false)
+        {
+            return (ensureDebug && IsDebug) && Setting<bool>(name);
+        }
     }
 }

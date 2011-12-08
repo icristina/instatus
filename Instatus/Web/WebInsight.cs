@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Instatus.Web
 {
-    public class WebStatistic
+    public class WebInsight
     {
         public int Total { get; set; }
         public bool Completed { get; set; }
