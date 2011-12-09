@@ -66,6 +66,39 @@ namespace Instatus
             return Regex.Replace(text, "<[^<>]*>", "");
         }
 
+        public static string RemoveHtmlElement(this string text, string element)
+        {
+            return Regex.Replace(text, "<[/]?" + element + "[^>]*>", "", RegexOptions.IgnoreCase);
+        }
+
+        public static string RemoveHtmlEmphasis(this string text)
+        {
+            return text.RemoveHtmlElement("(b|em|i)");
+        }
+
+        public static string RemoveHtmlFlowElements(this string text)
+        {
+            return text.RemoveHtmlElement("(p|div|section|header|footer|nav)");
+        }
+
+        // http://regexpal.com/
+        // http://tim.mackey.ie/CleanWordHTMLUsingRegularExpressions.aspx
+        // (\s*\w+(:\w+)?=['"][^'"]*['"])
+        public static string RemoveHtmlAttribute(this string text, string attribute)
+        {
+            return Regex.Replace(text, @"(\s*" +  attribute + @"(:\w+)?=['""][^'""]*['""])", "", RegexOptions.IgnoreCase);
+        }
+
+        public static string RemoveHtmlAttributes(this string text)
+        {
+            return text.RemoveHtmlAttribute(@"\w+");
+        }
+
+        public static string RemoveHtmlStyles(this string text)
+        {
+            return text.RemoveHtmlAttribute("(class|style|size|face)");
+        }
+
         public static string RemoveSpecialCharacters(this string text)
         {
             return Regex.Replace(text, @"[^a-z0-9\-\s]", "");
