@@ -69,6 +69,11 @@ namespace Instatus
             return text.RegexReplace(@"\s{1,}", " ");
         }
 
+        public static string RemoveWhiteSpace(this string text)
+        {
+            return text.RegexReplace(@"\s+");
+        }
+
         public static string RemoveHtml(this string text)
         {
             return text.RegexReplace("<[^<>]*>", "");

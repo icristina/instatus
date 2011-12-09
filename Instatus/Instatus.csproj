@@ -279,6 +279,7 @@
     <EmbeddedResource Include="Content\Scaffold.css" />
     <EmbeddedResource Include="Content\App.css" />
     <EmbeddedResource Include="Data\DropTables.sql" />
+    <Content Include="boilerplate.htm" />
     <Content Include="Favicon.ico" />
     <EmbeddedResource Include="Scripts\Respond.js" />
     <EmbeddedResource Include="Scripts\Scaffold.js" />
