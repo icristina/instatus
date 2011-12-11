@@ -22,7 +22,7 @@ namespace Instatus.Web
             get
             {
                 if(links == null) {
-                    using (var db = BaseDataContext.Instance().DisableProxiesAndLazyLoading())
+                    using (var db = BaseDataContext.BaseInstance())
                     {
                         links = db.Links.Where(l => l.Location != null && l.HttpStatusCode > 300 && l.HttpStatusCode < 303).ToList();
                     }

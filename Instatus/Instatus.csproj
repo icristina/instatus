@@ -104,7 +104,9 @@
     <Compile Include="Commands\AwardCommand.cs" />
     <Compile Include="Commands\StatusCommand.cs" />
     <Compile Include="Commands\SpamCommand.cs" />
+    <Compile Include="Data\IBaseDataContext.cs" />
     <Compile Include="Data\IDataExport.cs" />
+    <Compile Include="Data\InMemoryBaseDataContext.cs" />
     <Compile Include="Data\IPayload.cs" />
     <Compile Include="Data\LimitedQueue.cs" />
     <Compile Include="Data\RecordResult.cs" />

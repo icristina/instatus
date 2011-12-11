@@ -20,16 +20,20 @@ using System.ServiceModel.Web;
 using System.Linq.Expressions;
 
 namespace Instatus.Data
-{   
-    public class BaseDataContext : DbContext
+{
+    public class BaseDataContext : DbContext, IBaseDataContext
     {       
         public static BaseDataContext Instance() {
             return DependencyResolver.Current.GetService<BaseDataContext>();
         }
 
+        public static IBaseDataContext BaseInstance()
+        {
+            return DependencyResolver.Current.GetService<IBaseDataContext>();
+        }
+
         public static bool LoggingEnabled { get; set; }
 
-        public IDbSet<Application> Applications { get; set; }
         public IDbSet<Page> Pages { get; set; }
         public IDbSet<User> Users { get; set; }
         public IDbSet<Role> Roles { get; set; }
@@ -38,13 +42,9 @@ namespace Instatus.Data
         public IDbSet<Link> Links { get; set; }
         public IDbSet<Tag> Tags { get; set; }
         public IDbSet<Activity> Activities { get; set; }
-        public IDbSet<Offer> Offers { get; set; }
-        public IDbSet<Coupon> Coupons { get; set; }
         public IDbSet<Source> Sources { get; set; }
-        public IDbSet<Organization> Organizations { get; set; }
         public IDbSet<Price> Prices { get; set; }
         public IDbSet<Schedule> Schedules { get; set; }
-        public IDbSet<Profile> Profiles { get; set; }
         public IDbSet<Subscription> Subscriptions { get; set; }
         public IDbSet<Restriction> Restrictions { get; set; }
         public IDbSet<List> Lists { get; set; }

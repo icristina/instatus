@@ -39,7 +39,8 @@ namespace Instatus.Areas.Wordpress.Controllers
             Authenticate(username, password);
             
             ViewData.Model = Context
-                .Applications
+                .Pages
+                .OfType<Application>()
                 .ToList()
                 .Select(a => new BlogInfo()
                 {

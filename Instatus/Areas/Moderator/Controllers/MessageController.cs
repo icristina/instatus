@@ -36,7 +36,7 @@ namespace Instatus.Areas.Moderator.Controllers
 
         public override void Databind()
         {
-            ApplicationList = new SelectList(Context.Applications.ToList(), "Id", "Name", PageId);
+            ApplicationList = new SelectList(Context.Pages.OfType<Application>().ToList(), "Id", "Name", PageId);
             StatusList = new SelectList(new WebStatus[] { WebStatus.Draft, WebStatus.Published, WebStatus.Archived }.ToStringList(), Status);
         }
     }

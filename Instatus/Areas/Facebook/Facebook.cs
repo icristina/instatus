@@ -108,7 +108,7 @@ namespace Instatus.Areas.Facebook
                         var facebook = WebProvider.Facebook.ToString();
                         var environment = ConfigurationManager.AppSettings.Value<string>("Environment");
 
-                        credential = db.Applications.First()
+                        credential = db.Pages.OfType<Application>().First()
                                             .Credentials
                                             .Where(c => c.Provider == facebook && c.Environment == environment)
                                             .FirstOrDefault();

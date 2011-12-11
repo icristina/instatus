@@ -43,7 +43,7 @@ namespace Instatus.Web
         {
             using (var db = BaseDataContext.Instance())
             {
-                return db.Applications.First().ToSiteMapNode(this);
+                return db.Pages.OfType<Application>().First().ToSiteMapNode(this);
             }
         }
     }

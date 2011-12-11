@@ -35,7 +35,7 @@ namespace Instatus.Areas.Developer.Controllers
 
         public override void Databind()
         {
-            ApplicationList = new SelectList(Context.Applications.ToList(), "Id", "Name", ApplicationId);
+            ApplicationList = new SelectList(Context.Pages.OfType<Application>().ToList(), "Id", "Name", ApplicationId);
         }
 
         public override void Save(Credential model)

@@ -7,6 +7,7 @@ using Instatus.Controllers;
 using Instatus.Data;
 using System.Text;
 using Instatus.Web;
+using Instatus.Models;
 
 namespace Instatus.Areas.Microsite.Controllers
 {
@@ -14,7 +15,7 @@ namespace Instatus.Areas.Microsite.Controllers
     {
         public ActionResult Index()
         {
-            var published = Context.Applications.First().PublishedTime;
+            var published = Context.Pages.OfType<Application>().First().PublishedTime;
             var sb = new StringBuilder();
 
             if (published.HasValue && published.Value > DateTime.UtcNow)
