@@ -56,19 +56,32 @@ namespace Instatus
             return Regex.Replace(text, "(\\B[A-Z])", " $1"); // convert CapitalLetters to Capital Letters
         }
 
-        public static string RemoveDoubleSpaces(this string text)
+        public static string RegexReplace(this string text, string pattern, string replacement = "")
         {
-            return Regex.Replace(text, @"\s{1,}", " ");
+            if (text == null || pattern == null)
+                return text;
+
+            return Regex.Replace(text, pattern, replacement, RegexOptions.IgnoreCase);
+        }
+
+        public static string RemoveDoubleSpaces(this string text)
+        {           
+            return text.RegexReplace(@"\s{1,}", " ");
+        }
+
+        public static string RemoveWhiteSpace(this string text)
+        {
+            return text.RegexReplace(@"\s+");
         }
 
         public static string RemoveHtml(this string text)
         {
-            return Regex.Replace(text, "<[^<>]*>", "");
+            return text.RegexReplace("<[^<>]*>", "");
         }
 
         public static string RemoveHtmlElement(this string text, string element)
         {
-            return Regex.Replace(text, "<[/]?" + element + "[^>]*>", "", RegexOptions.IgnoreCase);
+            return text.RegexReplace("<[/]?" + element + "[^>]*>");
         }
 
         public static string RemoveHtmlEmphasis(this string text)
@@ -86,7 +99,7 @@ namespace Instatus
         // (\s*\w+(:\w+)?=['"][^'"]*['"])
         public static string RemoveHtmlAttribute(this string text, string attribute)
         {
-            return Regex.Replace(text, @"(\s*" +  attribute + @"(:\w+)?=['""][^'""]*['""])", "", RegexOptions.IgnoreCase);
+            return text.RegexReplace(@"(\s*" +  attribute + @"(:\w+)?=['""][^'""]*['""])");
         }
 
         public static string RemoveHtmlAttributes(this string text)
@@ -101,7 +114,7 @@ namespace Instatus
 
         public static string RemoveSpecialCharacters(this string text)
         {
-            return Regex.Replace(text, @"[^a-z0-9\-\s]", "");
+            return text.RegexReplace(@"[^a-z0-9\-\s]");
         }
 
         public static string ToEncrypted(this string text)
@@ -129,9 +142,10 @@ namespace Instatus
             return text.Equals(match.ToString(), DefaultComparison);
         }
 
+        // &#8230; or &hellip;
         public static string MaxLength(this string text, int maxLength, bool elipsis = false)
         {
-            var suffix = elipsis ? "&elip;" : "";
+            var suffix = elipsis ? "&hellip;" : "";
             return text.Length > maxLength ? text.Substring(0, maxLength - 1) + suffix : text;
         }
 

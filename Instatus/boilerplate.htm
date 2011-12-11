@@ -1,0 +1,138 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Boilerplate</title>
+    <link rel="stylesheet/less" href="content/app.css" />
+    <script src="scripts/less.js"></script>
+    <script src="scripts/modernizr.js"></script>
+    <script src="scripts/jquery.js"></script>
+    <script src="scripts/respond.js"></script>
+    <script src="scripts/swfobject.js"></script>
+</head>
+<body data-route-area="microsite" data-route-controller="page" data-route-action="details">
+    <div role="main" itemscope itemtype="http://schema.org/WebPage" itemid="1">
+        <header>
+            <h1 itemprop="name">Heading</h1>
+            <div>
+                <p>Intro copy</p>
+                <p>Intro copy</p>
+            </div>
+        </header>
+        <div itemprop="mainContentOfPage">
+            <figure>
+                <span>
+                    <img src="Content/mainImage.jpg" alt="Main image" height="200" width="200" />
+                </span>
+                <figcaption>
+                    <b>Image name</b>
+                    Image strapline
+                </figcaption>
+            </figure>
+            <section>
+                <div>
+                    <h1>Section</h1>
+                    <p>Section content</p>
+                    <p>Section content</p>
+                    <section>
+                        <div>
+                            <h1>Nested Section</h1>
+                            <p>Section content</p>
+                            <p>Section content</p>
+                        </div>
+                    </section>
+                </div>
+            </section>
+            <section data-query-kind="post" data-query-mode="list" data-query-pageSize="2">
+                <div>
+                    <h1>Posts</h1>
+                    <article itemscope itemtype="http://schema.org/BlogPost" itemid="11">
+                        <a href="Post/Details/11">
+                            <h1 itemprop="name">Post 11</h1>
+                            <img src="Content/postImage.jpg" alt="Alt text" />
+                            <dl>
+                                <dt>Published</dt>
+                                <dd itemprop="datePublished">08/09/2011</dd>
+                                <dt>Tags</dt>
+                                <dd itemprop="keywords">Tag 1, Tag 2</dd>
+                            </dl>      
+                            <span class="readMore">Read More</span>                 
+                        </a>
+                    </article>
+                    <article itemscope itemtype="http://schema.org/BlogPost" itemid="12">
+                        <a href="Post/Details/12">
+                            <h1 itemprop="name">Post 12</h1>
+                            <img src="Content/postImage.jpg" alt="Alt text" />
+                            <dl>
+                                <dt>Published</dt>
+                                <dd itemprop="datePublished">08/09/2011</dd>
+                                <dt>Tags</dt>
+                                <dd itemprop="keywords">Tag 1, Tag 2</dd>
+                            </dl>      
+                            <span class="readMore">Read More</span>                 
+                        </a>
+                    </article>
+                </div>
+            </section>
+            <section data-query-kind="organization" data-query-mode="pagedList" data-query-pageSize="1">
+                <div>
+                    <nav>
+                        <b>1</b>
+                        <a>2</a>
+                        <a>3</a>
+                        <a>4</a>
+                    </nav>
+                    <h1>Places</h1>
+                    <p id="slug" itemscope itemtype="http://schema.org/Organization" itemid="222">
+                        <span itemprop="address" itemtype="http://schema.org/Address">
+                            <span itemprop="street-address">Street address</span>
+                            <span itemprop="locality">Locality</span>
+                            <span itemprop="postal-code">Postcode</span>
+                        </span>
+                        Telephone: <a itemprop="tel" href="tel:0800 999 999">0800 999 999</a><br />
+                        <a href="mailto:a@b.com">a@b.com</a><br />
+                    </p>   
+                </div>
+            </section>
+        </div>
+        <aside>
+            <section>
+                <div>
+                    <h1>Related Links</h1>
+                    <ul>
+                        <li><a>Link 1</a></li>
+                        <li><a>Link 2</a></li>
+                    </ul>                    
+                </div>
+            </section>
+        </aside>
+    </div>
+    <nav role="navigation">
+        <a id="brand" href="/">
+            <img src="Content/Logo.png" alt="Brand Name" />
+        </a>
+        <ul>
+            <li><a>About</a></li>
+            <li><a>Case Studies</a></li>
+            <li><a>Contact</a></li>
+        </ul>
+    </nav>
+    <footer>
+        <section>
+            <div>
+                <h1>Network Links</h1>
+                <ul>
+                    <li><a>Link 1</a></li>
+                    <li><a>Link 2</a></li>
+                </ul>
+            </div>
+        </section>
+        <p id="legal">
+            &copy; Brand Name
+            <a>Terms and Conditions</a>
+            <a>Privacy Policy</a>
+        </p>    
+    </footer>
+    <script src="Scripts/App.js"></script>
+</body>
+</html>

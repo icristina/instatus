@@ -106,7 +106,12 @@ namespace Instatus
 
         public static int AsInteger(this object graph)
         {
-            return int.Parse(graph.AsString());
+            int integer;
+
+            if (int.TryParse(graph.AsString(), out integer))
+                return integer;
+            
+            return 0;
         }
 
         public static string ToJson(this object graph)
