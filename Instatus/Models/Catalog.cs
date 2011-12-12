@@ -5,8 +5,8 @@ using System.Web;
 
 namespace Instatus.Models
 {
-    public class Directory : Page
+    public class Catalog : Page
     {
-        public Directory() : base() { }
+        public Catalog() : base() { }
     }
 }

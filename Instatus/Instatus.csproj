@@ -104,6 +104,7 @@
     <Compile Include="Commands\AwardCommand.cs" />
     <Compile Include="Commands\StatusCommand.cs" />
     <Compile Include="Commands\SpamCommand.cs" />
+    <Compile Include="Data\IContentProvider.cs" />
     <Compile Include="Data\IBaseDataContext.cs" />
     <Compile Include="Data\IDataExport.cs" />
     <Compile Include="Data\InMemoryBaseDataContext.cs" />
@@ -123,7 +124,7 @@
     <Compile Include="Models\Journey.cs" />
     <Compile Include="Models\IExtensionPoint.cs" />
     <Compile Include="Models\Phrase.cs" />
-    <Compile Include="Models\Directory.cs" />
+    <Compile Include="Models\Catalog.cs" />
     <Compile Include="Models\IUserGeneratedContent.cs" />
     <Compile Include="Models\Review.cs" />
     <Compile Include="Queries\PageQueries.cs" />

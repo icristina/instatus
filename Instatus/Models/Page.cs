@@ -18,7 +18,7 @@ namespace Instatus.Models
     [KnownType(typeof(Article))]
     [KnownType(typeof(Brand))]
     [KnownType(typeof(CaseStudy))]
-    [KnownType(typeof(Directory))]
+    [KnownType(typeof(Catalog))]
     [KnownType(typeof(Event))]
     [KnownType(typeof(Group))]
     [KnownType(typeof(Post))]

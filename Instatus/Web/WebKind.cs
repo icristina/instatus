@@ -13,6 +13,7 @@ namespace Instatus.Web
         Activity,
         Article,
         CaseStudy,
+        Catalog,
         Event,
         Group,
         Job,

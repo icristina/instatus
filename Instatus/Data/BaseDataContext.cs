@@ -21,7 +21,7 @@ using System.Linq.Expressions;
 
 namespace Instatus.Data
 {
-    public class BaseDataContext : DbContext, IBaseDataContext
+    public class BaseDataContext : DbContext, IBaseDataContext, IContentProvider
     {       
         public static BaseDataContext Instance() {
             return DependencyResolver.Current.GetService<BaseDataContext>();
@@ -611,6 +611,8 @@ namespace Instatus.Data
                     return pages.OfType<Article>();
                 case WebKind.CaseStudy:
                     return pages.OfType<CaseStudy>();
+                case WebKind.Catalog:
+                    return pages.OfType<Catalog>();
                 case WebKind.Event:
                     return pages.OfType<Event>();
                 case WebKind.Group:
