@@ -205,6 +205,45 @@ namespace Instatus
             return list;
         }
 
+        public static List<Tuple<string, string>> ToLabelledList(this string text, string regex = "<h2[^>]*>([^<]*)</h2>")
+        {
+            var result = new List<Tuple<string, string>>();
+            var matches = Regex.Matches(text, regex, RegexOptions.IgnoreCase);
+
+            for (var i = 0; i < matches.Count; i++)
+            {
+                var match = matches[i];
+
+                if (i == 0 && match.Index > 0) // text before first boundary
+                {
+                    result.Add(new Tuple<string, string>(string.Empty, text.Substring(0, match.Index)));
+                }
+
+                string label = string.Empty;
+                string body = string.Empty;
+
+                if (match.Groups.Count > 0)
+                {
+                    label = match.Groups[1].Value;
+                }
+
+                var boundaryEnd = match.Index + match.Length;
+
+                if (i == matches.Count - 1) // last match
+                {
+                    body = text.Substring(boundaryEnd);
+                }
+                else
+                {
+                    body = text.Substring(boundaryEnd, matches[i + 1].Index - match.Index - match.Length);
+                }
+
+                result.Add(new Tuple<string, string>(label.TrimOrNull(), body.Trim()));
+            }
+
+            return result;
+        }
+
         public static StringBuilder AppendDelimitedValue(this StringBuilder stringBuilder, object value, string delimiter = " ", bool unique = false)
         {
             var stringValue = value.ToString();
