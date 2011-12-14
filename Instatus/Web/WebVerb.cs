@@ -27,8 +27,7 @@ namespace Instatus.Web
         Mention,
         Invite,
         Friend,
-
-        // community
+        Vote,
         Reputation,
 
         // gaming

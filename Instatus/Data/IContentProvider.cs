@@ -10,7 +10,7 @@ namespace Instatus.Data
 {
     public interface IContentProvider
     {
-        IOrderedQueryable<Page> GetPages(WebExpression filter, WebStatus? status = WebStatus.Published);
+        IEnumerable<Page> GetPages(WebExpression filter, WebStatus? status = WebStatus.Published);
         Page GetPage(string slug, string[] customExpansions = null);
     }
 }

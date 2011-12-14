@@ -411,7 +411,7 @@ namespace Instatus.Data
                     .FirstOrDefault();
         }
 
-        public IOrderedQueryable<T> GetPages<T>(WebExpression filter, WebStatus? status = WebStatus.Published) where T : Page
+        public IEnumerable<T> GetPages<T>(WebExpression filter, WebStatus? status = WebStatus.Published) where T : Page
         {
             return this
                     .DisableProxiesAndLazyLoading()
@@ -423,7 +423,7 @@ namespace Instatus.Data
                     .SortPages(filter.Sort);
         }
 
-        public IOrderedQueryable<Page> GetPages(WebExpression filter, WebStatus? status = WebStatus.Published)
+        public IEnumerable<Page> GetPages(WebExpression filter, WebStatus? status = WebStatus.Published)
         {
             return this
                     .DisableProxiesAndLazyLoading()
@@ -444,7 +444,7 @@ namespace Instatus.Data
                     .SortLinks(filter.Sort);
         }
 
-        public IOrderedQueryable<T> GetTemplates<T>(string locale = "") where T : Page 
+        public IEnumerable<T> GetTemplates<T>(string locale = "") where T : Page 
         {
             return GetPages<T>(new WebQuery() {
                 Locale = locale

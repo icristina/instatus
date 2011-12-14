@@ -8,7 +8,7 @@ using Instatus.Models;
 using System.Collections;
 
 namespace Instatus.Web
-{
+{   
     public interface IWebView : IEnumerable
     {
         int TotalItemCount { get; }
@@ -72,14 +72,8 @@ namespace Instatus.Web
             return HasNext ? Query.WithPageIndex(PageIndex + 1) : null;
         }
 
-        public WebView(IEnumerable<T> list, WebQuery query, int totalItemCount = 0)
-            : base(list, query.PageSize, query.PageIndex, totalItemCount)
-        {
-            Query = query;
-        }
-
-        public WebView(IQueryable<T> queryable, WebQuery query)
-            : base(queryable, query.PageSize, query.PageIndex, query.CountTotal)
+        public WebView(IEnumerable<T> list, WebQuery query)
+            : base(list, query.PageSize, query.PageIndex, query.CountTotal)
         {
             Query = query;
         }
