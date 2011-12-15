@@ -79,6 +79,11 @@ namespace Instatus
             }
         }
 
+        public static string ToTimestamp(this DateTime date)
+        {
+            return date.ToString("yyyyMMddHHmmssffffff");
+        }
+
         // http://www.dotnetperls.com/pretty-date
         // http://www.blackbeltcoder.com/Articles/time/a-friendly-datetime-formatter
         public static string ToRelativeString(this DateTime date)

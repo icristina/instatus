@@ -51,7 +51,7 @@ namespace Instatus.Data
 
         public static string TimeStamp()
         {
-            return DateTime.UtcNow.ToString("yyyyMMddHHmmssffffff");
+            return DateTime.UtcNow.ToTimestamp();
         }
 
         public static DateTime DateOfBirth(int minAge = 16)
