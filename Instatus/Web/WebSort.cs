@@ -13,6 +13,8 @@ namespace Instatus.Web
         Price,
         Likes,
         Comments,
+        Relevance,
+        Nearby,
         Custom
     }
 }

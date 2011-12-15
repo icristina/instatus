@@ -23,7 +23,7 @@ namespace Instatus.Web
         {
             using (var db = BaseDataContext.Instance())
             {
-                var nodes = db.GetPage<Page>(node.Key, new string[] { "Pages" })
+                var nodes = db.GetPage(node.Key, new string[] { "Pages" })
                                 .Pages
                                 .OfType<Article>()
                                 .Where(IsNavigable)
