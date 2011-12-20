@@ -609,6 +609,8 @@ namespace Instatus.Data
                     return pages.OfType<Application>();                
                 case WebKind.Article:
                     return pages.OfType<Article>();
+                case WebKind.Brand:
+                    return pages.OfType<Brand>();
                 case WebKind.CaseStudy:
                     return pages.OfType<CaseStudy>();
                 case WebKind.Catalog:

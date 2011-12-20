@@ -12,6 +12,7 @@ namespace Instatus.Web
         Achievement,
         Activity,
         Article,
+        Brand,
         CaseStudy,
         Catalog,
         Event,
