@@ -18,7 +18,7 @@ namespace Instatus.Data
     public class PagedCollection<T> : Collection<T>, IPagedCollection<T>
     {
         public int TotalItemCount { get; private set; }
-        public int PageIndex { get; set; }
+        public int PageIndex { get; private set; }
         public int PageSize { get; private set; }
 
         public int TotalPageCount {
