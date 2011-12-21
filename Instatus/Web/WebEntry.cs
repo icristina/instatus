@@ -5,6 +5,12 @@ using System.Web;
 
 namespace Instatus.Web
 {
+    public class WebGeospatialEntry : WebEntry
+    {
+        public double Longitude { get; set; }
+        public double Latitude { get; set; }
+    }
+    
     public class WebEntry
     {
         public string Kind { get; set; }

@@ -26,7 +26,12 @@ namespace Instatus.Controllers
 
         public BaseController()
         {
-            Context = DependencyResolver.Current.GetService<TContext>() ?? Activator.CreateInstance<TContext>();
+            Context = DependencyResolver.Current.GetService<TContext>();
+            
+            if (Context == null && !typeof(TContext).IsInterface)
+            {
+                Context = Activator.CreateInstance<TContext>();
+            }
         }
     }
     
