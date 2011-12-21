@@ -109,6 +109,7 @@
     <Compile Include="Data\IDataExport.cs" />
     <Compile Include="Data\InMemoryBaseDataContext.cs" />
     <Compile Include="Data\IPayload.cs" />
+    <Compile Include="Data\IRepository.cs" />
     <Compile Include="Data\LimitedQueue.cs" />
     <Compile Include="Data\RecordResult.cs" />
     <Compile Include="Extensions\ControllerDescriptorExtensions.cs" />
