@@ -201,5 +201,42 @@ namespace Instatus.Models
 
             return this;
         }
+
+        public static Page Instance(WebKind kind)
+        {
+            switch (kind)
+            {
+                case WebKind.Application:
+                    return new Application();
+                case WebKind.Achievement:
+                    return new Achievement();
+                case WebKind.Article:
+                    return new Article();
+                case WebKind.Brand:
+                    return new Brand();
+                case WebKind.CaseStudy:
+                    return new CaseStudy();
+                case WebKind.Catalog:
+                    return new Catalog();
+                case WebKind.Event:
+                    return new Event();
+                case WebKind.Group:
+                    return new Group();
+                case WebKind.Job:
+                    return new Job();
+                case WebKind.Post:
+                    return new Post();
+                case WebKind.Place:
+                    return new Place();
+                case WebKind.Product:
+                    return new Product();
+                case WebKind.Offer:
+                    return new Offer();
+                case WebKind.Organization:
+                    return new Organization();
+                default:
+                    return new Page();
+            }
+        }
     }
 }
