@@ -15,5 +15,21 @@ namespace Instatus
                 TaskContinuationOptions.ExecuteSynchronously);
             return task;
         }
+
+        public static void Retry(this Action action, int times)
+        {
+            while (times-- >= 0)
+            {
+                try
+                {
+                    action();
+                    break;
+                }
+                catch
+                {
+
+                }
+            }
+        }
     }
 }

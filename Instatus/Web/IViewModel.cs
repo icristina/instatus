@@ -5,7 +5,7 @@ using System.Text;
 using System.Data.Entity;
 
 namespace Instatus.Web
-{
+{   
     public interface IViewModel<TModel>
     {
         void Load(TModel model);

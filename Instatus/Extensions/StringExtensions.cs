@@ -139,14 +139,16 @@ namespace Instatus
 
         public static bool Match(this string text, object match)
         {
+            if (text.IsEmpty()) return false;
             return text.Equals(match.ToString(), DefaultComparison);
         }
 
         // &#8230; or &hellip;
         public static string MaxLength(this string text, int maxLength, bool elipsis = false)
         {
+            if (text.IsEmpty()) return null;
             var suffix = elipsis ? "&hellip;" : "";
-            return text.Length > maxLength ? text.Substring(0, maxLength - 1) + suffix : text;
+            return text.Length > maxLength ? text.Substring(0, maxLength) + suffix : text;
         }
 
         public static string ToSlug(this string text)

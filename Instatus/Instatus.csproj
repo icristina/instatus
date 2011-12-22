@@ -108,6 +108,7 @@
     <Compile Include="Data\IBaseDataContext.cs" />
     <Compile Include="Data\IDataExport.cs" />
     <Compile Include="Data\InMemoryBaseDataContext.cs" />
+    <Compile Include="Data\IObjectMapping.cs" />
     <Compile Include="Data\IPayload.cs" />
     <Compile Include="Data\IRepository.cs" />
     <Compile Include="Data\LimitedQueue.cs" />
@@ -243,7 +244,6 @@
     <Compile Include="Data\PagedCollection.cs" />
     <Compile Include="Models\Video.cs" />
     <Compile Include="Web\WebStream.cs" />
-    <Compile Include="Tasks\TaskProvider.cs" />
     <Compile Include="Web\DbSitemapProvider.cs" />
     <Compile Include="Web\BaseViewPage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -290,6 +290,8 @@
     <EmbeddedResource Include="Scripts\App.js" />
     <EmbeddedResource Include="Scripts\Less.js" />
     <EmbeddedResource Include="Scripts\Swfobject.js" />
+    <EmbeddedResource Include="Scripts\Knockout.js" />
+    <EmbeddedResource Include="Scripts\Underscore.js" />
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>

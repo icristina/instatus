@@ -4,7 +4,6 @@ using System.Linq;
 using System.Web;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
-using Instatus.Tasks;
 using Instatus.Web;
 
 namespace Instatus.Data

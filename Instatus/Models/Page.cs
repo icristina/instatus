@@ -110,6 +110,16 @@ namespace Instatus.Models
             Slug = name.ToSlug();
         }
 
+        public virtual WebEntry ToWebEntry()
+        {
+            return new WebEntry()
+            {
+                Title = Name,
+                Description = Description,
+                Picture = Picture
+            };
+        }
+
         public SiteMapNode ToSiteMapNode(SiteMapProvider sitemap)
         {
             var routeData = new { slug = Slug };
