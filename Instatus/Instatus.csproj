@@ -113,8 +113,10 @@
     <Compile Include="Data\IRepository.cs" />
     <Compile Include="Data\LimitedQueue.cs" />
     <Compile Include="Data\RecordResult.cs" />
+    <Compile Include="Extensions\CacheExtensions.cs" />
     <Compile Include="Extensions\ControllerDescriptorExtensions.cs" />
     <Compile Include="Extensions\BooleanExtensions.cs" />
+    <Compile Include="Extensions\GeospacialExtensions.cs" />
     <Compile Include="Extensions\GlobalFilterExtensions.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
