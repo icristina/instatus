@@ -95,6 +95,26 @@ namespace Instatus.Areas.Facebook
             client.UploadValues(uri, values);
         }
 
+        public static List<WebEntry> Feed(object resource, string accessToken)
+        {
+            var response = Request(resource, accessToken, Connection.Feed);
+            var feed = new List<WebEntry>();
+
+            foreach (var entry in response.data)
+            {
+                feed.Add(new WebEntry()
+                {
+                    Picture = entry.picture,
+                    Kind = entry.type,
+                    Title = entry.name,
+                    Description = entry.description,
+                    Timestamp = DateTime.Parse(entry.created_time)
+                });
+            }
+
+            return feed;
+        }
+
         private static Credential credential;
 
         public static Credential Credential

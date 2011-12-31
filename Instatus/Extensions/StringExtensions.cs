@@ -94,6 +94,20 @@ namespace Instatus
             return text.RemoveHtmlElement("(p|div|section|header|footer|nav)");
         }
 
+        public static string ReplaceLineBreaksAsHtml(this string text)
+        {
+            return text.RegexReplace("\n", "<br/>");
+        }
+
+        // http://www.codinghorror.com/blog/2008/10/the-problem-with-urls.html
+        public static string ReplaceLinksAsHtml(this string text)
+        {
+            // simple: \bhttp://[^\s]+
+            // orginal: \(?\bhttp://[-A-Za-z0-9+&@#/%?=~_()|!:,.;]*[-A-Za-z0-9+&@#/%=~_()|]
+            // updated for https
+            return text.RegexReplace(@"\(?\bhttps?://[-A-Za-z0-9+&@#/%?=~_()|!:,.;]*[-A-Za-z0-9+&@#/%=~_()|]", "<a href=\"$1\">$1<a>");
+        }
+
         // http://regexpal.com/
         // http://tim.mackey.ie/CleanWordHTMLUsingRegularExpressions.aspx
         // (\s*\w+(:\w+)?=['"][^'"]*['"])

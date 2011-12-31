@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.ComponentModel.Composition;
+using Instatus;
 
 namespace Instatus.Services
 {
@@ -11,7 +12,8 @@ namespace Instatus.Services
     {
         public string Process(string template, dynamic viewData)
         {
-            return viewData.ToString().Replace("\n", "<br/>");
+            return (viewData.ToString() as string)
+                .ReplaceLineBreaksAsHtml();
         }
     }
 }
