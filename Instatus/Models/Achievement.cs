@@ -9,9 +9,9 @@ namespace Instatus.Models
 {
     public class Achievement : Page
     {
-        public virtual ICollection<Award> Awards { get; set; } 
-        
-        public Achievement() : base() { }
+        public virtual ICollection<Award> Awards { get; set; }
+
+        public Achievement() { }
 
         public Achievement(string name) : base(name) { } 
     }

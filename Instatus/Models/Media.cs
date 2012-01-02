@@ -11,7 +11,7 @@ namespace Instatus.Models
         public int? Height { get; set; }
         public int? Width { get; set; }
         
-        public Media() : base() { }
+        public Media() { }
         public Media(WebContentType contentType, string uri) : base(contentType, uri) { }
     }
 }

@@ -100,12 +100,23 @@ namespace Instatus
         }
 
         // http://www.codinghorror.com/blog/2008/10/the-problem-with-urls.html
+        // http://daringfireball.net/2010/07/improved_regex_for_matching_urls
         public static string ReplaceLinksAsHtml(this string text)
         {
             // simple: \bhttp://[^\s]+
             // orginal: \(?\bhttp://[-A-Za-z0-9+&@#/%?=~_()|!:,.;]*[-A-Za-z0-9+&@#/%=~_()|]
             // updated for https
             return text.RegexReplace(@"\(?\bhttps?://[-A-Za-z0-9+&@#/%?=~_()|!:,.;]*[-A-Za-z0-9+&@#/%=~_()|]", "<a href=\"$1\">$1<a>");
+        }
+
+        public static string ReplaceHashTagsAsHtml(this string text, string uriTemplate)
+        {
+            return text.RegexReplace("[#]+[A-Za-z0-9-_]+", "");
+        }
+
+        public static string ReplaceMentionsAsHtml(this string text, string uriTemplate)
+        {
+            return text.RegexReplace(@"(^|\W)@([A-Za-z0-9_]+)", "");
         }
 
         // http://regexpal.com/

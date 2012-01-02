@@ -26,7 +26,7 @@ namespace Instatus.Models
             };
         }
 
-        public Place() : base()
+        public Place()
         {
             Address = new Address();
             Point = new Point();

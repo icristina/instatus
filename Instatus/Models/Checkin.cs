@@ -11,7 +11,6 @@ namespace Instatus.Models
         public Point To { get; set; }
         
         public Checkin()
-            : base()
         {
             Verb = WebVerb.Checkin.ToString();
         }

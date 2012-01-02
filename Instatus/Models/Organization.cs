@@ -9,10 +9,9 @@ namespace Instatus.Models
     {
         public virtual ICollection<Profile> Profiles { get; set; }
 
-        public Organization() : base() { }
+        public Organization() { }
 
         public Organization(string name)
-            : base()
         {
             Name = name;
         }

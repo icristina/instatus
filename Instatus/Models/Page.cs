@@ -43,6 +43,7 @@ namespace Instatus.Models
         public DateTime? PublishedTime { get; set; }
         public string Category { get; set; }
         public string Status { get; set; }
+        public string Data { get; set; }
 
         public virtual Application Application { get; set; }
         public int? ApplicationId { get; set; }
@@ -65,7 +66,17 @@ namespace Instatus.Models
         public virtual ICollection<Page> Parents { get; set; }
 
         [NotMapped]
-        public WebDocument Document { get; set; }
+        public WebDocument Document
+        {
+            get
+            {
+                return Fields["Document"] as WebDocument;
+            }
+            set
+            {
+                Fields["Document"] = value;
+            }
+        }
 
         [NotMapped]
         [IgnoreDataMember]
@@ -74,17 +85,22 @@ namespace Instatus.Models
         [NotMapped]
         public Dictionary<WebVerb, WebInsight> Insights { get; private set; }
 
+        [NotMapped]
         [IgnoreDataMember]
-        [ScaffoldColumn(false)]
-        public byte[] Data
+        public Dictionary<string, object> Fields { get; private set; }
+
+        private Type[] knownTypes = new Type[] { typeof(WebDocument) };
+
+        [IgnoreDataMember]
+        public byte[] Payload
         {
             get
             {
-                return Document.Serialize();
+                return Fields.Serialize(knownTypes);
             }
             set
             {
-                Document = value.Deserialize<WebDocument>();
+                Fields = value.Deserialize<Dictionary<string, object>>(knownTypes);
             }
         }
 
@@ -95,6 +111,8 @@ namespace Instatus.Models
 
         public Page()
         {
+            Fields = new Dictionary<string, object>();
+            
             CreatedTime = DateTime.UtcNow;
             UpdatedTime = DateTime.UtcNow;
             PublishedTime = DateTime.UtcNow;
@@ -148,7 +166,7 @@ namespace Instatus.Models
 
                 if (restrictionEvaluator is IPayload)
                 {
-                    ((IPayload)restrictionEvaluator).Data = restriction.Data;
+                    ((IPayload)restrictionEvaluator).Payload = restriction.Payload;
                 }
 
                 var restrictionResult = restrictionEvaluator.Evaluate(restrictionContext);

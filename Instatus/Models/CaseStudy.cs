@@ -7,12 +7,8 @@ namespace Instatus.Models
 {
     public class CaseStudy : Page
     {
-        public CaseStudy()
-            : base()
-        {
-
-        }
-
+        public CaseStudy() { }
+        
         public CaseStudy(string slug, string name, string body = null)
             : base(name)
         {

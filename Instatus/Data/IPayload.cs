@@ -7,6 +7,6 @@ namespace Instatus.Data
 {
     public interface IPayload
     {
-        byte[] Data { get; set; }
+        byte[] Payload { get; set; }
     }
 }

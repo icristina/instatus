@@ -8,7 +8,6 @@ namespace Instatus.Models
     public class Job : Page
     {
         public Job()
-            : base()
         {
 
         }

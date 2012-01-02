@@ -7,11 +7,7 @@ namespace Instatus.Models
 {
     public class Post : Page
     {
-        public Post()
-            : base()
-        {
-
-        }
+        public Post() { }
 
         public Post(string slug, string name, string body = null)
             : base(name)

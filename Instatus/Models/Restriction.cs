@@ -13,7 +13,7 @@ namespace Instatus.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public byte[] Data { get; set; }
+        public byte[] Payload { get; set; }
         public int Priority { get; set; }
 
         public virtual ICollection<Page> Pages { get; set; }
@@ -123,7 +123,7 @@ namespace Instatus.Models
         public int Priority { get; set; }
         public T Value { get; set; }
 
-        public byte[] Data
+        public byte[] Payload
         {
             get
             {
@@ -140,7 +140,7 @@ namespace Instatus.Models
             return new Restriction()
             {
                 Name = Name,
-                Data = Data,
+                Payload = Payload,
                 Priority = Priority
             };
         }

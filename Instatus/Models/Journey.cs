@@ -12,7 +12,6 @@ namespace Instatus.Models
         public int? Distance { get; set; }
 
         public Journey()
-            : base()
         {
             Verb = WebVerb.Journey.ToString();
         }

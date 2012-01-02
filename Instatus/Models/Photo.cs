@@ -8,7 +8,7 @@ namespace Instatus.Models
 {
     public class Photo : Media
     {
-        public Photo() : base() { }
+        public Photo() { }
         public Photo(WebContentType contentType, string uri) : base(contentType, uri) { }
     }
 }

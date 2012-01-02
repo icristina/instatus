@@ -7,6 +7,6 @@ namespace Instatus.Models
 {
     public class Catalog : Page
     {
-        public Catalog() : base() { }
+
     }
 }

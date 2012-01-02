@@ -41,19 +41,19 @@ namespace Instatus
             return isValid;
         }
         
-        public static byte[] Serialize<T>(this T graph)
+        public static byte[] Serialize<T>(this T graph, IEnumerable<Type> knownTypes = null)
         {
             var stream = new MemoryStream();
-            var serializer = new DataContractSerializer(typeof(T));
+            var serializer = new DataContractSerializer(typeof(T), knownTypes);
             serializer.WriteObject(stream, graph);
             return stream.ToArray();
         }
 
-        public static T Deserialize<T>(this byte[] bytes)
+        public static T Deserialize<T>(this byte[] bytes, IEnumerable<Type> knownTypes = null)
         {
             MemoryStream stream = new MemoryStream(bytes);
             stream.Position = 0;
-            var serializer = new DataContractSerializer(typeof(T));
+            var serializer = new DataContractSerializer(typeof(T), knownTypes);
             return (T)serializer.ReadObject(stream);
         }
 

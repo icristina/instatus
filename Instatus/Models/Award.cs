@@ -12,7 +12,6 @@ namespace Instatus.Models
         public int? AchievementId { get; set; }        
         
         public Award()
-            : base()
         {
             Verb = WebVerb.Award.ToString();
         }

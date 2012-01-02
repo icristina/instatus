@@ -9,10 +9,9 @@ namespace Instatus.Models
     {
         public virtual ICollection<Price> Prices { get; set; }
 
-        public Product() : base() { }
+        public Product() { }
 
         public Product(string name)
-            : base()
         {
             Name = name;
         }

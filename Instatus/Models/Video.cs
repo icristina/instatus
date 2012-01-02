@@ -10,7 +10,7 @@ namespace Instatus.Models
     {
         public int? Duration { get; set; }
         
-        public Video() : base() { }
+        public Video() { }
         public Video(WebContentType contentType, string uri) : base(contentType, uri) { }
     }
 }
