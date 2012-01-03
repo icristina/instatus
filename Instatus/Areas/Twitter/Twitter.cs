@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using Instatus.Web;
 using System.Net;
+using System.Text;
 
 namespace Instatus.Areas.Twitter
 {
@@ -36,7 +37,46 @@ namespace Instatus.Areas.Twitter
         // https://dev.twitter.com/docs/tweet-entities
         // https://github.com/danielcrenna/tweetsharp/blob/master/src/net40/TweetSharp.Next/Extensions/StringExtensions.cs
         private static string ReplaceEntitiesWithHtml(string text, dynamic entities) {
-            return text;
+            var characters = text.ToCharArray().Select(c => c.ToString()).ToList();
+            var length = text.Length - 1;
+
+            if (entities.urls != null)
+            {
+                foreach (var link in entities.urls)
+                {
+                    var startIndex = link.indices[0];
+                    var endIndex = link.indices[1] - 1;
+                
+                    characters[startIndex] = string.Format("<a href=\"{0}\">{1}", link.url, characters[startIndex]);
+                    characters[endIndex] = string.Format("{0}</a>", characters[endIndex]);
+                }
+            }
+
+            if (entities.hashtags != null)
+            {
+                foreach (var hashtag in entities.hashtags)
+                {
+                    var startIndex = hashtag.indices[0];
+                    var endIndex = hashtag.indices[1] - 1;
+
+                    characters[startIndex] = string.Format("<a href=\"http://search.twitter.com/search?q={0}\">{1}", hashtag.text, characters[startIndex]);
+                    characters[endIndex] = string.Format("{0}</a>", characters[endIndex]);
+                }
+            }
+
+            if (entities.user_mentions != null)
+            {
+                foreach (var mention in entities.user_mentions)
+                {
+                    var startIndex = mention.indices[0];
+                    var endIndex = mention.indices[1] - 1;
+
+                    characters[startIndex] = string.Format("<a href=\"http://twitter.com/{0}\">{1}", mention.screen_name, characters[startIndex]);
+                    characters[endIndex] = string.Format("{0}</a>", characters[endIndex]);
+                }
+            }
+
+            return string.Join("", characters);
         }
     }
 }

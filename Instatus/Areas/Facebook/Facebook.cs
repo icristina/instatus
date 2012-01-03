@@ -104,10 +104,10 @@ namespace Instatus.Areas.Facebook
             {
                 feed.Add(new WebEntry()
                 {
-                    Picture = entry.picture,
+                    Picture = Facebook.Picture(entry.from.id, PictureSize.Square),
                     Kind = entry.type,
                     Title = entry.name,
-                    Description = entry.description,
+                    Description = entry.message,
                     Timestamp = DateTime.Parse(entry.created_time)
                 });
             }
