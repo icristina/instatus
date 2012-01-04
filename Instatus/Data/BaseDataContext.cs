@@ -393,12 +393,20 @@ namespace Instatus.Data
 
         public Page GetPage(string slug, string[] customExpansions = null)
         {
-            return this.DisableProxiesAndLazyLoading()
+            var page = this.DisableProxiesAndLazyLoading()
                     .Pages
                     .Expand(DefaultPageExpansions)
-                    .Expand(customExpansions)
+                    //.Expand(customExpansions)
                     .Where(p => p.Slug == slug)
                     .FirstOrDefault();
+
+            // should select correct set rather than Pages, to do this eagerly
+            foreach (var navigationProperty in customExpansions)
+            {
+                Entry(page).Collection(navigationProperty).Load();
+            }
+
+            return page;
         }
 
         public T GetPage<T>(string slug, string[] customExpansions = null) where T : Page {
