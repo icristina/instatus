@@ -10,8 +10,10 @@ namespace Instatus.Areas.Twitter
 {
     public static class Twitter
     {
-        public const string TagUriTemplate = "http://search.twitter.com/search?q={0}";
-        public const string MentionUriTemplate = "http://twitter.com/{0}";
+        public static string Permalink(string user, string id)
+        {
+            return string.Format("http://twitter.com/{0}/status/{1}", user, id);
+        }
         
         public static List<WebEntry> Search(string[] terms, bool includeEntities = true)
         {
@@ -24,10 +26,13 @@ namespace Instatus.Areas.Twitter
             {
                 feed.Add(new WebEntry()
                 {
+                    Kind = "Tweet",
+                    Source = "Twitter",
                     Description = includeEntities ? ReplaceEntitiesWithHtml(entry.text, entry.entities) : entry.text,
                     Timestamp = DateTime.Parse(entry.created_at),
                     Picture = entry.profile_image_url,
-                    User = entry.user 
+                    User = entry.user,
+                    Uri = Twitter.Permalink(entry.from_user, entry.id_str)
                 });
             }
 

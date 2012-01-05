@@ -20,6 +20,7 @@ namespace Instatus.Web
         public string Picture { get; set; }
         public string Caption { get; set; }
         public string User { get; set; }
+        public string Source { get; set; }
         public DateTime Timestamp { get; set; }
     }
 }

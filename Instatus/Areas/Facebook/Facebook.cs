@@ -71,6 +71,16 @@ namespace Instatus.Areas.Facebook
             return string.Format("https://www.facebook.com/{0}", resource);
         }
 
+        public static string Permalink(object resource)
+        {
+            var id = resource.ToString();
+            var segments = id.Split('_');
+
+            return segments.Length == 2 ?
+                string.Format("http://www.facebook.com/{0}/posts/{1}", segments[0], segments[1]) :
+                "http://www.facebook.com";
+        }
+
         public static dynamic Request(object resource, string accessToken = null, object connection = null)
         {
             var response = InternalRequest(resource, accessToken, connection);
@@ -101,14 +111,17 @@ namespace Instatus.Areas.Facebook
             var feed = new List<WebEntry>();
 
             foreach (var entry in response.data)
-            {
+            {               
                 feed.Add(new WebEntry()
                 {
                     Picture = Facebook.Picture(entry.from.id, PictureSize.Square),
-                    Kind = entry.type,
+                    Kind = (entry.type as string).ToCapitalized(),
+                    Source = "Facebook",
                     Title = entry.name,
                     Description = entry.message,
-                    Timestamp = DateTime.Parse(entry.created_time)
+                    Timestamp = DateTime.Parse(entry.created_time),
+                    // Uri = entry.actionsentry.actions[0].link
+                    Uri = Facebook.Permalink(entry.id)
                 });
             }
 

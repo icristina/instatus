@@ -401,9 +401,12 @@ namespace Instatus.Data
                     .FirstOrDefault();
 
             // should select correct set rather than Pages, to do this eagerly
-            foreach (var navigationProperty in customExpansions)
+            if (!customExpansions.IsEmpty())
             {
-                Entry(page).Collection(navigationProperty).Load();
+                foreach (var navigationProperty in customExpansions)
+                {
+                    Entry(page).Collection(navigationProperty).Load();
+                }
             }
 
             return page;
