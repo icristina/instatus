@@ -7,11 +7,11 @@ namespace Instatus.Web
 {
     public enum WebStatus
     {
+        Published, // default is Published
         Template,
         Draft,
         PendingApproval,
         Approved,
-        Published,
         Archived,
         Spam, // automatically flagged
         Reported, // user reported

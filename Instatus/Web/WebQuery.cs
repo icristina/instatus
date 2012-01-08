@@ -6,22 +6,29 @@ using System.Dynamic;
 using System.Web.Routing;
 
 namespace Instatus.Web
-{
-    public class WebExpression
+{       
+    public class WebQuery : WebSet, ICloneable
     {
+        // view or mode
+        public WebSort Sort { get; set; }
+        public WebMode Mode { get; set; }    
+    
+        // selection
+        public WebContentType ContentType { get; set; }    
         public string User { get; set; }
-        public string[] Expand { get; set; }
         public string Parent { get; set; }
         public string Tag { get; set; }
         public string Category { get; set; }
-        public WebSort Sort { get; set; }
-        public WebMode Mode { get; set; }
-        public WebKind Kind { get; set; }
         public string[] Uri { get; set; }
         public string Term { get; set; }
-        public string Locale { get; set; }
         public DateTime? StartDate { get; set; }
-        public string Filter { get; set; }
+        public string Filter { get; set; }    
+
+        // paging
+        public int PageIndex { get; set; }
+        public int PageSize { get; set; }
+        public int MaxPageCount { get; set; }
+        public bool CountTotal { get; set; }
 
         public bool IsDateView
         {
@@ -30,15 +37,6 @@ namespace Instatus.Web
                 return Mode == WebMode.Day || Mode == WebMode.Week || Mode == WebMode.Month || Mode == WebMode.Year;
             }
         }
-    }
-    
-    public class WebQuery : WebExpression, ICloneable
-    {
-        public WebContentType ContentType { get; set; }
-        public int PageIndex { get; set; }
-        public int PageSize { get; set; }
-        public int MaxPageCount { get; set; }
-        public bool CountTotal { get; set; }
 
         public WebQuery() {
             PageSize = 10;
@@ -97,25 +95,25 @@ namespace Instatus.Web
                         .AddNonEmptyValue("tag", Tag)
                         .AddNonEmptyValue("sort", Sort)
                         .AddNonEmptyValue("mode", Mode)
-                        .AddNonEmptyValue("kind", Kind)
                         .AddNonEmptyValue("contentType", ContentType)
                         .AddNonEmptyValue("pageIndex", PageIndex)
                         .AddNonEmptyValue("pageSize", PageSize)
                         .AddNonEmptyValue("maxPageCount", MaxPageCount)
                         .AddNonEmptyValue("countTotal", CountTotal)
-                        .AddNonEmptyValue("locale", Locale)
                         .AddNonEmptyValue("parent", Parent)
                         .AddNonEmptyValue("startDate", StartDate.HasValue ? StartDate.Value.ToString("yyyy-MM-dd") : null)
                         .AddNonEmptyValue("term", Term)
-                        .AddNonEmptyValue("expand", string.Join(",", Expand ?? new string[] {}))
                         .AddNonEmptyValue("filter", Filter)
-                        .AddNonEmptyValue("category", Category);
+                        .AddNonEmptyValue("category", Category)
+                        .AddNonEmptyValue("kind", Kind)
+                        .AddNonEmptyValue("locale", Locale)
+                        .AddNonEmptyValue("expand", string.Join(",", Expand ?? new string[] { }));
         }
 
         public Dictionary<string, object> ToDataAttributeDictionary()
         {
             return new Dictionary<string, object>()
-                .AddNonEmptyValue("data-query-kind", Kind.ToString().ToCamelCase())
+                .AddNonEmptyValue("data-set-kind", Kind.ToString().ToCamelCase())
                 .AddNonEmptyValue("data-query-mode", Mode.ToString().ToCamelCase())
                 .AddNonEmptyValue("data-query-pageSize", PageSize)
                 .AddNonEmptyValue("data-query-category", Category.ToCamelCase())

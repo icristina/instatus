@@ -366,44 +366,58 @@ namespace Instatus.Data
             return award.IsEmpty() ? null : (T)award.Page;
         }
 
-        public IOrderedQueryable<Activity> GetActivities(WebExpression filter, WebStatus? status = WebStatus.Published)
+        public IOrderedQueryable<Activity> GetActivities(WebQuery query)
         {
             return this
                     .DisableProxiesAndLazyLoading()
                     .Activities
-                    .Expand(filter.Expand)
-                    .FilterActivities(filter, status)
-                    .SearchActivities(filter)
-                    .SortActivities(filter.Sort);            
+                    .Expand(query.Expand)
+                    .FilterActivities(query)
+                    .SearchActivities(query)
+                    .SortActivities(query.Sort);            
         }
 
-        public IOrderedQueryable<T> GetActivities<T>(WebExpression filter, WebStatus? status = WebStatus.Published) where T : Activity
+        public IOrderedQueryable<T> GetActivities<T>(WebQuery query) where T : Activity
         {
             return this
                     .DisableProxiesAndLazyLoading()
                     .Activities
-                    .Expand(filter.Expand)
-                    .FilterActivities(filter, status)
-                    .SearchActivities(filter)
+                    .Expand(query.Expand)
+                    .FilterActivities(query)
+                    .SearchActivities(query)
                     .OfType<T>()
-                    .SortActivities(filter.Sort);
+                    .SortActivities(query.Sort);
         }
 
         public static string[] DefaultPageExpansions = new string[] { "Restrictions", "Links", "Tags.Taxonomy", "User" };
 
-        public Page GetPage(string slug, string[] customExpansions = null)
+        public Page GetPage(string slug, WebSet set = null)
         {
             var page = this.DisableProxiesAndLazyLoading()
                     .Pages
                     .Expand(DefaultPageExpansions)
-                    //.Expand(customExpansions)
                     .Where(p => p.Slug == slug)
                     .FirstOrDefault();
 
-            // should select correct set rather than Pages, to do this eagerly
-            if (!customExpansions.IsEmpty())
+            return ExpandNavigationProperties(page, set);
+        }
+
+        public T GetPage<T>(string slug, WebSet set = null) where T : Page {
+            var page = this.DisableProxiesAndLazyLoading()
+                    .Pages
+                    .Expand(DefaultPageExpansions)
+                    .Where(p => p.Slug == slug)
+                    .OfType<T>()
+                    .FirstOrDefault();
+
+            return ExpandNavigationProperties(page, set);
+        }
+
+        private T ExpandNavigationProperties<T>(T page, WebSet set) where T : Page
+        {
+            if (page != null && set != null && !set.Expand.IsEmpty())
             {
-                foreach (var navigationProperty in customExpansions)
+                foreach (var navigationProperty in set.Expand)
                 {
                     Entry(page).Collection(navigationProperty).Load();
                 }
@@ -412,41 +426,31 @@ namespace Instatus.Data
             return page;
         }
 
-        public T GetPage<T>(string slug, string[] customExpansions = null) where T : Page {
-            return this.DisableProxiesAndLazyLoading()
-                    .Pages
-                    .Expand(DefaultPageExpansions)
-                    .Expand(customExpansions)
-                    .Where(p => p.Slug == slug)
-                    .OfType<T>()
-                    .FirstOrDefault();
-        }
-
-        public IEnumerable<T> GetPages<T>(WebExpression filter, WebStatus? status = WebStatus.Published) where T : Page
+        public IEnumerable<T> GetPages<T>(WebQuery query) where T : Page
         {
             return this
                     .DisableProxiesAndLazyLoading()
                     .Pages
-                    .Expand(filter.Expand)
-                    .FilterPages(filter, status)
-                    .SearchPages(filter)
+                    .Expand(query.Expand)
+                    .FilterPages(query)
+                    .SearchPages(query)
                     .OfType<T>()
-                    .SortPages(filter.Sort);
+                    .SortPages(query.Sort);
         }
 
-        public IEnumerable<Page> GetPages(WebExpression filter, WebStatus? status = WebStatus.Published)
+        public IEnumerable<Page> GetPages(WebQuery query)
         {
             return this
                     .DisableProxiesAndLazyLoading()
                     .Pages
-                    .Expand(filter.Expand)
-                    .FilterPages(filter, status)
-                    .SearchPages(filter)
-                    .OfKind(filter.Kind)
-                    .SortPages(filter.Sort);
+                    .Expand(query.Expand)
+                    .FilterPages(query)
+                    .SearchPages(query)
+                    .OfKind(query.Kind)
+                    .SortPages(query.Sort);
         }
 
-        public IOrderedQueryable<Link> GetLinks(WebExpression filter)
+        public IOrderedQueryable<Link> GetLinks(WebQuery filter)
         {
             return this
                     .DisableProxiesAndLazyLoading()
@@ -455,21 +459,14 @@ namespace Instatus.Data
                     .SortLinks(filter.Sort);
         }
 
-        public IEnumerable<T> GetTemplates<T>(string locale = "") where T : Page 
-        {
-            return GetPages<T>(new WebQuery() {
-                Locale = locale
-            });
-        }
-
-        public IQueryable<User> GetUsers(WebExpression filter, WebStatus? status = WebStatus.Published)
+        public IQueryable<User> GetUsers(WebQuery query)
         {
             return this
                     .DisableProxiesAndLazyLoading()
                     .Users
-                    .Expand(filter.Expand)
-                    .FilterUsers(filter, status)
-                    .SortUsers(filter.Sort);
+                    .Expand(query.Expand)
+                    .FilterUsers(query)
+                    .SortUsers(query.Sort);
         }
 
         public void LoadPages(Stream stream)
@@ -538,32 +535,30 @@ namespace Instatus.Data
 
     internal static class QueryExtensions
     {
-        public static IQueryable<Activity> FilterActivities(this IQueryable<Activity> queryable, WebExpression filter, WebStatus? webStatus)
+        public static IQueryable<Activity> FilterActivities(this IQueryable<Activity> queryable, WebQuery query)
         {
             var filtered = queryable;
 
-            if (webStatus.HasValue)
-            {
-                var status = webStatus.ToString();
-                filtered = filtered.Where(p => p.Status == status);
-            }
+            var status = query.Status.ToString();
+
+            filtered = filtered.Where(p => p.Status == status);
 
             int userId;
 
-            if (!filter.User.IsEmpty() && int.TryParse(filter.User, out userId))
+            if (!query.User.IsEmpty() && int.TryParse(query.User, out userId))
                 filtered = filtered.Where(p => p.UserId == userId);
 
             int parentId;
 
-            if (!filter.Parent.IsEmpty() && int.TryParse(filter.Parent, out parentId))
+            if (!query.Parent.IsEmpty() && int.TryParse(query.Parent, out parentId))
                 filtered = filtered.Where(a => a.PageId == parentId);
 
-            if (filter.StartDate.HasValue || filter.IsDateView)
+            if (query.StartDate.HasValue || query.IsDateView)
             {
-                DateTime startTime = filter.StartDate ?? StartDate(filter.Mode);
-                DateTime? endTime = startTime.EndDate(filter.Mode);
+                DateTime startTime = query.StartDate ?? StartDate(query.Mode);
+                DateTime? endTime = startTime.EndDate(query.Mode);
 
-                filter.StartDate = startTime;
+                query.StartDate = startTime;
 
                 filtered = filtered.Where(p => p.CreatedTime >= startTime);
 
@@ -598,7 +593,7 @@ namespace Instatus.Data
             return queryable.OrderByDescending(a => a.CreatedTime);
         }
 
-        public static IQueryable<T> SearchActivities<T>(this IQueryable<T> queryable, WebExpression filter) where T : Activity
+        public static IQueryable<T> SearchActivities<T>(this IQueryable<T> queryable, WebQuery filter) where T : Activity
         {
             if (!filter.Filter.IsEmpty())
             {
@@ -663,7 +658,7 @@ namespace Instatus.Data
             }
         }
 
-        public static IQueryable<T> SearchPages<T>(this IQueryable<T> queryable, WebExpression filter) where T : Page
+        public static IQueryable<T> SearchPages<T>(this IQueryable<T> queryable, WebQuery filter) where T : Page
         {
             if(!filter.Filter.IsEmpty()) {
                 if(filter.Filter.StartsWith("status:")) {
@@ -675,45 +670,44 @@ namespace Instatus.Data
             return queryable;
         }
 
-        public static IQueryable<T> FilterPages<T>(this IQueryable<T> queryable, WebExpression filter, WebStatus? webStatus) where T : Page
+        public static IQueryable<T> FilterPages<T>(this IQueryable<T> queryable, WebQuery query) where T : Page
         {
             var filtered = queryable;
 
-            if(webStatus.HasValue) {
-                var status = webStatus.ToString();
-                filtered = filtered.Where(p => p.Status == status);
-            }
+            var status = query.Status.ToString();
 
-            if (!filter.Tag.IsEmpty())
-                filtered = filtered.Where(p => p.Tags.Any(t => t.Name == filter.Tag));
+            filtered = filtered.Where(p => p.Status == status);
 
-            if(!filter.Category.IsEmpty())
-                filtered = filtered.Where(p => p.Category == filter.Category);
+            if (!query.Tag.IsEmpty())
+                filtered = filtered.Where(p => p.Tags.Any(t => t.Name == query.Tag));
 
-            if (!filter.Uri.IsEmpty())
-                filtered = filtered.Where(p => p.Sources.Any(s => filter.Uri.Contains(s.Uri)));
+            if(!query.Category.IsEmpty())
+                filtered = filtered.Where(p => p.Category == query.Category);
+
+            if (!query.Uri.IsEmpty())
+                filtered = filtered.Where(p => p.Sources.Any(s => query.Uri.Contains(s.Uri)));
 
             int parentId;
 
-            if (!filter.Parent.IsEmpty() && int.TryParse(filter.Parent, out parentId))
+            if (!query.Parent.IsEmpty() && int.TryParse(query.Parent, out parentId))
                 filtered = filtered.Where(p => p.Parents.Any(r => r.Id == parentId));
 
-            if (!filter.Term.IsEmpty())
-                filtered = filtered.Where(p => p.Name.StartsWith(filter.Term));
+            if (!query.Term.IsEmpty())
+                filtered = filtered.Where(p => p.Name.StartsWith(query.Term));
 
-            if (!filter.Locale.IsEmpty())
-                filtered = filtered.Where(p => p.Locale == filter.Locale);
+            if (!query.Locale.IsEmpty())
+                filtered = filtered.Where(p => p.Locale == query.Locale);
 
             int userId;
 
-            if (!filter.User.IsEmpty() && int.TryParse(filter.User, out userId))
+            if (!query.User.IsEmpty() && int.TryParse(query.User, out userId))
                 filtered = filtered.Where(p => p.UserId == userId);
 
-            if (filter.StartDate.HasValue || filter.IsDateView) {
-                DateTime startTime = filter.StartDate ?? StartDate(filter.Mode);
-                DateTime? endTime = startTime.EndDate(filter.Mode);
+            if (query.StartDate.HasValue || query.IsDateView) {
+                DateTime startTime = query.StartDate ?? StartDate(query.Mode);
+                DateTime? endTime = startTime.EndDate(query.Mode);
 
-                filter.StartDate = startTime;
+                query.StartDate = startTime;
 
                 if (queryable is IQueryable<Event>)
                 {
@@ -763,18 +757,16 @@ namespace Instatus.Data
             }
         }
 
-        public static IQueryable<User> FilterUsers(this IQueryable<User> queryable, WebExpression filter, WebStatus? webStatus)
+        public static IQueryable<User> FilterUsers(this IQueryable<User> queryable, WebQuery query)
         {
             var filtered = queryable;
 
-            if (webStatus.HasValue)
-            {
-                var status = webStatus.ToString();
-                filtered = filtered.Where(u => u.Status == status);
-            }
+            var status = query.Status.ToString();
 
-            if (!filter.Uri.IsEmpty())
-                filtered = filtered.Where(u => u.Credentials.Any(c => filter.Uri.Contains(c.Uri)));
+            filtered = filtered.Where(u => u.Status == status);
+
+            if (!query.Uri.IsEmpty())
+                filtered = filtered.Where(u => u.Credentials.Any(c => query.Uri.Contains(c.Uri)));
 
             return filtered;
         }
@@ -790,7 +782,7 @@ namespace Instatus.Data
             }
         }
 
-        public static IQueryable<Link> FilterLinks(this IQueryable<Link> queryable, WebExpression filter)
+        public static IQueryable<Link> FilterLinks(this IQueryable<Link> queryable, WebQuery filter)
         {
             var filtered = queryable;
 

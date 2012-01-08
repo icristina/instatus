@@ -247,6 +247,7 @@
     <Compile Include="Data\BaseDataService.cs" />
     <Compile Include="Data\PagedCollection.cs" />
     <Compile Include="Models\Video.cs" />
+    <Compile Include="Web\WebSet.cs" />
     <Compile Include="Web\WebStream.cs" />
     <Compile Include="Web\DbSitemapProvider.cs" />
     <Compile Include="Web\BaseViewPage.cs" />

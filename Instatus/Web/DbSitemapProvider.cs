@@ -23,7 +23,13 @@ namespace Instatus.Web
         {
             using (var db = BaseDataContext.Instance())
             {
-                var nodes = db.GetPage(node.Key, new string[] { "Pages" })
+                var set = new WebSet()
+                {
+                    Expand = new string[] { "Pages" },
+                    Kind = WebKind.Article
+                };
+
+                var nodes = db.GetPage(node.Key, set)
                                 .Pages
                                 .OfType<Article>()
                                 .Where(IsNavigable)
