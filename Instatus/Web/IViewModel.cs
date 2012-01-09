@@ -5,8 +5,13 @@ using System.Text;
 using System.Data.Entity;
 
 namespace Instatus.Web
-{   
-    public interface IViewModel<TModel>
+{
+    public interface IViewModel
+    {
+        WebStep Step { get; }
+    }
+    
+    public interface IViewModel<TModel> : IViewModel
     {
         void Load(TModel model);
         void Save(TModel model);
@@ -15,6 +20,8 @@ namespace Instatus.Web
 
     public class BaseViewModel<TModel> : IViewModel<TModel>
     {
+        public WebStep Step { get; set; }
+        
         public virtual void Load(TModel model)
         {
             this.ApplyValues(model);
@@ -27,6 +34,11 @@ namespace Instatus.Web
 
         public virtual void Databind() {
 
+        }
+
+        public BaseViewModel()
+        {
+            Step = WebStep.Start;
         }
     }
 
