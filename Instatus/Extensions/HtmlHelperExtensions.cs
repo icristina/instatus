@@ -40,10 +40,11 @@ namespace Instatus
 
         public static MvcHtmlString Scripts<T>(this HtmlHelper<T> html, params string[] scripts)
         {
+            var urlHelper = new UrlHelper(html.ViewContext.RequestContext);
             var sb = new StringBuilder();
             foreach(var src in scripts) {
                 var tag = new TagBuilder("script");
-                tag.MergeAttribute("src", VirtualPathUtility.ToAbsolute("~/Scripts/" + src));
+                tag.MergeAttribute("src", urlHelper.Relative("~/Scripts/" + src));
                 sb.AppendLine(tag.ToString());
             }
             return new MvcHtmlString(sb.ToString());
@@ -51,8 +52,9 @@ namespace Instatus
 
         public static MvcHtmlString Stylesheet<T>(this HtmlHelper<T> html, string stylesheet, string rel = "stylesheet")
         {
+            var urlHelper = new UrlHelper(html.ViewContext.RequestContext);
             var tag = new TagBuilder("link");
-            tag.MergeAttribute("href", VirtualPathUtility.ToAbsolute("~/Content/" + stylesheet));
+            tag.MergeAttribute("href", urlHelper.Relative("~/Content/" + stylesheet));
             tag.MergeAttribute("rel", rel);
             return new MvcHtmlString(tag.ToString());
         }
@@ -84,7 +86,7 @@ namespace Instatus
                             urlHelper.Action(actionName, controllerName),
                             (controllerName ?? routeData.ControllerName()).ToCamelCase(),
                             actionName.ToCamelCase(),
-                            urlHelper.Content(contentPath),
+                            urlHelper.Relative(contentPath),
                             alternativeText);
 
             return new MvcHtmlString(markup);
@@ -95,7 +97,7 @@ namespace Instatus
             var urlHelper = new UrlHelper(html.ViewContext.RequestContext);
             var markup = string.Format("<button type=\"{0}\"><img src=\"{1}\" alt=\"{2}\"/></button>",
                             type,
-                            urlHelper.Content(contentPath),
+                            urlHelper.Relative(contentPath),
                             alternativeText);
 
             return new MvcHtmlString(markup);
@@ -105,7 +107,7 @@ namespace Instatus
         {
             var urlHelper = new UrlHelper(html.ViewContext.RequestContext);
             var tag = new TagBuilder("img");
-            tag.MergeAttribute("src", urlHelper.Content(contentPath));
+            tag.MergeAttribute("src", urlHelper.Relative(contentPath));
             tag.MergeAttribute("alt", text);
             return new MvcHtmlString(tag.ToString());
         }

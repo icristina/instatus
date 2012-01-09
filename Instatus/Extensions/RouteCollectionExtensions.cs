@@ -45,9 +45,29 @@ namespace Instatus
             }
         }
 
+        public const string HomeRouteName = "HomeRoute";
+        public const string NavigableRouteName = "NavigableRoute";
+        public const string HomeSlug = "home";
+
+        public static void MapHomeRoute(this RouteCollection routes, string controllerName = "Page", string actionName = "Details", string areaName = null)
+        {
+            routes.MapRoute(
+                HomeRouteName,
+                "",
+                new
+                {
+                    controller = controllerName,
+                    action = actionName,
+                    area = areaName
+                }
+            );
+        }
+
         public static void MapNavigableRoute(this RouteCollection routes, string prefix, string controllerName = "Page", string actionName = "Details", string areaName = null)
         {
-            routes.MapRouteLowercase(MicrositeAreaRegistration.PageRouteName, prefix + "/{slug}",
+            routes.MapRouteLowercase(
+                NavigableRouteName, 
+                prefix + "/{slug}",
                 new
                 {
                     controller = controllerName,

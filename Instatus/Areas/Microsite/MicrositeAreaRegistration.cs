@@ -4,7 +4,7 @@ namespace Instatus.Areas.Microsite
 {
     public class MicrositeAreaRegistration : AreaRegistration
     {
-        public static string RoutePrefix = "Site";
+        public static string RoutePrefix = "Microsite";
         
         public override string AreaName
         {
@@ -14,17 +14,9 @@ namespace Instatus.Areas.Microsite
             }
         }
 
-        public const string RootRouteName = "Microsite_Root";
-        public const string PageRouteName = "Microsite_Page";
-
         public override void RegisterArea(AreaRegistrationContext context)
         {
-            context.MapRoute(
-                RootRouteName,
-                "",
-                new { controller = "Page", action = "Details" }
-            );
-
+            context.Routes.MapHomeRoute(areaName: AreaName);
             context.Routes.MapNavigableRoute(RoutePrefix, areaName: AreaName);
 
             context.MapRoute(

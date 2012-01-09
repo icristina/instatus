@@ -14,7 +14,12 @@ namespace Instatus
 {
     public static class UrlHelperExtensions
     {
-        public static string Absolute(string virtualPath)
+        public static string Relative(this UrlHelper urlHelper, string virtualPath)
+        {
+            return urlHelper.Content(virtualPath).ToLower();
+        }
+
+        public static string Absolute(this UrlHelper urlHelper, string virtualPath)
         {
             return WebPath.Absolute(virtualPath);
         }
@@ -57,16 +62,61 @@ namespace Instatus
 
         public static string Page(this UrlHelper urlHelper, string slug)
         {
-            if (slug == PageController.HomeSlug)
-                return urlHelper.RouteUrl(MicrositeAreaRegistration.RootRouteName);
+            if (slug.Match(RouteCollectionExtensions.HomeSlug))
+                return urlHelper.RouteUrl(RouteCollectionExtensions.HomeRouteName);
             
-            return urlHelper.RouteUrl(MicrositeAreaRegistration.PageRouteName, new { slug = slug });
+            return urlHelper.RouteUrl(RouteCollectionExtensions.NavigableRouteName, new { slug = slug });
         }
 
         public static string Self(this UrlHelper urlHelper, IWebView webView)
         {
             var routeData = urlHelper.RequestContext.RouteData;
             return urlHelper.Action(routeData.ActionName(), routeData.ControllerName(), webView.Query.ToRouteValueDictionary());
+        }
+
+        public static SiteMapNodeCollectionBuilder Nav(this UrlHelper urlHelper, string title, string slug)
+        {
+            return new SiteMapNodeCollectionBuilder(urlHelper)
+                        .Nav(title, slug);
+        }
+
+        public static SiteMapNodeCollectionBuilder Nav(this UrlHelper urlHelper, string title, string actionName, string controllerName)
+        {
+            return new SiteMapNodeCollectionBuilder(urlHelper)
+                        .Nav(title, actionName, controllerName);
+        }
+    }
+}
+
+namespace Instatus.Web
+{
+    public class SiteMapNodeCollectionBuilder {
+        private UrlHelper urlHelper;
+        private List<SiteMapNode> siteMapNodes;
+        private SiteMapProvider siteMapProvider;
+
+        public SiteMapNodeCollectionBuilder Nav(string title, string slug)
+        {
+            siteMapNodes.Add(new SiteMapNode(siteMapProvider, slug, urlHelper.Page(slug), title));
+            return this;
+        }
+
+        public SiteMapNodeCollectionBuilder Nav(string title, string actionName, string controllerName)
+        {
+            siteMapNodes.Add(new SiteMapNode(siteMapProvider, controllerName, urlHelper.Action(actionName, controllerName), title));
+            return this;
+        }
+
+        public SiteMapNodeCollection ToSiteMapNodeCollection()
+        {           
+            return new SiteMapNodeCollection(siteMapNodes.ToArray());
+        }
+
+        public SiteMapNodeCollectionBuilder(UrlHelper urlHelper, SiteMapProvider siteMapProvider = null, List<SiteMapNode> siteMapNodes = null)
+        {
+            this.urlHelper = urlHelper;
+            this.siteMapProvider = siteMapProvider ?? new SimpleSiteMapProvider();
+            this.siteMapNodes = siteMapNodes ?? new List<SiteMapNode>();
         }
     }
 }
