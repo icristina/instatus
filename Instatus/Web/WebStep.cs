@@ -11,6 +11,7 @@ namespace Instatus.Web
         Start,
         Teaser,
         Error,
+        Confirm,
         Complete,
         Cancelled
     } 
