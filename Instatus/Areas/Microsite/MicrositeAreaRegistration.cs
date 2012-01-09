@@ -24,12 +24,8 @@ namespace Instatus.Areas.Microsite
                 "",
                 new { controller = "Page", action = "Details" }
             );
-            
-            context.MapRoute(
-                PageRouteName,
-                RoutePrefix + "/{slug}",
-                new { controller = "Page", action = "Details", slug = UrlParameter.Optional }
-            );
+
+            context.Routes.MapNavigableRoute(RoutePrefix, areaName: AreaName);
 
             context.MapRoute(
                 "Microsite_Default",

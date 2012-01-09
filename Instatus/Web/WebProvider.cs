@@ -9,6 +9,7 @@ namespace Instatus.Web
     {
         Generated,
         Imported,
+        Internal,
         Facebook,
         Google,
         Microsoft,

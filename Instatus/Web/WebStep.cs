@@ -13,6 +13,7 @@ namespace Instatus.Web
         Error,
         Confirm,
         Complete,
-        Cancelled
+        Cancelled,
+        Closed
     } 
 }

@@ -15,7 +15,27 @@ namespace Instatus.Models
     public class User
     {
         public int Id { get; set; }
-        public string EmailAddress { get; set; }
+
+        private string emailAddress;
+
+        public string EmailAddress
+        {
+            get
+            {
+                return emailAddress;
+            }
+            set
+            {
+                if (value.IsEmpty())
+                {
+                    emailAddress = null;
+                }
+                else
+                {
+                    emailAddress = value.ToLower(); // normalize email address, ensure lowercase
+                }
+            }
+        }
 
         [IgnoreDataMember]
         public string Password { get; set; }

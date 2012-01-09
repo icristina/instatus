@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Routing;
 using System.Web.Mvc;
+using Instatus.Areas.Microsite;
 
 namespace Instatus
 {
@@ -42,6 +43,19 @@ namespace Instatus
             {
                 return new THandler();
             }
+        }
+
+        public static void MapNavigableRoute(this RouteCollection routes, string prefix, string controllerName = "Page", string actionName = "Details", string areaName = null)
+        {
+            routes.MapRouteLowercase(MicrositeAreaRegistration.PageRouteName, prefix + "/{slug}",
+                new
+                {
+                    controller = controllerName,
+                    action = actionName,
+                    slug = UrlParameter.Optional,
+                    area = areaName
+                }
+            );
         }
     }
 }
