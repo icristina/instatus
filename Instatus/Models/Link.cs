@@ -11,7 +11,7 @@ namespace Instatus.Models
     [KnownType(typeof(Photo))]
     [KnownType(typeof(Video))]
     [KnownType(typeof(Media))]
-    public class Link
+    public class Link : INavigableContent
     {
         public int Id { get; set; }
         public string Name { get; set; }

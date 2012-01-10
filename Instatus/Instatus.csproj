@@ -101,6 +101,7 @@
     <Compile Include="Areas\Microsite\Controllers\RobotsController.cs" />
     <Compile Include="Areas\Wordpress\Controllers\WordpressApiController.cs" />
     <Compile Include="Areas\Wordpress\WordpressAreaRegistration.cs" />
+    <Compile Include="Areas\YouTube\YouTube.cs" />
     <Compile Include="Commands\BanCommand.cs" />
     <Compile Include="Commands\AwardCommand.cs" />
     <Compile Include="Commands\StatusCommand.cs" />
@@ -126,6 +127,7 @@
     <Compile Include="Extensions\WebClientExtensions.cs" />
     <Compile Include="Models\Award.cs" />
     <Compile Include="Models\Brand.cs" />
+    <Compile Include="Models\INavigableContent.cs" />
     <Compile Include="Models\Note.cs" />
     <Compile Include="Models\Media.cs" />
     <Compile Include="Models\Journey.cs" />

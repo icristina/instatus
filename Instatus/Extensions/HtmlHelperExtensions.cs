@@ -92,6 +92,17 @@ namespace Instatus
             return new MvcHtmlString(markup);
         }
 
+        public static MvcHtmlString ExternalImageLink<T>(this HtmlHelper<T> html, string alternativeText, string contentPath, string uri)
+        {
+            var urlHelper = new UrlHelper(html.ViewContext.RequestContext);
+            var markup = string.Format("<a href=\"{0}\" rel=\"external\" target=\"_blank\"><img src=\"{1}\" alt=\"{2}\"/></a>",
+                            uri,
+                            urlHelper.Relative(contentPath),
+                            alternativeText);
+
+            return new MvcHtmlString(markup);
+        }
+
         public static MvcHtmlString ImageButton<T>(this HtmlHelper<T> html, string alternativeText, string contentPath, string type = "submit")
         {
             var urlHelper = new UrlHelper(html.ViewContext.RequestContext);
@@ -107,16 +118,20 @@ namespace Instatus
         {
             var urlHelper = new UrlHelper(html.ViewContext.RequestContext);
             var tag = new TagBuilder("img");
+
             tag.MergeAttribute("src", urlHelper.Relative(contentPath));
             tag.MergeAttribute("alt", text);
-            return new MvcHtmlString(tag.ToString());
+
+            return new MvcHtmlString(tag.ToString(TagRenderMode.SelfClosing));
         }
 
         public static MvcHtmlString SubmitButton<T>(this HtmlHelper<T> html, string text = null)
         {
             var tag = new TagBuilder("button");
+            
             tag.MergeAttribute("type", "submit");
             tag.SetInnerText(text ?? WebPhrase.Submit);
+            
             return new MvcHtmlString(tag.ToString());
         }
 
@@ -129,24 +144,30 @@ namespace Instatus
         public static MvcHtmlString ActiveText<T>(this HtmlHelper<T> html, string text)
         {
             var tag = new TagBuilder("b");
+
             tag.AddCssClass("current");
             tag.SetInnerText(text);
+            
             return new MvcHtmlString(tag.ToString());
         }
 
         public static MvcHtmlString Anchor<T>(this HtmlHelper<T> html, string text, string href)
         {
             var tag = new TagBuilder("a");
+            
             tag.MergeAttribute("href", href);
             tag.SetInnerText(text);
+            
             return new MvcHtmlString(tag.ToString());
         }
 
         public static MvcHtmlString FileInput<T>(this HtmlHelper<T> html, string name = "file")
         {
             var tag = new TagBuilder("input");
+            
             tag.MergeAttribute("type", "file");
             tag.MergeAttribute("name", name);
+            
             return new MvcHtmlString(tag.ToString());
         }
         

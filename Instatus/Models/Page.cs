@@ -28,7 +28,7 @@ namespace Instatus.Models
     [KnownType(typeof(Organization))]
     [KnownType(typeof(Job))]
     [KnownType(typeof(Achievement))]
-    public class Page : IUserGeneratedContent, IExtensionPoint
+    public class Page : IUserGeneratedContent, IExtensionPoint, INavigableContent
     {
         public int Id { get; set; }
         public string Locale { get; set; }

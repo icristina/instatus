@@ -43,7 +43,11 @@ namespace Instatus
 
         public static Application GetCurrentApplication(this IBaseDataContext context)
         {
-            return context.Pages.OfType<Application>().First();
+            return context                    
+                    .Pages
+                    .Include(a => a.Links)
+                    .OfType<Application>()
+                    .First();
         }
 
         public static Brand GetCurrentBrand(this IBaseDataContext context)
@@ -71,6 +75,8 @@ namespace Instatus
             var published = WebStatus.Published.ToString();
 
             return context.Pages.OfType<Offer>()
+                    .Include(o => o.Links)
+                    .Include(o => o.Dates)
                     .Where(o => o.Dates.Any(d => d.StartTime <= now && (!d.EndTime.HasValue || d.EndTime >= now)) && o.Status == published)
                     .FirstOrDefault();
         }

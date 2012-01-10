@@ -147,6 +147,16 @@ namespace Instatus
             return set;
         }
 
+        public static IEnumerable<T> ByAlphabetical<T>(this IEnumerable<T> content) where T : INavigableContent
+        {
+            return content.OrderBy(c => c.Name);
+        }
+
+        public static IEnumerable<T> ByPriority<T>(this IEnumerable<T> content) where T : INavigableContent
+        {
+            return content.OrderBy(c => c.Priority);
+        }
+
         public static IEnumerable<T> ByRecency<T>(this IEnumerable<T> content) where T : IUserGeneratedContent
         {
             return content.OrderByDescending(c => c.CreatedTime);
