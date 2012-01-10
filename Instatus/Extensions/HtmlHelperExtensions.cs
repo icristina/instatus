@@ -396,4 +396,18 @@ namespace Instatus
             return html.BeginForm(routeData.ActionName(), routeData.ControllerName(), FormMethod.Post, new { id = id }); 
         }
     }
+
+    internal static class HtmlBuilder
+    {
+        public static string Embed(string uri)
+        {
+            var tag = new TagBuilder("iframe");
+
+            tag.MergeAttribute("src", uri);
+            tag.MergeAttribute("frameborder", "0");
+            tag.MergeAttribute("allowfullscreen", null);
+
+            return tag.ToString();          
+        }
+    }
 }

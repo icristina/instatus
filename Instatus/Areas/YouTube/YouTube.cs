@@ -8,18 +8,29 @@ namespace Instatus.Areas.YouTube
 {
     public static class YouTube
     {
+        // http://stackoverflow.com/questions/6556772/parsing-youtube-url
+        public static string ParseYouTubeId(string videoUri)
+        {
+            var uri = new Uri(videoUri);
+
+            if(!uri.Query.IsEmpty()) {
+                var queryString = HttpUtility.ParseQueryString(uri.Query);
+                
+                // http://www.youtube.com/watch?v=Lp7E973zozc&feature=relmfu
+                if(queryString.AllKeys.Contains("v"))
+                    return queryString["v"];
+            }
+
+            // http://youtu.be/sGE4HMvDe-Q
+            // http://www.youtube.com/p/A0C3C1D163BE880A?hl=en_US&#038;fs=1 playlist
+            return uri.AbsolutePath.Substring(1);
+        }
+        
         public static string Embed(string videoUri)
         {
-            // from: http://youtu.be/Qjj7ZcDEIlw
-            // to: http://www.youtube.com/embed/Qjj7ZcDEIlw?wmode=opaque
-            var embedUri = string.Format("http://www.youtube.com/embed/{0}?wmode=opaque", videoUri.Substring(videoUri.LastIndexOf('/') + 1));
-            var tag = new TagBuilder("iframe");
-
-            tag.MergeAttribute("src", embedUri);
-            tag.MergeAttribute("frameborder", "0");
-            tag.MergeAttribute("allowfullscreen", null);
-            
-            return tag.ToString();            
+            var youTubeId = ParseYouTubeId(videoUri);
+            var embedUri = string.Format("http://www.youtube.com/embed/{0}?wmode=opaque", youTubeId);
+            return HtmlBuilder.Embed(embedUri);       
         }
     }
 }
