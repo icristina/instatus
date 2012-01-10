@@ -12,15 +12,12 @@ namespace Instatus.Areas.Microsite.Controllers
 {
     public class PageController : BaseController<BaseDataContext>
     {
-        public const string HomeSlug = "home";
-        
         public ActionResult Index()
         {
-            ViewData.Model = SiteMap.RootNode.ChildNodes;
-            return View("Sitemap");
+            return RedirectToAction("Details");
         }
         
-        public ActionResult Details(string slug = HomeSlug)
+        public ActionResult Details(string slug = RouteCollectionExtensions.HomeSlug)
         {
             return Page(slug);
         }
@@ -71,6 +68,13 @@ namespace Instatus.Areas.Microsite.Controllers
             };
 
             return PartialView();
+        }
+
+
+        public ActionResult Sitemap()
+        {
+            ViewData.Model = SiteMap.RootNode.ChildNodes;
+            return View();
         }
     }
 }

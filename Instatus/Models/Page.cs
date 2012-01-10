@@ -141,7 +141,7 @@ namespace Instatus.Models
         public SiteMapNode ToSiteMapNode(SiteMapProvider sitemap)
         {
             var routeData = new { slug = Slug };
-            var routeName = MicrositeAreaRegistration.PageRouteName;
+            var routeName = RouteCollectionExtensions.NavigableRouteName;
             var virtualPath = RouteTable.Routes.GetVirtualPath(null, routeName, new RouteValueDictionary(routeData)).VirtualPath;
             return new SiteMapNode(sitemap, Slug, virtualPath, Name);
         }
