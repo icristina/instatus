@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Instatus.Models;
 
 namespace Instatus
 {
@@ -24,7 +25,7 @@ namespace Instatus
             double dLon = (lon2 - lon1).ToRadian();
  
             double a = Math.Sin(dLat / 2) * Math.Sin(dLat / 2) +
-                Math.Cos(lat1.ToRadian()) *Math.Cos(lat2.ToRadian()) *
+                Math.Cos(lat1.ToRadian()) * Math.Cos(lat2.ToRadian()) *
                 Math.Sin(dLon / 2) * Math.Sin(dLon / 2);
 
             double c = 2 * Math.Asin(Math.Min(1, Math.Sqrt(a)));

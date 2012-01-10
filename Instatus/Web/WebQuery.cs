@@ -24,6 +24,26 @@ namespace Instatus.Web
         public DateTime? StartDate { get; set; }
         public string Filter { get; set; }    
 
+        // geo
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
+
+        public bool HasCoordinates
+        {
+            get
+            {
+                return !(Latitude == 0 && Longitude == 0);
+            }
+        }
+
+        public bool IsGeospacial
+        {
+            get
+            {
+                return Sort == WebSort.Nearby || HasCoordinates;
+            }
+        }
+
         // paging
         public int PageIndex { get; set; }
         public int PageSize { get; set; }
@@ -105,6 +125,8 @@ namespace Instatus.Web
                         .AddNonEmptyValue("term", Term)
                         .AddNonEmptyValue("filter", Filter)
                         .AddNonEmptyValue("category", Category)
+                        .AddNonEmptyValue("latitude", Latitude)
+                        .AddNonEmptyValue("longitude", Longitude)
                         .AddNonEmptyValue("kind", Kind)
                         .AddNonEmptyValue("locale", Locale)
                         .AddNonEmptyValue("expand", string.Join(",", Expand ?? new string[] { }));
