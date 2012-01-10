@@ -7,7 +7,6 @@ using System.Runtime.Serialization;
 
 namespace Instatus.Models
 {
-    [KnownType(typeof(Coupon))]
     public class Source
     {
         public int Id { get; set; }

@@ -346,6 +346,11 @@ namespace Instatus
             return new MvcHtmlString("&rarr;");
         }
 
+        public static MvcHtmlString Visible<T>(this HtmlHelper<T> html, bool condition)
+        {
+            return condition ? null : new MvcHtmlString("hidden"); // add hidden attribute based on condition
+        }
+
         public static MvcHtmlString Tags<T>(this HtmlHelper<T> html, IWebView webView, ICollection<Tag> tags, string seperator = "/")
         {
             if (tags.IsEmpty())

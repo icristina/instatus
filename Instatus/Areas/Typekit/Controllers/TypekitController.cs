@@ -14,7 +14,7 @@ namespace Instatus.Areas.Typekit.Controllers
     {
         public ActionResult RegisterScripts()
         {
-            ViewData.Model = Context.GetApplicationCredentials(WebProvider.Typekit);
+            ViewData.Model = Context.GetApplicationCredential(WebProvider.Typekit);
             return PartialView();
         }
     }

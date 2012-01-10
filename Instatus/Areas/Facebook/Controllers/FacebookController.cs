@@ -20,7 +20,7 @@ namespace Instatus.Areas.Facebook.Controllers
         
         public ActionResult RegisterScripts()
         {
-            ViewData.Model = Context.GetApplicationCredentials(WebProvider.Facebook);
+            ViewData.Model = Context.GetApplicationCredential(WebProvider.Facebook);
             return PartialView();
         }
 

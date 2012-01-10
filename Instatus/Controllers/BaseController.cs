@@ -114,12 +114,11 @@ namespace Instatus.Controllers
                 return HttpNotFound();
 
             if (Request.IsAjaxRequest())
-                return PartialView();
+            {
+                return viewName.IsEmpty() ? base.PartialView() : base.PartialView(viewName);
+            }
 
-            if (!viewName.IsEmpty())
-                return base.View(viewName);
-
-            return base.View();
+            return viewName.IsEmpty() ? base.View() : base.View(viewName);
         }
 
         [NonAction]

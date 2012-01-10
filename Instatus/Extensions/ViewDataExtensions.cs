@@ -11,5 +11,13 @@ namespace Instatus
         public static bool IsComplete(this ViewDataDictionary viewDataDictionary) {
             return viewDataDictionary.ModelState.IsValid && viewDataDictionary.Model != null;
         }
+
+        public static string ErrorMessage(this ModelStateDictionary modelStateDictionary)
+        {
+            return (from modelState in modelStateDictionary
+                    from error in modelState.Value.Errors
+                    where !string.IsNullOrEmpty(error.ErrorMessage)
+                    select error.ErrorMessage).FirstOrDefault(); // first error message
+        }
     }
 }

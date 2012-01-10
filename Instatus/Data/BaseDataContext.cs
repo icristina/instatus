@@ -13,7 +13,6 @@ using System.Web.Routing;
 using System.IO;
 using Instatus;
 using System.Data.Objects;
-using Instatus.Queries;
 using System.Net.Mail;
 using System.Text;
 using System.ServiceModel.Web;
@@ -22,8 +21,9 @@ using System.Linq.Expressions;
 namespace Instatus.Data
 {
     public class BaseDataContext : DbContext, IBaseDataContext, IContentProvider
-    {       
-        public static BaseDataContext Instance() {
+    {
+        public static BaseDataContext Instance()
+        {
             return DependencyResolver.Current.GetService<BaseDataContext>();
         }
 
@@ -53,104 +53,23 @@ namespace Instatus.Data
         public IDbSet<Log> Logs { get; set; }
         public IDbSet<Phrase> Phrases { get; set; }
 
-        public User GetUser(IPrincipal user)
-        {
-            return GetUser(user.Identity.Name);
-        }
-
-        public User GetUser(string userName)
-        {
-            if (userName.IsEmpty())
-                return null;
-            
-            if (userName.Contains("@"))
-            {
-                return Users
-                    .Include(u => u.Credentials)
-                    .Include(u => u.Roles)
-                    .FirstOrDefault(u => u.EmailAddress == userName);
-            }
-
-            var parts = userName.ToList(':');
-
-            if (parts.Count != 3 || parts[0] != "urn")
-                return null;
-
-            var provider = parts[1].AsEnum<WebProvider>();
-            var uri = parts[2];
-
-            return GetUser(provider, uri);
-        }
-
-        public User GetCurrentUser()
-        {
-            return GetUser(HttpContext.Current.User);
-        }
-
-        public User GetUser(WebProvider webProvider, string uri)
-        {
-            var provider = webProvider.ToString();
-            return Users
-                    .Include(u => u.Credentials)
-                    .Include(u => u.Roles)
-                    .FirstOrDefault(u => u.Credentials.Any(c => c.Provider == provider && c.Uri == uri));
-        }
-
-        public IQueryable<User> GetUsers(WebRole webRole)
-        {
-            var roleName = webRole.ToString();
-            return Users.Where(u => u.Roles.Any(r => r.Name == roleName));
-        }
-
-        public List<MailAddress> GetMailAddresses(WebRole webRole)
-        {
-            return GetUsers(webRole)
-                    .ToList()
-                    .Select(u => new MailAddress(u.EmailAddress, u.FullName))
-                    .ToList();
-        }
-
-        public Application GetCurrentApplication()
-        {
-            return Pages.OfType<Application>().First();
-        }
-
-        public Brand GetCurrentBrand()
-        {
-            var brand = Pages
-                    .Include(p => p.Links)
-                    .OfType<Brand>()
-                    .FirstOrDefault(); 
-            
-            if(brand != null)
-                return brand;
-
-            var application = GetCurrentApplication();
-
-            return new Brand()
-            {
-                Name = application.Name,
-                Picture = "~/Content/logo.png"
-            };
-        }
-
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<IncludeMetadataConvention>();
-            
+
             var page = modelBuilder.Entity<Page>();
-            
+
             page.HasMany(p => p.Pages).WithMany(p => p.Parents).Map(m => m.ToTable("RelatedPages"));
             page.HasOptional(p => p.Application).WithMany(a => a.Content);
 
             var activity = modelBuilder.Entity<Activity>();
 
             activity.HasMany(a => a.Activities).WithMany(a => a.Parents).Map(m => m.ToTable("RelatedActivities"));
-            
+
             var award = modelBuilder.Entity<Award>();
 
             award.HasOptional(a => a.Achievement).WithMany(a => a.Awards);
-            
+
             var message = modelBuilder.Entity<Message>();
 
             message.HasMany(m => m.Replies).WithOptional(m => m.InReplyTo);
@@ -163,209 +82,6 @@ namespace Instatus.Data
             user.HasMany(u => u.Credentials).WithOptional(c => c.User);
         }
 
-        public void SetStatus<T>(int id, WebStatus status) where T : class, IUserGeneratedContent
-        {
-            Set<T>().Find(id).Status = status.ToString();
-        }
-
-        public void MarkAsSpam<T>(int id) where T : class, IUserGeneratedContent
-        {
-            SetStatus<T>(id, WebStatus.Spam);
-        }
-
-        public void MarkAsPublished<T>(int id) where T : class, IUserGeneratedContent
-        {
-            SetStatus<T>(id, WebStatus.Published);
-        }
-
-        public void LogError(Exception error)
-        {
-            if (!LoggingEnabled)
-                return;
-
-            var message = new StringBuilder();
-            var uri = string.Empty;
-
-            message.AppendSection("Message", error.Message);
-            message.AppendSection("Stack Trace", error.StackTrace);
-
-            var innerException = error.InnerException;
-
-            if (innerException != null)
-            {
-                message.AppendSection("Inner Exception Message", innerException.Message);
-                message.AppendSection("Inner Exception Stack Trace", innerException.StackTrace);
-            }
-
-            if (HttpContext.Current.Request != null)
-            {
-                uri = HttpContext.Current.Request.RawUrl;
-
-                if (WebOperationContext.Current == null)
-                {
-                    message.AppendSection("Server Variables", HttpContext.Current.Request.ServerVariables["ALL_RAW"]);
-                }                
-            }
-
-            Logs.Add(new Log()
-            {
-                Verb = WebVerb.Error.ToString(),
-                Uri = uri,
-                Message = message.ToString()
-            });
-        }
-
-        public void LogChange(object resource, string action, string uri = null)
-        {
-            if (!LoggingEnabled)
-                return;
-            
-            var now = DateTime.UtcNow;
-            var user = GetCurrentUser();
-            var description = resource is string ? resource : string.Format("{0} {1}", ObjectContext.GetObjectType(resource.GetType()).Name, resource.GetKey());
-            var message = string.Format("{0} {1} for {2} at {3}",
-                user.FullName,
-                action,
-                description,
-                now);
-
-            Logs.Add(new Log()
-            {
-                Verb = WebVerb.Change.ToString(),
-                Uri = uri,
-                User = user,
-                Message = message,
-                CreatedTime = now
-            });
-        }
-
-        public void LogChange(object resource, string propertyName, object originalValue, object newValue, string uri = null)
-        {
-            var action = string.Format("changed {0} from {1} to {2}", propertyName, originalValue, newValue);
-            LogChange(resource, action, uri);
-        }
-
-        public IQueryable<Tag> GetTags(string taxonomyName)
-        {
-            return Tags.Where(t => t.Taxonomy.Name == taxonomyName).OrderBy(t => t.Name);
-        }
-
-        public RecordResult<Post> Post(string message)
-        {
-            return Post(new WebEntry()
-            {
-                Description = message
-            });
-        }
-
-        public RecordResult<Post> Post(WebEntry entry)
-        {
-            var user = GetCurrentUser();
-
-            if (!user.Can(WebVerb.Post))
-                return RecordResult<Post>.Failed;
-
-            var post = new Post()
-            {
-                Description = entry.Description,
-                User = user
-            };
-
-            Pages.Add(post);
-
-            return new RecordResult<Post>(post);
-        }
-
-        public RecordResult<Activity> Like<T>(int id) where T : class, IUserGeneratedContent
-        {
-            var user = GetCurrentUser();
-
-            if (!user.Can(WebVerb.Like))
-                return RecordResult<Activity>.Failed;
-
-            var userId = user.Id;
-            var like = WebVerb.Like.ToString();
-            var content = Set<T>().Find(id);
-
-            // Failure:
-            // Like own content
-            // Duplicate Like
-            if (content.User.Id == userId || content.Activities.Any(a => a.Verb == like && a.UserId == userId))
-                return RecordResult<Activity>.Failed;
-
-            var activity = new Activity()
-            {
-                Verb = like,
-                User = user
-            };
-
-            content.Activities.Add(activity);
-
-            return new RecordResult<Activity>(activity);
-        }
-
-        public RecordResult<Comment> Comment<T>(int id, string body) where T : class, IUserGeneratedContent
-        {
-            var user = GetCurrentUser();
-
-            if (!user.Can(WebVerb.Comment))
-                return RecordResult<Comment>.Failed;
-
-            var content = Set<T>().Find(id);
-
-            var comment = new Comment()
-            {
-                PageId = id,
-                User = user,
-                Body = body
-            };
-
-            Messages.Add(comment);
-
-            return new RecordResult<Comment>(comment);
-        }
-
-        public Credential GetApplicationCredentials(WebProvider webProvider, string environment = null)
-        {
-            if (environment == null)
-                environment = HttpContext.Current.ApplicationInstance.Setting<string>("Environment");
-
-            var provider = webProvider.ToString();
-
-            return Sources
-                    .OfType<Credential>()
-                    .FirstOrDefault(s => s.Provider == provider && s.Application != null && s.Environment == environment);
-        }
-
-        public Message GetApplicationMessage()
-        {
-            var published = WebStatus.Published.ToString();
-            return Messages
-                    .Where(m => m.Page is Application && m.Status == published)
-                    .OrderByDescending(m => m.CreatedTime)
-                    .FirstOrDefault();
-        }
-
-        public Offer GetLatestOffer()
-        {
-            var now = DateTime.UtcNow;
-            var published = WebStatus.Published.ToString();
-            
-            return Pages.OfType<Offer>()
-                    .Where(o => o.Dates.Any(d => d.StartTime <= now && (!d.EndTime.HasValue || d.EndTime >= now)) && o.Status == published)
-                    .FirstOrDefault();
-        }
-
-        public T GetLatestAwarded<T>(string achievementSlug) where T : Page
-        {
-            var award = Activities
-                        .OfType<Award>()
-                        .OrderByDescending(a => a.CreatedTime)
-                        .FirstOrDefault();
-
-            return award.IsEmpty() ? null : (T)award.Page;
-        }
-
         public IOrderedQueryable<Activity> GetActivities(WebQuery query)
         {
             return this
@@ -374,7 +90,7 @@ namespace Instatus.Data
                     .Expand(query.Expand)
                     .FilterActivities(query)
                     .SearchActivities(query)
-                    .SortActivities(query.Sort);            
+                    .SortActivities(query.Sort);
         }
 
         public IOrderedQueryable<T> GetActivities<T>(WebQuery query) where T : Activity
@@ -402,7 +118,8 @@ namespace Instatus.Data
             return ExpandNavigationProperties(page, set);
         }
 
-        public T GetPage<T>(string slug, WebSet set = null) where T : Page {
+        public T GetPage<T>(string slug, WebSet set = null) where T : Page
+        {
             var page = this.DisableProxiesAndLazyLoading()
                     .Pages
                     .Expand(DefaultPageExpansions)
@@ -467,69 +184,6 @@ namespace Instatus.Data
                     .Expand(query.Expand)
                     .FilterUsers(query)
                     .SortUsers(query.Sort);
-        }
-
-        public void LoadPages(Stream stream)
-        {
-            var pages = Generator.LoadXml<List<Page>>(stream);
-
-            foreach (var loaded in pages)
-            {
-                var page = GetPage<Page>(loaded.Slug);
-                
-                loaded.Tags = loaded.Tags.Synchronize(tag => Tags.FirstOrDefault(t => t.Name == tag.Name));
-
-                if (page == null)
-                {
-                    Pages.Add(loaded);
-                }
-                else
-                {
-                    page.Name = loaded.Name;
-                    page.Description = loaded.Description;
-                    page.Document = loaded.Document;
-                    page.Tags = loaded.Tags;
-                    page.Category = loaded.Category;
-
-                    if (!loaded.Links.IsEmpty())
-                    {
-                        this.MarkDeleted(page.Links);
-                        page.Links = loaded.Links;
-                    }   
-
-                    if (loaded.Priority != 0)
-                        page.Priority = page.Priority;
-
-                    if (loaded is Application)
-                    {
-                        var application = (Application)loaded;
-                        
-                        application.Taxonomies = application.Taxonomies.Synchronize(tn => Taxonomies.FirstOrDefault(t => t.Name == tn.Name));
-
-                        if (!application.Taxonomies.IsEmpty())
-                        {
-                            foreach (var taxonomy in application.Taxonomies)
-                            {
-                                taxonomy.Tags = taxonomy.Tags.Synchronize(tag => Tags.FirstOrDefault(t => t.Name == tag.Name));
-                            }
-                        }
-
-                        Entry((Application)page).Replace(a => a.Taxonomies, application.Taxonomies);
-                    }
-                }
-
-                SaveChanges();
-            }
-        }
-    }
-
-    internal static class DbEntryExtensions
-    {
-        public static void Replace<T, TNavigation>(this DbEntityEntry<T> entry, Expression<Func<T, ICollection<TNavigation>>> predicate, ICollection<TNavigation> navigation) where TNavigation : class where T : class
-        {
-            entry.Collection(predicate).Load();
-            entry.Collection(predicate).CurrentValue.Clear();
-            entry.Collection(predicate).CurrentValue = navigation;
         }
     }
 

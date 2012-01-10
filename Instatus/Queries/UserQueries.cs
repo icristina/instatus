@@ -8,7 +8,7 @@ using Instatus;
 using Instatus.Web;
 using Instatus.Data;
 
-namespace Instatus.Queries
+namespace Instatus
 {
     public static class UserQueries
     {
@@ -68,6 +68,16 @@ namespace Instatus.Queries
         {
             var credentials = user.Credentials(webProvider);
             return credentials != null ? credentials.AccessToken : string.Empty;
-        }        
+        }
+
+        public static T GetLatestAwarded<T>(this IBaseDataContext context, string achievementSlug) where T : Page
+        {
+            var award = context.Activities
+                        .OfType<Award>()
+                        .OrderByDescending(a => a.CreatedTime)
+                        .FirstOrDefault();
+
+            return award.IsEmpty() ? null : (T)award.Page;
+        }
     }
 }

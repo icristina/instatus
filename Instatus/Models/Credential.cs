@@ -31,8 +31,7 @@ namespace Instatus.Models
 
         public bool HasFeature(string name)
         {
-            var features = Features.ToList();
-            return features.Any(f => string.Equals(f, name, StringComparison.OrdinalIgnoreCase));
+            return Features.ToList().Any(f => f.Match(name));
         }
 
         public string ToUrn()
