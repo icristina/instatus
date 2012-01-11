@@ -18,7 +18,7 @@ namespace Instatus
 
         public static byte[] UploadValues(this WebClient webClient, string uri, object values)
         {
-            return webClient.UploadValues(uri, values.ToNameValueCollection());
+            return webClient.UploadValues(uri, values.ToNameValueCollection(false));
         }
 
         public static Stream DownloadStream(this WebClient webClient, string uri)

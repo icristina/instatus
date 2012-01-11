@@ -18,12 +18,17 @@ namespace Instatus
 {
     public static class ObjectExtensions
     {
-        public static NameValueCollection ToNameValueCollection(this object graph)
+        public static NameValueCollection ToNameValueCollection(this object graph, bool lowerCasePropertyNames = true)
         {
             var nameValueCollection = new NameValueCollection();
 
             foreach(var keyValuePair in new RouteValueDictionary(graph).Where(v => !v.Value.IsEmpty())) {
-                nameValueCollection.Add(keyValuePair.Key.ToLower(), keyValuePair.Value.ToString());
+                var key = keyValuePair.Key;
+
+                if (lowerCasePropertyNames)
+                    key = key.ToLower();
+                
+                nameValueCollection.Add(key, keyValuePair.Value.ToString());
             }
             
             return nameValueCollection;

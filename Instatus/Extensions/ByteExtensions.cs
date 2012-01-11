@@ -17,5 +17,10 @@ namespace Instatus
         public static Stream ToStream(this byte[] bytes) {
             return new MemoryStream(bytes);
         }
+
+        public static string ToStringValue(this byte[] bytes)
+        {
+            return System.Text.Encoding.Default.GetString(bytes);
+        }
     }
 }
