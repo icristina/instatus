@@ -308,6 +308,11 @@ namespace Instatus
             return Double.TryParse(text, out num);
         }
 
+        public static bool IsAbsoluteUri(this string text)
+        {
+            return Uri.IsWellFormedUriString(text, UriKind.Absolute);
+        }
+
         public static string ToHtmlEntites(this string text)
         {
             var sb = new StringBuilder();

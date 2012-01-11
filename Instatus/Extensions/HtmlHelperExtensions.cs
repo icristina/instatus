@@ -44,7 +44,7 @@ namespace Instatus
             var sb = new StringBuilder();
             foreach(var src in scripts) {
                 var tag = new TagBuilder("script");
-                tag.MergeAttribute("src", urlHelper.Relative("~/Scripts/" + src));
+                tag.MergeAttribute("src", src.IsAbsoluteUri() ? src : urlHelper.Relative("~/Scripts/" + src));
                 sb.AppendLine(tag.ToString());
             }
             return new MvcHtmlString(sb.ToString());
@@ -54,9 +54,14 @@ namespace Instatus
         {
             var urlHelper = new UrlHelper(html.ViewContext.RequestContext);
             var tag = new TagBuilder("link");
-            tag.MergeAttribute("href", urlHelper.Relative("~/Content/" + stylesheet));
+            tag.MergeAttribute("href", stylesheet.IsAbsoluteUri() ? stylesheet : urlHelper.Relative("~/Content/" + stylesheet));
             tag.MergeAttribute("rel", rel);
             return new MvcHtmlString(tag.ToString());
+        }
+
+        public static MvcHtmlString Viewport<T>(this HtmlHelper<T> html, string content = "initial-scale=1.0, width=device-width")
+        {
+            return new MvcHtmlString(HtmlBuilder.Meta("viewport", content));
         }
 
         public static MvcHtmlString ActionLinkOrText<T>(this HtmlHelper<T> html, bool condition, string linkText, string actionName, RouteValueDictionary routeValues)
@@ -408,6 +413,16 @@ namespace Instatus
             tag.MergeAttribute("allowfullscreen", null);
 
             return tag.ToString();          
+        }
+
+        public static string Meta(string name, string content)
+        {
+            var tag = new TagBuilder("meta");
+
+            tag.MergeAttribute("name", name);
+            tag.MergeAttribute("content", content);
+
+            return tag.ToString(TagRenderMode.SelfClosing);
         }
     }
 }

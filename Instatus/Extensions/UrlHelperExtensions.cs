@@ -16,7 +16,7 @@ namespace Instatus
     {
         public static string Relative(this UrlHelper urlHelper, string virtualPath)
         {
-            return urlHelper.Content(virtualPath).ToLower();
+            return virtualPath.IsAbsoluteUri() ? virtualPath : urlHelper.Content(virtualPath).ToLower();
         }
 
         public static string Absolute(this UrlHelper urlHelper, string virtualPath)

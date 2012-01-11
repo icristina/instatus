@@ -54,10 +54,7 @@ namespace Instatus.Web
 
         public static string Absolute(string virtualPath)
         {
-            if (Uri.IsWellFormedUriString(virtualPath, UriKind.Absolute))
-                return virtualPath;
-
-            return Absolute(BaseUri, virtualPath);
+            return virtualPath.IsAbsoluteUri() ? virtualPath : Absolute(BaseUri, virtualPath);
         }
 
         public static string ProtocolRelative(string absoluteUrl)

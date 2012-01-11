@@ -7,9 +7,10 @@ namespace Instatus.Web
 {
     public enum WebProvider
     {
-        Generated,
-        Imported,
-        Internal,
+        Internal, // Instatus database        
+        Generated, // mock data
+        Imported, // batch import
+        External, // custom crm or database
         Facebook,
         Google,
         Microsoft,
@@ -20,6 +21,8 @@ namespace Instatus.Web
         Amazon,
         Typekit,
         Omniture,
-        Adobe
+        Adobe,
+        Salesforce,
+        CampaignMonitor
     }
 }

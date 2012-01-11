@@ -47,9 +47,10 @@ namespace Instatus
 
         public const string HomeRouteName = "HomeRoute";
         public const string NavigableRouteName = "NavigableRoute";
+        public const string DefaultRouteName = "DefaultRoute";
         public const string HomeSlug = "home";
 
-        public static void MapHomeRoute(this RouteCollection routes, string controllerName = "Page", string actionName = "Details", string areaName = null)
+        public static void MapHomeRoute(this RouteCollection routes, string controllerName = "Home", string actionName = "Index", string areaName = null)
         {
             routes.MapRoute(
                 HomeRouteName,
@@ -59,6 +60,11 @@ namespace Instatus
                     controller = controllerName,
                     action = actionName,
                     area = areaName
+                },
+                new
+                {
+                    controller = controllerName,
+                    action = actionName
                 }
             );
         }
@@ -68,6 +74,21 @@ namespace Instatus
             routes.MapRouteLowercase(
                 NavigableRouteName, 
                 prefix + "/{slug}",
+                new
+                {
+                    controller = controllerName,
+                    action = actionName,
+                    slug = UrlParameter.Optional,
+                    area = areaName
+                }
+            );
+        }
+
+        public static void MapDefaultRoute(this RouteCollection routes, string controllerName = "Home", string actionName = "Index", string areaName = null)
+        {
+            routes.MapRouteLowercase(
+                DefaultRouteName,
+                "{controller}/{action}/{slug}",
                 new
                 {
                     controller = controllerName,
