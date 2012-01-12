@@ -84,6 +84,25 @@ namespace Instatus
             );
         }
 
+        public static void MapFixedNavigableRoute(this RouteCollection routes, string prefix, string[] slugs, string controllerName = "Page", string actionName = "Details", string areaName = null)
+        {
+            routes.MapRouteLowercase(
+                NavigableRouteName,
+                prefix + "/{slug}",
+                new
+                {
+                    controller = controllerName,
+                    action = actionName,
+                    slug = UrlParameter.Optional,
+                    area = areaName
+                },
+                new
+                {
+                    slug = string.Join("|", slugs)
+                }
+            );
+        }
+
         public static void MapDefaultRoute(this RouteCollection routes, string controllerName = "Home", string actionName = "Index", string areaName = null)
         {
             routes.MapRouteLowercase(
@@ -95,6 +114,26 @@ namespace Instatus
                     action = actionName,
                     slug = UrlParameter.Optional,
                     area = areaName
+                }
+            );
+        }
+
+        public static void MapSingleActionRoute(this RouteCollection routes, string controllerName, string actionName, string areaName = null)
+        {
+            routes.MapRouteLowercase(
+                string.Format("{0}-{1}", controllerName, actionName),
+                string.Format("{0}/{1}/{{slug}}", controllerName, actionName),
+                new
+                {
+                    controller = controllerName,
+                    action = actionName,
+                    slug = UrlParameter.Optional,
+                    area = areaName
+                },
+                new
+                {
+                    controller = controllerName,
+                    action = actionName
                 }
             );
         }

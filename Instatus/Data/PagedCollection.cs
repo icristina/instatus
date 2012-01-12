@@ -48,7 +48,7 @@ namespace Instatus.Data
             }
             else
             {
-                this.Append(list.OrderBy(a => true).Skip(pageIndex * pageSize).Take(pageSize).ToList());
+                this.Append(list.AsOrdered().Skip(pageIndex * pageSize).Take(pageSize).ToList());
                 
                 if(count)
                     TotalItemCount = list.Count();

@@ -11,7 +11,7 @@ namespace Instatus.Web
         public double Latitude { get; set; }
     }
     
-    public class WebEntry
+    public class WebEntry : IResource
     {
         public string Kind { get; set; }
         public string Uri { get; set; }
@@ -22,5 +22,23 @@ namespace Instatus.Web
         public string User { get; set; }
         public string Source { get; set; }
         public DateTime Timestamp { get; set; }
+    }
+
+    public interface IResource
+    {
+        string Uri { get; }
+    }
+
+    public class WebEntryComparer : IEqualityComparer<WebEntry>
+    {
+        public bool Equals(WebEntry x, WebEntry y)
+        {
+            return x.Uri.Match(y.Uri);
+        }
+
+        public int GetHashCode(WebEntry obj)
+        {
+            return obj.Uri.GetHashCode();
+        }
     }
 }

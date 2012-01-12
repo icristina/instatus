@@ -167,6 +167,16 @@ namespace Instatus
             return content.OrderBy(c => c.CreatedTime);
         }
 
+        public static IOrderedEnumerable<T> AsOrdered<T>(this IEnumerable<T> set)
+        {
+            return set.OrderBy(a => true);
+        }
+
+        public static IEnumerable<WebEntry> DistinctByUri(this IEnumerable<WebEntry> resources)
+        {
+            return resources.Distinct(new WebEntryComparer());
+        }
+
         public static List<string> ToStringList(this IEnumerable set)
         {
             var list = new List<string>();
