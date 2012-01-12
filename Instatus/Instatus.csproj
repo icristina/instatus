@@ -187,8 +187,7 @@
     <Compile Include="Services\RazorTemplateService.cs" />
     <Compile Include="Restrictions\LocaleRestriction.cs" />
     <Compile Include="Restrictions\RoleRestriction.cs" />
-    <Compile Include="Validation\ValidationMessages.cs" />
-    <Compile Include="Validation\ValidationPatterns.cs" />
+    <Compile Include="Data\ValidationPatterns.cs" />
     <Compile Include="Web\IWebCommand.cs" />
     <Compile Include="Web\SimpleSiteMapProvider.cs" />
     <Compile Include="Web\WebAction.cs" />

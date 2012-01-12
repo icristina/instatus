@@ -54,7 +54,7 @@ namespace Instatus.Web
             Mode,
             Tags,
             // phrases
-            ErrorMessage
+            ErrorDescription
         }        
         
         public enum FormatString
@@ -71,8 +71,19 @@ namespace Instatus.Web
             FromAToB,
             Flag,
             RemoveFlag,
-            PublishedDate
-        }        
+            PublishedDate,
+        }
+
+        public class ErrorMessage
+        {
+            public const string InvalidEmailAddress = "InvalidEmailAddress";
+            public const string RequiredEmailAddress = "RequiredEmailAddress";
+            public const string RequiredGivenName = "RequiredGivenName";
+            public const string RequiredFamilyName = "RequiredFamilyName";
+            public const string RequiredFullName = "RequiredFullName";
+            public const string DuplicateUser = "DuplicateUser";
+            public const string DuplicateSubscription = "DuplicateSubscription";
+        }
         
         public static string JustNow { get { return Localize(Common.JustNow, "just now"); } }
         public static string OneMinuteAgo { get { return Localize(Common.OneMinuteAgo, "one minute ago"); } }
@@ -105,7 +116,7 @@ namespace Instatus.Web
         public static string Actions { get { return Localize(Common.Actions, "Actions"); } }
         public static string All { get { return Localize(Common.All, "All"); } }
         public static string Error { get { return Localize(Common.Error, "Error"); } }
-        public static string ErrorMessage { get { return Localize(Common.ErrorMessage, "Sorry. An error occured on the page."); } }
+        public static string ErrorDescription { get { return Localize(Common.ErrorDescription, "Sorry. An error occured on the page."); } }
         public static string Filter { get { return Localize(Common.Filter, "Filter"); } }
         public static string Mode { get { return Localize(Common.Mode, "Mode"); } }
         public static string View { get { return Localize(Common.View, "View"); } }
@@ -126,6 +137,14 @@ namespace Instatus.Web
         public static string Flag(string name) { return Format(FormatString.Flag, "Mark as {0}", name); }
         public static string RemoveFlag(string name) { return Format(FormatString.RemoveFlag, "Unmark as {0}", name); }
         public static string PublishedDate(DateTime date) { return Format(FormatString.PublishedDate, "{0:dd/MM/yyyy}", date); }
+
+        public static string InvalidEmailAddress { get { return Localize(ErrorMessage.InvalidEmailAddress, "Please enter a valid email address"); } }
+        public static string RequiredEmailAddress { get { return Localize(ErrorMessage.RequiredEmailAddress, "Please enter a valid email address"); } }
+        public static string RequiredGivenName { get { return Localize(ErrorMessage.RequiredGivenName, "Please enter your first name"); } }
+        public static string RequiredFamilyName { get { return Localize(ErrorMessage.RequiredFamilyName, "Please enter your surname"); } }
+        public static string RequiredFullName { get { return Localize(ErrorMessage.RequiredFullName, "Please enter your name"); } }
+        public static string DuplicateSubscription { get { return Localize(ErrorMessage.DuplicateSubscription, "You have already subscribed"); } }
+        public static string DuplicateUser { get { return Localize(ErrorMessage.DuplicateUser, "You have already registered"); } }
 
         public static string Localize(object phraseOrKey, string defaultPhrase = null)
         {
