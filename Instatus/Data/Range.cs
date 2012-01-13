@@ -17,8 +17,21 @@ namespace Instatus.Data
         {
             // this.Start = start;
             // this.End = end;
-            this.Start = Range.Min(start, end); // auto-correct start and end order
-            this.End = Range.Max(start, end);
+
+            T calculatedEnd = end == null ? start : end; // correct null from nullable types
+
+            this.Start = Range.Min(start, calculatedEnd); // auto-correct start and end order
+            this.End = Range.Max(start, calculatedEnd);
+        }
+
+        public bool Contains(T other)
+        {
+            return this.Start.CompareTo(other) <= 0 && this.End.CompareTo(other) >= 0;
+        }
+
+        public bool Overlaps(Range<T> that)
+        {
+            return this.Contains(that.Start) || this.Contains(that.End);
         }
     }
 
@@ -26,18 +39,7 @@ namespace Instatus.Data
     {
         public static bool Overlap<T>(Range<T> left, Range<T> right) where T : IComparable<T>
         {
-            if (left.Start.CompareTo(left.Start) == 0)
-            {
-                return true;
-            }
-            else if (left.Start.CompareTo(right.Start) > 0)
-            {
-                return left.Start.CompareTo(right.End) <= 0;
-            }
-            else
-            {
-                return right.Start.CompareTo(left.End) <= 0;
-            }
+            return left.Overlaps(right);
         }
 
         // http://stackoverflow.com/questions/1906525/c-generic-math-functions-min-max-etc

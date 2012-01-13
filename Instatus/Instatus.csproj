@@ -114,6 +114,7 @@
     <Compile Include="Data\IPayload.cs" />
     <Compile Include="Data\IRepository.cs" />
     <Compile Include="Data\LimitedQueue.cs" />
+    <Compile Include="Data\Range.cs" />
     <Compile Include="Data\RecordResult.cs" />
     <Compile Include="Extensions\CacheExtensions.cs" />
     <Compile Include="Extensions\ControllerDescriptorExtensions.cs" />
@@ -137,6 +138,7 @@
     <Compile Include="Models\IUserGeneratedContent.cs" />
     <Compile Include="Models\Review.cs" />
     <Compile Include="Queries\ApplicationQueries.cs" />
+    <Compile Include="Queries\LinkQueries.cs" />
     <Compile Include="Queries\LoggingQueries.cs" />
     <Compile Include="Queries\MembershipQueries.cs" />
     <Compile Include="Queries\SocialQueries.cs" />

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Data.SqlTypes;
+using Instatus.Data;
 
 namespace Instatus.Models
 {
@@ -43,6 +44,11 @@ namespace Instatus.Models
             {
                 return new Schedule(SqlDateTime.MinValue.Value, SqlDateTime.MaxValue.Value);
             }
+        }
+
+        public Range<DateTime> ToRange()
+        {
+            return new Range<DateTime>(StartTime, EndTime.Value);
         }
     }
 }
