@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Instatus.Web;
+using Instatus.Data;
 
 namespace Instatus
 {
@@ -122,24 +123,15 @@ namespace Instatus
         }
 
         // http://geekswithblogs.net/mnf/archive/2008/02/21/min-and-max-methods-for-datetime.aspx
+        // http://stackoverflow.com/questions/1906525/c-generic-math-functions-min-max-etc
         public static DateTime Min(this DateTime t1, DateTime t2)
         {
-            if (DateTime.Compare(t1, t2) > 0)
-            {
-                return t2;
-            }
-
-            return t1;
+            return Range.Min(t1, t2);
         }
 
         public static DateTime Max(this DateTime t1, DateTime t2)
         {
-            if (DateTime.Compare(t1, t2) < 0)
-            {
-                return t2;
-            }
-
-            return t1;
+            return Range.Max(t1, t2);
         }
     }
 }
