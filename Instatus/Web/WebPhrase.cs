@@ -83,6 +83,7 @@ namespace Instatus.Web
             public const string RequiredFullName = "RequiredFullName";
             public const string DuplicateUser = "DuplicateUser";
             public const string DuplicateSubscription = "DuplicateSubscription";
+            public const string VerificationTokenRejected = "VerificationTokenRejected";
         }
         
         public static string JustNow { get { return Localize(Common.JustNow, "just now"); } }
@@ -145,6 +146,7 @@ namespace Instatus.Web
         public static string RequiredFullName { get { return Localize(ErrorMessage.RequiredFullName, "Please enter your name"); } }
         public static string DuplicateSubscription { get { return Localize(ErrorMessage.DuplicateSubscription, "You have already subscribed"); } }
         public static string DuplicateUser { get { return Localize(ErrorMessage.DuplicateUser, "You have already registered"); } }
+        public static string VerificationTokenRejected { get { return Localize(ErrorMessage.VerificationTokenRejected, "The verification token has been rejected."); } }
 
         public static string Localize(object phraseOrKey, string defaultPhrase = null)
         {

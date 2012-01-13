@@ -23,6 +23,11 @@ namespace Instatus
         {
             return WebPath.Absolute(virtualPath);
         }
+
+        public static string Absolute(this UrlHelper urlHelper, string actionName, string controllerName, object routeValues)
+        {
+            return WebPath.Absolute(urlHelper.Action(actionName, controllerName, routeValues));
+        }
         
         public static string Resize(this UrlHelper urlHelper, WebSize size, string virtualPath)
         {

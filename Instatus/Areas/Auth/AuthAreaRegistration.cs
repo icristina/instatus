@@ -1,9 +1,12 @@
 ﻿using System.Web.Mvc;
+using Instatus;
 
 namespace Instatus.Areas.Auth
 {
     public class AuthAreaRegistration : AreaRegistration
     {
+        public const string VerificationRouteName = "VerificationRouteName";
+        
         public override string AreaName
         {
             get
@@ -13,7 +16,16 @@ namespace Instatus.Areas.Auth
         }
 
         public override void RegisterArea(AreaRegistrationContext context)
-        {                      
+        {
+            context.Routes.MapRouteLowercase(
+                VerificationRouteName,
+                "Auth/Verification/{id}/{token}",
+                new { 
+                    action = "Index", 
+                    controller = "Verification"
+                }
+            );            
+            
             context.MapRoute(
                 "Auth_default",
                 "Auth/{controller}/{action}/{id}",

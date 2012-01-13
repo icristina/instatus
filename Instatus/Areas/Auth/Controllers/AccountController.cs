@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using Instatus.Controllers;
+using Instatus.Data;
+using Instatus.Web;
 
 namespace Instatus.Areas.Auth.Controllers
 {
@@ -25,6 +27,26 @@ namespace Instatus.Areas.Auth.Controllers
 
         public ActionResult Success()
         {
+            return View();
+        }
+
+        public ActionResult Verification(int id, string token)
+        {
+            using (var db = BaseDataContext.BaseInstance())
+            {
+                var user = db.Users.Find(id);
+
+                if (user.Password.Match(token))
+                {
+                    user.Status = WebStatus.Approved.ToString();
+                    db.SaveChanges();
+                }
+                else
+                {
+                    ModelState.AddModelError("Token", WebPhrase.VerificationTokenRejected);
+                }
+            }
+
             return View();
         }
 
