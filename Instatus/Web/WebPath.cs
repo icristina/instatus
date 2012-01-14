@@ -29,17 +29,29 @@ namespace Instatus.Web
                     var environment = ConfigurationManager.AppSettings.Value<string>("Environment");
                     using (var db = BaseDataContext.Instance())
                     {
-                        var domain = db.Domains.FirstOrDefault(d => d.Environment == environment);
-
-                        if (!domain.IsEmpty())
-                            baseUri = new Uri(domain.Uri);
-                        else if (HttpContext.Current.Request != null)
+                        if (db == null && HttpContext.Current.Request != null)
+                        {
                             baseUri = new Uri(HttpContext.Current.Request.BaseUri());
+                        }
+                        else
+                        {
+                            var domain = db.Domains.FirstOrDefault(d => d.Environment == environment);
+
+                            if (!domain.IsEmpty())
+                                baseUri = new Uri(domain.Uri);
+                            else if (HttpContext.Current.Request != null)
+                                baseUri = new Uri(HttpContext.Current.Request.BaseUri());
+                        }
                     }
                 }
 
                 return baseUri;
             }
+        }
+
+        public static string Server(string virtualPath)
+        {
+            return HttpContext.Current.Server.MapPath(virtualPath);
         }
 
         public static string Absolute(Uri baseUri, string virtualPath)

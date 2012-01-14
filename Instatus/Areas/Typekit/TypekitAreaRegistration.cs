@@ -16,7 +16,7 @@ namespace Instatus.Areas.Typekit
 
         public override void RegisterArea(AreaRegistrationContext context)
         {
-            context.MapRoute(
+            context.MapRouteLowercase(
                 "Typekit_default",
                 "Typekit/{controller}/{action}/{id}",
                 new { action = "Index", id = UrlParameter.Optional }

@@ -19,7 +19,7 @@ namespace Instatus.Areas.Microsite
             context.Routes.MapHomeRoute(areaName: AreaName);
             context.Routes.MapNavigableRoute(RoutePrefix, areaName: AreaName);
 
-            context.MapRoute(
+            context.MapRouteLowercase(
                 "Microsite_Default",
                 "Microsite/{controller}/{action}/{id}",
                 new { controller = "Page", action = "Index", id = UrlParameter.Optional }

@@ -9,6 +9,11 @@ using System.Web.Security;
 using Instatus.Data;
 using System.Dynamic;
 using Instatus.Web;
+using System.Web.Routing;
+using System.Web.Mvc;
+using Instatus.Areas.Auth;
+using Instatus.Services;
+using System.Net.Mail;
 
 namespace Instatus.Models
 {
@@ -94,6 +99,26 @@ namespace Instatus.Models
         public static User From(object entry)
         {
             return entry is IUserGeneratedContent ? ((IUserGeneratedContent)entry).User : (User)entry;
+        }
+
+        public string GenerateVerificationUri(UrlHelper urlHelper)
+        {
+            return urlHelper.Absolute(AuthAreaRegistration.VerificationRouteName, new { id = Id, token = Password });
+        }
+
+        public void GenerateVerificationNotification()
+        {
+            if (Status.AsEnum<WebStatus>() == WebStatus.PendingApproval)
+            {
+                var templateService = DependencyResolver.Current.GetService<ITemplateService>();
+                var from = string.Format("noreply@{1}", WebPath.BaseUri);
+                var mailMessage = new MailMessage(from, EmailAddress)
+                {
+                    Body = templateService.Process("Notification", this),
+                    IsBodyHtml = true
+                };
+                mailMessage.Send();
+            }
         }
     }
 }

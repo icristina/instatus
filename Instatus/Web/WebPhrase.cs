@@ -27,6 +27,8 @@ namespace Instatus.Web
             Latest,
             Homepage,
             Error,
+            Confirmation,
+            Complete,
             // actions
             LoadMore,
             ReadMore,
@@ -124,6 +126,8 @@ namespace Instatus.Web
         public static string Play { get { return Localize(Common.Play, "Play"); } }
         public static string Tags { get { return Localize(Common.Tags, "Tags"); } }
         public static string Subscribe { get { return Localize(Common.Subscribe, "Subscribe"); } }
+        public static string Confirmation { get { return Localize(Common.Confirmation, "Confirmation"); } }
+        public static string Complete { get { return Localize(Common.Complete, "Confirmation"); } }
 
         public static string MinutesAgo(double minutes) { return Format(FormatString.MinutesAgo, "{0} minutes ago", minutes); }
         public static string HoursAgo(double hours) { return Format(FormatString.HoursAgo, "{0} hours ago", hours); }

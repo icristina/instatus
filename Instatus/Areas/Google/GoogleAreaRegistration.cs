@@ -16,7 +16,7 @@ namespace Instatus.Areas.Google
 
         public override void RegisterArea(AreaRegistrationContext context)
         {
-            context.MapRoute(
+            context.MapRouteLowercase(
                 "Google_default",
                 "Google/{controller}/{action}/{id}",
                 new { action = "Index", id = UrlParameter.Optional }

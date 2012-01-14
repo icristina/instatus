@@ -17,7 +17,7 @@ namespace Instatus.Areas.Wordpress
         {
             ValueProviderFactories.Factories.Add(new XmlRpcValueProviderFactory());
             
-            context.MapRoute(
+            context.MapRouteLowercase(
                 "Wordpress",
                 "xmlrpc.php",
                 new { controller = "WordpressApi" },

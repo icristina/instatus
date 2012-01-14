@@ -28,7 +28,12 @@ namespace Instatus
         {
             return WebPath.Absolute(urlHelper.Action(actionName, controllerName, routeValues));
         }
-        
+
+        public static string Absolute(this UrlHelper urlHelper, string routeName, object routeValues)
+        {
+            return WebPath.Absolute(urlHelper.RouteUrl(routeName, routeValues));
+        }
+
         public static string Resize(this UrlHelper urlHelper, WebSize size, string virtualPath)
         {
             return urlHelper.Content(WebPath.Resize(size, virtualPath));

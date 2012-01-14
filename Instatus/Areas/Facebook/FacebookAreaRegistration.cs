@@ -18,13 +18,13 @@ namespace Instatus.Areas.Facebook
         {
             GlobalFilters.Filters.Add(new FacebookAttribute());
             
-            context.MapRoute(
+            context.MapRouteLowercase(
                 "Facebook_channel",
                 "channel.html",
                 new { controller = "Facebook", action = "Channel" }
             );            
             
-            context.MapRoute(
+            context.MapRouteLowercase(
                 "Facebook_default",
                 "Facebook/{controller}/{action}/{id}",
                 new { controller = "Tab", action = "Index", id = UrlParameter.Optional }

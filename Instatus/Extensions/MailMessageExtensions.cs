@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Net.Mail;
+using Instatus.Web;
 
 namespace Instatus
 {
@@ -15,7 +16,7 @@ namespace Instatus
             if (HttpContext.Current.ApplicationInstance.IsDebug())
             {
                 smtpClient.DeliveryMethod = SmtpDeliveryMethod.SpecifiedPickupDirectory;
-                smtpClient.PickupDirectoryLocation = VirtualPathUtility.ToAbsolute("~/App_Data/");
+                smtpClient.PickupDirectoryLocation = WebPath.Server("~/App_Data/");
             }
 
             smtpClient.Send(message);

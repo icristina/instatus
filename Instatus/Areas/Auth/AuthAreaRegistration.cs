@@ -17,7 +17,7 @@ namespace Instatus.Areas.Auth
 
         public override void RegisterArea(AreaRegistrationContext context)
         {
-            context.Routes.MapRouteLowercase(
+            context.MapRouteLowercase(
                 VerificationRouteName,
                 "Auth/Verification/{id}/{token}",
                 new { 
@@ -26,7 +26,7 @@ namespace Instatus.Areas.Auth
                 }
             );            
             
-            context.MapRoute(
+            context.MapRouteLowercase(
                 "Auth_default",
                 "Auth/{controller}/{action}/{id}",
                 new { action = "Index", id = UrlParameter.Optional }

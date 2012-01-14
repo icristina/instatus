@@ -14,7 +14,7 @@ namespace Instatus.Areas.Developer
 
         public override void RegisterArea(AreaRegistrationContext context)
         {                      
-            context.MapRoute(
+            context.MapRouteLowercase(
                 "Developer_default",
                 "Developer/{controller}/{action}/{id}",
                 new { action = "Index", id = UrlParameter.Optional }

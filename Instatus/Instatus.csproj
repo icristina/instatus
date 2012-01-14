@@ -437,6 +437,8 @@
     <EmbeddedResource Include="Views\Shared\Users.cshtml" />
     <EmbeddedResource Include="Views\Shared\Subscribe.cshtml" />
     <EmbeddedResource Include="Views\Shared\List.cshtml" />
+    <EmbeddedResource Include="Views\Shared\Verification.cshtml" />
+    <EmbeddedResource Include="Views\Shared\Notification.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

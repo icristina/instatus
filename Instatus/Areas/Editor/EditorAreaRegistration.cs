@@ -14,7 +14,7 @@ namespace Instatus.Areas.Editor
 
         public override void RegisterArea(AreaRegistrationContext context)
         {                      
-            context.MapRoute(
+            context.MapRouteLowercase(
                 "Editor_default",
                 "Editor/{controller}/{action}/{id}",
                 new { action = "Index", id = UrlParameter.Optional }

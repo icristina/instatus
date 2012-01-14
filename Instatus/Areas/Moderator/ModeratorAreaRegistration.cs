@@ -14,7 +14,7 @@ namespace Instatus.Areas.Moderator
 
         public override void RegisterArea(AreaRegistrationContext context)
         {                      
-            context.MapRoute(
+            context.MapRouteLowercase(
                 "Moderator_default",
                 "Moderator/{controller}/{action}/{id}",
                 new { action = "Index", id = UrlParameter.Optional }
