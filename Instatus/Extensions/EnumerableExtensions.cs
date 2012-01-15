@@ -35,6 +35,11 @@ namespace Instatus
             return result;
         }
 
+        public static IEnumerable<T> Randomize<T>(this IEnumerable<T> source)
+        {
+            return source.OrderBy(i => Guid.NewGuid());
+        }
+
         public static void ForFirst<T>(this IQueryable<T> list, Action<T> action)
         {
             if (list.Count() > 0)
