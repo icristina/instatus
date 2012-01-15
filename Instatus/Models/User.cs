@@ -42,8 +42,31 @@ namespace Instatus.Models
             }
         }
 
+        private string password;
+
         [IgnoreDataMember]
-        public string Password { get; set; }
+        public string Password
+        {
+            get
+            {
+                return password;
+            }
+            set
+            {
+                if (value.IsEmpty())
+                {
+                    password = Generator.Password().ToEncrypted();
+                } 
+                else if (!value.IsEncrypted())
+                {
+                    password = value.ToEncrypted();
+                }
+                else
+                {
+                    password = value;
+                }
+            }
+        }
 
         public Name Name { get; set; }
         public string FullName { get; set; }
@@ -83,11 +106,11 @@ namespace Instatus.Models
 
         public User()
         {
-            Password = Generator.Password().ToEncrypted();
+            Password = Generator.Password();
             CreatedTime = DateTime.UtcNow;
             Name = new Name();
             Extensions = new ExpandoObject();
-            Status = WebStatus.Approved.ToString();
+            Status = WebStatus.PendingApproval.ToString(); // PendingApproval, not auto Approved
         }
 
         public User(string fullName)
@@ -101,17 +124,37 @@ namespace Instatus.Models
             return entry is IUserGeneratedContent ? ((IUserGeneratedContent)entry).User : (User)entry;
         }
 
-        public string GenerateVerificationUri(UrlHelper urlHelper)
+        public string GetVerificationToken()
         {
-            return urlHelper.Absolute(AuthAreaRegistration.VerificationRouteName, new { id = Id, token = Password });
+            return Password.Substring(0, 10);
         }
 
-        public void GenerateVerificationNotification()
+        public bool ValidateVerificationToken(string token)
         {
-            if (Status.AsEnum<WebStatus>() == WebStatus.PendingApproval)
+            if (GetVerificationToken().Match(token))
+            {
+                if (Status.AsEnum<WebStatus>() == WebStatus.PendingApproval)
+                {
+                    Status = WebStatus.Approved.ToString();
+                }
+                
+                return true;
+            }
+            
+            return false;
+        }
+
+        public string GenerateVerificationUri(UrlHelper urlHelper)
+        {
+            return urlHelper.Absolute(AuthAreaRegistration.VerificationRouteName, new { id = Id, token = GetVerificationToken() });
+        }
+
+        public void GenerateVerificationEmail()
+        {
+            if (Status.AsEnum<WebStatus>() == WebStatus.PendingApproval && !EmailAddress.IsEmpty())
             {
                 var templateService = DependencyResolver.Current.GetService<ITemplateService>();
-                var from = string.Format("noreply@{1}", WebPath.BaseUri);
+                var from = string.Format("noreply@{0}", WebPath.BaseUri.Host);
                 var mailMessage = new MailMessage(from, EmailAddress)
                 {
                     Body = templateService.Process("Notification", this),

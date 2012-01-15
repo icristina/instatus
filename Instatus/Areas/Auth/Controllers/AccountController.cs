@@ -36,9 +36,8 @@ namespace Instatus.Areas.Auth.Controllers
             {
                 var user = db.Users.Find(id);
 
-                if (user.Password.Match(token))
+                if (user.ValidateVerificationToken(token))
                 {
-                    user.Status = WebStatus.Approved.ToString();
                     db.SaveChanges();
                 }
                 else

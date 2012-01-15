@@ -132,6 +132,17 @@ namespace Instatus
             return text.RegexReplace(@"[^a-z0-9\-\s]");
         }
 
+        public static string FindHtmlElement(this string text, string elementName)
+        {
+            var pattern = string.Format("<{0}[^<>]*>([^<>]+)</{0}>", elementName);
+            return Regex.IsMatch(text, pattern) ? Regex.Match(text, pattern).Groups[1].Value.Trim() : string.Empty;
+        }
+
+        public static bool IsEncrypted(this string text)
+        {
+            return !text.IsEmpty() && Regex.IsMatch(text, "^[A-Z0-9]{64}$"); // sha256 64 characters alphanumeric
+        }
+
         public static string ToEncrypted(this string text)
         {           
             return Crypto.Hash(text);
