@@ -155,9 +155,12 @@ namespace Instatus.Models
             {
                 var templateService = DependencyResolver.Current.GetService<ITemplateService>();
                 var from = string.Format("noreply@{0}", WebPath.BaseUri.Host);
+                var body = templateService.Process("Notification", this);
+                var subject = body.FindHtmlElement("title");
                 var mailMessage = new MailMessage(from, EmailAddress)
                 {
-                    Body = templateService.Process("Notification", this),
+                    Subject = subject,
+                    Body = body,
                     IsBodyHtml = true
                 };
                 mailMessage.Send();
