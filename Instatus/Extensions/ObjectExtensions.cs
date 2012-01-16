@@ -104,9 +104,10 @@ namespace Instatus
             return graph.IsEmpty() ? string.Empty : graph.ToString();
         }
 
-        public static bool AsBoolean(this object graph)
-        {           
-            return bool.Parse(graph.AsString());
+        public static bool AsBoolean(this object graph, bool defaultValue = false)
+        {
+            bool result;
+            return bool.TryParse(graph.AsString(), out result) ? result : defaultValue;
         }
 
         public static int AsInteger(this object graph)

@@ -11,13 +11,25 @@ namespace Instatus
 {
     public static class ApplicationQueries
     {
-        public static Credential GetApplicationCredential(this IBaseDataContext context, WebProvider webProvider, string environment = null)
+        public static Domain GetApplicationDomain(this IBaseDataContext context)
         {
-            if (environment == null)
-                environment = HttpContext.Current.ApplicationInstance.Setting<string>("Environment");
+            var environment = BaseHttpApplication.GetEnvironment().ToString();
+            var all = WebEnvironment.All.ToString();
 
+            return context
+                    .Domains
+                    .Where(d => d.Application != null
+                        && (d.Environment == environment || d.Environment == all))
+                    .OrderByDescending(d => d.IsCanonical) // descending to ensure true first, false second
+                    .FirstOrDefault();
+        }        
+        
+        public static Credential GetApplicationCredential(this IBaseDataContext context, WebProvider webProvider)
+        {
             var provider = webProvider.ToString();
-            var all = "All";
+
+            var environment = BaseHttpApplication.GetEnvironment().ToString();
+            var all = WebEnvironment.All.ToString();
 
             return context.Sources
                     .OfType<Credential>()

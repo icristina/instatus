@@ -8,6 +8,11 @@ namespace Instatus.Web
 {
     public class BaseHttpApplication : HttpApplication
     {
+        public static WebEnvironment GetEnvironment()
+        {
+            return HttpContext.Current.ApplicationInstance.Setting<string>("Environment").AsEnum<WebEnvironment>();
+        }
+        
         public bool IsDebug
         {
             get

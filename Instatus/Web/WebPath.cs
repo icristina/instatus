@@ -26,7 +26,6 @@ namespace Instatus.Web
             {
                 if (baseUri.IsEmpty())
                 {
-                    var environment = ConfigurationManager.AppSettings.Value<string>("Environment");
                     using (var db = BaseDataContext.Instance())
                     {
                         if (db == null && HttpContext.Current.Request != null)
@@ -35,12 +34,16 @@ namespace Instatus.Web
                         }
                         else
                         {
-                            var domain = db.Domains.FirstOrDefault(d => d.Environment == environment);
+                            var domain = db.GetApplicationDomain();
 
                             if (!domain.IsEmpty())
-                                baseUri = new Uri(domain.Uri);
+                            {
+                                baseUri = domain.Uri.StartsWith("http://") ? new Uri(domain.Uri) : new Uri("http://" + domain.Uri);
+                            }
                             else if (HttpContext.Current.Request != null)
+                            {
                                 baseUri = new Uri(HttpContext.Current.Request.BaseUri());
+                            }
                         }
                     }
                 }

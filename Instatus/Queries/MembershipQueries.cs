@@ -26,6 +26,8 @@ namespace Instatus
 
             if (userName.Contains("@"))
             {
+                userName = userName.ToLower(); // normalize email address
+
                 return context.Users
                     .Include(u => u.Credentials)
                     .Include(u => u.Roles)

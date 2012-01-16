@@ -138,13 +138,7 @@ namespace Instatus.Areas.Facebook
                 {
                     using (var db = BaseDataContext.Instance())
                     {
-                        var facebook = WebProvider.Facebook.ToString();
-                        var environment = ConfigurationManager.AppSettings.Value<string>("Environment");
-
-                        credential = db.Pages.OfType<Application>().First()
-                                            .Credentials
-                                            .Where(c => c.Provider == facebook && c.Environment == environment)
-                                            .FirstOrDefault();
+                        credential = db.GetApplicationCredential(WebProvider.Facebook);
                     }
                 }
 

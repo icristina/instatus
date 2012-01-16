@@ -24,10 +24,11 @@ namespace Instatus.Models
 
         public Domain() { }
 
-        public Domain(string uri, WebEnvironment environment = WebEnvironment.Production)
+        public Domain(string uri, WebEnvironment environment = WebEnvironment.Production, bool isCanonical = false)
         {
             Uri = uri;
             Environment = environment.ToString();
+            IsCanonical = isCanonical;
         }
     }
 }

@@ -32,14 +32,40 @@ namespace Instatus.Web
             }
         }
 
+        private static List<Domain> domains;
+
+        private List<Domain> Domains
+        {
+            get
+            {
+                if (domains == null)
+                {
+                    using (var db = BaseDataContext.BaseInstance())
+                    {
+                        var environment = BaseHttpApplication.GetEnvironment().ToString();
+                        var all = WebEnvironment.All.ToString();
+
+                        domains = db.Domains
+                            .OrderBy(d => d.IsCanonical)
+                            .Where(d => d.Application != null && (d.Environment == environment || d.Environment == all))
+                            .ToList();
+                    }
+                }
+
+                return domains;
+            }
+        }
+
         public void Init(HttpApplication context)
         {
             PubSub.Provider.Subscribe<ApplicationReset>(a =>
             {
                 links = null;
+                domains = null;
             });            
             
             context.BeginRequest += new EventHandler(this.Alternative);
+            context.BeginRequest += new EventHandler(this.Canonical);
         }
 
         private void Alternative(Object source, EventArgs e)
@@ -56,6 +82,20 @@ namespace Instatus.Web
                 {
                     HttpContext.Current.Response.Redirect(link.Location, true); // temporary redirect
                 }
+            }
+        }
+
+        private void Canonical(Object source, EventArgs e)
+        {
+            var url = HttpContext.Current.Request.Url;
+            var hostAndPort = url.Authority;
+            
+            if(Domains.Any(d => d.Uri.Match(hostAndPort) && d.IsCanonical == false) && Domains.Any(d => d.IsCanonical)) {
+                var canonicalDomain = Domains.First(d => d.IsCanonical);
+                var baseUri = new Uri("http://" + canonicalDomain.Uri);
+                var canonicalUri = new Uri(baseUri, url.PathAndQuery);
+
+                HttpContext.Current.Response.RedirectPermanent(canonicalUri.ToString(), true);
             }
         }
     }

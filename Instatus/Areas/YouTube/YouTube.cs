@@ -29,7 +29,7 @@ namespace Instatus.Areas.YouTube
         public static string Embed(string videoUri)
         {
             var youTubeId = ParseYouTubeId(videoUri);
-            var embedUri = string.Format("http://www.youtube.com/embed/{0}?wmode=opaque", youTubeId);
+            var embedUri = string.Format("https://www.youtube.com/embed/{0}?wmode=opaque&rel=0", youTubeId);  // rel=0 removes related videos end frame, https enables embed on https sites
             return HtmlBuilder.Embed(embedUri);       
         }
     }

@@ -19,7 +19,7 @@ namespace Instatus.Web
         
         public static void Start()
         {
-            if (started || !ConfigurationManager.AppSettings["Bootstrap"].AsBoolean())
+            if (started || !ConfigurationManager.AppSettings["Bootstrap"].AsBoolean(true))
             {
                 return;
             }
