@@ -27,6 +27,7 @@ namespace Instatus.Models
             Provider = provider.ToString();
             Uri = uri.ToString();
             AccessToken = accessToken;
+            Environment = WebEnvironment.All.ToString();
         }
 
         public bool HasFeature(string name)

@@ -15,7 +15,7 @@ namespace Instatus.Areas.Google.Controllers
         public ActionResult RegisterScripts()
         {
             ViewData.Model = Context.GetApplicationCredential(WebProvider.Google);
-            return PartialView();
+            return PartialViewOrEmpty();
         }
     }
 }

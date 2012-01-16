@@ -17,10 +17,12 @@ namespace Instatus
                 environment = HttpContext.Current.ApplicationInstance.Setting<string>("Environment");
 
             var provider = webProvider.ToString();
+            var all = "All";
 
             return context.Sources
                     .OfType<Credential>()
-                    .FirstOrDefault(s => s.Provider == provider && s.Application != null && s.Environment == environment);
+                    .FirstOrDefault(s => s.Provider == provider && s.Application != null 
+                        && (s.Environment == environment || s.Environment == all));
         }
 
         public static Message GetApplicationMessage(this IBaseDataContext context)

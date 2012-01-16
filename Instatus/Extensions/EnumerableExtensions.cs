@@ -22,10 +22,12 @@ namespace Instatus
             return list.ElementAt(random.Next(0, list.Count()));
         }
 
-        public static ICollection<T> Random<T>(this IEnumerable<T> list, int min, int max)
+        public static IEnumerable<T> Random<T>(this IEnumerable<T> list, int count) // fixed length, random result
         {
+            if (list.Count() <= count)
+                return list.Randomize();
+
             var result = new List<T>();
-            var count = random.Next(min, Math.Min(max, list.Count()));
 
             for (var i = 0; i < count; i++)
             {
@@ -33,6 +35,12 @@ namespace Instatus
             }
 
             return result;
+        }
+
+        public static IEnumerable<T> Random<T>(this IEnumerable<T> list, int min, int max) // random length, random result
+        {
+            var count = random.Next(min, Math.Min(max, list.Count()));
+            return list.Random(count);
         }
 
         public static IEnumerable<T> Randomize<T>(this IEnumerable<T> source)

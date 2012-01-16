@@ -7,6 +7,7 @@ namespace Instatus.Web
 {
     public enum WebEnvironment
     {
+        All,
         Development,
         Staging,
         Production
