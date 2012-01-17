@@ -29,6 +29,11 @@ namespace Instatus.Web
             Error,
             Confirmation,
             Complete,
+            Attachments,
+            Map,
+            Navigation,
+            Related,
+            Progress,
             // actions
             LoadMore,
             ReadMore,
@@ -43,9 +48,17 @@ namespace Instatus.Web
             View,
             Play,
             Subscribe,
+            Previous,
+            Next,
+            Search,
+            Like,
+            Comment,
+            Vote,
             // fields
             Telephone,
             EmailAddress,
+            FamilyName,
+            GivenName,
             Password,
             Author,
             Published,
@@ -56,7 +69,9 @@ namespace Instatus.Web
             Mode,
             Tags,
             // phrases
-            ErrorDescription
+            ErrorDescription,
+            SearchDescription,
+            NoResults
         }        
         
         public enum FormatString
@@ -128,6 +143,21 @@ namespace Instatus.Web
         public static string Subscribe { get { return Localize(Common.Subscribe, "Subscribe"); } }
         public static string Confirmation { get { return Localize(Common.Confirmation, "Confirmation"); } }
         public static string Complete { get { return Localize(Common.Complete, "Complete"); } }
+        public static string Previous { get { return Localize(Common.Previous, "Previous"); } }
+        public static string Next { get { return Localize(Common.Next, "Next"); } }
+        public static string Attachments { get { return Localize(Common.Attachments, "Attachments"); } }
+        public static string Search { get { return Localize(Common.Search, "Search"); } }
+        public static string Map { get { return Localize(Common.Map, "Map"); } }
+        public static string NoResults { get { return Localize(Common.NoResults, "Sorry. No results matched your query."); } }
+        public static string SearchDescription { get { return Localize(Common.SearchDescription, "Enter keyword or phrase"); } }
+        public static string Navigation { get { return Localize(Common.Navigation, "Navigation"); } }
+        public static string Related { get { return Localize(Common.Related, "Related"); } }
+        public static string Like { get { return Localize(Common.Like, "Like"); } }
+        public static string Vote { get { return Localize(Common.Vote, "Vote"); } }
+        public static string Comment { get { return Localize(Common.Comment, "Comment"); } }
+        public static string FamilyName { get { return Localize(Common.FamilyName, "Surname"); } }
+        public static string GivenName { get { return Localize(Common.GivenName, "First name"); } }
+        public static string Progress { get { return Localize(Common.Progress, "Progress"); } }
 
         public static string MinutesAgo(double minutes) { return Format(FormatString.MinutesAgo, "{0} minutes ago", minutes); }
         public static string HoursAgo(double hours) { return Format(FormatString.HoursAgo, "{0} hours ago", hours); }

@@ -133,6 +133,20 @@ namespace Instatus
             return new MvcHtmlString(tag.ToString(TagRenderMode.SelfClosing));
         }
 
+        public static MvcHtmlString CommandButton<T>(this HtmlHelper<T> html, string text, string commandName = null)
+        {
+            commandName = commandName.OrDefault(text.ToSlug());
+            
+            var tag = new TagBuilder("button");
+
+            tag.MergeAttribute("type", "button");
+            tag.MergeAttribute("name", commandName);
+            tag.MergeAttribute("class", commandName);
+            tag.SetInnerText(text);
+
+            return new MvcHtmlString(tag.ToString());
+        }
+
         public static MvcHtmlString SubmitButton<T>(this HtmlHelper<T> html, string text = null)
         {
             var tag = new TagBuilder("button");

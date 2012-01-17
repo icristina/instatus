@@ -34,5 +34,21 @@ namespace Instatus
         {
             return contentProvider.GetPage(slug, set) as T;
         }
+
+        public static void AppendContent<T>(this IContentProvider contentProvider, WebView<T> webView, string slug, WebSet set = null)
+        {
+            var page = contentProvider.GetPage(slug, set);
+
+            if (page != null)
+            {
+                webView.Name = page.Name;
+                webView.Document = page.Document;
+
+                if (webView.Document != null && !page.Description.IsEmpty() && webView.Document.Description.IsEmpty())
+                {
+                    webView.Document.Description = page.Description;
+                }
+            }
+        }
     }
 }

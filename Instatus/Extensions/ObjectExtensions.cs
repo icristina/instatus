@@ -112,11 +112,21 @@ namespace Instatus
 
         public static int AsInteger(this object graph)
         {
-            int integer;
+            int result;
 
-            if (int.TryParse(graph.AsString(), out integer))
-                return integer;
+            if (int.TryParse(graph.AsString(), out result))
+                return result;
             
+            return 0;
+        }
+
+        public static double AsDouble(this object graph)
+        {
+            double result;
+
+            if (double.TryParse(graph.AsString(), out result))
+                return result;
+
             return 0;
         }
 
