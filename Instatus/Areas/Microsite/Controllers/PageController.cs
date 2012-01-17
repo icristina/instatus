@@ -59,7 +59,7 @@ namespace Instatus.Areas.Microsite.Controllers
 
             var brand = Context.GetCurrentBrand();
 
-            ViewData.Model = new WebView<Article>(Context.GetPages<Article>(query, "Legal"), query)
+            ViewData.Model = new WebView<Article>(Context.GetPages<Article>(query, category: "Legal"), query)
             {
                 Name = brand.Name
             };

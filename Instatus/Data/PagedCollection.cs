@@ -39,7 +39,7 @@ namespace Instatus.Data
                 this.Append(pagedCollection);
                 TotalItemCount = pagedCollection.TotalItemCount;
             }
-            else if (list is IOrderedQueryable<T>)
+            else if (list is IOrderedQueryable<T> || list is IOrderedEnumerable<T>)
             {
                 this.Append(list.Skip(pageIndex * pageSize).Take(pageSize).ToList());
                 

@@ -99,6 +99,9 @@ namespace Instatus
 
         public static MvcHtmlString ExternalImageLink<T>(this HtmlHelper<T> html, string alternativeText, string contentPath, string uri)
         {
+            if (uri.IsEmpty())
+                return html.Image(contentPath, alternativeText);
+            
             var urlHelper = new UrlHelper(html.ViewContext.RequestContext);
             var markup = string.Format("<a href=\"{0}\" rel=\"external\" target=\"_blank\"><img src=\"{1}\" alt=\"{2}\"/></a>",
                             uri,

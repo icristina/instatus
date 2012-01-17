@@ -11,11 +11,23 @@ namespace Instatus
 {
     public static class ContentProviderQueries
     {
-        public static IEnumerable<T> GetPages<T>(this IContentProvider contentProvider, WebQuery query, string category = null) where T : Page
+        public static IEnumerable<T> GetPages<T>(this IContentProvider contentProvider, WebQuery query = null, bool cache = false, string expand = null, string category = null) where T : Page
         {
+            query = query ?? new WebQuery();
             query.Category = category ?? query.Category;
             query.Kind = typeof(T).Name.AsEnum<WebKind>();
-            return contentProvider.GetPages(query).Cast<T>();
+
+            if (!expand.IsEmpty())
+                query.Expand = expand.ToList().ToArray();
+
+            if (cache)
+            {
+                return HttpRuntime.Cache.Value(() => contentProvider.GetPages(query).Cast<T>().ToList()); // cache = true, currently returns list only
+            }
+            else
+            {
+                return contentProvider.GetPages(query).Cast<T>();
+            }
         }
 
         public static T GetPage<T>(this IContentProvider contentProvider, string slug, WebSet set = null) where T : Page

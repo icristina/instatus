@@ -15,7 +15,7 @@ namespace Instatus
             return links.Where(l => l.ContentType == contentType);
         }
 
-        public static string Uri(this IEnumerable<Link> links, WebContentType webContentType)
+        public static string Uri(this IEnumerable<Link> links, WebContentType webContentType = WebContentType.Html)
         {
             var link = links.WithContentType(webContentType).FirstOrDefault();
             return link != null ? link.Uri : string.Empty;
