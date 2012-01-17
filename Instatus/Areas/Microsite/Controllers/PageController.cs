@@ -55,14 +55,11 @@ namespace Instatus.Areas.Microsite.Controllers
 
         public ActionResult Legal()
         {
-            var query = new WebQuery()
-            {
-                Category = "Legal"
-            };
+            var query = new WebQuery();
 
             var brand = Context.GetCurrentBrand();
 
-            ViewData.Model = new WebView<Article>(Context.GetPages<Article>(query), query)
+            ViewData.Model = new WebView<Article>(Context.GetPages<Article>(query, "Legal"), query)
             {
                 Name = brand.Name
             };

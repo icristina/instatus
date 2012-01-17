@@ -138,6 +138,7 @@
     <Compile Include="Models\IUserGeneratedContent.cs" />
     <Compile Include="Models\Review.cs" />
     <Compile Include="Queries\ApplicationQueries.cs" />
+    <Compile Include="Queries\ContentProviderQueries.cs" />
     <Compile Include="Queries\LinkQueries.cs" />
     <Compile Include="Queries\LoggingQueries.cs" />
     <Compile Include="Queries\MembershipQueries.cs" />

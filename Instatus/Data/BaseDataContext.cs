@@ -118,18 +118,6 @@ namespace Instatus.Data
             return ExpandNavigationProperties(page, set);
         }
 
-        public T GetPage<T>(string slug, WebSet set = null) where T : Page
-        {
-            var page = this.DisableProxiesAndLazyLoading()
-                    .Pages
-                    .Expand(DefaultPageExpansions)
-                    .Where(p => p.Slug == slug)
-                    .OfType<T>()
-                    .FirstOrDefault();
-
-            return ExpandNavigationProperties(page, set);
-        }
-
         private T ExpandNavigationProperties<T>(T page, WebSet set) where T : Page
         {
             if (page != null && set != null && !set.Expand.IsEmpty())
@@ -141,18 +129,6 @@ namespace Instatus.Data
             }
 
             return page;
-        }
-
-        public IEnumerable<T> GetPages<T>(WebQuery query) where T : Page
-        {
-            return this
-                    .DisableProxiesAndLazyLoading()
-                    .Pages
-                    .Expand(query.Expand)
-                    .FilterPages(query)
-                    .SearchPages(query)
-                    .OfType<T>()
-                    .SortPages(query.Sort);
         }
 
         public IEnumerable<Page> GetPages(WebQuery query)

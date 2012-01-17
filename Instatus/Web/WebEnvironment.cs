@@ -9,6 +9,7 @@ namespace Instatus.Web
     {
         All,
         Development,
+        QualityAssurance,
         Staging,
         Production
     }
