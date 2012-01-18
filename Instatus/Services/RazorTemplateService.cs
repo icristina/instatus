@@ -20,17 +20,13 @@ namespace Instatus.Services
             var tempData = new TempDataDictionary();
             var routeData = new RouteData();
 
-            context.HttpContext = new HttpContextWrapper(new HttpContext(
-                new HttpRequest("", WebPath.BaseUri.ToString(), ""),
-                new HttpResponse(new StringWriter())
-            ));
-            
+            context.HttpContext = WebMock.CreateHttpContextBase();
             context.RouteData.Values.Add("controller", "Home");
 
             using (var sw = new StringWriter())
             {
-                ViewEngineResult viewResult = ViewEngines.Engines.FindPartialView(context, template);
-                ViewContext viewContext = new ViewContext(context, viewResult.View, viewData, tempData, sw);
+                var viewResult = ViewEngines.Engines.FindPartialView(context, template);
+                var viewContext = new ViewContext(context, viewResult.View, viewData, tempData, sw);
 
                 viewResult.View.Render(viewContext, sw);
 

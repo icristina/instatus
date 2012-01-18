@@ -91,6 +91,7 @@ namespace Instatus.Web
             Flag,
             RemoveFlag,
             PublishedDate,
+            HtmlTitle
         }
 
         public class ErrorMessage
@@ -176,6 +177,7 @@ namespace Instatus.Web
         public static string Flag(string name) { return Format(FormatString.Flag, "Mark as {0}", name); }
         public static string RemoveFlag(string name) { return Format(FormatString.RemoveFlag, "Unmark as {0}", name); }
         public static string PublishedDate(DateTime date) { return Format(FormatString.PublishedDate, "{0:dd/MM/yyyy}", date); }
+        public static string HtmlTitle(string value) { return Format(FormatString.HtmlTitle, "{0}", value); }
 
         public static string InvalidEmailAddress { get { return Localize(ErrorMessage.InvalidEmailAddress, "Please enter a valid email address"); } }
         public static string RequiredEmailAddress { get { return Localize(ErrorMessage.RequiredEmailAddress, "Please enter a valid email address"); } }

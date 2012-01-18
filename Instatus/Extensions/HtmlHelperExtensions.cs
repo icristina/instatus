@@ -11,6 +11,7 @@ using System.Web.Routing;
 using Instatus.Models;
 using Instatus.Web;
 using Instatus.Services;
+using System.IO;
 
 namespace Instatus
 {
@@ -124,11 +125,15 @@ namespace Instatus
 
         public static MvcHtmlString Image<T>(this HtmlHelper<T> html, string contentPath, string text = null)
         {
+            if (contentPath.IsEmpty())
+                return null;
+            
             var urlHelper = new UrlHelper(html.ViewContext.RequestContext);
             var tag = new TagBuilder("img");
+            var alt = text ?? Path.GetFileNameWithoutExtension(contentPath).ToCapitalized();
 
             tag.MergeAttribute("src", urlHelper.Relative(contentPath));
-            tag.MergeAttribute("alt", text);
+            tag.MergeAttribute("alt", alt);
 
             return new MvcHtmlString(tag.ToString(TagRenderMode.SelfClosing));
         }
@@ -425,7 +430,7 @@ namespace Instatus
             if(title.IsEmpty())
                 title = html.ViewData.Model.AsString(); // WebView and Page ToString() customized to give descriptive title for html pages
 
-            return new MvcHtmlString(title);
+            return new MvcHtmlString(WebPhrase.HtmlTitle(title));
         }
     }
 
