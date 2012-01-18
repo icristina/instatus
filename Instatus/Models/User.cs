@@ -79,6 +79,7 @@ namespace Instatus.Models
         public DateTime CreatedTime { get; set; }
 
         public string Status { get; set; }
+        public string Permission { get; set; }
 
         public virtual Source Source { get; set; }
         public int? SourceId { get; set; }
@@ -111,6 +112,7 @@ namespace Instatus.Models
             Name = new Name();
             Extensions = new ExpandoObject();
             Status = WebStatus.PendingApproval.ToString(); // PendingApproval, not auto Approved
+            Permission = WebPermission.Public.ToString();
         }
 
         public User(string fullName)

@@ -109,6 +109,8 @@ namespace Instatus.Data
 
         public Page GetPage(string slug, WebSet set = null)
         {
+            set = set ?? new WebSet();
+
             var page = this.DisableProxiesAndLazyLoading()
                     .Pages
                     .Expand(DefaultPageExpansions)
@@ -121,7 +123,7 @@ namespace Instatus.Data
 
         private T ExpandNavigationProperties<T>(T page, WebSet set) where T : Page
         {
-            if (page != null && set != null && !set.Expand.IsEmpty())
+            if (page != null)
             {
                 foreach (var navigationProperty in set.Expand)
                 {

@@ -236,6 +236,10 @@ namespace Instatus
         public static List<Tuple<string, string>> ToLabelledList(this string text, string regex = "<h2[^>]*>([^<]*)</h2>")
         {
             var result = new List<Tuple<string, string>>();
+            
+            if (text.IsEmpty())
+                return result;
+            
             var matches = Regex.Matches(text, regex, RegexOptions.IgnoreCase);
 
             for (var i = 0; i < matches.Count; i++)
@@ -244,7 +248,11 @@ namespace Instatus
 
                 if (i == 0 && match.Index > 0) // text before first boundary
                 {
-                    result.Add(new Tuple<string, string>(string.Empty, text.Substring(0, match.Index)));
+                    var precedingText = text.Substring(0, match.Index).TrimOrNull();
+                    
+                    if (!precedingText.IsEmpty()) {
+                        result.Add(new Tuple<string, string>(string.Empty, precedingText));
+                    }
                 }
 
                 string label = string.Empty;

@@ -13,5 +13,10 @@ namespace Instatus.Web
         public string[] Expand { get; set; }
         public WebStatus Status { get; set; }
         public WebKind Kind { get; set; }
+
+        public WebSet()
+        {
+            Expand = new string[] {};
+        }
     } 
 }

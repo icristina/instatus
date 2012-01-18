@@ -84,6 +84,7 @@
     <Compile Include="Areas\Editor\Controller\BlogPostController.cs" />
     <Compile Include="Areas\Developer\Controllers\LogController.cs" />
     <Compile Include="Areas\Developer\Controllers\LinkController.cs" />
+    <Compile Include="Areas\Google\Google.cs" />
     <Compile Include="Areas\Moderator\Controllers\MessageController.cs" />
     <Compile Include="Areas\Developer\Controllers\DomainController.cs" />
     <Compile Include="Areas\Developer\Controllers\CredentialController.cs" />

@@ -56,6 +56,9 @@ namespace Instatus
 
         public static T Deserialize<T>(this byte[] bytes, IEnumerable<Type> knownTypes = null)
         {
+            if (bytes == null)
+                return default(T);
+            
             MemoryStream stream = new MemoryStream(bytes);
             stream.Position = 0;
             var serializer = new DataContractSerializer(typeof(T), knownTypes);
