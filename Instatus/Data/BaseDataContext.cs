@@ -112,6 +112,7 @@ namespace Instatus.Data
             var page = this.DisableProxiesAndLazyLoading()
                     .Pages
                     .Expand(DefaultPageExpansions)
+                    .FilterPagesBySet(set)
                     .Where(p => p.Slug == slug)
                     .FirstOrDefault();
 
@@ -137,6 +138,7 @@ namespace Instatus.Data
                     .DisableProxiesAndLazyLoading()
                     .Pages
                     .Expand(query.Expand)
+                    .FilterPagesBySet(query)
                     .FilterPages(query)
                     .SearchPages(query)
                     .OfKind(query.Kind)
@@ -300,13 +302,23 @@ namespace Instatus.Data
             return queryable;
         }
 
-        public static IQueryable<T> FilterPages<T>(this IQueryable<T> queryable, WebQuery query) where T : Page
+        public static IQueryable<T> FilterPagesBySet<T>(this IQueryable<T> queryable, WebSet query) where T : Page
         {
             var filtered = queryable;
 
             var status = query.Status.ToString();
 
             filtered = filtered.Where(p => p.Status == status);
+
+            if (!query.Locale.IsEmpty())
+                filtered = filtered.Where(p => p.Locale == query.Locale);
+
+            return filtered;
+        }
+
+        public static IQueryable<T> FilterPages<T>(this IQueryable<T> queryable, WebQuery query) where T : Page
+        {
+            var filtered = queryable;
 
             if (!query.Tag.IsEmpty())
                 filtered = filtered.Where(p => p.Tags.Any(t => t.Name == query.Tag));
@@ -324,9 +336,6 @@ namespace Instatus.Data
 
             if (!query.Term.IsEmpty())
                 filtered = filtered.Where(p => p.Name.StartsWith(query.Term));
-
-            if (!query.Locale.IsEmpty())
-                filtered = filtered.Where(p => p.Locale == query.Locale);
 
             int userId;
 
