@@ -7,6 +7,7 @@ using System.Linq.Expressions;
 using Instatus.Data;
 using Instatus.Models;
 using System.IO;
+using Instatus.Web;
 
 namespace Instatus
 {
@@ -18,7 +19,12 @@ namespace Instatus
 
             foreach (var loaded in pages)
             {
-                var page = context.GetPage(loaded.Slug);
+                var webSet = new WebSet()
+                {
+                    Locale = loaded.Locale
+                };
+                
+                var page = context.GetPage(loaded.Slug, webSet);
                 
                 loaded.Tags = loaded.Tags.Synchronize(tag => context.Tags.FirstOrDefault(t => t.Name == tag.Name));
 

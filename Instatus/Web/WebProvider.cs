@@ -10,7 +10,6 @@ namespace Instatus.Web
         Internal, // Instatus database        
         Generated, // mock data
         Imported, // batch import
-        External, // custom crm or database
         Facebook,
         Google,
         Microsoft,
@@ -23,6 +22,9 @@ namespace Instatus.Web
         Omniture,
         Adobe,
         Salesforce,
-        CampaignMonitor
+        CampaignMonitor,
+        Custom1, // custom crm or external database
+        Custom2,
+        Custom3
     }
 }
