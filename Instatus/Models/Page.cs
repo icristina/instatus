@@ -106,6 +106,9 @@ namespace Instatus.Models
 
         public override string ToString()
         {
+            if (Document != null && !Document.Title.IsEmpty())
+                return Document.Title;
+
             return Name ?? Description;
         }
 

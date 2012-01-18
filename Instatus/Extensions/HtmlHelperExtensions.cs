@@ -417,6 +417,16 @@ namespace Instatus
             var routeData = html.ViewContext.RouteData;
             return html.BeginForm(routeData.ActionName(), routeData.ControllerName(), FormMethod.Post, new { id = id }); 
         }
+
+        public static MvcHtmlString Title<T>(this HtmlHelper<T> html)
+        {
+            var title = html.ViewData["Title"].AsString();
+
+            if(title.IsEmpty())
+                title = html.ViewData.Model.AsString(); // WebView and Page ToString() customized to give descriptive title for html pages
+
+            return new MvcHtmlString(title);
+        }
     }
 
     internal static class HtmlBuilder

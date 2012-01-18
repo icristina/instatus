@@ -106,5 +106,19 @@ namespace Instatus.Web
         {
             Mode = CreateSelectList<WebMode>(modes, Query.Filter, labels);
         }
+
+        public override string ToString()
+        {
+            if (!Name.IsEmpty())
+                return Name;
+
+            if (Document != null && !Document.Title.IsEmpty())
+                return Document.Title;
+            
+            if (Query != null)
+                return Query.Kind.ToDescriptiveString().ToPlural();
+
+            return base.ToString();
+        }
     }
 }

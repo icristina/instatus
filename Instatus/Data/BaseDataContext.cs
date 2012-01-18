@@ -329,12 +329,20 @@ namespace Instatus.Data
                 filtered = filtered.Where(p => p.Category == query.Category);
 
             if (!query.Uri.IsEmpty())
-                filtered = filtered.Where(p => p.Sources.Any(s => query.Uri.Contains(s.Uri)));
+                filtered = filtered.Where(p => p.Sources.Any(s => query.Uri.Contains(s.Uri)));            
 
-            int parentId;
-
-            if (!query.Parent.IsEmpty() && int.TryParse(query.Parent, out parentId))
-                filtered = filtered.Where(p => p.Parents.Any(r => r.Id == parentId));
+            if (!query.Parent.IsEmpty())
+            {
+                if (query.Parent.IsNumeric())
+                {
+                    int parentId = query.Parent.AsInteger();
+                    filtered = filtered.Where(p => p.Parents.Any(r => r.Id == parentId));
+                }
+                else
+                {
+                    filtered = filtered.Where(p => p.Parents.Any(r => r.Slug == query.Parent));
+                }
+            }                
 
             if (!query.Term.IsEmpty())
                 filtered = filtered.Where(p => p.Name.StartsWith(query.Term));
