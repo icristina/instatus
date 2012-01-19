@@ -39,6 +39,8 @@ namespace Instatus.Areas.Auth.Controllers
                 if (user.ValidateVerificationToken(token))
                 {
                     db.SaveChanges();
+
+                    ViewData.Model = user;
                 }
                 else
                 {

@@ -13,7 +13,7 @@ namespace Instatus
         {
             var smtpClient = new SmtpClient();
 
-            if (HttpContext.Current.ApplicationInstance.IsDebug())
+            if (HttpContext.Current.ApplicationInstance.IsDebugOrLocal())
             {
                 smtpClient.DeliveryMethod = SmtpDeliveryMethod.SpecifiedPickupDirectory;
                 smtpClient.PickupDirectoryLocation = WebPath.Server("~/App_Data/");

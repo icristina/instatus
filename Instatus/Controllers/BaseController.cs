@@ -147,6 +147,14 @@ namespace Instatus.Controllers
         }
 
         [NonAction]
+        public new ActionResult View(string viewName, object viewModel)
+        {
+            ViewData.Model = viewModel;
+            this.viewName = viewName;
+            return View();
+        }
+
+        [NonAction]
         public ActionResult Content(string content, WebContentType contentType)
         {
             return Content(content, contentType.ToMimeType());

@@ -21,8 +21,8 @@ namespace Instatus.Areas.Auth
                 VerificationRouteName,
                 "Auth/Verification/{id}/{token}",
                 new { 
-                    action = "Index", 
-                    controller = "Verification"
+                    action = "Verification", 
+                    controller = "Account"
                 }
             );            
             

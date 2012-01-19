@@ -14,6 +14,11 @@ namespace Instatus
         {
             return Debugger.IsAttached;
         }
+
+        public static bool IsDebugOrLocal(this HttpApplication application)
+        {
+            return Debugger.IsAttached || HttpContext.Current.Request.IsLocal;
+        }
         
         public static T Setting<T>(this HttpApplication application, object name)
         {                      
