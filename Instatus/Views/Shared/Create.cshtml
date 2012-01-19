@@ -1,10 +1,9 @@
 ﻿@{
     Layout = "~/Views/Shared/_Scaffold.cshtml";
-    ViewBag.Title = WebPhrase.Create;
 }
 
 @using (Html.BeginForm())
 {
-    <button type="submit">@WebPhrase.Create</button>
+    @Html.SubmitButton(WebPhrase.Create)
     @Html.EditorForModel()
 }

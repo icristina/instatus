@@ -17,6 +17,6 @@
 {
     using (Html.BeginForm("Delete", ViewContext.RouteData.ControllerName(), routeData))
     {
-        <button type="submit">@WebPhrase.Delete</button>
+        @Html.SubmitButton(WebPhrase.Delete)
     }
 }

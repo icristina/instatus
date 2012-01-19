@@ -29,13 +29,16 @@ namespace Instatus
             return html.Hidden(HtmlConstants.ReturnUrl, returnUrl ?? request.Params[HtmlConstants.ReturnUrl] ?? request.RawUrl);
         }
         
-        public static MvcHtmlString Tag<T>(this HtmlHelper<T> html, string tagName, object value)
+        public static MvcHtmlString Tag<T>(this HtmlHelper<T> html, string tagName, object value, string itemPropertyName = null)
         {
             if (value.IsEmpty())
                 return null;
 
             var tag = new TagBuilder(tagName);
+
+            tag.MergeAttributeOrEmpty("itemprop", itemPropertyName);
             tag.SetInnerText(value.ToString());
+            
             return new MvcHtmlString(tag.ToString());
         }
 
@@ -58,6 +61,14 @@ namespace Instatus
             tag.MergeAttribute("href", stylesheet.IsAbsoluteUri() ? stylesheet : urlHelper.Relative("~/Content/" + stylesheet));
             tag.MergeAttribute("rel", rel);
             return new MvcHtmlString(tag.ToString());
+        }
+
+        public static MvcHtmlString Meta<T>(this HtmlHelper<T> html, string name, string content)
+        {
+            if (name.IsEmpty() || content.IsEmpty())
+                return null;
+
+            return new MvcHtmlString(HtmlBuilder.Meta(name, content));
         }
 
         public static MvcHtmlString Viewport<T>(this HtmlHelper<T> html, string content = "initial-scale=1.0, width=device-width")
@@ -96,6 +107,14 @@ namespace Instatus
                             alternativeText);
 
             return new MvcHtmlString(markup);
+        }
+
+        public static MvcHtmlString PartialOrEmpty<T>(this HtmlHelper<T> html, string partialViewName, object model)
+        {
+            if (model.IsEmpty())
+                return null;
+            
+            return html.Partial(partialViewName, model);
         }
 
         public static MvcHtmlString ExternalImageLink<T>(this HtmlHelper<T> html, string alternativeText, string contentPath, string uri)
@@ -185,6 +204,18 @@ namespace Instatus
             tag.MergeAttribute("href", href);
             tag.SetInnerText(text);
             
+            return new MvcHtmlString(tag.ToString());
+        }
+
+        public static MvcHtmlString ExternalLink<T>(this HtmlHelper<T> html, string text, string href)
+        {
+            var tag = new TagBuilder("a");
+
+            tag.MergeAttribute("href", href);
+            tag.MergeAttribute("rel", "external");
+            tag.MergeAttribute("target", "_blank");
+            tag.SetInnerText(text);
+
             return new MvcHtmlString(tag.ToString());
         }
 
@@ -436,6 +467,14 @@ namespace Instatus
 
     internal static class HtmlBuilder
     {
+        public static TagBuilder MergeAttributeOrEmpty(this TagBuilder tagBuilder, string key, object value)
+        {
+            if (!(key.IsEmpty() || value.IsEmpty()))
+                tagBuilder.MergeAttribute(key, value.AsString());
+            
+            return tagBuilder;
+        }
+        
         public static string Embed(string uri)
         {
             var tag = new TagBuilder("iframe");

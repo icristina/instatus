@@ -26,7 +26,7 @@
         }
         @if (Model.Query.Kind == WebKind.Link)
         {
-            @Html.Partial("Links", Model)         
+            @Html.PartialOrEmpty("Links", Model)         
         }
         else if (Model.Query.Kind == WebKind.User) {
             @Html.Partial("Users", Model)            
@@ -41,10 +41,7 @@
                 <article itemscope itemtype="@page.GetItemType()" itemid="@page.Id">
                     <a href="@Url.Page(page.Slug)">
                         <h1 itemprop="name">@page.Name</h1>
-                        @if (!page.Description.IsEmpty())
-                        {
-                            <p itemprop="description">@page.Description</p>
-                        }
+                        @Html.Tag("p", page.Description, "description")
                         @if (!page.Picture.IsEmpty())
                         {
                             <img src="@WebPath.Absolute(page.Picture)" itemprop="image"/>
