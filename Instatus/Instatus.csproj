@@ -311,6 +311,7 @@
     <EmbeddedResource Include="Scripts\Swfobject.js" />
     <EmbeddedResource Include="Scripts\Knockout.js" />
     <EmbeddedResource Include="Scripts\Underscore.js" />
+    <EmbeddedResource Include="Scripts\Instatus.js" />
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
