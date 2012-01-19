@@ -70,5 +70,11 @@ namespace Instatus
                     { "data-route-action", routeData.ActionName().ToCamelCase() }
                 };
         }
+
+        public static bool IsAncestorOrSelf(this SiteMapNode siteMapNode)
+        {
+            var routeData = HttpContext.Current.Request.RequestContext.RouteData;
+            return siteMapNode.Key.Match(routeData.Slug()) || siteMapNode.Key.Match(routeData.ControllerName());
+        }
     }
 }

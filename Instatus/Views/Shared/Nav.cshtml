@@ -3,8 +3,10 @@
 <ul>
     @foreach (SiteMapNode node in Model)
     {
-        var className = node.Key.Match(ViewContext.RouteData.Slug()) || node.Key.Match(ViewContext.RouteData.ControllerName())
-            ? "current" : string.Empty;
-        <li><a @Html.Attr("class", className) href="@Url.Content(node.Url)">@node.Title</a></li>
+        <li>
+            <a @Html.OptionalAttr("class", "current", node.IsAncestorOrSelf()) href="@Url.Content(node.Url)">
+                @node.Title
+            </a>
+        </li>
     }
 </ul>

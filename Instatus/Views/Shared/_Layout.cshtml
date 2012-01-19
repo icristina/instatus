@@ -5,7 +5,7 @@
     <title>@Html.Title()</title>
     @RenderSection("base_head")
 </head>
-<body@(Html.Attr(ViewContext.RouteData.ToDataAttributeDictionary()))>
+<body @Html.RouteDataAttributes()>
     @RenderBody()
 </body>
 </html>

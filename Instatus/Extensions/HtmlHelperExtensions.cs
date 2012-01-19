@@ -229,6 +229,8 @@ namespace Instatus
             return new MvcHtmlString(tag.ToString());
         }
         
+        private static string[] BooleanAttributes = new string[] { "required", "hidden", "disabled", "checked" };
+        
         public static MvcHtmlString Attr<T>(this HtmlHelper<T> html, IDictionary<string, object> attributes)
         {
             if (attributes == null)
@@ -243,6 +245,22 @@ namespace Instatus
             }
 
             return new MvcHtmlString(markup.ToString().RemoveDoubleSpaces());
+        }
+
+        public static MvcHtmlString RouteDataAttributes<T>(this HtmlHelper<T> html)
+        {
+            return html.Attr(html.ViewContext.RouteData.ToDataAttributeDictionary());
+        }
+
+        public static MvcHtmlString OptionalAttr<T>(this HtmlHelper<T> html, string attributeName, object value, bool condition)
+        {
+            if (!condition)
+                return null;
+
+            if (BooleanAttributes.Contains(attributeName))
+                return new MvcHtmlString(attributeName);
+            
+            return value.ToAttr(attributeName);
         }
 
         public static MvcHtmlString Attr<T>(this HtmlHelper<T> html, string attributeName, object value)
@@ -427,7 +445,7 @@ namespace Instatus
 
         public static MvcHtmlString Visible<T>(this HtmlHelper<T> html, bool condition)
         {
-            return condition ? null : new MvcHtmlString("hidden"); // add hidden attribute based on condition
+            return html.OptionalAttr("hidden", "hidden", !condition); // add hidden attribute based on condition
         }
 
         public static MvcHtmlString Tags<T>(this HtmlHelper<T> html, IWebView webView, ICollection<Tag> tags, string seperator = "/")
