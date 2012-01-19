@@ -13,13 +13,19 @@ namespace Instatus.Areas.YouTube
         {
             var uri = new Uri(videoUri);
 
-            if(!uri.Query.IsEmpty()) {
+            if (!uri.Query.IsEmpty()) {
                 var queryString = HttpUtility.ParseQueryString(uri.Query);
                 
                 // http://www.youtube.com/watch?v=Lp7E973zozc&feature=relmfu
                 if(queryString.AllKeys.Contains("v"))
                     return queryString["v"];
             }
+
+            var embed = "/embed";
+
+            // http://www.youtube.com/embed/sGE4HMvDe-Q
+            if (uri.AbsolutePath.StartsWith(embed))
+                return uri.AbsolutePath.Substring(embed.Length + 1);
 
             // http://youtu.be/sGE4HMvDe-Q
             // http://www.youtube.com/p/A0C3C1D163BE880A?hl=en_US&#038;fs=1 playlist
