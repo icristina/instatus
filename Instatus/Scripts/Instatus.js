@@ -7,6 +7,20 @@
         }
     }
 
+    function close(event) {
+        event.preventDefault();
+
+        var config = $.extend({
+            target: null
+        }, event.data);
+
+        var el = $(this);
+        var href = el.attr('href');
+        var target = config.target ? $(config.target) : $(href);
+
+        visible(target, false);
+    }
+
     function toggle(event) {
         event.preventDefault();
 
@@ -39,7 +53,8 @@
 
         var config = $.extend({
             target: 'body',
-            empty: true
+            empty: true,
+            valid: function () { return true; }
         }, event.data);
 
         var el = $(this);
@@ -56,23 +71,60 @@
 
         var deferred;
 
-        if (el.is('form')) {
-            deferred = $.post(el.attr('action'), el.serialize())
-                .done(insert);
-        } else {
-            deferred = $.get(el.attr('href'))
-                .done(insert);
+        if (config.valid(el)) {
+            if (el.is('form')) {
+                deferred = $.post(el.attr('action'), el.serialize())
+                    .done(insert);
+            } else {
+                deferred = $.get(el.attr('href'))
+                    .done(insert);
+            }
         }
 
         if (config.addCallbacks)
             config.addCallbacks(deferred);
     }
 
+    function routeData() {
+        var body = $('body');
+        return {
+            id: body.data('routeId'),
+            controller: body.data('routeController'),
+            action: body.data('routeAction')
+        };
+    }
+
+    function trackEvent(event) {
+        _gaq.push(['_trackEvent', event.data.category, event.data.action, $(this).attr('href')]);
+    }
+
+    function back() {
+        history.back();
+    }
+
+    function required(val) {
+        return val && (val + '').length > 0;
+    }
+
+    function email(val) {
+        return val && val.indexOf('@') != -1;
+    }
+
     window.instatus = {
         behaviours: {
             accordion: accordion,
             ajax: ajax,
-            toggle: toggle
+            close: close,
+            toggle: toggle,
+            back: back
+        },
+        routeData: routeData,
+        track: {
+            event: trackEvent
+        },
+        validator: {
+            required: required,
+            email: email
         }
     };
 })();

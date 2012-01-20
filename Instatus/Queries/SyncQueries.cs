@@ -17,58 +17,65 @@ namespace Instatus
         {
             var pages = Generator.LoadXml<List<Page>>(stream);
 
-            foreach (var loaded in pages)
+            foreach (var page in pages)
             {
-                var webSet = new WebSet()
-                {
-                    Locale = loaded.Locale
-                };
-                
-                var page = context.GetPage(loaded.Slug, webSet);
-                
-                loaded.Tags = loaded.Tags.Synchronize(tag => context.Tags.FirstOrDefault(t => t.Name == tag.Name));
-
-                if (page == null)
-                {
-                    context.Pages.Add(loaded);
-                }
-                else
-                {
-                    page.Name = loaded.Name;
-                    page.Description = loaded.Description;
-                    page.Document = loaded.Document;
-                    page.Tags = loaded.Tags;
-                    page.Category = loaded.Category;
-
-                    if (!loaded.Links.IsEmpty())
-                    {
-                        context.MarkDeleted(page.Links);
-                        page.Links = loaded.Links;
-                    }   
-
-                    if (loaded.Priority != 0)
-                        page.Priority = page.Priority;
-
-                    if (loaded is Application)
-                    {
-                        var application = (Application)loaded;
-                        
-                        application.Taxonomies = application.Taxonomies.Synchronize(tn => context.Taxonomies.FirstOrDefault(t => t.Name == tn.Name));
-
-                        if (!application.Taxonomies.IsEmpty())
-                        {
-                            foreach (var taxonomy in application.Taxonomies)
-                            {
-                                taxonomy.Tags = taxonomy.Tags.Synchronize(tag => context.Tags.FirstOrDefault(t => t.Name == tag.Name));
-                            }
-                        }
-
-                        context.Entry((Application)page).Replace(a => a.Taxonomies, application.Taxonomies);
-                    }
-                }
-
+                context.AddOrMergePage(page);
                 context.SaveChanges();
             }
+        }
+
+        public static Page AddOrMergePage(this BaseDataContext context, Page page)
+        {
+            var webSet = new WebSet()
+            {
+                Locale = page.Locale
+            };
+
+            var merged = context.GetPage(page.Slug, webSet);
+
+            page.Tags = page.Tags.Synchronize(tag => context.Tags.FirstOrDefault(t => t.Name == tag.Name));
+
+            if (merged == null)
+            {
+                merged = page;
+                context.Pages.Add(merged);
+            }
+            else
+            {
+                merged.Name = page.Name;
+                merged.Description = page.Description;
+                merged.Document = page.Document;
+                merged.Tags = page.Tags;
+                merged.Category = page.Category;
+
+                if (!page.Links.IsEmpty())
+                {
+                    context.MarkDeleted(merged.Links);
+                    merged.Links = page.Links;
+                }
+
+                if (page.Priority != 0)
+                    merged.Priority = merged.Priority;
+
+                if (page is Application)
+                {
+                    var application = (Application)page;
+
+                    application.Taxonomies = application.Taxonomies.Synchronize(tn => context.Taxonomies.FirstOrDefault(t => t.Name == tn.Name));
+
+                    if (!application.Taxonomies.IsEmpty())
+                    {
+                        foreach (var taxonomy in application.Taxonomies)
+                        {
+                            taxonomy.Tags = taxonomy.Tags.Synchronize(tag => context.Tags.FirstOrDefault(t => t.Name == tag.Name));
+                        }
+                    }
+
+                    context.Entry((Application)merged).Replace(a => a.Taxonomies, application.Taxonomies);
+                }
+            }
+
+            return merged;
         }
     }
 
