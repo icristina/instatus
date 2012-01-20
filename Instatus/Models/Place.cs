@@ -15,15 +15,7 @@ namespace Instatus.Models
         public virtual ICollection<Event> Events { get; set; }
 
         public override WebEntry ToWebEntry() {
-            return new WebGeospatialEntry()
-            {
-                Title = Name,
-                Description = Description,
-                Caption = Address.Locality,
-                Picture = Picture,
-                Latitude = Point.Latitude,
-                Longitude = Point.Longitude
-            };
+            return ContentProviderQueries.SelectWebGeospatialEntry(this);
         }
 
         public Place()

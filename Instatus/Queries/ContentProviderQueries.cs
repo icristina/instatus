@@ -50,5 +50,38 @@ namespace Instatus
                 }
             }
         }
+
+        public static IEnumerable<WebEntry> AsWebEntries(this IEnumerable<Page> pages)
+        {
+            return pages.Select(SelectWebEntry);
+        }
+
+        public static IEnumerable<WebEntry> AsWebEntries(this IEnumerable<Place> places)
+        {
+            return places.Select(SelectWebGeospatialEntry);
+        }
+
+        internal static Func<Page, WebEntry> SelectWebEntry = new Func<Page, WebEntry>(p =>
+        {
+            return new WebEntry()
+            {
+                Title = p.Name,
+                Description = p.Description,
+                Picture = p.Picture
+            };
+        });
+
+        internal static Func<Place, WebEntry> SelectWebGeospatialEntry = new Func<Place, WebGeospatialEntry>(p =>
+        {
+            return new WebGeospatialEntry()
+            {
+                Title = p.Name,
+                Caption = p.Address.Locality,
+                Description = p.Description,
+                Picture = p.Picture,
+                Latitude = p.Point.Latitude,
+                Longitude = p.Point.Longitude
+            };
+        });
     }
 }

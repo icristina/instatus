@@ -133,12 +133,7 @@ namespace Instatus.Models
 
         public virtual WebEntry ToWebEntry()
         {
-            return new WebEntry()
-            {
-                Title = Name,
-                Description = Description,
-                Picture = Picture
-            };
+            return ContentProviderQueries.SelectWebEntry(this);
         }
 
         public SiteMapNode ToSiteMapNode(SiteMapProvider sitemap)
