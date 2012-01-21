@@ -1,4 +1,24 @@
 ﻿(function () {
+    $.fn.auto = function (eventName, selector) {
+        $(this).find(selector).trigger(eventName);
+        return this;
+    };
+
+    function selector(context, selector, deflt) {
+        return $.isFunction(selector) ? selector(context) : selector ? $(selector) : $(deflt);
+    }
+
+    function state(event, deflt) {
+        event.preventDefault();
+        var s = $.extend(deflt, event.data);
+        s.el = $(event.currentTarget);
+        s.tagName = s.el.get(0).tagName;
+        s.uri = s.el.attr('action') || s.el.attr('href') || s.el.attr('src');
+        s.target = selector(s.el, s.target, s.uri || event.delegateTarget);
+        s.container = selector(s.el, s.container, s.target);
+        return s;
+    }
+
     function visible(el, condition) {
         if (condition) {
             el.removeAttr('hidden').show();
@@ -8,34 +28,17 @@
     }
 
     function close(event) {
-        event.preventDefault();
-
-        var config = $.extend({
-            target: null
-        }, event.data);
-
-        var el = $(this);
-        var href = el.attr('href');
-        var target = config.target ? $(config.target) : $(href);
-
-        visible(target, false);
+        var s = state(event);
+        visible(s.target, false);
     }
 
     function toggle(event) {
-        event.preventDefault();
+        var s = state(event, {
+            container: function (el) { return el.closest('section, form'); }
+        });
 
-        var config = $.extend({
-            target: null,
-            container: null
-        }, event.data);
-
-        var el = $(this);
-        var href = el.attr('href');
-        var target = config.target ? $(config.target) : $(href);
-        var container = config.container ? $(config.container) : el.closest('section, form');
-
-        visible(target, true);
-        visible(container, false);
+        visible(s.target, true);
+        visible(s.container, false);
     }
 
     function accordion(event) {
@@ -49,40 +52,76 @@
     }
 
     function ajax(event) {
-        event.preventDefault();
-
-        var config = $.extend({
+        var s = state(event, {
             target: 'body',
             empty: true,
-            valid: function () { return true; }
-        }, event.data);
-
-        var el = $(this);
-        var target = $(config.target);
-        var container = config.container ? $(config.container) : target;
+            validate: validate,
+            hint: hint,
+            addCallbacks: null
+        });
 
         var insert = function (html) {
-            if (config.empty)
-                container.empty();
+            if (s.empty)
+                s.container.empty();
 
-            container.append(html);
-            visible(target, true);
+            s.container.append(html);
+            visible(s.target, true);
         };
 
-        var deferred;
+        if (!$.isFunction(s.validate) || s.validate(s)) {
+            var deferred;
 
-        if (config.valid(el)) {
-            if (el.is('form')) {
-                deferred = $.post(el.attr('action'), el.serialize())
+            if (s.el.is('form')) {
+                deferred = $.post(s.uri, s.el.serialize())
                     .done(insert);
             } else {
-                deferred = $.get(el.attr('href'))
+                deferred = $.get(s.uri)
                     .done(insert);
             }
-        }
 
-        if (config.addCallbacks)
-            config.addCallbacks(deferred);
+            if ($.isFunction(s.addCallbacks))
+                s.addCallbacks(deferred);
+        }
+    }
+
+    function hint(el, messages) {
+        alert(messages[0]);
+    }
+
+    function message(input, prefix, suffix) {
+        return input.attr('title') || prefix + ' ' + input.attr('placeholder') + ' ' + suffix;
+    }
+
+    function messages(form) {
+        var messages = [];
+        form.find(':input').each(function () {
+            var input = $(this);
+            var val = input.val();
+            var m;
+            if (input.is('[required]') && !required(val))
+                m = message(input, '', 'is required');
+            if (input.is('[type=email]') && !email(val))
+                m = message(input, '', 'is not valid');
+
+            if (m) {
+                input.addClass('error');
+                messages.push(m);
+            }
+            else {
+                input.removeClass('error');
+            }
+        });
+        return messages;
+    }
+
+    function validate(s) {
+        var m = messages(s.el);
+        if (m.length > 0) {
+            s.hint(s.el, m);
+            return false;
+        } else {
+            return true;
+        }
     }
 
     function routeData() {
@@ -103,7 +142,7 @@
     }
 
     function required(val) {
-        return val && (val + '').length > 0;
+        return val && (val + '').length > 0 && val != 'null';
     }
 
     function email(val) {
@@ -111,7 +150,7 @@
     }
 
     window.instatus = {
-        behaviours: {
+        behaviour: {
             accordion: accordion,
             ajax: ajax,
             close: close,
