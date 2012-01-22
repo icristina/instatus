@@ -11,7 +11,7 @@ namespace Instatus.Web
     {
         public ExcludeConstraint(params string[] exclusions)
         {
-            this.exclusions = exclusions;
+            this.exclusions = exclusions ?? new string[] {};
         }
 
         private string[] exclusions;

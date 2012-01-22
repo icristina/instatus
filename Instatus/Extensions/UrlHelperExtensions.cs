@@ -13,10 +13,10 @@ using Instatus.Areas.Microsite.Controllers;
 namespace Instatus
 {
     public static class UrlHelperExtensions
-    {
+    {       
         public static string Relative(this UrlHelper urlHelper, string virtualPath)
         {
-            return virtualPath.IsAbsoluteUri() ? virtualPath : urlHelper.Content(virtualPath).ToLower();
+            return WebPath.Relative(virtualPath);
         }
 
         public static string Absolute(this UrlHelper urlHelper, string virtualPath)

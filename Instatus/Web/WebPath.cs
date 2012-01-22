@@ -20,6 +20,8 @@ namespace Instatus.Web
         
         private static Uri baseUri;
 
+        public static string ApplicationPath { get; set; }
+
         public static Uri BaseUri
         {
             get
@@ -57,9 +59,14 @@ namespace Instatus.Web
             return HttpContext.Current.Server.MapPath(virtualPath);
         }
 
+        public static string Relative(string virtualPath)
+        {
+            return virtualPath.IsAbsoluteUri() ? virtualPath : VirtualPathUtility.ToAbsolute(virtualPath, ApplicationPath).ToLower();
+        }
+
         public static string Absolute(Uri baseUri, string virtualPath)
         {
-            return new Uri(baseUri, VirtualPathUtility.ToAbsolute(virtualPath)).ToString();
+            return new Uri(baseUri, Relative(virtualPath)).ToString();
         }
 
         public static string Absolute(string baseUri, string virtualPath)

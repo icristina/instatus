@@ -43,7 +43,11 @@ namespace Instatus.Web
 
         private String GetResourceName(String virtualPath)
         {
-            var parts = virtualPath.TrimStart('~').Split('/').ToList();
+            var parts = virtualPath
+                            .TrimStart('~')
+                            .Replace(WebPath.ApplicationPath.OrDefault("/").ToLower(), "") // correct for (mock) application path
+                            .Split('/')
+                            .ToList();
 
             for (var i = 0; i < parts.Count; i++)
             {

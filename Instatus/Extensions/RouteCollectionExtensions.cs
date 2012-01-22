@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Routing;
 using System.Web.Mvc;
 using Instatus.Areas.Microsite;
+using Instatus.Web;
 
 namespace Instatus
 {
@@ -50,9 +51,9 @@ namespace Instatus
         public const string DefaultRouteName = "DefaultRoute";
         public const string HomeSlug = "home";
 
-        public static void MapHomeRoute(this RouteCollection routes, string controllerName = "Home", string actionName = "Index", string areaName = null)
+        public static Route MapHomeRoute(this RouteCollection routes, string controllerName = "Home", string actionName = "Index", string areaName = null)
         {
-            routes.MapRoute(
+            return routes.MapRouteLowercase(
                 HomeRouteName,
                 "",
                 new
@@ -66,12 +67,12 @@ namespace Instatus
                     controller = controllerName,
                     action = actionName
                 }
-            );
+            ).AddAreaDataTokens(areaName);
         }
 
-        public static void MapNavigableRoute(this RouteCollection routes, string prefix, string controllerName = "Page", string actionName = "Details", string areaName = null)
+        public static Route MapNavigableRoute(this RouteCollection routes, string prefix, string controllerName = "Page", string actionName = "Details", string areaName = null)
         {
-            routes.MapRouteLowercase(
+            return routes.MapRouteLowercase(
                 NavigableRouteName, 
                 prefix + "/{slug}",
                 new
@@ -81,12 +82,12 @@ namespace Instatus
                     slug = UrlParameter.Optional,
                     area = areaName
                 }
-            );
+            ).AddAreaDataTokens(areaName);
         }
 
-        public static void MapFixedNavigableRoute(this RouteCollection routes, string prefix, string[] slugs, string controllerName = "Page", string actionName = "Details", string areaName = null)
+        public static Route MapFixedNavigableRoute(this RouteCollection routes, string prefix, string[] slugs, string controllerName = "Page", string actionName = "Details", string areaName = null)
         {
-            routes.MapRouteLowercase(
+            return routes.MapRouteLowercase(
                 NavigableRouteName,
                 prefix + "/{slug}",
                 new
@@ -100,12 +101,12 @@ namespace Instatus
                 {
                     slug = string.Join("|", slugs)
                 }
-            );
+            ).AddAreaDataTokens(areaName);
         }
 
-        public static void MapDefaultRoute(this RouteCollection routes, string controllerName = "Home", string actionName = "Index", string areaName = null)
+        public static Route MapDefaultRoute(this RouteCollection routes, string controllerName = "Home", string actionName = "Index", string areaName = null, string[] excludeControllerNames = null)
         {
-            routes.MapRouteLowercase(
+            return routes.MapRouteLowercase(
                 DefaultRouteName,
                 "{controller}/{action}/{slug}",
                 new
@@ -114,13 +115,17 @@ namespace Instatus
                     action = actionName,
                     slug = UrlParameter.Optional,
                     area = areaName
+                },
+                new
+                {
+                    controller = new ExcludeConstraint(excludeControllerNames)
                 }
-            );
+            ).AddAreaDataTokens(areaName);
         }
 
-        public static void MapSingleActionRoute(this RouteCollection routes, string controllerName, string actionName, string areaName = null)
+        public static Route MapSingleActionRoute(this RouteCollection routes, string controllerName, string actionName, string areaName = null)
         {
-            routes.MapRouteLowercase(
+            return routes.MapRouteLowercase(
                 string.Format("{0}-{1}", controllerName, actionName),
                 string.Format("{0}/{1}/{{slug}}", controllerName, actionName),
                 new
@@ -135,7 +140,7 @@ namespace Instatus
                     controller = controllerName,
                     action = actionName
                 }
-            );
+            ).AddAreaDataTokens(areaName);
         }
     }
 }

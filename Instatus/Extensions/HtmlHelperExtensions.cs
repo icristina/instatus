@@ -17,6 +17,11 @@ namespace Instatus
 {
     public static class HtmlHelperExtensions
     {
+        public static string Layout<T>(this HtmlHelper<T> html, string virtualPath)
+        {
+            return html.ViewContext.IsChildAction || html.ViewContext.HttpContext.Request.IsAjaxRequest() ? null : WebPath.Relative(virtualPath);
+        }        
+        
         public static MvcForm BeginMultipartForm<T>(this HtmlHelper<T> html, string actionName = null, string controllerName = null)
         {
             var routeData = html.ViewContext.RouteData;

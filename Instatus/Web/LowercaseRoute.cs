@@ -149,11 +149,18 @@ namespace Instatus
                 namespaces = context.Namespaces.ToArray();
             }
 
-            Route route = context.Routes.MapRouteLowercase(name, url, defaults, constraints, namespaces);
+            return context.Routes
+                        .MapRouteLowercase(name, url, defaults, constraints, namespaces)
+                        .AddAreaDataTokens(context.AreaName, namespaces);
+        }
 
-            route.DataTokens["area"] = context.AreaName;
-            route.DataTokens["UseNamespaceFallback"] = (namespaces == null || namespaces.Length == 0);
-
+        public static Route AddAreaDataTokens(this Route route, string areaName, string[] namespaces = null)
+        {
+            if (areaName != null)
+            {
+                route.DataTokens["area"] = areaName;
+                route.DataTokens["UseNamespaceFallback"] = (namespaces == null || namespaces.Length == 0);
+            }
             return route;
         }
     }
