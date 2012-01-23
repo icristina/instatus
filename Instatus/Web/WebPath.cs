@@ -60,8 +60,14 @@ namespace Instatus.Web
         }
 
         public static string Relative(string virtualPath)
-        {
-            return virtualPath.IsAbsoluteUri() ? virtualPath : VirtualPathUtility.ToAbsolute(virtualPath, ApplicationPath).ToLower();
+        {                        
+            if(virtualPath.IsAbsoluteUri())
+                return virtualPath;
+
+            if(!ApplicationPath.IsEmpty())
+                return VirtualPathUtility.ToAbsolute(virtualPath, ApplicationPath).ToLower();
+
+            return VirtualPathUtility.ToAbsolute(virtualPath).ToLower();
         }
 
         public static string Absolute(Uri baseUri, string virtualPath)

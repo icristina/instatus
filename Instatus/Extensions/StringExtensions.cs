@@ -332,6 +332,11 @@ namespace Instatus
             return Uri.IsWellFormedUriString(text, UriKind.Absolute);
         }
 
+        public static MvcHtmlString AsRaw(this string text)
+        {
+            return new MvcHtmlString(text);
+        }
+
         public static string ToHtmlEntites(this string text)
         {
             var sb = new StringBuilder();

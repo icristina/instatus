@@ -1,6 +1,10 @@
-﻿(function () {
-    $.fn.auto = function (eventName, selector) {
-        $(this).find(selector).trigger(eventName);
+﻿(function ($) {
+    String.prototype.startsWith = function (str) {
+        return this.indexOf(str) == 0;
+    };
+
+    $.fn.initialize = function (selector, evnt) {
+        this.find(selector).trigger(evnt | 'initialize');
         return this;
     };
 
@@ -14,7 +18,7 @@
         s.el = $(event.currentTarget);
         s.tagName = s.el.get(0).tagName;
         s.uri = s.el.attr('action') || s.el.attr('href') || s.el.attr('src');
-        s.target = selector(s.el, s.target, s.uri || event.delegateTarget);
+        s.target = selector(s.el, s.target, s.uri && s.uri.startsWith('#') ? s.uri : event.delegateTarget);
         s.container = selector(s.el, s.container, s.target);
         return s;
     }
@@ -41,6 +45,10 @@
         visible(s.container, false);
     }
 
+    function button(event) {
+        $(this).css('cursor', 'pointer');
+    }
+
     function accordion(event) {
         var el = $(this);
         var tagName = el.get(0).tagName;
@@ -53,8 +61,8 @@
 
     function ajax(event) {
         var s = state(event, {
-            target: 'body',
             empty: true,
+            track: true,
             validate: validate,
             hint: hint,
             addCallbacks: null
@@ -68,16 +76,23 @@
             visible(s.target, true);
         };
 
+        var track = function () {
+            if (s.track)
+                trackPageview(s.uri);
+        }
+
         if (!$.isFunction(s.validate) || s.validate(s)) {
             var deferred;
 
             if (s.el.is('form')) {
-                deferred = $.post(s.uri, s.el.serialize())
-                    .done(insert);
+                deferred = $.post(s.uri, s.el.serialize());
             } else {
-                deferred = $.get(s.uri)
-                    .done(insert);
+                deferred = $.get(s.uri);
             }
+
+            deferred
+                .done(insert)
+                .done(track);
 
             if ($.isFunction(s.addCallbacks))
                 s.addCallbacks(deferred);
@@ -133,8 +148,14 @@
         };
     }
 
+    function trackPageview(uri) {
+        if (window._gaq)
+            _gaq.push(['_trackPageview', uri]);
+    }
+
     function trackEvent(event) {
-        _gaq.push(['_trackEvent', event.data.category, event.data.action, $(this).attr('href')]);
+        if (window._gaq)
+            _gaq.push(['_trackEvent', event.data.category, event.data.action, $(this).attr('href')]);
     }
 
     function back() {
@@ -155,10 +176,12 @@
             ajax: ajax,
             close: close,
             toggle: toggle,
-            back: back
+            back: back,
+            button: button
         },
         routeData: routeData,
         track: {
+            view: trackPageview,
             event: trackEvent
         },
         validator: {
@@ -166,4 +189,4 @@
             email: email
         }
     };
-})();
+})(jQuery);

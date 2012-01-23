@@ -490,6 +490,11 @@ namespace Instatus
 
     internal static class HtmlBuilder
     {
+        public static TagBuilder MergeDataAttribute(this TagBuilder tagBuilder, string key, object value)
+        {
+            return tagBuilder.MergeAttributeOrEmpty("data-" + key, value);
+        }
+        
         public static TagBuilder MergeAttributeOrEmpty(this TagBuilder tagBuilder, string key, object value)
         {
             if (!(key.IsEmpty() || value.IsEmpty()))

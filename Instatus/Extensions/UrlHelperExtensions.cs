@@ -78,6 +78,11 @@ namespace Instatus
             return urlHelper.RouteUrl(RouteCollectionExtensions.NavigableRouteName, new { slug = slug });
         }
 
+        public static string Self(this UrlHelper urlHelper)
+        {
+            return urlHelper.RequestContext.HttpContext.Request.Url.AbsoluteUri;
+        }
+
         public static string Self(this UrlHelper urlHelper, IWebView webView)
         {
             var routeData = urlHelper.RequestContext.RouteData;

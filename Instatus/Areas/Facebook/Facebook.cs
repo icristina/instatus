@@ -16,6 +16,7 @@ using System.Text;
 using System.Data.Entity;
 using System.Configuration;
 using Instatus.Services;
+using System.Web.Mvc;
 
 namespace Instatus.Areas.Facebook
 {
@@ -59,6 +60,38 @@ namespace Instatus.Areas.Facebook
             {
                 return null;
             }
+        }
+
+        public static string LikeButtonCount(string uri = null, EmbedType embedType = EmbedType.Html, int width = 90)
+        {
+            uri = uri ?? HttpContext.Current.Request.Url.AbsoluteUri;
+            
+            TagBuilder tagBuilder;
+            
+            if(embedType == EmbedType.Html && Credential.HasFeature("xfbml")) {
+                tagBuilder = new TagBuilder("div");
+
+                tagBuilder.AddCssClass("fb-like");
+                
+                tagBuilder
+                      .MergeDataAttribute("href", uri)
+                      .MergeDataAttribute("send", "false")
+                      .MergeDataAttribute("layout", "button_count")
+                      .MergeDataAttribute("width", width)
+                      .MergeDataAttribute("show-faces", "false");
+ 
+            } else {
+                tagBuilder = new TagBuilder("iframe");
+
+                // extended_social_context=false attempts to disable "Be the first..." type descriptive text
+                tagBuilder.MergeAttribute("src", string.Format("//www.facebook.com/plugins/like.php?href={0}&send=false&layout=button_count&width={1}&show_faces=false&action=like&colorscheme=light&font&height=21&appId={2}&extended_social_context=false", HttpUtility.UrlEncode(uri), width, Facebook.ApplicationId));
+                tagBuilder.MergeAttribute("scrolling", "no");
+                tagBuilder.MergeAttribute("frameborder", "0");
+                tagBuilder.MergeAttribute("style", string.Format("border:none; overflow:hidden; width:{0}px; height:21px;", width));
+                tagBuilder.MergeAttribute("allowTransparency", "true");
+            }
+
+            return tagBuilder.ToString();
         }
 
         public static string Picture(object resource, PictureSize size)
@@ -361,6 +394,12 @@ namespace Instatus.Areas.Facebook
             {
                 return null;
             }            
+        }
+
+        public enum EmbedType
+        {
+            Html,
+            Iframe
         }
 
         public enum PictureSize {
