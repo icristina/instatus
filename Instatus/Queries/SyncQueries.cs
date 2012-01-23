@@ -38,6 +38,7 @@ namespace Instatus
             if (merged == null)
             {
                 merged = page;
+                merged.Id = 0;
                 context.Pages.Add(merged);
             }
             else
@@ -55,7 +56,7 @@ namespace Instatus
                 }
 
                 if (page.Priority != 0)
-                    merged.Priority = merged.Priority;
+                    merged.Priority = page.Priority;
 
                 if (page is Application)
                 {
