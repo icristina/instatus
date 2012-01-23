@@ -62,7 +62,7 @@ namespace Instatus.Areas.Facebook
             }
         }
 
-        public static string LikeButtonCount(string uri = null, EmbedType embedType = EmbedType.Html, int width = 90)
+        public static string LikeButton(string uri = null, EmbedType embedType = EmbedType.Html, int width = 90)
         {
             uri = uri ?? HttpContext.Current.Request.Url.AbsoluteUri;
             
