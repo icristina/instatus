@@ -36,6 +36,11 @@
         visible(s.target, false);
     }
 
+    function submit(event) {
+        var s = state(event);
+        s.target.submit();
+    }
+
     function toggle(event) {
         var s = state(event, {
             container: function (el) { return el.closest('section, form'); }
@@ -177,7 +182,8 @@
             close: close,
             toggle: toggle,
             back: back,
-            button: button
+            button: button,
+            submit: submit
         },
         routeData: routeData,
         track: {
