@@ -3,11 +3,6 @@
         return this.indexOf(str) == 0;
     };
 
-    $.fn.initialize = function (selector, evnt) {
-        this.find(selector).trigger(evnt | 'initialize');
-        return this;
-    };
-
     function selector(context, selector, deflt) {
         return $.isFunction(selector) ? selector(context) : selector ? $(selector) : $(deflt);
     }

@@ -200,12 +200,19 @@ namespace Instatus
             return list;
         }
 
-        public static ICollection<T> Synchronize<T>(this ICollection<T> source, Func<T, T> existingMatch) where T : class
+        public static IEnumerable<T> RemoveNulls<T>(this IEnumerable<T> source)
+        {
+            return source.Where(item => item != null);
+        }
+
+        public static ICollection<T> Synchronize<T>(this IEnumerable<T> source, Func<T, T> existingMatch, bool excludeNonMatches = false) where T : class
         {
             if (source.IsEmpty())
                 return null;
-            
-            return source.Select(item => existingMatch(item) ?? item).ToList();
+
+            return source.Select(item => existingMatch(item) ?? (excludeNonMatches ? null : item))
+                    .RemoveNulls()    
+                    .ToList();
         }
 
         public static string ToPositionString<T>(this IEnumerable<T> source, T item, string first = "first", string last = "last") where T : class

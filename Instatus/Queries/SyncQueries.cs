@@ -26,14 +26,24 @@ namespace Instatus
 
         public static Page AddOrMergePage(this BaseDataContext context, Page page)
         {
-            var webSet = new WebSet()
-            {
-                Locale = page.Locale
-            };
+            Page merged;
 
-            var merged = context.GetPage(page.Slug, webSet);
+            if (!page.Sources.IsEmpty())
+            {
+                var source = page.Sources.First();
+                merged = context.Pages.FirstOrDefault(p => p.Sources.Any(s => s.Uri == source.Uri && s.Provider == source.Provider));
+            }
+            else
+            {
+                var webSet = new WebSet()
+                {
+                    Locale = page.Locale
+                };                
+                merged = context.GetPage(page.Slug, webSet);
+            }
 
             page.Tags = page.Tags.Synchronize(tag => context.Tags.FirstOrDefault(t => t.Name == tag.Name));
+            page.Parents = page.Parents.Synchronize(pg => context.Pages.FirstOrDefault(p => p.Slug == pg.Slug), true);
 
             if (merged == null)
             {
@@ -47,7 +57,13 @@ namespace Instatus
                 merged.Description = page.Description;
                 merged.Document = page.Document;
                 merged.Tags = page.Tags;
+
                 merged.Category = page.Category;
+
+                if (!page.Parents.IsEmpty())
+                {
+                    context.Entry(merged).Replace(p => p.Parents, page.Parents);
+                }
 
                 if (!page.Links.IsEmpty())
                 {
