@@ -8,11 +8,17 @@ using Instatus.Data;
 using Instatus.Models;
 using System.IO;
 using Instatus.Web;
+using System.Data.Entity;
 
 namespace Instatus
 {
     public static class SyncQueries
     {
+        public static Page GetPage(this BaseDataContext context, Source source)
+        {
+            return context.Pages.FirstOrDefault(p => p.Sources.Any(s => s.Uri == source.Uri && s.Provider == source.Provider));;
+        }        
+        
         public static void LoadPages(this BaseDataContext context, Stream stream)
         {
             var pages = Generator.LoadXml<List<Page>>(stream);
@@ -30,16 +36,11 @@ namespace Instatus
 
             if (!page.Sources.IsEmpty())
             {
-                var source = page.Sources.First();
-                merged = context.Pages.FirstOrDefault(p => p.Sources.Any(s => s.Uri == source.Uri && s.Provider == source.Provider));
+                merged = context.GetPage(page.Sources.First());
             }
             else
-            {
-                var webSet = new WebSet()
-                {
-                    Locale = page.Locale
-                };                
-                merged = context.GetPage(page.Slug, webSet);
+            {         
+                merged = context.GetPage(page.Slug, locale: page.Locale);
             }
 
             page.Tags = page.Tags.Synchronize(tag => context.Tags.FirstOrDefault(t => t.Name == tag.Name));
@@ -48,7 +49,7 @@ namespace Instatus
             if (merged == null)
             {
                 merged = page;
-                merged.Id = 0;
+                merged.Id = 0; // id should be managed by context
                 context.Pages.Add(merged);
             }
             else
@@ -62,7 +63,7 @@ namespace Instatus
 
                 if (!page.Parents.IsEmpty())
                 {
-                    context.Entry(merged).Replace(p => p.Parents, page.Parents);
+                    context.Replace(merged, p => p.Parents, page.Parents);
                 }
 
                 if (!page.Links.IsEmpty())
@@ -88,7 +89,7 @@ namespace Instatus
                         }
                     }
 
-                    context.Entry((Application)merged).Replace(a => a.Taxonomies, application.Taxonomies);
+                    context.Replace((Application)merged, a => a.Taxonomies, application.Taxonomies);
                 }
             }
 
@@ -98,6 +99,13 @@ namespace Instatus
 
     internal static class DbEntryExtensions
     {
+        public static void Replace<T, TNavigation>(this DbContext context, T entity, Expression<Func<T, ICollection<TNavigation>>> predicate, ICollection<TNavigation> navigation)
+            where TNavigation : class
+            where T : class
+        {
+            context.Entry(entity).Replace(predicate, navigation);
+        }
+        
         public static void Replace<T, TNavigation>(this DbEntityEntry<T> entry, Expression<Func<T, ICollection<TNavigation>>> predicate, ICollection<TNavigation> navigation)
             where TNavigation : class
             where T : class

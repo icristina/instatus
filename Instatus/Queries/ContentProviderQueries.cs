@@ -35,6 +35,16 @@ namespace Instatus
             return contentProvider.GetPage(slug, set) as T;
         }
 
+        public static Page GetPage(this IContentProvider contentProvider, string slug, string locale = null)
+        {
+            var webSet = new WebSet()
+            {
+                Locale = locale
+            };
+            
+            return contentProvider.GetPage(slug, webSet);
+        }
+
         public static void AppendContent<T>(this IContentProvider contentProvider, WebView<T> webView, string slug, WebSet set = null)
         {
             var page = contentProvider.GetPage(slug, set);

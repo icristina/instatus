@@ -3,6 +3,15 @@
         return this.indexOf(str) == 0;
     };
 
+    $.fn.bootstrap = function (selector) {
+        var descendant = this.find(selector);
+        if (descendant.is(':input'))
+            descendant.trigger('change');
+        else
+            descendant.trigger('click');
+        return this;
+    };
+
     function selector(context, selector, deflt) {
         return $.isFunction(selector) ? selector(context) : selector ? $(selector) : $(deflt);
     }
