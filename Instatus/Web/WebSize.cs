@@ -7,6 +7,7 @@ namespace Instatus.Web
 {
     public enum WebSize
     {
+        Original,
         Large,
         Medium,
         Small,

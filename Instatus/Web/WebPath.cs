@@ -119,9 +119,16 @@ namespace Instatus.Web
 
         public static string Resize(WebSize size, string virtualPath)
         {
-            var extensionStartIndex = virtualPath.LastIndexOf('.');
-            var suffix = string.Format("-{0}", size.ToString().ToLower());
-            return virtualPath.Insert(extensionStartIndex, suffix);
+            if (size == WebSize.Original)
+            {
+                return virtualPath;
+            }
+            else
+            {
+                var extensionStartIndex = virtualPath.LastIndexOf('.');
+                var suffix = string.Format("-{0}", size.ToString().ToLower());
+                return virtualPath.Insert(extensionStartIndex, suffix);
+            }
         }
 
         public static string ResizeAbsolute(WebSize size, string virtualPath)

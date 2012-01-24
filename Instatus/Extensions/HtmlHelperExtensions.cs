@@ -147,7 +147,7 @@ namespace Instatus
             return new MvcHtmlString(markup);
         }
 
-        public static MvcHtmlString Image<T>(this HtmlHelper<T> html, string contentPath, string text = null)
+        public static MvcHtmlString Image<T>(this HtmlHelper<T> html, string contentPath, string text = null, WebSize size = WebSize.Original)
         {
             if (contentPath.IsEmpty())
                 return null;
@@ -156,7 +156,7 @@ namespace Instatus
             var tag = new TagBuilder("img");
             var alt = text ?? Path.GetFileNameWithoutExtension(contentPath).ToCapitalized();
 
-            tag.MergeAttribute("src", urlHelper.Relative(contentPath));
+            tag.MergeAttribute("src", urlHelper.Resize(size, contentPath));
             tag.MergeAttribute("alt", alt);
 
             return new MvcHtmlString(tag.ToString(TagRenderMode.SelfClosing));
@@ -301,6 +301,17 @@ namespace Instatus
         public static MvcHtmlString InlineData<T>(this HtmlHelper<T> html, string variableName, object graph)
         {
             return new MvcHtmlString(string.Format("<script>var {0} = {1};</script>", variableName, graph.ToJson()));
+        }
+
+        public static IDictionary<string, object> Attributes<T>(this HtmlHelper<T> html, string className = null, string id = null, string style = null)
+        {
+            var attr = new Dictionary<string, object>();
+
+            attr.AddNonEmptyValue("class", className);
+            attr.AddNonEmptyValue("id", id);
+            attr.AddNonEmptyValue("style", style);
+
+            return attr;
         }
 
         public static IDictionary<string, object> ValidationAttributes<T>(this HtmlHelper<T> html)
@@ -499,7 +510,7 @@ namespace Instatus
                 option.InnerHtml = item.Text;
 
                 if (item.Selected)
-                    option.MergeAttribute("checked", "checked");
+                    option.MergeAttribute("selected", "selected");
 
                 sb.Append(option.ToString());
             }

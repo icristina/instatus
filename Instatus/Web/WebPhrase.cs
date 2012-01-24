@@ -27,6 +27,7 @@ namespace Instatus.Web
             Latest,
             Homepage,
             Error,
+            NotFound,
             Confirmation,
             Complete,
             Attachments,
@@ -72,7 +73,9 @@ namespace Instatus.Web
             Tags,
             // phrases
             ErrorDescription,
+            NotFoundDescription,
             SearchDescription,
+            MapDescription,
             NoResults
         }        
         
@@ -90,6 +93,7 @@ namespace Instatus.Web
             FromAToB,
             Flag,
             RemoveFlag,
+            StartDate,
             PublishedDate,
             HtmlTitle
         }
@@ -138,6 +142,8 @@ namespace Instatus.Web
         public static string All { get { return Localize(Common.All, "All"); } }
         public static string Error { get { return Localize(Common.Error, "Error"); } }
         public static string ErrorDescription { get { return Localize(Common.ErrorDescription, "Sorry. An error occured on the page."); } }
+        public static string NotFound { get { return Localize(Common.NotFound, "File not found"); } }
+        public static string NotFoundDescription { get { return Localize(Common.NotFoundDescription, "Sorry. The file you are looking for cannot be found or has been moved."); } }
         public static string Filter { get { return Localize(Common.Filter, "Filter"); } }
         public static string Mode { get { return Localize(Common.Mode, "Mode"); } }
         public static string View { get { return Localize(Common.View, "View"); } }
@@ -150,9 +156,10 @@ namespace Instatus.Web
         public static string Next { get { return Localize(Common.Next, "Next"); } }
         public static string Attachments { get { return Localize(Common.Attachments, "Attachments"); } }
         public static string Search { get { return Localize(Common.Search, "Search"); } }
-        public static string Map { get { return Localize(Common.Map, "Map"); } }
-        public static string NoResults { get { return Localize(Common.NoResults, "Sorry. No results matched your query."); } }
         public static string SearchDescription { get { return Localize(Common.SearchDescription, "Enter keyword or phrase"); } }
+        public static string Map { get { return Localize(Common.Map, "Map"); } }
+        public static string MapDescription { get { return Localize(Common.MapDescription, "Select a location"); } }
+        public static string NoResults { get { return Localize(Common.NoResults, "Sorry. No results matched your query."); } }
         public static string Navigation { get { return Localize(Common.Navigation, "Navigation"); } }
         public static string Related { get { return Localize(Common.Related, "Related"); } }
         public static string Like { get { return Localize(Common.Like, "Like"); } }
@@ -176,6 +183,7 @@ namespace Instatus.Web
         public static string FromAToB(string placeA, string placeB) { return Format(FormatString.FromAToB, "from {0} to {1}", placeA, placeB); }
         public static string Flag(string name) { return Format(FormatString.Flag, "Mark as {0}", name); }
         public static string RemoveFlag(string name) { return Format(FormatString.RemoveFlag, "Unmark as {0}", name); }
+        public static string StartDate(DateTime date) { return Format(FormatString.StartDate, "{0:dd/MM/yyyy}", date); }
         public static string PublishedDate(DateTime date) { return Format(FormatString.PublishedDate, "{0:dd/MM/yyyy}", date); }
         public static string HtmlTitle(string value) { return Format(FormatString.HtmlTitle, "{0}", value); }
 

@@ -17,7 +17,7 @@ namespace Instatus
             query.Category = category ?? query.Category;
             query.Kind = typeof(T).Name.AsEnum<WebKind>();
 
-            if (!expand.IsEmpty())
+            if(!expand.IsEmpty())
                 query.Expand = expand.ToList().ToArray();
 
             if (cache)
@@ -35,12 +35,15 @@ namespace Instatus
             return contentProvider.GetPage(slug, set) as T;
         }
 
-        public static Page GetPage(this IContentProvider contentProvider, string slug, string locale = null)
+        public static Page GetPage(this IContentProvider contentProvider, string slug, string locale = null, string expand = null)
         {
             var webSet = new WebSet()
             {
                 Locale = locale
             };
+
+            if (!expand.IsEmpty())
+                webSet.Expand = expand.ToList().ToArray();
             
             return contentProvider.GetPage(slug, webSet);
         }

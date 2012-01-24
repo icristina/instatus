@@ -342,7 +342,20 @@ namespace Instatus.Data
                 {
                     filtered = filtered.Where(p => p.Parents.Any(r => r.Slug == query.Parent));
                 }
-            }                
+            }
+
+            if (!query.Ancestor.IsEmpty())
+            {
+                if (query.Ancestor.IsNumeric())
+                {
+                    int ancestorId = query.Ancestor.AsInteger();
+                    filtered = filtered.Where(p => p.Parents.Any(r => r.Parents.Any(a => a.Id == ancestorId)));
+                }
+                else
+                {
+                    filtered = filtered.Where(p => p.Parents.Any(r => r.Parents.Any(a => a.Slug == query.Ancestor)));
+                }
+            }     
 
             if (!query.Term.IsEmpty())
                 filtered = filtered.Where(p => p.Name.StartsWith(query.Term));

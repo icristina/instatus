@@ -16,17 +16,26 @@ namespace Instatus.Web
         // selection
         public WebContentType ContentType { get; set; }    
         public string User { get; set; }
+
+        // axis
+        public string Ancestor { get; set; }
         public string Parent { get; set; }
+        
+        // taxonomy
         public string Tag { get; set; }
         public string Category { get; set; }
-        public string[] Uri { get; set; }
+
+        // search
         public string Term { get; set; }
+
+        public string[] Uri { get; set; }
         public DateTime? StartDate { get; set; }
         public string Filter { get; set; }    
 
         // geo
         public double Latitude { get; set; }
         public double Longitude { get; set; }
+        public double Zoom { get; set; }
 
         public bool HasCoordinates
         {
@@ -120,6 +129,7 @@ namespace Instatus.Web
                         .AddNonEmptyValue("pageSize", PageSize)
                         .AddNonEmptyValue("maxPageCount", MaxPageCount)
                         .AddNonEmptyValue("countTotal", CountTotal)
+                        .AddNonEmptyValue("ancestor", Ancestor)
                         .AddNonEmptyValue("parent", Parent)
                         .AddNonEmptyValue("startDate", StartDate.HasValue ? StartDate.Value.ToString("yyyy-MM-dd") : null)
                         .AddNonEmptyValue("term", Term)
@@ -127,6 +137,7 @@ namespace Instatus.Web
                         .AddNonEmptyValue("category", Category)
                         .AddNonEmptyValue("latitude", Latitude)
                         .AddNonEmptyValue("longitude", Longitude)
+                        .AddNonEmptyValue("zoom", Zoom)
                         .AddNonEmptyValue("kind", Kind)
                         .AddNonEmptyValue("locale", Locale)
                         .AddNonEmptyValue("expand", string.Join(",", Expand ?? new string[] { }));

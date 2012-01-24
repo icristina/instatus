@@ -22,7 +22,7 @@ namespace Instatus.Services
             });
 
             // require block level container
-            if (!markup.Contains("<"))
+            if (!markup.Contains("<p") && !markup.Contains("<div"))
             {
                 markup = string.Format("<p>{0}</p>", markup);
             }                

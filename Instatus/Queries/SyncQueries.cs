@@ -91,6 +91,16 @@ namespace Instatus
 
                     context.Replace((Application)merged, a => a.Taxonomies, application.Taxonomies);
                 }
+
+                if (page is Event)
+                {
+                    var evnt = (Event)page;
+                    var mergedEvent = (Event)merged;
+
+                    context.Entry(mergedEvent).Collection(e => e.Dates).Load();
+                    context.MarkDeleted(mergedEvent.Dates);
+                    mergedEvent.Dates = evnt.Dates;
+                }
             }
 
             return merged;

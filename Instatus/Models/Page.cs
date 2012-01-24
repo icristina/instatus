@@ -11,6 +11,7 @@ using Instatus.Areas.Microsite;
 using Instatus.Web;
 using System.Dynamic;
 using Instatus.Data;
+using Instatus.Models;
 
 namespace Instatus.Models
 {   
@@ -185,48 +186,7 @@ namespace Instatus.Models
             return restrictionResults;
         }
 
-        public Page ProcessIncludes(BaseDataContext dataContext = null, RouteData routeData = null)
-        {
-            if (Document == null)
-                Document = new WebDocument();
-
-            var scope = new List<string>() { GetType().Name };
-
-            if(routeData != null) {
-                scope.Add(routeData.ActionName());
-                scope.Add(routeData.AreaName());
-                scope.Add(routeData.ToUniqueId());
-            }
-
-            // include WebParts that are unscoped or scope matches routeData parameter
-            Document.Parts.AddRange(WebPart.Catalog.Where(p => p.Scope.IsEmpty() || scope.Contains(p.Scope)));
-
-            if (dataContext == null)
-                dataContext = BaseDataContext.Instance();
-
-            foreach (var include in Document.Parts.OfType<WebInclude>().ToList())
-            {
-                Document.Parts.Remove(include);
-                
-                var page = dataContext.GetPage<Page>(include.Uri);
-
-                if (page.Document == null)
-                    break;
-
-                if (page.Document.Body != null)
-                    Document.Parts.Add(new WebSection()
-                    {
-                        Heading = page.Document.Title,
-                        Abstract = page.Document.Description,
-                        Body = page.Document.Body
-                    });
-
-                if (page.Document.Parts != null)
-                    Document.Parts.Append(page.Document.Parts);
-            }
-
-            return this;
-        }
+ 
 
         public static Page Instance(WebKind kind)
         {
@@ -263,6 +223,58 @@ namespace Instatus.Models
                 default:
                     return new Page();
             }
+        }
+    }
+}
+
+namespace Instatus
+{
+    public static class PageExtensions
+    {
+        public static Page ProcessIncludes(this Page page, BaseDataContext dataContext = null, RouteData routeData = null)
+        {
+            if (page == null)
+                return null;
+            
+            if (page.Document == null)
+                page.Document = new WebDocument();
+
+            var scope = new List<string>() { page.GetType().Name };
+
+            if(routeData != null) {
+                scope.Add(routeData.ActionName());
+                scope.Add(routeData.AreaName());
+                scope.Add(routeData.ToUniqueId());
+            }
+
+            // include WebParts that are unscoped or scope matches routeData parameter
+            page.Document.Parts.AddRange(WebPart.Catalog.Where(p => p.Scope.IsEmpty() || scope.Contains(p.Scope)));
+
+            if (dataContext == null)
+                dataContext = BaseDataContext.Instance();
+
+            foreach (var include in page.Document.Parts.OfType<WebInclude>().ToList())
+            {
+                page.Document.Parts.Remove(include);
+                
+                var childPage = dataContext.GetPage<Page>(include.Uri);
+
+                if (childPage.Document == null)
+                    break;
+
+                if (childPage.Document.Body != null)
+                    page.Document.Parts.Add(new WebSection()
+                    {
+                        Heading = childPage.Document.Title,
+                        Abstract = childPage.Document.Description,
+                        Body = childPage.Document.Body
+                    });
+
+                if (childPage.Document.Parts != null)
+                    page.Document.Parts.Append(childPage.Document.Parts);
+            }
+
+            return page;
         }
     }
 }
