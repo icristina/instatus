@@ -9,6 +9,7 @@ using Instatus.Data;
 using Instatus.Models;
 using Instatus.Web;
 using System.Net;
+using System.Configuration;
 
 namespace Instatus.Controllers
 {
@@ -88,7 +89,12 @@ namespace Instatus.Controllers
             {
                 Response.AddHeader("p3p", "CP=\"CAO PSA OUR\""); // cookies in iframes for IE
             }
-            
+
+            if (Request.IsAjaxRequest() && ConfigurationManager.AppSettings.Value<bool>("SimulateSlowConnection"))
+            {
+                System.Threading.Thread.Sleep(5000);
+            }
+
             base.OnActionExecuted(filterContext);
         }
         

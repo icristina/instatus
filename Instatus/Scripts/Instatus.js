@@ -95,6 +95,17 @@
         visible(content, true);
     }
 
+    function aria(el, role, val) {
+        el.attr('aria-' + role, val);
+
+        if (val === true) {
+            el.addClass(role);
+        }
+        else if (val === false) {
+            el.removeClass(role);
+        }
+    }
+
     function ajax(event) {
         var s = state(event, {
             empty: true,
@@ -117,6 +128,24 @@
                 trackPageview(s.uri);
         }
 
+        var busy = function () {
+            s.target.find(':submit').each(function () {
+                var button = $(this);
+
+                if (!button.is(':has(span)'))
+                    button.append('<span></span>');
+
+                button.attr('disabled', 'disabled');
+            });
+
+            aria(s.target, 'busy', true);
+        }
+
+        var done = function () {
+            s.target.find(':submit').removeAttr('disabled');
+            aria(s.target, 'busy', false);
+        }
+
         if (!$.isFunction(s.validate) || s.validate(s)) {
             var deferred;
 
@@ -126,7 +155,10 @@
                 deferred = $.get(s.uri);
             }
 
+            busy();
+
             deferred
+                .done(done)
                 .done(insert)
                 .done(track);
 
@@ -219,7 +251,7 @@
             validate: validate
         },
         polyfill: {
-            placeholder: placeholder            
+            placeholder: placeholder
         },
         routeData: routeData,
         track: {
