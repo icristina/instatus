@@ -4,11 +4,12 @@
     };
 
     $.fn.bootstrap = function (selector) {
-        var descendant = this.find(selector);
-        if (descendant.is(':input'))
-            descendant.trigger('change');
-        else
-            descendant.trigger('click');
+        this.find(selector).trigger('click');
+        return this;
+    };
+
+    $.fn.polyfill = function (selector, func) {
+        this.find(selector).each(func);
         return this;
     };
 
@@ -52,6 +53,32 @@
 
         visible(s.target, true);
         visible(s.container, false);
+    }
+
+    function placeholder() {
+        if (Modernizr && Modernizr.input && Modernizr.input.placeholder)
+            return;
+
+        var el = $(this);
+        var placeholder = el.attr('placeholder');
+
+        el.focus(function () {
+            el.removeClass('placeholder');
+            if (el.val() == placeholder)
+                el.val('');
+        });
+
+        var hint = function () {
+            if (el.val() == '') {
+                el.val(placeholder);
+                el.addClass('placeholder');
+            } else if (el.val() != placeholder) {
+                el.removeClass('placeholder');
+            }
+        };
+
+        el.blur(hint);
+        hint();
     }
 
     function button(event) {
@@ -122,9 +149,10 @@
             var input = $(this);
             var val = input.val();
             var m;
-            if (input.is('[required]') && !required(val))
+
+            if (input.is('[required]') && (input.val() == input.attr('placeholder') || !required(val)))
                 m = message(input, '', 'is required');
-            if (input.is('[type=email]') && !email(val))
+            else if (input.is('[type=email]') && !email(val))
                 m = message(input, '', 'is not valid');
 
             if (m) {
@@ -189,6 +217,9 @@
             button: button,
             submit: submit,
             validate: validate
+        },
+        polyfill: {
+            placeholder: placeholder            
         },
         routeData: routeData,
         track: {

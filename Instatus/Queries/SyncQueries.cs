@@ -101,6 +101,18 @@ namespace Instatus
                     context.MarkDeleted(mergedEvent.Dates);
                     mergedEvent.Dates = evnt.Dates;
                 }
+
+                if (page is Place)
+                {
+                    var place = (Place)page;
+                    var mergedPlace = (Place)merged;
+
+                    if(place.Address != null)
+                        mergedPlace.Address = place.Address;
+                    
+                    if(place.Point != null)
+                        mergedPlace.Point = place.Point;
+                }
             }
 
             return merged;
