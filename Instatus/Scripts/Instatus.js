@@ -3,16 +3,6 @@
         return this.indexOf(str) == 0;
     };
 
-    $.fn.bootstrap = function (selector) {
-        this.find(selector).trigger('click');
-        return this;
-    };
-
-    $.fn.polyfill = function (selector, func) {
-        this.find(selector).each(func);
-        return this;
-    };
-
     function selector(context, selector, deflt) {
         return $.isFunction(selector) ? selector(context) : selector ? $(selector) : $(deflt);
     }
@@ -56,11 +46,14 @@
     }
 
     function placeholder() {
-        if (Modernizr && Modernizr.input && Modernizr.input.placeholder)
+        if (window.Modernizr && Modernizr.input && Modernizr.input.placeholder)
             return;
 
         var el = $(this);
         var placeholder = el.attr('placeholder');
+
+        if (!placeholder)
+            return;
 
         el.focus(function () {
             el.removeClass('placeholder');
@@ -111,7 +104,7 @@
             empty: true,
             track: true,
             validate: validate,
-            hint: hint,
+            alert: alert,
             addCallbacks: null
         });
 
@@ -129,7 +122,7 @@
         }
 
         var busy = function () {
-            s.target.find(':submit').each(function () {
+            s.el.closest('form').find(':submit').each(function () {
                 var button = $(this);
 
                 if (!button.is(':has(span)'))
@@ -142,7 +135,7 @@
         }
 
         var done = function () {
-            s.target.find(':submit').removeAttr('disabled');
+            s.el.closest('form').find(':submit').removeAttr('disabled');
             aria(s.target, 'busy', false);
         }
 
@@ -167,41 +160,33 @@
         }
     }
 
-    function hint(el, messages) {
-        alert(messages[0]);
+    function alert(s) {
+        window.alert(s.errors[0].message);
     }
 
-    function message(input, prefix, suffix) {
-        return input.attr('title') || prefix + ' ' + input.attr('placeholder') + ' ' + suffix;
-    }
-
-    function messages(form) {
-        var messages = [];
-        form.find(':input').each(function () {
-            var input = $(this);
-            var val = input.val();
-            var m;
-
-            if (input.is('[required]') && (input.val() == input.attr('placeholder') || !required(val)))
-                m = message(input, '', 'is required');
-            else if (input.is('[type=email]') && !email(val))
-                m = message(input, '', 'is not valid');
-
-            if (m) {
-                input.addClass('error');
-                messages.push(m);
-            }
-            else {
-                input.removeClass('error');
-            }
-        });
-        return messages;
+    function format(formatString, val) {
+        return formatString.replace('{0}', val);
     }
 
     function validate(s) {
-        var m = messages(s.el);
-        if (m.length > 0) {
-            s.hint(s.el, m);
+        s.errors = [];
+        s.el.find(':input').each(function () {
+            var input = $(this);
+            $.each(instatus.validator, function (name, validator) {
+                if (input.is(validator.selector) && !validator.valid(input.val(), input)) {
+                    s.errors.push({
+                        input: input,
+                        message: input.attr('title') || format(validator.message, input.attr('placeholder'))
+                    });
+                    input.addClass('error');
+                    return false;
+                } else {
+                    input.removeClass('error');
+                }
+            });
+        });
+        if (s.errors.length > 0) {
+            s.alert(s);
             return false;
         } else {
             return true;
@@ -231,14 +216,6 @@
         history.back();
     }
 
-    function required(val) {
-        return val && (val + '').length > 0 && val != 'null';
-    }
-
-    function email(val) {
-        return val && val.indexOf('@') != -1;
-    }
-
     window.instatus = {
         behaviour: {
             accordion: accordion,
@@ -259,8 +236,16 @@
             event: trackEvent
         },
         validator: {
-            required: required,
-            email: email
+            required: {
+                selector: '[required]',
+                valid: function (val, input) { return !(val == input.attr('placeholder')) && val && (val + '').length > 0 && val != 'null'; },
+                message: '{0} is required'
+            },
+            email: {
+                selector: '[type=email]',
+                valid: function (val) { return val && val.indexOf('@') != -1; },
+                message: 'Email address is not valid'
+            }
         }
     };
 })(jQuery);

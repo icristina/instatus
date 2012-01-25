@@ -144,10 +144,16 @@ namespace Instatus
 
         public static T Value<T>(this NameValueCollection collection, string name)
         {
-            if (typeof(T).IsEnum)
-                return (T)Enum.Parse(typeof(T), collection[name]);
+            var type = typeof(T);
+            var value = collection[name];
             
-            return (T)Convert.ChangeType(collection[name], typeof(T));
+            if (type.IsEnum)
+                return (T)Enum.Parse(type, value);
+
+            if (type.IsValueType && value == null) // cannot convert null value type
+                return default(T);
+
+            return (T)Convert.ChangeType(value, type);
         }
 
         public static ICollection<T> Append<T>(this ICollection<T> set, IEnumerable<T> additions) {
