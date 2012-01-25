@@ -5,10 +5,11 @@ using System.Web;
 using Instatus.Web;
 using System.Dynamic;
 using System.Runtime.Serialization;
+using Instatus.Data;
 
 namespace Instatus.Web
 {
-    public class WebDocument
+    public class WebDocument : IHasValue
     {       
         public string Title { get; set; }
         public string Description { get; set; }
@@ -60,6 +61,19 @@ namespace Instatus.Web
             set
             {
                 parameters = value;
+            }
+        }
+
+        public bool HasValue
+        {
+            get
+            {
+                return !(Title.IsEmpty() 
+                    && Description.IsEmpty() 
+                    && Body.IsEmpty() 
+                    && links.IsEmpty() 
+                    && parts.IsEmpty() 
+                    && parameters.IsEmpty());
             }
         }
     }

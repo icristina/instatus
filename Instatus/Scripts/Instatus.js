@@ -187,7 +187,8 @@
             toggle: toggle,
             back: back,
             button: button,
-            submit: submit
+            submit: submit,
+            validate: validate
         },
         routeData: routeData,
         track: {

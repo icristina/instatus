@@ -110,6 +110,7 @@
     <Compile Include="Data\IContentProvider.cs" />
     <Compile Include="Data\IBaseDataContext.cs" />
     <Compile Include="Data\IDataExport.cs" />
+    <Compile Include="Data\IHasValue.cs" />
     <Compile Include="Data\InMemoryBaseDataContext.cs" />
     <Compile Include="Data\IObjectMapping.cs" />
     <Compile Include="Data\IPayload.cs" />

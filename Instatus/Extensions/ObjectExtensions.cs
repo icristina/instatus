@@ -13,6 +13,7 @@ using System.Web.Hosting;
 using System.Collections.Specialized;
 using System.Web.Routing;
 using System.Web.Script.Serialization;
+using Instatus.Data;
 
 namespace Instatus
 {
@@ -85,6 +86,7 @@ namespace Instatus
         public static bool IsEmpty(this object graph)
         {
             return graph == null 
+                || (graph is IHasValue && !((IHasValue)graph).HasValue)
                 || (graph is string && string.IsNullOrWhiteSpace((string)graph)) 
                 || (graph is ICollection && ((ICollection)graph).Count == 0)
                 || (graph is IEnumerable && CollectionExtensions.Count(((IEnumerable)graph)) == 0)

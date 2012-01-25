@@ -97,7 +97,7 @@ namespace Instatus.Models
         {
             get
             {
-                return Fields.Serialize(knownTypes);
+                return Fields == null || Fields.All(f => f.Value.IsEmpty()) ? null : Fields.Serialize(knownTypes);
             }
             set
             {
@@ -185,8 +185,6 @@ namespace Instatus.Models
 
             return restrictionResults;
         }
-
- 
 
         public static Page Instance(WebKind kind)
         {
