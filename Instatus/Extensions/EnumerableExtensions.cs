@@ -48,6 +48,11 @@ namespace Instatus
             return source.OrderBy(i => Guid.NewGuid());
         }
 
+        public static bool AllEmpty<T1, T2>(this IDictionary<T1, T2> source)
+        {
+            return source.All(f => f.Value.IsEmpty());
+        }
+
         public static void ForFirst<T>(this IQueryable<T> list, Action<T> action)
         {
             if (list.Count() > 0)

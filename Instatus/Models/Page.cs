@@ -86,9 +86,28 @@ namespace Instatus.Models
         [NotMapped]
         public Dictionary<WebVerb, WebInsight> Insights { get; private set; }
 
+        private Dictionary<string, object> fields;
+
         [NotMapped]
         [IgnoreDataMember]
-        public Dictionary<string, object> Fields { get; private set; }
+        public Dictionary<string, object> Fields {
+            get
+            {
+                if (fields == null)
+                {
+                    fields = new Dictionary<string, object>()
+                    {
+                        { "Document", new WebDocument() }
+                    };
+                }
+                
+                return fields;
+            }
+            set
+            {
+                fields = value;
+            }
+        }
 
         private Type[] knownTypes = new Type[] { typeof(WebDocument) };
 
@@ -97,7 +116,7 @@ namespace Instatus.Models
         {
             get
             {
-                return Fields == null || Fields.All(f => f.Value.IsEmpty()) ? null : Fields.Serialize(knownTypes);
+                return Fields.AllEmpty() ? null : Fields.Serialize(knownTypes);
             }
             set
             {
@@ -115,14 +134,11 @@ namespace Instatus.Models
 
         public Page()
         {
-            Fields = new Dictionary<string, object>();
-            
             CreatedTime = DateTime.UtcNow;
             UpdatedTime = DateTime.UtcNow;
             PublishedTime = DateTime.UtcNow;
             Extensions = new ExpandoObject();
             Status = WebStatus.Published.ToString();
-            Document = new WebDocument();
             Card = new Card();
             Insights = new Dictionary<WebVerb, WebInsight>();
         }
