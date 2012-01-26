@@ -151,7 +151,7 @@
             busy();
 
             deferred
-                .done(done)
+                .always(done)
                 .done(insert)
                 .done(track);
 

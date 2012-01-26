@@ -36,7 +36,7 @@ namespace Instatus
 
         public static string Resize(this UrlHelper urlHelper, WebSize size, string virtualPath)
         {
-            return urlHelper.Content(WebPath.Resize(size, virtualPath));
+            return WebPath.Relative(WebPath.Resize(size, virtualPath));
         }
 
         public static SiteMapNodeCollection SitemapNodes(this UrlHelper urlHelper, Func<ControllerDescriptor, bool> isNavigable = null, string actionName = "Index")

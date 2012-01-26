@@ -51,76 +51,94 @@ namespace Instatus
         public const string DefaultRouteName = "DefaultRoute";
         public const string HomeSlug = "home";
 
+        public static RouteCollection RemoveRoute(this RouteCollection routes, string routeName)
+        {
+            var route = routes[routeName];
+
+            if(route != null)
+                routes.Remove(route);
+
+            return routes;
+        }
+
         public static Route MapHomeRoute(this RouteCollection routes, string controllerName = "Home", string actionName = "Index", string areaName = null)
         {
-            return routes.MapRouteLowercase(
-                HomeRouteName,
-                "",
-                new
-                {
-                    controller = controllerName,
-                    action = actionName,
-                    area = areaName
-                },
-                new
-                {
-                    controller = controllerName,
-                    action = actionName
-                }
-            ).AddAreaDataTokens(areaName);
+            return routes
+                .RemoveRoute(HomeRouteName)
+                .MapRouteLowercase(
+                    HomeRouteName,
+                    "",
+                    new
+                    {
+                        controller = controllerName,
+                        action = actionName,
+                        area = areaName
+                    },
+                    new
+                    {
+                        controller = controllerName,
+                        action = actionName
+                    })
+                .AddAreaDataTokens(areaName);
         }
 
         public static Route MapNavigableRoute(this RouteCollection routes, string prefix, string controllerName = "Page", string actionName = "Details", string areaName = null)
         {
-            return routes.MapRouteLowercase(
-                NavigableRouteName, 
-                prefix + "/{slug}",
-                new
-                {
-                    controller = controllerName,
-                    action = actionName,
-                    slug = UrlParameter.Optional,
-                    area = areaName
-                }
-            ).AddAreaDataTokens(areaName);
+            return routes
+                .RemoveRoute(NavigableRouteName)
+                .MapRouteLowercase(
+                    NavigableRouteName, 
+                    prefix + "/{slug}",
+                    new
+                    {
+                        controller = controllerName,
+                        action = actionName,
+                        slug = UrlParameter.Optional,
+                        area = areaName
+                    })
+                .AddAreaDataTokens(areaName);
         }
 
         public static Route MapFixedNavigableRoute(this RouteCollection routes, string prefix, string[] slugs, string controllerName = "Page", string actionName = "Details", string areaName = null)
         {
-            return routes.MapRouteLowercase(
-                NavigableRouteName,
-                prefix + "/{slug}",
-                new
-                {
-                    controller = controllerName,
-                    action = actionName,
-                    slug = UrlParameter.Optional,
-                    area = areaName
-                },
-                new
-                {
-                    slug = string.Join("|", slugs)
-                }
-            ).AddAreaDataTokens(areaName);
+            return routes
+                .RemoveRoute(NavigableRouteName)
+                .MapRouteLowercase(
+                    NavigableRouteName,
+                    prefix + "/{slug}",
+                    new
+                    {
+                        controller = controllerName,
+                        action = actionName,
+                        slug = UrlParameter.Optional,
+                        area = areaName
+                    },
+                    new
+                    {
+                        slug = string.Join("|", slugs)
+                    })
+                .AddAreaDataTokens(areaName);
         }
 
         public static Route MapDefaultRoute(this RouteCollection routes, string controllerName = "Home", string actionName = "Index", string areaName = null, string[] excludeControllerNames = null)
         {
-            return routes.MapRouteLowercase(
-                DefaultRouteName,
-                "{controller}/{action}/{slug}",
-                new
-                {
-                    controller = controllerName,
-                    action = actionName,
-                    slug = UrlParameter.Optional,
-                    area = areaName
-                },
-                new
-                {
-                    controller = new ExcludeConstraint(excludeControllerNames)
-                }
-            ).AddAreaDataTokens(areaName);
+            return routes
+                .RemoveRoute(DefaultRouteName)
+                .MapRouteLowercase(
+                    DefaultRouteName,
+                    "{controller}/{action}/{slug}",
+                    new
+                    {
+                        controller = controllerName,
+                        action = actionName,
+                        slug = UrlParameter.Optional,
+                        area = areaName
+                    },
+                    new
+                    {
+                        controller = new ExcludeConstraint(excludeControllerNames)
+                    })
+                .AddAreaDataTokens(areaName);
         }
 
         public static Route MapSingleActionRoute(this RouteCollection routes, string controllerName, string actionName, string areaName = null)

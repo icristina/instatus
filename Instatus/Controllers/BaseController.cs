@@ -92,7 +92,7 @@ namespace Instatus.Controllers
 
             if (Request.IsAjaxRequest() && ConfigurationManager.AppSettings.Value<bool>("SimulateSlowConnection"))
             {
-                System.Threading.Thread.Sleep(5000);
+                System.Threading.Thread.Sleep(3000);
             }
 
             base.OnActionExecuted(filterContext);
