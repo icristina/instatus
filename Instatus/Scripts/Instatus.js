@@ -108,6 +108,9 @@
             addCallbacks: null
         });
 
+        if (s.target.hasClass('busy'))
+            return;
+
         var insert = function (html) {
             if (s.empty)
                 s.container.empty();
