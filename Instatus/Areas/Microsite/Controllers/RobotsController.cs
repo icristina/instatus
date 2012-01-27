@@ -15,10 +15,10 @@ namespace Instatus.Areas.Microsite.Controllers
     {
         public ActionResult Index()
         {
-            var published = Context.Pages.OfType<Application>().First().PublishedTime;
+            var published = Context.GetCurrentApplication().PublishedTime;
             var sb = new StringBuilder();
 
-            if (published.HasValue && published.Value > DateTime.UtcNow)
+            if (published > DateTime.UtcNow)
             {
                 sb.AppendLine("User-agent: *");
                 sb.AppendLine("Disallow: /");

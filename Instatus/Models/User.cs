@@ -148,7 +148,7 @@ namespace Instatus.Models
 
         public string GenerateVerificationUri(UrlHelper urlHelper)
         {
-            return urlHelper.Absolute(AuthAreaRegistration.VerificationRouteName, new { id = Id, token = GetVerificationToken() });
+            return urlHelper.Absolute(WebRoute.AccountVerification, new { id = Id, token = GetVerificationToken() });
         }
 
         public void GenerateVerificationEmail()

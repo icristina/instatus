@@ -17,7 +17,7 @@ namespace Instatus.Areas.Microsite.Controllers
             return RedirectToAction("Details");
         }
         
-        public ActionResult Details(string slug = RouteCollectionExtensions.HomeSlug)
+        public ActionResult Details(string slug = WebRoute.HomeSlug)
         {
             return Page(slug);
         }

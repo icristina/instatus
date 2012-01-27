@@ -155,6 +155,7 @@
     <Compile Include="Web\BaseHttpApplication.cs" />
     <Compile Include="Web\WebCategory.cs" />
     <Compile Include="Web\WebMock.cs" />
+    <Compile Include="Web\WebRoute.cs" />
     <Compile Include="Web\WebStep.cs" />
     <Compile Include="Web\DbResourceReader.cs" />
     <Compile Include="Web\LowercaseRoute.cs" />

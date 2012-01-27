@@ -64,6 +64,9 @@ namespace Instatus.Web
             if(virtualPath.IsAbsoluteUri())
                 return virtualPath;
 
+            if (!virtualPath.StartsWith("~/"))
+                virtualPath = string.Format("~/{0}", virtualPath);
+
             if(!ApplicationPath.IsEmpty())
                 return VirtualPathUtility.ToAbsolute(virtualPath, ApplicationPath).ToLower();
 

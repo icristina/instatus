@@ -46,10 +46,10 @@ namespace Instatus
             }
         }
 
-        public const string HomeRouteName = "HomeRoute";
-        public const string NavigableRouteName = "NavigableRoute";
-        public const string DefaultRouteName = "DefaultRoute";
-        public const string HomeSlug = "home";
+        public static string GetVirtualPath(this RouteCollection routes, string routeName, object routeData)
+        {
+            return routes.GetVirtualPath(null, routeName, new RouteValueDictionary(routeData)).VirtualPath;
+        }
 
         public static RouteCollection RemoveRoute(this RouteCollection routes, string routeName)
         {
@@ -64,9 +64,9 @@ namespace Instatus
         public static Route MapHomeRoute(this RouteCollection routes, string controllerName = "Home", string actionName = "Index", string areaName = null)
         {
             return routes
-                .RemoveRoute(HomeRouteName)
+                .RemoveRoute(WebRoute.Home)
                 .MapRouteLowercase(
-                    HomeRouteName,
+                    WebRoute.Home,
                     "",
                     new
                     {
@@ -82,12 +82,12 @@ namespace Instatus
                 .AddAreaDataTokens(areaName);
         }
 
-        public static Route MapNavigableRoute(this RouteCollection routes, string prefix, string controllerName = "Page", string actionName = "Details", string areaName = null)
+        public static Route MapPageRoute(this RouteCollection routes, string prefix, string controllerName = "Page", string actionName = "Details", string areaName = null)
         {
             return routes
-                .RemoveRoute(NavigableRouteName)
+                .RemoveRoute(WebRoute.Page)
                 .MapRouteLowercase(
-                    NavigableRouteName, 
+                    WebRoute.Page, 
                     prefix + "/{slug}",
                     new
                     {
@@ -99,12 +99,12 @@ namespace Instatus
                 .AddAreaDataTokens(areaName);
         }
 
-        public static Route MapFixedNavigableRoute(this RouteCollection routes, string prefix, string[] slugs, string controllerName = "Page", string actionName = "Details", string areaName = null)
+        public static Route MapPagesRoute(this RouteCollection routes, string prefix, string[] slugs, string controllerName = "Page", string actionName = "Details", string areaName = null)
         {
             return routes
-                .RemoveRoute(NavigableRouteName)
+                .RemoveRoute(WebRoute.Page)
                 .MapRouteLowercase(
-                    NavigableRouteName,
+                    WebRoute.Page,
                     prefix + "/{slug}",
                     new
                     {
@@ -123,9 +123,9 @@ namespace Instatus
         public static Route MapDefaultRoute(this RouteCollection routes, string controllerName = "Home", string actionName = "Index", string areaName = null, string[] excludeControllerNames = null)
         {
             return routes
-                .RemoveRoute(DefaultRouteName)
+                .RemoveRoute(WebRoute.Default)
                 .MapRouteLowercase(
-                    DefaultRouteName,
+                    WebRoute.Default,
                     "{controller}/{action}/{slug}",
                     new
                     {

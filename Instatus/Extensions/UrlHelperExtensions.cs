@@ -72,10 +72,10 @@ namespace Instatus
 
         public static string Page(this UrlHelper urlHelper, string slug)
         {
-            if (slug.Match(RouteCollectionExtensions.HomeSlug))
-                return urlHelper.RouteUrl(RouteCollectionExtensions.HomeRouteName);
+            if (slug.Match(WebRoute.HomeSlug))
+                return urlHelper.RouteUrl(WebRoute.Home);
             
-            return urlHelper.RouteUrl(RouteCollectionExtensions.NavigableRouteName, new { slug = slug });
+            return urlHelper.RouteUrl(WebRoute.Page, new { slug = slug });
         }
 
         public static string Self(this UrlHelper urlHelper)

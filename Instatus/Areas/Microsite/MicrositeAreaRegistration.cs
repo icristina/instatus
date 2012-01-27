@@ -17,7 +17,7 @@ namespace Instatus.Areas.Microsite
         public override void RegisterArea(AreaRegistrationContext context)
         {
             context.Routes.MapHomeRoute(controllerName: "Page", areaName: AreaName);
-            context.Routes.MapNavigableRoute(RoutePrefix, areaName: AreaName);
+            context.Routes.MapPageRoute(RoutePrefix, areaName: AreaName);
 
             context.MapRouteLowercase(
                 "Microsite_Default",

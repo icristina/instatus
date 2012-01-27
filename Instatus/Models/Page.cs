@@ -12,6 +12,7 @@ using Instatus.Web;
 using System.Dynamic;
 using Instatus.Data;
 using Instatus.Models;
+using System.ServiceModel.Syndication;
 
 namespace Instatus.Models
 {   
@@ -40,8 +41,8 @@ namespace Instatus.Models
         public string Picture { get; set; }
         public int Priority { get; set; }
         public DateTime CreatedTime { get; set; }
-        public DateTime? UpdatedTime { get; set; }
-        public DateTime? PublishedTime { get; set; }
+        public DateTime UpdatedTime { get; set; }
+        public DateTime PublishedTime { get; set; }
         public string Category { get; set; }
         public string Status { get; set; }
         public string Data { get; set; }
@@ -153,12 +154,23 @@ namespace Instatus.Models
             return ContentProviderQueries.SelectWebEntry(this);
         }
 
-        public SiteMapNode ToSiteMapNode(SiteMapProvider sitemap)
+        public SiteMapNode ToSiteMapNode(SiteMapProvider sitemap, string routeName = WebRoute.Page)
         {
             var routeData = new { slug = Slug };
-            var routeName = RouteCollectionExtensions.NavigableRouteName;
-            var virtualPath = RouteTable.Routes.GetVirtualPath(null, routeName, new RouteValueDictionary(routeData)).VirtualPath;
+            var virtualPath = RouteTable.Routes.GetVirtualPath(routeName, routeData);
             return new SiteMapNode(sitemap, Slug, virtualPath, Name);
+        }
+
+        public SyndicationItem ToSyndicationItem(string routeName = WebRoute.Post)
+        {
+            var routeData = new { slug = Slug };
+            var virtualPath = RouteTable.Routes.GetVirtualPath(routeName, routeData);
+            var uri = WebPath.Absolute(virtualPath);
+            
+            return new SyndicationItem(Name, Description, new Uri(uri))
+            {
+                PublishDate = PublishedTime
+            };
         }
 
         public RestrictionResultCollection ValidateRestrictions(BaseDataContext context = null, User user = null, Activity trigger = null, bool saveChanges = true)
