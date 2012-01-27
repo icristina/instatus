@@ -70,7 +70,7 @@ namespace Instatus.Controllers
 
         public ActionResult RedirectToHome()
         {
-            return Redirect("/");
+            return Redirect(WebPath.Home);
         }
 
         public ActionResult ErrorResult()
@@ -90,7 +90,7 @@ namespace Instatus.Controllers
                 Response.AddHeader("p3p", "CP=\"CAO PSA OUR\""); // cookies in iframes for IE
             }
 
-            if (Request.IsAjaxRequest() && ConfigurationManager.AppSettings.Value<bool>("SimulateSlowConnection"))
+            if (Request.IsAjaxRequest() && ConfigurationManager.AppSettings.Value<string>(WebAppSetting.Simulate).AsEnum<WebEnvironment>() == WebEnvironment.Production)
             {
                 System.Threading.Thread.Sleep(3000);
             }

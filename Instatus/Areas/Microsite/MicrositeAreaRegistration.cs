@@ -1,11 +1,10 @@
 ﻿using System.Web.Mvc;
+using Instatus.Web;
 
 namespace Instatus.Areas.Microsite
 {
     public class MicrositeAreaRegistration : AreaRegistration
     {
-        public static string RoutePrefix = "Microsite";
-        
         public override string AreaName
         {
             get
@@ -17,7 +16,7 @@ namespace Instatus.Areas.Microsite
         public override void RegisterArea(AreaRegistrationContext context)
         {
             context.Routes.MapHomeRoute(controllerName: "Page", areaName: AreaName);
-            context.Routes.MapPageRoute(RoutePrefix, areaName: AreaName);
+            context.Routes.MapPageRoute(WebRoute.PagePrefix, areaName: AreaName);
 
             context.MapRouteLowercase(
                 "Microsite_Default",

@@ -14,5 +14,7 @@ namespace Instatus.Web
         public const string AccountVerification = "Instatus.Web.WebRoute.AccountVerification";
 
         public const string HomeSlug = "home";
+
+        public static string PagePrefix = "site";
     }
 }

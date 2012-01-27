@@ -8,6 +8,7 @@ using Instatus.Models;
 using Instatus.Services;
 using System.Web.Helpers;
 using Instatus.Areas.Microsite;
+using Instatus.Web;
 
 namespace Instatus.Areas.Facebook
 {
@@ -31,7 +32,7 @@ namespace Instatus.Areas.Facebook
 
                     if (!appData.Contains("{"))
                     {
-                        HttpContext.Current.Response.Redirect("/" + MicrositeAreaRegistration.RoutePrefix + "/" + appData);
+                        HttpContext.Current.Response.Redirect(WebPath.Home, true);
                     }
                 }
             }

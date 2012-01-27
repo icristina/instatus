@@ -5,6 +5,8 @@ using System.Web;
 using System.Configuration;
 using Instatus.Data;
 using Instatus.Services;
+using System.Web.Mvc;
+using System.Web.Routing;
 
 namespace Instatus.Web
 {
@@ -60,7 +62,12 @@ namespace Instatus.Web
         }
 
         public static string Relative(string virtualPath)
-        {                        
+        {
+            var virtualPathRewriter = DependencyResolver.Current.GetService<IVirtualPathRewriter>();
+
+            if (virtualPathRewriter != null)
+                virtualPath = virtualPathRewriter.RewriteVirtualPath(virtualPath);
+            
             if(virtualPath.IsAbsoluteUri())
                 return virtualPath;
 
@@ -137,6 +144,14 @@ namespace Instatus.Web
         public static string ResizeAbsolute(WebSize size, string virtualPath)
         {
             return Absolute(Resize(size, virtualPath));
+        }
+
+        public static string Home {
+            get 
+            {
+                var route = RouteTable.Routes[WebRoute.Home];
+                return route != null ? route.GetVirtualPath(null, null).VirtualPath : "/";
+            }
         }
     }
 }

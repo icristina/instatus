@@ -153,6 +153,9 @@
     <Compile Include="Services\PubSub.cs" />
     <Compile Include="Services\SimpleTemplateService.cs" />
     <Compile Include="Web\BaseHttpApplication.cs" />
+    <Compile Include="Web\IVirtualPathRewriter.cs" />
+    <Compile Include="Web\WebAppSetting.cs" />
+    <Compile Include="Web\WebBootstrap.cs" />
     <Compile Include="Web\WebCategory.cs" />
     <Compile Include="Web\WebMock.cs" />
     <Compile Include="Web\WebRoute.cs" />

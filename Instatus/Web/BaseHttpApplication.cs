@@ -10,7 +10,7 @@ namespace Instatus.Web
     {
         public static WebEnvironment GetEnvironment()
         {
-            return HttpContext.Current.ApplicationInstance.Setting<string>("Environment").AsEnum<WebEnvironment>();
+            return HttpContext.Current.ApplicationInstance.Setting<string>(WebAppSetting.Environment).AsEnum<WebEnvironment>();
         }
         
         public bool IsDebug
