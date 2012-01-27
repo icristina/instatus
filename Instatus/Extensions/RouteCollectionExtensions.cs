@@ -99,6 +99,22 @@ namespace Instatus
                 .AddAreaDataTokens(areaName);
         }
 
+        public static Route MapPostRoute(this RouteCollection routes, string controllerName = "Post", string actionName = "Details", string areaName = null)
+        {
+            return routes
+                .RemoveRoute(WebRoute.Post)
+                .MapRouteLowercase(
+                    WebRoute.Post,
+                    controllerName + "/" + actionName + "/{slug}",
+                    new
+                    {
+                        controller = controllerName,
+                        action = actionName,
+                        area = areaName
+                    })
+                .AddAreaDataTokens(areaName);
+        }
+
         public static Route MapPagesRoute(this RouteCollection routes, string prefix, string[] slugs, string controllerName = "Page", string actionName = "Details", string areaName = null)
         {
             return routes

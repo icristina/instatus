@@ -167,10 +167,7 @@ namespace Instatus.Models
             var virtualPath = RouteTable.Routes.GetVirtualPath(routeName, routeData);
             var uri = WebPath.Absolute(virtualPath);
             
-            return new SyndicationItem(Name, Description, new Uri(uri))
-            {
-                PublishDate = PublishedTime
-            };
+            return new SyndicationItem(Name, Description, new Uri(uri), Slug, PublishedTime);
         }
 
         public RestrictionResultCollection ValidateRestrictions(BaseDataContext context = null, User user = null, Activity trigger = null, bool saveChanges = true)

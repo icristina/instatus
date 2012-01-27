@@ -6,6 +6,7 @@ using Instatus.Models;
 using Instatus.Web;
 using Instatus.Data;
 using System.Data.Entity;
+using System.ServiceModel.Syndication;
 
 namespace Instatus
 {
@@ -62,6 +63,11 @@ namespace Instatus
                     webView.Document.Description = page.Description;
                 }
             }
+        }
+
+        public static IEnumerable<SyndicationItem> AsSyndicationItems(this IEnumerable<Page> pages, string routeName = WebRoute.Post)
+        {
+            return pages.ToList().Select(s => s.ToSyndicationItem(routeName));
         }
 
         public static IEnumerable<WebEntry> AsWebEntries(this IEnumerable<Page> pages)
