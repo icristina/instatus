@@ -34,9 +34,7 @@ namespace Instatus.Areas.Facebook.Controllers
 
         public ActionResult Channel()
         {
-            var protocol = Request.Url.Scheme;
-            var html = string.Format("<script src='{0}://connect.facebook.net/en_US/all.js'></script>", protocol);
-            return Content(html);
+            return Content(Facebook.Channel());
         }
     }
 }

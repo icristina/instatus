@@ -62,6 +62,12 @@ namespace Instatus.Areas.Facebook
             }
         }
 
+        public static string Channel()
+        {
+            var protocol = HttpContext.Current.Request.Url.Scheme;
+            return string.Format("<script src='{0}://connect.facebook.net/en_US/all.js'></script>", protocol);
+        }
+
         public static string LikeButton(string uri = null, EmbedType embedType = EmbedType.Html, int width = 90)
         {
             uri = uri ?? HttpContext.Current.Request.Url.AbsoluteUri;

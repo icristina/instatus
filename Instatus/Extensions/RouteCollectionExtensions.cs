@@ -157,10 +157,10 @@ namespace Instatus
                 .AddAreaDataTokens(areaName);
         }
 
-        public static Route MapSingleActionRoute(this RouteCollection routes, string controllerName, string actionName, string areaName = null)
+        public static Route MapSingleActionRoute(this RouteCollection routes, string controllerName, string actionName, string areaName = null, string routeName = null)
         {
             return routes.MapRouteLowercase(
-                string.Format("{0}-{1}", controllerName, actionName),
+                routeName ?? string.Format("{0}-{1}", controllerName, actionName),
                 string.Format("{0}/{1}/{{slug}}", controllerName, actionName),
                 new
                 {
