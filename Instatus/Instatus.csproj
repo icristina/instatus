@@ -130,6 +130,7 @@
     <Compile Include="Extensions\WebClientExtensions.cs" />
     <Compile Include="Models\Award.cs" />
     <Compile Include="Models\Brand.cs" />
+    <Compile Include="Models\Region.cs" />
     <Compile Include="Models\INavigableContent.cs" />
     <Compile Include="Models\Note.cs" />
     <Compile Include="Models\Media.cs" />
@@ -147,6 +148,8 @@
     <Compile Include="Queries\SocialQueries.cs" />
     <Compile Include="Queries\SyncQueries.cs" />
     <Compile Include="Queries\TaxonomyQueries.cs" />
+    <Compile Include="Restrictions\ActivityRestriction.cs" />
+    <Compile Include="Restrictions\DateRestriction.cs" />
     <Compile Include="Services\BaseWcfService.cs" />
     <Compile Include="Services\MarkupTemplateService.cs" />
     <Compile Include="Services\IZipService.cs" />

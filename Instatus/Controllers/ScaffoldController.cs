@@ -39,7 +39,7 @@ namespace Instatus.Controllers
         }
 
         public virtual void ConfigureWebView(WebView<TModel> webView) {
-            webView.Navigation = Url.SitemapNodes();
+            webView.Navigation = Url.Controllers();
             webView.Commands = GetCommands();
         }
 

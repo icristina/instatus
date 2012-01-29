@@ -9,7 +9,7 @@ using System.Runtime.Serialization;
 
 namespace Instatus.Models
 {
-    public class Restriction
+    public class Restriction : IPayload
     {
         public int Id { get; set; }
         public string Name { get; set; }

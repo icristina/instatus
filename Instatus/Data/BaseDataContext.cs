@@ -271,6 +271,8 @@ namespace Instatus.Data
                     return pages.OfType<Offer>();
                 case WebKind.Organization:
                     return pages.OfType<Organization>();
+                case WebKind.Region:
+                    return pages.OfType<Region>();
                 default:
                     return pages;
             }

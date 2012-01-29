@@ -39,16 +39,8 @@ namespace Instatus
             return WebPath.Relative(WebPath.Resize(size, virtualPath));
         }
 
-        public static SiteMapNodeCollection SitemapNodes(this UrlHelper urlHelper, Func<ControllerDescriptor, bool> isNavigable = null, string actionName = "Index")
+        public static SiteMapNodeCollection Controllers(this UrlHelper urlHelper, Func<ControllerDescriptor, bool> isNavigable = null, string actionName = "Index")
         {
-            if (isNavigable == null)
-            {
-                isNavigable = new Func<ControllerDescriptor, bool>((d) =>
-                {
-                    return true;
-                });
-            }
-
             var siteMapProvider = new SimpleSiteMapProvider();
             var siteMapNodes = MefDependencyResolver
                     .GetTypes<IController>()
@@ -57,7 +49,7 @@ namespace Instatus
                         var descriptor = new ReflectedControllerDescriptor(controllerType);
                         var descriptionAttribute = descriptor.GetAttribute<DescriptionAttribute>();
 
-                        if (!isNavigable(descriptor) || !descriptor.HasAction(actionName) || descriptionAttribute == null)
+                        if ((isNavigable != null && !isNavigable(descriptor)) || !descriptor.HasAction(actionName) || descriptionAttribute == null)
                             return null;
 
                         var url = urlHelper.Action(actionName, descriptor.ControllerName);
@@ -89,16 +81,9 @@ namespace Instatus
             return urlHelper.Action(routeData.ActionName(), routeData.ControllerName(), webView.Query.ToRouteValueDictionary());
         }
 
-        public static SiteMapNodeCollectionBuilder Nav(this UrlHelper urlHelper, string title, string slug)
+        public static SiteMapNodeCollectionBuilder Navigation(this UrlHelper urlHelper)
         {
-            return new SiteMapNodeCollectionBuilder(urlHelper)
-                        .Nav(title, slug);
-        }
-
-        public static SiteMapNodeCollectionBuilder Nav(this UrlHelper urlHelper, string title, string actionName, string controllerName)
-        {
-            return new SiteMapNodeCollectionBuilder(urlHelper)
-                        .Nav(title, actionName, controllerName);
+            return new SiteMapNodeCollectionBuilder(urlHelper);
         }
     }
 }
@@ -110,15 +95,21 @@ namespace Instatus.Web
         private List<SiteMapNode> siteMapNodes;
         private SiteMapProvider siteMapProvider;
 
-        public SiteMapNodeCollectionBuilder Nav(string title, string slug)
+        public SiteMapNodeCollectionBuilder Page(string title, string slug)
         {
             siteMapNodes.Add(new SiteMapNode(siteMapProvider, slug, urlHelper.Page(slug), title));
             return this;
         }
 
-        public SiteMapNodeCollectionBuilder Nav(string title, string actionName, string controllerName)
+        public SiteMapNodeCollectionBuilder Action(string title, string actionName, string controllerName)
         {
             siteMapNodes.Add(new SiteMapNode(siteMapProvider, controllerName, urlHelper.Action(actionName, controllerName), title));
+            return this;
+        }
+
+        public SiteMapNodeCollectionBuilder Route(string title, string routeName)
+        {
+            siteMapNodes.Add(new SiteMapNode(siteMapProvider, routeName, urlHelper.RouteUrl(routeName), title));
             return this;
         }
 

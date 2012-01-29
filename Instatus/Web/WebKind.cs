@@ -23,6 +23,7 @@ namespace Instatus.Web
         Product,
         Offer,
         Organization,
+        Region,
         User,
         Message,
         Status,

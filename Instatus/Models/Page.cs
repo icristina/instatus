@@ -243,6 +243,8 @@ namespace Instatus.Models
                     return new Offer();
                 case WebKind.Organization:
                     return new Organization();
+                case WebKind.Region:
+                    return new Region();
                 default:
                     return new Page();
             }

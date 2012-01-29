@@ -5,14 +5,13 @@ using System.Web;
 
 namespace Instatus.Models
 {
-    public class Catalog : Page
+    public class Region : Place
     {
-        public Catalog() { }
+        public Region() { }
 
-        public Catalog(string name)
-            : base(name)
+        public Region(string name)
         {
-
+            Name = name;
         }
     }
 }
