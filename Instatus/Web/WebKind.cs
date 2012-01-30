@@ -18,6 +18,7 @@ namespace Instatus.Web
         Event,
         Group,
         Job,
+        News,
         Post,
         Place,
         Product,

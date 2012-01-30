@@ -30,6 +30,8 @@ namespace Instatus.Models
     [KnownType(typeof(Organization))]
     [KnownType(typeof(Job))]
     [KnownType(typeof(Achievement))]
+    [KnownType(typeof(News))]
+    [KnownType(typeof(Region))]
     public class Page : IUserGeneratedContent, IExtensionPoint, INavigableContent
     {
         public int Id { get; set; }
@@ -245,6 +247,8 @@ namespace Instatus.Models
                     return new Organization();
                 case WebKind.Region:
                     return new Region();
+                case WebKind.News:
+                    return new News();
                 default:
                     return new Page();
             }

@@ -273,6 +273,8 @@ namespace Instatus.Data
                     return pages.OfType<Organization>();
                 case WebKind.Region:
                     return pages.OfType<Region>();
+                case WebKind.News:
+                    return pages.OfType<News>();
                 default:
                     return pages;
             }
