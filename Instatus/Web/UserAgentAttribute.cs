@@ -19,13 +19,23 @@ namespace Instatus.Web
         
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            var browser = filterContext.HttpContext.Request.Browser;
-            var version = filterContext.HttpContext.Request.Browser.MajorVersion;
-
-            if (browser.Browser.Match(Name) && version < Version && Exclude)
+            if (!filterContext.IsChildAction)
             {
-                var requires = Exclude ? "Requires" : "Unavailable for"; 
-                throw new HttpException(string.Format("{0} {1} {2}", requires, Name, Version));
+                var browser = filterContext.HttpContext.Request.Browser;
+                var version = filterContext.HttpContext.Request.Browser.MajorVersion;
+
+                try
+                {
+                    if (browser.Browser.Match(Name) && version < Version && Exclude)
+                    {
+                        var requires = Exclude ? "Requires" : "Unavailable for";
+                        throw new UserAgentException(string.Format("{0} {1} {2}", requires, Name, Version));
+                    }
+                }
+                catch (Exception exception)
+                {
+                    filterContext.ReturnFatalErrorResult(exception);
+                }
             }
         }
 
@@ -34,6 +44,15 @@ namespace Instatus.Web
             Name = name;
             Version = version;
             Exclude = exclude;            
+        }
+    }
+
+    public class UserAgentException : HttpException
+    {
+        public UserAgentException(string message)
+            : base(message)
+        {
+
         }
     }
 }

@@ -119,6 +119,7 @@
     <Compile Include="Data\Range.cs" />
     <Compile Include="Data\RecordResult.cs" />
     <Compile Include="Extensions\CacheExtensions.cs" />
+    <Compile Include="Extensions\ActionExecutingContextExtensions.cs" />
     <Compile Include="Extensions\ControllerDescriptorExtensions.cs" />
     <Compile Include="Extensions\BooleanExtensions.cs" />
     <Compile Include="Extensions\GeospacialExtensions.cs" />
@@ -452,6 +453,8 @@
     <EmbeddedResource Include="Views\Shared\List.cshtml" />
     <EmbeddedResource Include="Views\Shared\Verification.cshtml" />
     <EmbeddedResource Include="Views\Shared\Notification.cshtml" />
+    <EmbeddedResource Include="Views\Shared\FatalError.cshtml" />
+    <EmbeddedResource Include="Views\Shared\NotFound.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

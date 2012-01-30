@@ -58,7 +58,7 @@ namespace Instatus.Web
         {
             get
             {
-                return TotalItemCount >= (PageIndex + 1) * PageSize;
+                return TotalItemCount > (PageIndex + 1) * PageSize;
             }
         }
 

@@ -1,0 +1,18 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+
+@{
+    Layout = null;
+}
+
+<html>
+    <head>
+        <title>@WebPhrase.Error</title>
+        <style>
+            body { font-family: Sans-Serif; color: #FF0000; background-color: #FFFFCC; }
+            h1 { font-weight: bold; font-size: 14px; }
+        </style>
+    </head>
+    <body>
+        <h1>@Model.Exception.Message</h1>
+    </body>
+</html>
