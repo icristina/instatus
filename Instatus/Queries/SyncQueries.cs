@@ -58,8 +58,13 @@ namespace Instatus
                 merged.Description = page.Description;
                 merged.Document = page.Document;
                 merged.Tags = page.Tags;
-
                 merged.Category = page.Category;
+                merged.Picture = page.Picture;
+
+                if (!page.PublishedTime.IsEmpty())
+                {
+                    merged.PublishedTime = page.PublishedTime;
+                }
 
                 if (!page.Parents.IsEmpty())
                 {
