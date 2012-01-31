@@ -62,10 +62,13 @@ namespace Instatus.Web
             {
                 links = null;
                 domains = null;
-            });            
-            
-            context.BeginRequest += new EventHandler(this.Alternative);
-            context.BeginRequest += new EventHandler(this.Canonical);
+            });
+
+            if (BaseDataContext.BaseInstance() != null) // optional, if context registered
+            {
+                context.BeginRequest += new EventHandler(this.Alternative);
+                context.BeginRequest += new EventHandler(this.Canonical);
+            }
         }
 
         private void Alternative(Object source, EventArgs e)

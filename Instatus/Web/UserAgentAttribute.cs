@@ -34,7 +34,7 @@ namespace Instatus.Web
                 }
                 catch (Exception exception)
                 {
-                    filterContext.ReturnFatalErrorResult(exception);
+                    filterContext.Result = new FatalErrorResult(filterContext, exception);
                 }
             }
         }

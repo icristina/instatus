@@ -119,7 +119,6 @@
     <Compile Include="Data\Range.cs" />
     <Compile Include="Data\RecordResult.cs" />
     <Compile Include="Extensions\CacheExtensions.cs" />
-    <Compile Include="Extensions\ActionExecutingContextExtensions.cs" />
     <Compile Include="Extensions\ControllerDescriptorExtensions.cs" />
     <Compile Include="Extensions\BooleanExtensions.cs" />
     <Compile Include="Extensions\GeospacialExtensions.cs" />
@@ -158,6 +157,7 @@
     <Compile Include="Services\PubSub.cs" />
     <Compile Include="Services\SimpleTemplateService.cs" />
     <Compile Include="Web\BaseHttpApplication.cs" />
+    <Compile Include="Web\FatalErrorResult.cs" />
     <Compile Include="Web\IVirtualPathRewriter.cs" />
     <Compile Include="Web\WebAppSetting.cs" />
     <Compile Include="Web\WebBootstrap.cs" />
