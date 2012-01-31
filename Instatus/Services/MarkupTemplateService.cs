@@ -16,10 +16,7 @@ namespace Instatus.Services
         {
             string markup = viewData.ToString();
 
-            // absolute paths
-            markup = Regex.Replace(markup, "~/[^\"]+", delegate(Match m) {
-                return WebPath.Absolute(m.Value);
-            });
+            markup = markup.RewriteRelativePaths();
 
             // require block level container
             if (!markup.Contains("<p") && !markup.Contains("<div"))

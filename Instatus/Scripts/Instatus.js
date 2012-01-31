@@ -18,11 +18,25 @@
         return s;
     }
 
-    function visible(el, condition) {
+    function visible(el, condition, animate) {
         if (condition) {
-            el.removeAttr('hidden').show();
+            el.removeAttr('hidden').hide();
+
+            if (animate) {
+                el.slideDown();
+            } else {
+                el.show();
+            }
         } else {
-            el.attr('hidden', 'hidden').hide();
+            var finished = function () {
+                el.attr('hidden', 'hidden');
+            };
+
+            if (animate) {
+                el.slideUp('fast', finished);
+            } else {
+                el.hide().each(finished);
+            }
         }
     }
 
@@ -84,8 +98,14 @@
         var content = el.next('div');
         var hidden = el.siblings().not(tagName).not(content);
 
-        visible(hidden, false);
-        visible(content, true);
+        el.addClass('open');
+        el.siblings(tagName).removeClass('open');
+
+        hidden.each(function () {
+            visible($(this), false, true);
+        });
+
+        visible(content, true, true);
     }
 
     function aria(el, role, val) {
@@ -246,7 +266,7 @@
             },
             email: {
                 selector: '[type=email]',
-                valid: function (val) { return val && val.indexOf('@') != -1; },
+                valid: function (val) { return val && val.indexOf('@') != -1 && val.lastIndexOf('.') > val.indexOf('@'); },
                 message: 'Email address is not valid'
             }
         }

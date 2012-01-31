@@ -151,17 +151,16 @@ namespace Instatus.Models
             return urlHelper.Absolute(WebRoute.AccountVerification, new { id = Id, token = GetVerificationToken() });
         }
 
-        public void GenerateVerificationEmail()
+        public void GenerateVerificationEmail(string subject = null, string senderEmailAddress = null, string senderDisplayName = null)
         {
             if (Status.AsEnum<WebStatus>() == WebStatus.PendingApproval && !EmailAddress.IsEmpty())
             {
                 var templateService = DependencyResolver.Current.GetService<ITemplateService>();
-                var from = string.Format("noreply@{0}", WebPath.BaseUri.Host);
+                var from = senderEmailAddress ?? string.Format("noreply@{0}", WebPath.BaseUri.Host);
                 var body = templateService.Process("Notification", this);
-                var subject = body.FindHtmlElement("title");
-                var mailMessage = new MailMessage(from, EmailAddress)
+                var mailMessage = new MailMessage(new MailAddress(from, senderDisplayName), new MailAddress(EmailAddress))
                 {
-                    Subject = subject,
+                    Subject = subject ?? body.FindHtmlElement("title"),
                     Body = body,
                     IsBodyHtml = true
                 };

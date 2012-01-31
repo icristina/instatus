@@ -113,6 +113,12 @@ namespace Instatus.Web
             return this;
         }
 
+        public SiteMapNodeCollectionBuilder External(string title, string uri)
+        {
+            siteMapNodes.Add(new SiteMapNode(siteMapProvider, uri, uri, title));
+            return this;
+        }
+
         public SiteMapNodeCollection ToSiteMapNodeCollection()
         {           
             return new SiteMapNodeCollection(siteMapNodes.ToArray());

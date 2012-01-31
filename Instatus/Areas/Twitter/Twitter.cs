@@ -70,14 +70,16 @@ namespace Instatus.Areas.Twitter
             return feed;
         }
 
+        private const string externalLink = " rel=\"external\" target=\"_blank\"";
+
         // https://dev.twitter.com/docs/tweet-entities
         // https://github.com/danielcrenna/tweetsharp/blob/master/src/net40/TweetSharp.Next/Extensions/StringExtensions.cs
         private static string ReplaceEntitiesWithHtml(string text, dynamic entities) {
             var characters = text.ToCharArray().Select(c => c.ToString()).ToList();
 
-            ReplaceLink(characters, entities.user_mentions, new Func<dynamic, object>(e => e.screen_name), "<a href=\"http://twitter.com/{0}\">{1}");
-            ReplaceLink(characters, entities.urls, new Func<dynamic, object>(e => e.url), "<a href=\"{0}\">{1}");
-            ReplaceLink(characters, entities.hashtags, new Func<dynamic, object>(e => e.text), "<a href=\"http://search.twitter.com/search?q={0}\">{1}");
+            ReplaceLink(characters, entities.user_mentions, new Func<dynamic, object>(e => e.screen_name), "<a href=\"http://twitter.com/{0}\"" + externalLink + ">{1}");
+            ReplaceLink(characters, entities.urls, new Func<dynamic, object>(e => e.url), "<a href=\"{0}\"" + externalLink + ">{1}");
+            ReplaceLink(characters, entities.hashtags, new Func<dynamic, object>(e => e.text), "<a href=\"http://search.twitter.com/search?q={0}\"" + externalLink + ">{1}");
 
             return string.Join("", characters);
         }

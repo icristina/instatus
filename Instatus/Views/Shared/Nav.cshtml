@@ -4,9 +4,18 @@
     @foreach (SiteMapNode node in Model)
     {
         <li>
-            <a @Html.OptionalAttr("class", "current", node.IsAncestorOrSelf()) href="@Url.Content(node.Url)">
-                @node.Title
-            </a>
+            @if (node.Url.IsAbsoluteUri())
+            {
+                <a href="@Url.Content(node.Url)" rel="external" target="_blank">
+                    @node.Title
+                </a>
+            }
+            else
+            {
+                <a @Html.OptionalAttr("class", "current", node.IsAncestorOrSelf()) href="@Url.Content(node.Url)">
+                    @node.Title
+                </a>
+            }
         </li>
     }
 </ul>

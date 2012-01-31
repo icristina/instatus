@@ -138,6 +138,14 @@ namespace Instatus
             return Regex.IsMatch(text, pattern) ? Regex.Match(text, pattern).Groups[1].Value.Trim() : string.Empty;
         }
 
+        public static string RewriteRelativePaths(this string text)
+        {
+            return Regex.Replace(text, "~/[^\"]+", delegate(Match m)
+            {
+                return WebPath.Absolute(m.Value);
+            });
+        }
+
         public static bool IsEncrypted(this string text)
         {
             return !text.IsEmpty() && Regex.IsMatch(text, "^[A-Z0-9]{64}$"); // sha256 64 characters alphanumeric

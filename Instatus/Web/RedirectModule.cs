@@ -24,7 +24,14 @@ namespace Instatus.Web
                 if(links == null) {
                     using (var db = BaseDataContext.BaseInstance())
                     {
-                        links = db.Links.Where(l => l.Location != null && l.HttpStatusCode > 300 && l.HttpStatusCode < 303).ToList();
+                        if (db != null)
+                        {
+                            links = db.Links.Where(l => l.Location != null && l.HttpStatusCode > 300 && l.HttpStatusCode < 303).ToList();
+                        }
+                        else
+                        {
+                            links = new List<Link>();
+                        }
                     }
                 }
 
@@ -42,13 +49,20 @@ namespace Instatus.Web
                 {
                     using (var db = BaseDataContext.BaseInstance())
                     {
-                        var environment = BaseHttpApplication.GetEnvironment().ToString();
-                        var all = WebEnvironment.All.ToString();
+                        if (db != null)
+                        {
+                            var environment = BaseHttpApplication.GetEnvironment().ToString();
+                            var all = WebEnvironment.All.ToString();
 
-                        domains = db.Domains
-                            .OrderBy(d => d.IsCanonical)
-                            .Where(d => d.Application != null && (d.Environment == environment || d.Environment == all))
-                            .ToList();
+                            domains = db.Domains
+                                .OrderBy(d => d.IsCanonical)
+                                .Where(d => d.Application != null && (d.Environment == environment || d.Environment == all))
+                                .ToList();
+                        }
+                        else
+                        {
+                            domains = new List<Domain>();
+                        }
                     }
                 }
 
@@ -64,11 +78,8 @@ namespace Instatus.Web
                 domains = null;
             });
 
-            if (BaseDataContext.BaseInstance() != null) // optional, if context registered
-            {
-                context.BeginRequest += new EventHandler(this.Alternative);
-                context.BeginRequest += new EventHandler(this.Canonical);
-            }
+            context.BeginRequest += new EventHandler(this.Alternative);
+            context.BeginRequest += new EventHandler(this.Canonical);
         }
 
         private void Alternative(Object source, EventArgs e)

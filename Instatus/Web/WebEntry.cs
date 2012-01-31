@@ -22,6 +22,7 @@ namespace Instatus.Web
         public string User { get; set; }
         public string Source { get; set; }
         public DateTime Timestamp { get; set; }
+        public string Rel { get; set; }
     }
 
     public interface IResource
