@@ -149,10 +149,6 @@ namespace Instatus
                         action = actionName,
                         slug = slug ?? hubName,
                         area = areaName
-                    },
-                    new
-                    {
-                        slug = slug ?? hubName
                     })
                 .AddAreaDataTokens(areaName);
         }
