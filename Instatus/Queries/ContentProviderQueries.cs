@@ -12,13 +12,16 @@ namespace Instatus
 {
     public static class ContentProviderQueries
     {
-        public static IEnumerable<T> GetPages<T>(this IContentProvider contentProvider, WebQuery query = null, bool cache = false, string expand = null, string category = null) where T : Page
+        public static IEnumerable<T> GetPages<T>(this IContentProvider contentProvider, WebQuery query = null, bool cache = false, string expand = null, string category = null, WebSort sort = WebSort.Recency) where T : Page
         {
             query = query ?? new WebQuery();
             query.Category = category ?? query.Category;
             query.Kind = typeof(T).Name.AsEnum<WebKind>();
 
-            if(!expand.IsEmpty())
+            if (sort != WebSort.Recency)
+                query.Sort = sort;
+
+            if (!expand.IsEmpty())
                 query.Expand = expand.ToList().ToArray();
 
             if (cache)

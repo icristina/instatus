@@ -499,7 +499,7 @@ namespace Instatus
             return new MvcHtmlString(WebPhrase.HtmlTitle(title));
         }
 
-        public static MvcHtmlString Options<T>(this HtmlHelper<T> htmlHelper, SelectList selectList, string prefix = null)
+        public static MvcHtmlString Options<T>(this HtmlHelper<T> htmlHelper, SelectList selectList, string prefix = null, object value = null)
         {
             var sb = new StringBuilder();
 
@@ -510,7 +510,7 @@ namespace Instatus
                 option.MergeAttribute("value", prefix != null ? string.Format("{0}:{1}", prefix, item.Value) : item.Value);
                 option.InnerHtml = item.Text;
 
-                if (item.Selected)
+                if (item.Selected || (value != null && (item.Value.Match(value) || item.Text.Match(value)))) // allow passing in value manually
                     option.MergeAttribute("selected", "selected");
 
                 sb.Append(option.ToString());

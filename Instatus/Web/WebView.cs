@@ -9,7 +9,7 @@ using System.Collections;
 
 namespace Instatus.Web
 {   
-    public interface IWebView : IEnumerable
+    public interface IWebView : IEnumerable, IViewModel
     {
         int TotalItemCount { get; }
         int TotalPageCount { get; }         
@@ -40,6 +40,7 @@ namespace Instatus.Web
         public ICollection<IWebCommand> Commands { get; set; }
         public SiteMapNodeCollection Navigation { get; set; }
         public dynamic CurrentRow { get; set; }
+        public WebStep Step { get; set; }
 
         public bool Can(object action)
         {
