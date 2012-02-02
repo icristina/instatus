@@ -38,6 +38,11 @@ namespace Instatus
             return request.Files[0].InputStream;
         }
 
+        public static string FileInputName(this HttpRequestBase request)
+        {
+            return request.Files[0].FileName;
+        }
+
         public static void RedirectToHome(this HttpResponseBase response)
         {
             response.Redirect("/");
