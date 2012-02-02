@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data.Entity;
+using System.ComponentModel.DataAnnotations;
 
 namespace Instatus.Web
 {
@@ -20,6 +21,7 @@ namespace Instatus.Web
 
     public class BaseViewModel<TModel> : IViewModel<TModel>
     {
+        [ScaffoldColumn(false)]
         public WebStep Step { get; set; }
         
         public virtual void Load(TModel model)
@@ -86,6 +88,7 @@ namespace Instatus.Web
 
     public class BaseViewModel<TModel, TContext> : BaseViewModel<TModel>
     {
+        [ScaffoldColumn(false)]
         public TContext Context { get; set; }
 
         public ICollection<T> UpdateList<T, TKey>(IDbSet<T> set, ICollection<T> list, IEnumerable<TKey> selected) where T : class

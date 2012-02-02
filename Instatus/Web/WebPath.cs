@@ -150,7 +150,8 @@ namespace Instatus.Web
             get 
             {
                 var route = RouteTable.Routes[WebRoute.Home];
-                return route != null ? route.GetVirtualPath(null, null).VirtualPath : "/";
+                return "/";
+                //return route != null ? route.GetVirtualPath(null, null).VirtualPath : "/";
             }
         }
     }

@@ -70,6 +70,7 @@ namespace Instatus.Models
         public virtual ICollection<Page> Parents { get; set; }
 
         [NotMapped]
+        [ScaffoldColumn(false)]
         public WebDocument Document
         {
             get
@@ -84,15 +85,18 @@ namespace Instatus.Models
 
         [NotMapped]
         [IgnoreDataMember]
+        [ScaffoldColumn(false)]
         public dynamic Extensions { get; set; }
 
         [NotMapped]
+        [ScaffoldColumn(false)]
         public Dictionary<WebVerb, WebInsight> Insights { get; private set; }
 
         private Dictionary<string, object> fields;
 
         [NotMapped]
         [IgnoreDataMember]
+        [ScaffoldColumn(false)]
         public Dictionary<string, object> Fields {
             get
             {
@@ -115,6 +119,7 @@ namespace Instatus.Models
         private Type[] knownTypes = new Type[] { typeof(WebDocument) };
 
         [IgnoreDataMember]
+        [ScaffoldColumn(false)]
         public byte[] Payload
         {
             get
