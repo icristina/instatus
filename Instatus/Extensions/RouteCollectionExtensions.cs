@@ -193,5 +193,24 @@ namespace Instatus
                 }
             ).AddAreaDataTokens(areaName);
         }
+
+        public static Route MapScaffoldRoute(this RouteCollection routes, string controllerName, string areaName = null, string routeName = null)
+        {
+            return routes.MapRouteLowercase(
+                routeName ?? controllerName,
+                string.Format("{0}/{{action}}/{{id}}", routeName ?? controllerName),
+                new
+                {
+                    controller = controllerName,
+                    action = "Index",
+                    id = UrlParameter.Optional,
+                    area = areaName
+                },
+                new
+                {
+                    controller = controllerName
+                }
+            ).AddAreaDataTokens(areaName);
+        }
     }
 }

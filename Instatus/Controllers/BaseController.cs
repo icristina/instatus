@@ -10,6 +10,7 @@ using Instatus.Models;
 using Instatus.Web;
 using System.Net;
 using System.Configuration;
+using System.Web.Helpers;
 
 namespace Instatus.Controllers
 {
@@ -60,7 +61,7 @@ namespace Instatus.Controllers
 
         public new ActionResult RedirectToAction(string actionName, object values = null)
         {
-            var returnUrl = Request.Params[HtmlConstants.ReturnUrl];
+            var returnUrl = Request.Unvalidated(HtmlConstants.ReturnUrl); // fix to allow redirect to action from form that includes HTML
             
             if (!returnUrl.IsEmpty())
                 return Redirect(returnUrl);

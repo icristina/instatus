@@ -67,7 +67,7 @@ namespace Instatus.Controllers
             return View(viewModel);
         }
 
-        [HttpPost]
+        [HttpPost]        
         public ActionResult Edit(TKey id, TViewModel viewModel)
         {
             AttachContext(viewModel);         

@@ -87,15 +87,8 @@ namespace Instatus
 
         public static Route MapRouteLowercase(this RouteCollection routes, string name, string url, object defaults, object constraints, string[] namespaces)
         {
-            if (routes == null)
-            {
-                throw new ArgumentNullException("routes");
-            }
-
-            if (url == null)
-            {
-                throw new ArgumentNullException("url");
-            }
+            if (routes[name] != null) // do not throw error on duplicate
+                return null;
 
             var route = new LowercaseRoute(url, new MvcRouteHandler())
             {
@@ -144,6 +137,9 @@ namespace Instatus
 
         public static Route MapRouteLowercase(this AreaRegistrationContext context, string name, string url, object defaults, object constraints, string[] namespaces)
         {
+            if (context.Routes[name] != null) // do not throw error on duplicate
+                return null;            
+            
             if (namespaces == null && context.Namespaces != null)
             {
                 namespaces = context.Namespaces.ToArray();
