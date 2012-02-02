@@ -75,5 +75,10 @@ namespace Instatus.Web
         {
             GlobalFilters.Filters.Add(new UserAgentAttribute("IE", 7, true));
         }
+
+        public static void GlobalNamespaces()
+        {
+            
+        }
     }
 }
