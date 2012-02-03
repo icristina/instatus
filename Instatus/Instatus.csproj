@@ -313,6 +313,10 @@
     <EmbeddedResource Include="Content\App.css" />
     <EmbeddedResource Include="Data\DropTables.sql" />
     <Content Include="boilerplate.htm" />
+    <EmbeddedResource Include="Content\Bootstrap.css" />
+    <EmbeddedResource Include="Content\BootstrapResponsive.css" />
+    <EmbeddedResource Include="Content\Glyphicons-halflings-white.png" />
+    <EmbeddedResource Include="Content\Glyphicons-halflings.png" />
     <Content Include="Favicon.ico" />
     <EmbeddedResource Include="Scripts\Respond.js" />
     <EmbeddedResource Include="Scripts\Scaffold.js" />
