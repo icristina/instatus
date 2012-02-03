@@ -16,8 +16,11 @@ namespace Instatus.Web
         {
             using (var db = BaseDataContext.Instance())
             {
-                db.LogError(filterContext.Exception);
-                db.SaveChanges();
+                if (db != null)
+                {
+                    db.LogError(filterContext.Exception);
+                    db.SaveChanges();
+                }
             }
         }
     }
