@@ -6,6 +6,7 @@ using System.Resources;
 using System.Collections;
 using Instatus.Data;
 using System.Web.Compilation;
+using Instatus.Services;
 
 namespace Instatus.Web
 {
@@ -60,10 +61,18 @@ namespace Instatus.Web
                 return new DbResourceReader(); 
             }
         }
+
+        public DbResourceProvider()
+        {
+            PubSub.Provider.Subscribe<ApplicationReset>(a =>
+            {
+                resourceSet = null;
+            });
+        }
     }
 
     public class DbResourceProviderFactory : ResourceProviderFactory
-    {
+    {       
         public override IResourceProvider CreateGlobalResourceProvider(string classKey)
         {
             return new DbResourceProvider();
