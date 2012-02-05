@@ -1,15 +1,17 @@
-﻿@{
-    Layout = null;
-}
-
-<span id="account">
+﻿<ul id="account">
     @if (User.Identity.IsAuthenticated)
     {
-        <span id="user">@User.Identity.Name</span>
-        @Html.ActionLink(WebPhrase.LogOut, "LogOut", "Account", new { area = "Auth" }, new { id = "logout" })
+        <li>
+            <a id="user">@User.Identity.Name</a>        
+        </li>
+        <li>
+            @Html.ActionLink(WebPhrase.LogOut, "LogOut", "Account", new { area = "Auth" }, new { id = "logout" })            
+        </li>
     }
     else
     {
-        @Html.ActionLink(WebPhrase.LogOn, "LogOn", "Account", new { area = "Auth" }, new { id = "logon" })
-    }
-</span>
+        <li>
+            @Html.ActionLink(WebPhrase.LogOn, "LogOn", "Account", new { area = "Auth" }, new { id = "logon" })        
+        </li>
+    }    
+</ul>

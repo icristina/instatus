@@ -1,8 +1,16 @@
-@import url(/Content/normalize.css);
-
-body 
+body[data-route-action=index]
 {
-    margin: 1.0em;
+    padding-top: 60px;
+}
+
+table form 
+{
+    display: inline;
+}
+
+table button 
+{
+    vertical-align: top;    
 }
 
 menu 
@@ -10,54 +18,11 @@ menu
     padding: 0;
 }
 
-table 
+@media (min-width: 480px)  
 {
-    width: 100%;
-}
-
-table form 
-{
-    display: inline-block;
-}
-
-table button, table a, table a:visited 
-{
-   border: 1px solid Gray;
-   border-radius: 0.25em;
-   background-color: transparent;
-   color: Black;
-   text-decoration: none;
-   padding: 0.25em;
-   font-size: 0.75em;
-}
-
-label 
-{
-    display: block;
-}
-
-input[type=text], textarea 
-{
-    width: 100%;
-    max-width: 600px;
-}
-
-textarea 
-{
-    height: 150px;
-}
-
-col.id 
-{
-    width: 10%;
-}
-
-col.description 
-{
-    width: 50%;
-}
-
-col.actions 
-{
-    width: 40%;
+    textarea, textarea.input-xlarge
+    {
+        width: 540px;
+        height: 200px;        
+    }
 }

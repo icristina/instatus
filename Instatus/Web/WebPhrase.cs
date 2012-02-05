@@ -118,18 +118,18 @@ namespace Instatus.Web
         public static string And { get { return Localize(Common.And, "and"); } }
         public static string TermsAndConditions { get { return Localize(Common.TermsAndConditions, "Terms and Conditions"); } }
         public static string PrivacyPolicy { get { return Localize(Common.PrivacyPolicy, "Privacy Policy"); } }
-        public static string LoadMore { get { return Localize(Common.LoadMore, "Load More"); } }
-        public static string ReadMore { get { return Localize(Common.ReadMore, "Read More"); } }
+        public static string LoadMore { get { return Localize(Common.LoadMore, "Load more"); } }
+        public static string ReadMore { get { return Localize(Common.ReadMore, "Read more"); } }
         public static string Latest { get { return Localize(Common.Latest, "Latest"); } }
         public static string Expand { get { return Localize(Common.Expand, "Expand"); } }
         public static string Featured { get { return Localize(Common.Featured, "Featured"); } }
         public static string Telephone { get { return Localize(Common.Telephone, "Telephone"); } }
-        public static string EmailAddress { get { return Localize(Common.EmailAddress, "Email Address"); } }
+        public static string EmailAddress { get { return Localize(Common.EmailAddress, "Email address"); } }
         public static string Password { get { return Localize(Common.Password, "Password"); } }
         public static string Author { get { return Localize(Common.Author, "Author"); } }
         public static string Published { get { return Localize(Common.Published, "Published"); } }
-        public static string LogOn { get { return Localize(Common.LogOn, "Log On"); } }
-        public static string LogOut { get { return Localize(Common.LogOut, "Log Out"); } }
+        public static string LogOn { get { return Localize(Common.LogOn, "Log on"); } }
+        public static string LogOut { get { return Localize(Common.LogOut, "Log out"); } }
         public static string Homepage { get { return Localize(Common.Homepage, "Home"); } }
         public static string Submit { get { return Localize(Common.Submit, "Submit"); } }
         public static string Create { get { return Localize(Common.Create, "Create"); } }

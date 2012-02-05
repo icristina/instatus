@@ -388,7 +388,7 @@ namespace Instatus
             return new MvcHtmlString(sb.ToString());
         }
 
-        public static MvcHtmlString Paging<T>(this HtmlHelper<T> html, IWebView webView = null, string seperator = "", string absolutePath = "")
+        public static MvcHtmlString Paging<T>(this HtmlHelper<T> html, IWebView webView = null, string seperator = "", string absolutePath = "", bool unorderedList = false)
         {
             int i = 0;
             int prev = i;
@@ -399,6 +399,9 @@ namespace Instatus
             var sb = new StringBuilder();
             var query = webView.Query;
 
+            if (unorderedList)
+                sb.Append("<ul>");
+
             if (webView.TotalPageCount > 1)
             {
                 while (i < webView.TotalPageCount)
@@ -407,10 +410,20 @@ namespace Instatus
 
                     if (!seperator.IsEmpty() && i > 0 && i < webView.TotalPageCount)
                     {
-                        sb.AppendSpace();
-                        sb.Append(seperator);
-                        sb.AppendSpace();
+                        if (unorderedList)
+                        {
+                            sb.AppendFormat("<li>{0}</li>", seperator);
+                        }
+                        else
+                        {
+                            sb.AppendSpace();
+                            sb.Append(seperator);
+                            sb.AppendSpace();
+                        }
                     }
+
+                    if (unorderedList)
+                        sb.Append("<li>");
 
                     MvcHtmlString link;
 
@@ -437,15 +450,28 @@ namespace Instatus
 
                     sb.Append(link);
                     
+                    if (unorderedList)
+                        sb.Append("</li>");                    
+                    
                     prev = i;
                     i = i.IncrementPager(query.PageIndex, webView.TotalPageCount, query.MaxPageCount);
                     
                     if (prev + 1 != i)
                     {
-                        sb.Append("&hellip;");
+                        if (unorderedList)
+                        {
+                            sb.Append("<li class=\"disabled\">&hellip;</li>");
+                        }
+                        else
+                        {
+                            sb.Append("&hellip;");
+                        }
                     }
                 }
             }
+
+            if (unorderedList)
+                sb.Append("</ul>");
 
             return new MvcHtmlString(sb.ToString());
         }

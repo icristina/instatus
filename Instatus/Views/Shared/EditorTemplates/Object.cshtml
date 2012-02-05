@@ -6,43 +6,43 @@
     {
         if(!prop.IsComplexType || prop.AdditionalValues["IsComplexTypeEntity"].AsBoolean() || allowedTypes.Contains(prop.ModelType)) 
         {
-            if (prop.IsReadOnly)
-            {
-                <label>
+            <div>
+                @if (prop.IsReadOnly)
+                {
                     <b>@prop.GetDisplayName()</b>
                     @Html.Display(prop.PropertyName)
-                </label>
-            }
-            else if (prop.HideSurroundingHtml)
-            {
-                @Html.Editor(prop.PropertyName)                    
-            }
-            else
-            {
-                <label>
-                    @if (!prop.GetDisplayName().IsEmpty())
-                    {
-                        <b>
-                            @prop.GetDisplayName() 
-                            @(prop.IsRequired ? "*" : "")
-                        </b>
-                    }                
-                </label> 
+                }
+                else if (prop.HideSurroundingHtml)
+                {
+                    @Html.Editor(prop.PropertyName)                    
+                }
+                else
+                {
+                    <label>
+                        @if (!prop.GetDisplayName().IsEmpty())
+                        {
+                            <b>
+                                @prop.GetDisplayName() 
+                                @(prop.IsRequired ? "*" : "")
+                            </b>
+                        }                
+                    </label> 
                     
-                @Html.Editor(prop.PropertyName) 
+                    @Html.Editor(prop.PropertyName) 
             
-                if (ViewContext.ViewData.ModelState[prop.PropertyName] != null && ViewContext.ViewData.ModelState[prop.PropertyName].Errors != null)
-                {
-                    <br />
-                    @Html.ValidationMessage(prop.PropertyName)  
-                }
+                    if (ViewContext.ViewData.ModelState[prop.PropertyName] != null && ViewContext.ViewData.ModelState[prop.PropertyName].Errors != null)
+                    {
+                        <br />
+                        @Html.ValidationMessage(prop.PropertyName)  
+                    }
 
-                if (!prop.Description.IsEmpty())
-                {
-                    <br />
-                    <small>@prop.Description</small>              
-                }
-            }
+                    if (!prop.Description.IsEmpty())
+                    {
+                        <br />
+                        <small>@prop.Description</small>              
+                    }
+                }            
+            </div>
         }
     }
 </fieldset>

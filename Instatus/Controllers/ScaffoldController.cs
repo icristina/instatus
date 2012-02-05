@@ -10,7 +10,6 @@ using Instatus.Web;
 using System.Linq.Expressions;
 using Instatus.Data;
 using System.ComponentModel;
-using System.ServiceModel.Syndication;
 
 namespace Instatus.Controllers
 {
@@ -41,6 +40,10 @@ namespace Instatus.Controllers
         public virtual void ConfigureWebView(WebView<TModel> webView) {
             webView.Navigation = Url.Controllers();
             webView.Commands = GetCommands();
+            webView.Document = new WebDocument()
+            {
+                Title = ControllerContext.Controller.GetCustomAttributeValue<DescriptionAttribute, string>(d => d.Description)
+            };
         }
 
         public virtual void AttachContext(TViewModel viewModel)
@@ -149,6 +152,10 @@ namespace Instatus.Controllers
             {
                 set = Context as IDbSet<TModel>;
             }
+            else if (Context is IRepository<TModel>)
+            {
+                set = (Context as IRepository<TModel>).Items;
+            }
             else
             {
                 throw new Exception("Unsupported context");
@@ -160,6 +167,10 @@ namespace Instatus.Controllers
             if (Context is DbContext)
             {
                 (Context as DbContext).SaveChanges();
+            }
+            else if (Context is IRepository<TModel>)
+            {
+                (Context as IRepository<TModel>).SaveChanges();
             }
         }
     }

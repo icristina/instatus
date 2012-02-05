@@ -32,8 +32,6 @@ namespace Instatus.Data
             return DependencyResolver.Current.GetService<IBaseDataContext>();
         }
 
-        public static bool LoggingEnabled { get; set; }
-
         public IDbSet<Page> Pages { get; set; }
         public IDbSet<User> Users { get; set; }
         public IDbSet<Role> Roles { get; set; }

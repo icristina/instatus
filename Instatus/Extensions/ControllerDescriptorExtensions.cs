@@ -9,9 +9,15 @@ namespace Instatus
 {
     public static class ControllerDescriptorExtensions
     {
+        public static ControllerDescriptor Descriptor(this IController controller)
+        {
+            return new ReflectedControllerDescriptor(controller.GetType());
+        }
+        
         public static string Description(this ControllerDescriptor descriptor)
         {
-            return descriptor.GetAttribute<DescriptionAttribute>().Description;
+            var description = descriptor.GetAttribute<DescriptionAttribute>();
+            return description != null ? description.Description : string.Empty;
         }
 
         public static T GetAttribute<T>(this ControllerDescriptor descriptor) where T : class

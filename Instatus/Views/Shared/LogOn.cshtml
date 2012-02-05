@@ -4,13 +4,14 @@
 }
 
 @using (Html.BeginForm()) {
-    <label>
-        <b>@WebPhrase.EmailAddress</b>
+    <h1>@WebPhrase.LogOn</h1>
+    <div>
+        @Html.Label("email", WebPhrase.EmailAddress)
         @Html.TextBox("email", null, new { type = "email" })
-    </label>
-    <label>
-        <b>@WebPhrase.Password</b>
+    </div>
+    <div>
+        @Html.Label("password", WebPhrase.Password)
         @Html.Password("password")
-    </label>
+    </div>
     @Html.SubmitButton(WebPhrase.LogOn)
 }

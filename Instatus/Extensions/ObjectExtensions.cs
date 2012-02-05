@@ -19,6 +19,17 @@ namespace Instatus
 {
     public static class ObjectExtensions
     {
+        public static TValue GetCustomAttributeValue<TAttribute, TValue>(this Type type, Func<TAttribute, TValue> predicate) where TAttribute : class
+        {
+            var attribute = type.GetCustomAttributes(typeof(TAttribute), true).FirstOrDefault() as TAttribute;
+            return attribute != null ? predicate(attribute) : default(TValue);
+        }        
+        
+        public static TValue GetCustomAttributeValue<TAttribute, TValue>(this object graph, Func<TAttribute, TValue> predicate) where TAttribute : class
+        {
+            return graph.GetType().GetCustomAttributeValue(predicate);
+        }
+        
         public static NameValueCollection ToNameValueCollection(this object graph, bool lowerCasePropertyNames = true)
         {
             var nameValueCollection = new NameValueCollection();

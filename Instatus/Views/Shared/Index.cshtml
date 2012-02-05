@@ -8,50 +8,51 @@
     <link rel="self" href="@Url.Self(Model)" />
 }
 
-<menu>
-    @Html.Partial("Menu", Model)
-</menu>
-<table>
-    <colgroup>
-        <col class="id" />
-        <col class="description" />
-        <col class="actions" />
-    </colgroup>
-    <thead>
-        <tr>
-            <td>@WebPhrase.Id</td>
-            <td>@WebPhrase.Description</td>
-            <td>@WebPhrase.Actions</td>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var entry in Model)
-        {
-            Model.CurrentRow = entry;
+<section>
+    @Html.Tag("h1", Model.Document.Title)
+    <menu>
+        @Html.Partial("Menu", Model)
+    </menu>
+    <table>
+        <colgroup>
+            <col class="id" />
+            <col class="description" />
+            <col class="actions" />
+        </colgroup>
+        <thead>
             <tr>
-                <td>
-                    @entry.GetKey()
-                </td>
-                <td>
-                    @Html.Partial("Entry", entry)
-                </td>
-                <td>
-                    @Html.Partial("Actions", Model)
-                    @Html.Partial("Commands", Model)
-                </td>
+                <td>@WebPhrase.Id</td>
+                <td>@WebPhrase.Description</td>
+                <td>@WebPhrase.Actions</td>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var entry in Model)
+            {
+                Model.CurrentRow = entry;
+                <tr>
+                    <td>
+                        @entry.GetKey()
+                    </td>
+                    <td>
+                        @Html.Partial("Entry", entry)
+                    </td>
+                    <td>
+                        @Html.Partial("Actions", Model)
+                        @Html.Partial("Commands", Model)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    @if (!Model.Document.IsEmpty() && !Model.Document.Body.IsEmpty())
+    {
+        <aside>
+            @Html.Content(Model.Document.Body)
+        </aside>
+    }
+</section>
 <nav>
-    <nav>  
-        @Html.Partial("Nav", Model.Navigation)
-        @Html.Partial("LoginStatus")
-    </nav>
+    @Html.Partial("Nav", Model.Navigation)
+    @Html.Partial("LoginStatus")
 </nav>
-@if (!Model.Document.IsEmpty() && !Model.Document.Body.IsEmpty())
-{
-    <aside>
-        @Html.Content(Model.Document.Body)
-    </aside>
-}

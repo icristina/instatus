@@ -3,8 +3,10 @@
 }
 
 @section base_head {
-    @Html.Stylesheet("scaffold.css", "stylesheet/less")
-    @Html.Scripts("less.js", "modernizr.js", "jquery.js", "respond.js", "instatus.js")
+    @Html.Stylesheet("bootstrap.css")
+    @Html.Stylesheet("bootstrapResponsive.css")
+    @Html.Stylesheet("scaffold.css")
+    @Html.Scripts("modernizr.js", "jquery.js", "respond.js", "instatus.js")
     @RenderSection("head", false)
 }
 

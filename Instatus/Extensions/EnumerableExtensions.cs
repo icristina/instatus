@@ -216,6 +216,11 @@ namespace Instatus
             return source.Where(item => item != null);
         }
 
+        public static IEnumerable<T> RemoveNullOrEmpty<T>(this IEnumerable<T> source)
+        {
+            return source.Where(item => !item.IsEmpty());
+        }
+
         public static ICollection<T> Synchronize<T>(this IEnumerable<T> source, Func<T, T> existingMatch, bool excludeNonMatches = false) where T : class
         {
             if (source.IsEmpty())

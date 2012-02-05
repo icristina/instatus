@@ -47,16 +47,16 @@ namespace Instatus
                     .Select(controllerType =>
                     {
                         var descriptor = new ReflectedControllerDescriptor(controllerType);
-                        var descriptionAttribute = descriptor.GetAttribute<DescriptionAttribute>();
+                        var description = descriptor.Description();
 
-                        if ((isNavigable != null && !isNavigable(descriptor)) || !descriptor.HasAction(actionName) || descriptionAttribute == null)
+                        if ((isNavigable != null && !isNavigable(descriptor)) || !descriptor.HasAction(actionName) || description.IsEmpty())
                             return null;
 
                         var url = urlHelper.Action(actionName, descriptor.ControllerName);
 
-                        return new SiteMapNode(siteMapProvider, controllerType.Name, url, descriptionAttribute.Description);
+                        return new SiteMapNode(siteMapProvider, controllerType.Name, url, description);
                     })
-                    .Where(s => !s.IsEmpty())
+                    .RemoveNulls()
                     .ToArray();
 
             return new SiteMapNodeCollection(siteMapNodes);

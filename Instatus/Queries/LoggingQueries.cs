@@ -15,7 +15,7 @@ namespace Instatus
     {
         public static void LogError(this BaseDataContext context, Exception error)
         {
-            if (!BaseDataContext.LoggingEnabled)
+            if (!WebBootstrap.LoggingEnabled)
                 return;
 
             var message = new StringBuilder();
@@ -52,7 +52,7 @@ namespace Instatus
 
         public static void LogChange(this BaseDataContext context, object resource, string action, string uri = null)
         {
-            if (!BaseDataContext.LoggingEnabled)
+            if (!WebBootstrap.LoggingEnabled)
                 return;
 
             var now = DateTime.UtcNow;

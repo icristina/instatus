@@ -1,8 +1,11 @@
 ﻿@model IWebView
 
-<span id="paging">
-    @Html.Paging()
-</span>
+@if (Model.TotalPageCount > 1)
+{
+    <span id="paging">
+        @Html.Paging(unorderedList: true)
+    </span>
+}
 @if (Model.Query.IsDateView)
 {
     var startDate = Model.Query.StartDate.Value;    
