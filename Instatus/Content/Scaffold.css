@@ -3,6 +3,11 @@ body[data-route-action=index]
     padding-top: 60px;
 }
 
+body[data-route-action=index] td
+{
+    vertical-align: middle;
+}
+
 menu 
 {
     padding: 0;
