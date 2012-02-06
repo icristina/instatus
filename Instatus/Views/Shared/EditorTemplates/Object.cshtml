@@ -21,10 +21,8 @@
                     <label>
                         @if (!prop.GetDisplayName().IsEmpty())
                         {
-                            <b>
-                                @prop.GetDisplayName() 
-                                @(prop.IsRequired ? "*" : "")
-                            </b>
+                            @prop.GetDisplayName() 
+                            @(prop.IsRequired ? "*" : "")
                         }                
                     </label> 
                     
