@@ -72,6 +72,7 @@ namespace Instatus.Web
             Mode,
             Tags,
             // phrases
+            LogOnErrorDescription,
             ErrorDescription,
             NotFoundDescription,
             SearchDescription,
@@ -144,6 +145,7 @@ namespace Instatus.Web
         public static string ErrorDescription { get { return Localize(Common.ErrorDescription, "Sorry. An error occured on the page."); } }
         public static string NotFound { get { return Localize(Common.NotFound, "File not found"); } }
         public static string NotFoundDescription { get { return Localize(Common.NotFoundDescription, "Sorry. The file you are looking for cannot be found or has been moved."); } }
+        public static string LogOnErrorDescription { get { return Localize(Common.LogOnErrorDescription, "Sorry. Your username or password were incorrect."); } }
         public static string Filter { get { return Localize(Common.Filter, "Filter"); } }
         public static string Mode { get { return Localize(Common.Mode, "Mode"); } }
         public static string View { get { return Localize(Common.View, "View"); } }

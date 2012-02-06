@@ -58,7 +58,7 @@ namespace Instatus
 
                         var url = urlHelper.Action(actionName, descriptor.ControllerName);
 
-                        return new SiteMapNode(siteMapProvider, controllerType.Name, url, description);
+                        return new SiteMapNode(siteMapProvider, descriptor.ControllerName, url, description);
                     })
                     .RemoveNulls()
                     .ToArray();

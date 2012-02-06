@@ -177,12 +177,13 @@ namespace Instatus
             return new MvcHtmlString(tag.ToString());
         }
 
-        public static MvcHtmlString SubmitButton<T>(this HtmlHelper<T> html, string text = null)
+        public static MvcHtmlString SubmitButton<T>(this HtmlHelper<T> html, string text = null, string className = null)
         {
             var tag = new TagBuilder("button");
             
             tag.MergeAttribute("type", "submit");
             tag.SetInnerText(text ?? WebPhrase.Submit);
+            tag.AddCssClass(className);
             
             return new MvcHtmlString(tag.ToString());
         }
@@ -193,12 +194,12 @@ namespace Instatus
             return html.Anchor(linkText, urlHelper.Page(slug));
         }
 
-        public static MvcHtmlString ActiveText<T>(this HtmlHelper<T> html, string text)
+        public static MvcHtmlString ActiveText<T>(this HtmlHelper<T> html, string text, string tagName = "b")
         {
-            var tag = new TagBuilder("b");
-
-            tag.AddCssClass("current");
-            tag.SetInnerText(text);
+            var tag = new TagBuilder(tagName);
+            
+            tag.AddCssClass("active");
+            tag.SetInnerText(text);           
             
             return new MvcHtmlString(tag.ToString());
         }
@@ -432,7 +433,11 @@ namespace Instatus
                     var nextPage = query.WithPageIndex(i).ToRouteValueDictionary();
                     var parentViewContext = html.ViewContext.ParentActionViewContext;
 
-                    if (query.PageIndex == i)
+                    if (query.PageIndex == i && unorderedList)
+                    {
+                        link = html.ActiveText(label, "a");
+                    }
+                    else if (query.PageIndex == i)
                     {
                         link = html.ActiveText(label);
                     }
@@ -462,7 +467,7 @@ namespace Instatus
                     {
                         if (unorderedList)
                         {
-                            sb.Append("<li class=\"disabled\">&hellip;</li>");
+                            sb.Append("<li class=\"disabled\"><a>&hellip;</a></li>");
                         }
                         else
                         {

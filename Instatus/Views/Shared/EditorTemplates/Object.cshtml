@@ -22,11 +22,11 @@
                 @Html.Editor(prop.PropertyName)             
                 @if (ViewContext.ViewData.ModelState.HasError(prop.PropertyName))
                 {
-                    @Html.ValidationMessage(prop.PropertyName)
+                    <small class="help-inline">@Html.ValidationMessage(prop.PropertyName)</small>
                 }
                 @if (!prop.Description.IsEmpty())
                 {
-                    <small>@prop.Description</small>              
+                    <small class="help-inline">@prop.Description</small>              
                 }                    
             </span>
         }            

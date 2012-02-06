@@ -3,7 +3,7 @@
 <ul class="nav">
     @foreach (SiteMapNode node in Model)
     {
-        <li>
+        <li @Html.OptionalAttr("class", "active", node.IsAncestorOrSelf()) id="@node.Key">
             @if (node.Url.IsAbsoluteUri())
             {
                 <a href="@Url.Content(node.Url)" rel="external" target="_blank">
@@ -12,7 +12,7 @@
             }
             else
             {
-                <a @Html.OptionalAttr("class", "current", node.IsAncestorOrSelf()) href="@Url.Content(node.Url)">
+                <a href="@Url.Content(node.Url)">
                     @node.Title
                 </a>
             }

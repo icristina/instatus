@@ -1,3 +1,8 @@
 ﻿@model object
 
-@Html.TextBox("", string.Format(ViewData.ModelMetadata.EditFormatString ?? "{0}", Model), Html.ValidationAttributes())
+@{
+    var attributes = Html.ValidationAttributes()
+                        .AddNonEmptyValue("class", "input-xlarge");    
+}
+
+@Html.TextBox("", string.Format(ViewData.ModelMetadata.EditFormatString ?? "{0}", Model), attributes)

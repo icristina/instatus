@@ -2,14 +2,14 @@
 
 @if (Model.TotalPageCount > 1)
 {
-    <span id="paging">
+    <div id="paging">
         @Html.Paging(unorderedList: true)
-    </span>
+    </div>
 }
 @if (Model.Query.IsDateView)
 {
     var startDate = Model.Query.StartDate.Value;    
-    <span id="date">
+    <div id="date">
         <a href="@Url.Action("Index", Model.Query.WithStartDate(startDate.Previous(Model.Query.Mode)).ToRouteValueDictionary())">
             @Html.LeftArrow()
         </a> 
@@ -17,14 +17,14 @@
         <a href="@Url.Action("Index", Model.Query.WithStartDate(startDate.Next(Model.Query.Mode)).ToRouteValueDictionary())">
             @Html.RightArrow()
         </a>    
-    </span>
+    </div>
 }
-<span id="actions">
+<div id="actions">
     @if (Model.Can(WebAction.Create))
     {
-        @Html.ActionLink(WebPhrase.Create, "Create", null, new { target = "_blank" })
+        @Html.ActionLink(WebPhrase.Create, "Create", null, new { target = "_blank", @class = "btn btn-primary" })
     }
-</span>
+</div>
 @if (!Model.Filter.IsEmpty())
 {
     using (Html.BeginNamedForm("filter"))

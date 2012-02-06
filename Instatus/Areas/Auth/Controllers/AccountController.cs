@@ -11,7 +11,14 @@ using Instatus.Web;
 namespace Instatus.Areas.Auth.Controllers
 {
     public class AccountController : BaseController
-    {       
+    {
+        [HttpGet]
+        public ActionResult LogOn()
+        {
+            return View();
+        }
+        
+        [HttpPost]
         public ActionResult LogOn(string email, string password, string returnUrl)
         {
             if (Membership.ValidateUser(email, password))
@@ -19,6 +26,8 @@ namespace Instatus.Areas.Auth.Controllers
                 FormsAuthentication.SetAuthCookie(email, true);
                 return Redirect(returnUrl.OrDefault(WebPath.Home));
             }
+
+            ModelState.AddModelError("password", WebPhrase.LogOnErrorDescription);
 
             return View();
         }

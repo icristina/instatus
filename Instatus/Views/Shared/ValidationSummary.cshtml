@@ -1,6 +1,8 @@
-﻿<ul class="errors">
-    @foreach (var item in ViewData.ModelState.Values.SelectMany(m => m.Errors))
-    {
-        <li>@item.ErrorMessage</li>
-    }
-</ul>
+﻿<div class="alert">
+    <ul class="errors">
+        @foreach (var item in ViewData.ModelState.Values.SelectMany(m => m.Errors))
+        {
+            <li>@item.ErrorMessage</li>
+        }
+    </ul>
+</div>

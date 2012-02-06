@@ -5,7 +5,15 @@
 
 <div class="container">
     @using (Html.BeginForm()) {
-        <h1>@WebPhrase.LogOn</h1>
+        <header class="page-header">
+            <h1>@WebPhrase.LogOn</h1>        
+        </header>
+        if (!ViewData.ModelState.IsValid)
+        {
+            <p class="alert">
+                @Html.ValidationMessage("password")
+            </p>
+        }
         <div class="control-group">
             <label for="email" class="control-label">
                 @WebPhrase.EmailAddress

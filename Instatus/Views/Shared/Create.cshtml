@@ -3,10 +3,10 @@
 }
 
 <div class="container">
-    @using (Html.BeginForm())
+    @using (Html.BeginForm("Create", ViewContext.RouteData.ControllerName(), FormMethod.Post, new { @class = "form-horizontal" }))
     {
         <div class="form-actions">
-            @Html.SubmitButton(WebPhrase.Create)
+            @Html.SubmitButton(WebPhrase.Create, "btn btn-primary")
         </div>
         @Html.EditorForModel()
     }

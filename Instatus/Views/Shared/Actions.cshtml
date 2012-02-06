@@ -3,7 +3,7 @@
 @{
     var key = ((object)Model.CurrentRow).GetKey();
     var routeData = new { id = key };
-    var commandButton = new { target = "_blank" };    
+    var commandButton = new { target = "_blank", @class = "btn" };    
 }
 
 @Html.ActionLink(WebPhrase.Details, "Details", routeData, commandButton)
@@ -17,6 +17,6 @@
 {
     using (Html.BeginForm("Delete", ViewContext.RouteData.ControllerName(), routeData))
     {
-        @Html.SubmitButton(WebPhrase.Delete)
+        @Html.SubmitButton(WebPhrase.Delete, "btn")
     }
 }
