@@ -1,8 +1,9 @@
-﻿<ul id="account">
+﻿<ul class="nav">
+    <li class="divider-vertical">​</li>
     @if (User.Identity.IsAuthenticated)
     {
         <li>
-            <a id="user">@User.Identity.Name</a>        
+            <a><i class="icon-user icon-white"></i> @User.Identity.Name</a>        
         </li>
         <li>
             @Html.ActionLink(WebPhrase.LogOut, "LogOut", "Account", new { area = "Auth" }, new { id = "logout" })            

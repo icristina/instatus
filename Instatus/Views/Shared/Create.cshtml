@@ -2,8 +2,12 @@
     Layout = "~/Views/Shared/_Scaffold.cshtml";
 }
 
-@using (Html.BeginForm())
-{
-    @Html.SubmitButton(WebPhrase.Create)
-    @Html.EditorForModel()
-}
+<div class="container">
+    @using (Html.BeginForm())
+    {
+        <div class="form-actions">
+            @Html.SubmitButton(WebPhrase.Create)
+        </div>
+        @Html.EditorForModel()
+    }
+</div>

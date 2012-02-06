@@ -400,7 +400,7 @@ namespace Instatus
             var query = webView.Query;
 
             if (unorderedList)
-                sb.Append("<ul>");
+                sb.Append("<ul class=\"pagination\">");
 
             if (webView.TotalPageCount > 1)
             {
@@ -422,7 +422,9 @@ namespace Instatus
                         }
                     }
 
-                    if (unorderedList)
+                    if (unorderedList && query.PageIndex == i)
+                        sb.Append("<li class=\"active\">");
+                    else if(unorderedList)
                         sb.Append("<li>");
 
                     MvcHtmlString link;

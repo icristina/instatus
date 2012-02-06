@@ -7,7 +7,7 @@
         ViewData.ModelMetadata.AdditionalValues["ColumnName"].ToString() : "Selected" + ViewData.ModelMetadata.PropertyName;       
 }
 
-<div class="multiSelectList">
+<div class="controls">
     @foreach(var item in Model) {
         <label>
             <input type="checkbox" name="@htmlFieldName" value="@item.Value"

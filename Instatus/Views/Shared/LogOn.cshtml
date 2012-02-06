@@ -3,19 +3,27 @@
     ViewBag.Title = WebPhrase.LogOn;
 }
 
-@using (Html.BeginForm()) {
-    <h1>@WebPhrase.LogOn</h1>
-    <div>
-        @Html.Label("email", WebPhrase.EmailAddress)        
-        <span>
-            @Html.TextBox("email", null, new { type = "email" })        
-        </span>
-    </div>
-    <div>
-        @Html.Label("password", WebPhrase.Password)
-        <span>
-            @Html.Password("password")        
-        </span>
-    </div>
-    @Html.SubmitButton(WebPhrase.LogOn)
-}
+<div class="container">
+    @using (Html.BeginForm()) {
+        <h1>@WebPhrase.LogOn</h1>
+        <div class="control-group">
+            <label for="email" class="control-label">
+                @WebPhrase.EmailAddress
+            </label>    
+            <span class="controls">
+                @Html.TextBox("email", null, new { type = "email" })        
+            </span>
+        </div>
+        <div class="control-group">
+            <label for="password" class="control-label">
+                @WebPhrase.Password
+            </label>
+            <span class="controls">
+                @Html.Password("password")        
+            </span>
+        </div>
+        <div class="form-actions">
+            @Html.SubmitButton(WebPhrase.LogOn)    
+        </div>
+    }
+</div>

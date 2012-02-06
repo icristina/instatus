@@ -1,5 +1,5 @@
 ﻿@helper Field(ModelMetadata prop) {
-    <div @Html.OptionalAttr("class", "error", ViewContext.ViewData.ModelState.HasError(prop.PropertyName))>
+    <div class="control-group @(ViewContext.ViewData.ModelState.HasError(prop.PropertyName) ? "error" : "")">
         @if (prop.IsReadOnly)
         {
             <b>@prop.GetDisplayName()</b>
@@ -11,14 +11,14 @@
         }
         else
         {
-            <label>
+            <label class="control-label">
                 @if (!prop.GetDisplayName().IsEmpty())
                 {
                     @prop.GetDisplayName() 
                     @(prop.IsRequired ? " *" : "")
                 }                
             </label>                     
-            <span>
+            <span class="controls">
                 @Html.Editor(prop.PropertyName)             
                 @if (ViewContext.ViewData.ModelState.HasError(prop.PropertyName))
                 {

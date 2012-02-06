@@ -46,6 +46,11 @@ namespace Instatus.Areas.Editor.Controllers
         [Display(Order = 2)]
         public string Description { get; set; }
 
+        [Category("Overview")]
+        [DataType(DataType.ImageUrl)]
+        [Display(Order = 3)]
+        public string Picture { get; set; }
+
         [Category("Links")]
         [ScaffoldColumn(true)]
         [Display(Order = 3)]

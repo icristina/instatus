@@ -136,39 +136,11 @@ $(function () {
 
     $('.current').addClass('active');
 
-    primaryNavigation
-        .prependTo('body')
-        .wrap('<div class="navbar navbar-fixed-top"><div class=navbar-inner><div class=container></div></div></div>')
-        .find('ul')
-            .addClass('nav')
-            .first()
-                .append('<li class=divider-vertical>​</li>');
-
-    $('body')
-        .children('form, section, table')
-            .wrap('<div class=container></div>')
-        .end()
-        .find('h1')
-            .wrap('<div class=page-header></div>');
-
     $('body')
         .find('> form, div > form')
             .addClass('form-horizontal')
             .wrap('<div class=contains><div class=row></div></div>')
-            .find('fieldset > div, > div')
-                .addClass('control-group')
-            .end()
-            .find('div > label')
-                .addClass('control-label')
-                .next('span')
-                    .addClass('controls')
-                .end()
-            .end()
-            .find('.multiSelectList')
-                .addClass('controls')
-            .end()
-            .children('button[type=submit]')
-                .wrap('<div class=form-actions></div>')
+            .find('button[type=submit]')
                 .addClass('btn btn-primary')
             .end()
             .find('input[type=text], textarea')
@@ -179,7 +151,6 @@ $(function () {
             .end();
 
     $('table')
-        .addClass('table table-striped')
         .find('a, button')
             .addClass('btn');
 
@@ -187,18 +158,10 @@ $(function () {
         .find('a')
             .addClass('btn btn-primary');
 
-    $('#user')
-        .prepend('<i class="icon-user icon-white"></i> ');
-
     $('#paging')
-        .find('ul')
-            .addClass('pagination')
-        .end()
         .find('li.disabled')
             .wrapInner('<a></a>')
         .end()
         .find('b')
-            .wrap('<a></a>')
-            .closest('li')
-                .addClass('active');
+            .wrap('<a></a>');
 });

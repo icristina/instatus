@@ -8,12 +8,22 @@
     <link rel="self" href="@Url.Self(Model)" />
 }
 
-<section>
-    @Html.Tag("h1", Model.Document.Title)
+<nav class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">    
+            @Html.Partial("Nav", Model.Navigation)
+            @Html.Partial("LoginStatus")
+        </div>
+    </div>
+</nav>   
+<section class="container">
+    <div class="page-header">
+        @Html.Tag("h1", Model.Document.Title)    
+    </div>
     <menu>
         @Html.Partial("Menu", Model)
     </menu>
-    <table>
+    <table class="table table-striped">
         <colgroup>
             <col class="id" />
             <col class="description" />
@@ -52,7 +62,3 @@
         </aside>
     }
 </section>
-<nav>
-    @Html.Partial("Nav", Model.Navigation)
-    @Html.Partial("LoginStatus")
-</nav>

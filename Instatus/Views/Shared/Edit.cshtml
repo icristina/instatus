@@ -3,8 +3,12 @@
     ViewBag.Title = Model.ToString();
 }
 
-@using (Html.BeginForm())
-{
-    @Html.SubmitButton()
-    @Html.EditorForModel()
-}
+<div class="container">
+    @using (Html.BeginForm())
+    {
+        <div class="form-actions">
+            @Html.SubmitButton()
+        </div>
+        @Html.EditorForModel()
+    }
+</div>
