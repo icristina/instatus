@@ -51,6 +51,11 @@ namespace Instatus.Data
 
         }
 
+        public InMemorySet(IEnumerable<T> items)
+        {
+            list = items.ToList();
+        }
+
         public T Add(T entity)
         {
             list.Add(entity);

@@ -6,12 +6,16 @@
 @using (Html.BeginForm()) {
     <h1>@WebPhrase.LogOn</h1>
     <div>
-        @Html.Label("email", WebPhrase.EmailAddress)
-        @Html.TextBox("email", null, new { type = "email" })
+        @Html.Label("email", WebPhrase.EmailAddress)        
+        <span>
+            @Html.TextBox("email", null, new { type = "email" })        
+        </span>
     </div>
     <div>
         @Html.Label("password", WebPhrase.Password)
-        @Html.Password("password")
+        <span>
+            @Html.Password("password")        
+        </span>
     </div>
     @Html.SubmitButton(WebPhrase.LogOn)
 }

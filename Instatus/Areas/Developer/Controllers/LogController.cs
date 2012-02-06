@@ -11,10 +11,12 @@ using Instatus.Services;
 using System.IO;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
+using System.ComponentModel;
 
 namespace Instatus.Areas.Developer.Controllers
 {   
-    [Authorize(Roles = "Administrator")]
+    [Authorize(Roles = "Developer")]
+    [Description("Logs")]
     public class LogController : ScaffoldController<BaseViewModel<Log>, Log, BaseDataContext, int>
     {
         public override IOrderedQueryable<Log> Query(IDbSet<Log> set, WebQuery query)

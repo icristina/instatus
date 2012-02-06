@@ -43,6 +43,21 @@ namespace Instatus
             return list.Random(count);
         }
 
+        public static IList<T> Pad<T>(this IList<T> list, int count) where T : new()
+        {
+            var actualCount = list.Count();
+            
+            if (actualCount < count)
+            {
+                for (var i = 0; i < count - actualCount; i++)
+                {
+                    list.Add(new T());
+                }
+            }
+
+            return list;
+        }
+
         public static IEnumerable<T> Randomize<T>(this IEnumerable<T> source)
         {
             return source.OrderBy(i => Guid.NewGuid());

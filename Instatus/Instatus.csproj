@@ -78,10 +78,18 @@
   <ItemGroup>
     <Compile Include="Areas\Auth\AuthAreaRegistration.cs" />
     <Compile Include="Areas\Auth\Controllers\AccountController.cs" />
+    <Compile Include="Areas\Developer\Controllers\PhraseController.cs" />
     <Compile Include="Areas\Developer\DeveloperAreaRegistration.cs" />
     <Compile Include="Areas\Developer\Controllers\DashboardController.cs" />
+    <Compile Include="Areas\Editor\Controller\BrandController.cs" />
+    <Compile Include="Areas\Editor\Controller\ArticleController.cs" />
+    <Compile Include="Areas\Editor\Controller\CatalogController.cs" />
+    <Compile Include="Areas\Editor\Controller\RegionController.cs" />
+    <Compile Include="Areas\Editor\Controller\NewsController.cs" />
+    <Compile Include="Areas\Editor\Controller\FileController.cs" />
+    <Compile Include="Areas\Editor\Controller\OrganizationController.cs" />
     <Compile Include="Areas\Editor\EditorAreaRegistration.cs" />
-    <Compile Include="Areas\Editor\Controller\BlogPostController.cs" />
+    <Compile Include="Areas\Editor\Controller\PostController.cs" />
     <Compile Include="Areas\Developer\Controllers\LogController.cs" />
     <Compile Include="Areas\Developer\Controllers\LinkController.cs" />
     <Compile Include="Areas\Google\Google.cs" />

@@ -8,6 +8,11 @@ namespace Instatus
 {
     public static class ViewDataExtensions
     {
+        public static bool HasError(this ModelStateDictionary modelStateDictionary, string propertyName)
+        {
+            return modelStateDictionary[propertyName] != null && modelStateDictionary[propertyName].Errors != null && modelStateDictionary[propertyName].Errors.Count > 0;
+        }
+        
         public static bool IsComplete(this ViewDataDictionary viewDataDictionary) {
             return viewDataDictionary.ModelState.IsValid && viewDataDictionary.Model != null;
         }

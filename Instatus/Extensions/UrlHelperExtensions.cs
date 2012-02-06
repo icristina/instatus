@@ -48,8 +48,12 @@ namespace Instatus
                     {
                         var descriptor = new ReflectedControllerDescriptor(controllerType);
                         var description = descriptor.Description();
+                        var roles = controllerType.GetCustomAttributeValue<AuthorizeAttribute, string>(a => a.Roles).ToList();
+                        var user = urlHelper.RequestContext.HttpContext.User;
 
-                        if ((isNavigable != null && !isNavigable(descriptor)) || !descriptor.HasAction(actionName) || description.IsEmpty())
+                        if ((isNavigable != null && !isNavigable(descriptor)) 
+                            || !descriptor.HasAction(actionName) || description.IsEmpty() // requires node title from description
+                            || (!roles.IsEmpty() && !roles.Any(r => user.IsInRole(r)))) // required role
                             return null;
 
                         var url = urlHelper.Action(actionName, descriptor.ControllerName);

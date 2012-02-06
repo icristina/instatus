@@ -10,6 +10,7 @@ using Instatus.Web;
 using Instatus.Services;
 using System.IO;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
 
 namespace Instatus.Areas.Editor.Controllers
 {
@@ -20,11 +21,12 @@ namespace Instatus.Areas.Editor.Controllers
     }
     
     [Authorize(Roles = "Editor")]
+    [Description("Tags")]
     public class TagController : ScaffoldController<TagViewModel, Tag, BaseDataContext, int>
     {
         public override void ConfigureWebView(WebView<Tag> webView)
         {
-            webView.Permissions = WebRole.Administrator.ToPermissions();
+            webView.Permissions = WebRole.Editor.ToPermissions();
             base.ConfigureWebView(webView);
         }
     }

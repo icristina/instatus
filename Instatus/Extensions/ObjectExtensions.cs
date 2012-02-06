@@ -193,7 +193,12 @@ namespace Instatus
                     // nullable types should evaluate to true if check whether destination is assignable from property
                     if ((destination.PropertyType.IsSimpleType() || !recursive) && destination.PropertyType.IsAssignableFrom(property.PropertyType))
                     {
-                        destination.SetValue(target, property.GetValue(source, null), null);
+                        var value = property.GetValue(source, null);
+
+                        if (value is string)
+                            value = ((string)value).TrimOrNull(); // auto-trim strings
+                        
+                        destination.SetValue(target, value, null);
                     }
                     else if (recursive)
                     {

@@ -1,46 +1,76 @@
-﻿<fieldset>
-    @{
-        var allowedTypes = new Type[] { typeof(SelectList), typeof(MultiSelectList) };        
-    }
-    @foreach (var prop in ViewData.ModelMetadata.Properties.Where(pm => pm.ShowForEdit && !ViewData.TemplateInfo.Visited(pm)))
-    {
-        if(!prop.IsComplexType || prop.AdditionalValues["IsComplexTypeEntity"].AsBoolean() || allowedTypes.Contains(prop.ModelType)) 
+﻿@helper Field(ModelMetadata prop) {
+    <div @Html.OptionalAttr("class", "error", ViewContext.ViewData.ModelState.HasError(prop.PropertyName))>
+        @if (prop.IsReadOnly)
         {
-            <div>
-                @if (prop.IsReadOnly)
+            <b>@prop.GetDisplayName()</b>
+            @Html.Display(prop.PropertyName)
+        }
+        else if (prop.HideSurroundingHtml)
+        {
+            @Html.Editor(prop.PropertyName)                    
+        }
+        else
+        {
+            <label>
+                @if (!prop.GetDisplayName().IsEmpty())
                 {
-                    <b>@prop.GetDisplayName()</b>
-                    @Html.Display(prop.PropertyName)
+                    @prop.GetDisplayName() 
+                    @(prop.IsRequired ? " *" : "")
+                }                
+            </label>                     
+            <span>
+                @Html.Editor(prop.PropertyName)             
+                @if (ViewContext.ViewData.ModelState.HasError(prop.PropertyName))
+                {
+                    @Html.ValidationMessage(prop.PropertyName)
                 }
-                else if (prop.HideSurroundingHtml)
+                @if (!prop.Description.IsEmpty())
                 {
-                    @Html.Editor(prop.PropertyName)                    
-                }
-                else
-                {
-                    <label>
-                        @if (!prop.GetDisplayName().IsEmpty())
-                        {
-                            @prop.GetDisplayName() 
-                            @(prop.IsRequired ? "*" : "")
-                        }                
-                    </label> 
-                    
-                    @Html.Editor(prop.PropertyName) 
-            
-                    if (ViewContext.ViewData.ModelState[prop.PropertyName] != null && ViewContext.ViewData.ModelState[prop.PropertyName].Errors != null)
-                    {
-                        <br />
-                        @Html.ValidationMessage(prop.PropertyName)  
-                    }
+                    <small>@prop.Description</small>              
+                }                    
+            </span>
+        }            
+    </div>    
+}
 
-                    if (!prop.Description.IsEmpty())
+<fieldset>
+    @{
+        var properties = ViewData.ModelMetadata.Properties
+                            .Where(prop => prop.ShowForEdit && !ViewData.TemplateInfo.Visited(prop))
+                            .Where(prop => !prop.IsComplexType
+                                || prop.AdditionalValues["IsScaffoldColumn"].AsBoolean()
+                                || prop.AdditionalValues["IsComplexTypeEntity"].AsBoolean()
+                                || (prop.Model is SelectList && !((SelectList)prop.Model).Items.IsEmpty()));
+
+        var groupedProperties = properties.GroupBy(p => p.AdditionalValues["Category"].AsString());   
+    }        
+    @if (groupedProperties.Count() > 1)
+    {
+        <ul class="nav nav-tabs">
+            @foreach (var group in groupedProperties)
+            {
+                <li @Html.OptionalAttr("class", "active", groupedProperties.First().Key == group.Key)>
+                    <a href="#@group.Key.ToSlug()" data-toggle="tab">@group.Key.ToPascalCase()</a>
+                </li>
+            }
+        </ul>        
+        <div class="tab-content">
+            @foreach (var group in groupedProperties)
+            {
+                <div class="tab-pane @(groupedProperties.First().Key == group.Key ? "active" : "")" id="@group.Key.ToSlug()">
+                    @foreach (var prop in group)
                     {
-                        <br />
-                        <small>@prop.Description</small>              
-                    }
-                }            
-            </div>
+                        @Field(prop)
+                    }     
+                </div>           
+            }
+        </div>        
+    }
+    else
+    {
+        foreach (var prop in properties)
+        {
+            @Field(prop)
         }
     }
 </fieldset>

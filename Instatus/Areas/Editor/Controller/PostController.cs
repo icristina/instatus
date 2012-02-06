@@ -15,10 +15,11 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Instatus.Areas.Editor.Controllers
 {
-    public class BlogPostViewModel : BaseViewModel<Post, BaseDataContext>
+    public class PostViewModel : BaseViewModel<Post, BaseDataContext>
     {
         [DisplayName("Friendly Url")]
         [Required]
+        [RegularExpression(ValidationPatterns.Slug)]
         public string Slug { get; set; }        
         
         [DisplayName("Title")]
@@ -29,11 +30,6 @@ namespace Instatus.Areas.Editor.Controllers
         [Required]
         public string Description { get; set; }
 
-        [DataType(DataType.MultilineText)]
-        [Required]
-        [AllowHtml]
-        public string Body { get; set; }
-
         [Column("Tags")]
         [Display(Name = "Tags")]
         public MultiSelectList TagsList { get; set; }
@@ -41,37 +37,35 @@ namespace Instatus.Areas.Editor.Controllers
         [ScaffoldColumn(false)]
         public int[] Tags { get; set; }
 
-        [Column("Status")]
-        [Display(Name = "Status")]
-        public SelectList StatusList { get; set; }
+        [Column("Organization")]
+        [Display(Name = "Organization")]
+        public SelectList OrganizationList { get; set; }
 
         [ScaffoldColumn(false)]
-        public string Status { get; set; }
+        public int Organization { get; set; }
 
         public override void Load(Post model)
         {
             Tags = model.Tags.IsEmpty() ? null : model.Tags.Select(t => t.Id).ToArray();
-            Body = model.Document.Body;
             base.Load(model);
         }
 
         public override void Save(Post model)
         {
             model.Tags = UpdateList<Tag, int>(Context.Tags, model.Tags, Tags);
-            model.User = Context.GetCurrentUser();
-            model.Document.Body = Body;
             base.Save(model);
         }
 
         public override void Databind()
-        {
-            StatusList = new SelectList(new WebStatus[] { WebStatus.Published, WebStatus.Draft }.ToStringList(), Status);
+        {            
             TagsList = new MultiSelectList(Context.Tags.ToList(), "Id", "Name", Tags);
+            OrganizationList = new SelectList(Context.Pages.OfType<Organization>(), "Id", "Name", Organization);
         }
     }
     
     [Authorize(Roles = "Editor")]
-    public class BlogPostController : ScaffoldController<BlogPostViewModel, Post, BaseDataContext, int>
+    [Description("Posts")]
+    public class PostController : ScaffoldController<PostViewModel, Post, BaseDataContext, int>
     {
         public override void ConfigureWebView(WebView<Post> webView)
         {
