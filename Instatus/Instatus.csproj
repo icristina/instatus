@@ -78,6 +78,7 @@
   <ItemGroup>
     <Compile Include="Areas\Auth\AuthAreaRegistration.cs" />
     <Compile Include="Areas\Auth\Controllers\AccountController.cs" />
+    <Compile Include="Areas\Auth\Models\LogOnViewModel.cs" />
     <Compile Include="Areas\Developer\Controllers\PhraseController.cs" />
     <Compile Include="Areas\Developer\DeveloperAreaRegistration.cs" />
     <Compile Include="Areas\Developer\Controllers\DashboardController.cs" />
@@ -470,6 +471,7 @@
     <EmbeddedResource Include="Views\Shared\FatalError.cshtml" />
     <EmbeddedResource Include="Views\Shared\NotFound.cshtml" />
     <EmbeddedResource Include="Views\Shared\Upload.cshtml" />
+    <EmbeddedResource Include="Views\Shared\EditorTemplates\Password.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

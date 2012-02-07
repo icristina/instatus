@@ -7,29 +7,34 @@ using System.Web.Security;
 using Instatus.Controllers;
 using Instatus.Data;
 using Instatus.Web;
+using Instatus.Areas.Auth.Models;
 
 namespace Instatus.Areas.Auth.Controllers
 {
     public class AccountController : BaseController
     {
         [HttpGet]
-        public ActionResult LogOn()
+        public ActionResult LogOn(string returnUrl)
         {
+            ViewData.Model = new LogOnViewModel()
+            {
+                ReturnUrl = returnUrl
+            };
             return View();
         }
         
         [HttpPost]
-        public ActionResult LogOn(string email, string password, string returnUrl)
+        public ActionResult LogOn(LogOnViewModel viewModel)
         {
-            if (Membership.ValidateUser(email, password))
+            if (ModelState.IsValid && Membership.ValidateUser(viewModel.EmailAddress, viewModel.Password))
             {
-                FormsAuthentication.SetAuthCookie(email, true);
-                return Redirect(returnUrl.OrDefault(WebPath.Home));
+                FormsAuthentication.SetAuthCookie(viewModel.EmailAddress, true);
+                return Redirect(viewModel.ReturnUrl.OrDefault(WebPath.Home));
             }
 
-            ModelState.AddModelError("password", WebPhrase.LogOnErrorDescription);
+            ModelState.AddModelError("Password", WebPhrase.LogOnErrorDescription);
 
-            return View();
+            return View(viewModel);
         }
 
         public ActionResult Success()
