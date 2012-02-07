@@ -31,6 +31,23 @@ namespace Instatus.Areas.Editor.Controllers
         {
             return set.OrderBy(o => o.Name);
         }
+
+        [HttpGet]
+        public ActionResult Upload()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Upload(string fileName)
+        {
+            if (Request.HasFile())
+            {
+                LocalStorageBlobService.Save("~/LocalStorage/" + Request.FileInputName(), Request.FileInputStream());
+            }
+
+            return RedirectToAction("Index");
+        }
     }
 
     public class FileRepository : IRepository<Link>

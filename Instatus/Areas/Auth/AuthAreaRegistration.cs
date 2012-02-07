@@ -22,13 +22,17 @@ namespace Instatus.Areas.Auth
                 new { 
                     action = "Verification", 
                     controller = "Account"
-                }
+                },
+                null,
+                new string[] { "Instatus.Areas.Auth.Controllers" }
             );            
             
             context.MapRouteLowercase(
                 "Auth_default",
                 "Auth/{controller}/{action}/{id}",
-                new { action = "Index", id = UrlParameter.Optional }
+                new { action = "Index", id = UrlParameter.Optional, area = AreaName },
+                null,
+                new string[] { "Instatus.Areas.Auth.Controllers" }
             );
         }
     }

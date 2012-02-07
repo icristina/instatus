@@ -21,7 +21,7 @@ namespace Instatus
     {
         public static TValue GetCustomAttributeValue<TAttribute, TValue>(this Type type, Func<TAttribute, TValue> predicate) where TAttribute : class
         {
-            var attribute = type.GetCustomAttributes(typeof(TAttribute), true).FirstOrDefault() as TAttribute;
+            var attribute = TypeDescriptor.GetAttributes(type).OfType<TAttribute>().LastOrDefault() as TAttribute; // last ensures TypeDescriptor.AddAttributes(typeof(TypeName), new Attribute("Value")) allowed in global.asa
             return attribute != null ? predicate(attribute) : default(TValue);
         }        
         

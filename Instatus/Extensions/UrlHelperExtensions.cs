@@ -47,16 +47,23 @@ namespace Instatus
                     .Select(controllerType =>
                     {
                         var descriptor = new ReflectedControllerDescriptor(controllerType);
-                        var description = descriptor.Description();
+                        var description = controllerType.GetCustomAttributeValue<DescriptionAttribute, string>(d => d.Description);
                         var roles = controllerType.GetCustomAttributeValue<AuthorizeAttribute, string>(a => a.Roles).ToList();
                         var user = urlHelper.RequestContext.HttpContext.User;
 
-                        if ((isNavigable != null && !isNavigable(descriptor)) 
-                            || !descriptor.HasAction(actionName) || description.IsEmpty() // requires node title from description
+                        if ((isNavigable != null && !isNavigable(descriptor))
+                            || !descriptor.GetCanonicalActions().Any(a => a.ActionName == actionName) 
+                            || description.IsEmpty() // requires node title from description
                             || (!roles.IsEmpty() && !roles.Any(r => user.IsInRole(r)))) // required role
                             return null;
 
-                        var url = urlHelper.Action(actionName, descriptor.ControllerName);
+                        string url;
+                        var namespaces = controllerType.Namespace.Split('.');
+
+                        if (namespaces.Length == 4)
+                            url = urlHelper.Action(actionName, descriptor.ControllerName, new { area = namespaces[2] });
+                        else
+                            url = urlHelper.Action(actionName, descriptor.ControllerName);
 
                         return new SiteMapNode(siteMapProvider, descriptor.ControllerName, url, description);
                     })

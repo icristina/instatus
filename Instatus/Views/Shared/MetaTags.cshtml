@@ -1,6 +1,23 @@
-﻿@model IEnumerable<Instatus.Web.WebParameter>
-
-@foreach (var parameter in Model)
+﻿@if (Model is IContentSource && ((IContentSource)Model).Document != null)
 {
-    @Html.Meta(parameter.Name, parameter.Content)
+    var parameters = ((IContentSource)Model).Document.Parameters;
+    var htmlParameters = parameters.GetParameterSet(WebNamespace.Html);
+    var openGraphParameters = parameters.GetParameterSet(WebNamespace.OpenGraph);
+    
+    @Html.Meta("description", htmlParameters.Value("Description"))
+    @Html.Meta("keywords", htmlParameters.Value("Keywords"))
+
+    foreach (var og in openGraphParameters)
+    {
+        @Html.Meta("og:" + og.Key, og.Value)
+    }
+}
+else if (Model is IEnumerable<Instatus.Web.WebParameter>)
+{
+    var parameters = (IEnumerable<Instatus.Web.WebParameter>)Model;
+
+    foreach (var parameter in parameters)
+    {
+        @Html.Meta(parameter.Name, parameter.Content)
+    }
 }

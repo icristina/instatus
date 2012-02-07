@@ -81,24 +81,26 @@
     <Compile Include="Areas\Developer\Controllers\PhraseController.cs" />
     <Compile Include="Areas\Developer\DeveloperAreaRegistration.cs" />
     <Compile Include="Areas\Developer\Controllers\DashboardController.cs" />
-    <Compile Include="Areas\Editor\Controller\BrandController.cs" />
-    <Compile Include="Areas\Editor\Controller\ArticleController.cs" />
-    <Compile Include="Areas\Editor\Controller\CatalogController.cs" />
-    <Compile Include="Areas\Editor\Controller\RegionController.cs" />
-    <Compile Include="Areas\Editor\Controller\NewsController.cs" />
-    <Compile Include="Areas\Editor\Controller\FileController.cs" />
-    <Compile Include="Areas\Editor\Controller\OrganizationController.cs" />
+    <Compile Include="Areas\Editor\Controllers\BrandController.cs" />
+    <Compile Include="Areas\Editor\Controllers\ArticleController.cs" />
+    <Compile Include="Areas\Editor\Controllers\CatalogController.cs" />
+    <Compile Include="Areas\Editor\Controllers\RegionController.cs" />
+    <Compile Include="Areas\Editor\Controllers\NewsController.cs" />
+    <Compile Include="Areas\Editor\Controllers\FileController.cs" />
+    <Compile Include="Areas\Editor\Controllers\OrganizationController.cs" />
     <Compile Include="Areas\Editor\EditorAreaRegistration.cs" />
-    <Compile Include="Areas\Editor\Controller\PostController.cs" />
+    <Compile Include="Areas\Editor\Controllers\PostController.cs" />
     <Compile Include="Areas\Developer\Controllers\LogController.cs" />
     <Compile Include="Areas\Developer\Controllers\LinkController.cs" />
+    <Compile Include="Areas\Editor\Models\PublishingViewModel.cs" />
+    <Compile Include="Areas\Editor\Models\MetaTagsViewModel.cs" />
     <Compile Include="Areas\Google\Google.cs" />
     <Compile Include="Areas\Moderator\Controllers\MessageController.cs" />
     <Compile Include="Areas\Developer\Controllers\DomainController.cs" />
     <Compile Include="Areas\Developer\Controllers\CredentialController.cs" />
     <Compile Include="Areas\Moderator\Controllers\ExportController.cs" />
     <Compile Include="Areas\Developer\Controllers\UserController.cs" />
-    <Compile Include="Areas\Editor\Controller\TagController.cs" />
+    <Compile Include="Areas\Editor\Controllers\TagController.cs" />
     <Compile Include="Areas\Microsite\SchemaOrgExtensions.cs" />
     <Compile Include="Areas\Moderator\ModeratorAreaRegistration.cs" />
     <Compile Include="Areas\Twitter\Twitter.cs" />
@@ -127,7 +129,6 @@
     <Compile Include="Data\Range.cs" />
     <Compile Include="Data\RecordResult.cs" />
     <Compile Include="Extensions\CacheExtensions.cs" />
-    <Compile Include="Extensions\ControllerDescriptorExtensions.cs" />
     <Compile Include="Extensions\BooleanExtensions.cs" />
     <Compile Include="Extensions\GeospacialExtensions.cs" />
     <Compile Include="Extensions\GlobalFilterExtensions.cs" />
@@ -468,6 +469,7 @@
     <EmbeddedResource Include="Views\Shared\Notification.cshtml" />
     <EmbeddedResource Include="Views\Shared\FatalError.cshtml" />
     <EmbeddedResource Include="Views\Shared\NotFound.cshtml" />
+    <EmbeddedResource Include="Views\Shared\Upload.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

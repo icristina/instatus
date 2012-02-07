@@ -17,13 +17,16 @@ namespace Instatus.Areas.Developer.Controllers
 {
     public class PhraseViewModel : BaseViewModel<Phrase>
     {
+        [Required]
         public string Name { get; set; }
+
+        [Required]
         public string Value { get; set; }
     }
 
     [Authorize(Roles = "Developer")]
     [Description("Localization")]
-    public class PhraseScaffoldController : ScaffoldController<PhraseViewModel, Phrase, BaseDataContext, int>
+    public class PhraseController : ScaffoldController<PhraseViewModel, Phrase, BaseDataContext, int>
     {
         public override IOrderedQueryable<Phrase> Query(IDbSet<Phrase> set, WebQuery query)
         {

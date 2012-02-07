@@ -63,6 +63,13 @@ namespace Instatus
             return source.OrderBy(i => Guid.NewGuid());
         }
 
+        public static T2 Value<T1, T2>(this IDictionary<T1, T2> source, T1 key)
+        {
+            T2 value;
+            source.TryGetValue(key, out value);
+            return value;
+        }
+
         public static bool AllEmpty<T1, T2>(this IDictionary<T1, T2> source)
         {
             return source.All(f => f.Value.IsEmpty());
@@ -82,7 +89,8 @@ namespace Instatus
             return dictionary;
         }
 
-        public static T AddNonEmptyValue<T, TValue>(this T dictionary, string name, TValue value) where T : IDictionary<string, object> {
+        public static IDictionary<TKey, TValue> AddNonEmptyValue<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey name, TValue value)
+        {
             if (!value.IsEmpty() && !value.Equals(default(TValue)))
                 if (dictionary.ContainsKey(name))
                     dictionary[name] = value;

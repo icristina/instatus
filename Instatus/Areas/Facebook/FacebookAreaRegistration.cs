@@ -21,13 +21,17 @@ namespace Instatus.Areas.Facebook
             context.MapRouteLowercase(
                 "Facebook_channel",
                 "channel.html",
-                new { controller = "Facebook", action = "Channel" }
+                new { controller = "Facebook", action = "Channel" },
+                null,
+                new string[] { "Instatus.Areas.Facebook.Controllers" }
             );            
             
             context.MapRouteLowercase(
                 "Facebook_default",
                 "Facebook/{controller}/{action}/{id}",
-                new { controller = "Tab", action = "Index", id = UrlParameter.Optional }
+                new { controller = "Tab", action = "Index", id = UrlParameter.Optional, area = AreaName },
+                null,
+                new string[] { "Instatus.Areas.Facebook.Controllers" }
             );
 
             WebPart.Catalog.Add(new WebPartial()

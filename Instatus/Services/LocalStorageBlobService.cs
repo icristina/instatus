@@ -16,12 +16,12 @@ namespace Instatus.Services
     {       
         public static string BasePath = "~/LocalStorage/";
 
-        private void EnsureFolderExists()
+        public static void EnsureFolderExists(string absolutePath)
         {
-            var folderPath = HostingEnvironment.MapPath(BasePath);
+            var directoryName = Path.GetDirectoryName(absolutePath);
             
-            if (!Directory.Exists(folderPath))
-                Directory.CreateDirectory(folderPath);
+            if (!Directory.Exists(directoryName))
+                Directory.CreateDirectory(directoryName);
         }
 
         private string GetRelativePath(string contentType, string slug)
@@ -36,16 +36,23 @@ namespace Instatus.Services
             var relativePath = GetRelativePath(contentType, slug);
             var absolutePath = HostingEnvironment.MapPath(relativePath);
 
-            EnsureFolderExists();
+            EnsureFolderExists(absolutePath);
+            Save(absolutePath, stream);
+
+            return relativePath;
+        }
+
+        public static void Save(string relativePath, Stream stream) {
+            var absolutePath = HostingEnvironment.MapPath(relativePath);
+
+            EnsureFolderExists(absolutePath);
 
             using (var fs = new FileStream(absolutePath, FileMode.Create, FileAccess.Write))
             {
                 stream.Flush();
-                stream.Position = 0;                
+                stream.Position = 0;
                 stream.CopyTo(fs);
             }
-
-            return relativePath;
         }
 
         public Stream Stream(string key)

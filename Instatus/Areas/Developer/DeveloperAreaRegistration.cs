@@ -17,7 +17,9 @@ namespace Instatus.Areas.Developer
             context.MapRouteLowercase(
                 "Developer_default",
                 "Developer/{controller}/{action}/{id}",
-                new { action = "Index", id = UrlParameter.Optional }
+                new { action = "Index", id = UrlParameter.Optional, area = AreaName },
+                null,
+                new string[] { "Instatus.Areas.Developer.Controllers" }
             );
         }
     }

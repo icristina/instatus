@@ -1,0 +1,14 @@
+﻿@{
+    Layout = "~/Views/Shared/_Scaffold.cshtml";
+    ViewBag.Title = Model.ToString();
+}
+
+<div class="container">
+    @using (Html.BeginMultipartForm(className: "form-horizontal"))
+    {
+        <div class="form-actions">
+            @Html.SubmitButton(WebPhrase.Submit, "btn btn-primary")
+        </div>
+        @Html.EditorForModel()
+    }
+</div>

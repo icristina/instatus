@@ -13,23 +13,38 @@ using Instatus;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
+using Instatus.Areas.Editor.Models;
 
 namespace Instatus.Areas.Editor.Controllers
 {
     public class OrganizationViewModel : BaseViewModel<Organization, BaseDataContext>
     {
+        [Category("Overview")]
         public string Name { get; set; }
 
+        [Category("Overview")]
         [DataType(DataType.MultilineText)]
         public string Description { get; set; }
 
+        [Category("Overview")]
         public double Longitude { get; set; }
+
+        [Category("Overview")]
         public double Latitude { get; set; }
+
+        [Category("Overview")]
         public double Zoom { get; set; }
+
+        [Category("Overview")]
         public int Priority { get; set; }
+
+        [Category("Overview")]
         public string Picture { get; set; }
+
+        [Category("Overview")]
         public string Data { get; set; }
 
+        [Category("Overview")]
         [Column("Region")]
         [Display(Name = "Region")]
         public SelectList RegionList { get; set; }
@@ -37,12 +52,16 @@ namespace Instatus.Areas.Editor.Controllers
         [ScaffoldColumn(false)]
         public int Region { get; set; }
 
+        [Category("Overview")]
         [Column("Catalog")]
         [Display(Name = "Catalog")]
         public SelectList CatalogList { get; set; }
 
         [ScaffoldColumn(false)]
         public int Catalog { get; set; }
+
+        [Category("Meta Tags")]
+        public MetaTagsViewModel MetaTags { get; set; }
 
         public override void Load(Organization model)
         {

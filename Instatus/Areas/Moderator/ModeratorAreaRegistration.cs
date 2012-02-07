@@ -17,7 +17,9 @@ namespace Instatus.Areas.Moderator
             context.MapRouteLowercase(
                 "Moderator_default",
                 "Moderator/{controller}/{action}/{id}",
-                new { action = "Index", id = UrlParameter.Optional }
+                new { action = "Index", id = UrlParameter.Optional, area = AreaName },
+                null,
+                new string[] { "Instatus.Areas.Moderator.Controllers" }
             );
         }
     }

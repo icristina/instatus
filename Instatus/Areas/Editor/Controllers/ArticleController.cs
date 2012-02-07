@@ -13,6 +13,7 @@ using Instatus;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
+using Instatus.Areas.Editor.Models;
 
 namespace Instatus.Areas.Editor.Controllers
 {
@@ -56,6 +57,9 @@ namespace Instatus.Areas.Editor.Controllers
         [Display(Order = 3)]
         public IEnumerable<LinkViewModel> Links { get; set; }
 
+        [Category("Meta Tags")]
+        public MetaTagsViewModel MetaTags { get; set; }
+
         public override void Load(Article model)
         {
             base.Load(model);
@@ -68,6 +72,8 @@ namespace Instatus.Areas.Editor.Controllers
             })
             .ToList()
             .Pad(10);
+
+            MetaTags.Load(model.Document);
         }
 
         public override void Save(Article model)
@@ -81,6 +87,13 @@ namespace Instatus.Areas.Editor.Controllers
                 Picture = l.Picture                
             })
             .ToList();
+
+            MetaTags.Save(model.Document);
+        }
+
+        public ArticleViewModel()
+        {
+            MetaTags = new MetaTagsViewModel();
         }
     }
 

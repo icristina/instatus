@@ -17,7 +17,9 @@ namespace Instatus.Areas.Editor
             context.MapRouteLowercase(
                 "Editor_default",
                 "Editor/{controller}/{action}/{id}",
-                new { action = "Index", id = UrlParameter.Optional }
+                new { action = "Index", id = UrlParameter.Optional, area = AreaName },
+                null,
+                new string[] { "Instatus.Areas.Editor.Controllers" }
             );
         }
     }

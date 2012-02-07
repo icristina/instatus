@@ -9,6 +9,7 @@ using System.Web.Security;
 using System.Collections.Specialized;
 using System.Web.Routing;
 using Microsoft.Web.Infrastructure.DynamicModuleHelper;
+using System.ComponentModel;
 
 namespace Instatus.Web
 {

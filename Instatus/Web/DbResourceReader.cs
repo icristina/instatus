@@ -26,7 +26,7 @@ namespace Instatus.Web
             using (var db = BaseDataContext.Instance())
             {
                 foreach (var phrase in db.Phrases.ToList())
-                    entries.Add(phrase.Name, phrase.Value);
+                    entries.AddNonEmptyValue(phrase.Name, phrase.Value);
             }
             
             return entries.GetEnumerator();

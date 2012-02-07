@@ -21,7 +21,8 @@ namespace Instatus.Areas.Wordpress
                 "Wordpress",
                 "xmlrpc.php",
                 new { controller = "WordpressApi" },
-                new { action = new XmlRpcRouteConstraint() }
+                new { action = new XmlRpcRouteConstraint() },
+                new string[] { "Instatus.Areas.Wordpress.Controllers" }
             );  
         }
     }

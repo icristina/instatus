@@ -29,7 +29,7 @@ namespace Instatus.Controllers
         {
             var webView = new WebView<TModel>(Query(set, query), query);
             ConfigureWebView(webView);
-            return View(webView);
+            return View("~/Views/Shared/Index.cshtml", webView); // view name hard coded in case a view in parent project with the same name
         }
 
         public virtual IOrderedQueryable<TModel> Query(IDbSet<TModel> set, WebQuery query)
@@ -56,7 +56,7 @@ namespace Instatus.Controllers
         public ActionResult Details(TKey id)
         {
             ViewData.Model = set.Find(id);
-            return View();
+            return View("~/Views/Shared/Details.cshtml");
         }
 
         [HttpGet]
@@ -67,7 +67,7 @@ namespace Instatus.Controllers
             AttachContext(viewModel);
             viewModel.Load(model);
             viewModel.Databind();
-            return View(viewModel);
+            return View("~/Views/Shared/Edit.cshtml", viewModel);
         }
 
         [HttpPost]        
@@ -86,7 +86,7 @@ namespace Instatus.Controllers
 
             viewModel.Databind();
 
-            return View(viewModel);
+            return View("~/Views/Shared/Edit.cshtml", viewModel);
         }
 
         [HttpGet]
@@ -99,7 +99,7 @@ namespace Instatus.Controllers
             viewModel.Load(model);
             viewModel.Databind();
 
-            return View(viewModel);
+            return View("~/Views/Shared/Create.cshtml", viewModel);
         }
 
         [HttpPost]
@@ -120,7 +120,7 @@ namespace Instatus.Controllers
 
             viewModel.Databind();
 
-            return View(viewModel);
+            return View("~/Views/Shared/Create.cshtml", viewModel);
         }
 
         public virtual ICollection<IWebCommand> GetCommands()

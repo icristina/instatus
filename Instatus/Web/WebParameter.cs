@@ -41,6 +41,11 @@ namespace Instatus.Web
             };
         }
 
+        public static void SetParameter(this List<WebParameter> parameters, WebNamespace ns, string name, object content)
+        {
+            parameters.SetParameter(ns.ToDescriptiveString(), name, content);
+        }
+
         public static void SetParameter(this List<WebParameter> parameters, string ns, string name, object content)
         {
             var parameter = parameters.FirstOrDefault(p => p.Name == WebParameter.GetNamespacedPropertyName(ns, name));
@@ -61,6 +66,11 @@ namespace Instatus.Web
         {
             var parameter = parameters.FirstOrDefault(p => p.Name == name);
             return parameter.IsEmpty() ? string.Empty : parameter.Content;
+        }
+
+        public static IDictionary<string, object> GetParameterSet(this List<WebParameter> parameters, WebNamespace ns)
+        {
+            return parameters.GetParameterSet(ns.ToDescriptiveString());
         }
 
         public static IDictionary<string, object> GetParameterSet(this List<WebParameter> parameters, string ns)

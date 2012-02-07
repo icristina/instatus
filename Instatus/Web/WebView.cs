@@ -8,7 +8,12 @@ using Instatus.Models;
 using System.Collections;
 
 namespace Instatus.Web
-{   
+{
+    public interface IContentSource
+    {
+        WebDocument Document { get; }
+    }
+    
     public interface IWebView : IEnumerable, IViewModel
     {
         int TotalItemCount { get; }
@@ -25,7 +30,7 @@ namespace Instatus.Web
         WebDocument Document { get; }
     }
 
-    public class WebView<T> : PagedCollection<T>, IWebView
+    public class WebView<T> : PagedCollection<T>, IWebView, IContentSource
     {
         public string Name { get; set; }
         public object Context { get; set; }

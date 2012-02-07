@@ -19,7 +19,9 @@ namespace Instatus.Areas.Google
             context.MapRouteLowercase(
                 "Google_default",
                 "Google/{controller}/{action}/{id}",
-                new { action = "Index", id = UrlParameter.Optional }
+                new { action = "Index", id = UrlParameter.Optional, area = AreaName },
+                null,
+                new string[] { "Instatus.Areas.Google.Controllers" }
             );
 
             WebPart.Catalog.Add(new WebPartial()

@@ -1,36 +1,42 @@
 ﻿@helper Field(ModelMetadata prop) {
-    <div class="control-group @(ViewContext.ViewData.ModelState.HasError(prop.PropertyName) ? "error" : "")">
-        @if (prop.IsReadOnly)
-        {
-            <b>@prop.GetDisplayName()</b>
-            @Html.Display(prop.PropertyName)
-        }
-        else if (prop.HideSurroundingHtml)
-        {
-            @Html.Editor(prop.PropertyName)                    
-        }
-        else
-        {
-            <label class="control-label">
-                @if (!prop.GetDisplayName().IsEmpty())
-                {
-                    @prop.GetDisplayName() 
-                    @(prop.IsRequired ? " *" : "")
-                }                
-            </label>                     
-            <span class="controls">
-                @Html.Editor(prop.PropertyName)             
-                @if (ViewContext.ViewData.ModelState.HasError(prop.PropertyName))
-                {
-                    <small class="help-inline">@Html.ValidationMessage(prop.PropertyName)</small>
-                }
-                @if (!prop.Description.IsEmpty())
-                {
-                    <small class="help-inline">@prop.Description</small>              
-                }                    
-            </span>
-        }            
-    </div>    
+    if (prop.AdditionalValues["IsComplexTypeEntity"].AsBoolean()) { // scaffold shared child models
+        @Html.Editor(prop.PropertyName)
+    }
+    else
+    {
+        <div class="control-group @(ViewContext.ViewData.ModelState.HasError(prop.PropertyName) ? "error" : "")">
+            @if (prop.IsReadOnly)
+            {
+                <b>@prop.GetDisplayName()</b>
+                @Html.Display(prop.PropertyName)
+            }
+            else if (prop.HideSurroundingHtml)
+            {
+                @Html.Editor(prop.PropertyName)                    
+            }
+            else
+            {
+                <label class="control-label">
+                    @if (!prop.GetDisplayName().IsEmpty())
+                    {
+                        @prop.GetDisplayName() 
+                        @(prop.IsRequired ? " *" : "")
+                    }                
+                </label>                     
+                <span class="controls">
+                    @Html.Editor(prop.PropertyName)             
+                    @if (ViewContext.ViewData.ModelState.HasError(prop.PropertyName))
+                    {
+                        <small class="help-inline">@Html.ValidationMessage(prop.PropertyName)</small>
+                    }
+                    @if (!prop.Description.IsEmpty())
+                    {
+                        <small class="help-inline">@prop.Description</small>              
+                    }                    
+                </span>
+            }            
+        </div>           
+    } 
 }
 
 <fieldset>

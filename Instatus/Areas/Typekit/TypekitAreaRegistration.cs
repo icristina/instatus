@@ -19,7 +19,9 @@ namespace Instatus.Areas.Typekit
             context.MapRouteLowercase(
                 "Typekit_default",
                 "Typekit/{controller}/{action}/{id}",
-                new { action = "Index", id = UrlParameter.Optional }
+                new { action = "Index", id = UrlParameter.Optional, area = AreaName },
+                null,
+                new string[] { "Instatus.Areas.Typekit.Controllers" }
             );
 
             WebPart.Catalog.Add(new WebPartial()

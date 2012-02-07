@@ -22,10 +22,10 @@ namespace Instatus
             return html.ViewContext.IsChildAction || html.ViewContext.HttpContext.Request.IsAjaxRequest() ? null : WebPath.Relative(virtualPath);
         }        
         
-        public static MvcForm BeginMultipartForm<T>(this HtmlHelper<T> html, string actionName = null, string controllerName = null)
+        public static MvcForm BeginMultipartForm<T>(this HtmlHelper<T> html, string actionName = null, string controllerName = null, string className = null)
         {
             var routeData = html.ViewContext.RouteData;
-            return html.BeginForm(actionName ?? routeData.ActionName(), controllerName ?? routeData.ControllerName(), FormMethod.Post, new { enctype = "multipart/form-data" }); 
+            return html.BeginForm(actionName ?? routeData.ActionName(), controllerName ?? routeData.ControllerName(), FormMethod.Post, new { enctype = "multipart/form-data", @class = className }); 
         }
         
         public static MvcHtmlString ReturnUrl<T>(this HtmlHelper<T> html, string returnUrl = null)
@@ -68,12 +68,12 @@ namespace Instatus
             return new MvcHtmlString(tag.ToString());
         }
 
-        public static MvcHtmlString Meta<T>(this HtmlHelper<T> html, string name, string content)
+        public static MvcHtmlString Meta<T>(this HtmlHelper<T> html, string name, object content)
         {
             if (name.IsEmpty() || content.IsEmpty())
                 return null;
 
-            return new MvcHtmlString(HtmlBuilder.Meta(name, content));
+            return new MvcHtmlString(HtmlBuilder.Meta(name, content.AsString()));
         }
 
         public static MvcHtmlString Viewport<T>(this HtmlHelper<T> html, string content = "initial-scale=1.0, width=device-width")
@@ -525,9 +525,13 @@ namespace Instatus
         public static MvcHtmlString Title<T>(this HtmlHelper<T> html)
         {
             var title = html.ViewData["Title"].AsString();
+            var model = html.ViewData.Model;
 
-            if(title.IsEmpty())
-                title = html.ViewData.Model.AsString(); // WebView and Page ToString() customized to give descriptive title for html pages
+            if (model is IContentSource && (IContentSource)model != null && ((IContentSource)model).Document != null)
+                title = ((IContentSource)model).Document.Parameters.GetParameter(WebNamespace.Html, "Title");
+
+            if (title.IsEmpty())
+                title = model.AsString(); // WebView and Page ToString() customized to give descriptive title for html pages
 
             return new MvcHtmlString(WebPhrase.HtmlTitle(title));
         }
