@@ -5,29 +5,25 @@ using System.Web;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 using Instatus.Web;
-using Instatus.Models;
-using Instatus.Data;
+using System.Web.Mvc;
 
 namespace Instatus.Areas.Editor.Models
 {
     [ComplexType]
-    public class OverviewViewModel : IViewModel<Page>
+    public class DocumentViewModel : IViewModel<WebDocument>
     {
-        [DisplayName("Friendly Url")]
-        [Required]
-        [RegularExpression(ValidationPatterns.Slug, ErrorMessage = ValidationMessages.InvalidSlug)]
-        public string Slug { get; set; }             
-        
-        public int Priority { get; set; }
+        public string Heading { get; set; }
 
-        public DateTime PublishedTime { get; set; }
+        [DataType(DataType.MultilineText)]
+        [AllowHtml]
+        public string Body { get; set; }
 
-        public void Load(Page model)
+        public void Load(WebDocument model)
         {
             this.ApplyValues(model);
         }
 
-        public void Save(Page model)
+        public void Save(WebDocument model)
         {
             model.ApplyValues(this);
         }

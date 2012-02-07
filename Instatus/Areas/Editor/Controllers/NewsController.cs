@@ -17,11 +17,6 @@ namespace Instatus.Areas.Editor.Controllers
 {
     public class NewsViewModel : BaseViewModel<News>
     {
-        [DisplayName("Friendly Url")]
-        [Required]
-        [RegularExpression(ValidationPatterns.Slug, ErrorMessage = ValidationMessages.InvalidSlug)]
-        public string Slug { get; set; }        
-        
         [DisplayName("Title")]
         [Required]
         public string Name { get; set; }

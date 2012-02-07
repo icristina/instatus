@@ -13,14 +13,16 @@ namespace Instatus.Areas.Editor.Models
     [ComplexType]
     public class OverviewViewModel : IViewModel<Page>
     {
-        [DisplayName("Friendly Url")]
+        [DisplayName("Title")]
         [Required]
-        [RegularExpression(ValidationPatterns.Slug, ErrorMessage = ValidationMessages.InvalidSlug)]
-        public string Slug { get; set; }             
-        
-        public int Priority { get; set; }
+        public string Name { get; set; }
 
-        public DateTime PublishedTime { get; set; }
+        [DataType(DataType.MultilineText)]
+        [Required]
+        public string Description { get; set; }
+
+        [DataType(DataType.ImageUrl)]
+        public string Picture { get; set; }
 
         public void Load(Page model)
         {
