@@ -20,11 +20,11 @@ namespace Instatus.Areas.Editor.Controllers
     {
         [Category("Overview")]
         [Display(Order = 1)]
-        public OverviewViewModel Overview { get; set; }
+        public OverviewViewModel<Post> Overview { get; set; }
 
         [Category("Overview")]
         [Column("Tags")]
-        [Display(Name = "Tags")]
+        [Display(Name = "Tags", Order = 2)]
         public MultiSelectList TagsList { get; set; }
 
         [ScaffoldColumn(false)]
@@ -32,15 +32,19 @@ namespace Instatus.Areas.Editor.Controllers
 
         [Category("Overview")]
         [Column("Organization")]
-        [Display(Name = "Organization")]
+        [Display(Name = "Organization", Order = 3)]
         public SelectList OrganizationList { get; set; }
 
         [ScaffoldColumn(false)]
         public int Organization { get; set; }
 
+        [Category("Video")]
+        [Display(Order = 4)]
+        public VideoViewModel<Post> Video { get; set; }
+
         [Category("Publishing")]
         [Display(Order = 5)]
-        public PublishingViewModel Publishing { get; set; }
+        public PublishingViewModel<Post> Publishing { get; set; }
 
         public override void Load(Post model)
         {
@@ -62,8 +66,9 @@ namespace Instatus.Areas.Editor.Controllers
 
         public PostViewModel()
         {
-            Overview = new OverviewViewModel();
-            Publishing = new PublishingViewModel();
+            Overview = new OverviewViewModel<Post>();
+            Video = new VideoViewModel<Post>();
+            Publishing = new PublishingViewModel<Post>();
         }
     }
     

@@ -11,7 +11,7 @@ using Instatus.Data;
 namespace Instatus.Areas.Editor.Models
 {
     [ComplexType]
-    public class OverviewViewModel : BaseViewModel<Page>
+    public class OverviewViewModel<T> : BaseViewModel<T> where T : Page
     {
         [DisplayName("Title")]
         [Required]

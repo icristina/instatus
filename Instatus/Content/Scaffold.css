@@ -29,7 +29,7 @@ form span.controls
     display: block;
 }
 
-fieldset fieldset 
+.list fieldset 
 {
     border-bottom: 1px solid #DDD;
     margin-bottom: 18px;

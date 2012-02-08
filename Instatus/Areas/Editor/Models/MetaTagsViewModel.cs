@@ -5,11 +5,12 @@ using System.Web;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 using Instatus.Web;
+using Instatus.Models;
 
 namespace Instatus.Areas.Editor.Models
 {
     [ComplexType]
-    public class MetaTagsViewModel : BaseViewModel<WebDocument>
+    public class MetaTagsViewModel<T> : BaseViewModel<T> where T : Page
     {
         [DisplayName("Title")]
         public string TitleString { get; set; }
@@ -20,18 +21,28 @@ namespace Instatus.Areas.Editor.Models
         [DataType(DataType.MultilineText)]
         public string Keywords { get; set; }
 
-        public override void Load(WebDocument model)
+        public override void Load(T model)
         {
-            TitleString = model.Parameters.GetParameter(WebNamespace.Html, "Title");
-            Description = model.Parameters.GetParameter(WebNamespace.Html, "Description");
-            Keywords = model.Parameters.GetParameter(WebNamespace.Html, "Keywords");
+            var document = model.Document;
+
+            if (document != null)
+            {
+                TitleString = document.Parameters.GetParameter(WebNamespace.Html, "Title");
+                Description = document.Parameters.GetParameter(WebNamespace.Html, "Description");
+                Keywords = document.Parameters.GetParameter(WebNamespace.Html, "Keywords");
+            }
         }
 
-        public override void Save(WebDocument model)
+        public override void Save(T model)
         {
-            model.Parameters.SetParameter(WebNamespace.Html, "Title", TitleString);
-            model.Parameters.SetParameter(WebNamespace.Html, "Description", Description);
-            model.Parameters.SetParameter(WebNamespace.Html, "Keywords", Keywords);
+            if(model.Document == null)
+                model.Document = new WebDocument();
+            
+            var document = model.Document;
+            
+            document.Parameters.SetParameter(WebNamespace.Html, "Title", TitleString);
+            document.Parameters.SetParameter(WebNamespace.Html, "Description", Description);
+            document.Parameters.SetParameter(WebNamespace.Html, "Keywords", Keywords);
         }
     }
 }

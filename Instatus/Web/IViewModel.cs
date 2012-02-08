@@ -27,11 +27,13 @@ namespace Instatus.Web
         public virtual void Load(TModel model)
         {
             this.ApplyValues(model);
+            this.ApplyAction<IViewModel<TModel>>(m => m.Load(model));
         }
 
         public virtual void Save(TModel model)
         {
             model.ApplyValues(this);
+            this.ApplyAction<IViewModel<TModel>>(m => m.Save(model));
         }
 
         public virtual void Databind() {
@@ -41,6 +43,30 @@ namespace Instatus.Web
         public BaseViewModel()
         {
             Step = WebStep.Start;
+        }
+    }
+
+    public class BaseViewModel<TModel, TContext> : BaseViewModel<TModel>
+    {
+        private TContext context;
+
+        [ScaffoldColumn(false)]
+        public TContext Context
+        {
+            get
+            {
+                return context;
+            }
+            set
+            {
+                context = value;
+                this.ApplyAction<BaseViewModel<TModel, TContext>>(m => m.Context = context); // add context to all child properties as required
+            }
+        }
+
+        public ICollection<T> UpdateList<T, TKey>(IDbSet<T> set, ICollection<T> list, IEnumerable<TKey> selected) where T : class
+        {
+            return BindingHelpers.UpdateList<T, TKey>(set, list, selected);
         }
     }
 
@@ -83,17 +109,6 @@ namespace Instatus.Web
             }
 
             return list;
-        }
-    }
-
-    public class BaseViewModel<TModel, TContext> : BaseViewModel<TModel>
-    {
-        [ScaffoldColumn(false)]
-        public TContext Context { get; set; }
-
-        public ICollection<T> UpdateList<T, TKey>(IDbSet<T> set, ICollection<T> list, IEnumerable<TKey> selected) where T : class
-        {
-            return BindingHelpers.UpdateList<T, TKey>(set, list, selected);
         }
     }
 }

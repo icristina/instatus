@@ -18,17 +18,17 @@
             else
             {
                 <label class="control-label">
-                    @WebPhrase.Localize(propertyKey + ".Label", prop.GetDisplayName()) 
+                    @WebPhrase.Localize(propertyKey + ".Label", prop.GetDisplayName(), false) 
                     @(prop.IsRequired ? " *" : "")             
                 </label>                     
-                <span class="controls">
+                <span class="controls @(prop.Model is System.Collections.IEnumerable ? "list" : "")">
                     @Html.Editor(prop.PropertyName)             
                     @if (ViewContext.ViewData.ModelState.HasError(prop.PropertyName))
                     {
                         <small class="help-inline">@Html.ValidationMessage(prop.PropertyName)</small>
                     }
                     @{
-                        var description = WebPhrase.Localize(propertyKey + ".Label", prop.Description);
+                        var description = WebPhrase.Localize(propertyKey + ".Label", prop.Description, false);
                     }
                     @if (!description.IsEmpty())
                     {

@@ -198,9 +198,13 @@ namespace Instatus.Web
         public static string DuplicateUser { get { return Localize(ErrorMessage.DuplicateUser, "You have already registered"); } }
         public static string VerificationTokenRejected { get { return Localize(ErrorMessage.VerificationTokenRejected, "The verification token has been rejected."); } }
 
-        public static string Localize(object phraseOrKey, string defaultPhrase = null)
+        public static string Localize(object phraseOrKey, string defaultPhrase = null, bool keyAsDefault = true)
         {
             var resource = HttpContext.GetGlobalResourceObject(null, phraseOrKey.ToString());
+
+            if (!keyAsDefault)
+                return resource.IsEmpty() ? defaultPhrase : resource.ToString();
+            
             return resource.IsEmpty() ? defaultPhrase ?? phraseOrKey.ToString() : resource.ToString();
         }
 

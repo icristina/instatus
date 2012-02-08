@@ -7,4 +7,11 @@
         ViewData.ModelMetadata.AdditionalValues["ColumnName"].ToString() : "Selected" + ViewData.ModelMetadata.PropertyName; 
 }
 
-@Html.DropDownList(htmlFieldName, Model)
+@if (ViewData.ModelMetadata.IsRequired)
+{
+    @Html.DropDownList(htmlFieldName, Model)
+}
+else
+{
+    @Html.DropDownList(htmlFieldName, Model, " ", null)
+}

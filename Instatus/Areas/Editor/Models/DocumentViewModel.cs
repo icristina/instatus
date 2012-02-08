@@ -11,24 +11,24 @@ using Instatus.Models;
 namespace Instatus.Areas.Editor.Models
 {
     [ComplexType]
-    public class DocumentViewModel : BaseViewModel<Page>
-    {
+    public class DocumentViewModel<T> : BaseViewModel<T> where T : Page
+    {       
         public string Heading { get; set; }
 
         [DataType(DataType.MultilineText)]
         [AllowHtml]
         public string Body { get; set; }
 
-        public override void Load(Page model)
+        public override void Load(T model)
         {
-            Heading = model.Document.Title;
-            Body = model.Document.Body;
+            Heading = model.Document.Title.TrimOrNull();
+            Body = model.Document.Body.TrimOrNull();
         }
 
-        public override void Save(Page model)
+        public override void Save(T model)
         {
-            model.Document.Title = Heading;
-            model.Document.Body = Body;
+            model.Document.Title = Heading.TrimOrNull();
+            model.Document.Body = Body.TrimOrNull();
         }
     }
 }

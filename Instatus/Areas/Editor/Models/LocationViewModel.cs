@@ -12,7 +12,7 @@ using Instatus.Data;
 namespace Instatus.Areas.Editor.Models
 {
     [ComplexType]
-    public class LocationViewModel : BaseViewModel<Place, BaseDataContext>
+    public class LocationViewModel<T> : BaseViewModel<T, BaseDataContext> where T : Place
     {
         public double Longitude { get; set; }
 
@@ -28,14 +28,14 @@ namespace Instatus.Areas.Editor.Models
         [ScaffoldColumn(false)]
         public int Region { get; set; }
 
-        public override void Load(Place model)
+        public override void Load(T model)
         {
             Longitude = model.Point.Longitude;
             Latitude = model.Point.Latitude;
             Zoom = model.Point.Zoom;
         }
 
-        public override void Save(Place model)
+        public override void Save(T model)
         {
             model.Point.Longitude = Longitude;
             model.Point.Latitude = Latitude;

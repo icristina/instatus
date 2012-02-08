@@ -40,11 +40,11 @@ namespace Instatus.Areas.Editor.Controllers
     {
         [Category("Overview")]
         [Display(Order = 1)]
-        public OverviewViewModel Overview { get; set; }
+        public OverviewViewModel<Article> Overview { get; set; }
 
         [Category("Body")]
         [Display(Order = 2)]
-        public DocumentViewModel Document { get; set; }
+        public DocumentViewModel<Article> Document { get; set; }
 
         [Category("Links")]
         [ScaffoldColumn(true)]
@@ -53,11 +53,11 @@ namespace Instatus.Areas.Editor.Controllers
 
         [Category("Meta Tags")]
         [Display(Order = 4)]
-        public MetaTagsViewModel MetaTags { get; set; }
+        public MetaTagsViewModel<Article> MetaTags { get; set; }
 
         [Category("Publishing")]
         [Display(Order = 5)]
-        public PublishingViewModel Publishing { get; set; }
+        public PublishingViewModel<Article> Publishing { get; set; }
 
         public override void Load(Article model)
         {
@@ -88,10 +88,10 @@ namespace Instatus.Areas.Editor.Controllers
 
         public ArticleViewModel()
         {
-            Overview = new OverviewViewModel();
-            Document = new DocumentViewModel();
-            MetaTags = new MetaTagsViewModel();
-            Publishing = new PublishingViewModel();
+            Overview = new OverviewViewModel<Article>();
+            Document = new DocumentViewModel<Article>();
+            MetaTags = new MetaTagsViewModel<Article>();
+            Publishing = new PublishingViewModel<Article>();
         }
     }
 

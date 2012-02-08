@@ -12,18 +12,30 @@ using System.IO;
 using Instatus;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using Instatus.Areas.Editor.Models;
 
 namespace Instatus.Areas.Editor.Controllers
 {
     public class NewsViewModel : BaseViewModel<News>
     {
-        [DisplayName("Title")]
-        [Required]
-        public string Name { get; set; }
+        [Category("Overview")]
+        [Display(Order = 1)]
+        public OverviewViewModel<Article> Overview { get; set; }
 
-        [DataType(DataType.MultilineText)]
-        [Required]
-        public string Description { get; set; }
+        [Category("Body")]
+        [Display(Order = 2)]
+        public DocumentViewModel<Article> Document { get; set; }
+
+        [Category("Publishing")]
+        [Display(Order = 3)]
+        public PublishingViewModel<Article> Publishing { get; set; }
+
+        public NewsViewModel()
+        {
+            Overview = new OverviewViewModel<Article>();
+            Document = new DocumentViewModel<Article>();
+            Publishing = new PublishingViewModel<Article>();
+        }
     }
     
     [Authorize(Roles = "Editor")]

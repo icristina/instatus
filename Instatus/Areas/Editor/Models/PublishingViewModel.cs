@@ -11,7 +11,7 @@ using Instatus.Data;
 namespace Instatus.Areas.Editor.Models
 {
     [ComplexType]
-    public class PublishingViewModel : BaseViewModel<Page>
+    public class PublishingViewModel<T> : BaseViewModel<T> where T : Page
     {
         [DisplayName("Friendly Url")]
         [Required]

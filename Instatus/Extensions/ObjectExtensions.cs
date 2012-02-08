@@ -182,22 +182,32 @@ namespace Instatus
             return null;
         }
 
+        public static void ApplyAction<TPropertyType>(this object target, Action<TPropertyType> action) {
+            foreach (var property in target.GetType().GetProperties())
+            {
+                var destinationValue = property.GetValue(target, null);
+
+                if (destinationValue != null && destinationValue is TPropertyType)
+                {
+                    action((TPropertyType)destinationValue);
+                }
+            }
+        }
+
         public static TTarget ApplyValues<TTarget, TSource>(this TTarget target, TSource source, bool recursive = false, string[] exclusions = null)
         {
+            // each property with matching name in target and source
             foreach (var property in source.GetType().GetProperties())
             {
                 var destination = target.GetType().GetProperty(property.Name);
-                var destinationValue = destination.GetValue(target, null);
-
+                
                 if (!(exclusions != null && exclusions.Contains(property.Name)) && destination != null && destination.CanWrite)
                 {
-                    if (destinationValue != null && destinationValue is IViewModel<TSource>)
-                    {
-                        ((IViewModel<TSource>)destinationValue).Load(source);
-                    }
+                    var destinationValue = destination.GetValue(target, null);
+                    
                     // if int, string or enum set value, if second level in object graph always set value even if complex type
                     // nullable types should evaluate to true if check whether destination is assignable from property
-                    else if ((destination.PropertyType.IsSimpleType() || !recursive) && destination.PropertyType.IsAssignableFrom(property.PropertyType))
+                    if ((destination.PropertyType.IsSimpleType() || !recursive) && destination.PropertyType.IsAssignableFrom(property.PropertyType))
                     {
                         var value = property.GetValue(source, null);
 

@@ -21,7 +21,7 @@ namespace Instatus.Areas.Editor.Controllers
     {
         [Category("Overview")]
         [Display(Order = 1)]
-        public OverviewViewModel Overview { get; set; }
+        public OverviewViewModel<Organization> Overview { get; set; }
 
         [Category("Overview")]
         [Column("Catalog")]
@@ -32,14 +32,21 @@ namespace Instatus.Areas.Editor.Controllers
         public int Catalog { get; set; }
 
         [Category("Meta Tags")]
-        public MetaTagsViewModel MetaTags { get; set; }
+        public MetaTagsViewModel<Organization> MetaTags { get; set; }
 
         [Category("Publishing")]
-        public PublishingViewModel Publishing { get; set; }
+        public PublishingViewModel<Organization> Publishing { get; set; }
 
         public override void Databind()
         {
             CatalogList = new SelectList(Context.Pages.OfType<Catalog>(), "Id", "Name", Catalog);
+        }
+
+        public OrganizationViewModel()
+        {
+            Overview = new OverviewViewModel<Organization>();
+            MetaTags = new MetaTagsViewModel<Organization>();
+            Publishing = new PublishingViewModel<Organization>();
         }
     }
 
