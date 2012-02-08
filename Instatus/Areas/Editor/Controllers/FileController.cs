@@ -83,9 +83,8 @@ namespace Instatus.Areas.Editor.Controllers
         {
             var path = HostingEnvironment.MapPath(LocalStorageBlobService.BasePath);
             var files = Directory.GetFiles(path);
-            var extensions = new string[] { "-small", "-medium" };
             var links = files
-                .Where(f => !extensions.Any(e => f.Contains(e)))
+                .Where(f => !WebPath.IsResizePath(f))
                 .Select(f => {
                     var uri = LocalStorageBlobService.BasePath + Path.GetFileName(f);
                     return new WebLink()
