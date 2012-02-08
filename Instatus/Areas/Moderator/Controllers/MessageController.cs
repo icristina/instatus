@@ -44,15 +44,10 @@ namespace Instatus.Areas.Moderator.Controllers
     [Authorize(Roles = "Moderator")]
     public class MessageController : ScaffoldController<MessageViewModel, Message, BaseDataContext, int>
     {
-        public override IOrderedQueryable<Message> Query(IDbSet<Message> set, WebQuery query)
+        public override IEnumerable<Message> Query(IDbSet<Message> set, WebQuery query)
         {
-            return set.Where(c => c.Page is Application).OrderBy(c => c.CreatedTime);
-        }
-        
-        public override void ConfigureWebView(WebView<Message> webView)
-        {
-            webView.Permissions = WebRole.Administrator.ToPermissions();
-            base.ConfigureWebView(webView);
+            return set.Where(c => c.Page is Application)
+                      .OrderBy(c => c.CreatedTime);
         }
     }
 }

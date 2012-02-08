@@ -99,15 +99,9 @@ namespace Instatus.Areas.Editor.Controllers
     [Description("Articles")]
     public class ArticleController : ScaffoldController<ArticleViewModel, Article, BaseDataContext, int>
     {
-        public override IOrderedQueryable<Article> Query(IDbSet<Article> set, WebQuery query)
+        public override IEnumerable<Article> Query(IDbSet<Article> set, WebQuery query)
         {
-            return set.OrderBy(o => o.Name);
-        }
-
-        public override void ConfigureWebView(WebView<Article> webView)
-        {
-            webView.Permissions = WebRole.Editor.ToPermissions();
-            base.ConfigureWebView(webView);            
+            return set.ByAlphabetical();
         }
     }
 }

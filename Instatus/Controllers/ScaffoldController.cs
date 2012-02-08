@@ -32,18 +32,25 @@ namespace Instatus.Controllers
             return View("~/Views/Shared/Index.cshtml", webView); // view name hard coded in case a view in parent project with the same name
         }
 
-        public virtual IOrderedQueryable<TModel> Query(IDbSet<TModel> set, WebQuery query)
+        public virtual IEnumerable<TModel> Query(IDbSet<TModel> set, WebQuery query)
         {
             return set.OrderBy(m => true);
         }
 
         public virtual void ConfigureWebView(WebView<TModel> webView) {
+            var controller = ControllerContext.Controller;
+            
             webView.Navigation = Url.Controllers();
             webView.Commands = GetCommands();
             webView.Document = new WebDocument()
             {
-                Title = ControllerContext.Controller.GetCustomAttributeValue<DescriptionAttribute, string>(d => d.Description)
+                Title = controller.GetCustomAttributeValue<DescriptionAttribute, string>(d => d.Description)
             };
+
+            var roles = controller.GetCustomAttributeValue<AuthorizeAttribute, string>(a => a.Roles).ToList();
+
+            if (roles.Count > 0)
+                webView.Permissions = roles[0].AsEnum<WebRole>().ToPermissions();
         }
 
         public virtual void AttachContext(TViewModel viewModel)

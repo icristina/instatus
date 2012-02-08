@@ -24,10 +24,6 @@ namespace Instatus.Areas.Editor.Controllers
     [Description("Tags")]
     public class TagController : ScaffoldController<TagViewModel, Tag, BaseDataContext, int>
     {
-        public override void ConfigureWebView(WebView<Tag> webView)
-        {
-            webView.Permissions = WebRole.Editor.ToPermissions();
-            base.ConfigureWebView(webView);
-        }
+
     }
 }

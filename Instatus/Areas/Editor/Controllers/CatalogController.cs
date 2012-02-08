@@ -25,15 +25,9 @@ namespace Instatus.Areas.Editor.Controllers
     [Description("Catalogs")]
     public class CatalogController : ScaffoldController<CatalogViewModel, Catalog, BaseDataContext, int>
     {
-        public override IOrderedQueryable<Catalog> Query(IDbSet<Catalog> set, WebQuery query)
+        public override IEnumerable<Catalog> Query(IDbSet<Catalog> set, WebQuery query)
         {
-            return set.OrderBy(o => o.Name);
-        }
-
-        public override void ConfigureWebView(WebView<Catalog> webView)
-        {
-            webView.Permissions = WebRole.Editor.ToPermissions();
-            base.ConfigureWebView(webView);            
+            return set.ByAlphabetical();
         }
     }
 }

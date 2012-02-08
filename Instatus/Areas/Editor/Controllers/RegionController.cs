@@ -25,15 +25,9 @@ namespace Instatus.Areas.Editor.Controllers
     [Description("Regions")]
     public class RegionController : ScaffoldController<RegionViewModel, Region, BaseDataContext, int>
     {
-        public override IOrderedQueryable<Region> Query(IDbSet<Region> set, WebQuery query)
+        public override IEnumerable<Region> Query(IDbSet<Region> set, WebQuery query)
         {
-            return set.OrderBy(o => o.Name);
-        }
-
-        public override void ConfigureWebView(WebView<Region> webView)
-        {
-            webView.Permissions = WebRole.Editor.ToPermissions();
-            base.ConfigureWebView(webView);            
+            return set.ByAlphabetical();
         }
     }
 }

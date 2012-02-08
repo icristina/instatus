@@ -76,10 +76,6 @@ namespace Instatus.Areas.Editor.Controllers
     [Description("Posts")]
     public class PostController : ScaffoldController<PostViewModel, Post, BaseDataContext, int>
     {
-        public override void ConfigureWebView(WebView<Post> webView)
-        {
-            webView.Permissions = WebRole.Administrator.ToPermissions();
-            base.ConfigureWebView(webView);
-        }
+
     }
 }

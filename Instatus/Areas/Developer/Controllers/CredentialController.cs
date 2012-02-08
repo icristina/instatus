@@ -50,16 +50,11 @@ namespace Instatus.Areas.Developer.Controllers
     [Authorize(Roles = "Administrator")]
     public class CredentialController : ScaffoldController<CredentialViewModel, Credential, BaseDataContext, int>
     {
-        public override IOrderedQueryable<Credential> Query(IDbSet<Credential> set, WebQuery query)
+        public override IEnumerable<Credential> Query(IDbSet<Credential> set, WebQuery query)
         {
-            return set.Where(c => c.Application != null).OrderBy(c => c.CreatedTime);
-        }
-        
-        public override void ConfigureWebView(WebView<Credential> webView)
-        {
-            webView.Permissions = WebRole.Administrator.ToPermissions();
-            base.ConfigureWebView(webView);
-        }
+            return set.Where(c => c.Application != null)
+                      .OrderBy(c => c.CreatedTime);
+        }       
 
         public override void SaveChanges()
         {

@@ -26,6 +26,7 @@ namespace Instatus.Areas.Editor.Controllers
         [Category("Overview")]
         [Column("Catalog")]
         [Display(Name = "Catalog")]
+        [Required]
         public SelectList CatalogList { get; set; }
 
         [ScaffoldColumn(false)]
@@ -54,15 +55,9 @@ namespace Instatus.Areas.Editor.Controllers
     [Description("Organizations")]
     public class OrganizationController : ScaffoldController<OrganizationViewModel, Organization, BaseDataContext, int>
     {
-        public override IOrderedQueryable<Organization> Query(IDbSet<Organization> set, WebQuery query)
+        public override IEnumerable<Organization> Query(IDbSet<Organization> set, WebQuery query)
         {
-            return set.OrderBy(o => o.Name);
-        }
-
-        public override void ConfigureWebView(WebView<Organization> webView)
-        {
-            webView.Permissions = WebRole.Editor.ToPermissions();
-            base.ConfigureWebView(webView);            
+            return set.ByAlphabetical();
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Instatus.Areas.Developer.Controllers
     [Description("Logs")]
     public class LogController : ScaffoldController<BaseViewModel<Log>, Log, BaseDataContext, int>
     {
-        public override IOrderedQueryable<Log> Query(IDbSet<Log> set, WebQuery query)
+        public override IEnumerable<Log> Query(IDbSet<Log> set, WebQuery query)
         {
             return set.OrderByDescending(d => d.CreatedTime);
         }

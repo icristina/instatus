@@ -51,15 +51,9 @@ namespace Instatus.Areas.Editor.Controllers
     [Description("Brands")]
     public class BrandController : ScaffoldController<BrandViewModel, Brand, BaseDataContext, int>
     {
-        public override IOrderedQueryable<Brand> Query(IDbSet<Brand> set, WebQuery query)
+        public override IEnumerable<Brand> Query(IDbSet<Brand> set, WebQuery query)
         {
-            return set.OrderBy(o => o.Name);
-        }
-
-        public override void ConfigureWebView(WebView<Brand> webView)
-        {
-            webView.Permissions = WebRole.Editor.ToPermissions();
-            base.ConfigureWebView(webView);            
+            return set.ByAlphabetical();
         }
     }
 }

@@ -42,10 +42,6 @@ namespace Instatus.Areas.Editor.Controllers
     [Description("News")]
     public class NewsController : ScaffoldController<NewsViewModel, News, BaseDataContext, int>
     {
-        public override void ConfigureWebView(WebView<News> webView)
-        {
-            webView.Permissions = WebRole.Editor.ToPermissions();
-            base.ConfigureWebView(webView);
-        }
+
     }
 }

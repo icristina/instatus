@@ -27,7 +27,7 @@ namespace Instatus.Areas.Editor.Controllers
     [Description("Files")]
     public class FileController : ScaffoldController<FileViewModel, Link, FileRepository, int>
     {
-        public override IOrderedQueryable<Link> Query(IDbSet<Link> set, WebQuery query)
+        public override IEnumerable<Link> Query(IDbSet<Link> set, WebQuery query)
         {
             return set.OrderBy(o => o.Name);
         }

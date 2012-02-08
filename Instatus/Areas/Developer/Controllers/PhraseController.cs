@@ -28,15 +28,9 @@ namespace Instatus.Areas.Developer.Controllers
     [Description("Localization")]
     public class PhraseController : ScaffoldController<PhraseViewModel, Phrase, BaseDataContext, int>
     {
-        public override IOrderedQueryable<Phrase> Query(IDbSet<Phrase> set, WebQuery query)
+        public override IEnumerable<Phrase> Query(IDbSet<Phrase> set, WebQuery query)
         {
             return set.OrderBy(o => o.Name);
-        }
-
-        public override void ConfigureWebView(WebView<Phrase> webView)
-        {
-            webView.Permissions = WebRole.Developer.ToPermissions();
-            base.ConfigureWebView(webView);
         }
 
         public override void SaveChanges()
