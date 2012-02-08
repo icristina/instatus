@@ -26,7 +26,7 @@ namespace Instatus.Web
                     {
                         if (db != null)
                         {
-                            links = db.Links.Where(l => l.Location != null && l.HttpStatusCode > 300 && l.HttpStatusCode < 303).ToList();
+                            links = db.Links.Redirects().ToList();
                         }
                         else
                         {

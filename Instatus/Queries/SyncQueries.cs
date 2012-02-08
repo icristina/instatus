@@ -118,6 +118,12 @@ namespace Instatus
                     if(place.Point != null)
                         mergedPlace.Point = place.Point;
                 }
+
+                if (!page.Replies.IsEmpty() && page.Replies.OfType<Note>().Any()) // only merge notes, not comments or reviews, which are typically user generated
+                {
+                    context.MarkDeleted(merged.Replies.OfType<Note>());
+                    merged.Replies.Append(page.Replies.OfType<Note>());
+                }
             }
 
             return merged;

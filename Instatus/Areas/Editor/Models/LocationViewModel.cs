@@ -29,6 +29,8 @@ namespace Instatus.Areas.Editor.Models
 
         public override void Load(T model)
         {
+            base.Load(model);
+            
             Longitude = model.Point.Longitude;
             Latitude = model.Point.Latitude;
             Zoom = model.Point.Zoom;
@@ -38,6 +40,8 @@ namespace Instatus.Areas.Editor.Models
 
         public override void Save(T model)
         {
+            base.Save(model);
+            
             model.Point.Longitude = Longitude;
             model.Point.Latitude = Latitude;
             model.Point.Zoom = Zoom;

@@ -57,6 +57,7 @@ namespace Instatus.Web
             Vote,
             Close,
             Cancel,
+            Choose,
             // fields
             Telephone,
             EmailAddress,
@@ -172,6 +173,7 @@ namespace Instatus.Web
         public static string Progress { get { return Localize(Common.Progress, "Progress"); } }
         public static string Close { get { return Localize(Common.Close, "Close"); } }
         public static string Cancel { get { return Localize(Common.Cancel, "Cancel"); } }
+        public static string Choose { get { return Localize(Common.Choose, "Choose"); } }
 
         public static string MinutesAgo(double minutes) { return Format(FormatString.MinutesAgo, "{0} minutes ago", minutes); }
         public static string HoursAgo(double hours) { return Format(FormatString.HoursAgo, "{0} hours ago", hours); }

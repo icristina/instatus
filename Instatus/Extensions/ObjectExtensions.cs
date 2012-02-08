@@ -15,6 +15,7 @@ using System.Web.Routing;
 using System.Web.Script.Serialization;
 using Instatus.Data;
 using Instatus.Web;
+using System.Reflection;
 
 namespace Instatus
 {
@@ -180,6 +181,18 @@ namespace Instatus
             }
 
             return null;
+        }
+
+        public static void ActivateCollections(this object target)
+        {
+            foreach (var property in target.GetType().GetProperties().Where(p => p.PropertyType.IsGenericType && p.PropertyType.GetGenericTypeDefinition() == typeof(ICollection<>)).ToList())
+            {
+                if (property.GetValue(target, null) == null)
+                {
+                    var concreteType = typeof(List<>).MakeGenericType(property.PropertyType.GetGenericArguments()[0]);                    
+                    property.SetValue(target, Activator.CreateInstance(concreteType), null);
+                }                
+            }
         }
 
         public static void ApplyAction<TPropertyType>(this object target, Action<TPropertyType> action) {

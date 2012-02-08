@@ -26,8 +26,8 @@ namespace Instatus.Areas.Developer.Controllers
 
         public override void ConfigureWebView(WebView<Log> webView)
         {
-            webView.Permissions = WebRole.Member.ToPermissions();
             base.ConfigureWebView(webView);
+            webView.Permissions = WebRole.Member.ToPermissions();            
         }
     }
 }

@@ -11,6 +11,7 @@ using Instatus.Services;
 using System.IO;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
+using System.ComponentModel;
 
 namespace Instatus.Areas.Developer.Controllers
 {
@@ -25,9 +26,11 @@ namespace Instatus.Areas.Developer.Controllers
         public string Environment { get; set; }
         public string Scope { get; set; }
         public string Provider { get; set; }
+        public string Features { get; set; }
 
         [Column("ApplicationId")]
         [Display(Name = "Application")]
+        [AdditionalMetadata("Required", true)]
         public SelectList ApplicationList { get; set; }
 
         [ScaffoldColumn(false)]
@@ -48,6 +51,7 @@ namespace Instatus.Areas.Developer.Controllers
     }
     
     [Authorize(Roles = "Administrator")]
+    [Description("Credentials")]
     public class CredentialController : ScaffoldController<CredentialViewModel, Credential, BaseDataContext, int>
     {
         public override IEnumerable<Credential> Query(IDbSet<Credential> set, WebQuery query)

@@ -7,7 +7,7 @@
         var link = command.GetLink(Model.CurrentRow, Url);
         if (link != null)
         {
-            <a href="@link.Uri" rel="@(link.Rel ?? "command")">@link.Title</a>
+            <a href="@link.Uri" rel="@(link.Rel ?? "command")" class="btn">@link.Title</a>
         }
     }
 }

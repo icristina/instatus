@@ -26,12 +26,14 @@ namespace Instatus.Web
         
         public virtual void Load(TModel model)
         {
+            model.ActivateCollections();
             this.ApplyValues(model);
             this.ApplyAction<IViewModel<TModel>>(m => m.Load(model));
         }
 
         public virtual void Save(TModel model)
         {
+            model.ActivateCollections();
             model.ApplyValues(this);
             this.ApplyAction<IViewModel<TModel>>(m => m.Save(model));
         }

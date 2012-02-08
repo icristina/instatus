@@ -120,6 +120,7 @@
     <Compile Include="Areas\YouTube\YouTube.cs" />
     <Compile Include="Commands\BanCommand.cs" />
     <Compile Include="Commands\AwardCommand.cs" />
+    <Compile Include="Commands\SelectCommand.cs" />
     <Compile Include="Commands\StatusCommand.cs" />
     <Compile Include="Commands\SpamCommand.cs" />
     <Compile Include="Data\IContentProvider.cs" />
@@ -476,6 +477,7 @@
     <EmbeddedResource Include="Views\Shared\NotFound.cshtml" />
     <EmbeddedResource Include="Views\Shared\Upload.cshtml" />
     <EmbeddedResource Include="Views\Shared\EditorTemplates\Password.cshtml" />
+    <EmbeddedResource Include="Views\Shared\EditorTemplates\ImageUrl.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

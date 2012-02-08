@@ -10,6 +10,8 @@ using Instatus.Web;
 using Instatus.Services;
 using System.IO;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
+using System.Data.Entity;
 
 namespace Instatus.Areas.Developer.Controllers
 {
@@ -23,6 +25,7 @@ namespace Instatus.Areas.Developer.Controllers
 
         [Column("HttpStatusCode")]
         [Display(Name = "Http Code")]
+        [AdditionalMetadata("Required", true)]
         public SelectList HttpStatusCodeList { get; set; }
 
         [ScaffoldColumn(false)]
@@ -35,14 +38,14 @@ namespace Instatus.Areas.Developer.Controllers
     }
     
     [Authorize(Roles = "Administrator")]
+    [Description("Redirects")]
     public class LinkController : ScaffoldController<LinkViewModel, Link, BaseDataContext, int>
     {
-        public override void ConfigureWebView(WebView<Link> webView)
+        public override IEnumerable<Link> Query(IDbSet<Link> set, WebQuery query)
         {
-            webView.Permissions = WebRole.Administrator.ToPermissions();
-            base.ConfigureWebView(webView);
+            return set.Redirects();
         }
-
+        
         public override void SaveChanges()
         {
             base.SaveChanges();

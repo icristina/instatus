@@ -15,6 +15,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.Web.Hosting;
 using System.ComponentModel.Composition;
+using Instatus.Commands;
 
 namespace Instatus.Areas.Editor.Controllers
 {
@@ -30,6 +31,13 @@ namespace Instatus.Areas.Editor.Controllers
         public override IEnumerable<Link> Query(IDbSet<Link> set, WebQuery query)
         {
             return set.OrderBy(o => o.Name);
+        }
+
+        public override ICollection<IWebCommand> GetCommands(WebQuery query)
+        {
+            return new List<IWebCommand>() {
+                new SelectCommand()
+            };
         }
 
         [HttpGet]

@@ -163,7 +163,7 @@ namespace Instatus
             return new MvcHtmlString(tag.ToString(TagRenderMode.SelfClosing));
         }
 
-        public static MvcHtmlString CommandButton<T>(this HtmlHelper<T> html, string text, string commandName = null)
+        public static MvcHtmlString CommandButton<T>(this HtmlHelper<T> html, string text, string commandName = null, string className = null)
         {
             commandName = commandName.OrDefault(text.ToSlug());
             
@@ -171,7 +171,8 @@ namespace Instatus
 
             tag.MergeAttribute("type", "button");
             tag.MergeAttribute("name", commandName);
-            tag.MergeAttribute("class", commandName);
+            tag.AddCssClass(commandName);
+            tag.AddCssClass(className);
             tag.SetInnerText(text);
 
             return new MvcHtmlString(tag.ToString());

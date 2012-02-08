@@ -20,5 +20,10 @@ namespace Instatus
             var link = links.WithContentType(webContentType).FirstOrDefault();
             return link != null ? link.Uri : string.Empty;
         }
+
+        public static IEnumerable<Link> Redirects(this IEnumerable<Link> links)
+        {
+            return links.Where(l => l.Location != null && l.HttpStatusCode > 300 && l.HttpStatusCode < 303);
+        }
     }
 }

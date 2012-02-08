@@ -11,7 +11,8 @@ namespace Instatus.Web
     {
         // view or mode
         public WebSort Sort { get; set; }
-        public WebMode Mode { get; set; }    
+        public WebMode Mode { get; set; }
+        public string Command { get; set; } // edit action
     
         // selection
         public WebContentType ContentType { get; set; }    

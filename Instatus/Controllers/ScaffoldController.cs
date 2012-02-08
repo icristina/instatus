@@ -41,7 +41,7 @@ namespace Instatus.Controllers
             var controller = ControllerContext.Controller;
             
             webView.Navigation = Url.Controllers();
-            webView.Commands = GetCommands();
+            webView.Commands = GetCommands(webView.Query);
             webView.Document = new WebDocument()
             {
                 Title = controller.GetCustomAttributeValue<DescriptionAttribute, string>(d => d.Description)
@@ -130,14 +130,14 @@ namespace Instatus.Controllers
             return View("~/Views/Shared/Create.cshtml", viewModel);
         }
 
-        public virtual ICollection<IWebCommand> GetCommands()
+        public virtual ICollection<IWebCommand> GetCommands(WebQuery query)
         {
             return new List<IWebCommand>();
         }
 
         public ActionResult Command(TKey id, string commandName)
         {
-            return CommandResult(GetCommands(), commandName, set.Find(id));
+            return CommandResult(GetCommands(null), commandName, set.Find(id));
         }
 
         [HttpPost]
