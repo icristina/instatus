@@ -177,6 +177,7 @@
     <Compile Include="Web\WebAppSetting.cs" />
     <Compile Include="Web\WebBootstrap.cs" />
     <Compile Include="Web\WebCategory.cs" />
+    <Compile Include="Web\WebFeed.cs" />
     <Compile Include="Web\WebMock.cs" />
     <Compile Include="Web\WebRoute.cs" />
     <Compile Include="Web\WebStep.cs" />
@@ -475,9 +476,9 @@
     <EmbeddedResource Include="Views\Shared\Notification.cshtml" />
     <EmbeddedResource Include="Views\Shared\FatalError.cshtml" />
     <EmbeddedResource Include="Views\Shared\NotFound.cshtml" />
-    <EmbeddedResource Include="Views\Shared\Upload.cshtml" />
     <EmbeddedResource Include="Views\Shared\EditorTemplates\Password.cshtml" />
     <EmbeddedResource Include="Views\Shared\EditorTemplates\ImageUrl.cshtml" />
+    <EmbeddedResource Include="Views\Shared\EditorTemplates\File.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

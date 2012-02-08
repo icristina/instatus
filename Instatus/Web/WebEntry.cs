@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.ComponentModel.DataAnnotations;
 
 namespace Instatus.Web
 {
@@ -13,8 +14,9 @@ namespace Instatus.Web
     
     public class WebEntry : IResource
     {
-        public string Kind { get; set; }
+        [Key]
         public string Uri { get; set; }
+        public string Kind { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public string Picture { get; set; }

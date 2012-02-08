@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.IO;
 
 namespace Instatus.Web
 {
@@ -103,6 +104,17 @@ namespace Instatus.Web
         public static bool IsContentType(this WebContentType contentType, string mimeType)
         {
             return definitions.Any(d => d.ContentType == contentType && d.MimeTypes.Any(m => m == mimeType));
+        }
+
+        private static bool IsRelativePathInCategory(string relativePath, Category category)
+        {
+            var fileExtension = Path.GetExtension(relativePath).ToLower().Substring(1);
+            return definitions.Any(d => d.Category == category && d.Extensions.Any(e => e == fileExtension));
+        }
+
+        public static bool IsRelativePathPhoto(string relativePath)
+        {
+            return IsRelativePathInCategory(relativePath, Category.Photo);
         }
 
         public static bool IsPhoto(string mimeType)

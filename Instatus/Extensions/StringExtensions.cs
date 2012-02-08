@@ -345,6 +345,11 @@ namespace Instatus
             return new MvcHtmlString(text);
         }
 
+        public static string ToUrlEncoded(this string text)
+        {
+            return HttpUtility.UrlEncode(text);
+        }
+
         public static string ToHtmlEntites(this string text)
         {
             var sb = new StringBuilder();

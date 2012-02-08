@@ -3,18 +3,32 @@
     ViewBag.Title = Model.ToString();
 }
 
-<div class="container">
-    @using (Html.BeginForm("Edit", ViewContext.RouteData.ControllerName(), FormMethod.Post, new { @class = "form-horizontal" }))
+@helper Edit() {
+    <div class="form-actions">
+        @Html.SubmitButton(WebPhrase.Submit, "btn btn-primary")
+    </div>
+    if (!ViewData.ModelState.IsValid)
     {
-        <div class="form-actions">
-            @Html.SubmitButton(WebPhrase.Submit, "btn btn-primary")
-        </div>
-        if (!ViewData.ModelState.IsValid)
+        <p class="alert">
+            @ViewData.ModelState.ErrorMessage()
+        </p>
+    }        
+    @Html.EditorForModel()    
+}
+
+<div class="container">
+    @if (ViewData.ModelMetadata.AdditionalValues.Value("File").AsBoolean())
+    {
+        using (Html.BeginMultipartForm(className: "form-horizontal"))
         {
-            <p class="alert">
-                @ViewData.ModelState.ErrorMessage()
-            </p>
-        }        
-        @Html.EditorForModel()
+            @Edit()
+        }
+    }
+    else
+    {
+        using (Html.BeginForm("Edit", ViewContext.RouteData.ControllerName(), FormMethod.Post, new { @class = "form-horizontal" }))
+        {
+            @Edit()
+        }
     }
 </div>

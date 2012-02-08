@@ -1,12 +1,15 @@
 ﻿@model IWebView
 
 @{
-    var key = ((object)Model.CurrentRow).GetKey();
+    var key = ((object)Model.CurrentRow).GetKey().AsString().ToUrlEncoded();
     var routeData = new { id = key };
     var commandButton = new { target = "_blank", @class = "btn" };    
 }
 
-@Html.ActionLink(WebPhrase.Details, "Details", routeData, commandButton)
+@if (Model.Can(WebAction.Details))
+{
+    @Html.ActionLink(WebPhrase.Details, "Details", routeData, commandButton)
+}
 
 @if (Model.Can(WebAction.Edit))
 {

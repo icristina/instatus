@@ -2,12 +2,26 @@
     Layout = "~/Views/Shared/_Scaffold.cshtml";
 }
 
+@helper Create() {
+    <div class="form-actions">
+        @Html.SubmitButton(WebPhrase.Create, "btn btn-primary")
+    </div>
+    @Html.EditorForModel()    
+}
+
 <div class="container">
-    @using (Html.BeginForm("Create", ViewContext.RouteData.ControllerName(), FormMethod.Post, new { @class = "form-horizontal" }))
+    @if (ViewData.ModelMetadata.AdditionalValues.Value("File").AsBoolean())
     {
-        <div class="form-actions">
-            @Html.SubmitButton(WebPhrase.Create, "btn btn-primary")
-        </div>
-        @Html.EditorForModel()
+        using (Html.BeginMultipartForm(className: "form-horizontal"))
+        {
+            @Create()
+        }
     }
+    else
+    {
+        using (Html.BeginForm("Create", ViewContext.RouteData.ControllerName(), FormMethod.Post, new { @class = "form-horizontal" }))
+        {
+            @Create()
+        }
+    }    
 </div>

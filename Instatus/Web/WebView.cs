@@ -6,12 +6,14 @@ using Instatus.Data;
 using System.Web.Mvc;
 using Instatus.Models;
 using System.Collections;
+using System.Dynamic;
 
 namespace Instatus.Web
 {
     public interface IContentSource
     {
         WebDocument Document { get; }
+        IList<WebFeed> Feeds { get; }
     }
     
     public interface IWebView : IEnumerable, IViewModel
@@ -30,11 +32,12 @@ namespace Instatus.Web
         WebDocument Document { get; }
     }
 
-    public class WebView<T> : PagedCollection<T>, IWebView, IContentSource
+    public class WebView<T> : PagedCollection<T>, IWebView, IContentSource, IExtensionPoint
     {
         public string Name { get; set; }
         public object Context { get; set; }
         public WebDocument Document { get; set; }
+        public IList<WebFeed> Feeds { get; set; }
         public SelectList Tags { get; set; }
         public SelectList Filter { get; set; }
         public SelectList Mode { get; set; }
@@ -46,6 +49,7 @@ namespace Instatus.Web
         public SiteMapNodeCollection Navigation { get; set; }
         public dynamic CurrentRow { get; set; }
         public WebStep Step { get; set; }
+        public dynamic Extensions { get; set; }
 
         public bool Can(object action)
         {
@@ -78,15 +82,23 @@ namespace Instatus.Web
             return HasNext ? Query.WithPageIndex(PageIndex + 1) : null;
         }
 
+        private void Init()
+        {
+            Extensions = new ExpandoObject();
+            Feeds = new List<WebFeed>();
+        }
+
         public WebView(IEnumerable<T> list, WebQuery query)
             : base(list, query.PageSize, query.PageIndex, query.CountTotal)
         {
+            Init();
             Query = query;
         }
 
         public WebView(IQueryable<Record<T>> queryable, Func<Record<T>, T> projection, WebQuery query)
             : base(queryable, projection, query.PageSize, query.PageIndex, query.CountTotal)
         {
+            Init();
             Query = query;
         }
 

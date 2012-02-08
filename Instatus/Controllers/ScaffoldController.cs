@@ -110,7 +110,7 @@ namespace Instatus.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(TViewModel viewModel)
+        public virtual ActionResult Create(TViewModel viewModel)
         {
             AttachContext(viewModel);           
             
@@ -120,7 +120,6 @@ namespace Instatus.Controllers
                 viewModel.Save(model);
                 set.Add(model);
                 SaveChanges();
-
 
                 return RedirectToAction("Details", new { id = model.GetKey() });
             }

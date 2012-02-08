@@ -26,6 +26,7 @@ namespace Instatus.Commands
         {
             return new WebLink()
             {
+                Uri = viewModel.Uri,
                 Title = "Select",
                 Rel = "select"
             };           

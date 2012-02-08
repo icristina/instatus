@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace Instatus.Areas.Auth.Models
 {
@@ -16,6 +17,7 @@ namespace Instatus.Areas.Auth.Models
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
+        [HiddenInput(DisplayValue = false)]
         public string ReturnUrl { get; set; }
     }
 }

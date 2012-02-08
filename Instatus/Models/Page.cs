@@ -89,6 +89,11 @@ namespace Instatus.Models
         public dynamic Extensions { get; set; }
 
         [NotMapped]
+        [IgnoreDataMember]
+        [ScaffoldColumn(false)]
+        public IList<WebFeed> Feeds { get; set; }
+
+        [NotMapped]
         [ScaffoldColumn(false)]
         public Dictionary<WebVerb, WebInsight> Insights { get; private set; }
 
@@ -149,6 +154,7 @@ namespace Instatus.Models
             Status = WebStatus.Published.ToString();
             Card = new Card();
             Insights = new Dictionary<WebVerb, WebInsight>();
+            Feeds = new List<WebFeed>();
         }
 
         public Page(string name) : this() {

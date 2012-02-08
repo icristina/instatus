@@ -19,48 +19,55 @@ using Instatus.Commands;
 
 namespace Instatus.Areas.Editor.Controllers
 {
-    public class FileViewModel : BaseViewModel<Link>
+    [AdditionalMetadata("File", true)]
+    public class FileViewModel : BaseViewModel<WebLink>
     {
-        public string Name { get; set; }
+        [UIHint("File")]
+        public string File { get; set; }
     }
 
     [Authorize(Roles = "Editor")]
     [Description("Files")]
-    public class FileController : ScaffoldController<FileViewModel, Link, FileRepository, int>
+    public class FileController : ScaffoldController<FileViewModel, WebLink, FileRepository, int>
     {
-        public override IEnumerable<Link> Query(IDbSet<Link> set, WebQuery query)
+        public override IEnumerable<WebLink> Query(IDbSet<WebLink> set, WebQuery query)
         {
-            return set.OrderBy(o => o.Name);
-        }
-
-        public override ICollection<IWebCommand> GetCommands(WebQuery query)
-        {
-            return new List<IWebCommand>() {
-                new SelectCommand()
-            };
-        }
-
-        [HttpGet]
-        public ActionResult Upload()
-        {
-            return View();
+            return set.OrderBy(l => l.Uri);
         }
 
         [HttpPost]
-        public ActionResult Upload(string fileName)
+        public override ActionResult Create(FileViewModel viewModel)
         {
             if (Request.HasFile())
             {
                 LocalStorageBlobService.Save("~/LocalStorage/" + Request.FileInputName(), Request.FileInputStream());
+            }           
+            
+            return RedirectToIndex();
+        }
+
+        public override ICollection<IWebCommand> GetCommands(WebQuery query)
+        {
+            if (query.Command.Match("picker"))
+            {
+                return new List<IWebCommand>() {
+                    new SelectCommand()
+                };
             }
 
-            return RedirectToAction("Index");
+            return null;
+        }
+
+        public override void ConfigureWebView(WebView<WebLink> webView)
+        {
+            base.ConfigureWebView(webView);
+            webView.Permissions = new WebAction[] { WebAction.Create };
         }
     }
 
-    public class FileRepository : IRepository<Link>
+    public class FileRepository : IRepository<WebLink>
     {        
-        public IDbSet<Link> Items { get; set; }
+        public IDbSet<WebLink> Items { get; set; }
 
         public int SaveChanges()
         {
@@ -77,16 +84,24 @@ namespace Instatus.Areas.Editor.Controllers
             var path = HostingEnvironment.MapPath(LocalStorageBlobService.BasePath);
             var files = Directory.GetFiles(path);
             var extensions = new string[] { "-small", "-medium" };
-            var links = files.Where(f => !extensions.Any(e => f.Contains(e))).Select(f => new Link() {
-                Uri = LocalStorageBlobService.BasePath + Path.GetFileName(f)   
-            }).ToList();
+            var links = files
+                .Where(f => !extensions.Any(e => f.Contains(e)))
+                .Select(f => {
+                    var uri = LocalStorageBlobService.BasePath + Path.GetFileName(f);
+                    return new WebLink()
+                    {
+                        Uri = uri,
+                        Picture = WebMimeType.IsRelativePathPhoto(uri) ? uri : null
+                    };
+                })
+                .ToList();
 
             Items = new FileSet(links);
         }
     }
 
-    public class FileSet : InMemorySet<Link> {
-        public FileSet(List<Link> links) : base(links)
+    public class FileSet : InMemorySet<WebLink> {
+        public FileSet(List<WebLink> links) : base(links)
         {
 
         }

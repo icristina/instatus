@@ -1,4 +1,4 @@
-﻿@model object
+﻿@model string
 
 @{
     var attributes = Html.ValidationAttributes()
@@ -8,3 +8,12 @@
 @Html.TextBox("", string.Format(ViewData.ModelMetadata.EditFormatString ?? "{0}", Model), attributes)
 
 @Html.CommandButton(WebPhrase.Choose, "openFilePicker", "btn")
+
+@if (!Model.IsEmpty() && WebMimeType.IsRelativePathPhoto(Model))
+{
+    @Html.Image(Model, className: "thumbnail")    
+}
+else
+{
+    <img src="" style="display: none;" class="thumbnail"/>
+}

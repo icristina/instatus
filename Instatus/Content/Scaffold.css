@@ -3,6 +3,13 @@ body[data-route-action=index] td
     vertical-align: middle;
 }
 
+img.thumbnail
+{
+    display: block;
+    max-width: 100px;
+    margin-top: 10px;
+}
+
 menu 
 {
     padding: 0;

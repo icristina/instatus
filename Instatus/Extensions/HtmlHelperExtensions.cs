@@ -227,12 +227,13 @@ namespace Instatus
             return new MvcHtmlString(tag.ToString());
         }
 
-        public static MvcHtmlString FileInput<T>(this HtmlHelper<T> html, string name = "file")
+        public static MvcHtmlString FileInput<T>(this HtmlHelper<T> html, string name = "file", string className = null)
         {
             var tag = new TagBuilder("input");
             
             tag.MergeAttribute("type", "file");
             tag.MergeAttribute("name", name);
+            tag.AddCssClass(className);
             
             return new MvcHtmlString(tag.ToString());
         }
