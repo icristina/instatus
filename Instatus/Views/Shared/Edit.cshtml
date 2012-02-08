@@ -9,6 +9,12 @@
         <div class="form-actions">
             @Html.SubmitButton(WebPhrase.Submit, "btn btn-primary")
         </div>
+        if (!ViewData.ModelState.IsValid)
+        {
+            <p class="alert">
+                @ViewData.ModelState.ErrorMessage()
+            </p>
+        }        
         @Html.EditorForModel()
     }
 </div>

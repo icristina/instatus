@@ -20,19 +20,20 @@ namespace Instatus.Areas.Editor.Models
 
         public double Zoom { get; set; }
 
-        [Category("Overview")]
         [Column("Region")]
         [Display(Name = "Region")]
         public SelectList RegionList { get; set; }
 
         [ScaffoldColumn(false)]
-        public int Region { get; set; }
+        public int? Region { get; set; }
 
         public override void Load(T model)
         {
             Longitude = model.Point.Longitude;
             Latitude = model.Point.Latitude;
             Zoom = model.Point.Zoom;
+
+            model.Parents.OfType<Region>().ForFirst(r => Region = r.Id);
         }
 
         public override void Save(T model)
@@ -40,6 +41,13 @@ namespace Instatus.Areas.Editor.Models
             model.Point.Longitude = Longitude;
             model.Point.Latitude = Latitude;
             model.Point.Zoom = Zoom;
+
+            model.Parents.OfType<Region>().ForFirst(r => model.Parents.Remove(r));
+
+            if (Region.HasValue)
+            {
+                model.Parents.Add(Context.Pages.Find(Region));
+            }
         }
 
         public override void Databind() {

@@ -18,15 +18,20 @@ namespace Instatus.Areas.Editor.Models
 
         public override void Load(T model)
         {
-            var video = model.Links.OfType<Video>().FirstOrDefault();
-
-            if (video != null)
-                Uri = video.Uri;
+            model.Links.OfType<Video>().ForFirst(v => Uri = v.Uri);
         }
 
         public override void Save(T model)
         {
+            model.Links.OfType<Video>().ForFirst(v => model.Links.Remove(v));
             
+            if (!Uri.IsEmpty())
+            {
+                model.Links.Add(new Video()
+                {
+                    Uri = Uri
+                });
+            }            
         }
     }
 }

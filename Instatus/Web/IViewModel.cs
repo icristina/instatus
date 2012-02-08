@@ -37,7 +37,7 @@ namespace Instatus.Web
         }
 
         public virtual void Databind() {
-
+            this.ApplyAction<IViewModel<TModel>>(m => m.Databind());
         }
 
         public BaseViewModel()

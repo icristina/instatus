@@ -13,12 +13,27 @@ using Instatus;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
+using Instatus.Areas.Editor.Models;
 
 namespace Instatus.Areas.Editor.Controllers
 {
-    public class RegionViewModel : BaseViewModel<Region>
+    public class RegionViewModel : BaseViewModel<Region, BaseDataContext>
     {
+        [Category("Overview")]
+        [Display(Order = 1)]        
         public string Name { get; set; }
+
+        [Category("Location")]
+        public LocationViewModel<Region> Location { get; set; }
+
+        [Category("Publishing")]
+        public PublishingViewModel<Region> Publishing { get; set; }
+
+        public RegionViewModel()
+        {
+            Location = new LocationViewModel<Region>();
+            Publishing = new PublishingViewModel<Region>();
+        }
     }
 
     [Authorize(Roles = "Editor")]

@@ -20,21 +20,21 @@ namespace Instatus.Areas.Editor.Controllers
     {
         [Category("Overview")]
         [Display(Order = 1)]
-        public OverviewViewModel<Article> Overview { get; set; }
+        public OverviewViewModel<News> Overview { get; set; }
 
         [Category("Body")]
         [Display(Order = 2)]
-        public DocumentViewModel<Article> Document { get; set; }
+        public DocumentViewModel<News> Document { get; set; }
 
         [Category("Publishing")]
         [Display(Order = 3)]
-        public PublishingViewModel<Article> Publishing { get; set; }
+        public PublishingViewModel<News> Publishing { get; set; }
 
         public NewsViewModel()
         {
-            Overview = new OverviewViewModel<Article>();
-            Document = new DocumentViewModel<Article>();
-            Publishing = new PublishingViewModel<Article>();
+            Overview = new OverviewViewModel<News>();
+            Document = new DocumentViewModel<News>();
+            Publishing = new PublishingViewModel<News>();
         }
     }
     

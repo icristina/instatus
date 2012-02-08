@@ -7,6 +7,7 @@ using System.ComponentModel;
 using Instatus.Web;
 using Instatus.Models;
 using Instatus.Data;
+using System.Web.Mvc;
 
 namespace Instatus.Areas.Editor.Models
 {
@@ -19,6 +20,7 @@ namespace Instatus.Areas.Editor.Models
 
         [DataType(DataType.MultilineText)]
         [Required]
+        [AllowHtml]
         public string Description { get; set; }
 
         [DataType(DataType.ImageUrl)]

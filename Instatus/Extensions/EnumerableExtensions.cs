@@ -58,6 +58,14 @@ namespace Instatus
             return list;
         }
 
+        public static IList<T> Pop<T>(this IList<T> source)
+        {
+            if (source.Count() > 0)
+                source.RemoveAt(source.Count - 1);
+
+            return source;
+        }
+
         public static IEnumerable<T> Randomize<T>(this IEnumerable<T> source)
         {
             return source.OrderBy(i => Guid.NewGuid());
@@ -75,7 +83,7 @@ namespace Instatus
             return source.All(f => f.Value.IsEmpty());
         }
 
-        public static void ForFirst<T>(this IQueryable<T> list, Action<T> action)
+        public static void ForFirst<T>(this IEnumerable<T> list, Action<T> action)
         {
             if (list.Count() > 0)
                 action(list.First());

@@ -36,7 +36,7 @@ namespace Instatus.Areas.Editor.Controllers
         public SelectList OrganizationList { get; set; }
 
         [ScaffoldColumn(false)]
-        public int Organization { get; set; }
+        public int? Organization { get; set; }
 
         [Category("Video")]
         [Display(Order = 4)]
@@ -48,14 +48,20 @@ namespace Instatus.Areas.Editor.Controllers
 
         public override void Load(Post model)
         {
-            Tags = model.Tags.IsEmpty() ? null : model.Tags.Select(t => t.Id).ToArray();
             base.Load(model);
+            Tags = model.Tags.IsEmpty() ? null : model.Tags.Select(t => t.Id).ToArray();
+            model.Parents.OfType<Organization>().ForFirst(o => Organization = o.Id);
         }
 
         public override void Save(Post model)
-        {
-            model.Tags = UpdateList<Tag, int>(Context.Tags, model.Tags, Tags);
+        {            
             base.Save(model);
+            model.Tags = UpdateList<Tag, int>(Context.Tags, model.Tags, Tags);
+            if (Organization.HasValue)
+            {
+                model.Parents.OfType<Organization>().ForFirst(o => model.Parents.Remove(o));
+                model.Parents.Add(Context.Pages.Find(Organization));
+            }
         }
 
         public override void Databind()

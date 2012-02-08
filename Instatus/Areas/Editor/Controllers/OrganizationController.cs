@@ -25,12 +25,15 @@ namespace Instatus.Areas.Editor.Controllers
 
         [Category("Overview")]
         [Column("Catalog")]
-        [Display(Name = "Catalog")]
-        [Required]
+        [Display(Name = "Category")]       
+        [AdditionalMetadata("Required", true)]
         public SelectList CatalogList { get; set; }
 
         [ScaffoldColumn(false)]
         public int Catalog { get; set; }
+
+        [Category("Location")]
+        public LocationViewModel<Organization> Location { get; set; }
 
         [Category("Meta Tags")]
         public MetaTagsViewModel<Organization> MetaTags { get; set; }
@@ -38,14 +41,29 @@ namespace Instatus.Areas.Editor.Controllers
         [Category("Publishing")]
         public PublishingViewModel<Organization> Publishing { get; set; }
 
+        public override void Load(Organization model)
+        {
+            base.Load(model);
+            model.Parents.OfType<Catalog>().ForFirst(c => Catalog = c.Id);
+        }
+
+        public override void Save(Organization model)
+        {
+            base.Save(model);
+            model.Parents.OfType<Catalog>().ForFirst(c => model.Parents.Remove(c));
+            model.Parents.Add(Context.Pages.Find(Catalog));
+        }
+
         public override void Databind()
         {
+            base.Databind();
             CatalogList = new SelectList(Context.Pages.OfType<Catalog>(), "Id", "Name", Catalog);
         }
 
         public OrganizationViewModel()
         {
             Overview = new OverviewViewModel<Organization>();
+            Location = new LocationViewModel<Organization>();
             MetaTags = new MetaTagsViewModel<Organization>();
             Publishing = new PublishingViewModel<Organization>();
         }
