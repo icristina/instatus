@@ -9,7 +9,7 @@ using Instatus.Web;
 namespace Instatus.Areas.Editor.Models
 {
     [ComplexType]
-    public class MetaTagsViewModel : IViewModel<WebDocument>
+    public class MetaTagsViewModel : BaseViewModel<WebDocument>
     {
         [DisplayName("Title")]
         public string TitleString { get; set; }
@@ -20,31 +20,18 @@ namespace Instatus.Areas.Editor.Models
         [DataType(DataType.MultilineText)]
         public string Keywords { get; set; }
 
-        public void Load(WebDocument model)
+        public override void Load(WebDocument model)
         {
             TitleString = model.Parameters.GetParameter(WebNamespace.Html, "Title");
             Description = model.Parameters.GetParameter(WebNamespace.Html, "Description");
             Keywords = model.Parameters.GetParameter(WebNamespace.Html, "Keywords");
         }
 
-        public void Save(WebDocument model)
+        public override void Save(WebDocument model)
         {
             model.Parameters.SetParameter(WebNamespace.Html, "Title", TitleString);
             model.Parameters.SetParameter(WebNamespace.Html, "Description", Description);
             model.Parameters.SetParameter(WebNamespace.Html, "Keywords", Keywords);
-        }
-
-        public void Databind()
-        {
-            
-        }
-
-        [ScaffoldColumn(false)]
-        public WebStep Step
-        {
-            get {
-                return WebStep.Start;
-            }
         }
     }
 }

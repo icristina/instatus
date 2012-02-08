@@ -93,6 +93,9 @@
     <Compile Include="Areas\Editor\Controllers\PostController.cs" />
     <Compile Include="Areas\Developer\Controllers\LogController.cs" />
     <Compile Include="Areas\Developer\Controllers\LinkController.cs" />
+    <Compile Include="Areas\Editor\Models\LocationViewModel.cs" />
+    <Compile Include="Areas\Editor\Models\DocumentViewModel.cs" />
+    <Compile Include="Areas\Editor\Models\OverviewViewModel.cs" />
     <Compile Include="Areas\Editor\Models\PublishingViewModel.cs" />
     <Compile Include="Areas\Editor\Models\MetaTagsViewModel.cs" />
     <Compile Include="Areas\Google\Google.cs" />

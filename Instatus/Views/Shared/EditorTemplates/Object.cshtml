@@ -1,4 +1,5 @@
 ﻿@helper Field(ModelMetadata prop) {
+    var propertyKey = string.Format("{0}.{1}", ViewData.ModelMetadata.ModelType.Name, prop.PropertyName);
     if (prop.AdditionalValues["IsComplexTypeEntity"].AsBoolean()) { // scaffold shared child models
         @Html.Editor(prop.PropertyName)
     }
@@ -17,11 +18,8 @@
             else
             {
                 <label class="control-label">
-                    @if (!prop.GetDisplayName().IsEmpty())
-                    {
-                        @prop.GetDisplayName() 
-                        @(prop.IsRequired ? " *" : "")
-                    }                
+                    @WebPhrase.Localize(propertyKey + ".Label", prop.GetDisplayName()) 
+                    @(prop.IsRequired ? " *" : "")             
                 </label>                     
                 <span class="controls">
                     @Html.Editor(prop.PropertyName)             
@@ -29,9 +27,14 @@
                     {
                         <small class="help-inline">@Html.ValidationMessage(prop.PropertyName)</small>
                     }
-                    @if (!prop.Description.IsEmpty())
+                    @{
+                        var description = WebPhrase.Localize(propertyKey + ".Label", prop.Description);
+                    }
+                    @if (!description.IsEmpty())
                     {
-                        <small class="help-inline">@prop.Description</small>              
+                        <small class="help-inline">
+                            @description
+                        </small>              
                     }                    
                 </span>
             }            

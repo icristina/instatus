@@ -40,17 +40,11 @@ namespace Instatus.Areas.Editor.Controllers
     {
         [Category("Overview")]
         [Display(Order = 1)]
-        public string Name { get; set; }
-        
-        [Category("Overview")]
-        [DataType(DataType.MultilineText)]
-        [Display(Order = 2)]
-        public string Description { get; set; }
+        public OverviewViewModel Overview { get; set; }
 
-        [Category("Overview")]
-        [DataType(DataType.ImageUrl)]
-        [Display(Order = 3)]
-        public string Picture { get; set; }
+        [Category("Body")]
+        [Display(Order = 2)]
+        public DocumentViewModel Document { get; set; }
 
         [Category("Links")]
         [ScaffoldColumn(true)]
@@ -58,7 +52,12 @@ namespace Instatus.Areas.Editor.Controllers
         public IEnumerable<LinkViewModel> Links { get; set; }
 
         [Category("Meta Tags")]
+        [Display(Order = 4)]
         public MetaTagsViewModel MetaTags { get; set; }
+
+        [Category("Publishing")]
+        [Display(Order = 5)]
+        public PublishingViewModel Publishing { get; set; }
 
         public override void Load(Article model)
         {
@@ -72,8 +71,6 @@ namespace Instatus.Areas.Editor.Controllers
             })
             .ToList()
             .Pad(10);
-
-            MetaTags.Load(model.Document);
         }
 
         public override void Save(Article model)
@@ -87,13 +84,14 @@ namespace Instatus.Areas.Editor.Controllers
                 Picture = l.Picture                
             })
             .ToList();
-
-            MetaTags.Save(model.Document);
         }
 
         public ArticleViewModel()
         {
+            Overview = new OverviewViewModel();
+            Document = new DocumentViewModel();
             MetaTags = new MetaTagsViewModel();
+            Publishing = new PublishingViewModel();
         }
     }
 

@@ -6,11 +6,12 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 using Instatus.Web;
 using System.Web.Mvc;
+using Instatus.Models;
 
 namespace Instatus.Areas.Editor.Models
 {
     [ComplexType]
-    public class DocumentViewModel : IViewModel<WebDocument>
+    public class DocumentViewModel : BaseViewModel<Page>
     {
         public string Heading { get; set; }
 
@@ -18,27 +19,16 @@ namespace Instatus.Areas.Editor.Models
         [AllowHtml]
         public string Body { get; set; }
 
-        public void Load(WebDocument model)
+        public override void Load(Page model)
         {
-            this.ApplyValues(model);
+            Heading = model.Document.Title;
+            Body = model.Document.Body;
         }
 
-        public void Save(WebDocument model)
+        public override void Save(Page model)
         {
-            model.ApplyValues(this);
-        }
-
-        public void Databind()
-        {
-            
-        }
-
-        [ScaffoldColumn(false)]
-        public WebStep Step
-        {
-            get {
-                return WebStep.Start;
-            }
+            model.Document.Title = Heading;
+            model.Document.Body = Body;
         }
     }
 }

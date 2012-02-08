@@ -20,37 +20,8 @@ namespace Instatus.Areas.Editor.Controllers
     public class OrganizationViewModel : BaseViewModel<Organization, BaseDataContext>
     {
         [Category("Overview")]
-        public string Name { get; set; }
-
-        [Category("Overview")]
-        [DataType(DataType.MultilineText)]
-        public string Description { get; set; }
-
-        [Category("Overview")]
-        public double Longitude { get; set; }
-
-        [Category("Overview")]
-        public double Latitude { get; set; }
-
-        [Category("Overview")]
-        public double Zoom { get; set; }
-
-        [Category("Overview")]
-        public int Priority { get; set; }
-
-        [Category("Overview")]
-        public string Picture { get; set; }
-
-        [Category("Overview")]
-        public string Data { get; set; }
-
-        [Category("Overview")]
-        [Column("Region")]
-        [Display(Name = "Region")]
-        public SelectList RegionList { get; set; }
-
-        [ScaffoldColumn(false)]
-        public int Region { get; set; }
+        [Display(Order = 1)]
+        public OverviewViewModel Overview { get; set; }
 
         [Category("Overview")]
         [Column("Catalog")]
@@ -63,27 +34,11 @@ namespace Instatus.Areas.Editor.Controllers
         [Category("Meta Tags")]
         public MetaTagsViewModel MetaTags { get; set; }
 
-        public override void Load(Organization model)
-        {
-            base.Load(model);
-
-            Longitude = model.Point.Longitude;
-            Latitude = model.Point.Latitude;
-            Zoom = model.Point.Zoom;
-        }
-
-        public override void Save(Organization model)
-        {
-            base.Save(model);
-
-            model.Point.Longitude = Longitude;
-            model.Point.Latitude = Latitude;
-            model.Point.Zoom = Zoom;
-        }
+        [Category("Publishing")]
+        public PublishingViewModel Publishing { get; set; }
 
         public override void Databind()
         {
-            RegionList = new SelectList(Context.Pages.OfType<Region>(), "Id", "Name", Catalog);
             CatalogList = new SelectList(Context.Pages.OfType<Catalog>(), "Id", "Name", Catalog);
         }
     }

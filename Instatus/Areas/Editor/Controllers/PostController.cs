@@ -12,24 +12,17 @@ using System.IO;
 using Instatus;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using Instatus.Areas.Editor.Models;
 
 namespace Instatus.Areas.Editor.Controllers
 {
     public class PostViewModel : BaseViewModel<Post, BaseDataContext>
     {
-        [DisplayName("Friendly Url")]
-        [Required]
-        [RegularExpression(ValidationPatterns.Slug)]
-        public string Slug { get; set; }        
-        
-        [DisplayName("Title")]
-        [Required]
-        public string Name { get; set; }
+        [Category("Overview")]
+        [Display(Order = 1)]
+        public OverviewViewModel Overview { get; set; }
 
-        [DataType(DataType.MultilineText)]
-        [Required]
-        public string Description { get; set; }
-
+        [Category("Overview")]
         [Column("Tags")]
         [Display(Name = "Tags")]
         public MultiSelectList TagsList { get; set; }
@@ -37,12 +30,17 @@ namespace Instatus.Areas.Editor.Controllers
         [ScaffoldColumn(false)]
         public int[] Tags { get; set; }
 
+        [Category("Overview")]
         [Column("Organization")]
         [Display(Name = "Organization")]
         public SelectList OrganizationList { get; set; }
 
         [ScaffoldColumn(false)]
         public int Organization { get; set; }
+
+        [Category("Publishing")]
+        [Display(Order = 5)]
+        public PublishingViewModel Publishing { get; set; }
 
         public override void Load(Post model)
         {
@@ -60,6 +58,12 @@ namespace Instatus.Areas.Editor.Controllers
         {            
             TagsList = new MultiSelectList(Context.Tags.ToList(), "Id", "Name", Tags);
             OrganizationList = new SelectList(Context.Pages.OfType<Organization>(), "Id", "Name", Organization);
+        }
+
+        public PostViewModel()
+        {
+            Overview = new OverviewViewModel();
+            Publishing = new PublishingViewModel();
         }
     }
     

@@ -14,6 +14,7 @@ using System.Collections.Specialized;
 using System.Web.Routing;
 using System.Web.Script.Serialization;
 using Instatus.Data;
+using Instatus.Web;
 
 namespace Instatus
 {
@@ -181,17 +182,22 @@ namespace Instatus
             return null;
         }
 
-        public static T ApplyValues<T>(this T target, object source, bool recursive = false, string[] exclusions = null)
+        public static TTarget ApplyValues<TTarget, TSource>(this TTarget target, TSource source, bool recursive = false, string[] exclusions = null)
         {
             foreach (var property in source.GetType().GetProperties())
             {
                 var destination = target.GetType().GetProperty(property.Name);
+                var destinationValue = destination.GetValue(target, null);
 
                 if (!(exclusions != null && exclusions.Contains(property.Name)) && destination != null && destination.CanWrite)
                 {
+                    if (destinationValue != null && destinationValue is IViewModel<TSource>)
+                    {
+                        ((IViewModel<TSource>)destinationValue).Load(source);
+                    }
                     // if int, string or enum set value, if second level in object graph always set value even if complex type
                     // nullable types should evaluate to true if check whether destination is assignable from property
-                    if ((destination.PropertyType.IsSimpleType() || !recursive) && destination.PropertyType.IsAssignableFrom(property.PropertyType))
+                    else if ((destination.PropertyType.IsSimpleType() || !recursive) && destination.PropertyType.IsAssignableFrom(property.PropertyType))
                     {
                         var value = property.GetValue(source, null);
 
@@ -210,8 +216,6 @@ namespace Instatus
                         }
                         else
                         {
-                            var destinationValue = destination.GetValue(target, null);
-
                             // activate new instance of complex types
                             if (destinationValue == null)
                             {

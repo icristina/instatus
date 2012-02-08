@@ -11,7 +11,7 @@ using Instatus.Data;
 namespace Instatus.Areas.Editor.Models
 {
     [ComplexType]
-    public class OverviewViewModel : IViewModel<Page>
+    public class OverviewViewModel : BaseViewModel<Page>
     {
         [DisplayName("Title")]
         [Required]
@@ -23,28 +23,5 @@ namespace Instatus.Areas.Editor.Models
 
         [DataType(DataType.ImageUrl)]
         public string Picture { get; set; }
-
-        public void Load(Page model)
-        {
-            this.ApplyValues(model);
-        }
-
-        public void Save(Page model)
-        {
-            model.ApplyValues(this);
-        }
-
-        public void Databind()
-        {
-            
-        }
-
-        [ScaffoldColumn(false)]
-        public WebStep Step
-        {
-            get {
-                return WebStep.Start;
-            }
-        }
     }
 }
