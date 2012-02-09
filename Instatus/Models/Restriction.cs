@@ -9,6 +9,11 @@ using System.Runtime.Serialization;
 
 namespace Instatus.Models
 {
+    public interface IRestrictionEvaluator : IRule<RestrictionContext, RestrictionResult>
+    {
+
+    }
+    
     public class Restriction : IPayload
     {
         public int Id { get; set; }
@@ -22,12 +27,6 @@ namespace Instatus.Models
         {
             return Name;
         }
-    }
-
-    public interface IRestrictionEvaluator
-    {
-        string Name { get; }
-        RestrictionResult Evaluate(RestrictionContext context);
     }
 
     public class RestrictionResultCollection : List<RestrictionResult>

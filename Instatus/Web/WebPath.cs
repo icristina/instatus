@@ -141,12 +141,6 @@ namespace Instatus.Web
             }
         }
 
-        public static bool IsResizePath(string virtualPath)
-        {
-            var extensions = new string[] { "-thumb.", "-small.", "-medium.", "-large." };
-            return extensions.Any(e => virtualPath.Contains(e));
-        }
-
         public static string ResizeAbsolute(WebSize size, string virtualPath)
         {
             return Absolute(Resize(size, virtualPath));
@@ -156,8 +150,7 @@ namespace Instatus.Web
             get 
             {
                 var route = RouteTable.Routes[WebRoute.Home];
-                return "/";
-                //return route != null ? route.GetVirtualPath(null, null).VirtualPath : "/";
+                return route != null ? route.GetVirtualPath(null, null).VirtualPath : "/";
             }
         }
     }

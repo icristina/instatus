@@ -16,6 +16,7 @@ using System.Data.Entity;
 using System.Web.Hosting;
 using System.ComponentModel.Composition;
 using Instatus.Commands;
+using System.Text.RegularExpressions;
 
 namespace Instatus.Areas.Editor.Controllers
 {
@@ -41,8 +42,8 @@ namespace Instatus.Areas.Editor.Controllers
             if (Request.HasFile())
             {
                 LocalStorageBlobService.Save("~/LocalStorage/" + Request.FileInputName(), Request.FileInputStream());
-            }           
-            
+            }
+
             return RedirectToIndex();
         }
 
@@ -66,7 +67,15 @@ namespace Instatus.Areas.Editor.Controllers
     }
 
     public class FileRepository : IRepository<WebLink>
-    {        
+    {
+        public static List<IRule<string>> Rules = new List<IRule<string>>()
+        {
+            new RegexRule(@"-thumb\.jpg", false),
+            new RegexRule(@"-small\.jpg", false),
+            new RegexRule(@"-medium\.jpg", false),
+            new RegexRule(@"-large\.jpg", false)
+        };
+        
         public IDbSet<WebLink> Items { get; set; }
 
         public int SaveChanges()
@@ -76,7 +85,7 @@ namespace Instatus.Areas.Editor.Controllers
 
         public void Dispose()
         {
-            
+
         }
 
         public FileRepository()
@@ -84,9 +93,10 @@ namespace Instatus.Areas.Editor.Controllers
             var path = HostingEnvironment.MapPath(LocalStorageBlobService.BasePath);
             var files = Directory.GetFiles(path);
             var links = files
-                .Where(f => !WebPath.IsResizePath(f))
-                .Select(f => {
-                    var uri = LocalStorageBlobService.BasePath + Path.GetFileName(f);
+                .Where(fileName => Rules.All(rule => rule.Evaluate(fileName)))
+                .Select(fileName =>
+                {
+                    var uri = LocalStorageBlobService.BasePath + Path.GetFileName(fileName);
                     return new WebLink()
                     {
                         Uri = uri,
@@ -95,14 +105,7 @@ namespace Instatus.Areas.Editor.Controllers
                 })
                 .ToList();
 
-            Items = new FileSet(links);
-        }
-    }
-
-    public class FileSet : InMemorySet<WebLink> {
-        public FileSet(List<WebLink> links) : base(links)
-        {
-
+            Items = new InMemorySet<WebLink>(links);
         }
     }
 }

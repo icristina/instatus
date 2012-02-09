@@ -131,6 +131,7 @@
     <Compile Include="Data\IObjectMapping.cs" />
     <Compile Include="Data\IPayload.cs" />
     <Compile Include="Data\IRepository.cs" />
+    <Compile Include="Data\IRule.cs" />
     <Compile Include="Data\LimitedQueue.cs" />
     <Compile Include="Data\Range.cs" />
     <Compile Include="Data\RecordResult.cs" />
