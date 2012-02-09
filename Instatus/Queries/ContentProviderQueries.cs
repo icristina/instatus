@@ -68,12 +68,18 @@ namespace Instatus
             }
         }
 
-        public static void AppendContent<T>(this IContentProvider contentProvider, IContentSource content, string slug = null, string expand = null)
+        public static void AppendContent(this IContentProvider contentProvider, IContentSource content, string slug = null, string expand = null)
         {
             Page page = !slug.IsEmpty() ? contentProvider.GetPage(slug, expand: expand) : content as Page;
             
             if (page != null) {
                 content.Document = page.Document;
+
+                if (page.Replies != null)
+                {
+                    content.Feeds.Add(WebVerb.Notification, new DeferredWebFeed(page.Replies.OfType<Notification>()));
+                    content.Feeds.Add(WebVerb.Comment, new DeferredWebFeed(page.Replies.OfType<Comment>()));
+                }
             }     
         }
 

@@ -30,6 +30,11 @@ namespace Instatus.Web
         public string Source { get; set; }
         public DateTime Timestamp { get; set; }
         public string Rel { get; set; }
+
+        public override string ToString()
+        {
+            return Title ?? Description ?? Uri;
+        }
     }
 
     public interface IResource

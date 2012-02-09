@@ -105,7 +105,15 @@ namespace Instatus.Areas.Editor.Controllers
                 })
                 .ToList();
 
-            Items = new InMemorySet<WebLink>(links);
+            Items = new FileMemorySet(links);
+        }
+    }
+
+    internal class FileMemorySet : InMemorySet<WebLink> {
+        public FileMemorySet(IEnumerable<WebLink> links)
+            : base(links)
+        {
+
         }
     }
 }

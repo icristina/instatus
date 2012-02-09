@@ -13,7 +13,7 @@ namespace Instatus.Web
     public interface IContentSource
     {
         WebDocument Document { get; set; }
-        IList<WebFeed> Feeds { get; set; }
+        IDictionary<WebVerb, IWebFeed> Feeds { get; }
     }
     
     public interface IWebView : IEnumerable, IViewModel
@@ -38,7 +38,7 @@ namespace Instatus.Web
         public string Name { get; set; }
         public object Context { get; set; }
         public WebDocument Document { get; set; }
-        public IList<WebFeed> Feeds { get; set; }
+        public IDictionary<WebVerb, IWebFeed> Feeds { get; private set; }
         public SelectList Tags { get; set; }
         public SelectList Filter { get; set; }
         public SelectList Mode { get; set; }
@@ -87,7 +87,7 @@ namespace Instatus.Web
         private void Init()
         {
             Extensions = new ExpandoObject();
-            Feeds = new List<WebFeed>();
+            Feeds = new Dictionary<WebVerb, IWebFeed>();
             Columns = new string[] { };
         }
 

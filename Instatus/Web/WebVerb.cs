@@ -14,7 +14,10 @@ namespace Instatus.Web
         // collaboration
         Change,
 
-        // social
+        // social general
+        News,
+
+        // social action
         Post,
         Like,
         Checkin,
@@ -29,6 +32,7 @@ namespace Instatus.Web
         Friend,
         Vote,
         Reputation,
+        Notification,
 
         // gaming
         Award,

@@ -10,21 +10,44 @@ using Instatus.Web;
 using Instatus.Services;
 using System.IO;
 using System.ComponentModel.Composition;
+using System.Data.Entity;
+using System.ComponentModel;
 
 namespace Instatus.Areas.Moderator.Controllers
 {
     [Authorize(Roles = "Moderator")]
     [Export]
     [PartCreationPolicy(CreationPolicy.NonShared)]
-    public class ExportController : BaseController<BaseDataContext>
+    [Description("Export")]
+    public class ExportController : ScaffoldController<BaseViewModel<WebEntry>, WebEntry, WebEntryRepository, string>
     {
         [ImportMany]
         private IEnumerable<IDataExport> exports;
 
-        public ActionResult Index()
+        public override IEnumerable<WebEntry> Query(IDbSet<WebEntry> set, WebQuery query)
         {
-            ViewData.Model = new SelectList(exports, "Name", "Name");            
-            return View();
+            if (set.Count() == 0)
+            {
+                set.Append(exports.Select(e => new WebEntry() {
+                    Title = e.Name
+                }));
+            }
+            
+            return set;
+        }
+
+        public override void ConfigureWebView(WebView<WebEntry> webView)
+        {
+            base.ConfigureWebView(webView);
+            webView.Permissions = new string[] { };
+        }
+
+        public override ICollection<IWebCommand> GetCommands(WebQuery query)
+        {
+            return new List<IWebCommand>()
+            {
+                new ExportCommand()
+            };
         }
 
         public ActionResult File(string name)
@@ -38,5 +61,54 @@ namespace Instatus.Areas.Moderator.Controllers
 
             return new EmptyResult();
         }
+    }
+
+    public class ExportCommand : IWebCommand
+    {
+        public string Name
+        {
+            get {
+                return "ExportCommand";
+            }
+        }
+
+        public WebLink GetLink(dynamic viewModel, UrlHelper urlHelper)
+        {
+            return new WebLink()
+            {
+                Title = "Export",
+                Uri = urlHelper.Action("File", new { name = viewModel.Title  })
+            };
+        }
+
+        public bool Execute(dynamic viewModel, UrlHelper urlHelper, System.Web.Routing.RouteData routeData, System.Collections.Specialized.NameValueCollection requestParams)
+        {
+            return true;
+        }
+    }
+
+
+    public class WebEntryRepository : IRepository<WebEntry>{
+        public IDbSet<WebEntry> Items
+        {
+	        get {
+                return new WebEntrySet();
+            }
+        }
+
+        public int SaveChanges()
+        {
+ 	        return 0;
+        }
+
+        public void  Dispose()
+        {
+
+        }
+    }
+
+    internal class WebEntrySet : InMemorySet<WebEntry>
+    {
+
     }
 }

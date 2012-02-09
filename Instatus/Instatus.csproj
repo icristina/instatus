@@ -102,7 +102,7 @@
     <Compile Include="Areas\Editor\Models\PublishingViewModel.cs" />
     <Compile Include="Areas\Editor\Models\MetaTagsViewModel.cs" />
     <Compile Include="Areas\Google\Google.cs" />
-    <Compile Include="Areas\Moderator\Controllers\MessageController.cs" />
+    <Compile Include="Areas\Moderator\Controllers\NotificationController.cs" />
     <Compile Include="Areas\Developer\Controllers\DomainController.cs" />
     <Compile Include="Areas\Developer\Controllers\CredentialController.cs" />
     <Compile Include="Areas\Moderator\Controllers\ExportController.cs" />
@@ -149,6 +149,7 @@
     <Compile Include="Models\Award.cs" />
     <Compile Include="Models\Brand.cs" />
     <Compile Include="Data\IFriendlyIdentifier.cs" />
+    <Compile Include="Models\Notification.cs" />
     <Compile Include="Models\News.cs" />
     <Compile Include="Models\Region.cs" />
     <Compile Include="Models\INavigableContent.cs" />
@@ -456,9 +457,7 @@
     <EmbeddedResource Include="Areas\Typekit\Views\Web.config" />
     <EmbeddedResource Include="Areas\Developer\Views\Web.config" />
     <EmbeddedResource Include="Areas\Developer\Views\Dashboard\Index.cshtml" />
-    <EmbeddedResource Include="Areas\Moderator\Views\Export\Index.cshtml" />
     <EmbeddedResource Include="Areas\Facebook\Views\Facebook\Index.cshtml" />
-    <EmbeddedResource Include="Areas\Moderator\Views\Web.config" />
     <None Include="README.md" />
     <EmbeddedResource Include="Views\Shared\Entry.cshtml" />
     <EmbeddedResource Include="Views\Shared\DisplayTemplates\LinkList.cshtml" />

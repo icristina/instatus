@@ -15,7 +15,7 @@ using System.ComponentModel;
 
 namespace Instatus.Areas.Moderator.Controllers
 {
-    public class MessageViewModel : BaseViewModel<Note, BaseDataContext>
+    public class NotificationViewModel : BaseViewModel<Notification, BaseDataContext>
     {
         [AllowHtml]
         [DataType(DataType.MultilineText)]
@@ -36,10 +36,10 @@ namespace Instatus.Areas.Moderator.Controllers
     }
     
     [Authorize(Roles = "Moderator")]
-    [Description("Notes")]
-    public class MessageController : ScaffoldController<MessageViewModel, Note, BaseDataContext, int>
+    [Description("Notifications")]
+    public class NotificationController : ScaffoldController<NotificationViewModel, Notification, BaseDataContext, int>
     {
-        public override IEnumerable<Note> Query(IDbSet<Note> set, WebQuery query)
+        public override IEnumerable<Notification> Query(IDbSet<Notification> set, WebQuery query)
         {
             return set.Where(c => c.Page is Application || c.Page is Article)
                       .OrderBy(c => c.CreatedTime);

@@ -91,11 +91,12 @@ namespace Instatus.Models
         [NotMapped]
         [IgnoreDataMember]
         [ScaffoldColumn(false)]
-        public IList<WebFeed> Feeds { get; set; }
+        public IDictionary<WebVerb, IWebFeed> Feeds { get; private set; }
 
         [NotMapped]
+        [IgnoreDataMember]
         [ScaffoldColumn(false)]
-        public Dictionary<WebVerb, WebInsight> Insights { get; private set; }
+        public IDictionary<WebVerb, WebInsight> Insights { get; private set; }
 
         private Dictionary<string, object> fields;
 
@@ -154,7 +155,7 @@ namespace Instatus.Models
             Status = WebStatus.Published.ToString();
             Card = new Card();
             Insights = new Dictionary<WebVerb, WebInsight>();
-            Feeds = new List<WebFeed>();
+            Feeds = new Dictionary<WebVerb, IWebFeed>();
         }
 
         public Page(string name) : this() {
