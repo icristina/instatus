@@ -148,7 +148,7 @@
     <Compile Include="Extensions\WebClientExtensions.cs" />
     <Compile Include="Models\Award.cs" />
     <Compile Include="Models\Brand.cs" />
-    <Compile Include="Data\IFriendlyIdentitier.cs" />
+    <Compile Include="Data\IFriendlyIdentifier.cs" />
     <Compile Include="Models\News.cs" />
     <Compile Include="Models\Region.cs" />
     <Compile Include="Models\INavigableContent.cs" />
