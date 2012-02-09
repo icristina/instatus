@@ -11,42 +11,37 @@ using Instatus.Services;
 using System.IO;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
+using System.ComponentModel;
 
 namespace Instatus.Areas.Moderator.Controllers
 {
-    public class MessageViewModel : BaseViewModel<Message, BaseDataContext>
+    public class MessageViewModel : BaseViewModel<Note, BaseDataContext>
     {
         [AllowHtml]
         [DataType(DataType.MultilineText)]
         public string Body { get; set; }
 
         [Column("PageId")]
-        [Display(Name = "Application")]
-        public SelectList ApplicationList { get; set; }
+        [Display(Name = "Page")]
+        [AdditionalMetadata("Required", true)]
+        public SelectList PageList { get; set; }
 
         [ScaffoldColumn(false)]
-        public int PageId { get; set; }
-
-        [Column("Status")]
-        [Display(Name = "Status")]
-        public SelectList StatusList { get; set; }
-
-        [ScaffoldColumn(false)]
-        public string Status { get; set; }
+        public int? PageId { get; set; }
 
         public override void Databind()
         {
-            ApplicationList = new SelectList(Context.Pages.OfType<Application>().ToList(), "Id", "Name", PageId);
-            StatusList = new SelectList(new WebStatus[] { WebStatus.Draft, WebStatus.Published, WebStatus.Archived }.ToStringList(), Status);
+            PageList = new SelectList(Context.Pages.Where(p => p is Application || p is Article).ToList(), "Id", "Name", PageId);
         }
     }
     
     [Authorize(Roles = "Moderator")]
-    public class MessageController : ScaffoldController<MessageViewModel, Message, BaseDataContext, int>
+    [Description("Notes")]
+    public class MessageController : ScaffoldController<MessageViewModel, Note, BaseDataContext, int>
     {
-        public override IEnumerable<Message> Query(IDbSet<Message> set, WebQuery query)
+        public override IEnumerable<Note> Query(IDbSet<Note> set, WebQuery query)
         {
-            return set.Where(c => c.Page is Application)
+            return set.Where(c => c.Page is Application || c.Page is Article)
                       .OrderBy(c => c.CreatedTime);
         }
     }

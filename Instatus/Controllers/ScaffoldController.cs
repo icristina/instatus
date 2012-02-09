@@ -51,6 +51,9 @@ namespace Instatus.Controllers
 
             if (roles.Count > 0)
                 webView.Permissions = roles[0].AsEnum<WebRole>().ToPermissions();
+
+            if (typeof(IFriendlyIdentifier).IsAssignableFrom(typeof(TModel)))
+                webView.Columns = new string[] { "Slug" };
         }
 
         public virtual void AttachContext(TViewModel viewModel)

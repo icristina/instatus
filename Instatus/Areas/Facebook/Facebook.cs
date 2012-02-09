@@ -262,7 +262,7 @@ namespace Instatus.Areas.Facebook
         // Facebook C# SDK
         public static dynamic SignedRequest(string applicationSecret = null, string signedRequest = null)
         {
-            var signed = signedRequest ?? HttpContext.Current.Request.Params["signed_request"];
+            var signed = signedRequest ?? HttpContext.Current.Request.Unvalidated("signed_request");
 
             if (signed.IsEmpty())
                 return null;

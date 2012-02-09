@@ -68,6 +68,15 @@ namespace Instatus
             }
         }
 
+        public static void AppendContent<T>(this IContentProvider contentProvider, IContentSource content, string slug = null, string expand = null)
+        {
+            Page page = !slug.IsEmpty() ? contentProvider.GetPage(slug, expand: expand) : content as Page;
+            
+            if (page != null) {
+                content.Document = page.Document;
+            }     
+        }
+
         public static IEnumerable<SyndicationItem> AsSyndicationItems(this IEnumerable<Page> pages, string routeName = WebRoute.Post)
         {
             return pages.ToList().Select(s => s.ToSyndicationItem(routeName));

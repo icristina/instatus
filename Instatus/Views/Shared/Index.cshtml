@@ -1,4 +1,6 @@
 ﻿@model IWebView
+           
+@using Instatus.Data
 
 @{
     Layout = "~/Views/Shared/_Scaffold.cshtml";
@@ -33,12 +35,17 @@
     <table class="table table-striped">
         <colgroup>
             <col class="id" />
+            <col class="slug" />
             <col class="description" />
             <col class="actions" />
         </colgroup>
         <thead>
             <tr>
                 <th>@WebPhrase.Id</th>
+                @if (Model.Columns.Contains("Slug"))
+                {
+                    <th>@WebPhrase.Slug</th>
+                }
                 <th>@WebPhrase.Description</th>
                 <th>@WebPhrase.Actions</th>
             </tr>
@@ -51,6 +58,12 @@
                     <td>
                         @entry.GetKey()
                     </td>
+                    @if (Model.Columns.Contains("Slug"))
+                    {
+                        <td>
+                            @(((IFriendlyIdentifier)entry).Slug)                       
+                        </td>
+                    }
                     <td>
                         @Html.Partial("Entry", entry)
                     </td>

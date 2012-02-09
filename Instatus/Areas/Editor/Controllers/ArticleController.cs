@@ -17,25 +17,6 @@ using Instatus.Areas.Editor.Models;
 
 namespace Instatus.Areas.Editor.Controllers
 {
-    public class LinkViewModel : IHasValue
-    {        
-        public string Name { get; set; }
-
-        [DataType(DataType.Url)]
-        public string Uri { get; set; }
-
-        [DataType(DataType.ImageUrl)]
-        public string Picture { get; set; }
-
-        [ScaffoldColumn(false)]
-        public bool HasValue
-        {
-	        get {
-                return !Uri.IsEmpty() && !Name.IsEmpty();
-            }
-        }
-    }
-    
     public class ArticleViewModel : BaseViewModel<Article>
     {
         [Category("Overview")]

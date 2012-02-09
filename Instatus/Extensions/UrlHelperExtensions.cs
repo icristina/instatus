@@ -112,15 +112,21 @@ namespace Instatus.Web
             return this;
         }
 
-        public SiteMapNodeCollectionBuilder Action(string title, string actionName, string controllerName)
+        public SiteMapNodeCollectionBuilder Action(string title, string actionName, string controllerName, string area = null)
         {
-            siteMapNodes.Add(new SiteMapNode(siteMapProvider, controllerName, urlHelper.Action(actionName, controllerName), title));
+            siteMapNodes.Add(new SiteMapNode(siteMapProvider, controllerName, urlHelper.Action(actionName, controllerName, new { area = area }), title));
             return this;
         }
 
         public SiteMapNodeCollectionBuilder Route(string title, string routeName)
         {
             siteMapNodes.Add(new SiteMapNode(siteMapProvider, routeName, urlHelper.RouteUrl(routeName), title));
+            return this;
+        }
+
+        public SiteMapNodeCollectionBuilder Home(string title)
+        {
+            siteMapNodes.Add(new SiteMapNode(siteMapProvider, WebRoute.Home, WebPath.Home, title));
             return this;
         }
 

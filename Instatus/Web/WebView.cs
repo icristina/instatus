@@ -12,8 +12,8 @@ namespace Instatus.Web
 {
     public interface IContentSource
     {
-        WebDocument Document { get; }
-        IList<WebFeed> Feeds { get; }
+        WebDocument Document { get; set; }
+        IList<WebFeed> Feeds { get; set; }
     }
     
     public interface IWebView : IEnumerable, IViewModel
@@ -30,6 +30,7 @@ namespace Instatus.Web
         SiteMapNodeCollection Navigation { get; }
         dynamic CurrentRow { get; set; }
         WebDocument Document { get; }
+        string[] Columns { get; }
     }
 
     public class WebView<T> : PagedCollection<T>, IWebView, IContentSource, IExtensionPoint
@@ -50,6 +51,7 @@ namespace Instatus.Web
         public dynamic CurrentRow { get; set; }
         public WebStep Step { get; set; }
         public dynamic Extensions { get; set; }
+        public string[] Columns { get; set; }
 
         public bool Can(object action)
         {
@@ -86,6 +88,7 @@ namespace Instatus.Web
         {
             Extensions = new ExpandoObject();
             Feeds = new List<WebFeed>();
+            Columns = new string[] { };
         }
 
         public WebView(IEnumerable<T> list, WebQuery query)

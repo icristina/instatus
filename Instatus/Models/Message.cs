@@ -12,7 +12,7 @@ namespace Instatus.Models
     [KnownType(typeof(Comment))]
     [KnownType(typeof(Review))]
     [KnownType(typeof(Note))]
-    public class Message : IUserGeneratedContent, IExtensionPoint
+    public class Message : IUserGeneratedContent, IExtensionPoint, ISyndicatable
     {
         public int Id { get; set; }
         public string Body { get; set; }
@@ -45,6 +45,14 @@ namespace Instatus.Models
 
         [NotMapped]
         public Dictionary<WebVerb, WebInsight> Insights { get; private set; }
+
+        public virtual WebEntry ToWebEntry()
+        {
+            return new WebEntry()
+            {
+                Description = Body
+            };
+        }
 
         public Message()
         {

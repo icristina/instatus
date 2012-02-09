@@ -12,7 +12,7 @@
             }
             else
             {
-                <a href="@Url.Content(node.Url)">
+                <a href="@Url.Content(node.Url.OrDefault("/"))">
                     @node.Title
                 </a>
             }

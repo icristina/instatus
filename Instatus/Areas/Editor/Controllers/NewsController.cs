@@ -16,7 +16,7 @@ using Instatus.Areas.Editor.Models;
 
 namespace Instatus.Areas.Editor.Controllers
 {
-    public class NewsViewModel : BaseViewModel<News>
+    public class NewsViewModel : BaseViewModel<News, BaseDataContext>
     {
         [Category("Overview")]
         [Display(Order = 1)]
@@ -26,14 +26,19 @@ namespace Instatus.Areas.Editor.Controllers
         [Display(Order = 2)]
         public DocumentViewModel<News> Document { get; set; }
 
-        [Category("Publishing")]
+        [Category("Call To Action")]
         [Display(Order = 3)]
+        public CallToActionViewModel<News> CallToAction { get; set; }
+
+        [Category("Publishing")]
+        [Display(Order = 4)]
         public PublishingViewModel<News> Publishing { get; set; }
 
         public NewsViewModel()
         {
             Overview = new OverviewViewModel<News>();
             Document = new DocumentViewModel<News>();
+            CallToAction = new CallToActionViewModel<News>();
             Publishing = new PublishingViewModel<News>();
         }
     }

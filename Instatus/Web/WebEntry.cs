@@ -6,6 +6,11 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Instatus.Web
 {
+    public interface ISyndicatable
+    {
+        WebEntry ToWebEntry();
+    }
+    
     public class WebGeospatialEntry : WebEntry
     {
         public double Longitude { get; set; }

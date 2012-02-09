@@ -10,6 +10,12 @@ namespace Instatus.Web
         public string Title { get; set; }
         public IList<WebEntry> Entries { get; set; }
 
+        public WebFeed(string title)
+            : this()
+        {
+            Title = title;
+        }
+
         public WebFeed()
         {
             Entries = new List<WebEntry>();

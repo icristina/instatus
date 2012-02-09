@@ -125,6 +125,7 @@ namespace Instatus.Web
                             .AddNonEmptyValue("tag", Tag)
                             .AddNonEmptyValue("sort", Sort)
                             .AddNonEmptyValue("mode", Mode)
+                            .AddNonEmptyValue("command", Command)
                             .AddNonEmptyValue("contentType", ContentType)
                             .AddNonEmptyValue("pageIndex", PageIndex)
                             .AddNonEmptyValue("pageSize", PageSize)

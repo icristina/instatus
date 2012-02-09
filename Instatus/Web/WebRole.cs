@@ -29,6 +29,7 @@ namespace Instatus.Web
                 case WebRole.Author:
                     return new WebAction[] { WebAction.Index, WebAction.Details, WebAction.Edit, WebAction.Create };
                 case WebRole.Editor:
+                case WebRole.Moderator:
                 case WebRole.Administrator:
                 case WebRole.Developer:
                     return new WebAction[] { WebAction.Index, WebAction.Details, WebAction.Edit, WebAction.Create, WebAction.Delete };

@@ -26,7 +26,8 @@ namespace Instatus.Web
         Mp3,
         Json,
         Xml,
-        Csv
+        Csv,
+        Js
     }
 
     public static class WebMimeType
@@ -79,7 +80,8 @@ namespace Instatus.Web
             new Definition(WebContentType.Mp3, "audio/mpeg", "mp3", Category.Audio),
             new Definition(WebContentType.Json, "application/json", "json", Category.Data),
             new Definition(WebContentType.Xml, new string[] { "text/xml", "application/xml" }, "xml", Category.Data),
-            new Definition(WebContentType.Csv, new string[] { "text/csv" }, "csv", Category.Data)
+            new Definition(WebContentType.Csv, new string[] { "text/csv" }, "csv", Category.Data),
+            new Definition(WebContentType.Js, new string[] { "text/javascript" }, "js", Category.Data)
         };
 
         public static string ToMimeType(this WebContentType contentType)

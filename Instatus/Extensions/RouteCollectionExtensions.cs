@@ -196,6 +196,30 @@ namespace Instatus
                 .AddAreaDataTokens(areaName);
         }
 
+        public static Route MapSingleControllerRoute(this RouteCollection routes, string controllerName, string prefix = null, string areaName = null, string ns = null)
+        {
+            return routes
+                .RemoveRoute(controllerName)
+                .MapRouteLowercase(
+                    controllerName,
+                    (prefix ?? controllerName) + "/{action}/{slug}",
+                    new
+                    {
+                        controller = controllerName,
+                        action = "Index",
+                        slug = UrlParameter.Optional,
+                        area = areaName
+                    },
+                    new
+                    {
+                        controller = controllerName
+                    },
+                    new string[] {
+                        ns ?? GetDefaultNamespace()    
+                    })
+                .AddAreaDataTokens(areaName);
+        }
+
         public static Route MapSingleActionRoute(this RouteCollection routes, string controllerName, string actionName, string areaName = null, string routeName = null, string ns = null)
         {
             return routes.MapRouteLowercase(
