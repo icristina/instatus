@@ -17,7 +17,13 @@ menu
 
 table form 
 {
-    display: inline;
+    display: inline-block;
+}
+
+.btn-group form 
+{
+    float: left;
+    margin: 0;
 }
 
 table button 

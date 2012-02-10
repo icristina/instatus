@@ -6,20 +6,23 @@
     var commandButton = new { target = "_blank", @class = "btn" };    
 }
 
-@if (Model.Can(WebAction.Details))
-{
-    @Html.ActionLink(WebPhrase.Details, "Details", routeData, commandButton)
-}
-
-@if (Model.Can(WebAction.Edit))
-{
-    @Html.ActionLink(WebPhrase.Edit, "Edit", routeData, commandButton)
-}
-                    
-@if (Model.Can(WebAction.Delete))
-{
-    using (Html.BeginForm("Delete", ViewContext.RouteData.ControllerName(), routeData))
+<span class="btn-group">
+    @if (Model.Can(WebAction.Details))
     {
-        @Html.SubmitButton(WebPhrase.Delete, "btn")
+        @Html.ActionLink(WebPhrase.Details, "Details", routeData, commandButton)
     }
-}
+
+    @if (Model.Can(WebAction.Edit))
+    {
+        @Html.ActionLink(WebPhrase.Edit, "Edit", routeData, commandButton)
+    }
+                    
+    @if (Model.Can(WebAction.Delete))
+    {
+        using (Html.BeginForm("Delete", ViewContext.RouteData.ControllerName(), routeData))
+        {
+            <span></span>
+            @Html.SubmitButton(WebPhrase.Delete, "btn")
+        }
+    }
+</span>
