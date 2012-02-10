@@ -14,13 +14,9 @@ namespace Instatus.Areas.Auth.Controllers
     public class AccountController : BaseController
     {
         [HttpGet]
-        public ActionResult LogOn(string returnUrl)
+        public ActionResult LogOn(LogOnViewModel viewModel)
         {
-            ViewData.Model = new LogOnViewModel()
-            {
-                ReturnUrl = returnUrl
-            };
-            return View();
+            return View(viewModel);
         }
         
         [HttpPost]
