@@ -114,12 +114,21 @@ namespace Instatus
             return new MvcHtmlString(markup);
         }
 
-        public static MvcHtmlString PartialOrEmpty<T>(this HtmlHelper<T> html, string partialViewName, object model)
+        public static MvcHtmlString Partial<T>(this HtmlHelper<T> html, string partialViewName, object model, WebFormatting formatting)
+        {
+            var viewDataDictionary = new ViewDataDictionary(model);
+
+            viewDataDictionary.Add("formatting", formatting);
+            
+            return html.PartialOrEmpty(partialViewName, model, viewDataDictionary);
+        }
+
+        public static MvcHtmlString PartialOrEmpty<T>(this HtmlHelper<T> html, string partialViewName, object model, ViewDataDictionary viewDataDictionary = null)
         {
             if (model.IsEmpty())
                 return null;
             
-            return html.Partial(partialViewName, model);
+            return html.Partial(partialViewName, model, viewDataDictionary);
         }
 
         public static MvcHtmlString ExternalImageLink<T>(this HtmlHelper<T> html, string alternativeText, string contentPath, string uri)

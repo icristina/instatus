@@ -37,9 +37,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\EntityFramework.4.1.10331.0\lib\EntityFramework.dll</HintPath>
+    <Reference Include="EntityFramework, Version=4.3.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Users\andrew.booth\Documents\Visual Studio 2010\Projects\MvcApplication6\packages\EntityFramework.4.3.0\lib\net40\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
@@ -183,6 +183,7 @@
     <Compile Include="Web\WebBootstrap.cs" />
     <Compile Include="Web\WebCategory.cs" />
     <Compile Include="Web\WebFeed.cs" />
+    <Compile Include="Web\WebFormatting.cs" />
     <Compile Include="Web\WebMock.cs" />
     <Compile Include="Web\WebRoute.cs" />
     <Compile Include="Web\WebStep.cs" />
@@ -354,9 +355,6 @@
     <EmbeddedResource Include="Views\Shared\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Views\Shared\LogOn.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -458,6 +456,8 @@
     <EmbeddedResource Include="Areas\Developer\Views\Web.config" />
     <EmbeddedResource Include="Areas\Developer\Views\Dashboard\Index.cshtml" />
     <EmbeddedResource Include="Areas\Facebook\Views\Facebook\Index.cshtml" />
+    <None Include="App.config" />
+    <None Include="packages.config" />
     <None Include="README.md" />
     <EmbeddedResource Include="Views\Shared\Entry.cshtml" />
     <EmbeddedResource Include="Views\Shared\DisplayTemplates\LinkList.cshtml" />

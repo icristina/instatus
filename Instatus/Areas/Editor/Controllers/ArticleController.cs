@@ -17,27 +17,35 @@ using Instatus.Areas.Editor.Models;
 
 namespace Instatus.Areas.Editor.Controllers
 {
-    public class ArticleViewModel : BaseViewModel<Article>
+    public class ArticleViewModel : BaseViewModel<Article, BaseDataContext>
     {
         [Category("Overview")]
         [Display(Order = 1)]
         public OverviewViewModel<Article> Overview { get; set; }
 
+        [Category("Overview")]
+        [Column("Parent")]
+        [Display(Name = "Parent", Order = 2)]
+        public SelectList ParentList { get; set; }
+
+        [ScaffoldColumn(false)]
+        public int? Parent { get; set; }
+
         [Category("Body")]
-        [Display(Order = 2)]
+        [Display(Order = 3)]
         public DocumentViewModel<Article> Document { get; set; }
 
         [Category("Links")]
         [ScaffoldColumn(true)]
-        [Display(Order = 3)]
+        [Display(Order = 4)]
         public IEnumerable<LinkViewModel> Links { get; set; }
 
         [Category("Meta Tags")]
-        [Display(Order = 4)]
+        [Display(Order = 5)]
         public MetaTagsViewModel<Article> MetaTags { get; set; }
 
         [Category("Publishing")]
-        [Display(Order = 5)]
+        [Display(Order = 6)]
         public PublishingViewModel<Article> Publishing { get; set; }
 
         public override void Load(Article model)
@@ -52,6 +60,8 @@ namespace Instatus.Areas.Editor.Controllers
             })
             .ToList()
             .Pad(10);
+
+            model.Parents.OfType<Article>().ForFirst(p => Parent = p.Id);
         }
 
         public override void Save(Article model)
@@ -65,6 +75,18 @@ namespace Instatus.Areas.Editor.Controllers
                 Picture = l.Picture                
             })
             .ToList();
+
+            model.Parents.OfType<Article>().ForFirst(p => model.Parents.Remove(p));
+
+            if (Parent.HasValue)
+            {
+                model.Parents.Add(Context.Pages.Find(Parent));
+            }
+        }
+
+        public override void Databind()
+        {
+            ParentList = new SelectList(Context.Pages.OfType<Article>(), "Id", "Name", Parent);
         }
 
         public ArticleViewModel()

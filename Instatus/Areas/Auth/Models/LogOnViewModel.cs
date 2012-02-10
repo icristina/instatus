@@ -19,5 +19,12 @@ namespace Instatus.Areas.Auth.Models
 
         [HiddenInput(DisplayValue = false)]
         public string ReturnUrl { get; set; }
+
+        public LogOnViewModel() { }
+
+        public LogOnViewModel(string returnUrl)
+        {
+            ReturnUrl = returnUrl;
+        }
     }
 }

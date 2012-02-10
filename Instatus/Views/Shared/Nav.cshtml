@@ -1,21 +1,47 @@
 ﻿@model SiteMapNodeCollection
 
+@{
+    var formatting = ViewData["formatting"] as WebFormatting ?? new WebFormatting() { MaxLength = 10 };
+}
+
+@helper Node(SiteMapNode node) {
+    <li @Html.OptionalAttr("class", "active", node.IsAncestorOrSelf())>
+        @if (node.Url.IsAbsoluteUri())
+        {
+            <a href="@Url.Content(node.Url)" rel="external" target="_blank">
+                @node.Title
+            </a>
+        }
+        else
+        {
+            <a href="@Url.Content(node.Url.OrDefault("/"))">
+                @node.Title
+            </a>
+        }
+    </li>    
+}
+
 <ul class="nav">
-    @foreach (SiteMapNode node in Model)
+    @for(var i = 0; i < Model.Count; i++) 
     {
-        <li @Html.OptionalAttr("class", "active", node.IsAncestorOrSelf())>
-            @if (node.Url.IsAbsoluteUri())
-            {
-                <a href="@Url.Content(node.Url)" rel="external" target="_blank">
-                    @node.Title
+        if(i == formatting.MaxLength) {
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    @WebPhrase.MoreActions
+                    <b class="caret"></b>
                 </a>
-            }
-            else
-            {
-                <a href="@Url.Content(node.Url.OrDefault("/"))">
-                    @node.Title
-                </a>
-            }
-        </li>
+                <ul class="dropdown-menu">
+                    @Node(Model[i])
+                    @for(var j = formatting.MaxLength + 1; j < Model.Count; j++) {
+                        @Node(Model[j])
+                    }
+                </ul>
+            </li>   
+            break;
+        }
+        else
+        {
+            @Node(Model[i])
+        }
     }
 </ul>

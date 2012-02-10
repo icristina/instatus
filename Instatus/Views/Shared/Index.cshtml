@@ -19,7 +19,7 @@
                 <span class="icon-bar"></span>
             </a>
             <div class="nav-collapse">
-                @Html.Partial("Nav", Model.Navigation)
+                @Html.Partial("Nav", Model.Navigation, new WebFormatting() { MaxLength = 6 })
                 @Html.Partial("LoginStatus")
             </div>
         </div>
