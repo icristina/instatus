@@ -34,10 +34,8 @@ namespace Instatus.Services
         public string Save(string contentType, string slug, Stream stream)
         {
             var relativePath = GetRelativePath(contentType, slug);
-            var absolutePath = HostingEnvironment.MapPath(relativePath);
 
-            EnsureFolderExists(absolutePath);
-            Save(absolutePath, stream);
+            Save(relativePath, stream);
 
             return relativePath;
         }
