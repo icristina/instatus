@@ -86,6 +86,8 @@ namespace Instatus.Areas.Editor.Controllers
 
         public override void Databind()
         {
+            base.Databind();
+
             ParentList = new SelectList(Context.Pages.OfType<Article>(), "Id", "Name", Parent);
         }
 

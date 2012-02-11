@@ -49,6 +49,7 @@ namespace Instatus.Areas.Editor.Controllers
         public override void Load(Post model)
         {
             base.Load(model);
+
             Tags = model.Tags.IsEmpty() ? null : model.Tags.Select(t => t.Id).ToArray();
             model.Parents.OfType<Organization>().ForFirst(o => Organization = o.Id);
         }
@@ -56,7 +57,9 @@ namespace Instatus.Areas.Editor.Controllers
         public override void Save(Post model)
         {            
             base.Save(model);
+
             model.Tags = UpdateList<Tag, int>(Context.Tags, model.Tags, Tags);
+
             if (Organization.HasValue)
             {
                 model.Parents.OfType<Organization>().ForFirst(o => model.Parents.Remove(o));
@@ -65,7 +68,9 @@ namespace Instatus.Areas.Editor.Controllers
         }
 
         public override void Databind()
-        {            
+        {
+            base.Databind();
+            
             TagsList = new MultiSelectList(Context.Tags.ToList(), "Id", "Name", Tags);
             OrganizationList = new SelectList(Context.Pages.OfType<Organization>(), "Id", "Name", Organization);
         }
@@ -82,6 +87,9 @@ namespace Instatus.Areas.Editor.Controllers
     [Description("Posts")]
     public class PostController : ScaffoldController<PostViewModel, Post, BaseDataContext, int>
     {
-
+        public override IEnumerable<Post> Query(IEnumerable<Post> set, WebQuery query)
+        {
+            return set.ByRecency();
+        }
     }
 }

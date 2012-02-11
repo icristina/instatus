@@ -44,12 +44,14 @@ namespace Instatus.Areas.Editor.Controllers
         public override void Load(Organization model)
         {
             base.Load(model);
+
             model.Parents.OfType<Catalog>().ForFirst(c => Catalog = c.Id);
         }
 
         public override void Save(Organization model)
         {
             base.Save(model);
+
             model.Parents.OfType<Catalog>().ForFirst(c => model.Parents.Remove(c));
             model.Parents.Add(Context.Pages.Find(Catalog));
         }
@@ -57,6 +59,7 @@ namespace Instatus.Areas.Editor.Controllers
         public override void Databind()
         {
             base.Databind();
+
             CatalogList = new SelectList(Context.Pages.OfType<Catalog>(), "Id", "Name", Catalog);
         }
 

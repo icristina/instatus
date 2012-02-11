@@ -7,6 +7,7 @@ using System.ComponentModel;
 using Instatus.Web;
 using Instatus.Models;
 using Instatus.Data;
+using System.Web.Mvc;
 
 namespace Instatus.Areas.Editor.Models
 {
@@ -21,7 +22,20 @@ namespace Instatus.Areas.Editor.Models
         public int Priority { get; set; }
         
         public DateTime PublishedTime { get; set; }
+
+        [Column("Status")]
+        [Display(Name = "Status")]
+        [AdditionalMetadata("Required", true)]
+        public SelectList StatusList { get; set; }
+
+        [ScaffoldColumn(false)]
+        public string Status { get; set; }
         
-        public string Data { get; set; }   
+        public string Data { get; set; }
+
+        public override void Databind()
+        {
+            StatusList = WebUtility.CreateSelectList(new WebStatus[] { WebStatus.Published, WebStatus.Draft }, Status, new string[] { "Published", "Draft" });
+        }
     }
 }

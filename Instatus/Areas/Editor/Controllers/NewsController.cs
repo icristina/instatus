@@ -47,6 +47,9 @@ namespace Instatus.Areas.Editor.Controllers
     [Description("News")]
     public class NewsController : ScaffoldController<NewsViewModel, News, BaseDataContext, int>
     {
-
+        public override IEnumerable<News> Query(IEnumerable<News> set, WebQuery query)
+        {
+            return set.ByRecency();
+        }
     }
 }

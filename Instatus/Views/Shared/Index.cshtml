@@ -35,8 +35,12 @@
     <table class="table table-striped">
         <colgroup>
             <col class="id" />
-            <col class="slug" />
+            @if (Model.Columns.Contains("Slug"))
+            {
+                <col class="slug" />
+            }
             <col class="description" />
+            <col class="icon" />
             <col class="actions" />
         </colgroup>
         <thead>
@@ -47,25 +51,35 @@
                     <th>@WebPhrase.Slug</th>
                 }
                 <th>@WebPhrase.Description</th>
+                <th></th>
                 <th>@WebPhrase.Actions</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var entry in Model)
+            @foreach (dynamic entry in Model)
             {
                 Model.CurrentRow = entry;
                 <tr>
                     <td>
-                        @entry.GetKey()
+                        @((entry as object).GetKey())
                     </td>
                     @if (Model.Columns.Contains("Slug"))
                     {
                         <td>
-                            @(((IFriendlyIdentifier)entry).Slug)                       
+                            @entry.Slug                  
                         </td>
                     }
                     <td>
-                        @Html.Partial("Entry", entry)
+                        @Html.Partial("Entry", entry as object)
+                    </td>
+                    <td>
+                        @if (Model.Columns.Contains("Status"))
+                        {
+                            if ((entry.Status as String).AsEnum<WebStatus>() != WebStatus.Published)
+                            {
+                                <i class="icon-ban-circle" title="@entry.Status"></i>
+                            }   
+                        }
                     </td>
                     <td>
                         @Html.Partial("Actions", Model)
