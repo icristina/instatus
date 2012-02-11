@@ -39,7 +39,7 @@ namespace Instatus.Areas.Moderator.Controllers
     [Description("Notifications")]
     public class NotificationController : ScaffoldController<NotificationViewModel, Notification, BaseDataContext, int>
     {
-        public override IEnumerable<Notification> Query(IDbSet<Notification> set, WebQuery query)
+        public override IEnumerable<Notification> Query(IEnumerable<Notification> set, WebQuery query)
         {
             return set.Where(c => c.Page is Application || c.Page is Article)
                       .OrderBy(c => c.CreatedTime);

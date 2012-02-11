@@ -24,10 +24,7 @@ namespace Instatus.Areas.Facebook
     {
         static Facebook()
         {
-            PubSub.Provider.Subscribe<ApplicationReset>(a =>
-            {
-                credential = null;
-            });
+            WebApp.OnReset(() => credential = null);
         }
         
         private static Uri Route(object resource, object connection)

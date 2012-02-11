@@ -31,8 +31,23 @@ namespace Instatus.Areas.Editor.Controllers
     [Description("Files")]
     public class FileController : ScaffoldController<FileViewModel, WebLink, FileRepository, int>
     {
-        public override IEnumerable<WebLink> Query(IDbSet<WebLink> set, WebQuery query)
+        public override IEnumerable<WebLink> Query(IEnumerable<WebLink> set, WebQuery query)
         {
+            if (query.Mode == WebMode.Index)
+            {
+                if (query.Filter.IsEmpty())
+                    query.Filter = "A";
+                
+                if (query.Filter.Match(WebQuery.NonWordCharacter))
+                {
+                    set = set.Where(l => !Generator.UpperCaseLetters.Any(c => l.Title.ToUpper().StartsWith(c.ToString())));
+                }
+                else
+                {
+                    set = set.Where(l => l.Title.ToUpper().StartsWith(query.Filter));
+                }
+            }
+            
             return set.OrderBy(l => l.Uri);
         }
 
@@ -52,7 +67,7 @@ namespace Instatus.Areas.Editor.Controllers
             if (query.Command.Match("picker"))
             {
                 return new List<IWebCommand>() {
-                    new SelectCommand()
+                    new GenericCommand("select")
                 };
             }
 
@@ -62,7 +77,12 @@ namespace Instatus.Areas.Editor.Controllers
         public override void ConfigureWebView(WebView<WebLink> webView)
         {
             base.ConfigureWebView(webView);
+
             webView.Permissions = new WebAction[] { WebAction.Create };
+            webView.Mode = WebUtility.CreateSelectList(
+                new WebMode[] { WebMode.PagedList, WebMode.Index }, 
+                webView.Query.Mode,
+                new string[] { "List", "Alphabetical" });
         }
     }
 
@@ -93,14 +113,16 @@ namespace Instatus.Areas.Editor.Controllers
             var path = HostingEnvironment.MapPath(LocalStorageBlobService.BasePath);
             var files = Directory.GetFiles(path);
             var links = files
-                .Where(fileName => Rules.All(rule => rule.Evaluate(fileName)))
-                .Select(fileName =>
+                .FilterByRules(Rules)
+                .Select(file =>
                 {
-                    var uri = LocalStorageBlobService.BasePath + Path.GetFileName(fileName);
+                    var fileName = Path.GetFileName(file);
+                    var uri = LocalStorageBlobService.BasePath + fileName;
                     return new WebLink()
                     {
                         Uri = uri,
-                        Picture = WebMimeType.IsRelativePathPhoto(uri) ? uri : null
+                        Picture = WebMimeType.IsRelativePathPhoto(uri) ? uri : null,
+                        Title = fileName
                     };
                 })
                 .ToList();

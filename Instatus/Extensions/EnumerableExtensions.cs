@@ -10,6 +10,7 @@ using Instatus.Web;
 using Instatus.Models;
 using System.Collections;
 using System.Linq.Expressions;
+using Instatus.Data;
 
 namespace Instatus
 {
@@ -187,6 +188,22 @@ namespace Instatus
             return (T)Convert.ChangeType(value, type);
         }
 
+        public static IEnumerable<T> Prepend<T>(this ICollection<T> set, T addition)
+        {
+            var newList = new List<T>()
+            {
+                addition
+            }.Concat(set);
+
+            return newList;
+        }
+
+        public static ICollection<T> Append<T>(this ICollection<T> set, T addition)
+        {
+            set.Add(addition);
+            return set;
+        }
+
         public static ICollection<T> Append<T>(this ICollection<T> set, IEnumerable<T> additions) {
             foreach (var item in additions)
                 set.Add(item);
@@ -222,6 +239,11 @@ namespace Instatus
             return content.OrderBy(c => c.CreatedTime);
         }
 
+        public static IEnumerable<T> FilterByRules<T>(this IEnumerable<T> content, IEnumerable<IRule<T>> rules)
+        {
+            return content.Where(c => rules.All(rule => rule.Evaluate(c)));
+        }
+
         public static IOrderedEnumerable<T> AsOrdered<T>(this IEnumerable<T> set)
         {
             return set.OrderBy(a => true);
@@ -229,7 +251,7 @@ namespace Instatus
 
         public static IEnumerable<WebEntry> DistinctByUri(this IEnumerable<WebEntry> resources)
         {
-            return resources.Distinct(new WebEntryComparer());
+            return resources.Distinct(new ResourceComparer<WebEntry>());
         }
 
         public static List<string> ToStringList(this IEnumerable set)

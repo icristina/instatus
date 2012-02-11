@@ -288,6 +288,11 @@ namespace Instatus
             return result;
         }
 
+        public static string Append(this string original, string value, bool condition = true)
+        {
+            return condition ? original + value : original;
+        }
+
         public static StringBuilder AppendDelimitedValue(this StringBuilder stringBuilder, object value, string delimiter = " ", bool unique = false)
         {
             var stringValue = value.ToString();

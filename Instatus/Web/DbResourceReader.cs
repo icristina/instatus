@@ -64,10 +64,7 @@ namespace Instatus.Web
 
         public DbResourceProvider()
         {
-            PubSub.Provider.Subscribe<ApplicationReset>(a =>
-            {
-                resourceSet = null;
-            });
+            WebApp.OnReset(() => resourceSet = null);
         }
     }
 

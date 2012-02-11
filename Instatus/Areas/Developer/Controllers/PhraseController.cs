@@ -28,7 +28,7 @@ namespace Instatus.Areas.Developer.Controllers
     [Description("Localization")]
     public class PhraseController : ScaffoldController<PhraseViewModel, Phrase, BaseDataContext, int>
     {
-        public override IEnumerable<Phrase> Query(IDbSet<Phrase> set, WebQuery query)
+        public override IEnumerable<Phrase> Query(IEnumerable<Phrase> set, WebQuery query)
         {
             return set.OrderBy(o => o.Name);
         }
@@ -36,7 +36,7 @@ namespace Instatus.Areas.Developer.Controllers
         public override void SaveChanges()
         {
             base.SaveChanges();
-            PubSub.Provider.Publish<ApplicationReset>(new ApplicationReset());
+            WebApp.Reset();
         }
     }
 }

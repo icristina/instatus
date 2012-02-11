@@ -14,10 +14,7 @@ namespace Instatus.Web
     {
         static WebPath()
         {
-            PubSub.Provider.Subscribe<ApplicationReset>(a =>
-            {
-                baseUri = null;
-            });
+            WebApp.OnReset(() => baseUri = null);
         }                
         
         private static Uri baseUri;

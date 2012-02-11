@@ -51,7 +51,7 @@ namespace Instatus.Areas.Editor.Controllers
     [Description("Brands")]
     public class BrandController : ScaffoldController<BrandViewModel, Brand, BaseDataContext, int>
     {
-        public override IEnumerable<Brand> Query(IDbSet<Brand> set, WebQuery query)
+        public override IEnumerable<Brand> Query(IEnumerable<Brand> set, WebQuery query)
         {
             return set.ByAlphabetical();
         }

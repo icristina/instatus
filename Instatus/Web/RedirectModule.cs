@@ -51,7 +51,7 @@ namespace Instatus.Web
                     {
                         if (db != null)
                         {
-                            var environment = BaseHttpApplication.GetEnvironment().ToString();
+                            var environment = WebApp.Environment.ToString();
                             var all = WebEnvironment.All.ToString();
 
                             domains = db.Domains
@@ -72,7 +72,7 @@ namespace Instatus.Web
 
         public void Init(HttpApplication context)
         {
-            PubSub.Provider.Subscribe<ApplicationReset>(a =>
+            WebApp.OnReset(() =>
             {
                 links = null;
                 domains = null;

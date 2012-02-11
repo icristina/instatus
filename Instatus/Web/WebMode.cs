@@ -13,6 +13,7 @@ namespace Instatus.Web
         Day,
         Week,
         Month,
-        Year
+        Year,
+        Index // alphabetical
     }
 }

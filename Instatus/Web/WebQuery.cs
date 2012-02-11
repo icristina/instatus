@@ -9,6 +9,8 @@ namespace Instatus.Web
 {       
     public class WebQuery : WebSet, ICloneable
     {
+        public const string NonWordCharacter = "0";
+        
         // view or mode
         public WebSort Sort { get; set; }
         public WebMode Mode { get; set; }

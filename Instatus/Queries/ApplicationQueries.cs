@@ -13,7 +13,7 @@ namespace Instatus
     {
         public static Domain GetApplicationDomain(this IBaseDataContext context)
         {
-            var environment = BaseHttpApplication.GetEnvironment().ToString();
+            var environment = WebApp.Environment.ToString();
             var all = WebEnvironment.All.ToString();
 
             return context
@@ -28,7 +28,7 @@ namespace Instatus
         {
             var provider = webProvider.ToString();
 
-            var environment = BaseHttpApplication.GetEnvironment().ToString();
+            var environment = WebApp.Environment.ToString();
             var all = WebEnvironment.All.ToString();
 
             return context.Sources

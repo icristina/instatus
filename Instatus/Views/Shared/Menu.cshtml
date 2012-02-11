@@ -1,11 +1,11 @@
 ﻿@model IWebView
 
-@if (Model.TotalPageCount > 1)
-{
-    <div id="paging">
-        @Html.Paging(unorderedList: true)
-    </div>
-}
+<div id="actions">
+    @if (Model.Can(WebAction.Create))
+    {
+        @Html.ActionLink(WebPhrase.Create, "Create", null, new { target = "_blank", @class = "btn btn-primary" })
+    }
+</div>
 @if (Model.Query.IsDateView)
 {
     var startDate = Model.Query.StartDate.Value;    
@@ -19,12 +19,6 @@
         </a>    
     </div>
 }
-<div id="actions">
-    @if (Model.Can(WebAction.Create))
-    {
-        @Html.ActionLink(WebPhrase.Create, "Create", null, new { target = "_blank", @class = "btn btn-primary" })
-    }
-</div>
 @if (!Model.Filter.IsEmpty())
 {
     using (Html.BeginNamedForm("filter"))
@@ -33,11 +27,28 @@
         @Html.SubmitButton(WebPhrase.Filter)
     }
 }  
-@if (!Model.Mode.IsEmpty())
-{
-    using (Html.BeginNamedForm("mode"))
+<div class="btn-toolbar">
+    @if (Model.Query.Mode == WebMode.Index)
     {
-        @Html.DropDownList("mode", Model.Mode)
-        @Html.SubmitButton(WebPhrase.Mode)
+        <div class="btn-group">
+            @Html.ActionLink("0 - 9", "Index", new { Mode = WebMode.Index, Filter = WebQuery.NonWordCharacter, Command = Model.Query.Command }, new { @class = "btn".Append(" active", Model.Query.Filter.Match(WebQuery.NonWordCharacter)) })
+            @foreach (var letter in Instatus.Data.Generator.UpperCaseLetters)
+            {
+                @Html.ActionLink(letter.ToString(), "Index", new { Mode = WebMode.Index, Filter = letter, Command = Model.Query.Command }, new { @class = "btn".Append(" active", Model.Query.Filter.Match(letter)) })
+            }        
+        </div>
     }
-} 
+    @if (!Model.Mode.IsEmpty())
+    {
+        <div class="btn-group">
+            @foreach (var mode in Model.Mode)
+            {
+                @Html.ActionLink(mode.Text, "Index", new { Mode = mode.Value, Command = Model.Query.Command }, new { @class = "btn".Append(" active", mode.Selected) })
+            }
+        </div>
+    } 
+</div>
+@if (Model.TotalPageCount > 1)
+{
+    @Html.Paging(unorderedList: true)
+}

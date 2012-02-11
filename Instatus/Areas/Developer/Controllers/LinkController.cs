@@ -41,7 +41,7 @@ namespace Instatus.Areas.Developer.Controllers
     [Description("Redirects")]
     public class LinkController : ScaffoldController<LinkViewModel, Link, BaseDataContext, int>
     {
-        public override IEnumerable<Link> Query(IDbSet<Link> set, WebQuery query)
+        public override IEnumerable<Link> Query(IEnumerable<Link> set, WebQuery query)
         {
             return set.Redirects();
         }
@@ -49,7 +49,7 @@ namespace Instatus.Areas.Developer.Controllers
         public override void SaveChanges()
         {
             base.SaveChanges();
-            PubSub.Provider.Publish<ApplicationReset>(new ApplicationReset());
+            WebApp.Reset();
         }
     }
 }

@@ -45,7 +45,7 @@ namespace Instatus
 
         public static void RedirectToHome(this HttpResponseBase response)
         {
-            response.Redirect("/");
+            response.Redirect(WebPath.Home);
         }
     }
 }

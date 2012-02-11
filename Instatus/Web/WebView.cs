@@ -105,29 +105,6 @@ namespace Instatus.Web
             Query = query;
         }
 
-        private SelectList CreateSelectList<TSelectItem>(IEnumerable<TSelectItem> data, object selectedValue = null, IEnumerable<string> labels = null, string allLabel = "All", string prefix = "") {
-            var items = new List<WebParameter>();
-
-            if (!allLabel.IsEmpty())
-                items.Add(new WebParameter("all", allLabel));
-
-            for (var i = 0; i < data.Count(); i++)
-            {
-                items.Add(new WebParameter(prefix, data.ElementAt(i), labels.IsEmpty() ? data.ElementAt(i).ToString() : labels.ElementAt(i)));
-            }
-
-            return new SelectList(items, "Name", "Content", selectedValue);
-        }
-
-        public void WebStatusList(IEnumerable<WebStatus> statuses, IEnumerable<string> labels = null) {
-            Filter = CreateSelectList<WebStatus>(statuses, Query.Filter, labels, prefix: "status");
-        }
-
-        public void WebModeList(IEnumerable<WebMode> modes, IEnumerable<string> labels = null)
-        {
-            Mode = CreateSelectList<WebMode>(modes, Query.Filter, labels);
-        }
-
         public override string ToString()
         {
             if (!Name.IsEmpty())

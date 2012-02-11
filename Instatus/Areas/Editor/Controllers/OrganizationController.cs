@@ -73,7 +73,7 @@ namespace Instatus.Areas.Editor.Controllers
     [Description("Organizations")]
     public class OrganizationController : ScaffoldController<OrganizationViewModel, Organization, BaseDataContext, int>
     {
-        public override IEnumerable<Organization> Query(IDbSet<Organization> set, WebQuery query)
+        public override IEnumerable<Organization> Query(IEnumerable<Organization> set, WebQuery query)
         {
             return set.ByAlphabetical();
         }

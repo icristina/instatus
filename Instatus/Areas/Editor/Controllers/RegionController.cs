@@ -40,7 +40,7 @@ namespace Instatus.Areas.Editor.Controllers
     [Description("Regions")]
     public class RegionController : ScaffoldController<RegionViewModel, Region, BaseDataContext, int>
     {
-        public override IEnumerable<Region> Query(IDbSet<Region> set, WebQuery query)
+        public override IEnumerable<Region> Query(IEnumerable<Region> set, WebQuery query)
         {
             return set.ByAlphabetical();
         }

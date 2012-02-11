@@ -74,22 +74,4 @@ namespace Instatus.Services
             }
         }
     }
-
-    public static class PubSub
-    {
-        private static IMessageBus messageBus = new MessageBus();
-
-        public static IMessageBus Provider
-        {
-            get
-            {
-                return messageBus;
-            }
-        }
-    }
-
-    public class ApplicationReset
-    {
-
-    }
 }

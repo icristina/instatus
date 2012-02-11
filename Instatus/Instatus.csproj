@@ -122,7 +122,7 @@
     <Compile Include="Areas\YouTube\YouTube.cs" />
     <Compile Include="Commands\BanCommand.cs" />
     <Compile Include="Commands\AwardCommand.cs" />
-    <Compile Include="Commands\SelectCommand.cs" />
+    <Compile Include="Commands\GenericCommand.cs" />
     <Compile Include="Commands\StatusCommand.cs" />
     <Compile Include="Commands\SpamCommand.cs" />
     <Compile Include="Data\IContentProvider.cs" />
@@ -174,11 +174,11 @@
     <Compile Include="Services\BaseWcfService.cs" />
     <Compile Include="Services\MarkupTemplateService.cs" />
     <Compile Include="Services\IZipService.cs" />
-    <Compile Include="Services\PubSub.cs" />
+    <Compile Include="Services\MessageBus.cs" />
     <Compile Include="Services\SimpleTemplateService.cs" />
-    <Compile Include="Web\BaseHttpApplication.cs" />
     <Compile Include="Web\FatalErrorResult.cs" />
     <Compile Include="Web\IVirtualPathRewriter.cs" />
+    <Compile Include="Web\WebApp.cs" />
     <Compile Include="Web\WebAppSetting.cs" />
     <Compile Include="Web\WebBootstrap.cs" />
     <Compile Include="Web\WebCategory.cs" />
@@ -197,7 +197,6 @@
     <Compile Include="Data\Record.cs" />
     <Compile Include="Extensions\ByteExtensions.cs" />
     <Compile Include="Extensions\DependencyResolverExtensions.cs" />
-    <Compile Include="Extensions\HttpApplicationExtensions.cs" />
     <Compile Include="Extensions\MailMessageExtensions.cs" />
     <Compile Include="Extensions\PrincipalExtensions.cs" />
     <Compile Include="Extensions\TaskExtensions.cs" />
@@ -296,12 +295,12 @@
     <Compile Include="Web\WebSet.cs" />
     <Compile Include="Web\WebStream.cs" />
     <Compile Include="Web\DbSitemapProvider.cs" />
-    <Compile Include="Web\BaseViewPage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Data\BaseDataContext.cs" />
     <Compile Include="Web\WebEnvironment.cs" />
     <Compile Include="Web\WebListType.cs" />
     <Compile Include="Web\WebParameter.cs" />
+    <Compile Include="Web\WebUtility.cs" />
     <Compile Include="Web\WebVariable.cs" />
     <Compile Include="Web\WebPermission.cs" />
     <Compile Include="Web\WebProvider.cs" />

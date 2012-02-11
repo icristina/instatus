@@ -40,16 +40,17 @@ namespace Instatus.Web
     public interface IResource
     {
         string Uri { get; }
+        string Title { get; }
     }
 
-    public class WebEntryComparer : IEqualityComparer<WebEntry>
+    public class ResourceComparer<TResource> : IEqualityComparer<TResource> where TResource : IResource
     {
-        public bool Equals(WebEntry x, WebEntry y)
+        public bool Equals(TResource x, TResource y)
         {
             return x.Uri.Match(y.Uri);
         }
 
-        public int GetHashCode(WebEntry obj)
+        public int GetHashCode(TResource obj)
         {
             return obj.Uri.GetHashCode();
         }

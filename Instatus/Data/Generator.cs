@@ -40,9 +40,9 @@ namespace Instatus.Data
             "Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"
         };
         public static string[] UnitedKingdomCities = new string[] { "London", "Birmingham", "Glasgow", "Liverpool", "Manchester", "Leeds", "Sheffield", "Edinburgh", "Bristol", "Cardiff", "Leicester", "Coventry", "Hull", "Bradford", "Belfast", "Newcastle", "Stoke", "Wolverhampton", "Nottingham", "Plymouth" };
-        
-        public static List<char> LowerCaseLetters = Enumerable.Range(Convert.ToInt32('a'), Convert.ToInt32('z')).Select(c => Convert.ToChar(c)).ToList();
-        public static List<char> UpperCaseLetters = Enumerable.Range(Convert.ToInt32('A'), Convert.ToInt32('Z')).Select(c => Convert.ToChar(c)).ToList();
+
+        public static List<char> LowerCaseLetters = Enumerable.Range('a', 'z' - 'a' + 1).Select(c => (Char)c).ToList();
+        public static List<char> UpperCaseLetters = Enumerable.Range('A', 'Z' - 'A' + 1).Select(c => (Char)c).ToList();
 
         public static double Price()
         {

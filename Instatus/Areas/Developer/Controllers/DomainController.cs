@@ -43,7 +43,7 @@ namespace Instatus.Areas.Developer.Controllers
         public override void SaveChanges()
         {
             base.SaveChanges();
-            PubSub.Provider.Publish<ApplicationReset>(new ApplicationReset());
+            WebApp.Reset();
         }
     }
 }

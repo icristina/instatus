@@ -102,7 +102,7 @@ namespace Instatus.Areas.Editor.Controllers
     [Description("Articles")]
     public class ArticleController : ScaffoldController<ArticleViewModel, Article, BaseDataContext, int>
     {
-        public override IEnumerable<Article> Query(IDbSet<Article> set, WebQuery query)
+        public override IEnumerable<Article> Query(IEnumerable<Article> set, WebQuery query)
         {
             return set.ByAlphabetical();
         }

@@ -94,7 +94,7 @@ namespace Instatus.Areas.Developer.Controllers
 
         public ActionResult ApplicationReset()
         {
-            PubSub.Provider.Publish(new ApplicationReset());
+            WebApp.Reset();
 
             SetResult("Application Reset");
             

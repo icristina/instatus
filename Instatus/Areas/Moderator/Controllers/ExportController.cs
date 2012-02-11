@@ -24,16 +24,12 @@ namespace Instatus.Areas.Moderator.Controllers
         [ImportMany]
         private IEnumerable<IDataExport> exports;
 
-        public override IEnumerable<WebEntry> Query(IDbSet<WebEntry> set, WebQuery query)
+        public override IEnumerable<WebEntry> Query(IEnumerable<WebEntry> set, WebQuery query)
         {
-            if (set.Count() == 0)
+            return exports.Select(e => new WebEntry()
             {
-                set.Append(exports.Select(e => new WebEntry() {
-                    Title = e.Name
-                }));
-            }
-            
-            return set;
+                Title = e.Name
+            });
         }
 
         public override void ConfigureWebView(WebView<WebEntry> webView)
@@ -86,7 +82,6 @@ namespace Instatus.Areas.Moderator.Controllers
             return true;
         }
     }
-
 
     public class WebEntryRepository : IRepository<WebEntry>{
         public IDbSet<WebEntry> Items

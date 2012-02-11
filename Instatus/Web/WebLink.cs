@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations;
 namespace Instatus.Web
 {
     [KnownType(typeof(WebMedia))]
-    public class WebLink
+    public class WebLink : IResource
     {
         [Key]
         public string Uri { get; set; }

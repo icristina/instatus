@@ -54,7 +54,7 @@ namespace Instatus.Areas.Developer.Controllers
     [Description("Credentials")]
     public class CredentialController : ScaffoldController<CredentialViewModel, Credential, BaseDataContext, int>
     {
-        public override IEnumerable<Credential> Query(IDbSet<Credential> set, WebQuery query)
+        public override IEnumerable<Credential> Query(IEnumerable<Credential> set, WebQuery query)
         {
             return set.Where(c => c.Application != null)
                       .OrderBy(c => c.CreatedTime);
@@ -63,7 +63,7 @@ namespace Instatus.Areas.Developer.Controllers
         public override void SaveChanges()
         {
             base.SaveChanges();
-            PubSub.Provider.Publish<ApplicationReset>(new ApplicationReset());
+            WebApp.Reset();
         }
     }
 }
