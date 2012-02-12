@@ -16,5 +16,13 @@ namespace Instatus.Models
         {
             return string.Format("{0} {1}", GivenName, FamilyName);
         }
+
+        public Name() { }
+
+        public Name(string givenName, string familyName)
+        {
+            GivenName = givenName;
+            FamilyName = familyName;
+        }
     }
 }

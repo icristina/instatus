@@ -1,8 +1,12 @@
 ﻿@if (Model == null) {
-    @ViewData.ModelMetadata.NullDisplayText
+    <div class="null">
+        @ViewData.ModelMetadata.NullDisplayText    
+    </div>
 }
 else if (ViewData.TemplateInfo.TemplateDepth > 1) {
-    @ViewData.ModelMetadata.SimpleDisplayText
+    <div class="link">
+        @ViewData.ModelMetadata.SimpleDisplayText    
+    </div>
 }
 else 
 {

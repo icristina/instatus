@@ -48,6 +48,12 @@ form span.controls
     margin-bottom: 18px;
 }
 
+.checkbox-list 
+{
+    max-height: 115px;
+    overflow-y: scroll;
+}
+
 @media (min-width: 480px)  
 {   
     textarea, textarea.input-xlarge

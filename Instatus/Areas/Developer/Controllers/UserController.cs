@@ -21,12 +21,11 @@ namespace Instatus.Areas.Developer.Controllers
         [Required]
         public string FullName { get; set; }        
         
-        [DisplayName("Email Address (Username)")]
+        [DisplayName("Email Address")]
         [Required]
         public string EmailAddress { get; set; }        
         
         [DisplayName("Password")]
-        [Required]
         public string UnencryptedPassword { get; set; }
 
         [Column("Roles")]
@@ -58,12 +57,9 @@ namespace Instatus.Areas.Developer.Controllers
     }
     
     [Authorize(Roles = "Administrator")]
+    [Description("Users")]
     public class UserController : ScaffoldController<UserViewModel, User, BaseDataContext, int>
     {
-        public override void ConfigureWebView(WebView<User> webView)
-        {
-            webView.Permissions = WebRole.Administrator.ToPermissions();
-            base.ConfigureWebView(webView);
-        }
+
     }
 }

@@ -49,7 +49,8 @@
                             .Where(prop => !prop.IsComplexType
                                 || prop.AdditionalValues["IsScaffoldColumn"].AsBoolean()
                                 || prop.AdditionalValues["IsComplexTypeEntity"].AsBoolean()
-                                || (prop.Model is SelectList && !((SelectList)prop.Model).Items.IsEmpty()));
+                                || (prop.Model is SelectList && !((SelectList)prop.Model).Items.IsEmpty())
+                                || (prop.Model is MultiSelectList && !((MultiSelectList)prop.Model).Items.IsEmpty()));
 
         var groupedProperties = properties.GroupBy(p => p.AdditionalValues["Category"].AsString());   
     }        

@@ -15,7 +15,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using Instatus.Areas.Editor.Models;
 
-namespace Instatus.Areas.Editor.Controllers
+namespace Instatus.Areas.Developer.Controllers
 {
     public class RegionViewModel : BaseViewModel<Region, BaseDataContext>
     {

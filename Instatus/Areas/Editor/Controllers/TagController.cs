@@ -14,10 +14,22 @@ using System.ComponentModel;
 
 namespace Instatus.Areas.Editor.Controllers
 {
-    public class TagViewModel : BaseViewModel<Tag>
+    public class TagViewModel : BaseViewModel<Tag, BaseDataContext>
     {
         [Required]
         public string Name { get; set; }
+
+        [Column("TaxonomyId")]
+        [Display(Name = "Taxonomy")]
+        public SelectList TaxonomyList { get; set; }
+
+        [ScaffoldColumn(false)]
+        public int? TaxonomyId { get; set; }
+
+        public override void Databind()
+        {
+            TaxonomyList = new SelectList(Context.Taxonomies.ToList(), "Id", "Name", TaxonomyId);
+        }
     }
     
     [Authorize(Roles = "Editor")]

@@ -69,7 +69,14 @@ namespace Instatus.Models
 
         public override string ToString()
         {
-            return string.Format("{0} at {1}", Verb, CreatedTime);
+            if (Page != null && User != null)
+            {
+                return string.Format("{0} {1} {2}, {3}", User.ToString(), Verb.AsEnum<WebVerb>().ToDescriptiveString(), Page.Name, CreatedTime.ToRelativeString());
+            }
+            else
+            {
+                return string.Format("{0} at {1}", Verb, CreatedTime);
+            }
         }
     }
 }

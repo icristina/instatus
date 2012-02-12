@@ -102,7 +102,7 @@ namespace Instatus.Models
 
         public override string ToString()
         {
-            return FullName;
+            return FullName ?? Name.ToString();
         }
 
         public User()
