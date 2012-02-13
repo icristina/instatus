@@ -41,7 +41,7 @@ namespace Instatus.Areas.Auth.Controllers
 
         public ActionResult Verification(int id, string token)
         {
-            using (var db = BaseDataContext.BaseInstance())
+            using (var db = WebApp.GetService<IBaseDataContext>())
             {
                 var user = db.Users.Find(id);
 

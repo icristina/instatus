@@ -184,11 +184,11 @@ namespace Instatus.Models
             return new SyndicationItem(Name, Description, new Uri(uri), Slug, PublishedTime);
         }
 
-        public RestrictionResultCollection ValidateRestrictions(BaseDataContext context = null, User user = null, Activity trigger = null, bool saveChanges = true)
+        public RestrictionResultCollection ValidateRestrictions(IBaseDataContext context = null, User user = null, Activity trigger = null, bool saveChanges = true)
         {
             var restrictionContext = new RestrictionContext()
             {
-                DataContext = context ?? BaseDataContext.Instance(),
+                DataContext = context ?? WebApp.GetService<IBaseDataContext>(),
                 Page = this,
                 Trigger = trigger
             };
@@ -272,7 +272,7 @@ namespace Instatus
 {
     public static class PageExtensions
     {
-        public static Page ProcessIncludes(this Page page, BaseDataContext dataContext = null, RouteData routeData = null)
+        public static Page ProcessIncludes(this Page page, IBaseDataContext dataContext = null, RouteData routeData = null)
         {
             if (page == null)
                 return null;
@@ -291,14 +291,19 @@ namespace Instatus
             // include WebParts that are unscoped or scope matches routeData parameter
             page.Document.Parts.AddRange(WebPart.Catalog.Where(p => p.Scope.IsEmpty() || scope.Contains(p.Scope)));
 
+            var newInstance = false;
+
             if (dataContext == null)
-                dataContext = BaseDataContext.Instance();
+            {
+                dataContext = WebApp.GetService<IBaseDataContext>();
+                newInstance = true;
+            }
 
             foreach (var include in page.Document.Parts.OfType<WebInclude>().ToList())
             {
                 page.Document.Parts.Remove(include);
                 
-                var childPage = dataContext.GetPage<Page>(include.Uri);
+                var childPage = dataContext.Pages.FirstOrDefault(p => p.Slug == include.Uri);
 
                 if (childPage.Document == null)
                     break;
@@ -313,6 +318,11 @@ namespace Instatus
 
                 if (childPage.Document.Parts != null)
                     page.Document.Parts.Append(childPage.Document.Parts);
+            }
+
+            if (newInstance)
+            {
+                dataContext.Dispose();
             }
 
             return page;

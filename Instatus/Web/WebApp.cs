@@ -7,11 +7,24 @@ using Instatus.Web;
 using System.Diagnostics;
 using System.Configuration;
 using Instatus.Services;
+using System.Web.Mvc;
 
 namespace Instatus.Web
 {
     public static class WebApp
     {
+        public static T GetService<T>()
+        {
+            T service = DependencyResolver.Current.GetService<T>();
+
+            if (service == null && !typeof(T).IsInterface)
+            {
+                service = Activator.CreateInstance<T>();
+            }            
+            
+            return service;
+        }
+        
         public static HttpApplication Instance {
             get 
             {

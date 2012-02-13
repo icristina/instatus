@@ -23,7 +23,7 @@ namespace Instatus.Web
         {
             var entries = new Dictionary<object, object>();
                 
-            using (var db = BaseDataContext.Instance())
+            using (var db = WebApp.GetService<IBaseDataContext>())
             {
                 foreach (var phrase in db.Phrases.ToList())
                     entries.AddNonEmptyValue(phrase.Name, phrase.Value);

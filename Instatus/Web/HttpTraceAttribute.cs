@@ -14,7 +14,7 @@ namespace Instatus.Web
     {
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            using (var db = BaseDataContext.Instance())
+            using (var db = WebApp.GetService<IBaseDataContext>())
             {
                 var message = new StringBuilder();
                 var request = filterContext.HttpContext.Request;

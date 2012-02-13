@@ -8,6 +8,7 @@ using Instatus.Web;
 using Instatus.Models;
 using System.Web.Routing;
 using System.Collections.Specialized;
+using System.Data.Entity;
 
 namespace Instatus.Commands
 {
@@ -57,15 +58,20 @@ namespace Instatus.Commands
             var id = routeData.Id();
             var status = requestParams.Value<WebStatus>("commandValue");
             
-            using (var db = BaseDataContext.Instance())
+            using (var db = WebApp.GetService<IBaseDataContext>())
             {
-                var entity = db.Set<T>().Find(id);
-                var originalValue = entity.Status;
+                if (db is DbContext)
+                {
+                    var context = (DbContext)db;
 
-                entity.Status = status.ToString();
+                    var entity = context.Set<T>().Find(id);
+                    var originalValue = entity.Status;
 
-                db.LogChange(entity, "Status", originalValue, status);
-                db.SaveChanges();
+                    entity.Status = status.ToString();
+
+                    db.LogChange(entity, "Status", originalValue, status);
+                    db.SaveChanges();
+                }
             }
 
             return true;

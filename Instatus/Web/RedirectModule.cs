@@ -22,7 +22,7 @@ namespace Instatus.Web
             get
             {
                 if(links == null) {
-                    using (var db = BaseDataContext.BaseInstance())
+                    using (var db = WebApp.GetService<IBaseDataContext>())
                     {
                         if (db != null)
                         {
@@ -47,7 +47,7 @@ namespace Instatus.Web
             {
                 if (domains == null)
                 {
-                    using (var db = BaseDataContext.BaseInstance())
+                    using (var db = WebApp.GetService<IBaseDataContext>())
                     {
                         if (db != null)
                         {

@@ -27,7 +27,7 @@ namespace Instatus.Web
             {
                 if (baseUri.IsEmpty())
                 {
-                    using (var db = BaseDataContext.Instance())
+                    using (var db = WebApp.GetService<IBaseDataContext>())
                     {
                         if (db == null && HttpContext.Current.Request != null)
                         {

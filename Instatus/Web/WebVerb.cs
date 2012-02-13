@@ -8,19 +8,23 @@ namespace Instatus.Web
 {
     public enum WebVerb
     {
-        // reading        
+        // general
         [Description("viewed")] 
-        View,
+        View,    
+        [Description("is interested in")]
+        News,    
+
+        // reading        
+        [Description("read")]
+        Read,
         [Description("saved")] 
         Save,
         
         // collaboration
         [Description("updated")]
         Change,
-
-        // social general
-        [Description("is interested in")]
-        News,
+        [Description("deleted")]
+        Delete,
 
         // social action
         [Description("posted")]
@@ -57,7 +61,7 @@ namespace Instatus.Web
         // gaming
         [Description("awarded")]
         Award,
-        [Description("achieved")]
+        [Description("achieved a highscore")]
         Highscore,
 
         // system

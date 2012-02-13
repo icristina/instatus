@@ -130,6 +130,7 @@
     <Compile Include="Data\IContentProvider.cs" />
     <Compile Include="Data\IBaseDataContext.cs" />
     <Compile Include="Data\IDataExport.cs" />
+    <Compile Include="Data\IDataImport.cs" />
     <Compile Include="Data\IHasValue.cs" />
     <Compile Include="Data\InMemoryBaseDataContext.cs" />
     <Compile Include="Data\IObjectMapping.cs" />
@@ -178,6 +179,7 @@
     <Compile Include="Services\IZipService.cs" />
     <Compile Include="Services\MessageBus.cs" />
     <Compile Include="Services\SimpleTemplateService.cs" />
+    <Compile Include="Web\EmptyResultOnExceptionAttribute.cs" />
     <Compile Include="Web\FatalErrorResult.cs" />
     <Compile Include="Web\IVirtualPathRewriter.cs" />
     <Compile Include="Web\WebApp.cs" />

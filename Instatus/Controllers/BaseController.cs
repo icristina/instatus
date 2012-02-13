@@ -28,12 +28,7 @@ namespace Instatus.Controllers
 
         public BaseController()
         {
-            Context = DependencyResolver.Current.GetService<TContext>();
-            
-            if (Context == null && !typeof(TContext).IsInterface)
-            {
-                Context = Activator.CreateInstance<TContext>();
-            }
+            Context = WebApp.GetService<TContext>();
         }
     }
     
@@ -102,10 +97,14 @@ namespace Instatus.Controllers
         [NonAction]
         public ActionResult Page(string slug = null)
         {
-            using (var db = BaseDataContext.Instance())
+            using (var db = WebApp.GetService<IContentProvider>())
             {
-                var page = db.GetPage(slug ?? RouteData.ActionName())
-                                    .ProcessIncludes(db);
+                var page = db.GetPage(slug ?? RouteData.ActionName());
+
+                using (var ctx = WebApp.GetService<IBaseDataContext>())
+                {
+                    page.ProcessIncludes(ctx);
+                }
 
                 TempData["page"] = page;
                 ViewData.Model = page;

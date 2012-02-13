@@ -10,7 +10,7 @@ using Instatus.Web;
 
 namespace Instatus.Areas.Typekit.Controllers
 {
-    public class TypekitController : BaseController<BaseDataContext>
+    public class TypekitController : BaseController<IBaseDataContext>
     {
         public ActionResult RegisterScripts()
         {

@@ -159,7 +159,7 @@ namespace Instatus.Web
             if (username.IsEmpty() || password.IsEmpty())
                 return false;
             
-            using (var db = BaseDataContext.Instance())
+            using (var db = WebApp.GetService<IBaseDataContext>())
             {
                 var user = db.GetUser(username);                
                 return user != null && user.Password == password.ToEncrypted();

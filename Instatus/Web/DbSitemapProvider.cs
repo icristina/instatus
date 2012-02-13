@@ -21,7 +21,7 @@ namespace Instatus.Web
 
         public override SiteMapNodeCollection GetChildNodes(SiteMapNode node)
         {
-            using (var db = BaseDataContext.Instance())
+            using (var db = WebApp.GetService<IContentProvider>())
             {
                 var set = new WebSet()
                 {
@@ -47,7 +47,7 @@ namespace Instatus.Web
 
         protected override SiteMapNode GetRootNodeCore()
         {
-            using (var db = BaseDataContext.Instance())
+            using (var db = WebApp.GetService<IBaseDataContext>())
             {
                 return db.Pages.OfType<Application>().First().ToSiteMapNode(this);
             }

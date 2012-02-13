@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Collections;
 using System.ComponentModel.Composition;
+using Instatus.Web;
 
 namespace Instatus.Data
 {
@@ -20,7 +21,7 @@ namespace Instatus.Data
         {
             get
             {
-                using (var db = BaseDataContext.BaseInstance())
+                using (var db = WebApp.GetService<IBaseDataContext>())
                 {
                     return db.Users
                             .Where(u => u.Subscriptions.Any())

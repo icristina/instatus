@@ -12,6 +12,7 @@ using System.ComponentModel.Composition;
 using System.Net;
 using System.Runtime.Serialization.Json;
 using System.ServiceModel.Web;
+using Instatus.Web;
 
 namespace Instatus.Services
 {
@@ -44,7 +45,7 @@ namespace Instatus.Services
 
         public virtual bool HandleError(Exception error)
         {
-            using (var db = BaseDataContext.Instance())
+            using (var db = WebApp.GetService<IBaseDataContext>())
             {
                 db.LogError(error);
                 db.SaveChanges();

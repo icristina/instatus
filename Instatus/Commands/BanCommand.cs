@@ -50,7 +50,7 @@ namespace Instatus.Commands
             var userId = user != null ? user.Id : routeData.Id();
             var status = requestParams.Value<WebStatus>("commandValue");
             
-            using (var db = BaseDataContext.Instance())
+            using (var db = WebApp.GetService<IBaseDataContext>())
             {
                 db.Users.Find(userId).Status = status.ToString();
                 db.SaveChanges();

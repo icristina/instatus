@@ -26,11 +26,11 @@ namespace Instatus.Commands
 
         public WebLink GetLink(dynamic viewModel, UrlHelper urlHelper)
         {
-            User user = User.From(viewModel); 
+            User user = User.From(viewModel);
 
-            using (var db = BaseDataContext.Instance())
+            using (var db = WebApp.GetService<IBaseDataContext>())
             {
-                var achievement = db.GetPage<Achievement>(achievementSlug);
+                var achievement = db.Pages.OfType<Achievement>().First(a => a.Slug == achievementSlug);
                 
                 if (!db.Activities.OfType<Award>().Any(a => a.UserId == user.Id && a.AchievementId == achievement.Id))
                 {
@@ -56,13 +56,13 @@ namespace Instatus.Commands
             User userModel = User.From(viewModel);
             var userId = userModel != null ? userModel.Id : routeData.Id();
             var awarded = requestParams.Value<bool>("commandValue");
-            
-            using (var db = BaseDataContext.Instance())
+
+            using (var db = WebApp.GetService<IBaseDataContext>())
             {
                 var user = db.Users.Find(userId);
                 
                 if(awarded) {
-                    var achievement = db.GetPage<Achievement>(achievementSlug);
+                    var achievement = db.Pages.OfType<Achievement>().First(a => a.Slug == achievementSlug);
 
                     if (user.Activities == null)
                         user.Activities = new List<Activity>();
@@ -106,7 +106,7 @@ namespace Instatus.Commands
                         award.Parents.Remove(activity);
                     }
 
-                    db.MarkDeleted(award);
+                    db.Activities.Remove(award);
                 }
                 
                 db.SaveChanges();

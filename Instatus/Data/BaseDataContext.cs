@@ -22,16 +22,6 @@ namespace Instatus.Data
 {
     public class BaseDataContext : DbContext, IBaseDataContext, IContentProvider
     {
-        public static BaseDataContext Instance()
-        {
-            return DependencyResolver.Current.GetService<BaseDataContext>();
-        }
-
-        public static IBaseDataContext BaseInstance()
-        {
-            return DependencyResolver.Current.GetService<IBaseDataContext>();
-        }
-
         public IDbSet<Page> Pages { get; set; }
         public IDbSet<User> Users { get; set; }
         public IDbSet<Role> Roles { get; set; }

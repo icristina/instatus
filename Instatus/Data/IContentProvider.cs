@@ -8,7 +8,7 @@ using Instatus.Web;
 
 namespace Instatus.Data
 {
-    public interface IContentProvider
+    public interface IContentProvider : IDisposable
     {
         IEnumerable<Page> GetPages(WebQuery query);
         Page GetPage(string slug, WebSet set = null);

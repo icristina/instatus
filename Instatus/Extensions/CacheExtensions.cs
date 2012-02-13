@@ -23,5 +23,16 @@ namespace Instatus
 
             return cachedValue;
         }
+
+        // http://stackoverflow.com/questions/2109928/how-to-turn-output-caching-off-for-authenticated-users-in-asp-net-mvc
+        public static void IgnoreThisRequest(this HttpCachePolicyBase cache)
+        {
+            cache.AddValidationCallback(IgnoreThisRequestCallback, null);
+        }
+
+        private static void IgnoreThisRequestCallback(HttpContext context, object data, ref HttpValidationStatus validationStatus)
+        {
+            validationStatus = HttpValidationStatus.IgnoreThisRequest;
+        }
     }
 }
