@@ -48,9 +48,9 @@ namespace Instatus.Web
             }
         }
 
-        public static bool IsEnabled(string name, bool ensureDebug = false)
+        public static bool IsEnabled(string name, bool defaultValue = true) // defaults to enabled
         {
-            return (ensureDebug && IsDebug) && Setting<bool>(name);
+            return ConfigurationManager.AppSettings[name].AsBoolean(defaultValue);
         }
 
         private static IMessageBus messageBus = new MessageBus();

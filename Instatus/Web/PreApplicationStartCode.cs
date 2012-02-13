@@ -19,7 +19,7 @@ namespace Instatus.Web
         
         public static void Start()
         {
-            if (started || !ConfigurationManager.AppSettings[WebAppSetting.Bootstrap].AsBoolean(true))
+            if (started || !WebApp.IsEnabled(WebAppSetting.Bootstrap))
             {
                 return;
             }

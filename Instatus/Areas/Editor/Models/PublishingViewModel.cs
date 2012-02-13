@@ -20,7 +20,8 @@ namespace Instatus.Areas.Editor.Models
         public string Slug { get; set; }      
        
         public int Priority { get; set; }
-        
+
+        [DisplayName("Published Time")]
         public DateTime PublishedTime { get; set; }
 
         [Column("Status")]
