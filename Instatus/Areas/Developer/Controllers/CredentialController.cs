@@ -15,7 +15,7 @@ using System.ComponentModel;
 
 namespace Instatus.Areas.Developer.Controllers
 {
-    public class CredentialViewModel : BaseViewModel<Credential, BaseDataContext>
+    public class CredentialViewModel : BaseViewModel<Credential, IDataContext>
     {
         public string Name { get; set; }
         public string Uri { get; set; }
@@ -52,7 +52,7 @@ namespace Instatus.Areas.Developer.Controllers
     
     [Authorize(Roles = "Administrator")]
     [Description("Credentials")]
-    public class CredentialController : ScaffoldController<CredentialViewModel, Credential, BaseDataContext, int>
+    public class CredentialController : ScaffoldController<CredentialViewModel, Credential, IDataContext, int>
     {
         public override IEnumerable<Credential> Query(IEnumerable<Credential> set, WebQuery query)
         {

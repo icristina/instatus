@@ -7,7 +7,7 @@ using Instatus.Models;
 
 namespace Instatus.Data
 {
-    public class InMemoryBaseDataContext : IBaseDataContext
+    public class InMemoryDataContext : IDataContext
     {
         public IDbSet<Page> Pages { get; private set; }
         public IDbSet<User> Users { get; private set; }
@@ -38,7 +38,7 @@ namespace Instatus.Data
             
         }
 
-        public InMemoryBaseDataContext()
+        public InMemoryDataContext()
         {
             Pages = new InMemorySet<Page>();
             Users = new InMemorySet<User>();

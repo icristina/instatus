@@ -22,7 +22,7 @@ namespace Instatus.Areas.Developer.Controllers
     
     [Authorize(Roles = "Developer")]
     [Description("Taxonomies")]
-    public class TaxonomyController : ScaffoldController<TaxonomyViewModel, Taxonomy, BaseDataContext, int>
+    public class TaxonomyController : ScaffoldController<TaxonomyViewModel, Taxonomy, IDataContext, int>
     {
 
     }

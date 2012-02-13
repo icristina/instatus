@@ -17,7 +17,7 @@ namespace Instatus.Areas.Moderator.Controllers
 {
     [Authorize(Roles = "Moderator")]
     [Description("Activities")]
-    public class ActivityController : ScaffoldController<BaseViewModel<Activity>, Activity, BaseDataContext, int>
+    public class ActivityController : ScaffoldController<BaseViewModel<Activity>, Activity, IDataContext, int>
     {
         public override IEnumerable<Activity> Query(IEnumerable<Activity> set, WebQuery query)
         {

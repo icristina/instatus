@@ -7,7 +7,7 @@ using Instatus.Models;
 
 namespace Instatus.Data
 {
-    public interface IBaseDataContext : IDisposable
+    public interface IDataContext : IDisposable
     {
         IDbSet<Page> Pages { get; }
         IDbSet<User> Users { get; }

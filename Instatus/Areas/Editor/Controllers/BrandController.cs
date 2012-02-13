@@ -16,7 +16,7 @@ using System.Data.Entity;
 
 namespace Instatus.Areas.Editor.Controllers
 {
-    public class BrandViewModel : BaseViewModel<Brand, BaseDataContext>
+    public class BrandViewModel : BaseViewModel<Brand, IDataContext>
     {
         public string Name { get; set; }
         public string Data { get; set; }
@@ -35,7 +35,7 @@ namespace Instatus.Areas.Editor.Controllers
         {
             base.Save(model);
 
-            Context.MarkDeleted(model.Links);
+            model.Links.ToList().ForEach(l => Context.Links.Remove(l));
 
             model.Links = new List<Link>()
             {
@@ -49,7 +49,7 @@ namespace Instatus.Areas.Editor.Controllers
 
     [Authorize(Roles = "Editor")]
     [Description("Brands")]
-    public class BrandController : ScaffoldController<BrandViewModel, Brand, BaseDataContext, int>
+    public class BrandController : ScaffoldController<BrandViewModel, Brand, IDataContext, int>
     {
         public override IEnumerable<Brand> Query(IEnumerable<Brand> set, WebQuery query)
         {

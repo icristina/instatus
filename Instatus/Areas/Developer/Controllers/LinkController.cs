@@ -15,7 +15,7 @@ using System.Data.Entity;
 
 namespace Instatus.Areas.Developer.Controllers
 {
-    public class LinkViewModel : BaseViewModel<Link, BaseDataContext>
+    public class LinkViewModel : BaseViewModel<Link, IDataContext>
     {
         [Required]
         public string Uri { get; set; }
@@ -39,7 +39,7 @@ namespace Instatus.Areas.Developer.Controllers
     
     [Authorize(Roles = "Administrator")]
     [Description("Redirects")]
-    public class LinkController : ScaffoldController<LinkViewModel, Link, BaseDataContext, int>
+    public class LinkController : ScaffoldController<LinkViewModel, Link, IDataContext, int>
     {
         public override IEnumerable<Link> Query(IEnumerable<Link> set, WebQuery query)
         {

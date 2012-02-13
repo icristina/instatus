@@ -12,7 +12,7 @@ using Instatus.Data;
 namespace Instatus.Areas.Editor.Models
 {
     [ComplexType]
-    public class CallToActionViewModel<T> : BaseViewModel<T, BaseDataContext> where T : Page
+    public class CallToActionViewModel<T> : BaseViewModel<T, IDataContext> where T : Page
     {       
         public string Uri { get; set; }
 
@@ -25,7 +25,7 @@ namespace Instatus.Areas.Editor.Models
         {
             var html = WebContentType.Html.ToMimeType();
             
-            Context.MarkDeleted<Link>(model.Links.Where(l => l.ContentType == html).ToList());
+            model.Links.Where(l => l.ContentType == html).ToList().ForEach(l => Context.Links.Remove(l));
 
             if (!Uri.IsEmpty())
             {

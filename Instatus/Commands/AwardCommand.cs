@@ -28,7 +28,7 @@ namespace Instatus.Commands
         {
             User user = User.From(viewModel);
 
-            using (var db = WebApp.GetService<IBaseDataContext>())
+            using (var db = WebApp.GetService<IDataContext>())
             {
                 var achievement = db.Pages.OfType<Achievement>().First(a => a.Slug == achievementSlug);
                 
@@ -57,7 +57,7 @@ namespace Instatus.Commands
             var userId = userModel != null ? userModel.Id : routeData.Id();
             var awarded = requestParams.Value<bool>("commandValue");
 
-            using (var db = WebApp.GetService<IBaseDataContext>())
+            using (var db = WebApp.GetService<IDataContext>())
             {
                 var user = db.Users.Find(userId);
                 

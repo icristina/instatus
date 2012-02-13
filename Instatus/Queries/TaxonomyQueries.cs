@@ -9,7 +9,7 @@ namespace Instatus
 {
     public static class TaxonomyQueries
     {
-        public static IQueryable<Tag> GetTags(this IBaseDataContext context, string taxonomyName)
+        public static IQueryable<Tag> GetTags(this IDataContext context, string taxonomyName)
         {
             return context.Tags.Where(t => t.Taxonomy.Name == taxonomyName).OrderBy(t => t.Name);
         }

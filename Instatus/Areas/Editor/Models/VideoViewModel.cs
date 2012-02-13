@@ -12,7 +12,7 @@ using Instatus.Data;
 namespace Instatus.Areas.Editor.Models
 {
     [ComplexType]
-    public class VideoViewModel<T> : BaseViewModel<T, BaseDataContext> where T : Page
+    public class VideoViewModel<T> : BaseViewModel<T, IDataContext> where T : Page
     {       
         public string Uri { get; set; }
 

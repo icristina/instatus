@@ -32,7 +32,7 @@ namespace Instatus.Models
     [KnownType(typeof(Achievement))]
     [KnownType(typeof(News))]
     [KnownType(typeof(Region))]
-    public class Page : IUserGeneratedContent, IExtensionPoint, INavigableContent, IContentSource, IFriendlyIdentifier, ISyndicatable
+    public class Page : IUserGeneratedContent, IExtensionPoint, INavigableContent, IContentItem, IFriendlyIdentifier, ISyndicatable
     {
         public int Id { get; set; }
         public string Locale { get; set; }
@@ -165,7 +165,7 @@ namespace Instatus.Models
 
         public virtual WebEntry ToWebEntry()
         {
-            return ContentProviderQueries.SelectWebEntry(this);
+            return PageRepositoryQueries.SelectWebEntry(this);
         }
 
         public SiteMapNode ToSiteMapNode(SiteMapProvider sitemap, string routeName = WebRoute.Page)
@@ -184,11 +184,11 @@ namespace Instatus.Models
             return new SyndicationItem(Name, Description, new Uri(uri), Slug, PublishedTime);
         }
 
-        public RestrictionResultCollection ValidateRestrictions(IBaseDataContext context = null, User user = null, Activity trigger = null, bool saveChanges = true)
+        public RestrictionResultCollection ValidateRestrictions(IDataContext context = null, User user = null, Activity trigger = null, bool saveChanges = true)
         {
             var restrictionContext = new RestrictionContext()
             {
-                DataContext = context ?? WebApp.GetService<IBaseDataContext>(),
+                DataContext = context ?? WebApp.GetService<IDataContext>(),
                 Page = this,
                 Trigger = trigger
             };
@@ -272,7 +272,7 @@ namespace Instatus
 {
     public static class PageExtensions
     {
-        public static Page ProcessIncludes(this Page page, IBaseDataContext dataContext = null, RouteData routeData = null)
+        public static Page ProcessIncludes(this Page page, IDataContext dataContext = null, RouteData routeData = null)
         {
             if (page == null)
                 return null;
@@ -295,7 +295,7 @@ namespace Instatus
 
             if (dataContext == null)
             {
-                dataContext = WebApp.GetService<IBaseDataContext>();
+                dataContext = WebApp.GetService<IDataContext>();
                 newInstance = true;
             }
 

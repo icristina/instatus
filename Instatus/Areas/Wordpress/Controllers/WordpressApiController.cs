@@ -13,7 +13,7 @@ using System.ComponentModel;
 
 namespace Instatus.Areas.Wordpress.Controllers
 {
-    public class WordpressApiController : BaseController<IBaseDataContext>
+    public class WordpressApiController : BaseController<IDataContext>
     {
         private void Authenticate(string username, string password)
         {

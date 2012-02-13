@@ -10,7 +10,7 @@ using System.Dynamic;
 
 namespace Instatus.Web
 {
-    public interface IContentSource
+    public interface IContentItem
     {
         WebDocument Document { get; set; }
         IDictionary<WebVerb, IWebFeed> Feeds { get; }
@@ -33,7 +33,7 @@ namespace Instatus.Web
         string[] Columns { get; }
     }
 
-    public class WebView<T> : PagedCollection<T>, IWebView, IContentSource, IExtensionPoint
+    public class WebView<T> : PagedCollection<T>, IWebView, IContentItem, IExtensionPoint
     {
         public string Name { get; set; }
         public object Context { get; set; }

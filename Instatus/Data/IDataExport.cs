@@ -21,7 +21,7 @@ namespace Instatus.Data
         {
             get
             {
-                using (var db = WebApp.GetService<IBaseDataContext>())
+                using (var db = WebApp.GetService<IDataContext>())
                 {
                     return db.Users
                             .Where(u => u.Subscriptions.Any())

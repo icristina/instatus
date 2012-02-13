@@ -15,7 +15,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Instatus.Areas.Developer.Controllers
 {
-    public class UserViewModel : BaseViewModel<User, BaseDataContext>
+    public class UserViewModel : BaseViewModel<User, IDataContext>
     {
         [DisplayName("Full Name")]
         [Required]
@@ -58,7 +58,7 @@ namespace Instatus.Areas.Developer.Controllers
     
     [Authorize(Roles = "Administrator")]
     [Description("Users")]
-    public class UserController : ScaffoldController<UserViewModel, User, BaseDataContext, int>
+    public class UserController : ScaffoldController<UserViewModel, User, IDataContext, int>
     {
 
     }

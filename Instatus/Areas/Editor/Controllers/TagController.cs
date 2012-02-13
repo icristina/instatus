@@ -14,7 +14,7 @@ using System.ComponentModel;
 
 namespace Instatus.Areas.Editor.Controllers
 {
-    public class TagViewModel : BaseViewModel<Tag, BaseDataContext>
+    public class TagViewModel : BaseViewModel<Tag, IDataContext>
     {
         [Required]
         public string Name { get; set; }
@@ -34,7 +34,7 @@ namespace Instatus.Areas.Editor.Controllers
     
     [Authorize(Roles = "Editor")]
     [Description("Tags")]
-    public class TagController : ScaffoldController<TagViewModel, Tag, BaseDataContext, int>
+    public class TagController : ScaffoldController<TagViewModel, Tag, IDataContext, int>
     {
 
     }

@@ -55,7 +55,7 @@ namespace Instatus.Web
 
         public override string[] GetRolesForUser(string username)
         {
-            using (var db = WebApp.GetService<IBaseDataContext>())
+            using (var db = WebApp.GetService<IDataContext>())
             {
                 var user = db.GetUser(username);
                 

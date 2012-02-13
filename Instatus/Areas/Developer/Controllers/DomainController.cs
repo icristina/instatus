@@ -13,7 +13,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Instatus.Areas.Developer.Controllers
 {
-    public class DomainViewModel : BaseViewModel<Domain, BaseDataContext>
+    public class DomainViewModel : BaseViewModel<Domain, IDataContext>
     {
         public string Environment { get; set; }
         public string Uri { get; set; }
@@ -32,7 +32,7 @@ namespace Instatus.Areas.Developer.Controllers
     }
     
     [Authorize(Roles = "Administrator")]
-    public class DomainController : ScaffoldController<DomainViewModel, Domain, BaseDataContext, int>
+    public class DomainController : ScaffoldController<DomainViewModel, Domain, IDataContext, int>
     {
         public override void ConfigureWebView(WebView<Domain> webView)
         {

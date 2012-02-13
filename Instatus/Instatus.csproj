@@ -127,12 +127,12 @@
     <Compile Include="Commands\GenericCommand.cs" />
     <Compile Include="Commands\StatusCommand.cs" />
     <Compile Include="Commands\SpamCommand.cs" />
-    <Compile Include="Data\IContentProvider.cs" />
-    <Compile Include="Data\IBaseDataContext.cs" />
+    <Compile Include="Data\IContentRepository.cs" />
+    <Compile Include="Data\IDataContext.cs" />
     <Compile Include="Data\IDataExport.cs" />
     <Compile Include="Data\IDataImport.cs" />
     <Compile Include="Data\IHasValue.cs" />
-    <Compile Include="Data\InMemoryBaseDataContext.cs" />
+    <Compile Include="Data\InMemoryDataContext.cs" />
     <Compile Include="Data\IObjectMapping.cs" />
     <Compile Include="Data\IPayload.cs" />
     <Compile Include="Data\IRepository.cs" />
@@ -165,7 +165,7 @@
     <Compile Include="Models\IUserGeneratedContent.cs" />
     <Compile Include="Models\Review.cs" />
     <Compile Include="Queries\ApplicationQueries.cs" />
-    <Compile Include="Queries\ContentProviderQueries.cs" />
+    <Compile Include="Queries\PageRepositoryQueries.cs" />
     <Compile Include="Queries\LinkQueries.cs" />
     <Compile Include="Queries\LoggingQueries.cs" />
     <Compile Include="Queries\MembershipQueries.cs" />
@@ -175,10 +175,8 @@
     <Compile Include="Restrictions\ActivityRestriction.cs" />
     <Compile Include="Restrictions\DateRestriction.cs" />
     <Compile Include="Services\BaseWcfService.cs" />
-    <Compile Include="Services\MarkupTemplateService.cs" />
     <Compile Include="Services\IZipService.cs" />
     <Compile Include="Services\MessageBus.cs" />
-    <Compile Include="Services\SimpleTemplateService.cs" />
     <Compile Include="Web\EmptyResultOnExceptionAttribute.cs" />
     <Compile Include="Web\FatalErrorResult.cs" />
     <Compile Include="Web\IVirtualPathRewriter.cs" />

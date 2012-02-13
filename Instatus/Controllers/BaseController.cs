@@ -97,11 +97,11 @@ namespace Instatus.Controllers
         [NonAction]
         public ActionResult Page(string slug = null)
         {
-            using (var db = WebApp.GetService<IContentProvider>())
+            using (var db = WebApp.GetService<IContentRepository>())
             {
                 var page = db.GetPage(slug ?? RouteData.ActionName());
 
-                using (var ctx = WebApp.GetService<IBaseDataContext>())
+                using (var ctx = WebApp.GetService<IDataContext>())
                 {
                     page.ProcessIncludes(ctx);
                 }

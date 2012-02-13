@@ -70,7 +70,7 @@ namespace Instatus
             return credentials != null ? credentials.AccessToken : string.Empty;
         }
 
-        public static T GetLatestAwarded<T>(this IBaseDataContext context, string achievementSlug) where T : Page
+        public static T GetLatestAwarded<T>(this IDataContext context, string achievementSlug) where T : Page
         {
             var award = context.Activities
                         .OfType<Award>()

@@ -296,7 +296,15 @@ namespace Instatus
             if (markup.IsEmpty())
                 return null;
 
-            return new MvcHtmlString(new MarkupTemplateService().Process(null, markup));
+            markup = markup.RewriteRelativePaths();
+
+            // require block level container
+            if (!markup.Contains("<p") && !markup.Contains("<div"))
+            {
+                markup = string.Format("<p>{0}</p>", markup);
+            }
+
+            return new MvcHtmlString(markup);
         }
 
         public static MvcForm BeginAuthenticatedForm<T>(this HtmlHelper<T> html, string actionName, string controllerName, string areaName)
@@ -538,8 +546,8 @@ namespace Instatus
             var title = html.ViewData["Title"].AsString();
             var model = html.ViewData.Model;
 
-            if (model is IContentSource && (IContentSource)model != null && ((IContentSource)model).Document != null)
-                title = ((IContentSource)model).Document.Parameters.GetParameter(WebNamespace.Html, "Title");
+            if (model is IContentItem && (IContentItem)model != null && ((IContentItem)model).Document != null)
+                title = ((IContentItem)model).Document.Parameters.GetParameter(WebNamespace.Html, "Title");
 
             if (title.IsEmpty())
                 title = model.AsString(); // WebView and Page ToString() customized to give descriptive title for html pages

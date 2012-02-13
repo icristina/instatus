@@ -20,7 +20,7 @@ using System.Linq.Expressions;
 
 namespace Instatus.Data
 {
-    public class BaseDataContext : DbContext, IBaseDataContext, IContentProvider
+    public class BaseDataContext : DbContext, IDataContext, IContentRepository
     {
         public IDbSet<Page> Pages { get; set; }
         public IDbSet<User> Users { get; set; }

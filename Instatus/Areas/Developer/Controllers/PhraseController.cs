@@ -26,7 +26,7 @@ namespace Instatus.Areas.Developer.Controllers
 
     [Authorize(Roles = "Developer")]
     [Description("Localization")]
-    public class PhraseController : ScaffoldController<PhraseViewModel, Phrase, BaseDataContext, int>
+    public class PhraseController : ScaffoldController<PhraseViewModel, Phrase, IDataContext, int>
     {
         public override IEnumerable<Phrase> Query(IEnumerable<Phrase> set, WebQuery query)
         {

@@ -10,7 +10,7 @@ using Instatus.Web;
 
 namespace Instatus.Areas.Google.Controllers
 {
-    public class GoogleController : BaseController<IBaseDataContext>
+    public class GoogleController : BaseController<IDataContext>
     {
         public ActionResult RegisterScripts()
         {

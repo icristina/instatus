@@ -10,9 +10,9 @@ using System.ServiceModel.Syndication;
 
 namespace Instatus
 {
-    public static class ContentProviderQueries
+    public static class PageRepositoryQueries
     {
-        public static IEnumerable<T> GetPages<T>(this IContentProvider contentProvider, WebQuery query = null, bool cache = false, string expand = null, string category = null, WebSort sort = WebSort.Recency) where T : Page
+        public static IEnumerable<T> GetPages<T>(this IContentRepository content, WebQuery query = null, bool cache = false, string expand = null, string category = null, WebSort sort = WebSort.Recency) where T : Page
         {
             query = query ?? new WebQuery();
             query.Category = category ?? query.Category;
@@ -26,20 +26,20 @@ namespace Instatus
 
             if (cache)
             {
-                return HttpRuntime.Cache.Value(() => contentProvider.GetPages(query).Cast<T>().ToList()); // cache = true, currently returns list only
+                return HttpRuntime.Cache.Value(() => content.GetPages(query).Cast<T>().ToList()); // cache = true, currently returns list only
             }
             else
             {
-                return contentProvider.GetPages(query).Cast<T>();
+                return content.GetPages(query).Cast<T>();
             }
         }
 
-        public static T GetPage<T>(this IContentProvider contentProvider, string slug, WebSet set = null) where T : Page
+        public static T GetPage<T>(this IContentRepository content, string slug, WebSet set = null) where T : Page
         {
-            return contentProvider.GetPage(slug, set) as T;
+            return content.GetPage(slug, set) as T;
         }
 
-        public static Page GetPage(this IContentProvider contentProvider, string slug, string locale = null, string expand = null)
+        public static Page GetPage(this IContentRepository content, string slug, string locale = null, string expand = null)
         {
             var webSet = new WebSet()
             {
@@ -49,12 +49,12 @@ namespace Instatus
             if (!expand.IsEmpty())
                 webSet.Expand = expand.ToList().ToArray();
             
-            return contentProvider.GetPage(slug, webSet);
+            return content.GetPage(slug, webSet);
         }
 
-        public static void AppendContent<T>(this IContentProvider contentProvider, WebView<T> webView, string slug, WebSet set = null)
+        public static void AppendContent<T>(this IContentRepository content, WebView<T> webView, string slug, WebSet set = null)
         {
-            var page = contentProvider.GetPage(slug, set);
+            var page = content.GetPage(slug, set);
 
             if (page != null)
             {
@@ -68,17 +68,17 @@ namespace Instatus
             }
         }
 
-        public static void AppendContent(this IContentProvider contentProvider, IContentSource content, string slug = null, string expand = null)
+        public static void AppendContent(this IContentRepository content, IContentItem contentItem, string slug = null, string expand = null)
         {
-            Page page = !slug.IsEmpty() ? contentProvider.GetPage(slug, expand: expand) : content as Page;
+            Page page = !slug.IsEmpty() ? content.GetPage(slug, expand: expand) : contentItem as Page;
             
             if (page != null) {
-                content.Document = page.Document;
+                contentItem.Document = page.Document;
 
                 if (page.Replies != null)
                 {
-                    content.Feeds.Add(WebVerb.Notification, new DeferredWebFeed(page.Replies.OfType<Notification>()));
-                    content.Feeds.Add(WebVerb.Comment, new DeferredWebFeed(page.Replies.OfType<Comment>()));
+                    contentItem.Feeds.Add(WebVerb.Notification, new DeferredWebFeed(page.Replies.OfType<Notification>()));
+                    contentItem.Feeds.Add(WebVerb.Comment, new DeferredWebFeed(page.Replies.OfType<Comment>()));
                 }
             }     
         }
