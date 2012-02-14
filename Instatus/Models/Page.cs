@@ -198,26 +198,29 @@ namespace Instatus.Models
             var restrictionEvaluators = DependencyResolver.Current.GetServices<IRestrictionEvaluator>();
             var restrictionResults = new RestrictionResultCollection(restrictionContext);
 
-            foreach (var restriction in Restrictions.OrderBy(r => r.Priority))
+            if (Restrictions != null)
             {
-                var restrictionEvaluator = restrictionEvaluators.First(s => s.Name == restriction.Name);
-
-                if (restrictionEvaluator is IPayload)
+                foreach (var restriction in Restrictions.OrderBy(r => r.Priority))
                 {
-                    ((IPayload)restrictionEvaluator).Payload = restriction.Payload;
-                }
+                    var restrictionEvaluator = restrictionEvaluators.First(s => s.Name == restriction.Name);
 
-                var restrictionResult = restrictionEvaluator.Evaluate(restrictionContext);
+                    if (restrictionEvaluator is IPayload)
+                    {
+                        ((IPayload)restrictionEvaluator).Payload = restriction.Payload;
+                    }
 
-                restrictionResults.Add(restrictionResult);
+                    var restrictionResult = restrictionEvaluator.Evaluate(restrictionContext);
 
-                if (restrictionResult.Continue == false)
-                {
-                    break;
+                    restrictionResults.Add(restrictionResult);
+
+                    if (restrictionResult.Continue == false)
+                    {
+                        break;
+                    }
                 }
             }
 
-            if (restrictionResults.IsValid && saveChanges)
+            if (context != null && restrictionResults.IsValid && saveChanges)
             {
                 restrictionResults.SaveActivities();
             }

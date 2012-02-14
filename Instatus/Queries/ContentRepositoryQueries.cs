@@ -12,7 +12,7 @@ namespace Instatus
 {
     public static class ContentRepositoryQueries
     {
-        public static IEnumerable<T> GetPages<T>(this IContentRepository content, WebQuery query = null, bool cache = false, string expand = null, string category = null, WebSort sort = WebSort.Recency) where T : Page
+        public static IEnumerable<T> GetPages<T>(this IContentRepository content, WebQuery query = null, bool cache = false, string expand = null, string category = null, WebSort sort = WebSort.Recency, string cacheKey = null, int cacheDuration = 60) where T : Page
         {
             query = query ?? new WebQuery();
             query.Category = category ?? query.Category;
@@ -26,7 +26,7 @@ namespace Instatus
 
             if (cache)
             {
-                return HttpRuntime.Cache.Value(() => content.GetPages(query).Cast<T>().ToList()); // cache = true, currently returns list only
+                return HttpRuntime.Cache.Value(() => content.GetPages(query).Cast<T>().ToList(), cacheKey, cacheDuration); // cache = true, currently returns list only
             }
             else
             {
