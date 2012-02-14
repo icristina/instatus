@@ -15,7 +15,7 @@ namespace Instatus.Models
         public virtual ICollection<Event> Events { get; set; }
 
         public override WebEntry ToWebEntry() {
-            return PageRepositoryQueries.SelectWebGeospatialEntry(this);
+            return ContentRepositoryQueries.SelectWebGeospatialEntry(this);
         }
 
         public Place()

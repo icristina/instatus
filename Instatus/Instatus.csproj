@@ -95,6 +95,7 @@
     <Compile Include="Areas\Developer\Controllers\LogController.cs" />
     <Compile Include="Areas\Developer\Controllers\LinkController.cs" />
     <Compile Include="Areas\Editor\Models\CallToActionViewModel.cs" />
+    <Compile Include="Areas\Editor\Models\MarkupViewModel.cs" />
     <Compile Include="Areas\Editor\Models\LinkViewModel.cs" />
     <Compile Include="Areas\Editor\Models\VideoViewModel.cs" />
     <Compile Include="Areas\Editor\Models\LocationViewModel.cs" />
@@ -165,7 +166,7 @@
     <Compile Include="Models\IUserGeneratedContent.cs" />
     <Compile Include="Models\Review.cs" />
     <Compile Include="Queries\ApplicationQueries.cs" />
-    <Compile Include="Queries\PageRepositoryQueries.cs" />
+    <Compile Include="Queries\ContentRepositoryQueries.cs" />
     <Compile Include="Queries\LinkQueries.cs" />
     <Compile Include="Queries\LoggingQueries.cs" />
     <Compile Include="Queries\MembershipQueries.cs" />
@@ -483,6 +484,7 @@
     <EmbeddedResource Include="Views\Shared\EditorTemplates\Password.cshtml" />
     <EmbeddedResource Include="Views\Shared\EditorTemplates\ImageUrl.cshtml" />
     <EmbeddedResource Include="Views\Shared\EditorTemplates\File.cshtml" />
+    <EmbeddedResource Include="Views\Shared\Markup.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

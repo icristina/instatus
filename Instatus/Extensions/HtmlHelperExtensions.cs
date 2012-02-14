@@ -387,16 +387,25 @@ namespace Instatus
 
         public static MvcHtmlString Parts<T>(this HtmlHelper<T> html, WebZone zoneName = WebZone.Body)
         {
-            IEnumerable<WebPart> parts;
+            var routeData = html.ViewContext.RouteData;
+            var parts = new List<WebPart>();
 
-            if (html.ViewData.Model is Page)
+            if (html.ViewData.Model is IContentItem)
             {
-                parts = (html.ViewData.Model as Page).Document.Parts;
+                parts.AddRange(((IContentItem)html.ViewData.Model).Document.Parts);
             }
-            else
+
+            // include WebParts that are unscoped or scope matches routeData parameter
+            var scope = new List<string>() { html.ViewData.Model.GetType().Name };
+
+            if (routeData != null)
             {
-                parts = WebPart.Catalog;
+                scope.Add(routeData.ActionName());
+                scope.Add(routeData.AreaName());
+                scope.Add(routeData.ToUniqueId());
             }
+            
+            parts.AddRange(WebPart.Catalog.Where(p => p.Scope.IsEmpty() || scope.Contains(p.Scope)));
 
             var sb = new StringBuilder();
 

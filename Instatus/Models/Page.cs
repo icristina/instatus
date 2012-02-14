@@ -165,7 +165,7 @@ namespace Instatus.Models
 
         public virtual WebEntry ToWebEntry()
         {
-            return PageRepositoryQueries.SelectWebEntry(this);
+            return ContentRepositoryQueries.SelectWebEntry(this);
         }
 
         public SiteMapNode ToSiteMapNode(SiteMapProvider sitemap, string routeName = WebRoute.Page)
@@ -280,16 +280,8 @@ namespace Instatus
             if (page.Document == null)
                 page.Document = new WebDocument();
 
-            var scope = new List<string>() { page.GetType().Name };
-
-            if(routeData != null) {
-                scope.Add(routeData.ActionName());
-                scope.Add(routeData.AreaName());
-                scope.Add(routeData.ToUniqueId());
-            }
-
-            // include WebParts that are unscoped or scope matches routeData parameter
-            page.Document.Parts.AddRange(WebPart.Catalog.Where(p => p.Scope.IsEmpty() || scope.Contains(p.Scope)));
+            if (!page.Document.Parts.OfType<WebInclude>().Any())
+                return page;
 
             var newInstance = false;
 

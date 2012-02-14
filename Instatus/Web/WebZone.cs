@@ -13,6 +13,7 @@ namespace Instatus.Web
         Body,
         Aside,
         Footer,
-        Scripts
+        Scripts,
+        Tracking
     }
 }

@@ -1,6 +1,6 @@
-﻿@if (Model is IContentSource && ((IContentSource)Model).Document != null)
+﻿@if (Model is IContentItem && ((IContentItem)Model).Document != null)
 {
-    var parameters = ((IContentSource)Model).Document.Parameters;
+    var parameters = ((IContentItem)Model).Document.Parameters;
     var htmlParameters = parameters.GetParameterSet(WebNamespace.Html);
     var openGraphParameters = parameters.GetParameterSet(WebNamespace.OpenGraph);
     

@@ -10,7 +10,7 @@ using System.ServiceModel.Syndication;
 
 namespace Instatus
 {
-    public static class PageRepositoryQueries
+    public static class ContentRepositoryQueries
     {
         public static IEnumerable<T> GetPages<T>(this IContentRepository content, WebQuery query = null, bool cache = false, string expand = null, string category = null, WebSort sort = WebSort.Recency) where T : Page
         {

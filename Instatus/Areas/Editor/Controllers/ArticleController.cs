@@ -44,8 +44,12 @@ namespace Instatus.Areas.Editor.Controllers
         [Display(Order = 5)]
         public MetaTagsViewModel<Article> MetaTags { get; set; }
 
-        [Category("Publishing")]
+        [Category("Custom Markup")]
         [Display(Order = 6)]
+        public MarkupViewModel<Article> Markup { get; set; }
+
+        [Category("Publishing")]
+        [Display(Order = 7)]
         public PublishingViewModel<Article> Publishing { get; set; }
 
         public override void Load(Article model)
@@ -96,6 +100,7 @@ namespace Instatus.Areas.Editor.Controllers
             Overview = new OverviewViewModel<Article>();
             Document = new DocumentViewModel<Article>();
             MetaTags = new MetaTagsViewModel<Article>();
+            Markup = new MarkupViewModel<Article>();
             Publishing = new PublishingViewModel<Article>();
         }
     }

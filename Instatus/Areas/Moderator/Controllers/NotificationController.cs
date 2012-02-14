@@ -41,7 +41,9 @@ namespace Instatus.Areas.Moderator.Controllers
     {
         public override IEnumerable<Notification> Query(IEnumerable<Notification> set, WebQuery query)
         {
-            return set.Where(c => c.Page is Application || c.Page is Article)
+            return set
+                      .AsQueryable()                      
+                      .Where(c => c.Page is Application || c.Page is Article)
                       .OrderBy(c => c.CreatedTime);
         }
     }

@@ -8,6 +8,8 @@
     @Html.Parts(WebZone.Head)
 }
 
+@Html.Parts(WebZone.Tracking)
+
 <div role="main" itemscope itemtype="@Model.GetItemType()" itemid="@Model.Id">
     <header>
         <h1 itemprop="name">@Model.Name</h1>  
@@ -45,4 +47,5 @@
         @Html.Action("Legal")   
     </div>
 </footer>
+
 @Html.Parts(WebZone.Scripts)

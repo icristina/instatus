@@ -86,7 +86,7 @@ namespace Instatus
 
         public static void ForFirst<T>(this IEnumerable<T> list, Action<T> action)
         {
-            if (list.Count() > 0)
+            if (!list.IsEmpty())
                 action(list.First());
         }
 
