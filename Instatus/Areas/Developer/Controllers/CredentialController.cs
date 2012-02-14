@@ -56,8 +56,10 @@ namespace Instatus.Areas.Developer.Controllers
     {
         public override IEnumerable<Credential> Query(IEnumerable<Credential> set, WebQuery query)
         {
-            return set.Where(c => c.Application != null)
-                      .OrderBy(c => c.CreatedTime);
+            return set
+                .AsQueryable()
+                .Where(c => c.Application != null)
+                .OrderBy(c => c.CreatedTime);
         }       
 
         public override void SaveChanges()

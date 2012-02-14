@@ -43,7 +43,9 @@ namespace Instatus.Areas.Developer.Controllers
     {
         public override IEnumerable<Link> Query(IEnumerable<Link> set, WebQuery query)
         {
-            return set.Redirects();
+            return set
+                .AsQueryable()
+                .Redirects();
         }
         
         public override void SaveChanges()
