@@ -69,21 +69,6 @@ namespace Instatus
             }
         }
 
-        public static void AppendContent(this IContentRepository content, IContentItem contentItem, string slug = null, string expand = null)
-        {
-            Page page = !slug.IsEmpty() ? content.GetPage(slug, expand: expand) : contentItem as Page;
-            
-            if (page != null) {
-                contentItem.Document = page.Document;
-
-                if (page.Replies != null)
-                {
-                    contentItem.Feeds.Add(WebVerb.Notification, new DeferredWebFeed(page.Replies.OfType<Notification>()));
-                    contentItem.Feeds.Add(WebVerb.Comment, new DeferredWebFeed(page.Replies.OfType<Comment>()));
-                }
-            }     
-        }
-
         public static IEnumerable<SyndicationItem> AsSyndicationItems(this IEnumerable<Page> pages, string routeName = WebRoute.Post)
         {
             return pages.ToList().Select(s => s.ToSyndicationItem(routeName));

@@ -27,6 +27,7 @@ namespace Instatus.Web
 
             // dependency injection
             DependencyResolver.SetResolver(new MefDependencyResolver());
+            DynamicModuleUtility.RegisterModule(typeof(MefDependencyResolverModule));
 
             // virtual path providers
             HostingEnvironment.RegisterVirtualPathProvider(new EmbeddedVirtualPathProvider());
