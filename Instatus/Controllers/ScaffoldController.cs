@@ -50,7 +50,7 @@ namespace Instatus.Controllers
             var roles = controller.GetCustomAttributeValue<AuthorizeAttribute, string>(a => a.Roles).ToList();
 
             if (roles.Count > 0)
-                webView.Permissions = roles[0].AsEnum<WebRole>().ToPermissions().ToStringList();
+                webView.Permissions = roles[0].AsEnum<WebRole>().ToPermissions();
 
             var columns = new List<string>();
 

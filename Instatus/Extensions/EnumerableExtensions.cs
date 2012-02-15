@@ -18,12 +18,12 @@ namespace Instatus
     {
         private static Random random = new Random();
 
-        public static T Random<T>(this IEnumerable<T> list)
+        public static T Random<T>(this IList<T> list)
         {
             return list.ElementAt(random.Next(0, list.Count()));
         }
 
-        public static IEnumerable<T> Random<T>(this IEnumerable<T> list, int count) // fixed length, random result
+        public static IEnumerable<T> Random<T>(this IList<T> list, int count) // fixed length, random result
         {
             if (list.Count() <= count)
                 return list.Randomize();
@@ -32,13 +32,13 @@ namespace Instatus
 
             for (var i = 0; i < count; i++)
             {
-                result.Add(list.Except(result).Random());
+                result.Add(list.Except(result).ToList().Random());
             }
 
             return result;
         }
 
-        public static IEnumerable<T> Random<T>(this IEnumerable<T> list, int min, int max) // random length, random result
+        public static IEnumerable<T> Random<T>(this IList<T> list, int min, int max) // random length, random result
         {
             var count = random.Next(min, Math.Min(max, list.Count()));
             return list.Random(count);
@@ -67,9 +67,11 @@ namespace Instatus
             return source;
         }
 
-        public static IEnumerable<T> Randomize<T>(this IEnumerable<T> source)
+        public static IList<T> Randomize<T>(this IList<T> source)
         {
-            return source.OrderBy(i => Guid.NewGuid());
+            return source
+                .OrderBy(i => Guid.NewGuid())
+                .ToList();
         }
 
         public static T2 Value<T1, T2>(this IDictionary<T1, T2> source, T1 key)
@@ -256,7 +258,13 @@ namespace Instatus
 
         public static List<string> ToStringList(this IEnumerable set)
         {
+            if (set is List<string>)
+                return (List<string>)set;
+            
             var list = new List<string>();
+
+            if (set.IsEmpty())
+                return list;
 
             foreach (var item in set)
                 list.Add(item.ToString());

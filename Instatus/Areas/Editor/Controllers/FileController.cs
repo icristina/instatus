@@ -79,6 +79,7 @@ namespace Instatus.Areas.Editor.Controllers
             base.ConfigureWebView(webView);
 
             webView.Permissions = new WebAction[] { WebAction.Create };
+
             webView.Mode = WebUtility.CreateSelectList(
                 new WebMode[] { WebMode.PagedList, WebMode.Index }, 
                 webView.Query.Mode,

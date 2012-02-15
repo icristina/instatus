@@ -34,12 +34,6 @@ namespace Instatus.Areas.Developer.Controllers
     [Authorize(Roles = "Administrator")]
     public class DomainController : ScaffoldController<DomainViewModel, Domain, IDataContext, int>
     {
-        public override void ConfigureWebView(WebView<Domain> webView)
-        {
-            webView.Permissions = WebRole.Administrator.ToPermissions();
-            base.ConfigureWebView(webView);
-        }
-
         public override void SaveChanges()
         {
             base.SaveChanges();

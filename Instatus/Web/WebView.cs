@@ -44,13 +44,26 @@ namespace Instatus.Web
         public SelectList Sort { get; set; }
         public ICollection<WebLink> Links { get; set; }
         public WebQuery Query { get; set; }
-        public IList Permissions { get; set; }
         public ICollection<IWebCommand> Commands { get; set; }
         public SiteMapNodeCollection Navigation { get; set; }
         public dynamic CurrentRow { get; set; }
         public WebStep Step { get; set; }
         public dynamic Extensions { get; set; }
         public string[] Columns { get; set; }
+
+        private List<string> permissions;
+
+        public IList Permissions
+        {
+            get
+            {
+                return permissions;
+            }
+            set
+            {
+                permissions = value.ToStringList(); // IHasPermissions typically checks against a string
+            }
+        }
 
         public bool Can(string action, object instance)
         {
