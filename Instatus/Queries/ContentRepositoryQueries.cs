@@ -26,6 +26,7 @@ namespace Instatus
 
             if (cache)
             {
+                content.SerializationSafe();
                 return HttpRuntime.Cache.Value(() => content.GetPages(query).Cast<T>().ToList(), cacheKey, cacheDuration); // cache = true, currently returns list only
             }
             else

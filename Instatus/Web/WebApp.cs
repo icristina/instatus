@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Configuration;
 using Instatus.Services;
 using System.Web.Mvc;
+using Instatus.Data;
 
 namespace Instatus.Web
 {
@@ -24,7 +25,7 @@ namespace Instatus.Web
             
             return service;
         }
-        
+
         public static HttpApplication Instance {
             get 
             {
@@ -86,6 +87,13 @@ namespace Instatus.Web
         public static void Reset()
         {
             Publish(new WebAppReset());
+        }
+
+        public static IHasPermission GlobalPermission { get; set; } 
+
+        public static bool Can(string action, object instance)
+        {
+            return GlobalPermission == null || GlobalPermission.Can(action, instance);
         }
     }
 

@@ -132,6 +132,7 @@
     <Compile Include="Data\IDataContext.cs" />
     <Compile Include="Data\IDataExport.cs" />
     <Compile Include="Data\IDataImport.cs" />
+    <Compile Include="Data\IHasPermission.cs" />
     <Compile Include="Data\IHasValue.cs" />
     <Compile Include="Data\InMemoryDataContext.cs" />
     <Compile Include="Data\IObjectMapping.cs" />

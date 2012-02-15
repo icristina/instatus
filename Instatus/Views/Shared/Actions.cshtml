@@ -1,23 +1,24 @@
 ﻿@model IWebView
 
 @{
-    var key = ((object)Model.CurrentRow).GetKey().AsString().ToUrlEncoded();
+    var row = (object)Model.CurrentRow;
+    var key = row.GetKey().AsString().ToUrlEncoded();
     var routeData = new { id = key };
     var commandButton = new { target = "_blank", @class = "btn" };    
 }
 
 <span class="btn-group">
-    @if (Model.Can(WebAction.Details))
+    @if (Model.Can(WebAction.Details.ToString(), row))
     {
         @Html.ActionLink(WebPhrase.Details, "Details", routeData, commandButton)
     }
 
-    @if (Model.Can(WebAction.Edit))
+    @if (Model.Can(WebAction.Edit.ToString(), row))
     {
         @Html.ActionLink(WebPhrase.Edit, "Edit", routeData, commandButton)
     }
                     
-    @if (Model.Can(WebAction.Delete))
+    @if (Model.Can(WebAction.Delete.ToString(), row))
     {
         using (Html.BeginForm("Delete", ViewContext.RouteData.ControllerName(), routeData))
         {

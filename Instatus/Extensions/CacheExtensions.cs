@@ -8,17 +8,28 @@ namespace Instatus
 {
     public static class CacheExtensions
     {
+        private static object cacheLock = new object();
+
+        // http://stackoverflow.com/questions/39112/what-is-the-best-way-to-lock-cache-in-asp-net
         public static T Value<T>(this Cache cache, Func<T> getter, string key = null, int duration = 60) where T : class
         {
             if(key == null)
-                key = getter.GetHashCode().ToString();
+                key = getter.GetHashCode().ToString(); // hash of getter, is hashcode of the return type
 
             T cachedValue = cache[key] as T;
 
             if (cachedValue == null)
             {
-                cachedValue = getter();
-                cache.Insert(key, cachedValue, null, DateTime.Now.AddSeconds(duration), TimeSpan.Zero);
+                lock (cacheLock)
+                {
+                    cachedValue = cache[key] as T; // recheck if available in cache during locking
+
+                    if (cachedValue == null)
+                    {
+                        cachedValue = getter();
+                        cache.Insert(key, cachedValue, null, DateTime.Now.AddSeconds(duration), TimeSpan.Zero);
+                    }
+                }
             }
 
             return cachedValue;

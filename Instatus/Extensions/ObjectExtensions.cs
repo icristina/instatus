@@ -16,6 +16,7 @@ using System.Web.Script.Serialization;
 using Instatus.Data;
 using Instatus.Web;
 using System.Reflection;
+using System.Data.Entity;
 
 namespace Instatus
 {
@@ -207,14 +208,23 @@ namespace Instatus
             }
         }
 
+        public static T SerializationSafe<T>(this T source)
+        {
+            if (source is DbContext)
+                (source as DbContext).DisableProxiesAndLazyLoading();
+            
+            return source;
+        }
+
         public static TTarget ApplyValues<TTarget, TSource>(this TTarget target, TSource source, bool recursive = false, string[] exclusions = null)
         {
             // each property with matching name in target and source
             foreach (var property in source.GetType().GetProperties())
             {
                 var destination = target.GetType().GetProperty(property.Name);
-                
-                if (!(exclusions != null && exclusions.Contains(property.Name)) && destination != null && destination.CanWrite)
+                var changeEvent = string.Format("change.{0}", property.Name);
+
+                if (WebApp.Can(changeEvent, target) && !(exclusions != null && exclusions.Contains(property.Name)) && destination != null && destination.CanWrite)
                 {
                     var destinationValue = destination.GetValue(target, null);
                     

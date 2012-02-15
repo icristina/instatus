@@ -16,7 +16,7 @@ namespace Instatus.Web
         IDictionary<WebVerb, IWebFeed> Feeds { get; }
     }
     
-    public interface IWebView : IEnumerable, IViewModel
+    public interface IWebView : IEnumerable, IViewModel, IHasPermission
     {
         int TotalItemCount { get; }
         int TotalPageCount { get; }         
@@ -26,14 +26,13 @@ namespace Instatus.Web
         SelectList Mode { get; }
         SelectList Sort { get; }
         ICollection<IWebCommand> Commands { get; }
-        bool Can(object action);
         SiteMapNodeCollection Navigation { get; }
         dynamic CurrentRow { get; set; }
         WebDocument Document { get; }
         string[] Columns { get; }
     }
 
-    public class WebView<T> : PagedCollection<T>, IWebView, IContentItem, IExtensionPoint
+    public class WebView<T> : PagedCollection<T>, IWebView, IContentItem, IExtensionPoint, IHasPermission
     {
         public string Name { get; set; }
         public object Context { get; set; }
@@ -53,9 +52,9 @@ namespace Instatus.Web
         public dynamic Extensions { get; set; }
         public string[] Columns { get; set; }
 
-        public bool Can(object action)
+        public bool Can(string action, object instance)
         {
-            return !Permissions.IsEmpty() && Permissions.Contains(action);
+            return !Permissions.IsEmpty() && Permissions.Contains(action) && WebApp.Can(action, instance);
         }
 
         public bool HasPrevious

@@ -392,7 +392,10 @@ namespace Instatus
 
             if (html.ViewData.Model is IContentItem)
             {
-                parts.AddRange(((IContentItem)html.ViewData.Model).Document.Parts);
+                var contentItem = (IContentItem)html.ViewData.Model;
+                
+                if(contentItem.Document != null)
+                    parts.AddRange(contentItem.Document.Parts);
             }
 
             // include WebParts that are unscoped or scope matches routeData parameter

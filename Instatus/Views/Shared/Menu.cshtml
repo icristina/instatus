@@ -1,7 +1,7 @@
 ﻿@model IWebView
 
 <div id="actions">
-    @if (Model.Can(WebAction.Create))
+    @if (Model.Can(WebAction.Create.ToString(), null))
     {
         @Html.ActionLink(WebPhrase.Create, "Create", null, new { target = "_blank", @class = "btn btn-primary" })
     }
