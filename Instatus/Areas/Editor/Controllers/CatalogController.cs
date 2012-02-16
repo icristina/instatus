@@ -18,6 +18,7 @@ namespace Instatus.Areas.Editor.Controllers
 {
     public class CatalogViewModel : BaseViewModel<Catalog>
     {
+        [Required]
         public string Name { get; set; }
     }
 

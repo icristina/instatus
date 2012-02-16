@@ -19,6 +19,7 @@ namespace Instatus.Areas.Moderator.Controllers
     {
         [AllowHtml]
         [DataType(DataType.MultilineText)]
+        [Required]
         public string Body { get; set; }
 
         [Column("PageId")]

@@ -20,7 +20,8 @@ namespace Instatus.Areas.Developer.Controllers
     public class RegionViewModel : BaseViewModel<Region, IDataContext>
     {
         [Category("Overview")]
-        [Display(Order = 1)]        
+        [Display(Order = 1)]      
+        [Required]
         public string Name { get; set; }
 
         [Category("Location")]

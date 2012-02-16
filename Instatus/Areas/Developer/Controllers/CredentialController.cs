@@ -18,14 +18,20 @@ namespace Instatus.Areas.Developer.Controllers
     public class CredentialViewModel : BaseViewModel<Credential, IDataContext>
     {
         public string Name { get; set; }
+        
+        [Required]
         public string Uri { get; set; }
 
         [Display(Name = "Secret")]
         public string UpdatedSecret { get; set; }
         
+        [Required]
         public string Environment { get; set; }
         public string Scope { get; set; }
+
+        [Required]
         public string Provider { get; set; }
+
         public string Features { get; set; }
 
         [Column("ApplicationId")]

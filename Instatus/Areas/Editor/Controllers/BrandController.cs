@@ -18,9 +18,13 @@ namespace Instatus.Areas.Editor.Controllers
 {
     public class BrandViewModel : BaseViewModel<Brand, IDataContext>
     {
+        [Required]
         public string Name { get; set; }
         public string Data { get; set; }
+
+        [Required]
         public string Href { get; set; }
+
         public string Visual { get; set; }
 
         public override void Load(Brand model)
