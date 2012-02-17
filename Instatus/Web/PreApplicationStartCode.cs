@@ -29,10 +29,10 @@ namespace Instatus.Web
             WebBootstrap.Core();
             WebBootstrap.Routes();
             WebBootstrap.Auth();
-            WebBootstrap.Tracing();
             WebBootstrap.Rewriting();
             WebBootstrap.ErrorHandling();
             WebBootstrap.LegacyUserAgents();
+            WebBootstrap.ViewLocation();
 
             DynamicModuleUtility.RegisterModule(typeof(ConfigurationModule));
         }

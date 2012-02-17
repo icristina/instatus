@@ -182,6 +182,7 @@
     <Compile Include="Web\EmptyResultOnExceptionAttribute.cs" />
     <Compile Include="Web\FatalErrorResult.cs" />
     <Compile Include="Web\IVirtualPathRewriter.cs" />
+    <Compile Include="Web\TwoLevelViewCache.cs" />
     <Compile Include="Web\WebApp.cs" />
     <Compile Include="Web\WebAppSetting.cs" />
     <Compile Include="Web\WebBootstrap.cs" />

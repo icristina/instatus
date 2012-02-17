@@ -12,6 +12,7 @@ namespace Instatus.Areas.Typekit.Controllers
 {
     public class TypekitController : BaseController<IDataContext>
     {
+        [OutputCache(Duration = WebApp.CacheDuration, VaryByParam = WebApp.CacheVaryByParam)]
         public ActionResult RegisterScripts()
         {
             ViewData.Model = Context.GetApplicationCredential(WebProvider.Typekit);

@@ -14,6 +14,9 @@ namespace Instatus.Web
 {
     public static class WebApp
     {
+        public const int CacheDuration = 600; // 10 minutes
+        public const string CacheVaryByParam = "none"; // option to make this a querystring value to clear caches
+        
         public static T GetService<T>()
         {
             T service = DependencyResolver.Current.GetService<T>();

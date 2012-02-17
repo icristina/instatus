@@ -12,6 +12,7 @@ namespace Instatus.Areas.Google.Controllers
 {
     public class GoogleController : BaseController<IDataContext>
     {
+        [OutputCache(Duration = WebApp.CacheDuration, VaryByParam = WebApp.CacheVaryByParam)]
         public ActionResult RegisterScripts()
         {
             ViewData.Model = Context.GetApplicationCredential(WebProvider.Google);

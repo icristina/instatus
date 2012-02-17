@@ -57,11 +57,6 @@ namespace Instatus.Web
             RouteTable.Routes.IgnoreRoute("favicon.ico");
         }
 
-        public static void Tracing()
-        {
-            DynamicModuleUtility.RegisterModule(typeof(HttpTraceModule));
-        }
-
         public static void Rewriting()
         {
             DynamicModuleUtility.RegisterModule(typeof(RedirectModule));
@@ -76,6 +71,17 @@ namespace Instatus.Web
         public static void LegacyUserAgents()
         {
             GlobalFilters.Filters.Add(new UserAgentAttribute("IE", 7, true));
+        }
+
+        // http://blogs.msdn.com/b/marcinon/archive/2011/08/16/optimizing-mvc-view-lookup-performance.aspx
+        public static void ViewLocation()
+        {
+            ViewEngines.Engines.Clear();
+
+            var razorViewEngine = new RazorViewEngine();
+            razorViewEngine.ViewLocationCache = new TwoLevelViewCache(razorViewEngine.ViewLocationCache);
+
+            ViewEngines.Engines.Add(razorViewEngine);
         }
 
         public static bool LoggingEnabled { get; set; }
