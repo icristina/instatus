@@ -1,6 +1,14 @@
 ﻿@{
-    Layout = "~/Views/Shared/_Scaffold.cshtml";
+    Layout = "~/Views/Shared/_Bootstrap.cshtml";
     ViewBag.Title = Model.ToString();
+}
+
+@section head {
+    @Html.Stylesheet("scaffold.css")
+}
+
+@section scripts {
+    @Html.Scripts("scaffold.js")
 }
 
 @helper Edit() {

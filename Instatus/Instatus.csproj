@@ -37,9 +37,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\..\..\..\Users\andrew.booth\Documents\Visual Studio 2010\Projects\MvcApplication6\packages\EntityFramework.4.1.10331.0\lib\EntityFramework.dll</HintPath>
+    <Reference Include="EntityFramework, Version=4.3.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Users\andrew.booth\Documents\Visual Studio 2010\Projects\MvcApplication6\packages\EntityFramework.4.3.0\lib\net40\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
@@ -336,7 +336,6 @@
     <EmbeddedResource Include="Scripts\Jquery.js" />
     <EmbeddedResource Include="Scripts\Modernizr.js" />
     <EmbeddedResource Include="Content\Scaffold.css" />
-    <EmbeddedResource Include="Content\App.css" />
     <EmbeddedResource Include="Data\DropTables.sql" />
     <Content Include="boilerplate.htm" />
     <EmbeddedResource Include="Content\Bootstrap.css" />
@@ -346,7 +345,6 @@
     <Content Include="Favicon.ico" />
     <EmbeddedResource Include="Scripts\Respond.js" />
     <EmbeddedResource Include="Scripts\Scaffold.js" />
-    <EmbeddedResource Include="Scripts\App.js" />
     <EmbeddedResource Include="Scripts\Less.js" />
     <EmbeddedResource Include="Scripts\Swfobject.js" />
     <EmbeddedResource Include="Scripts\Knockout.js" />
@@ -378,9 +376,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Shared\Tags.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\Feeds.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Shared\DisplayTemplates\Object.cshtml" />
@@ -418,9 +413,6 @@
     <EmbeddedResource Include="Views\Shared\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\_Layout.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Views\Shared\Stream.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -428,16 +420,10 @@
     <EmbeddedResource Include="Views\Shared\EditorTemplates\SelectList.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\_Scaffold.cshtml" />
+    <EmbeddedResource Include="Views\Shared\_Bootstrap.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Shared\Section.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\Commands.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\Actions.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Shared\Menu.cshtml" />
@@ -462,13 +448,10 @@
     <EmbeddedResource Include="Areas\Facebook\Views\Facebook\Index.cshtml" />
     <None Include="App.config" />
     <None Include="packages.config" />
-    <None Include="README.md" />
-    <EmbeddedResource Include="Views\Shared\Entry.cshtml" />
     <EmbeddedResource Include="Views\Shared\DisplayTemplates\LinkList.cshtml" />
     <EmbeddedResource Include="Views\Shared\Brand.cshtml" />
     <EmbeddedResource Include="Views\Shared\Part.cshtml" />
     <EmbeddedResource Include="Views\Shared\ValidationSummary.cshtml" />
-    <EmbeddedResource Include="Views\Shared\_App.cshtml" />
     <EmbeddedResource Include="Views\Shared\Parameters.cshtml" />
     <EmbeddedResource Include="Views\Shared\MetaTags.cshtml" />
     <EmbeddedResource Include="Views\Shared\Sitemap.cshtml" />

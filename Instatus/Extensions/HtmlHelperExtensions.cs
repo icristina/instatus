@@ -51,11 +51,15 @@ namespace Instatus
         {
             var urlHelper = new UrlHelper(html.ViewContext.RequestContext);
             var sb = new StringBuilder();
+
             foreach(var src in scripts) {
                 var tag = new TagBuilder("script");
+                
                 tag.MergeAttribute("src", src.IsAbsoluteUri() ? src : urlHelper.Relative("~/Scripts/" + src));
+                
                 sb.AppendLine(tag.ToString());
             }
+
             return new MvcHtmlString(sb.ToString());
         }
 
@@ -63,8 +67,23 @@ namespace Instatus
         {
             var urlHelper = new UrlHelper(html.ViewContext.RequestContext);
             var tag = new TagBuilder("link");
+            
             tag.MergeAttribute("href", stylesheet.IsAbsoluteUri() ? stylesheet : urlHelper.Relative("~/Content/" + stylesheet));
             tag.MergeAttribute("rel", rel);
+            
+            return new MvcHtmlString(tag.ToString());
+        }
+
+        public static MvcHtmlString Link<T>(this HtmlHelper<T> html, string rel, string href)
+        {
+            if (rel.IsEmpty() || href.IsEmpty())
+                return null;
+
+            var tag = new TagBuilder("link");
+
+            tag.MergeAttribute("href", href);
+            tag.MergeAttribute("rel", rel);
+
             return new MvcHtmlString(tag.ToString());
         }
 

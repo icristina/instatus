@@ -19,8 +19,6 @@ namespace Instatus.Web
         
         private static Uri baseUri;
 
-        public static string ApplicationPath { get; set; }
-
         public static Uri BaseUri
         {
             get
@@ -70,9 +68,6 @@ namespace Instatus.Web
 
             if (!virtualPath.StartsWith("~/"))
                 virtualPath = string.Format("~/{0}", virtualPath);
-
-            if(!ApplicationPath.IsEmpty())
-                return VirtualPathUtility.ToAbsolute(virtualPath, ApplicationPath).ToLower();
 
             return VirtualPathUtility.ToAbsolute(virtualPath).ToLower();
         }

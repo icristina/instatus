@@ -1,5 +1,13 @@
 ﻿@{
-    Layout = "~/Views/Shared/_Scaffold.cshtml";
+    Layout = "~/Views/Shared/_Bootstrap.cshtml";
+}
+
+@section head {
+    @Html.Stylesheet("scaffold.css")
+}
+
+@section scripts {
+    @Html.Scripts("scaffold.js")
 }
 
 @helper Create() {
@@ -9,19 +17,17 @@
     @Html.EditorForModel()    
 }
 
-<div class="container">
-    @if (ViewData.ModelMetadata.AdditionalValues.Value("File").AsBoolean())
+@if (ViewData.ModelMetadata.AdditionalValues.Value("File").AsBoolean())
+{
+    using (Html.BeginMultipartForm(className: "form-horizontal"))
     {
-        using (Html.BeginMultipartForm(className: "form-horizontal"))
-        {
-            @Create()
-        }
+        @Create()
     }
-    else
+}
+else
+{
+    using (Html.BeginForm("Create", ViewContext.RouteData.ControllerName(), FormMethod.Post, new { @class = "form-horizontal" }))
     {
-        using (Html.BeginForm("Create", ViewContext.RouteData.ControllerName(), FormMethod.Post, new { @class = "form-horizontal" }))
-        {
-            @Create()
-        }
-    }    
-</div>
+        @Create()
+    }
+}    

@@ -3,29 +3,37 @@
 @using Instatus.Data
 
 @{
-    Layout = "~/Views/Shared/_Scaffold.cshtml";
+    Layout = "~/Views/Shared/_Bootstrap.cshtml";
 }
 
 @section head {
-    <link rel="self" href="@Url.Self(Model)" />
+    @Html.Link("self", Url.Self(Model))
+    @Html.Stylesheet("scaffold.css")
 }
 
-<nav class="navbar navbar-fixed-top">
-    <div class="navbar-inner">
-        <div class="container">    
-            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </a>
-            <div class="nav-collapse">
-                @Html.Partial("Nav", Model.Navigation, new WebFormatting() { MaxLength = 6 })
-                @Html.Partial("LoginStatus")
+@section scripts {
+    @Html.Scripts("scaffold.js")
+}
+
+@section nav {
+    <nav class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">    
+                <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </a>
+                <div class="nav-collapse">
+                    @Html.Partial("Nav", Model.Navigation, new WebFormatting() { MaxLength = 6 })
+                    @Html.Partial("LoginStatus")
+                </div>
             </div>
         </div>
-    </div>
-</nav>   
-<section class="container">
+    </nav>   
+}
+
+<section>
     <header class="page-header">
         @Html.Tag("h1", Model.Document.Title)    
     </header>
@@ -58,10 +66,13 @@
         <tbody>
             @foreach (dynamic entry in Model)
             {
-                Model.CurrentRow = entry;
+                var row = entry as object;
+                var key = row.GetKey().AsString().ToUrlEncoded();
+                var routeData = new { id = key };
+                var commandButton = new { target = "_blank", @class = "btn" };                    
                 <tr>
                     <td>
-                        @((entry as object).GetKey())
+                        @row.GetKey()
                     </td>
                     @if (Model.Columns.Contains("Slug"))
                     {
@@ -70,7 +81,14 @@
                         </td>
                     }
                     <td>
-                        @Html.Partial("Entry", entry as object)
+                        @if ((entry is WebEntry || entry is WebLink) && entry.Picture != null)
+                        {
+                            @Html.Image(entry.Picture as string, className: "thumbnail")
+                        }
+                        else
+                        {
+                            @Html.Raw(row.ToString())
+                        }
                     </td>
                     <td>
                         @if (Model.Columns.Contains("Status"))
@@ -82,8 +100,35 @@
                         }
                     </td>
                     <td>
-                        @Html.Partial("Actions", Model)
-                        @Html.Partial("Commands", Model)
+                        <span class="btn-group">
+                            @if (Model.Can(WebAction.Details.ToString(), row))
+                            {
+                                @Html.ActionLink(WebPhrase.Details, "Details", routeData, commandButton)
+                            }
+                            @if (Model.Can(WebAction.Edit.ToString(), row))
+                            {
+                                @Html.ActionLink(WebPhrase.Edit, "Edit", routeData, commandButton)
+                            }                    
+                            @if (Model.Can(WebAction.Delete.ToString(), row))
+                            {
+                                using (Html.BeginForm("Delete", ViewContext.RouteData.ControllerName(), routeData))
+                                {
+                                    <span></span>
+                                    @Html.SubmitButton(WebPhrase.Delete, "btn")
+                                }
+                            }
+                            @if (!Model.Commands.IsEmpty())
+                            {
+                                foreach (var command in Model.Commands.OfType<IWebCommand>())
+                                {
+                                    var link = command.GetLink(entry, Url);
+                                    if (link != null)
+                                    {
+                                        <a href="@link.Uri" rel="@(link.Rel ?? "command")" class="btn">@link.Title</a>
+                                    }
+                                }
+                            }                            
+                        </span>
                     </td>
                 </tr>
             }

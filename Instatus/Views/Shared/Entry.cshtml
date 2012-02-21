@@ -1,8 +1,0 @@
-﻿@if ((Model is WebEntry || Model is WebLink) && Model.Picture != null)
-{
-    @Html.Image(Model.Picture as string, className: "thumbnail")
-}
-else
-{
-    @Html.Raw(Model.ToString())
-}

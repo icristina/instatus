@@ -1,7 +1,13 @@
 ﻿@{
-    Layout = "~/Views/Shared/_Scaffold.cshtml";
+    Layout = "~/Views/Shared/_Bootstrap.cshtml";
 }
 
-<div class="container">
-    @Html.DisplayForModel()
-</div>
+@section head {
+    @Html.Stylesheet("scaffold.css")
+}
+
+@section scripts {
+    @Html.Scripts("scaffold.js")
+}
+
+@Html.DisplayForModel()
