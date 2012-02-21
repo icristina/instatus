@@ -42,7 +42,7 @@ form span.controls
     display: block;
 }
 
-.list fieldset 
+.list .model
 {
     border-bottom: 1px solid #DDD;
     margin-bottom: 18px;

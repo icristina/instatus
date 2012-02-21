@@ -5,7 +5,7 @@
     }
     else
     {
-        <div class="control-group @(ViewContext.ViewData.ModelState.HasError(prop.PropertyName) ? "error" : "")">
+        <div class="control-group @(ViewContext.ViewData.ModelState.HasError(prop.PropertyName) ? "error" : "") @prop.PropertyName.ToCamelCase()">
             @if (prop.IsReadOnly)
             {
                 <b>@prop.GetDisplayName()</b>
@@ -21,7 +21,7 @@
                     @WebPhrase.Localize(propertyKey + ".Label", prop.GetDisplayName(), false) 
                     @(prop.IsRequired ? " *" : "")             
                 </label>                     
-                <span class="controls @(prop.Model is System.Collections.IEnumerable ? "list" : "")">
+                <div class="controls @(prop.Model is System.Collections.IEnumerable ? "list" : "")">
                     @Html.Editor(prop.PropertyName)             
                     @if (ViewContext.ViewData.ModelState.HasError(prop.PropertyName))
                     {
@@ -36,24 +36,60 @@
                             @description
                         </small>              
                     }                    
-                </span>
+                </div>
             }            
         </div>           
     } 
 }
 
-<fieldset>
-    @{
-        var properties = ViewData.ModelMetadata.Properties
-                            .Where(prop => prop.ShowForEdit && !ViewData.TemplateInfo.Visited(prop))
-                            .Where(prop => !prop.IsComplexType
-                                || prop.AdditionalValues["IsScaffoldColumn"].AsBoolean()
-                                || prop.AdditionalValues["IsComplexTypeEntity"].AsBoolean()
-                                || (prop.Model is SelectList && !((SelectList)prop.Model).Items.IsEmpty())
-                                || (prop.Model is MultiSelectList && !((MultiSelectList)prop.Model).Items.IsEmpty()));
+@helper Fieldset(IEnumerable<ModelMetadata> fields) {
+    var groupedFields = fields.GroupBy(p => p.AdditionalValues.Value("GroupName").AsString());
+    
+    if(groupedFields.Count() > 1) 
+    {
+        foreach (var fieldset in groupedFields) 
+        {
+            if(!fieldset.Key.IsEmpty()) 
+            {
+                <fieldset @Html.Attr("id", fieldset.Key.AsString().ToSlug())>
+                    <legend>@fieldset.Key</legend>
+                    @foreach (var prop in fieldset)
+                    {
+                        @Field(prop)
+                    }
+                </fieldset>                                   
+            } 
+            else 
+            {
+                foreach (var prop in fieldset)
+                {
+                    @Field(prop)
+                }                
+            }       
+        }
+    }
+    else
+    {
+        foreach (var prop in fields)
+        {
+            @Field(prop)
+        }
+    }
+}
 
-        var groupedProperties = properties.GroupBy(p => p.AdditionalValues["Category"].AsString());   
-    }        
+@{
+    var properties = ViewData.ModelMetadata.Properties
+                        .Where(prop => prop.ShowForEdit && !ViewData.TemplateInfo.Visited(prop))
+                        .Where(prop => !prop.IsComplexType
+                            || prop.AdditionalValues["IsScaffoldColumn"].AsBoolean()
+                            || prop.AdditionalValues["IsComplexTypeEntity"].AsBoolean()
+                            || (prop.Model is SelectList && !((SelectList)prop.Model).Items.IsEmpty())
+                            || (prop.Model is MultiSelectList && !((MultiSelectList)prop.Model).Items.IsEmpty()));
+
+    var groupedProperties = properties.GroupBy(p => p.AdditionalValues.Value("Category").AsString());   
+}     
+
+<div class="model">
     @if (groupedProperties.Count() > 1)
     {
         <ul class="nav nav-tabs">
@@ -68,19 +104,13 @@
             @foreach (var group in groupedProperties)
             {
                 <div class="tab-pane @(groupedProperties.First().Key == group.Key ? "active" : "")" id="@group.Key.ToSlug()">
-                    @foreach (var prop in group)
-                    {
-                        @Field(prop)
-                    }     
+                    @Fieldset(group)  
                 </div>           
             }
         </div>        
     }
     else
     {
-        foreach (var prop in properties)
-        {
-            @Field(prop)
-        }
+        @Fieldset(properties)
     }
-</fieldset>
+</div>   

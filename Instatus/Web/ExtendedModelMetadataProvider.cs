@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
+using Instatus;
 
 namespace Instatus.Web
 {
@@ -16,22 +17,17 @@ namespace Instatus.Web
 
             metadata.AdditionalValues["IsComplexTypeEntity"] = attributes.OfType<ComplexTypeAttribute>().Any();
             metadata.AdditionalValues["IsScaffoldColumn"] = attributes.OfType<ScaffoldColumnAttribute>().Any() && attributes.OfType<ScaffoldColumnAttribute>().First().Scaffold;
-            metadata.AdditionalValues["Category"] = attributes.OfType<CategoryAttribute>().Any() ? attributes.OfType<CategoryAttribute>().First().Category : string.Empty;
 
             DataType dataType;
 
-            if (Enum.TryParse<DataType>(metadata.DataTypeName, out dataType) && 
-                editFormatString.ContainsKey(dataType))
+            if (Enum.TryParse<DataType>(metadata.DataTypeName, out dataType) && editFormatString.ContainsKey(dataType))
             {
                 metadata.EditFormatString = editFormatString[dataType];
             }
 
-            var columnAttributes = attributes.OfType<ColumnAttribute>();
-
-            if (columnAttributes.Any())
-            {
-                metadata.AdditionalValues["ColumnName"] = columnAttributes.First().Name;
-            }
+            attributes.OfType<CategoryAttribute>().ForFirst(c => metadata.AdditionalValues["Category"] = c.Category);
+            attributes.OfType<ColumnAttribute>().ForFirst(c => metadata.AdditionalValues["ColumnName"] = c.Name);
+            attributes.OfType<DisplayAttribute>().ForFirst(d => metadata.AdditionalValues["GroupName"] = d.GetGroupName());
 
             return metadata;
         }
