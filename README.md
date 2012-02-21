@@ -30,6 +30,7 @@ Instatus Roadmap
 0.6 current
 
 0.7
+
 * when: pending
 * upgrade to EF 4.3, testing code based alternative to DDL scripts
 * replace LogErrorAttribute with HealthMonitoring buffered implementation
@@ -39,12 +40,14 @@ Instatus Roadmap
 * review MicrositeArea PageController and whether still required
 
 0.8 
+
 * when: ASP.NET MVC 4 and Web API RTM
 * update ExtendedModelMetaData provider for MVC 4 html5 input type improvements
 * replace Html.OptionalAttribute with Razor 2 syntax
 * review Restrictions api for access control and competition logic
 
 0.9
+
 * when: intermediate release
 * replace WordpressArea with Web API implementation
 * replace Facebook authentication endpoints with Web API implementation
@@ -52,6 +55,7 @@ Instatus Roadmap
 * evaluate client side Web API for Facebook and Twitter Http Requests, with better response code handling
 
 1.0
+
 * when: ASP.NET 4.5 and EF 5.0 RTM
 * replace MefDependencyResolver with System.ComponentModel.Composition.Ioc implementation
 * OAuth integration
