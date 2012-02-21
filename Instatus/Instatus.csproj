@@ -181,7 +181,9 @@
     <Compile Include="Services\MessageBus.cs" />
     <Compile Include="Web\EmptyResultOnExceptionAttribute.cs" />
     <Compile Include="Web\FatalErrorResult.cs" />
+    <Compile Include="Web\IContentItem.cs" />
     <Compile Include="Web\IVirtualPathRewriter.cs" />
+    <Compile Include="Web\IWebView.cs" />
     <Compile Include="Web\TwoLevelViewCache.cs" />
     <Compile Include="Web\WebApp.cs" />
     <Compile Include="Web\WebAppSetting.cs" />

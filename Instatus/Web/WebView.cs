@@ -10,28 +10,6 @@ using System.Dynamic;
 
 namespace Instatus.Web
 {
-    public interface IContentItem
-    {
-        WebDocument Document { get; set; }
-        IDictionary<WebVerb, IWebFeed> Feeds { get; }
-    }
-    
-    public interface IWebView : IEnumerable, IViewModel, IHasPermission
-    {
-        int TotalItemCount { get; }
-        int TotalPageCount { get; }         
-        WebQuery Query { get; }
-        SelectList Tags { get; }
-        SelectList Filter { get; }
-        SelectList Mode { get; }
-        SelectList Sort { get; }
-        ICollection<IWebCommand> Commands { get; }
-        SiteMapNodeCollection Navigation { get; }
-        dynamic CurrentRow { get; set; }
-        WebDocument Document { get; }
-        string[] Columns { get; }
-    }
-
     public class WebView<T> : PagedCollection<T>, IWebView, IContentItem, IExtensionPoint, IHasPermission
     {
         public string Name { get; set; }
@@ -46,7 +24,6 @@ namespace Instatus.Web
         public WebQuery Query { get; set; }
         public ICollection<IWebCommand> Commands { get; set; }
         public SiteMapNodeCollection Navigation { get; set; }
-        public dynamic CurrentRow { get; set; }
         public WebStep Step { get; set; }
         public dynamic Extensions { get; set; }
         public string[] Columns { get; set; }

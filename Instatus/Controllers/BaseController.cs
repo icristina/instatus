@@ -11,6 +11,7 @@ using Instatus.Web;
 using System.Net;
 using System.Configuration;
 using System.Web.Helpers;
+using System.Web.SessionState;
 
 namespace Instatus.Controllers
 {
@@ -31,7 +32,8 @@ namespace Instatus.Controllers
             Context = WebApp.GetService<TContext>();
         }
     }
-    
+
+    [SessionState(SessionStateBehavior.Disabled)]
     public class BaseController : Controller
     {                
         public HttpApplication Application
@@ -99,15 +101,7 @@ namespace Instatus.Controllers
         {
             using (var db = WebApp.GetService<IContentRepository>())
             {
-                var page = db.GetPage(slug ?? RouteData.ActionName());
-
-                using (var ctx = WebApp.GetService<IDataContext>())
-                {
-                    page.ProcessIncludes(ctx);
-                }
-
-                TempData["page"] = page;
-                ViewData.Model = page;
+                ViewData.Model = db.GetPage(slug ?? RouteData.ActionName());
             }
 
             return View("Page");

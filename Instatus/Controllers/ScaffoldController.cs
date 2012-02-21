@@ -10,6 +10,7 @@ using Instatus.Web;
 using System.Linq.Expressions;
 using Instatus.Data;
 using System.ComponentModel;
+using System.Web.SessionState;
 
 namespace Instatus.Controllers
 {
