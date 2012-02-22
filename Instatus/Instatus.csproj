@@ -353,6 +353,7 @@
     <EmbeddedResource Include="Scripts\Underscore.js" />
     <EmbeddedResource Include="Scripts\Instatus.js" />
     <EmbeddedResource Include="Scripts\Bootstrap.js" />
+    <EmbeddedResource Include="Scripts\Masonry.js" />
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
