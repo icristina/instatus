@@ -87,6 +87,7 @@
     <Compile Include="Areas\Editor\Controllers\CatalogController.cs" />
     <Compile Include="Areas\Developer\Controllers\TaxonomyController.cs" />
     <Compile Include="Areas\Developer\Controllers\RegionController.cs" />
+    <Compile Include="Areas\Editor\Controllers\ProfileController.cs" />
     <Compile Include="Areas\Editor\Controllers\NewsController.cs" />
     <Compile Include="Areas\Editor\Controllers\FileController.cs" />
     <Compile Include="Areas\Editor\Controllers\OrganizationController.cs" />

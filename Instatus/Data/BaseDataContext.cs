@@ -17,6 +17,7 @@ using System.Net.Mail;
 using System.Text;
 using System.ServiceModel.Web;
 using System.Linq.Expressions;
+using System.Data;
 
 namespace Instatus.Data
 {
@@ -68,6 +69,35 @@ namespace Instatus.Data
             user.HasMany(u => u.Activities).WithOptional(a => a.User);
             user.HasOptional(u => u.Source);
             user.HasMany(u => u.Credentials).WithOptional(c => c.User);
+        }
+
+        public override int SaveChanges()
+        {
+            // Entity<Page>().Relationship.WithCascadeOnDelete() could be used in model builder
+            foreach (var deletedEntity in ChangeTracker.Entries().Where(e => e.State == EntityState.Deleted))
+            {
+                deletedEntity.State = EntityState.Modified;
+
+                if (deletedEntity.Entity is Page)
+                {
+                    var page = (Page)deletedEntity.Entity;
+
+                    page.Tags.Clear();
+                    page.Parents.Clear();
+                    page.Pages.Clear();
+                }
+
+                if (deletedEntity.Entity is Tag)
+                {
+                    var tag = (Tag)deletedEntity.Entity;
+
+                    tag.Pages.Clear();
+                }
+
+                deletedEntity.State = EntityState.Deleted;
+            }
+            
+            return base.SaveChanges();
         }
 
         public IOrderedQueryable<Activity> GetActivities(WebQuery query)

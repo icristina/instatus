@@ -58,11 +58,11 @@ namespace Instatus.Areas.Editor.Controllers
         {            
             base.Save(model);
 
-            model.Tags = UpdateList<Tag, int>(Context.Tags, model.Tags, Tags);
-
+            model.Tags = UpdateList<Tag, int>(Context.Tags, model.Tags, Tags);            
+            model.Parents.OfType<Organization>().ForFirst(o => model.Parents.Remove(o));
+            
             if (Organization.HasValue)
             {
-                model.Parents.OfType<Organization>().ForFirst(o => model.Parents.Remove(o));
                 model.Parents.Add(Context.Pages.Find(Organization));
             }
         }
