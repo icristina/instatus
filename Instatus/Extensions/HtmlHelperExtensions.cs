@@ -611,6 +611,22 @@ namespace Instatus
 
             return new MvcHtmlString(sb.ToString());
         }
+
+        private static string BrowserClassName(HttpBrowserCapabilitiesBase browserCapabilities)
+        {
+            return string.Format("{0} {0}{1}", browserCapabilities.Browser.ToSlug(), browserCapabilities.MajorVersion);
+        }
+
+        public static MvcHtmlString BrowserCapabilitiesAttributes<T>(this HtmlHelper<T> htmlHelper)
+        {
+            var browserCapabilities = htmlHelper.ViewContext.RequestContext.HttpContext.Request.Browser;
+            var sb = new StringBuilder();
+
+            sb.AppendDelimitedValue("no-js");
+            sb.AppendDelimitedValue(BrowserClassName(browserCapabilities));
+
+            return sb.ToString().ToAttr("class");
+        }
     }
 
     internal static class HtmlBuilder

@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html>
+<html @Html.BrowserCapabilitiesAttributes()>
 <head>
     <meta charset="utf-8" />
     <title>@Html.Title()</title>
@@ -9,7 +9,7 @@
     @RenderSection("head", false)
     @Html.Parts(WebZone.Head)
 </head>
-<body @Html.RouteDataAttributes()>
+<body@(Html.RouteDataAttributes())>
     @RenderSection("nav", false)
     <div class="container">
         @RenderBody()    
