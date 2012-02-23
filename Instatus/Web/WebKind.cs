@@ -22,6 +22,7 @@ namespace Instatus.Web
         Post,
         Place,
         Product,
+        Profile,
         Offer,
         Organization,
         Region,

@@ -31,6 +31,7 @@ namespace Instatus
                 return context.Users
                     .Include(u => u.Credentials)
                     .Include(u => u.Roles)
+                    .Include(u => u.Preferences)
                     .FirstOrDefault(u => u.EmailAddress == userName);
             }
 

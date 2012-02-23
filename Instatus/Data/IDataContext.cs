@@ -12,6 +12,7 @@ namespace Instatus.Data
         IDbSet<Page> Pages { get; }
         IDbSet<User> Users { get; }
         IDbSet<Role> Roles { get; }
+        IDbSet<Preference> Preferences { get; }
         IDbSet<Message> Messages { get; }
         IDbSet<Domain> Domains { get; }
         IDbSet<Link> Links { get; }

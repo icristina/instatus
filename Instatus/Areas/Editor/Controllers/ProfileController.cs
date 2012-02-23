@@ -25,11 +25,15 @@ namespace Instatus.Areas.Editor.Controllers
 
         [Category("Overview")]
         [Column("Catalog")]
-        [Display(Name = "Category")]
+        [Display(Name = "Category", Order = 2)]
         public SelectList CatalogList { get; set; }
 
         [ScaffoldColumn(false)]
         public int? Catalog { get; set; }
+
+        [Category("Publishing")]
+        [Display(Order = 3)]
+        public PublishingViewModel<Profile> Publishing { get; set; }
 
         public override void Load(Profile model)
         {
@@ -59,6 +63,7 @@ namespace Instatus.Areas.Editor.Controllers
         public ProfileViewModel()
         {
             Overview = new OverviewViewModel<Profile>();
+            Publishing = new PublishingViewModel<Profile>();
         }
     }
 

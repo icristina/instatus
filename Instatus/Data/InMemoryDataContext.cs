@@ -12,6 +12,7 @@ namespace Instatus.Data
         public IDbSet<Page> Pages { get; private set; }
         public IDbSet<User> Users { get; private set; }
         public IDbSet<Role> Roles { get; private set; }
+        public IDbSet<Preference> Preferences { get; private set; }
         public IDbSet<Message> Messages { get; private set; }
         public IDbSet<Domain> Domains { get; private set; }
         public IDbSet<Link> Links { get; private set; }
@@ -43,6 +44,7 @@ namespace Instatus.Data
             Pages = new InMemorySet<Page>();
             Users = new InMemorySet<User>();
             Roles = new InMemorySet<Role>();
+            Preferences = new InMemorySet<Preference>();
             Messages = new InMemorySet<Message>();
             Domains = new InMemorySet<Domain>();
             Links = new InMemorySet<Link>();

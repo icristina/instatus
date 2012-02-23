@@ -11,15 +11,16 @@ namespace Instatus
     {
         public static void Send(this MailMessage message)
         {
-            var smtpClient = new SmtpClient();
-
-            if (WebApp.IsDebugOrLocal)
+            using (var smtpClient = new SmtpClient())
             {
-                smtpClient.DeliveryMethod = SmtpDeliveryMethod.SpecifiedPickupDirectory;
-                smtpClient.PickupDirectoryLocation = WebPath.Server("~/App_Data/");
-            }
+                if (WebApp.IsDebugOrLocal)
+                {
+                    smtpClient.DeliveryMethod = SmtpDeliveryMethod.SpecifiedPickupDirectory;
+                    smtpClient.PickupDirectoryLocation = WebPath.Server("~/App_Data/");
+                }
 
-            smtpClient.Send(message);
+                smtpClient.Send(message);
+            }
         }
     }
 }

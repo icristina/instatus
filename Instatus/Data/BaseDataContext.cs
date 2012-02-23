@@ -26,6 +26,7 @@ namespace Instatus.Data
         public IDbSet<Page> Pages { get; set; }
         public IDbSet<User> Users { get; set; }
         public IDbSet<Role> Roles { get; set; }
+        public IDbSet<Preference> Preferences { get; set; }
         public IDbSet<Message> Messages { get; set; }
         public IDbSet<Domain> Domains { get; set; }
         public IDbSet<Link> Links { get; set; }
@@ -293,6 +294,8 @@ namespace Instatus.Data
                     return pages.OfType<Region>();
                 case WebKind.News:
                     return pages.OfType<News>();
+                case WebKind.Profile:
+                    return pages.OfType<Profile>();
                 default:
                     return pages;
             }
