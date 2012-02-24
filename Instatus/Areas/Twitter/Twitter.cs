@@ -24,7 +24,12 @@ namespace Instatus.Areas.Twitter
         {
             var uriTemplate = "http://search.twitter.com/search.json?q={0}&include_entities={1}";
             var uri = string.Format(uriTemplate, HttpUtility.UrlEncode(string.Join(" OR ", terms)), includeEntities);
-            var response = new WebClient().DownloadJson(uri);
+            
+            dynamic response;
+
+            using(var webClient = new WebClient()) {
+                response = webClient.DownloadJson(uri);
+            }
 
             var feed = new List<WebEntry>();
 
@@ -49,7 +54,13 @@ namespace Instatus.Areas.Twitter
         {
             var uriTemplate = "https://api.twitter.com/1/statuses/user_timeline.json?screen_name={0}&include_entities={1}";
             var uri = string.Format(uriTemplate, screenName, includeEntities);
-            var response = new WebClient().DownloadJson(uri);
+
+            dynamic response;
+
+            using (var webClient = new WebClient()) 
+            {
+                response = webClient.DownloadJson(uri);
+            }
 
             var feed = new List<WebEntry>();
 

@@ -47,15 +47,16 @@ namespace Instatus.Areas.Facebook
 
             uri = uri.Query("access_token", accessToken);
             
-            var client = new WebClient();
-
-            try
+            using (var client = new WebClient())
             {
-                return client.DownloadString(uri);
-            }
-            catch
-            {
-                return null;
+                try
+                {
+                    return client.DownloadString(uri);
+                }
+                catch
+                {
+                    return null;
+                }
             }
         }
 
@@ -135,10 +136,12 @@ namespace Instatus.Areas.Facebook
             
             var uri = Route(resource, connection)
                         .Query("access_token", accessToken);
-            var client = new WebClient();
             var values = graph.ToNameValueCollection();
-            
-            client.UploadValues(uri, values);
+
+            using (var client = new WebClient())
+            {
+                client.UploadValues(uri, values);
+            }
         }
 
         public static List<WebEntry> Feed(object resource, string accessToken)
@@ -241,7 +244,10 @@ namespace Instatus.Areas.Facebook
                 applicationId ?? Facebook.ApplicationId,
                 applicationSecret ?? Facebook.ApplicationSecret);
 
-            return new WebClient().DownloadString(uri).SubstringAfter("access_token=");
+            using (var webClient = new WebClient()) 
+            {
+                return webClient.DownloadString(uri).SubstringAfter("access_token=");
+            }
         }
 
         public static void AppRequest(object resource, string message, string applicationAccessToken = null)
@@ -251,7 +257,10 @@ namespace Instatus.Areas.Facebook
                 message,
                 applicationAccessToken ?? Facebook.ApplicationAccessToken());
 
-            new WebClient().UploadString(uri, string.Empty);
+            using (var webClient = new WebClient())
+            {
+                webClient.UploadString(uri, string.Empty);
+            }
         }
 
         // http://stackoverflow.com/questions/3385593/c-hmacsha256-problem-matching-facebook-signed-request-implementation
