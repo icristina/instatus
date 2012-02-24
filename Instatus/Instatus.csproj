@@ -189,6 +189,7 @@
     <Compile Include="Web\WebApp.cs" />
     <Compile Include="Web\WebAppSetting.cs" />
     <Compile Include="Web\WebBootstrap.cs" />
+    <Compile Include="Web\WebCache.cs" />
     <Compile Include="Web\WebCategory.cs" />
     <Compile Include="Web\WebFeed.cs" />
     <Compile Include="Web\WebFormatting.cs" />

@@ -18,7 +18,7 @@ namespace Instatus.Areas.Facebook.Controllers
             return View();
         }
         
-        [OutputCache(Duration = WebApp.CacheDuration, VaryByParam = WebApp.CacheVaryByParam)]
+        [OutputCache(Duration = WebCache.Duration, VaryByParam = WebCache.VaryByParam)]
         public ActionResult RegisterScripts()
         {
             ViewData.Model = Context.GetApplicationCredential(WebProvider.Facebook);

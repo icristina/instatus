@@ -40,7 +40,7 @@ namespace Instatus
             }
             else
             {         
-                merged = context.GetPage(page.Slug, locale: page.Locale);
+                merged = context.Pages.FirstOrDefault(p => p.Slug == page.Slug && p.Locale == page.Locale);
             }
 
             page.Tags = page.Tags.Synchronize(tag => context.Tags.FirstOrDefault(t => t.Name == tag.Name));

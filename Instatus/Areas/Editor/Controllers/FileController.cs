@@ -91,10 +91,7 @@ namespace Instatus.Areas.Editor.Controllers
     {
         public static List<IRule<string>> Rules = new List<IRule<string>>()
         {
-            new RegexRule(@"-thumb\.jpg", false),
-            new RegexRule(@"-small\.jpg", false),
-            new RegexRule(@"-medium\.jpg", false),
-            new RegexRule(@"-large\.jpg", false)
+            new RegexRule(@"-(thumb|small|medium|large)\.(jpg|png|gif)", false)
         };
         
         public IDbSet<WebLink> Items { get; set; }

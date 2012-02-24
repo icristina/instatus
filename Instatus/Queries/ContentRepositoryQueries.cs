@@ -12,7 +12,7 @@ namespace Instatus
 {
     public static class ContentRepositoryQueries
     {
-        public static IEnumerable<T> GetPages<T>(this IContentRepository content, WebQuery query = null, bool cache = false, string expand = null, string category = null, WebSort sort = WebSort.Recency, string cacheKey = null, int cacheDuration = 60) where T : Page
+        public static IEnumerable<T> GetPages<T>(this IContentRepository content, WebQuery query = null, bool cache = false, string expand = null, string category = null, WebSort sort = WebSort.Recency, string cacheKey = null, int cacheDuration = WebCache.Duration) where T : Page
         {
             query = query ?? new WebQuery();
             query.Category = category ?? query.Category;
@@ -27,7 +27,7 @@ namespace Instatus
             if (cache)
             {
                 content.SerializationSafe();
-                return HttpRuntime.Cache.Value(() => content.GetPages(query).Cast<T>().ToList(), cacheKey, cacheDuration); // cache = true, currently returns list only
+                return WebCache.Value(() => content.GetPages(query).Cast<T>().ToList(), cacheKey, cacheDuration);
             }
             else
             {
@@ -35,38 +35,39 @@ namespace Instatus
             }
         }
 
-        public static T GetPage<T>(this IContentRepository content, string slug, WebSet set = null) where T : Page
-        {
-            return content.GetPage(slug, set) as T;
-        }
-
-        public static Page GetPage(this IContentRepository content, string slug, string locale = null, string expand = null)
+        public static T GetPage<T>(this IContentRepository content, string slug, string locale = null, string expand = null) where T : Page
         {
             var webSet = new WebSet()
             {
-                Locale = locale
+                Locale = locale,
+                Kind = typeof(T).Name.AsEnum<WebKind>()
             };
 
             if (!expand.IsEmpty())
                 webSet.Expand = expand.ToList().ToArray();
             
-            return content.GetPage(slug, webSet);
+            return content.GetPage(slug, webSet) as T;
         }
 
-        public static void AppendContent<T>(this IContentRepository content, WebView<T> webView, string slug, WebSet set = null)
+        public static T AppendContent<T>(this IContentRepository content, T contentItem, string slug, WebSet set = null) where T : IContentItem
         {
-            var page = content.GetPage(slug, set);
-
-            if (page != null)
+            if (contentItem != null && !slug.IsEmpty())
             {
-                webView.Name = page.Name;
-                webView.Document = page.Document;
+                var page = content.GetPage(slug, set);
 
-                if (webView.Document != null && !page.Description.IsEmpty() && webView.Document.Description.IsEmpty())
+                if (page != null)
                 {
-                    webView.Document.Description = page.Description;
+                    contentItem.Name = page.Name;
+                    contentItem.Document = page.Document;
+
+                    if (contentItem.Document != null && !page.Description.IsEmpty() && contentItem.Document.Description.IsEmpty())
+                    {
+                        contentItem.Document.Description = page.Description;
+                    }
                 }
             }
+
+            return contentItem;
         }
 
         public static IEnumerable<SyndicationItem> AsSyndicationItems(this IEnumerable<Page> pages, string routeName = WebRoute.Post)
