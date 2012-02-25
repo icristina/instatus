@@ -7,6 +7,7 @@ using Instatus.Web;
 using Instatus.Data;
 using System.Data.Entity;
 using System.ServiceModel.Syndication;
+using Instatus.Adapters;
 
 namespace Instatus
 {
@@ -49,21 +50,16 @@ namespace Instatus
             return content.GetPage(slug, webSet) as T;
         }
 
-        public static T AppendContent<T>(this IContentRepository content, T contentItem, string slug, WebSet set = null) where T : IContentItem
+        public static T ApplyAdapters<T>(this T contentItem, IContentRepository contentRepository, string hint = null, Func<IContentItem, IContentAdapter, bool> isValidAdapter = null) where T : IContentItem
         {
-            if (contentItem != null && !slug.IsEmpty())
+            if (contentItem == null)
+                return contentItem;
+            
+            foreach(var contentAdapter in WebApp.GetServices<IContentAdapter>()) 
             {
-                var page = content.GetPage(slug, set);
-
-                if (page != null)
+                if (isValidAdapter == null || isValidAdapter(contentItem, contentAdapter))
                 {
-                    contentItem.Name = page.Name;
-                    contentItem.Document = page.Document;
-
-                    if (contentItem.Document != null && !page.Description.IsEmpty() && contentItem.Document.Description.IsEmpty())
-                    {
-                        contentItem.Document.Description = page.Description;
-                    }
+                    contentAdapter.Process(contentItem, contentRepository, hint);
                 }
             }
 

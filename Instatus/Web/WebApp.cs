@@ -26,6 +26,11 @@ namespace Instatus.Web
             return service;
         }
 
+        public static IEnumerable<T> GetServices<T>()
+        {
+            return DependencyResolver.Current.GetServices<T>();
+        }
+
         public static HttpApplication Instance {
             get 
             {

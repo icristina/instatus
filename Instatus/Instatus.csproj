@@ -76,6 +76,10 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Adapters\NotificationsAdapter.cs" />
+    <Compile Include="Adapters\IncludeAdapter.cs" />
+    <Compile Include="Adapters\MultiSectionAdapter.cs" />
+    <Compile Include="Adapters\DocumentAdapter.cs" />
     <Compile Include="Areas\Auth\AuthAreaRegistration.cs" />
     <Compile Include="Areas\Auth\Controllers\AccountController.cs" />
     <Compile Include="Areas\Auth\Models\LogOnViewModel.cs" />
@@ -129,6 +133,7 @@
     <Compile Include="Commands\GenericCommand.cs" />
     <Compile Include="Commands\StatusCommand.cs" />
     <Compile Include="Commands\SpamCommand.cs" />
+    <Compile Include="Adapters\IContentAdapter.cs" />
     <Compile Include="Data\IContentRepository.cs" />
     <Compile Include="Data\IDataContext.cs" />
     <Compile Include="Data\IDataExport.cs" />

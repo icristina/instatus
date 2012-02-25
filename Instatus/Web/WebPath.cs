@@ -58,11 +58,10 @@ namespace Instatus.Web
 
         public static string Relative(string virtualPath)
         {
-            var virtualPathRewriter = DependencyResolver.Current.GetService<IVirtualPathRewriter>();
-
-            if (virtualPathRewriter != null)
+            foreach(var virtualPathRewriter in WebApp.GetServices<IVirtualPathRewriter>()) {
                 virtualPath = virtualPathRewriter.RewriteVirtualPath(virtualPath);
-            
+            }
+
             if(virtualPath.IsAbsoluteUri())
                 return virtualPath;
 
