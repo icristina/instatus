@@ -83,6 +83,7 @@ namespace Instatus.Data
                 {
                     var page = (Page)deletedEntity.Entity;
 
+                    page.Links.Clear();
                     page.Tags.Clear();
                     page.Parents.Clear();
                     page.Pages.Clear();

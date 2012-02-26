@@ -317,6 +317,14 @@ namespace Instatus
             }
         }
 
+        public static void RemoveAll<TItem, T>(this ICollection<T> source) where TItem : T
+        {
+            foreach (var item in source.OfType<TItem>().ToList())
+            {
+                source.Remove(item);
+            }
+        }
+
         // http://msmvps.com/blogs/matthieu/archive/2009/04/01/how-to-use-linq-extension-methods-on-non-generic-ienumerable.aspx
         public static int Count(IEnumerable source)
         {

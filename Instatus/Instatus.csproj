@@ -100,6 +100,7 @@
     <Compile Include="Areas\Developer\Controllers\LogController.cs" />
     <Compile Include="Areas\Developer\Controllers\LinkController.cs" />
     <Compile Include="Areas\Editor\Models\CallToActionViewModel.cs" />
+    <Compile Include="Areas\Editor\Models\PeopleViewModel.cs" />
     <Compile Include="Areas\Editor\Models\MarkupViewModel.cs" />
     <Compile Include="Areas\Editor\Models\LinkViewModel.cs" />
     <Compile Include="Areas\Editor\Models\VideoViewModel.cs" />

@@ -42,8 +42,12 @@ namespace Instatus.Areas.Editor.Controllers
         [Display(Order = 4)]
         public VideoViewModel<Post> Video { get; set; }
 
-        [Category("Publishing")]
+        [Category("People")]
         [Display(Order = 5)]
+        public PeopleViewModel<Post> People { get; set; }
+
+        [Category("Publishing")]
+        [Display(Order = 6)]
         public PublishingViewModel<Post> Publishing { get; set; }
 
         public override void Load(Post model)
@@ -79,6 +83,7 @@ namespace Instatus.Areas.Editor.Controllers
         {
             Overview = new OverviewViewModel<Post>();
             Video = new VideoViewModel<Post>();
+            People = new PeopleViewModel<Post>();
             Publishing = new PublishingViewModel<Post>();
         }
     }
