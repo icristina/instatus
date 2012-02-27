@@ -18,18 +18,28 @@ namespace Instatus.Adapters
         {
             if (!hint.IsEmpty())
             {
-                var page = contentRepository.GetPage(hint);
+                var page = GetPage(contentRepository, hint);
 
                 if (page != null)
                 {
-                    contentItem.Name = page.Name;
-                    contentItem.Document = page.Document;
-
-                    if (contentItem.Document != null && !page.Description.IsEmpty() && contentItem.Document.Description.IsEmpty())
-                    {
-                        contentItem.Document.Description = page.Description;
-                    }
+                    AttachPage(contentItem, page);
                 }
+            }
+        }
+
+        public virtual Page GetPage(IContentRepository contentRepository, string hint)
+        {
+            return contentRepository.GetPage(hint);
+        }
+
+        public virtual void AttachPage(IContentItem contentItem, Page page)
+        {
+            contentItem.Name = page.Name;
+            contentItem.Document = page.Document;
+
+            if (contentItem.Document != null && !page.Description.IsEmpty() && contentItem.Document.Description.IsEmpty())
+            {
+                contentItem.Document.Description = page.Description;
             }
         }
     }

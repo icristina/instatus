@@ -25,7 +25,7 @@ namespace Instatus.Adapters
             {
                 using (var context = WebApp.GetService<IDataContext>())
                 {
-                    return context.Messages.OfType<Notification>().Where(n => n.Page is Application).ToList();
+                    return context.Messages.OfType<Notification>().Where(n => n.Page is Application).ToList().Randomize();
                 }
             }, "ApplicationNotifications");
 

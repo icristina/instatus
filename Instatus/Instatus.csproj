@@ -78,7 +78,7 @@
   <ItemGroup>
     <Compile Include="Adapters\NotificationsAdapter.cs" />
     <Compile Include="Adapters\IncludeAdapter.cs" />
-    <Compile Include="Adapters\MultiSectionAdapter.cs" />
+    <Compile Include="Adapters\AccordionAdapter.cs" />
     <Compile Include="Adapters\DocumentAdapter.cs" />
     <Compile Include="Areas\Auth\AuthAreaRegistration.cs" />
     <Compile Include="Areas\Auth\Controllers\AccountController.cs" />

@@ -50,17 +50,14 @@ namespace Instatus
             return content.GetPage(slug, webSet) as T;
         }
 
-        public static T ApplyAdapters<T>(this T contentItem, IContentRepository contentRepository, string hint = null, Func<IContentItem, IContentAdapter, bool> isValidAdapter = null) where T : IContentItem
+        public static T ApplyAdapters<T>(this T contentItem, IContentRepository contentRepository, string hint = null) where T : IContentItem
         {
             if (contentItem == null)
                 return contentItem;
             
             foreach(var contentAdapter in WebApp.GetServices<IContentAdapter>()) 
             {
-                if (isValidAdapter == null || isValidAdapter(contentItem, contentAdapter))
-                {
-                    contentAdapter.Process(contentItem, contentRepository, hint);
-                }
+                contentAdapter.Process(contentItem, contentRepository, hint);
             }
 
             return contentItem;

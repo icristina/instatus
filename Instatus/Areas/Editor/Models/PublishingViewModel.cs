@@ -34,6 +34,8 @@ namespace Instatus.Areas.Editor.Models
         
         public string Data { get; set; }
 
+        public string Category { get; set; }
+
         public override void Databind()
         {
             StatusList = WebUtility.CreateSelectList(new WebStatus[] { WebStatus.Published, WebStatus.Draft }, Status, new string[] { "Published", "Draft" });
