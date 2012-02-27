@@ -603,7 +603,7 @@ namespace Instatus
                 option.MergeAttribute("value", prefix != null ? string.Format("{0}:{1}", prefix, item.Value) : item.Value);
                 option.InnerHtml = item.Text;
 
-                if (item.Selected || (value != null && (item.Value.Match(value) || item.Text.Match(value)))) // allow passing in value manually
+                if (item.Selected || (value != null && (item.Value.Equals(value) || item.Text.Match(value)))) // allow passing in value manually, match value exact, match text case insensitive
                     option.MergeAttribute("selected", "selected");
 
                 sb.Append(option.ToString());

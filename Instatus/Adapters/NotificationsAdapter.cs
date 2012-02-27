@@ -18,7 +18,12 @@ namespace Instatus.Adapters
         {
             if (contentItem is IUserGeneratedContent) // add page notifications to extensions, to allow ExtensionsAll<Notification>
             {
-                contentItem.Extensions.Notifications = ((IUserGeneratedContent)contentItem).Replies.OfType<Notification>().ToList();
+                var userGeneratedContent = (IUserGeneratedContent)contentItem;
+
+                if (userGeneratedContent.Replies != null)
+                {
+                    contentItem.Extensions.Notifications = userGeneratedContent.Replies.OfType<Notification>().ToList();
+                }
             }
             
             var applicationNotifications = WebCache.Value(() =>

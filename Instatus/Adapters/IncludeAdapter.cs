@@ -16,25 +16,28 @@ namespace Instatus.Adapters
     {
         public void Process(IContentItem contentItem, IContentRepository contentRepository, string hint)
         {
-            foreach (var include in contentItem.Document.Parts.OfType<WebInclude>().ToList())
+            if (contentItem.Document != null)
             {
-                contentItem.Document.Parts.Remove(include);
+                foreach (var include in contentItem.Document.Parts.OfType<WebInclude>().ToList())
+                {
+                    contentItem.Document.Parts.Remove(include);
 
-                var childPage = contentRepository.GetPage(include.Uri);
+                    var childPage = contentRepository.GetPage(include.Uri);
 
-                if (childPage.Document == null)
-                    break;
+                    if (childPage.Document == null)
+                        break;
 
-                if (childPage.Document.Body != null)
-                    contentItem.Document.Parts.Add(new WebSection()
-                    {
-                        Heading = childPage.Document.Title,
-                        Abstract = childPage.Document.Description,
-                        Body = childPage.Document.Body
-                    });
+                    if (childPage.Document.Body != null)
+                        contentItem.Document.Parts.Add(new WebSection()
+                        {
+                            Heading = childPage.Document.Title,
+                            Abstract = childPage.Document.Description,
+                            Body = childPage.Document.Body
+                        });
 
-                if (childPage.Document.Parts != null)
-                    contentItem.Document.Parts.Append(childPage.Document.Parts);
+                    if (childPage.Document.Parts != null)
+                        contentItem.Document.Parts.Append(childPage.Document.Parts);
+                }
             }
         }
     }
