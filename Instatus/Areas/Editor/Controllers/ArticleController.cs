@@ -35,25 +35,29 @@ namespace Instatus.Areas.Editor.Controllers
         [Display(Order = 3)]
         public DocumentViewModel<Article> Document { get; set; }
 
+        [Category("Video")]
+        [Display(Order = 4)]
+        public VideoViewModel<Article> Video { get; set; }
+
         [Category("Links")]
         [ScaffoldColumn(true)]
-        [Display(Order = 4)]
+        [Display(Order = 5)]
         public IEnumerable<LinkViewModel> Links { get; set; }
 
         [Category("Meta Tags")]
-        [Display(Order = 5)]
+        [Display(Order = 6)]
         public MetaTagsViewModel<Article> MetaTags { get; set; }
 
         [Category("Custom Markup")]
-        [Display(Order = 6)]
+        [Display(Order = 7)]
         public MarkupViewModel<Article> Markup { get; set; }
 
         [Category("People")]
-        [Display(Order = 7)]
+        [Display(Order = 8)]
         public PeopleViewModel<Article> People { get; set; }
 
         [Category("Publishing")]
-        [Display(Order = 8)]
+        [Display(Order = 9)]
         public PublishingViewModel<Article> Publishing { get; set; }
 
         public override void Load(Article model)
@@ -103,6 +107,7 @@ namespace Instatus.Areas.Editor.Controllers
         {
             Overview = new OverviewViewModel<Article>();
             Document = new DocumentViewModel<Article>();
+            Video = new VideoViewModel<Article>();
             MetaTags = new MetaTagsViewModel<Article>();
             Markup = new MarkupViewModel<Article>();
             People = new PeopleViewModel<Article>();
