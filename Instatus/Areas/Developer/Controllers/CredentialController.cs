@@ -44,15 +44,15 @@ namespace Instatus.Areas.Developer.Controllers
 
         public override void Databind()
         {
-            ApplicationList = new SelectList(Context.Pages.OfType<Application>().ToList(), "Id", "Name", ApplicationId);
+            ApplicationList = DatabindSelectList<Page, Application>(Context.Pages, ApplicationId);
         }
 
         public override void Save(Credential model)
         {
-            if (!UpdatedSecret.IsEmpty())
-                model.Secret = UpdatedSecret;            
-            
             base.Save(model);
+            
+            if (!UpdatedSecret.IsEmpty())
+                model.Secret = UpdatedSecret;                                    
         }
     }
     

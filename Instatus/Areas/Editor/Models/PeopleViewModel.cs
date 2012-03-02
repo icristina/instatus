@@ -48,7 +48,7 @@ namespace Instatus.Areas.Editor.Models
         {
             base.Databind();
 
-            ProfilesList = new MultiSelectList(Context.Pages.OfType<Profile>().ToList(), "Id", "Name", Profiles);
+            ProfilesList = DatabindMultiSelectList<Page, Profile>(Context.Pages, Profiles);
         }
     }
 }

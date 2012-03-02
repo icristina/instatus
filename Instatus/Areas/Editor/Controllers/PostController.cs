@@ -55,20 +55,16 @@ namespace Instatus.Areas.Editor.Controllers
             base.Load(model);
 
             Tags = model.Tags.IsEmpty() ? null : model.Tags.Select(t => t.Id).ToArray();
-            model.Parents.OfType<Organization>().ForFirst(o => Organization = o.Id);
+
+            Organization = LoadAssociation<Page, Organization>(model.Parents);
         }
 
         public override void Save(Post model)
         {            
             base.Save(model);
 
-            model.Tags = UpdateList<Tag, int>(Context.Tags, model.Tags, Tags);            
-            model.Parents.OfType<Organization>().ForFirst(o => model.Parents.Remove(o));
-            
-            if (Organization.HasValue)
-            {
-                model.Parents.Add(Context.Pages.Find(Organization));
-            }
+            model.Tags = SaveMultiAssociation<Tag>(Context.Tags, model.Tags, Tags);
+            model.Parents = SaveAssociation<Page, Organization>(Context.Pages, model.Parents, Organization);
         }
 
         public override void Databind()
@@ -76,7 +72,7 @@ namespace Instatus.Areas.Editor.Controllers
             base.Databind();
             
             TagsList = new MultiSelectList(Context.Tags.ToList(), "Id", "Name", Tags);
-            OrganizationList = new SelectList(Context.Pages.OfType<Organization>(), "Id", "Name", Organization);
+            OrganizationList = DatabindSelectList<Page, Organization>(Context.Pages, Organization);
         }
 
         public PostViewModel()

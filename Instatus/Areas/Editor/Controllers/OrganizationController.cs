@@ -45,22 +45,21 @@ namespace Instatus.Areas.Editor.Controllers
         {
             base.Load(model);
 
-            model.Parents.OfType<Catalog>().ForFirst(c => Catalog = c.Id);
+            Catalog = LoadAssociation<Page, Catalog>(model.Parents).Value;
         }
 
         public override void Save(Organization model)
         {
             base.Save(model);
 
-            model.Parents.OfType<Catalog>().ForFirst(c => model.Parents.Remove(c));
-            model.Parents.Add(Context.Pages.Find(Catalog));
+            model.Parents = SaveAssociation<Page, Catalog>(Context.Pages, model.Parents, Catalog);
         }
 
         public override void Databind()
         {
             base.Databind();
 
-            CatalogList = new SelectList(Context.Pages.OfType<Catalog>(), "Id", "Name", Catalog);
+            CatalogList = DatabindSelectList<Page, Catalog>(Context.Pages, Catalog);
         }
 
         public OrganizationViewModel()

@@ -37,17 +37,19 @@ namespace Instatus.Areas.Developer.Controllers
 
         public override void Load(User model)
         {
-            Roles = model.Roles.IsEmpty() ? null : model.Roles.Select(t => t.Id).ToArray();
             base.Load(model);
+            
+            Roles = LoadMultiAssociation(model.Roles);            
         }
 
         public override void Save(User model)
         {
+            base.Save(model);
+            
             if (!UnencryptedPassword.IsEmpty())
                 model.Password = UnencryptedPassword.ToEncrypted();
 
-            model.Roles = UpdateList<Role, int>(Context.Roles, model.Roles, Roles);
-            base.Save(model);
+            model.Roles = SaveMultiAssociation<Role>(Context.Roles, model.Roles, Roles);            
         }
 
         public override void Databind()

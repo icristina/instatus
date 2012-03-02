@@ -35,7 +35,7 @@ namespace Instatus.Areas.Editor.Models
             Latitude = model.Point.Latitude;
             Zoom = model.Point.Zoom;
 
-            model.Parents.OfType<Region>().ForFirst(r => Region = r.Id);
+            Region = LoadAssociation<Page, Region>(model.Parents);
         }
 
         public override void Save(T model)
@@ -46,16 +46,11 @@ namespace Instatus.Areas.Editor.Models
             model.Point.Latitude = Latitude;
             model.Point.Zoom = Zoom;
 
-            model.Parents.OfType<Region>().ForFirst(r => model.Parents.Remove(r));
-
-            if (Region.HasValue)
-            {
-                model.Parents.Add(Context.Pages.Find(Region));
-            }
+            model.Parents = SaveAssociation<Page, Region>(Context.Pages, model.Parents, Region);
         }
 
         public override void Databind() {
-            RegionList = new SelectList(Context.Pages.OfType<Region>(), "Id", "Name", Region);
+            RegionList = DatabindSelectList<Page, Region>(Context.Pages, Region);
         }
     }
 }

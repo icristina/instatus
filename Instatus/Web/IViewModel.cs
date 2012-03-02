@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Data.Entity;
 using System.ComponentModel.DataAnnotations;
+using Instatus.Data;
+using System.Collections;
+using System.Web.Mvc;
 
 namespace Instatus.Web
 {
@@ -66,20 +69,17 @@ namespace Instatus.Web
             }
         }
 
-        public ICollection<T> UpdateList<T, TKey>(IDbSet<T> set, ICollection<T> list, IEnumerable<TKey> selected) where T : class
+        public int[] LoadMultiAssociation<T>(IEnumerable<T> list)
         {
-            return BindingHelpers.UpdateList<T, TKey>(set, list, selected);
+            return list.IsEmpty() ? null : list.Select(t => t.GetKey().AsInteger()).ToArray();
         }
-    }
 
-    public static class BindingHelpers
-    {
-        public static ICollection<T> UpdateList<T, TKey>(IDbSet<T> set, ICollection<T> list, IEnumerable<TKey> selected) where T : class
+        public ICollection<T> SaveMultiAssociation<T>(IDbSet<T> set, ICollection<T> list, IList keys) where T : class
         {
-            if (selected.IsEmpty())
+            if (keys.IsEmpty())
                 return new List<T>();
-            
-            var selectedKeys = selected.ToList();
+
+            var selectedKeys = keys.Cast<object>().ToList();            
 
             if (list == null)
             {
@@ -91,7 +91,7 @@ namespace Instatus.Web
                 
                 foreach (var item in items)
                 {
-                    var id = (TKey)item.GetKey();
+                    var id = item.GetKey();
 
                     if (!(selectedKeys.Contains(id)))
                     {
@@ -111,6 +111,47 @@ namespace Instatus.Web
             }
 
             return list;
+        }
+
+        public int? LoadAssociation<T, T2>(ICollection<T> list)
+            where T : class
+            where T2 : T
+        {
+            if (list.IsEmpty() || !list.OfType<T2>().Any())
+                return null;
+            
+            return list.OfType<T2>().Select(t => t.GetKey().AsInteger()).First();
+        }
+
+        public ICollection<T> SaveAssociation<T, T2>(IDbSet<T> set, ICollection<T> list, int? id) 
+            where T : class 
+            where T2 : T
+        {
+            if (list.IsEmpty())
+                list = new List<T>();
+            
+            list.OfType<T2>().ForFirst(o => list.Remove(o)); // remove first instance, even if id null
+
+            if (id.HasValue)
+            {
+                list.Add(set.Find(id));
+            }
+
+            return list;
+        }
+
+        public SelectList DatabindSelectList<T, T2>(IDbSet<T> set, int? id, string dataValueField = "Id", string dataTextField = "Name") 
+            where T : class
+            where T2 : T
+        {
+            return new SelectList(set.OfType<T2>().ToList(), dataValueField, dataTextField, id);
+        }
+
+        public MultiSelectList DatabindMultiSelectList<T, T2>(IDbSet<T> set, int[] id, string dataValueField = "Id", string dataTextField = "Name") 
+            where T : class
+            where T2 : T
+        {
+            return new MultiSelectList(set.OfType<T2>().ToList(), dataValueField, dataTextField, id);
         }
     }
 }

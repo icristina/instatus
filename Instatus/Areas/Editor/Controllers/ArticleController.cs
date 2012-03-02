@@ -73,7 +73,7 @@ namespace Instatus.Areas.Editor.Controllers
             .ToList()
             .Pad(10);
 
-            model.Parents.OfType<Article>().ForFirst(p => Parent = p.Id);
+            Parent = LoadAssociation<Page, Article>(model.Parents);
         }
 
         public override void Save(Article model)
@@ -88,19 +88,14 @@ namespace Instatus.Areas.Editor.Controllers
             })
             .ToList();
 
-            model.Parents.OfType<Article>().ForFirst(p => model.Parents.Remove(p));
-
-            if (Parent.HasValue)
-            {
-                model.Parents.Add(Context.Pages.Find(Parent));
-            }
+            model.Parents = SaveAssociation<Page, Article>(Context.Pages, model.Parents, Parent);
         }
 
         public override void Databind()
         {
             base.Databind();
 
-            ParentList = new SelectList(Context.Pages.OfType<Article>(), "Id", "Name", Parent);
+            ParentList = DatabindSelectList<Page, Article>(Context.Pages, Parent);
         }
 
         public ArticleViewModel()
