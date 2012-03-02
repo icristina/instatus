@@ -16,6 +16,11 @@ namespace Instatus
 {
     public static class CollectionExtensions
     {
+        public static IEnumerable<T> Paging<T>(this IEnumerable<T> list, int pageIndex, int pageSize)
+        {
+            return list.AsOrdered().Skip(pageIndex * pageSize).Take(pageSize);
+        }
+        
         private static Random random = new Random();
 
         public static T Random<T>(this IList<T> list)
@@ -246,9 +251,12 @@ namespace Instatus
             return content.Where(c => rules.All(rule => rule.Evaluate(c)));
         }
 
-        public static IOrderedEnumerable<T> AsOrdered<T>(this IEnumerable<T> set)
+        public static IEnumerable<T> AsOrdered<T>(this IEnumerable<T> list)
         {
-            return set.OrderBy(a => true);
+            if (list is IOrderedQueryable<T> || list is IOrderedEnumerable<T>)
+                return list;
+            
+            return list.OrderBy(a => true);
         }
 
         public static IEnumerable<WebEntry> DistinctByUri(this IEnumerable<WebEntry> resources)

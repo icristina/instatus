@@ -36,19 +36,14 @@ namespace Instatus.Data
             if (list is IPagedCollection<T>)
             {
                 var pagedCollection = (IPagedCollection<T>)list;
+                
                 this.Append(pagedCollection);
+
                 TotalItemCount = pagedCollection.TotalItemCount;
             }
             else if (list is IOrderedQueryable<T> || list is IOrderedEnumerable<T>)
             {
-                this.Append(list.Skip(pageIndex * pageSize).Take(pageSize).ToList());
-                
-                if(count)
-                    TotalItemCount = list.Count();
-            }
-            else
-            {
-                this.Append(list.AsOrdered().Skip(pageIndex * pageSize).Take(pageSize).ToList());
+                this.Append(list.Paging(pageIndex, pageSize).ToList());
                 
                 if(count)
                     TotalItemCount = list.Count();
@@ -59,7 +54,7 @@ namespace Instatus.Data
         }
 
         public PagedCollection(IQueryable<Record<T>> queryable, Func<Record<T>, T> mapping, int pageSize = 10, int pageIndex = 0, bool count = false)
-            : base(queryable.Skip(pageIndex * pageSize).Take(pageSize).ToList().Select(mapping).ToList())
+            : base(queryable.Paging(pageIndex, pageSize).ToList().Select(mapping).ToList())
         {
             PageSize = pageSize;
             PageIndex = pageIndex;

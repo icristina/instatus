@@ -17,7 +17,8 @@ namespace Instatus
             return viewDataDictionary.ModelState.IsValid && viewDataDictionary.Model != null;
         }
 
-        public static string ErrorMessage(this ModelStateDictionary modelStateDictionary)
+        // https://github.com/ayende/RaccoonBlog/blob/master/RaccoonBlog.Web/Helpers/ModelStateExtensions.cs
+        public static string FirstErrorMessage(this ModelStateDictionary modelStateDictionary)
         {
             return (from modelState in modelStateDictionary
                     from error in modelState.Value.Errors
