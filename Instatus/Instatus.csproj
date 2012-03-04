@@ -106,6 +106,7 @@
     <Compile Include="Areas\Developer\Controllers\LogController.cs" />
     <Compile Include="Areas\Developer\Controllers\LinkController.cs" />
     <Compile Include="Areas\Editor\Models\CallToActionViewModel.cs" />
+    <Compile Include="Areas\Editor\Models\CreativeViewModel.cs" />
     <Compile Include="Areas\Editor\Models\RelatedViewModel.cs" />
     <Compile Include="Areas\Editor\Models\PeopleViewModel.cs" />
     <Compile Include="Areas\Editor\Models\MarkupViewModel.cs" />
