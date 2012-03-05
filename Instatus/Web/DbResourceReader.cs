@@ -7,6 +7,7 @@ using System.Collections;
 using Instatus.Data;
 using System.Web.Compilation;
 using Instatus.Services;
+using Instatus.Models;
 
 namespace Instatus.Web
 {
@@ -23,7 +24,7 @@ namespace Instatus.Web
         {
             var entries = new Dictionary<object, object>();
                 
-            using (var db = WebApp.GetService<IDataContext>())
+            using (var db = WebApp.GetService<IApplicationContext>())
             {
                 foreach (var phrase in db.Phrases.ToList())
                     entries.AddNonEmptyValue(phrase.Name, phrase.Value);

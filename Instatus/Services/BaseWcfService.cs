@@ -45,7 +45,7 @@ namespace Instatus.Services
 
         public virtual bool HandleError(Exception error)
         {
-            using (var db = WebApp.GetService<IDataContext>())
+            using (var db = WebApp.GetService<Instatus.Models.IApplicationContext>())
             {
                 db.LogError(error);
                 db.SaveChanges();

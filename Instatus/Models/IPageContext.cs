@@ -6,9 +6,9 @@ using System.Data.Entity;
 using Instatus.Models;
 using Instatus.Web;
 
-namespace Instatus.Data
+namespace Instatus.Models
 {
-    public interface IContentRepository : IDisposable
+    public interface IPageContext : IDisposable
     {
         IEnumerable<Page> GetPages(WebQuery query);
         Page GetPage(string slug, WebSet set = null);

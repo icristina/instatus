@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Instatus.Data;
+using Instatus.Models;
 
 namespace Instatus.Web
 {
@@ -55,7 +56,7 @@ namespace Instatus.Web
 
         public override string[] GetRolesForUser(string username)
         {
-            using (var db = WebApp.GetService<IDataContext>())
+            using (var db = WebApp.GetService<IApplicationContext>())
             {
                 var user = db.GetUser(username);
                 

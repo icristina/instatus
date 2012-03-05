@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using Instatus.Data;
 using System.Web.Security;
+using Instatus.Models;
 
 namespace Instatus.Web
 {
@@ -159,7 +160,7 @@ namespace Instatus.Web
             if (username.IsEmpty() || password.IsEmpty())
                 return false;
             
-            using (var db = WebApp.GetService<IDataContext>())
+            using (var db = WebApp.GetService<IApplicationContext>())
             {
                 var user = db.GetUser(username);                
                 return user != null && user.Password == password.ToEncrypted();

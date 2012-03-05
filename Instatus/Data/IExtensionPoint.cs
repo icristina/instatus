@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Collections;
 using Instatus.Models;
+using Instatus.Data;
 
-namespace Instatus.Models
+namespace Instatus.Data
 {
     public interface IExtensionPoint
     {

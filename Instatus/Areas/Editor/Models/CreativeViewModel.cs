@@ -12,7 +12,7 @@ using Instatus.Data;
 namespace Instatus.Areas.Editor.Models
 {
     [ComplexType]
-    public class CreativeViewModel<T> : BaseViewModel<T, IDataContext> where T : Page
+    public class CreativeViewModel<T> : BaseViewModel<T, IApplicationContext> where T : Page
     {
         [ScaffoldColumn(true)]
         [Display(Order = 5)]

@@ -14,11 +14,11 @@ namespace Instatus.Adapters
     [PartCreationPolicy(CreationPolicy.NonShared)]    
     public class DocumentAdapter : IContentAdapter
     {
-        public void Process(IContentItem contentItem, IContentRepository contentRepository, string hint)
+        public void Process(IContentItem contentItem, IPageContext pageContext, string hint)
         {
             if (!hint.IsEmpty())
             {
-                var page = GetPage(contentRepository, hint);
+                var page = GetPage(pageContext, hint);
 
                 if (page != null)
                 {
@@ -27,9 +27,9 @@ namespace Instatus.Adapters
             }
         }
 
-        public virtual Page GetPage(IContentRepository contentRepository, string hint)
+        public virtual Page GetPage(IPageContext pageContext, string hint)
         {
-            return contentRepository.GetPage(hint);
+            return pageContext.GetPage(hint);
         }
 
         public virtual void AttachPage(IContentItem contentItem, Page page)

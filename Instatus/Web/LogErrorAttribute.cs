@@ -14,7 +14,7 @@ namespace Instatus.Web
     {
         public void OnException(ExceptionContext filterContext)
         {
-            using (var db = WebApp.GetService<IDataContext>())
+            using (var db = WebApp.GetService<IApplicationContext>())
             {
                 if (db != null)
                 {

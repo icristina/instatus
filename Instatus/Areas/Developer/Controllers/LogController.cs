@@ -17,7 +17,7 @@ namespace Instatus.Areas.Developer.Controllers
 {   
     [Authorize(Roles = "Developer")]
     [Description("Logs")]
-    public class LogController : ScaffoldController<BaseViewModel<Log>, Log, IDataContext, int>
+    public class LogController : ScaffoldController<BaseViewModel<Log>, Log, IApplicationContext, int>
     {
         public override IEnumerable<Log> Query(IEnumerable<Log> set, WebQuery query)
         {

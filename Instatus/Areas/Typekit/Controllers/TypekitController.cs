@@ -10,7 +10,7 @@ using Instatus.Web;
 
 namespace Instatus.Areas.Typekit.Controllers
 {
-    public class TypekitController : BaseController<IDataContext>
+    public class TypekitController : BaseController<IApplicationContext>
     {
         [OutputCache(Duration = WebCache.Duration, VaryByParam = WebCache.VaryByParam)]
         public ActionResult RegisterScripts()

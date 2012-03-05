@@ -1,28 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Data.Entity;
-using Instatus.Models;
-using System.Data.Entity.Infrastructure;
-using System.Security.Principal;
-using Instatus.Web;
-using System.Web.Mvc;
-using System.ComponentModel.Composition;
-using System.Web.Routing;
-using System.IO;
-using Instatus;
-using System.Data.Objects;
-using System.Net.Mail;
-using System.Text;
-using System.ServiceModel.Web;
-using System.Linq.Expressions;
 using System.Data;
+using System.Data.Entity;
+using System.Linq;
+using Instatus.Web;
 
-namespace Instatus.Data
+namespace Instatus.Models
 {
-    public class BaseDataContext : DbContext, IDataContext, IContentRepository
+    public class DbApplicationContext : DbContext, IApplicationContext, IPageContext
     {
+        public DbApplicationContext(string connectionName)
+            : base(connectionName)
+        {
+
+        }
+        
         public new IDbSet<T> Set<T>() where T : class
         {
             return base.Set<T>();

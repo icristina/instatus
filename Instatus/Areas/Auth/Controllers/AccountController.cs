@@ -8,6 +8,7 @@ using Instatus.Controllers;
 using Instatus.Data;
 using Instatus.Web;
 using Instatus.Areas.Auth.Models;
+using Instatus.Models;
 
 namespace Instatus.Areas.Auth.Controllers
 {
@@ -41,7 +42,7 @@ namespace Instatus.Areas.Auth.Controllers
 
         public ActionResult Verification(int id, string token)
         {
-            using (var db = WebApp.GetService<IDataContext>())
+            using (var db = WebApp.GetService<IApplicationContext>())
             {
                 var user = db.Users.Find(id);
 

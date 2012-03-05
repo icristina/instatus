@@ -14,7 +14,7 @@ namespace Instatus.Web
     {
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            using (var db = WebApp.GetService<IDataContext>())
+            using (var db = WebApp.GetService<IApplicationContext>())
             {
                 var message = new StringBuilder();
                 var request = filterContext.HttpContext.Request;

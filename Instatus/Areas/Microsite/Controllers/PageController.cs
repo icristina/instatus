@@ -10,7 +10,7 @@ using Instatus.Web;
 
 namespace Instatus.Areas.Microsite.Controllers
 {
-    public class PageController : BaseController<BaseDataContext>
+    public class PageController : BaseController<DbApplicationContext>
     {
         public ActionResult Index()
         {

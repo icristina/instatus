@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Data.Entity;
-using Instatus.Models;
+using Instatus.Data;
 
-namespace Instatus.Data
+namespace Instatus.Models
 {
-    public class InMemoryDataContext : IDataContext
+    public class InMemoryApplicationContext : IApplicationContext
     {
         public IDbSet<Page> Pages { get; private set; }
         public IDbSet<User> Users { get; private set; }
@@ -44,7 +44,7 @@ namespace Instatus.Data
             
         }
 
-        public InMemoryDataContext()
+        public InMemoryApplicationContext()
         {
             Pages = new InMemorySet<Page>();
             Users = new InMemorySet<User>();

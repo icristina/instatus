@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Data.Entity;
-using Instatus.Models;
+using Instatus.Data;
 
-namespace Instatus.Data
+namespace Instatus.Models
 {
-    public interface IDataContext : IDbContext, IDisposable
+    public interface IApplicationContext : IDbContext, IDisposable
     {
         IDbSet<Page> Pages { get; }
         IDbSet<User> Users { get; }

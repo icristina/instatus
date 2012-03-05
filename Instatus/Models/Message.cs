@@ -6,6 +6,7 @@ using System.Runtime.Serialization;
 using System.Web.Mvc;
 using System.ComponentModel.DataAnnotations;
 using Instatus.Web;
+using Instatus.Data;
 
 namespace Instatus.Models
 {

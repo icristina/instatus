@@ -10,7 +10,7 @@ using Instatus.Web;
 
 namespace Instatus.Areas.Facebook.Controllers
 {
-    public class FacebookController : BaseController<IDataContext>
+    public class FacebookController : BaseController<IApplicationContext>
     {
         [Authorize(Roles = "Administrator")]
         public ActionResult Index()

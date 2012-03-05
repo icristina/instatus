@@ -24,7 +24,7 @@ namespace Instatus.Areas.Editor.Controllers
 
     [Authorize(Roles = "Editor")]
     [Description("Catalogs")]
-    public class CatalogController : ScaffoldController<CatalogViewModel, Catalog, IDataContext, int>
+    public class CatalogController : ScaffoldController<CatalogViewModel, Catalog, IApplicationContext, int>
     {
         public override IEnumerable<Catalog> Query(IEnumerable<Catalog> set, WebQuery query)
         {

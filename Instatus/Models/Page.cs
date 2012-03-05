@@ -166,7 +166,7 @@ namespace Instatus.Models
 
         public virtual WebEntry ToWebEntry()
         {
-            return ContentRepositoryQueries.SelectWebEntry(this);
+            return pageContextQueries.SelectWebEntry(this);
         }
 
         public SiteMapNode ToSiteMapNode(SiteMapProvider sitemap, string routeName = WebRoute.Page)
@@ -185,11 +185,11 @@ namespace Instatus.Models
             return new SyndicationItem(Name, Description, new Uri(uri), Slug, PublishedTime);
         }
 
-        public RestrictionResultCollection ValidateRestrictions(IDataContext context = null, User user = null, Activity trigger = null, bool saveChanges = true)
+        public RestrictionResultCollection ValidateRestrictions(IApplicationContext context = null, User user = null, Activity trigger = null, bool saveChanges = true)
         {
             var restrictionContext = new RestrictionContext()
             {
-                DataContext = context ?? WebApp.GetService<IDataContext>(),
+                DataContext = context ?? WebApp.GetService<IApplicationContext>(),
                 Page = this,
                 Trigger = trigger
             };

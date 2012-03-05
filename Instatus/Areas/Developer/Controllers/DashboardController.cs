@@ -13,7 +13,7 @@ using System.IO;
 namespace Instatus.Areas.Developer.Controllers
 {
     [Authorize(Roles = "Administrator")]
-    public class DashboardController : BaseController<BaseDataContext>
+    public class DashboardController : BaseController<DbApplicationContext>
     {
         public ActionResult Index()
         {

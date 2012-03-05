@@ -12,7 +12,7 @@ using Instatus.Data;
 namespace Instatus.Areas.Editor.Models
 {
     [ComplexType]
-    public class CallToActionViewModel<T> : BaseViewModel<T, IDataContext> where T : Page
+    public class CallToActionViewModel<T> : BaseViewModel<T, IApplicationContext> where T : Page
     {       
         public string Uri { get; set; }
 

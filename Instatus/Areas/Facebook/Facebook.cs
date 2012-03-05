@@ -175,7 +175,7 @@ namespace Instatus.Areas.Facebook
             {               
                 if (credential.IsEmpty())
                 {
-                    using (var db = WebApp.GetService<IDataContext>())
+                    using (var db = WebApp.GetService<IApplicationContext>())
                     {
                         credential = db.GetApplicationCredential(WebProvider.Facebook);
                     }
@@ -354,7 +354,7 @@ namespace Instatus.Areas.Facebook
                 
                 FormsAuthentication.SetAuthCookie(userName, false); // persistant cookie not required, as signed_request will re-login user
 
-                using (var db = WebApp.GetService<IDataContext>())
+                using (var db = WebApp.GetService<IApplicationContext>())
                 {
                     var user = db.GetUser(WebProvider.Facebook, facebookId) ?? db.GetUser(emailAddress);
                     

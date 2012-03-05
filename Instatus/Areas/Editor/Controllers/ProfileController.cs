@@ -17,7 +17,7 @@ using Instatus.Areas.Editor.Models;
 
 namespace Instatus.Areas.Editor.Controllers
 {
-    public class ProfileViewModel : BaseViewModel<Profile, IDataContext>
+    public class ProfileViewModel : BaseViewModel<Profile, IApplicationContext>
     {
         [Category("Overview")]
         [Display(Order = 1)]
@@ -65,7 +65,7 @@ namespace Instatus.Areas.Editor.Controllers
 
     [Authorize(Roles = "Editor")]
     [Description("Profiles")]
-    public class ProfileController : ScaffoldController<ProfileViewModel, Profile, IDataContext, int>
+    public class ProfileController : ScaffoldController<ProfileViewModel, Profile, IApplicationContext, int>
     {
         public override IEnumerable<Profile> Query(IEnumerable<Profile> set, WebQuery query)
         {

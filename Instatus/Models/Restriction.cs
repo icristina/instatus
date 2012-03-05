@@ -103,7 +103,7 @@ namespace Instatus.Models
     }
 
     public class RestrictionContext {
-        public IDataContext DataContext { get; set; }
+        public IApplicationContext DataContext { get; set; }
         public Activity Trigger { get; set; }
         public User User { get; set; }
         public Page Page { get; set; }

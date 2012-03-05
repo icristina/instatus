@@ -14,7 +14,7 @@ namespace Instatus.Adapters
     [PartCreationPolicy(CreationPolicy.NonShared)]   
     public class IncludeAdapter : IContentAdapter
     {
-        public void Process(IContentItem contentItem, IContentRepository contentRepository, string hint)
+        public void Process(IContentItem contentItem, IPageContext pageContext, string hint)
         {
             if (contentItem.Document != null)
             {
@@ -22,7 +22,7 @@ namespace Instatus.Adapters
                 {
                     contentItem.Document.Parts.Remove(include);
 
-                    var childPage = contentRepository.GetPage(include.Uri);
+                    var childPage = pageContext.GetPage(include.Uri);
 
                     if (childPage.Document == null)
                         break;

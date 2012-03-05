@@ -10,22 +10,22 @@ namespace Instatus
 {
     public static class SocialQueries
     {
-        public static void SetStatus<T>(this BaseDataContext context, int id, WebStatus status) where T : class, IUserGeneratedContent
+        public static void SetStatus<T>(this IApplicationContext context, int id, WebStatus status) where T : class, IUserGeneratedContent
         {
             context.Set<T>().Find(id).Status = status.ToString();
         }
 
-        public static void MarkAsSpam<T>(this BaseDataContext context, int id) where T : class, IUserGeneratedContent
+        public static void MarkAsSpam<T>(this IApplicationContext context, int id) where T : class, IUserGeneratedContent
         {
             context.SetStatus<T>(id, WebStatus.Spam);
         }
 
-        public static void MarkAsPublished<T>(this BaseDataContext context, int id) where T : class, IUserGeneratedContent
+        public static void MarkAsPublished<T>(this IApplicationContext context, int id) where T : class, IUserGeneratedContent
         {
             context.SetStatus<T>(id, WebStatus.Published);
         }
 
-        public static RecordResult<Post> Post(this BaseDataContext context, string message)
+        public static RecordResult<Post> Post(this IApplicationContext context, string message)
         {
             return context.Post(new WebEntry()
             {
@@ -33,7 +33,7 @@ namespace Instatus
             });
         }
 
-        public static RecordResult<Post> Post(this BaseDataContext context, WebEntry entry)
+        public static RecordResult<Post> Post(this IApplicationContext context, WebEntry entry)
         {
             var user = context.GetCurrentUser();
 
@@ -51,7 +51,7 @@ namespace Instatus
             return new RecordResult<Post>(post);
         }
 
-        public static RecordResult<Activity> Like<T>(this BaseDataContext context, int id) where T : class, IUserGeneratedContent
+        public static RecordResult<Activity> Like<T>(this IApplicationContext context, int id) where T : class, IUserGeneratedContent
         {
             var user = context.GetCurrentUser();
 
@@ -79,7 +79,7 @@ namespace Instatus
             return new RecordResult<Activity>(activity);
         }
 
-        public static RecordResult<Comment> Comment<T>(this BaseDataContext context, int id, string body) where T : class, IUserGeneratedContent
+        public static RecordResult<Comment> Comment<T>(this IApplicationContext context, int id, string body) where T : class, IUserGeneratedContent
         {
             var user = context.GetCurrentUser();
 

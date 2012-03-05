@@ -16,7 +16,7 @@ using System.Data.Entity;
 
 namespace Instatus.Areas.Editor.Controllers
 {
-    public class BrandViewModel : BaseViewModel<Brand, IDataContext>
+    public class BrandViewModel : BaseViewModel<Brand, IApplicationContext>
     {
         [Required]
         public string Name { get; set; }
@@ -53,7 +53,7 @@ namespace Instatus.Areas.Editor.Controllers
 
     [Authorize(Roles = "Editor")]
     [Description("Brands")]
-    public class BrandController : ScaffoldController<BrandViewModel, Brand, IDataContext, int>
+    public class BrandController : ScaffoldController<BrandViewModel, Brand, IApplicationContext, int>
     {
         public override IEnumerable<Brand> Query(IEnumerable<Brand> set, WebQuery query)
         {

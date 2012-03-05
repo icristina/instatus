@@ -17,7 +17,7 @@ using Instatus.Areas.Editor.Models;
 
 namespace Instatus.Areas.Editor.Controllers
 {
-    public class OrganizationViewModel : BaseViewModel<Organization, IDataContext>
+    public class OrganizationViewModel : BaseViewModel<Organization, IApplicationContext>
     {
         [Category("Overview")]
         [Display(Order = 1)]
@@ -45,7 +45,7 @@ namespace Instatus.Areas.Editor.Controllers
         {
             base.Load(model);
 
-            Catalog = LoadAssociation<Page, Catalog>(model.Parents).Value;
+            Catalog = LoadAssociation<Page, Catalog>(model.Parents) ?? 0;
         }
 
         public override void Save(Organization model)
@@ -73,7 +73,7 @@ namespace Instatus.Areas.Editor.Controllers
 
     [Authorize(Roles = "Editor")]
     [Description("Organizations")]
-    public class OrganizationController : ScaffoldController<OrganizationViewModel, Organization, IDataContext, int>
+    public class OrganizationController : ScaffoldController<OrganizationViewModel, Organization, IApplicationContext, int>
     {
         public override IEnumerable<Organization> Query(IEnumerable<Organization> set, WebQuery query)
         {

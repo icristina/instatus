@@ -11,9 +11,9 @@ using Instatus.Adapters;
 
 namespace Instatus
 {
-    public static class ContentRepositoryQueries
+    public static class pageContextQueries
     {
-        public static IEnumerable<T> GetPages<T>(this IContentRepository content, WebQuery query = null, bool cache = false, string expand = null, string category = null, WebSort sort = WebSort.Recency, string cacheKey = null, int cacheDuration = WebCache.Duration) where T : Page
+        public static IEnumerable<T> GetPages<T>(this IPageContext content, WebQuery query = null, bool cache = false, string expand = null, string category = null, WebSort sort = WebSort.Recency, string cacheKey = null, int cacheDuration = WebCache.Duration) where T : Page
         {
             query = query ?? new WebQuery();
             query.Category = category ?? query.Category;
@@ -36,7 +36,7 @@ namespace Instatus
             }
         }
 
-        public static T GetPage<T>(this IContentRepository content, string slug, string locale = null, string expand = null) where T : Page
+        public static T GetPage<T>(this IPageContext content, string slug, string locale = null, string expand = null) where T : Page
         {
             var webSet = new WebSet()
             {
@@ -50,14 +50,14 @@ namespace Instatus
             return content.GetPage(slug, webSet) as T;
         }
 
-        public static T ApplyAdapters<T>(this T contentItem, IContentRepository contentRepository, string hint = null) where T : IContentItem
+        public static T ApplyAdapters<T>(this T contentItem, IPageContext pageContext, string hint = null) where T : IContentItem
         {
             if (contentItem == null)
                 return contentItem;
             
             foreach(var contentAdapter in WebApp.GetServices<IContentAdapter>()) 
             {
-                contentAdapter.Process(contentItem, contentRepository, hint);
+                contentAdapter.Process(contentItem, pageContext, hint);
             }
 
             return contentItem;

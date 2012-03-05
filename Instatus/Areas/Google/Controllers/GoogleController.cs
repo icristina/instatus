@@ -10,7 +10,7 @@ using Instatus.Web;
 
 namespace Instatus.Areas.Google.Controllers
 {
-    public class GoogleController : BaseController<IDataContext>
+    public class GoogleController : BaseController<IApplicationContext>
     {
         [OutputCache(Duration = WebCache.Duration, VaryByParam = WebCache.VaryByParam)]
         public ActionResult RegisterScripts()

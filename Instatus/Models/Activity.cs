@@ -7,6 +7,7 @@ using Instatus.Web;
 using System.ComponentModel.DataAnnotations;
 using System.Dynamic;
 using System.Web.Mvc;
+using Instatus.Data;
 
 namespace Instatus.Models
 {

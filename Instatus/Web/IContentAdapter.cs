@@ -4,11 +4,12 @@ using System.Linq;
 using System.Web;
 using Instatus.Web;
 using Instatus.Data;
+using Instatus.Models;
 
-namespace Instatus.Adapters
+namespace Instatus.Web
 {
     public interface IContentAdapter
     {
-        void Process(IContentItem contentItem, IContentRepository contentRepository, string hint);
+        void Process(IContentItem contentItem, IPageContext pageContext, string hint);
     }
 }

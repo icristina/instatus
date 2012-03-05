@@ -14,12 +14,12 @@ namespace Instatus
 {
     public static class SyncQueries
     {
-        public static Page GetPage(this BaseDataContext context, Source source)
+        public static Page GetPage(this IApplicationContext context, Source source)
         {
             return context.Pages.FirstOrDefault(p => p.Sources.Any(s => s.Uri == source.Uri && s.Provider == source.Provider));;
         }        
         
-        public static void LoadPages(this BaseDataContext context, Stream stream)
+        public static void LoadPages(this DbApplicationContext context, Stream stream)
         {
             var pages = Generator.LoadXml<List<Page>>(stream);
 
@@ -30,7 +30,7 @@ namespace Instatus
             }
         }
 
-        public static Page AddOrMergePage(this BaseDataContext context, Page page)
+        public static Page AddOrMergePage(this DbApplicationContext context, Page page)
         {
             Page merged;
 

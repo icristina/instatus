@@ -11,7 +11,7 @@ using Instatus.Models;
 
 namespace Instatus.Areas.Microsite.Controllers
 {
-    public class RobotsController : BaseController<IDataContext>
+    public class RobotsController : BaseController<IApplicationContext>
     {
         public ActionResult Index()
         {

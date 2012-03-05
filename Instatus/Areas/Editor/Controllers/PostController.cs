@@ -16,7 +16,7 @@ using Instatus.Areas.Editor.Models;
 
 namespace Instatus.Areas.Editor.Controllers
 {
-    public class PostViewModel : BaseViewModel<Post, IDataContext>
+    public class PostViewModel : BaseViewModel<Post, IApplicationContext>
     {
         [Category("Overview")]
         [Display(Order = 1)]
@@ -86,7 +86,7 @@ namespace Instatus.Areas.Editor.Controllers
     
     [Authorize(Roles = "Editor")]
     [Description("Posts")]
-    public class PostController : ScaffoldController<PostViewModel, Post, IDataContext, int>
+    public class PostController : ScaffoldController<PostViewModel, Post, IApplicationContext, int>
     {
         public override IEnumerable<Post> Query(IEnumerable<Post> set, WebQuery query)
         {

@@ -7,6 +7,7 @@ using Instatus.Data;
 using Instatus.Services;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Instatus.Models;
 
 namespace Instatus.Web
 {
@@ -25,7 +26,7 @@ namespace Instatus.Web
             {
                 if (baseUri.IsEmpty())
                 {
-                    using (var db = WebApp.GetService<IDataContext>())
+                    using (var db = WebApp.GetService<IApplicationContext>())
                     {
                         if (db == null && HttpContext.Current.Request != null)
                         {

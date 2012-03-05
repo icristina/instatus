@@ -9,6 +9,6 @@ namespace Instatus.Data
 {
     public interface IDataImport
     {
-        void ImportRow(DbContext context, DataRow row);
+        void ImportRow(IDbContext context, DataRow row);
     }
 }

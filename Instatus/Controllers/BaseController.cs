@@ -99,7 +99,7 @@ namespace Instatus.Controllers
         [NonAction]
         public ActionResult Page(string slug = null)
         {
-            using (var db = WebApp.GetService<IContentRepository>())
+            using (var db = WebApp.GetService<IPageContext>())
             {
                 ViewData.Model = db.GetPage(slug ?? RouteData.ActionName());
             }

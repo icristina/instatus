@@ -14,7 +14,7 @@ namespace Instatus.Adapters
     [PartCreationPolicy(CreationPolicy.NonShared)]   
     public class NotificationsAdapter : IContentAdapter
     {
-        public void Process(IContentItem contentItem, IContentRepository contentRepository, string hint)
+        public void Process(IContentItem contentItem, IPageContext pageContext, string hint)
         {
             if (contentItem is IUserGeneratedContent) // add page notifications to extensions, to allow ExtensionsAll<Notification>
             {
@@ -28,7 +28,7 @@ namespace Instatus.Adapters
             
             var applicationNotifications = WebCache.Value(() =>
             {
-                using (var context = WebApp.GetService<IDataContext>())
+                using (var context = WebApp.GetService<IApplicationContext>())
                 {
                     return context.Messages.OfType<Notification>().Where(n => n.Page is Application).ToList().Randomize();
                 }
