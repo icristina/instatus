@@ -110,8 +110,14 @@ namespace Instatus.Web
 
         private static bool IsRelativePathInCategory(string relativePath, Category category)
         {
-            var fileExtension = Path.GetExtension(relativePath).ToLower().Substring(1);
-            return definitions.Any(d => d.Category == category && d.Extensions.Any(e => e == fileExtension));
+            var extension = Path.GetExtension(relativePath);
+
+            if (extension.IsEmpty())
+                return false;
+
+            var normalizedExtension = Path.GetExtension(relativePath).ToLower().Substring(1);
+            
+            return definitions.Any(d => d.Category == category && d.Extensions.Any(e => e == normalizedExtension));
         }
 
         public static bool IsRelativePathPhoto(string relativePath)

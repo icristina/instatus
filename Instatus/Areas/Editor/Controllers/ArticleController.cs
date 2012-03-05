@@ -40,9 +40,8 @@ namespace Instatus.Areas.Editor.Controllers
         public VideoViewModel<Article> Video { get; set; }
 
         [Category("Links")]
-        [ScaffoldColumn(true)]
         [Display(Order = 5)]
-        public IEnumerable<LinkViewModel> Links { get; set; }
+        public CreativeViewModel<Article> Creative { get; set; }
 
         [Category("Meta Tags")]
         [Display(Order = 6)]
@@ -64,29 +63,12 @@ namespace Instatus.Areas.Editor.Controllers
         {
             base.Load(model);
 
-            Links = model.Document.Links.Select(l => new LinkViewModel()
-            {
-                Uri = l.Uri,
-                Name = l.Title,
-                Picture = l.Picture
-            })
-            .ToList()
-            .Pad(10);
-
             Parent = LoadAssociation<Page, Article>(model.Parents);
         }
 
         public override void Save(Article model)
         {
             base.Save(model);
-
-            model.Document.Links = Links.RemoveNullOrEmpty().Select(l => new WebLink()
-            {
-                Uri = l.Uri,
-                Title = l.Name,
-                Picture = l.Picture                
-            })
-            .ToList();
 
             model.Parents = SaveAssociation<Page, Article>(Context.Pages, model.Parents, Parent);
         }
@@ -102,6 +84,7 @@ namespace Instatus.Areas.Editor.Controllers
         {
             Overview = new OverviewViewModel<Article>();
             Document = new DocumentViewModel<Article>();
+            Creative = new CreativeViewModel<Article>();
             Video = new VideoViewModel<Article>();
             MetaTags = new MetaTagsViewModel<Article>();
             Markup = new MarkupViewModel<Article>();
