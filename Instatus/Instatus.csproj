@@ -146,6 +146,7 @@
     <Compile Include="Data\IDataContext.cs" />
     <Compile Include="Data\IDataExport.cs" />
     <Compile Include="Data\IDataImport.cs" />
+    <Compile Include="Data\IDbContext.cs" />
     <Compile Include="Data\IHasPermission.cs" />
     <Compile Include="Data\IHasValue.cs" />
     <Compile Include="Data\InMemoryDataContext.cs" />
@@ -168,6 +169,7 @@
     <Compile Include="Models\Award.cs" />
     <Compile Include="Models\Brand.cs" />
     <Compile Include="Data\IFriendlyIdentifier.cs" />
+    <Compile Include="Models\Listing.cs" />
     <Compile Include="Models\Notification.cs" />
     <Compile Include="Models\News.cs" />
     <Compile Include="Models\Region.cs" />

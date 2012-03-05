@@ -184,6 +184,15 @@ namespace Instatus
             return null;
         }
 
+        public static T FirstMemberOfType<T>(this object graph) where T : class
+        {
+            return graph.GetType()
+                    .GetProperties()
+                    .Where(property => typeof(T).IsAssignableFrom(property.PropertyType))
+                    .Select(property => property.GetValue(graph, null))
+                    .First() as T;
+        }
+
         public static void ActivateCollections(this object target)
         {
             foreach (var property in target.GetType().GetProperties().Where(p => p.PropertyType.IsGenericType && p.PropertyType.GetGenericTypeDefinition() == typeof(ICollection<>)).ToList())

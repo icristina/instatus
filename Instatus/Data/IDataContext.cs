@@ -7,7 +7,7 @@ using Instatus.Models;
 
 namespace Instatus.Data
 {
-    public interface IDataContext : IDisposable
+    public interface IDataContext : IDbContext, IDisposable
     {
         IDbSet<Page> Pages { get; }
         IDbSet<User> Users { get; }
@@ -28,6 +28,5 @@ namespace Instatus.Data
         IDbSet<Taxonomy> Taxonomies { get; }
         IDbSet<Log> Logs { get; }
         IDbSet<Phrase> Phrases { get; }
-        int SaveChanges();
     }
 }

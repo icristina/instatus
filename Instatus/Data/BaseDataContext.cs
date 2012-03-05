@@ -23,6 +23,11 @@ namespace Instatus.Data
 {
     public class BaseDataContext : DbContext, IDataContext, IContentRepository
     {
+        public new IDbSet<T> Set<T>() where T : class
+        {
+            return base.Set<T>();
+        }  
+        
         public IDbSet<Page> Pages { get; set; }
         public IDbSet<User> Users { get; set; }
         public IDbSet<Role> Roles { get; set; }
@@ -45,8 +50,6 @@ namespace Instatus.Data
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Conventions.Remove<IncludeMetadataConvention>();
-
             var page = modelBuilder.Entity<Page>();
 
             page.HasMany(p => p.Pages).WithMany(p => p.Parents).Map(m => m.ToTable("RelatedPages"));
@@ -72,7 +75,7 @@ namespace Instatus.Data
             user.HasMany(u => u.Credentials).WithOptional(c => c.User);
         }
 
-        public override int SaveChanges()
+        public new void SaveChanges()
         {
             // Entity<Page>().Relationship.WithCascadeOnDelete() could be used in model builder
             foreach (var deletedEntity in ChangeTracker.Entries().Where(e => e.State == EntityState.Deleted))
@@ -99,7 +102,7 @@ namespace Instatus.Data
                 deletedEntity.State = EntityState.Deleted;
             }
             
-            return base.SaveChanges();
+            base.SaveChanges();
         }
 
         public IOrderedQueryable<Activity> GetActivities(WebQuery query)
@@ -297,6 +300,8 @@ namespace Instatus.Data
                     return pages.OfType<News>();
                 case WebKind.Profile:
                     return pages.OfType<Profile>();
+                case WebKind.Listing:
+                    return pages.OfType<Listing>();
                 default:
                     return pages;
             }

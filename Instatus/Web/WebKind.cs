@@ -16,6 +16,7 @@ namespace Instatus.Web
         CaseStudy,
         Catalog,
         Event,
+        Listing,
         Group,
         Job,
         News,

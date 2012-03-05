@@ -32,6 +32,7 @@ namespace Instatus.Models
     [KnownType(typeof(Achievement))]
     [KnownType(typeof(News))]
     [KnownType(typeof(Region))]
+    [KnownType(typeof(Listing))]
     public class Page : IUserGeneratedContent, IExtensionPoint, INavigableContent, IContentItem, IFriendlyIdentifier, ISyndicatable
     {
         public int Id { get; set; }

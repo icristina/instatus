@@ -96,12 +96,7 @@ namespace Instatus.Areas.Editor.Controllers
         
         public IDbSet<WebLink> Items { get; set; }
 
-        public int SaveChanges()
-        {
-            return 0;
-        }
-
-        public void Dispose()
+        public void SaveChanges()
         {
 
         }

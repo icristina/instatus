@@ -29,9 +29,14 @@ namespace Instatus.Data
         public IDbSet<Log> Logs { get; private set; }
         public IDbSet<Phrase> Phrases { get; private set; }
 
-        public int SaveChanges()
+        public IDbSet<T> Set<T>() where T : class
         {
-            return 0;
+            return this.FirstMemberOfType<IDbSet<T>>();
+        }
+
+        public void SaveChanges()
+        {
+
         }
 
         public void Dispose()

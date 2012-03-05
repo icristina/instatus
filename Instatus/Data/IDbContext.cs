@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
-using System.Data.Entity;
 
 namespace Instatus.Data
 {
-    public interface IRepository<T> where T : class
+    public interface IDbContext
     {
-        IDbSet<T> Items { get; }
+        IDbSet<T> Set<T>() where T : class;
         void SaveChanges();
     }
 }

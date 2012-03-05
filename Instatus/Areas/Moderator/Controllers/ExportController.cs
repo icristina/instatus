@@ -91,12 +91,7 @@ namespace Instatus.Areas.Moderator.Controllers
             }
         }
 
-        public int SaveChanges()
-        {
- 	        return 0;
-        }
-
-        public void  Dispose()
+        public void SaveChanges()
         {
 
         }
