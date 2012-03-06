@@ -133,5 +133,39 @@ namespace Instatus
         {
             return Range.Max(t1, t2);
         }
+
+        public static DateTime StartDate(WebMode mode)
+        {
+            var today = DateTime.Today;
+
+            switch (mode)
+            {
+                case WebMode.Year:
+                    return new DateTime(today.Year, 1, 1);
+                case WebMode.Month:
+                    return new DateTime(today.Year, today.Month, 1);
+                case WebMode.Week:
+                    return today.AddDays((int)today.DayOfWeek);
+                default:
+                    return today;
+            }
+        }
+
+        public static DateTime? EndDate(this DateTime startTime, WebMode mode)
+        {
+            switch (mode)
+            {
+                case WebMode.Day:
+                    return startTime.AddDays(1);
+                case WebMode.Week:
+                    return startTime.AddDays(7);
+                case WebMode.Month:
+                    return startTime.AddMonths(1);
+                case WebMode.Year:
+                    return startTime.AddYears(1);
+                default:
+                    return null;
+            }
+        }
     }
 }

@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.Linq;
 using System.Web;
 using Instatus.Models;
 
-namespace Instatus
+namespace Instatus.Web
 {
-    public static class SchemaOrgExtensions
+    [Export(typeof(IWebVocabulary))]
+    [PartCreationPolicy(CreationPolicy.Shared)]       
+    public class SchemaOrgVocabulary : IWebVocabulary
     {
         private static Dictionary<Type, string> schemas = new Dictionary<Type, string>()
         {
@@ -23,14 +26,14 @@ namespace Instatus
             { typeof(User), "Person" },
             { typeof(Profile), "Person" }
         };
-        
-        private static string GetTypeName(this object graph)
+
+        private string GetTypeName(object graph)
         {
             var type = graph.GetType();
             return schemas.ContainsKey(type) ? schemas[type] : "CreativeWork";
         }
 
-        public static string GetItemType(this object graph)
+        public string GetItemType(object graph)
         {
             return @"http://schema.org/" + GetTypeName(graph);
         }

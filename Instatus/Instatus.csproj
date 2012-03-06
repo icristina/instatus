@@ -125,7 +125,6 @@
     <Compile Include="Areas\Moderator\Controllers\ExportController.cs" />
     <Compile Include="Areas\Developer\Controllers\UserController.cs" />
     <Compile Include="Areas\Editor\Controllers\TagController.cs" />
-    <Compile Include="Areas\Microsite\SchemaOrgExtensions.cs" />
     <Compile Include="Areas\Moderator\ModeratorAreaRegistration.cs" />
     <Compile Include="Areas\Twitter\Twitter.cs" />
     <Compile Include="Areas\Typekit\Controllers\TypekitController.cs" />
@@ -133,7 +132,6 @@
     <Compile Include="Areas\Facebook\Controllers\FacebookController.cs" />
     <Compile Include="Areas\Facebook\Facebook.cs" />
     <Compile Include="Areas\Facebook\FacebookAttribute.cs" />
-    <Compile Include="Areas\Microsite\Controllers\RobotsController.cs" />
     <Compile Include="Areas\Wordpress\Controllers\WordpressApiController.cs" />
     <Compile Include="Areas\Wordpress\WordpressAreaRegistration.cs" />
     <Compile Include="Areas\YouTube\YouTube.cs" />
@@ -142,6 +140,7 @@
     <Compile Include="Commands\GenericCommand.cs" />
     <Compile Include="Commands\StatusCommand.cs" />
     <Compile Include="Commands\SpamCommand.cs" />
+    <Compile Include="Queries\ActivityQueries.cs" />
     <Compile Include="Web\IContentAdapter.cs" />
     <Compile Include="Export\SubscriberExport.cs" />
     <Compile Include="Models\IPageContext.cs" />
@@ -185,7 +184,7 @@
     <Compile Include="Models\IUserGeneratedContent.cs" />
     <Compile Include="Models\Review.cs" />
     <Compile Include="Queries\ApplicationQueries.cs" />
-    <Compile Include="Queries\ContentRepositoryQueries.cs" />
+    <Compile Include="Queries\PageQueries.cs" />
     <Compile Include="Queries\EventQueries.cs" />
     <Compile Include="Queries\LinkQueries.cs" />
     <Compile Include="Queries\LoggingQueries.cs" />
@@ -202,7 +201,9 @@
     <Compile Include="Web\FatalErrorResult.cs" />
     <Compile Include="Web\IContentItem.cs" />
     <Compile Include="Web\IVirtualPathRewriter.cs" />
+    <Compile Include="Web\IWebVocabulary.cs" />
     <Compile Include="Web\IWebView.cs" />
+    <Compile Include="Web\SchemaOrgVocabulary.cs" />
     <Compile Include="Web\TwoLevelViewCache.cs" />
     <Compile Include="Web\WebApp.cs" />
     <Compile Include="Web\WebAppSetting.cs" />
@@ -281,7 +282,7 @@
     <Compile Include="Web\HttpTraceAttribute.cs" />
     <Compile Include="Web\WebContentType.cs" />
     <Compile Include="Controllers\BaseController.cs" />
-    <Compile Include="Areas\Microsite\Controllers\PageController.cs" />
+    <Compile Include="Areas\Microsite\Controllers\StreamController.cs" />
     <Compile Include="Data\DropTablesInitializer.cs" />
     <Compile Include="Extensions\HtmlHelperExtensions.cs" />
     <Compile Include="Extensions\ObjectExtensions.cs" />

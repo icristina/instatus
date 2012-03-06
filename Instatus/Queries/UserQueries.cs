@@ -79,5 +79,40 @@ namespace Instatus
 
             return award.IsEmpty() ? null : (T)award.Page;
         }
+
+        public static IEnumerable<User> GetUsers(this IApplicationContext context, WebQuery query)
+        {
+            return context
+                    .SerializationSafe()
+                    .Users
+                    .Expand(query.Expand)
+                    .Filter(query)
+                    .Sort(query.Sort);
+        }
+
+        public static IQueryable<User> Filter(this IQueryable<User> queryable, WebQuery query)
+        {
+            var filtered = queryable;
+
+            var status = query.Status.ToString();
+
+            filtered = filtered.Where(u => u.Status == status);
+
+            if (!query.Uri.IsEmpty())
+                filtered = filtered.Where(u => u.Credentials.Any(c => query.Uri.Contains(c.Uri)));
+
+            return filtered;
+        }
+
+        public static IOrderedQueryable<User> Sort(this IQueryable<User> queryable, WebSort sort)
+        {
+            switch (sort)
+            {
+                case WebSort.Recency:
+                    return queryable.OrderByDescending(u => u.CreatedTime);
+                default:
+                    return queryable.OrderBy(u => u.FullName);
+            }
+        }
     }
 }

@@ -41,7 +41,7 @@ namespace Instatus.Data
 
                 TotalItemCount = pagedCollection.TotalItemCount;
             }
-            else if (list is IOrderedQueryable<T> || list is IOrderedEnumerable<T>)
+            else
             {
                 this.Append(list.Paging(pageIndex, pageSize).ToList());
                 

@@ -66,21 +66,10 @@ namespace Instatus
 
         public static Brand GetCurrentBrand(this IApplicationContext context)
         {
-            var brand = context.Pages
+            return context.Pages
                     .Include(p => p.Links)
                     .OfType<Brand>()
                     .FirstOrDefault();
-
-            if (brand != null)
-                return brand;
-
-            var application = context.GetCurrentApplication();
-
-            return new Brand()
-            {
-                Name = application.Name,
-                Picture = "~/Content/logo.png"
-            };
         }
 
         public static Offer GetLatestOffer(this IApplicationContext context)

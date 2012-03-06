@@ -166,7 +166,7 @@ namespace Instatus.Models
 
         public virtual WebEntry ToWebEntry()
         {
-            return pageContextQueries.SelectWebEntry(this);
+            return PageQueries.SelectWebEntry(this);
         }
 
         public SiteMapNode ToSiteMapNode(SiteMapProvider sitemap, string routeName = WebRoute.Page)

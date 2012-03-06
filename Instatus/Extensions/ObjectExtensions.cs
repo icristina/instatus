@@ -184,6 +184,12 @@ namespace Instatus
             return null;
         }
 
+        public static string GetVocabularyItemType(this object graph)
+        {
+            var vocabulary = WebApp.GetService<IWebVocabulary>();
+            return vocabulary == null ? string.Empty : vocabulary.GetItemType(graph);
+        }
+
         public static T FirstMemberOfType<T>(this object graph) where T : class
         {
             return graph.GetType()

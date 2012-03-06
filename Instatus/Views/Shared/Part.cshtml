@@ -4,7 +4,10 @@
 {
     var stream = (WebStream)Model;
     
-    @Html.Action("Stream", stream.Query.ToRouteValueDictionary().AddRequestParams().AddNonEmptyValue("viewName", stream.ViewName))
+    @Html.Action("Index", "Stream", stream.Query.ToRouteValueDictionary()
+        .AddRequestParams()
+        .AddNonEmptyValue("viewName", stream.ViewName)
+        .AddNonEmptyValue("area", "Microsite"))
 }
 else if (Model is WebPartial)
 {

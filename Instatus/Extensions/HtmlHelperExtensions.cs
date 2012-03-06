@@ -326,18 +326,6 @@ namespace Instatus
             return new MvcHtmlString(markup);
         }
 
-        public static MvcForm BeginAuthenticatedForm<T>(this HtmlHelper<T> html, string actionName, string controllerName, string areaName)
-        {
-            return html.BeginForm(actionName, controllerName, new { area = areaName }, FormMethod.Post, new { data_auth_required = true } );
-        }
-
-        public static IDictionary<string, object> RequireAuthentication<T>(this HtmlHelper<T> html)
-        {
-            return new Dictionary<string, object>() {
-                { "data-auth-required", true }
-            };
-        }
-
         public static MvcHtmlString InlineData<T>(this HtmlHelper<T> html, string variableName, object graph)
         {
             return new MvcHtmlString(string.Format("<script>var {0} = {1};</script>", variableName, graph.ToJson()));

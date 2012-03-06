@@ -25,5 +25,35 @@ namespace Instatus
         {
             return links.Where(l => l.Location != null && l.HttpStatusCode > 300 && l.HttpStatusCode < 303);
         }
+
+        public static IEnumerable<Link> GetLinks(this IApplicationContext context, WebQuery filter)
+        {
+            return context
+                    .SerializationSafe()
+                    .Links
+                    .Filter(filter)
+                    .Sort(filter.Sort);
+        }
+
+        public static IQueryable<Link> Filter(this IQueryable<Link> queryable, WebQuery filter)
+        {
+            var filtered = queryable;
+
+            if (!filter.Category.IsEmpty())
+                filtered = filtered.Where(l => l.Rel == filter.Category);
+
+            return filtered;
+        }
+
+        public static IQueryable<Link> Sort(this IQueryable<Link> queryable, WebSort sort)
+        {
+            switch (sort)
+            {
+                case WebSort.Alphabetical:
+                    return queryable.OrderByDescending(l => l.Name);
+                default:
+                    return queryable.OrderBy(l => l.Priority);
+            }
+        }
     }
 }
