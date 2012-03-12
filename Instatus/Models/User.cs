@@ -23,6 +23,8 @@ namespace Instatus.Models
 
         private string emailAddress;
 
+        [Required]
+        [RegularExpression(ValidationPatterns.EmailAddress)]
         public string EmailAddress
         {
             get
