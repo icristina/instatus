@@ -55,10 +55,10 @@ namespace Instatus.Controllers
 
             var columns = new List<string>();
 
-            if (typeof(IFriendlyIdentifier).IsAssignableFrom(typeof(TModel)))
+            if (TypeExtensions.Implements<IFriendlyIdentifier, TModel>())
                 columns.Add("Slug");
 
-            if (typeof(IUserGeneratedContent).IsAssignableFrom(typeof(TModel)))
+            if (TypeExtensions.Implements<IUserGeneratedContent, TModel>())
                 columns.Add("Status");
 
             webView.Columns = columns.ToArray();
@@ -165,6 +165,10 @@ namespace Instatus.Controllers
             {
                 set = (Context as DbContext).Set<TModel>();
             }
+            else if (Context is IDbContext)
+            {
+                set = (Context as IDbContext).Set<TModel>();
+            }
             else if (Context is IDbSet<TModel>)
             {
                 set = Context as IDbSet<TModel>;
@@ -184,6 +188,10 @@ namespace Instatus.Controllers
             if (Context is DbContext)
             {
                 (Context as DbContext).SaveChanges();
+            }
+            else if (Context is IDbContext)
+            {
+                (Context as IDbContext).SaveChanges();
             }
             else if (Context is IRepository<TModel>)
             {

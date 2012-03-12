@@ -14,7 +14,7 @@ using Instatus.Data;
 
 namespace Instatus
 {
-    public static class CollectionExtensions
+    public static class EnumerableExtensions
     {
         public static IEnumerable<T> Paging<T>(this IEnumerable<T> list, int pageIndex, int pageSize)
         {

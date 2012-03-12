@@ -135,12 +135,12 @@ namespace Instatus.Data
 
         public static void SaveCsv(IEnumerable records, Stream stream)
         {
-            if (records == null || CollectionExtensions.Count(records) == 0)
+            if (records == null || EnumerableExtensions.Count(records) == 0)
                 return;
 
             using (var writer = new CsvFileWriter(stream))
             {
-                var properties = CollectionExtensions.First(records).GetType().GetProperties();
+                var properties = EnumerableExtensions.First(records).GetType().GetProperties();
                 var header = properties.Select(p => p.Name.ToCapitalizedDelimited()).ToList();
 
                 writer.WriteRow(header);
