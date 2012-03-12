@@ -33,23 +33,7 @@ namespace Instatus.Web
             WebBootstrap.ErrorHandling();
             WebBootstrap.LegacyUserAgents();
             WebBootstrap.ViewLocation();
-
-            DynamicModuleUtility.RegisterModule(typeof(ConfigurationModule));
-        }
-
-        private class ConfigurationModule : IHttpModule
-        {
-            public void Dispose()
-            {
-                
-            }
-
-            public void Init(HttpApplication context)
-            {
-                var ns = context.GetType().BaseType.Namespace + ".Controllers";
-                
-                ControllerBuilder.Current.DefaultNamespaces.Add(ns);
-            }
+            WebBootstrap.RemoveServerFingerprint();
         }
     }
 }

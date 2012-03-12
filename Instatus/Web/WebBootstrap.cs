@@ -32,6 +32,9 @@ namespace Instatus.Web
             // virtual path providers
             HostingEnvironment.RegisterVirtualPathProvider(new EmbeddedVirtualPathProvider());
             HostingEnvironment.RegisterVirtualPathProvider(new PackageVirtualPathProvider());
+
+            // namespaces
+            DynamicModuleUtility.RegisterModule(typeof(MvcConfigurationModule));
         }
 
         public static void Auth()
@@ -50,10 +53,15 @@ namespace Instatus.Web
 
         public static void Routes()
         {
+            // allow Elmah and other handlers in route or sub-folder
             RouteTable.Routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
             RouteTable.Routes.IgnoreRoute("{location}/{resource}.axd/{*pathInfo}");
+            
+            // static content
             RouteTable.Routes.IgnoreRoute("Scripts/{*pathInfo}");
             RouteTable.Routes.IgnoreRoute("Content/{*pathInfo}");
+            
+            // limit mvc 404 warnings
             RouteTable.Routes.IgnoreRoute("favicon.ico");
         }
 
@@ -76,6 +84,7 @@ namespace Instatus.Web
         // http://blogs.msdn.com/b/marcinon/archive/2011/08/16/optimizing-mvc-view-lookup-performance.aspx
         public static void ViewLocation()
         {
+            // limits view location lookups
             ViewEngines.Engines.Clear();
 
             var razorViewEngine = new RazorViewEngine();
@@ -85,5 +94,17 @@ namespace Instatus.Web
         }
 
         public static bool LoggingEnabled { get; set; }
+
+        // http://serverfault.com/questions/24885/how-to-remove-iis-asp-net-response-headers
+        public static void RemoveServerFingerprint()
+        {
+            // limits warnings from automated intrusion detection software
+            // [1] add <httpRuntime enableVersionHeader="false"/> to remove X-AspNet-Version header
+            // [2] remove X-AspNetMvc-Version header
+            MvcHandler.DisableMvcResponseHeader = true;
+
+            // [3] remove all redundant server headers
+            DynamicModuleUtility.RegisterModule(typeof(FilterResponseHeadersModule));
+        }
     }
 }

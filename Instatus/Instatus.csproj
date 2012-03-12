@@ -142,6 +142,7 @@
     <Compile Include="Commands\SpamCommand.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="Queries\ActivityQueries.cs" />
+    <Compile Include="Web\FilterResponseHeadersModule.cs" />
     <Compile Include="Web\IContentAdapter.cs" />
     <Compile Include="Export\SubscriberExport.cs" />
     <Compile Include="Models\IPageContext.cs" />
@@ -204,6 +205,7 @@
     <Compile Include="Web\IVirtualPathRewriter.cs" />
     <Compile Include="Web\IWebVocabulary.cs" />
     <Compile Include="Web\IWebView.cs" />
+    <Compile Include="Web\MvcConfigurationModule.cs" />
     <Compile Include="Web\SchemaOrgVocabulary.cs" />
     <Compile Include="Web\TwoLevelViewCache.cs" />
     <Compile Include="Web\WebApp.cs" />
