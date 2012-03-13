@@ -140,6 +140,7 @@
     <Compile Include="Commands\GenericCommand.cs" />
     <Compile Include="Commands\StatusCommand.cs" />
     <Compile Include="Commands\SpamCommand.cs" />
+    <Compile Include="Data\IJob.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="Queries\ActivityQueries.cs" />
     <Compile Include="Web\FilterResponseHeadersModule.cs" />

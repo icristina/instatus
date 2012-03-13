@@ -106,7 +106,7 @@ namespace Instatus.Web
 
         // ping server every minute
         // http://www.west-wind.com/weblog/posts/2007/May/10/Forcing-an-ASPNET-Application-to-stay-alive
-        public void KeepAlive()
+        public static void KeepAlive()
         {
             TaskExtensions.Infinite(() =>
             {

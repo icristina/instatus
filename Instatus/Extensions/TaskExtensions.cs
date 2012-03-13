@@ -19,14 +19,17 @@ namespace Instatus
             return task;
         }
 
-        public static void Infinite(this Action action, int milliseconds = 1000)
+        // Alternative is EventLoopScheduler in Reactive Extensions
+        // http://msdn.microsoft.com/en-us/library/hh229870(v=vs.103).aspx
+        // http://programmers.stackexchange.com/questions/13711/servicing-background-tasks-on-a-large-site
+        public static void Infinite(this Action action, int delay = 1000)
         {
             var task = new Task(action, TaskCreationOptions.LongRunning)
-                            .Delay(milliseconds)
+                            .Delay(delay)
                             .IgnoreExceptions()
                             .ContinueWith(t =>
                             {
-                                Infinite(action, milliseconds);
+                                Infinite(action, delay);
                             }, TaskContinuationOptions.OnlyOnRanToCompletion);
         }
 
@@ -52,14 +55,14 @@ namespace Instatus
 
         public static Task Delay(this Task task, int milliseconds)
         {
-            var timer = new Timer(_ => Start(task), null, milliseconds, -1L);
+            var timer = new Timer(_ => StartDelayedTask(task), null, milliseconds, -1L);
 
             timers.AddOrUpdate(task, timer, (k, t) => t);
             
             return task;
         }
 
-        private static void Start(Task task)
+        private static void StartDelayedTask(Task task)
         {
             task.Start();
 
