@@ -140,7 +140,6 @@
     <Compile Include="Commands\GenericCommand.cs" />
     <Compile Include="Commands\StatusCommand.cs" />
     <Compile Include="Commands\SpamCommand.cs" />
-    <Compile Include="Data\IJob.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="Queries\ActivityQueries.cs" />
     <Compile Include="Web\FilterResponseHeadersModule.cs" />
@@ -211,6 +210,7 @@
     <Compile Include="Web\TwoLevelViewCache.cs" />
     <Compile Include="Web\WebApp.cs" />
     <Compile Include="Web\WebAppSetting.cs" />
+    <Compile Include="Data\MessageQueue.cs" />
     <Compile Include="Web\WebBootstrap.cs" />
     <Compile Include="Web\WebCache.cs" />
     <Compile Include="Web\WebCategory.cs" />
