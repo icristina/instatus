@@ -9,6 +9,7 @@ using System.Configuration;
 using Instatus.Services;
 using System.Web.Mvc;
 using Instatus.Data;
+using System.Net;
 
 namespace Instatus.Web
 {
@@ -99,6 +100,18 @@ namespace Instatus.Web
         public static bool Can(string action, object instance)
         {
             return GlobalPermission == null || GlobalPermission.Can(action, instance);
+        }
+
+        public static string PingUrl { get; set; }
+
+        // ping server every minute
+        // http://www.west-wind.com/weblog/posts/2007/May/10/Forcing-an-ASPNET-Application-to-stay-alive
+        public void KeepAlive()
+        {
+            TaskExtensions.Infinite(() =>
+            {
+                new WebClient().DownloadString(PingUrl ?? WebPath.BaseUri.ToString());
+            }, 60 * 1000 * 1); 
         }
     }
 
