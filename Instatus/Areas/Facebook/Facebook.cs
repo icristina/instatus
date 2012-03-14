@@ -144,9 +144,9 @@ namespace Instatus.Areas.Facebook
             }
         }
 
-        public static List<WebEntry> Feed(object resource, string accessToken)
+        public static List<WebEntry> Feed(object resource, string accessToken, Connection connection = Connection.Feed)
         {
-            var response = Request(resource, accessToken, Connection.Feed);
+            var response = Request(resource, accessToken, connection);
             var feed = new List<WebEntry>();
 
             foreach (var entry in response.data)

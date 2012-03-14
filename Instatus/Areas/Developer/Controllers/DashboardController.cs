@@ -59,7 +59,7 @@ namespace Instatus.Areas.Developer.Controllers
                 return Request.FileInputStream();
 
             if (!path.IsEmpty())
-                return new LocalStorageBlobService().Stream(path);
+                return new FileSystemBlobService().Stream(path);
 
             return null;
         }

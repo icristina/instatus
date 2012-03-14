@@ -3,18 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Instatus.Services
+namespace Instatus.Data
 {
-    // http://brentedwards.net/2010/04/13/roll-your-own-simple-message-bus-event-aggregator/
-    public interface IMessageBus
-    {
-        void Subscribe<TMessage>(Action<TMessage> handler);
-        void Unsubscribe<TMessage>(Action<TMessage> handler);
-        void Publish<TMessage>(TMessage message);
-        void Publish(Object message);
-    }    
-
-    public sealed class MessageBus : IMessageBus
+    // http://brentedwards.net/2010/04/13/roll-your-own-simple-message-bus-event-aggregator/    
+    public class InMemoryMessageBus : IMessageBus
     {
         private Dictionary<Type, List<Object>> _Subscribers = new Dictionary<Type, List<Object>>();
 

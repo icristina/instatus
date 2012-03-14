@@ -12,9 +12,9 @@ using Instatus.Data;
 namespace Instatus.Services
 {
     [Export(typeof(IBlobService))]
-    public class LocalStorageBlobService : IBlobService
+    public class FileSystemBlobService : IBlobService
     {       
-        public static string BasePath = "~/LocalStorage/";
+        public static string BasePath = "~/Media/";
 
         public static void EnsureFolderExists(string absolutePath)
         {

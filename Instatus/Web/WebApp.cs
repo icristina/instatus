@@ -73,7 +73,7 @@ namespace Instatus.Web
             return ConfigurationManager.AppSettings[name].AsBoolean(defaultValue);
         }
 
-        private static IMessageBus messageBus = new MessageBus();
+        private static IMessageBus messageBus = new InMemoryMessageBus();
 
         public static void Subscribe<T>(Action<T> action)
         {

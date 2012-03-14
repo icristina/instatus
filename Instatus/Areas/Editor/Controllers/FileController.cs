@@ -56,7 +56,7 @@ namespace Instatus.Areas.Editor.Controllers
         {
             if (Request.HasFile())
             {
-                LocalStorageBlobService.Save("~/LocalStorage/" + Request.FileInputName(), Request.FileInputStream());
+                FileSystemBlobService.Save(FileSystemBlobService.BasePath + Request.FileInputName(), Request.FileInputStream());
             }
 
             return RedirectToIndex();
@@ -103,14 +103,14 @@ namespace Instatus.Areas.Editor.Controllers
 
         public FileRepository()
         {
-            var path = HostingEnvironment.MapPath(LocalStorageBlobService.BasePath);
+            var path = HostingEnvironment.MapPath(FileSystemBlobService.BasePath);
             var files = Directory.GetFiles(path);
             var links = files
                 .FilterByRules(Rules)
                 .Select(file =>
                 {
                     var fileName = Path.GetFileName(file);
-                    var uri = LocalStorageBlobService.BasePath + fileName;
+                    var uri = FileSystemBlobService.BasePath + fileName;
                     return new WebLink()
                     {
                         Uri = uri,

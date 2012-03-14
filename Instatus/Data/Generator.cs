@@ -86,7 +86,7 @@ namespace Instatus.Data
 
         public static object LoadXml(Type t, string virtualPath, IEnumerable<Type> knownTypes = null)
         {
-            using (var fs = new LocalStorageBlobService().Stream(virtualPath))
+            using (var fs = new FileSystemBlobService().Stream(virtualPath))
             {
                 return LoadXml(t, fs, knownTypes);
             }
