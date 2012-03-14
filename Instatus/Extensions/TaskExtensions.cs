@@ -22,14 +22,14 @@ namespace Instatus
         // Alternative is EventLoopScheduler in Reactive Extensions
         // http://msdn.microsoft.com/en-us/library/hh229870(v=vs.103).aspx
         // http://programmers.stackexchange.com/questions/13711/servicing-background-tasks-on-a-large-site
-        public static void Infinite(this Action action, int delay = 1000)
+        public static void Repeat(this Action action, int delay = 1000)
         {
             var task = new Task(action, TaskCreationOptions.LongRunning)
                             .Delay(delay)
                             .IgnoreExceptions()
                             .ContinueWith(t =>
                             {
-                                Infinite(action, delay);
+                                Repeat(action, delay);
                             }, TaskContinuationOptions.OnlyOnRanToCompletion);
         }
 

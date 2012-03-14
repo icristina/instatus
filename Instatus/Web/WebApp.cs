@@ -108,7 +108,7 @@ namespace Instatus.Web
         // http://www.west-wind.com/weblog/posts/2007/May/10/Forcing-an-ASPNET-Application-to-stay-alive
         public static void KeepAlive()
         {
-            TaskExtensions.Infinite(() =>
+            TaskExtensions.Repeat(() =>
             {
                 new WebClient().DownloadString(PingUrl ?? WebPath.BaseUri.ToString());
             }, 60 * 1000 * 1); 
