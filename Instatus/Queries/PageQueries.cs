@@ -139,6 +139,8 @@ namespace Instatus
                     return pages.OfType<Profile>();
                 case WebKind.Listing:
                     return pages.OfType<Listing>();
+                case WebKind.Milestone:
+                    return pages.OfType<Milestone>();
                 default:
                     return pages;
             }

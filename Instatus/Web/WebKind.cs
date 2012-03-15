@@ -30,6 +30,7 @@ namespace Instatus.Web
         User,
         Message,
         Status,
-        Link
+        Link,
+        Milestone
     }
 }

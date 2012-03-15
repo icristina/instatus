@@ -236,12 +236,12 @@ namespace Instatus
             return content.OrderBy(c => c.Priority);
         }
 
-        public static IEnumerable<T> ByRecency<T>(this IEnumerable<T> content) where T : IUserGeneratedContent
+        public static IEnumerable<T> ByRecency<T>(this IEnumerable<T> content) where T : ITimestamp
         {
             return content.OrderByDescending(c => c.CreatedTime);
         }
 
-        public static IEnumerable<T> ByCreatedTime<T>(this IEnumerable<T> content) where T : IUserGeneratedContent
+        public static IEnumerable<T> ByCreatedTime<T>(this IEnumerable<T> content) where T : ITimestamp
         {
             return content.OrderBy(c => c.CreatedTime);
         }

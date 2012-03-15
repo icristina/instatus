@@ -33,6 +33,7 @@ namespace Instatus.Models
     [KnownType(typeof(News))]
     [KnownType(typeof(Region))]
     [KnownType(typeof(Listing))]
+    [KnownType(typeof(Milestone))]
     public class Page : IEntity, IUserGeneratedContent, IExtensionPoint, INavigableContent, IContentItem, IFriendlyIdentifier, ISyndicatable
     {
         public int Id { get; set; }
@@ -265,6 +266,8 @@ namespace Instatus.Models
                     return new Region();
                 case WebKind.News:
                     return new News();
+                case WebKind.Milestone:
+                    return new Milestone();
                 default:
                     return new Page();
             }
