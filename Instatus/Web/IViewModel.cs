@@ -7,6 +7,7 @@ using System.ComponentModel.DataAnnotations;
 using Instatus.Data;
 using System.Collections;
 using System.Web.Mvc;
+using Instatus.Web;
 
 namespace Instatus.Web
 {
@@ -152,6 +153,21 @@ namespace Instatus.Web
             where T2 : T
         {
             return new MultiSelectList(set.OfType<T2>().ToList(), dataValueField, dataTextField, id);
+        }
+    }
+}
+
+namespace Instatus
+{
+    public static class ViewModelExtensions
+    {
+        public static TModel ToModel<TModel>(this IViewModel<TModel> viewModel)
+        {
+            var model = Activator.CreateInstance<TModel>();
+
+            viewModel.Save(model);
+
+            return model;
         }
     }
 }

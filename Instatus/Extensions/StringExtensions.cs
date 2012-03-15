@@ -173,7 +173,7 @@ namespace Instatus
 
         public static bool Match(this string text, object match)
         {
-            if (text.IsEmpty()) return false;
+            if (text.IsEmpty() || match.IsEmpty()) return false;
             return text.Equals(match.ToString(), DefaultComparison);
         }
 
