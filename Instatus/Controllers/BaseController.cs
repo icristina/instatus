@@ -21,8 +21,10 @@ namespace Instatus.Controllers
 
         protected override void Dispose(bool disposing)
         {
-            if (Context is IDisposable)
-                ((IDisposable)Context).Dispose();
+            if (disposing)
+            {
+                Context.TryDispose();
+            }
 
             base.Dispose(disposing);
         }

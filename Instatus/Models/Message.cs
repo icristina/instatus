@@ -14,7 +14,7 @@ namespace Instatus.Models
     [KnownType(typeof(Review))]
     [KnownType(typeof(Note))]
     [KnownType(typeof(Notification))]
-    public class Message : IUserGeneratedContent, IExtensionPoint, ISyndicatable
+    public class Message : IEntity, IUserGeneratedContent, IExtensionPoint, ISyndicatable
     {
         public int Id { get; set; }
         public string Body { get; set; }

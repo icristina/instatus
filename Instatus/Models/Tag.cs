@@ -6,10 +6,11 @@ using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Dynamic;
 using Instatus.Models;
+using Instatus.Data;
 
 namespace Instatus.Models
 {
-    public class Tag
+    public class Tag : IEntity
     {
         public int Id { get; set; }
         public string Name { get; set; }

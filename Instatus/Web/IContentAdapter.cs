@@ -10,6 +10,6 @@ namespace Instatus.Web
 {
     public interface IContentAdapter
     {
-        void Process(IContentItem contentItem, IPageContext pageContext, string hint);
+        void Process(IContentItem contentItem, string hint);
     }
 }

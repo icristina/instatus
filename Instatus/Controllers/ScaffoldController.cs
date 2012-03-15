@@ -55,6 +55,9 @@ namespace Instatus.Controllers
 
             var columns = new List<string>();
 
+            if (TypeExtensions.Implements<IEntity, TModel>())
+                columns.Add("Id");
+
             if (TypeExtensions.Implements<IFriendlyIdentifier, TModel>())
                 columns.Add("Slug");
 

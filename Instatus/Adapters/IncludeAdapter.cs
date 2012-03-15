@@ -14,7 +14,9 @@ namespace Instatus.Adapters
     [PartCreationPolicy(CreationPolicy.NonShared)]   
     public class IncludeAdapter : IContentAdapter
     {
-        public void Process(IContentItem contentItem, IPageContext pageContext, string hint)
+        private IPageContext pageContext;
+        
+        public void Process(IContentItem contentItem, string hint)
         {
             if (contentItem.Document != null)
             {
@@ -39,6 +41,12 @@ namespace Instatus.Adapters
                         contentItem.Document.Parts.Append(childPage.Document.Parts);
                 }
             }
+        }
+
+        [ImportingConstructor]
+        public IncludeAdapter(IPageContext pageContext)
+        {
+            this.pageContext = pageContext;
         }
     }
 }

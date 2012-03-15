@@ -14,7 +14,7 @@ namespace Instatus.Adapters
     [PartCreationPolicy(CreationPolicy.NonShared)]   
     public class AccordionAdapter : IContentAdapter
     {
-        public void Process(IContentItem contentItem, IPageContext pageContext, string hint)
+        public void Process(IContentItem contentItem, string hint)
         {
             if (IsValid(contentItem))
             {

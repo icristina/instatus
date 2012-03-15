@@ -14,7 +14,9 @@ namespace Instatus.Adapters
     [PartCreationPolicy(CreationPolicy.NonShared)]   
     public class NotificationsAdapter : IContentAdapter
     {
-        public void Process(IContentItem contentItem, IPageContext pageContext, string hint)
+        private IPageContext pageContext;
+        
+        public void Process(IContentItem contentItem, string hint)
         {
             if (contentItem is IUserGeneratedContent) // add page notifications to extensions, to allow ExtensionsAll<Notification>
             {
@@ -35,6 +37,12 @@ namespace Instatus.Adapters
             }, "ApplicationNotifications");
 
             contentItem.Extensions.ApplicationNotifications = applicationNotifications;
+        }
+
+        [ImportingConstructor]
+        public NotificationsAdapter(IPageContext pageContext)
+        {
+            this.pageContext = pageContext;
         }
     }
 }

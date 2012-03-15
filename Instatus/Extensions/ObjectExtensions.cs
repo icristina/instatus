@@ -289,5 +289,13 @@ namespace Instatus
         {
             return type.IsPrimitive || type.IsValueType || type.IsAssignableFrom(typeof(string)) || type.IsAssignableFrom(typeof(DateTime?));
         }
+
+        public static bool TryDispose(this object graph)
+        {
+            using (graph as IDisposable)
+            {
+                return true;
+            }
+        }
     }
 }

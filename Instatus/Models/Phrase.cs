@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Instatus.Data;
 
 namespace Instatus.Models
 {
-    public class Phrase
+    public class Phrase : IEntity
     {
         public int Id { get; set; }
         public string Locale { get; set; }

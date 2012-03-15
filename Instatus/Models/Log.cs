@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Instatus.Data;
 
 namespace Instatus.Models
 {
-    public class Log
+    public class Log : IEntity
     {
         public int Id { get; set; }
         public string Uri { get; set; }

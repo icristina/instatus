@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.ComponentModel.DataAnnotations;
 using Instatus.Web;
+using Instatus.Data;
 
 namespace Instatus.Models
 {
-    public class Role
+    public class Role : IEntity
     {
         public int Id { get; set; }
         public string Name { get; set; }

@@ -24,7 +24,7 @@ namespace Instatus.Web
             {
                 if (!HttpContext.Current.Items.Contains(MefDependencyResolver.HttpContextKey))
                 {
-                    HttpContext.Current.Items.Add(HttpContextKey, new CompositionContainer(new TypeCatalog(Types)));
+                    HttpContext.Current.Items.Add(HttpContextKey, new CompositionContainer(new TypeCatalog(Types), true, null));
                 }
 
                 return (CompositionContainer)HttpContext.Current.Items[HttpContextKey];
@@ -76,15 +76,7 @@ namespace Instatus.Web
 
         public void DisposeContainer(object sender, EventArgs e)
         {
-            if (HttpContext.Current.Items.Contains(MefDependencyResolver.HttpContextKey))
-            {
-                var disposable = HttpContext.Current.Items[MefDependencyResolver.HttpContextKey] as IDisposable;
-                
-                if (disposable != null)
-                {
-                    disposable.Dispose();
-                }
-            }
+            HttpContext.Current.Items[MefDependencyResolver.HttpContextKey].TryDispose();
         }
     }
 }

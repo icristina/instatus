@@ -4,10 +4,11 @@ using System.Linq;
 using System.Web;
 using Instatus.Web;
 using System.Runtime.Serialization;
+using Instatus.Data;
 
 namespace Instatus.Models
 {
-    public class Source
+    public class Source : IEntity
     {
         public int Id { get; set; }
         public string Name { get; set; }

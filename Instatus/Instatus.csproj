@@ -140,9 +140,11 @@
     <Compile Include="Commands\GenericCommand.cs" />
     <Compile Include="Commands\StatusCommand.cs" />
     <Compile Include="Commands\SpamCommand.cs" />
+    <Compile Include="Data\IEntity.cs" />
     <Compile Include="Data\IMessageBus.cs" />
     <Compile Include="Data\IMessageQueue.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
+    <Compile Include="Models\DbPageContext.cs" />
     <Compile Include="Queries\ActivityQueries.cs" />
     <Compile Include="Web\FilterResponseHeadersModule.cs" />
     <Compile Include="Web\IContentAdapter.cs" />

@@ -14,11 +14,13 @@ namespace Instatus.Adapters
     [PartCreationPolicy(CreationPolicy.NonShared)]    
     public class DocumentAdapter : IContentAdapter
     {
-        public void Process(IContentItem contentItem, IPageContext pageContext, string hint)
+        private IPageContext pageContext;
+        
+        public void Process(IContentItem contentItem, string hint)
         {
             if (!hint.IsEmpty())
             {
-                var page = GetPage(pageContext, hint);
+                var page = GetPage(hint);
 
                 if (page != null)
                 {
@@ -27,7 +29,7 @@ namespace Instatus.Adapters
             }
         }
 
-        public virtual Page GetPage(IPageContext pageContext, string hint)
+        public virtual Page GetPage(string hint)
         {
             return pageContext.GetPage(hint);
         }
@@ -41,6 +43,12 @@ namespace Instatus.Adapters
             {
                 contentItem.Document.Description = page.Description;
             }
+        }
+
+        [ImportingConstructor]
+        public DocumentAdapter(IPageContext pageContext)
+        {
+            this.pageContext = pageContext;
         }
     }
 }

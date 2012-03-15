@@ -7,7 +7,7 @@ using Instatus.Data;
 
 namespace Instatus.Models
 {
-    public class Schedule
+    public class Schedule : IEntity
     {
         public int Id { get; set; }
         public DateTime StartTime { get; set; }

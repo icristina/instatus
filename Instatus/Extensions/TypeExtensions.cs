@@ -7,9 +7,14 @@ namespace Instatus
 {
     public static class TypeExtensions
     {
-        public static bool Implements<T1, T2>()
+        public static bool Implements<TInterface, T>()
         {
-            return typeof(T1).IsAssignableFrom(typeof(T2));
+            return typeof(TInterface).IsAssignableFrom(typeof(T));
+        }
+
+        public static bool HasAttribute<TAttribute, T>() 
+        {
+            return typeof(T).GetCustomAttributes(typeof(TAttribute), true).OfType<TAttribute>().Any();
         }
     }
 }

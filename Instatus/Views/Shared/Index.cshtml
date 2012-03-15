@@ -42,7 +42,10 @@
     </menu>
     <table class="table table-striped">
         <colgroup>
-            <col class="id" />
+            @if (Model.Columns.Contains("Id"))
+            {
+                <col class="id" />
+            }
             @if (Model.Columns.Contains("Slug"))
             {
                 <col class="slug" />
@@ -53,7 +56,10 @@
         </colgroup>
         <thead>
             <tr>
-                <th>@WebPhrase.Id</th>
+                @if (Model.Columns.Contains("Id"))
+                {
+                    <th>@WebPhrase.Id</th>
+                }                
                 @if (Model.Columns.Contains("Slug"))
                 {
                     <th>@WebPhrase.Slug</th>
@@ -71,9 +77,12 @@
                 var routeData = new { id = key };
                 var commandButton = new { target = "_blank", @class = "btn" };                    
                 <tr>
-                    <td>
-                        @row.GetKey()
-                    </td>
+                    @if (Model.Columns.Contains("Id")) 
+                    {
+                        <td>
+                            @row.GetKey()
+                        </td>
+                    }
                     @if (Model.Columns.Contains("Slug"))
                     {
                         <td>

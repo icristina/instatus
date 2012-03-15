@@ -4,10 +4,11 @@ using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
 using Instatus.Web;
+using Instatus.Data;
 
 namespace Instatus.Models
 {
-    public class Domain
+    public class Domain : IEntity
     {
         public int Id { get; set; }
         public string Uri { get; set; }

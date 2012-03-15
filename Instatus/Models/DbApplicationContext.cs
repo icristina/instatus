@@ -7,7 +7,7 @@ using Instatus.Web;
 
 namespace Instatus.Models
 {
-    public class DbApplicationContext : DbContext, IApplicationContext, IPageContext
+    public class DbApplicationContext : DbContext, IApplicationContext
     {
         public DbApplicationContext(string connectionName)
             : base(connectionName)
@@ -95,47 +95,6 @@ namespace Instatus.Models
             }
             
             base.SaveChanges();
-        }
-
-        public static string[] DefaultPageExpansions = new string[] { "Restrictions", "Links", "Tags.Taxonomy", "User" };
-
-        public Page GetPage(string slug, WebSet set = null)
-        {
-            set = set ?? new WebSet();
-
-            var page = this.DisableProxiesAndLazyLoading()
-                    .Pages
-                    .Expand(DefaultPageExpansions)
-                    .FilterBySet(set)
-                    .Where(p => p.Slug == slug)
-                    .FirstOrDefault();
-
-            return ExpandNavigationProperties(page, set);
-        }
-
-        private T ExpandNavigationProperties<T>(T page, WebSet set) where T : Page
-        {
-            if (page != null)
-            {
-                foreach (var navigationProperty in set.Expand)
-                {
-                    Entry(page).Collection(navigationProperty).Load();
-                }
-            }
-
-            return page;
-        }
-
-        public IEnumerable<Page> GetPages(WebQuery query)
-        {
-            return this
-                    .DisableProxiesAndLazyLoading()
-                    .Pages
-                    .Expand(query.Expand)
-                    .FilterBySet(query)
-                    .Filter(query)
-                    .OfKind(query.Kind)
-                    .Sort(query.Sort);
         }
     }
 }

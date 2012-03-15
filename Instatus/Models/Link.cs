@@ -5,13 +5,14 @@ using System.Web;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using Instatus.Web;
+using Instatus.Data;
 
 namespace Instatus.Models
 {
     [KnownType(typeof(Photo))]
     [KnownType(typeof(Video))]
     [KnownType(typeof(Media))]
-    public class Link : INavigableContent
+    public class Link : IEntity, INavigableContent
     {
         public int Id { get; set; }
         public string Name { get; set; }
