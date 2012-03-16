@@ -29,8 +29,12 @@ namespace Instatus.Areas.Editor.Controllers
 
     [Authorize(Roles = "Editor")]
     [Description("Files")]
+    [Export]
+    [PartCreationPolicy(CreationPolicy.NonShared)]
     public class FileController : ScaffoldController<FileViewModel, WebLink, FileRepository, int>
     {
+        private IBlobService blobService;
+        
         public override IEnumerable<WebLink> Query(IEnumerable<WebLink> set, WebQuery query)
         {
             if (query.Mode == WebMode.Index)
@@ -56,7 +60,7 @@ namespace Instatus.Areas.Editor.Controllers
         {
             if (Request.HasFile())
             {
-                FileSystemBlobService.Save(FileSystemBlobService.BasePath + Request.FileInputName(), Request.FileInputStream());
+                blobService.Save(null, Request.FileInputName(), Request.FileInputStream());
             }
 
             return RedirectToIndex();
@@ -85,15 +89,18 @@ namespace Instatus.Areas.Editor.Controllers
                 webView.Query.Mode,
                 new string[] { "List", "Alphabetical" });
         }
+
+        [ImportingConstructor]
+        public FileController(IBlobService blobService)
+        {
+            this.blobService = blobService;
+
+            Context = new FileRepository(blobService);
+        }
     }
 
     public class FileRepository : IRepository<WebLink>
     {
-        public static List<IRule<string>> Rules = new List<IRule<string>>()
-        {
-            new RegexRule(@"-(thumb|small|medium|large)\.(jpg|png|gif)", false)
-        };
-        
         public IDbSet<WebLink> Items { get; set; }
 
         public void SaveChanges()
@@ -101,12 +108,10 @@ namespace Instatus.Areas.Editor.Controllers
 
         }
 
-        public FileRepository()
+        public FileRepository(IBlobService blobService)
         {
-            var path = HostingEnvironment.MapPath(FileSystemBlobService.BasePath);
-            var files = Directory.GetFiles(path);
+            var files = blobService.Query(null);
             var links = files
-                .FilterByRules(Rules)
                 .Select(file =>
                 {
                     var fileName = Path.GetFileName(file);

@@ -12,9 +12,15 @@ using Instatus.Data;
 namespace Instatus.Services
 {
     [Export(typeof(IBlobService))]
+    [PartCreationPolicy(CreationPolicy.NonShared)]
     public class FileSystemBlobService : IBlobService
     {       
         public static string BasePath = "~/Media/";
+
+        public static List<IRule<string>> FilterRules = new List<IRule<string>>()
+        {
+            new RegexRule(@"-(thumb|small|medium|large)\.(jpg|png|gif)", false)
+        };
 
         public static void EnsureFolderExists(string absolutePath)
         {
@@ -26,6 +32,9 @@ namespace Instatus.Services
 
         private string GetRelativePath(string contentType, string slug)
         {
+            if (slug.Contains('.'))
+                return BasePath + slug;
+            
             var extension = WebMimeType.GetExtension(contentType);
             var fileName = string.Format("{0}.{1}", slug ?? Generator.TimeStamp(), extension);
             return BasePath + fileName;
@@ -56,6 +65,16 @@ namespace Instatus.Services
         public Stream Stream(string key)
         {
             return new FileStream(HostingEnvironment.MapPath(key), FileMode.Open, FileAccess.Read);
+        }
+
+        public string[] Query(string folder)
+        {
+            var path = HostingEnvironment.MapPath(folder ?? BasePath);
+            var files = Directory.GetFiles(path);
+            
+            return files
+                .FilterByRules(FilterRules)
+                .ToArray();
         }
     }
 }

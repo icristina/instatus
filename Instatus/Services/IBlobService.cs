@@ -10,5 +10,6 @@ namespace Instatus.Services
     {
         string Save(string contentType, string slug, Stream stream);
         Stream Stream(string key);
+        string[] Query(string folder);
     }
 }
