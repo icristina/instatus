@@ -37,6 +37,7 @@ namespace Instatus.Areas.Microsite.Controllers
             }
         }
 
+        [ImportingConstructor]
         public StreamController(IApplicationContext applicationContext, IPageContext pageContext)
         {
             this.applicationContext = applicationContext;

@@ -8,7 +8,7 @@ using Instatus.Web;
 
 namespace Instatus.Models
 {
-    public interface IPageContext : IDisposable
+    public interface IPageContext
     {
         IEnumerable<Page> GetPages(WebQuery query);
         Page GetPage(string slug, WebSet set = null);

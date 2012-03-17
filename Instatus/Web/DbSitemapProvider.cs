@@ -21,23 +21,24 @@ namespace Instatus.Web
 
         public override SiteMapNodeCollection GetChildNodes(SiteMapNode node)
         {
-            using (var db = WebApp.GetService<IPageContext>())
+            var pageContext = WebApp.GetService<IPageContext>();
+
+            var set = new WebSet()
             {
-                var set = new WebSet()
-                {
-                    Expand = new string[] { "Pages" },
-                    Kind = WebKind.Article
-                };
+                Expand = new string[] { "Pages" },
+                Kind = WebKind.Article
+            };
 
-                var nodes = db.GetPage(node.Key, set)
-                                .Pages
-                                .OfType<Article>()
-                                .Where(IsNavigable)
-                                .Select(p => p.ToSiteMapNode(this))
-                                .ToArray();
+            var nodes = pageContext.GetPage(node.Key, set)
+                            .Pages
+                            .OfType<Article>()
+                            .Where(IsNavigable)
+                            .Select(p => p.ToSiteMapNode(this))
+                            .ToArray();
 
-                return new SiteMapNodeCollection(nodes);
-            }
+            pageContext.TryDispose();
+
+            return new SiteMapNodeCollection(nodes);
         }
 
         public override SiteMapNode GetParentNode(SiteMapNode node)

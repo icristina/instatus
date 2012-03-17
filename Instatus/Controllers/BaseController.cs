@@ -113,10 +113,11 @@ namespace Instatus.Controllers
         [NonAction]
         public ActionResult Page(string slug = null)
         {
-            using (var db = WebApp.GetService<IPageContext>())
-            {
-                ViewData.Model = db.GetPage(slug ?? RouteData.ActionName());
-            }
+            var pageContext = WebApp.GetService<IPageContext>();
+
+            ViewData.Model = pageContext.GetPage(slug ?? RouteData.ActionName());
+            
+            pageContext.TryDispose();
 
             return View("Page");
         }

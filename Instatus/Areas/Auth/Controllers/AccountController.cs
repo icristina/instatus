@@ -12,7 +12,7 @@ using Instatus.Models;
 
 namespace Instatus.Areas.Auth.Controllers
 {
-    public class AccountController : BaseController
+    public class AccountController : BaseController<IApplicationContext>
     {
         [HttpGet]
         public ActionResult LogOn(string returnUrl)
@@ -42,20 +42,17 @@ namespace Instatus.Areas.Auth.Controllers
 
         public ActionResult Verification(int id, string token)
         {
-            using (var db = WebApp.GetService<IApplicationContext>())
+            var user = Context.Users.Find(id);
+
+            if (user.ValidateVerificationToken(token))
             {
-                var user = db.Users.Find(id);
+                Context.SaveChanges();
 
-                if (user.ValidateVerificationToken(token))
-                {
-                    db.SaveChanges();
-
-                    ViewData.Model = user;
-                }
-                else
-                {
-                    ModelState.AddModelError("Token", WebPhrase.VerificationTokenRejected);
-                }
+                ViewData.Model = user;
+            }
+            else
+            {
+                ModelState.AddModelError("Token", WebPhrase.VerificationTokenRejected);
             }
 
             return View();
