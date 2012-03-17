@@ -17,21 +17,33 @@ namespace Instatus.Controllers
 {
     public class BaseController<TContext> : BaseController where TContext : class
     {
-        protected TContext Context;
+        private TContext context;
+
+        public TContext Context
+        {
+            get
+            {
+                if (context == null)
+                {
+                    context = WebApp.GetService<TContext>();
+                }
+
+                return context;
+            }
+            set
+            {
+                context = value;
+            }
+        }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
-                Context.TryDispose();
+                context.TryDispose();
             }
 
             base.Dispose(disposing);
-        }
-
-        public BaseController()
-        {
-            Context = WebApp.GetService<TContext>();
         }
     }
 

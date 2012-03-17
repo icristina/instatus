@@ -91,7 +91,6 @@
     <Compile Include="Areas\Auth\Models\LogOnViewModel.cs" />
     <Compile Include="Areas\Developer\Controllers\PhraseController.cs" />
     <Compile Include="Areas\Developer\DeveloperAreaRegistration.cs" />
-    <Compile Include="Areas\Developer\Controllers\DashboardController.cs" />
     <Compile Include="Areas\Editor\Controllers\BrandController.cs" />
     <Compile Include="Areas\Editor\Controllers\ArticleController.cs" />
     <Compile Include="Areas\Editor\Controllers\CatalogController.cs" />

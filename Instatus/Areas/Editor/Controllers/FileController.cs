@@ -94,7 +94,6 @@ namespace Instatus.Areas.Editor.Controllers
         public FileController(IBlobService blobService)
         {
             this.blobService = blobService;
-
             Context = new FileRepository(blobService);
         }
     }
