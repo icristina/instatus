@@ -10,7 +10,7 @@ using Instatus.Data;
 
 namespace Instatus.Models
 {
-    public class Tag : IEntity
+    public class Tag : IEntity, INamed, IFriendlyIdentifier
     {
         public int Id { get; set; }
         public string Name { get; set; }

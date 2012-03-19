@@ -8,7 +8,7 @@ using Instatus.Data;
 
 namespace Instatus.Models
 {
-    public class Source : IEntity
+    public class Source : IEntity, INamed
     {
         public int Id { get; set; }
         public string Name { get; set; }

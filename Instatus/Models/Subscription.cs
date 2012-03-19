@@ -6,7 +6,7 @@ using Instatus.Data;
 
 namespace Instatus.Models
 {
-    public class Subscription : IEntity
+    public class Subscription : IEntity, INamed
     {
         public int Id { get; set; }
         public string Name { get; set; }

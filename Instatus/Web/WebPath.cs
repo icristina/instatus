@@ -54,6 +54,12 @@ namespace Instatus.Web
 
         public static string Server(string virtualPath)
         {
+            if (!VirtualPathUtility.IsAppRelative(virtualPath))
+                return virtualPath;
+
+            if (HttpContext.Current == null)
+                return AppDomain.CurrentDomain.BaseDirectory + virtualPath.Replace("~", "");
+
             return HttpContext.Current.Server.MapPath(virtualPath);
         }
 
@@ -66,7 +72,7 @@ namespace Instatus.Web
             if(virtualPath.IsAbsoluteUri())
                 return virtualPath;
 
-            if (!virtualPath.StartsWith("~/"))
+            if (!VirtualPathUtility.IsAppRelative(virtualPath))
                 virtualPath = string.Format("~/{0}", virtualPath);
 
             return VirtualPathUtility.ToAbsolute(virtualPath).ToLower();

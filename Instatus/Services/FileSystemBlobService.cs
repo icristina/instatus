@@ -50,7 +50,7 @@ namespace Instatus.Services
         }
 
         public static void Save(string relativePath, Stream stream) {
-            var absolutePath = HostingEnvironment.MapPath(relativePath);
+            var absolutePath = WebPath.Server(relativePath);
 
             EnsureFolderExists(absolutePath);
 
@@ -64,12 +64,12 @@ namespace Instatus.Services
 
         public Stream Stream(string key)
         {
-            return new FileStream(HostingEnvironment.MapPath(key), FileMode.Open, FileAccess.Read);
+            return new FileStream(WebPath.Server(key), FileMode.Open, FileAccess.Read);
         }
 
         public string[] Query(string folder)
         {
-            var path = HostingEnvironment.MapPath(folder ?? BasePath);
+            var path = WebPath.Server(folder ?? BasePath);
             var files = Directory.GetFiles(path);
             
             return files

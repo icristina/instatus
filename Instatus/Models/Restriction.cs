@@ -14,7 +14,7 @@ namespace Instatus.Models
 
     }
     
-    public class Restriction : IEntity, IPayload
+    public class Restriction : IEntity, INamed, IPayload
     {
         public int Id { get; set; }
         public string Name { get; set; }

@@ -143,6 +143,7 @@
     <Compile Include="Data\IJob.cs" />
     <Compile Include="Data\IMessageBus.cs" />
     <Compile Include="Data\IMessageQueue.cs" />
+    <Compile Include="Data\INamed.cs" />
     <Compile Include="Data\ITimestamp.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="Models\Milestone.cs" />

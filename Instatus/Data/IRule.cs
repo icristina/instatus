@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 
 namespace Instatus.Data
 {
-    public interface IRule<TContext, TResult>
+    public interface IRule<TContext, TResult> : INamed
     {
         string Name { get; }
         TResult Evaluate(TContext context);

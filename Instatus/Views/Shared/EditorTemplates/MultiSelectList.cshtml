@@ -13,7 +13,7 @@
 <div class="checkbox-list">
     @foreach(var item in Model.OrderByDescending(m => m.Selected)) {
         <label class="checkbox">
-            <input type="checkbox" name="@(string.Join(".", htmlFieldNameParts))" value="@item.Value"
+            <input type="checkbox" name="@(string.Join(".", htmlFieldNameParts))" value="@(item.Value ?? item.Text)"
                 @if(item.Selected) {
                     @:checked    
                 }

@@ -12,7 +12,7 @@ namespace Instatus.Models
     [KnownType(typeof(Photo))]
     [KnownType(typeof(Video))]
     [KnownType(typeof(Media))]
-    public class Link : IEntity, INavigableContent
+    public class Link : IEntity, INamed, INavigableContent
     {
         public int Id { get; set; }
         public string Name { get; set; }

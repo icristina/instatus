@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Text;
 
 namespace Instatus.Data
 {
-    public interface IJob<TContext, TResult> : INamed
+    public interface INamed
     {
         string Name { get; }
-        TResult Process(TContext context);
     }
 }

@@ -34,7 +34,7 @@ namespace Instatus.Models
     [KnownType(typeof(Region))]
     [KnownType(typeof(Listing))]
     [KnownType(typeof(Milestone))]
-    public class Page : IEntity, IUserGeneratedContent, IExtensionPoint, INavigableContent, IContentItem, IFriendlyIdentifier, ISyndicatable
+    public class Page : IEntity, INamed, IUserGeneratedContent, IExtensionPoint, INavigableContent, IContentItem, IFriendlyIdentifier, ISyndicatable
     {
         public int Id { get; set; }
         public string Locale { get; set; }
