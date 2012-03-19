@@ -8,9 +8,8 @@ using Instatus.Web;
 
 namespace Instatus.Data
 {
-    public interface IDataExport
+    public interface IDataExport : INamed
     {
-        string Name { get; }
         IEnumerable Data { get; }
     }
 }

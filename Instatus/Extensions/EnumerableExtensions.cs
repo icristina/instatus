@@ -251,6 +251,11 @@ namespace Instatus
             return content.Where(c => rules.All(rule => rule.Evaluate(c)));
         }
 
+        public static T FirstByName<T>(this IEnumerable<T> content, string name) where T : INamed
+        {
+            return content.FirstOrDefault(n => n.Name.Match(name));
+        }
+
         public static IEnumerable<T> AsOrdered<T>(this IEnumerable<T> list)
         {
             if (list is IOrderedQueryable<T> || list is IOrderedEnumerable<T>)

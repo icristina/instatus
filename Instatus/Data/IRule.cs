@@ -8,7 +8,6 @@ namespace Instatus.Data
 {
     public interface IRule<TContext, TResult> : INamed
     {
-        string Name { get; }
         TResult Evaluate(TContext context);
     }
     
