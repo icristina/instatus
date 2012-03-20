@@ -504,6 +504,7 @@
     <EmbeddedResource Include="Views\Shared\EditorTemplates\ImageUrl.cshtml" />
     <EmbeddedResource Include="Views\Shared\EditorTemplates\File.cshtml" />
     <EmbeddedResource Include="Views\Shared\Markup.cshtml" />
+    <EmbeddedResource Include="Views\Shared\Form.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup>

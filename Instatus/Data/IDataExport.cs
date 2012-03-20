@@ -10,6 +10,7 @@ namespace Instatus.Data
 {
     public interface IDataExport : INamed
     {
-        IEnumerable Data { get; }
+        object DefaultConfiguration { get; }
+        IEnumerable Export(object configuration);
     }
 }

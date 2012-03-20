@@ -9,25 +9,218 @@ namespace Instatus.Models
 {
     public class InMemoryApplicationContext : IApplicationContext
     {
-        public IDbSet<Page> Pages { get; private set; }
-        public IDbSet<User> Users { get; private set; }
-        public IDbSet<Role> Roles { get; private set; }
-        public IDbSet<Preference> Preferences { get; private set; }
-        public IDbSet<Message> Messages { get; private set; }
-        public IDbSet<Domain> Domains { get; private set; }
-        public IDbSet<Link> Links { get; private set; }
-        public IDbSet<Tag> Tags { get; private set; }
-        public IDbSet<Activity> Activities { get; private set; }
-        public IDbSet<Source> Sources { get; private set; }
-        public IDbSet<Price> Prices { get; private set; }
-        public IDbSet<Schedule> Schedules { get; private set; }
-        public IDbSet<Subscription> Subscriptions { get; private set; }
-        public IDbSet<Restriction> Restrictions { get; private set; }
-        public IDbSet<List> Lists { get; private set; }
-        public IDbSet<Selection> Selections { get; private set; }
-        public IDbSet<Taxonomy> Taxonomies { get; private set; }
-        public IDbSet<Log> Logs { get; private set; }
-        public IDbSet<Phrase> Phrases { get; private set; }
+        static InMemoryApplicationContext()
+        {
+            pages = new InMemorySet<Page>();
+            users = new InMemorySet<User>();
+            roles = new InMemorySet<Role>();
+            preferences = new InMemorySet<Preference>();
+            messages = new InMemorySet<Message>();
+            domains = new InMemorySet<Domain>();
+            links = new InMemorySet<Link>();
+            tags = new InMemorySet<Tag>();
+            activities = new InMemorySet<Activity>();
+            sources = new InMemorySet<Source>();
+            prices = new InMemorySet<Price>();
+            schedules = new InMemorySet<Schedule>();
+            subscriptions = new InMemorySet<Subscription>();
+            restrictions = new InMemorySet<Restriction>();
+            lists = new InMemorySet<List>();
+            selections = new InMemorySet<Selection>();
+            taxonomies = new InMemorySet<Taxonomy>();
+            logs = new InMemorySet<Log>();
+            phrases = new InMemorySet<Phrase>();
+        }
+
+        private static IDbSet<Page> pages;
+
+        public IDbSet<Page> Pages
+        {
+            get
+            {
+                return pages;
+            }
+        }
+
+        private static IDbSet<User> users;
+
+        public IDbSet<User> Users
+        {
+            get
+            {
+                return users;
+            }
+        }
+
+        private static IDbSet<Role> roles;
+
+        public IDbSet<Role> Roles
+        {
+            get
+            {
+                return roles;
+            }
+        }
+
+        private static IDbSet<Preference> preferences;
+
+        public IDbSet<Preference> Preferences
+        {
+            get
+            {
+                return preferences;
+            }
+        }
+
+        private static IDbSet<Message> messages;
+
+        public IDbSet<Message> Messages
+        {
+            get
+            {
+                return messages;
+            }
+        }
+
+        private static IDbSet<Domain> domains;
+
+        public IDbSet<Domain> Domains
+        {
+            get
+            {
+                return domains;
+            }
+        }
+
+        private static IDbSet<Link> links;
+
+        public IDbSet<Link> Links
+        {
+            get
+            {
+                return links;
+            }
+        }
+
+        private static IDbSet<Tag> tags;
+
+        public IDbSet<Tag> Tags
+        {
+            get
+            {
+                return tags;
+            }
+        }
+
+        private static IDbSet<Activity> activities;
+
+        public IDbSet<Activity> Activities
+        {
+            get
+            {
+                return activities;
+            }
+        }
+
+        private static IDbSet<Source> sources;
+
+        public IDbSet<Source> Sources
+        {
+            get
+            {
+                return sources;
+            }
+        }
+
+        private static IDbSet<Price> prices;
+
+        public IDbSet<Price> Prices
+        {
+            get
+            {
+                return prices;
+            }
+        }
+
+        private static IDbSet<Schedule> schedules;
+
+        public IDbSet<Schedule> Schedules
+        {
+            get
+            {
+                return schedules;
+            }
+        }
+
+        private static IDbSet<Subscription> subscriptions;
+
+        public IDbSet<Subscription> Subscriptions
+        {
+            get
+            {
+                return subscriptions;
+            }
+        }
+
+        private static IDbSet<Restriction> restrictions;
+
+        public IDbSet<Restriction> Restrictions
+        {
+            get
+            {
+                return restrictions;
+            }
+        }
+
+        private static IDbSet<List> lists;
+
+        public IDbSet<List> Lists
+        {
+            get
+            {
+                return lists;
+            }
+        }
+
+        private static IDbSet<Selection> selections;
+
+        public IDbSet<Selection> Selections
+        {
+            get
+            {
+                return selections;
+            }
+        }
+
+        private static IDbSet<Taxonomy> taxonomies;
+
+        public IDbSet<Taxonomy> Taxonomies
+        {
+            get
+            {
+                return taxonomies;
+            }
+        }
+
+        private static IDbSet<Log> logs;
+
+        public IDbSet<Log> Logs
+        {
+            get
+            {
+                return logs;
+            }
+        }
+
+        private static IDbSet<Phrase> phrases;
+
+        public IDbSet<Phrase> Phrases
+        {
+            get
+            {
+                return phrases;
+            }
+        }
 
         public IDbSet<T> Set<T>() where T : class
         {
@@ -42,29 +235,6 @@ namespace Instatus.Models
         public void Dispose()
         {
             
-        }
-
-        public InMemoryApplicationContext()
-        {
-            Pages = new InMemorySet<Page>();
-            Users = new InMemorySet<User>();
-            Roles = new InMemorySet<Role>();
-            Preferences = new InMemorySet<Preference>();
-            Messages = new InMemorySet<Message>();
-            Domains = new InMemorySet<Domain>();
-            Links = new InMemorySet<Link>();
-            Tags = new InMemorySet<Tag>();
-            Activities = new InMemorySet<Activity>();
-            Sources = new InMemorySet<Source>();
-            Prices = new InMemorySet<Price>();
-            Schedules = new InMemorySet<Schedule>();
-            Subscriptions = new InMemorySet<Subscription>();
-            Restrictions = new InMemorySet<Restriction>();
-            Lists = new InMemorySet<List>();
-            Selections = new InMemorySet<Selection>();
-            Taxonomies = new InMemorySet<Taxonomy>();
-            Logs = new InMemorySet<Log>();
-            Phrases = new InMemorySet<Phrase>();
         }
     }
 }

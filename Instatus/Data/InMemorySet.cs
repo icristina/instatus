@@ -11,7 +11,7 @@ namespace Instatus.Data
 {
     public class InMemorySet<T> : IDbSet<T> where T : class
     {
-        private static IList<T> list = new List<T>();
+        private IList<T> list = new List<T>();
 
         public IEnumerator<T> GetEnumerator()
         {

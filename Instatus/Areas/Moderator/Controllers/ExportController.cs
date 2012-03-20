@@ -19,7 +19,7 @@ namespace Instatus.Areas.Moderator.Controllers
     [Export]
     [PartCreationPolicy(CreationPolicy.NonShared)]
     [Description("Export")]
-    public class ExportController : ScaffoldController<BaseViewModel<WebEntry>, WebEntry, WebEntryRepository, string>
+    public class ExportController : ScaffoldController<BaseViewModel<WebEntry>, WebEntry, IDbSet<WebEntry>, string>
     {
         [ImportMany]
         private IEnumerable<IDataExport> exports;
@@ -28,8 +28,24 @@ namespace Instatus.Areas.Moderator.Controllers
         {
             return exports.Select(e => new WebEntry()
             {
-                Title = e.Name
+                Title = e.Name,
+                Rel = "Configurable"
             });
+        }
+
+        public ActionResult Configure(string name)
+        {
+            var dataExport = exports.FirstByName(name);
+            var configuration = dataExport.DefaultConfiguration;
+
+            configuration.TryDatabind();
+
+            ViewData.Model = configuration;
+
+            ViewBag.Action = "Download";
+            ViewBag.ActionText = "Export";
+
+            return View("Form");
         }
 
         public override void ConfigureWebView(WebView<WebEntry> webView)
@@ -42,18 +58,25 @@ namespace Instatus.Areas.Moderator.Controllers
         {
             return new List<IWebCommand>()
             {
-                new ExportCommand()
+                new ExportCommand(),
+                new ConfigureCommand()
             };
         }
 
-        public ActionResult File(string name)
+        public ActionResult Download(string name)
         {
-            var dataExport = exports.First(e => e.Name == name);
+            var dataExport = exports.FirstByName(name);
+            var configuration = dataExport.DefaultConfiguration;
+
+            if (configuration != null)
+            {
+                UpdateModel(configuration);
+            }
 
             Response.ContentType = WebContentType.Csv.ToMimeType();
             Response.AppendHeader("Content-Disposition", string.Format("attachment;filename={0}.csv", dataExport.Name));
 
-            Generator.SaveCsv(dataExport.Data, Response.OutputStream);
+            Generator.SaveCsv(dataExport.Export(configuration), Response.OutputStream);
 
             return new EmptyResult();
         }
@@ -73,7 +96,7 @@ namespace Instatus.Areas.Moderator.Controllers
             return new WebLink()
             {
                 Title = "Export",
-                Uri = urlHelper.Action("File", new { name = viewModel.Title  })
+                Uri = urlHelper.Action("Download", new { name = viewModel.Title  })
             };
         }
 
@@ -83,22 +106,35 @@ namespace Instatus.Areas.Moderator.Controllers
         }
     }
 
-    public class WebEntryRepository : IRepository<WebEntry>{
-        public IDbSet<WebEntry> Items
+    public class ConfigureCommand : IWebCommand
+    {
+        public string Name
         {
-	        get {
-                return new WebEntrySet();
+            get
+            {
+                return "ConfigureCommand";
             }
         }
 
-        public void SaveChanges()
+        public WebLink GetLink(dynamic viewModel, UrlHelper urlHelper)
         {
-
+            if (viewModel.Rel == "Configurable")
+            {
+                return new WebLink()
+                {
+                    Title = "Configure",
+                    Uri = urlHelper.Action("Configure", new { name = viewModel.Title })
+                };
+            }
+            else
+            {
+                return null;
+            }
         }
-    }
 
-    internal class WebEntrySet : InMemorySet<WebEntry>
-    {
-
+        public bool Execute(dynamic viewModel, UrlHelper urlHelper, System.Web.Routing.RouteData routeData, System.Collections.Specialized.NameValueCollection requestParams)
+        {
+            return true;
+        }
     }
 }

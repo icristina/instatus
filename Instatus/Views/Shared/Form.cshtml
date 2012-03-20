@@ -1,0 +1,42 @@
+﻿@{
+    Layout = "~/Views/Shared/_Bootstrap.cshtml";
+    ViewBag.Title = Model.ToString();
+}
+
+@section head {
+    @Html.Stylesheet("scaffold.css")
+}
+
+@section scripts {
+    @Html.Scripts("scaffold.js")
+}
+
+@helper EditorForForm() {
+    <div class="form-actions">
+        @Html.SubmitButton(ViewBag.ActionText as string, "btn btn-primary")
+    </div>
+    if (!ViewData.ModelState.IsValid)
+    {
+        <p class="alert">
+            @ViewData.ModelState.FirstErrorMessage()
+        </p>
+    }        
+    @Html.EditorForModel()    
+}
+
+<div class="container">
+    @if (ViewData.ModelMetadata.AdditionalValues.Value("File").AsBoolean())
+    {
+        using (Html.BeginMultipartForm(className: "form-horizontal"))
+        {
+            @EditorForForm()
+        }
+    }
+    else
+    {
+        using (Html.BeginForm(ViewBag.Action as string, ViewContext.RouteData.ControllerName(), FormMethod.Post, new { @class = "form-horizontal" }))
+        {
+            @EditorForForm()
+        }
+    }
+</div>

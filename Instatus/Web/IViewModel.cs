@@ -11,16 +11,20 @@ using Instatus.Web;
 
 namespace Instatus.Web
 {
+    public interface IDataboundModel
+    {
+        void Databind();
+    }
+    
     public interface IViewModel
     {
         WebStep Step { get; }
     }
     
-    public interface IViewModel<TModel> : IViewModel
+    public interface IViewModel<TModel> : IViewModel, IDataboundModel
     {
         void Load(TModel model);
         void Save(TModel model);
-        void Databind();
     }
 
     public class BaseViewModel<TModel> : IViewModel<TModel>

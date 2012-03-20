@@ -297,5 +297,15 @@ namespace Instatus
                 return true;
             }
         }
+
+        public static bool TryDatabind(this object graph)
+        {
+            if (graph is IDataboundModel)
+            {
+                ((IDataboundModel)graph).Databind();
+            }
+
+            return false;
+        }
     }
 }

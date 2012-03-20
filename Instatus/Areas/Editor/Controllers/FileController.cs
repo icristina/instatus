@@ -31,12 +31,28 @@ namespace Instatus.Areas.Editor.Controllers
     [Description("Files")]
     [Export]
     [PartCreationPolicy(CreationPolicy.NonShared)]
-    public class FileController : ScaffoldController<FileViewModel, WebLink, FileRepository, int>
+    public class FileController : ScaffoldController<FileViewModel, WebLink, IDbSet<WebLink>, int>
     {
         private IBlobService blobService;
         
         public override IEnumerable<WebLink> Query(IEnumerable<WebLink> set, WebQuery query)
         {
+            var files = blobService.Query(null);
+
+            set = files
+                .Select(file =>
+                {
+                    var fileName = Path.GetFileName(file);
+                    var uri = FileSystemBlobService.BasePath + fileName;
+                    return new WebLink()
+                    {
+                        Uri = uri,
+                        Picture = WebMimeType.IsRelativePathPhoto(uri) ? uri : null,
+                        Title = fileName
+                    };
+                })
+                .ToList();            
+            
             if (query.Mode == WebMode.Index)
             {
                 if (query.Filter.IsEmpty())
@@ -94,45 +110,6 @@ namespace Instatus.Areas.Editor.Controllers
         public FileController(IBlobService blobService)
         {
             this.blobService = blobService;
-            Context = new FileRepository(blobService);
-        }
-    }
-
-    public class FileRepository : IRepository<WebLink>
-    {
-        public IDbSet<WebLink> Items { get; set; }
-
-        public void SaveChanges()
-        {
-
-        }
-
-        public FileRepository(IBlobService blobService)
-        {
-            var files = blobService.Query(null);
-            var links = files
-                .Select(file =>
-                {
-                    var fileName = Path.GetFileName(file);
-                    var uri = FileSystemBlobService.BasePath + fileName;
-                    return new WebLink()
-                    {
-                        Uri = uri,
-                        Picture = WebMimeType.IsRelativePathPhoto(uri) ? uri : null,
-                        Title = fileName
-                    };
-                })
-                .ToList();
-
-            Items = new FileMemorySet(links);
-        }
-    }
-
-    internal class FileMemorySet : InMemorySet<WebLink> {
-        public FileMemorySet(IEnumerable<WebLink> links)
-            : base(links)
-        {
-
         }
     }
 }

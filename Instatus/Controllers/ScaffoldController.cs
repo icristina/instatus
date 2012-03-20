@@ -43,10 +43,6 @@ namespace Instatus.Controllers
                     {
                         set = (Context as IRepository<TModel>).Items;
                     }
-                    else
-                    {
-                        throw new Exception("Unsupported context");
-                    }
                 }
 
                 return set;
