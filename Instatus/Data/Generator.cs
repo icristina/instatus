@@ -153,6 +153,25 @@ namespace Instatus.Data
             }
         }
 
+        public static void SaveCsv(DataTable table, Stream stream)
+        {
+            if (table == null || table.Rows.Count == 0)
+                return;
+
+            using (var writer = new CsvFileWriter(stream))
+            {
+                var header = table.Columns.Cast<DataColumn>().Select(c => c.ColumnName.ToCapitalizedDelimited()).ToList();
+
+                writer.WriteRow(header);
+
+                foreach (DataRow row in table.Rows)
+                {
+                    var fields = row.ItemArray.ToStringList();
+                    writer.WriteRow(fields);
+                }
+            }
+        }
+
         public static string Password(int length = 6, int specialCharacters = 1)
         {
             return Membership.GeneratePassword(length, specialCharacters);
@@ -222,7 +241,7 @@ namespace Instatus.Data
         }
 
         // http://www.blackbeltcoder.com/Articles/files/reading-and-writing-csv-files-in-c
-        internal class CsvRow : List<string>
+        public class CsvRow : List<string>
         {
             public string LineText { get; set; }
 
@@ -234,7 +253,7 @@ namespace Instatus.Data
             }
         }
 
-        internal class CsvFileWriter : StreamWriter
+        public class CsvFileWriter : StreamWriter
         {
             public CsvFileWriter(Stream stream)
                 : base(stream)
@@ -268,7 +287,7 @@ namespace Instatus.Data
             }
         }
 
-        internal class CsvFileReader : StreamReader
+        public class CsvFileReader : StreamReader
         {
             public CsvFileReader(Stream stream)
                 : base(stream)

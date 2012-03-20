@@ -45,6 +45,11 @@ namespace Instatus.Areas.Moderator.Controllers
             ViewBag.Action = "Download";
             ViewBag.ActionText = "Export";
 
+            ViewBag.HiddenParameters = new List<WebParameter>()
+            {
+                new WebParameter("name", name)
+            };
+
             return View("Form");
         }
 

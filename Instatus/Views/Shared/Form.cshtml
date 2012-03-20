@@ -12,6 +12,9 @@
 }
 
 @helper EditorForForm() {
+    foreach(WebParameter parameter in ViewBag.HiddenParameters) {
+        @Html.Hidden(parameter.Name, parameter.Content)    
+    }    
     <div class="form-actions">
         @Html.SubmitButton(ViewBag.ActionText as string, "btn btn-primary")
     </div>
