@@ -60,10 +60,10 @@ namespace Instatus
                         string url;
                         var namespaces = controllerType.Namespace.Split('.');
 
-                        if (namespaces.Length == 4)
+                        if (namespaces.Length == 4) // Namespace(0).Areas(1).AreaName(2).Controllers(3)
                             url = urlHelper.Action(actionName, descriptor.ControllerName, new { area = namespaces[2] });
                         else
-                            url = urlHelper.Action(actionName, descriptor.ControllerName);
+                            url = urlHelper.Action(actionName, descriptor.ControllerName, new { area = string.Empty });
 
                         return new SiteMapNode(siteMapProvider, descriptor.ControllerName, url, description);
                     })

@@ -8,5 +8,10 @@ namespace Instatus.Web
     public class WebFormatting
     {
         public int MaxLength { get; set; }
+
+        public WebFormatting()
+        {
+            MaxLength = int.MaxValue;
+        }
     }
 }

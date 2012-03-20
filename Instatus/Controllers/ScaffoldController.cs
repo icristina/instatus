@@ -119,7 +119,7 @@ namespace Instatus.Controllers
             viewModel.Load(model);
             viewModel.Databind();
 
-            ViewData["form"] = WebForm.Edit();
+            ViewData.AddSingle(WebForm.Edit());
             
             return View(EditViewName, viewModel);
         }
@@ -140,7 +140,7 @@ namespace Instatus.Controllers
 
             viewModel.Databind();
 
-            ViewData["form"] = WebForm.Edit();
+            ViewData.AddSingle(WebForm.Edit());
 
             return View(EditViewName, viewModel);
         }
@@ -156,7 +156,7 @@ namespace Instatus.Controllers
             viewModel.Load(model);
             viewModel.Databind();
 
-            ViewData["form"] = WebForm.Create();
+            ViewData.AddSingle(WebForm.Create());
 
             return View(CreateViewName, viewModel);
         }
@@ -178,7 +178,7 @@ namespace Instatus.Controllers
 
             viewModel.Databind();
 
-            ViewData["form"] = WebForm.Create();
+            ViewData.AddSingle(WebForm.Create());
 
             return View(CreateViewName, viewModel);
         }

@@ -2,7 +2,7 @@
     Layout = "~/Views/Shared/_Bootstrap.cshtml";
     ViewBag.Title = Model.ToString();
 
-    var webForm = (WebForm)ViewData["form"];
+    var webForm = ViewData.GetSingle<WebForm>();
 }
 
 @section head {
@@ -15,9 +15,9 @@
 
 @section nav {
     @{
-        var navigation = ViewData["navigation"] as SiteMapNodeCollection;    
+        var navigation = ViewData.GetSingle<SiteMapNodeCollection>();    
     }
-    @if (navigation != null) {
+    @if (!navigation.IsEmpty()) {
         <nav class="navbar navbar-fixed-top">
             <div class="navbar-inner">
                 <div class="container">    
@@ -37,7 +37,7 @@
 }
 
 @helper Edit() {
-    var webForm = (WebForm)ViewData["form"];
+    var webForm = ViewData.GetSingle<WebForm>();
     foreach (var parameter in webForm.HiddenParameters) {
         @Html.Hidden(parameter.Name, parameter.Content)    
     }    

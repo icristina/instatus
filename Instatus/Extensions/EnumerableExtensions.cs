@@ -116,6 +116,20 @@ namespace Instatus
             return dictionary;
         }
 
+        private const string dictionaryPrefix = "__SingleInstance.";
+
+        public static IDictionary<string, object> AddSingle<T>(this IDictionary<string, object> dictionary, T item) where T : class
+        {
+            dictionary.Add(dictionaryPrefix + item.GetType().FullName, item);
+            
+            return dictionary;
+        }
+
+        public static T GetSingle<T>(this IDictionary<string, object> dictionary) where T : class
+        {
+            return dictionary[dictionaryPrefix + typeof(T).FullName] as T ?? Activator.CreateInstance<T>();
+        }
+
         public static T AddRequestParams<T>(this T dictionary) where T : IDictionary<string, object>
         {
             var nameValueCollection = HttpContext.Current.Request.Params;

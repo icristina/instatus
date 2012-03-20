@@ -1,7 +1,7 @@
 ﻿@model SiteMapNodeCollection
 
 @{
-    var formatting = ViewData["formatting"] as WebFormatting ?? new WebFormatting() { MaxLength = 10 };
+    var formatting = ViewData.GetSingle<WebFormatting>();
 }
 
 @helper Node(SiteMapNode node) {

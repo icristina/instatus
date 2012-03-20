@@ -133,11 +133,11 @@ namespace Instatus
             return new MvcHtmlString(markup);
         }
 
-        public static MvcHtmlString Partial<T>(this HtmlHelper<T> html, string partialViewName, object model, WebFormatting formatting)
+        public static MvcHtmlString Partial<T>(this HtmlHelper<T> html, string partialViewName, object model, WebFormatting singleViewDataEntry)
         {
             var viewDataDictionary = new ViewDataDictionary(model);
 
-            viewDataDictionary.Add("formatting", formatting);
+            viewDataDictionary.AddSingle(singleViewDataEntry);
             
             return html.PartialOrEmpty(partialViewName, model, viewDataDictionary);
         }
