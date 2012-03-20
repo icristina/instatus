@@ -1,6 +1,8 @@
 ﻿@{
     Layout = "~/Views/Shared/_Bootstrap.cshtml";
     ViewBag.Title = Model.ToString();
+
+    var webForm = (WebForm)ViewData["form"];
 }
 
 @section head {
@@ -11,9 +13,36 @@
     @Html.Scripts("scaffold.js")
 }
 
+@section nav {
+    @{
+        var navigation = ViewData["navigation"] as SiteMapNodeCollection;    
+    }
+    @if (navigation != null) {
+        <nav class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">    
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <div class="nav-collapse">
+                        @Html.Partial("Nav", navigation, new WebFormatting() { MaxLength = 6 })
+                        @Html.Partial("LoginStatus")
+                    </div>
+                </div>
+            </div>
+        </nav>   
+    }
+}
+
 @helper Edit() {
+    var webForm = (WebForm)ViewData["form"];
+    foreach (var parameter in webForm.HiddenParameters) {
+        @Html.Hidden(parameter.Name, parameter.Content)    
+    }    
     <div class="form-actions">
-        @Html.SubmitButton(WebPhrase.Submit, "btn btn-primary")
+        @Html.SubmitButton(webForm.ActionText, "btn btn-primary")
     </div>
     if (!ViewData.ModelState.IsValid)
     {
@@ -34,7 +63,7 @@
     }
     else
     {
-        using (Html.BeginForm("Edit", ViewContext.RouteData.ControllerName(), FormMethod.Post, new { @class = "form-horizontal" }))
+        using (Html.BeginForm(webForm.ActionName, ViewContext.RouteData.ControllerName(), FormMethod.Post, new { @class = "form-horizontal" }))
         {
             @Edit()
         }

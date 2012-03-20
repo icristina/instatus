@@ -221,6 +221,7 @@
     <Compile Include="Web\WebCache.cs" />
     <Compile Include="Web\WebCategory.cs" />
     <Compile Include="Web\WebFeed.cs" />
+    <Compile Include="Web\WebForm.cs" />
     <Compile Include="Web\WebFormatting.cs" />
     <Compile Include="Web\WebMock.cs" />
     <Compile Include="Web\WebRoute.cs" />
@@ -441,9 +442,6 @@
     <EmbeddedResource Include="Views\Shared\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\Create.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Views\Shared\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -504,7 +502,6 @@
     <EmbeddedResource Include="Views\Shared\EditorTemplates\ImageUrl.cshtml" />
     <EmbeddedResource Include="Views\Shared\EditorTemplates\File.cshtml" />
     <EmbeddedResource Include="Views\Shared\Markup.cshtml" />
-    <EmbeddedResource Include="Views\Shared\Form.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup>

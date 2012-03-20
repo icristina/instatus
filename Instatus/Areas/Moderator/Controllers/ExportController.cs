@@ -12,6 +12,7 @@ using System.IO;
 using System.ComponentModel.Composition;
 using System.Data.Entity;
 using System.ComponentModel;
+using System.Data;
 
 namespace Instatus.Areas.Moderator.Controllers
 {
@@ -42,15 +43,17 @@ namespace Instatus.Areas.Moderator.Controllers
 
             ViewData.Model = configuration;
 
-            ViewBag.Action = "Download";
-            ViewBag.ActionText = "Export";
-
-            ViewBag.HiddenParameters = new List<WebParameter>()
+            ViewData["form"] = new WebForm()
             {
-                new WebParameter("name", name)
+                ActionName = "Download",
+                ActionText = "Export",
+                HiddenParameters = new List<WebParameter>()
+                {
+                    new WebParameter("name", name)
+                }
             };
 
-            return View("Form");
+            return View("Edit");
         }
 
         public override void ConfigureWebView(WebView<WebEntry> webView)
@@ -81,7 +84,17 @@ namespace Instatus.Areas.Moderator.Controllers
             Response.ContentType = WebContentType.Csv.ToMimeType();
             Response.AppendHeader("Content-Disposition", string.Format("attachment;filename={0}.csv", dataExport.Name));
 
-            Generator.SaveCsv(dataExport.Export(configuration), Response.OutputStream);
+            var enumerable = dataExport.Export(configuration);
+
+            if (enumerable is DataRowCollection) {
+                var dataRows = enumerable as DataRowCollection;
+
+                if (dataRows.Count > 0) {
+                    Generator.SaveCsv(dataRows[0].Table, Response.OutputStream);
+                }
+            } else {
+                Generator.SaveCsv(enumerable, Response.OutputStream);
+            }
 
             return new EmptyResult();
         }

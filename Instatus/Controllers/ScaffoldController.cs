@@ -19,6 +19,11 @@ namespace Instatus.Controllers
         where TContext : class 
         where TModel : class
     {
+        public static string IndexViewName = "~/Views/Shared/Index.cshtml"; // view name hard coded in case a view in parent project with the same name
+        public static string DetailsViewName = "~/Views/Shared/Details.cshtml";
+        public static string EditViewName = "~/Views/Shared/Edit.cshtml";
+        public static string CreateViewName = "~/Views/Shared/Edit.cshtml";        
+
         private IDbSet<TModel> set;
         
         public IDbSet<TModel> Set
@@ -53,7 +58,7 @@ namespace Instatus.Controllers
         {
             var webView = new WebView<TModel>(Query(Set, query), query);
             ConfigureWebView(webView);
-            return View("~/Views/Shared/Index.cshtml", webView); // view name hard coded in case a view in parent project with the same name
+            return View(IndexViewName, webView);
         }
 
         public virtual IEnumerable<TModel> Query(IEnumerable<TModel> set, WebQuery query)
@@ -100,7 +105,7 @@ namespace Instatus.Controllers
         public ActionResult Details(TKey id)
         {
             ViewData.Model = Set.Find(id);
-            return View("~/Views/Shared/Details.cshtml");
+            return View(DetailsViewName);
         }
 
         [HttpGet]
@@ -108,10 +113,15 @@ namespace Instatus.Controllers
         {
             var model = Set.Find(id);
             var viewModel = Activator.CreateInstance<TViewModel>();
+            
             AttachContext(viewModel);
+            
             viewModel.Load(model);
             viewModel.Databind();
-            return View("~/Views/Shared/Edit.cshtml", viewModel);
+
+            ViewData["form"] = WebForm.Edit();
+            
+            return View(EditViewName, viewModel);
         }
 
         [HttpPost]        
@@ -130,7 +140,9 @@ namespace Instatus.Controllers
 
             viewModel.Databind();
 
-            return View("~/Views/Shared/Edit.cshtml", viewModel);
+            ViewData["form"] = WebForm.Edit();
+
+            return View(EditViewName, viewModel);
         }
 
         [HttpGet]
@@ -140,10 +152,13 @@ namespace Instatus.Controllers
             var viewModel = Activator.CreateInstance<TViewModel>();
 
             AttachContext(viewModel);
+
             viewModel.Load(model);
             viewModel.Databind();
 
-            return View("~/Views/Shared/Create.cshtml", viewModel);
+            ViewData["form"] = WebForm.Create();
+
+            return View(CreateViewName, viewModel);
         }
 
         [HttpPost]
@@ -163,7 +178,9 @@ namespace Instatus.Controllers
 
             viewModel.Databind();
 
-            return View("~/Views/Shared/Create.cshtml", viewModel);
+            ViewData["form"] = WebForm.Create();
+
+            return View(CreateViewName, viewModel);
         }
 
         public virtual ICollection<IWebCommand> GetCommands(WebQuery query)
