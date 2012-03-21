@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Helpers;
@@ -31,6 +34,32 @@ namespace Instatus
         {
             image.Resize(width, height > 0 ? height : width, true, true);
             return image;
+        }
+
+        public static Stream GetJpgAsStream(this WebImage image)
+        {
+            return image.GetBytes("jpeg").ToStream();
+        }
+
+        public static Graphics AsHighQuality(this Graphics graphics)
+        {
+            graphics.CompositingQuality = CompositingQuality.HighQuality;
+            graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+            graphics.SmoothingMode = SmoothingMode.HighQuality;            
+            return graphics;
+        }
+
+        // http://stackoverflow.com/questions/249587/high-quality-image-scaling-c-sharp
+        public static Bitmap Resize(Image image, int width, int height)
+        {
+            var bitmap = new Bitmap(width, height);
+
+            using (var graphics = Graphics.FromImage(bitmap).AsHighQuality())
+            {
+                graphics.DrawImage(image, 0, 0, bitmap.Width, bitmap.Height);
+            }
+
+            return bitmap;
         }
     }
 }

@@ -8,6 +8,7 @@ using Instatus.Services;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Instatus.Models;
+using System.IO;
 
 namespace Instatus.Web
 {
@@ -125,7 +126,7 @@ namespace Instatus.Web
             return uriBuilder.Uri.ToString(); // user uri property to ensure :80 or :443 default ports not returned
         }
 
-        public static string Resize(WebSize size, string virtualPath)
+        public static string Resize(WebSize size, string virtualPath, bool normalizeExtension = true)
         {
             if (size == WebSize.Original)
             {
@@ -135,7 +136,14 @@ namespace Instatus.Web
             {
                 var extensionStartIndex = virtualPath.LastIndexOf('.');
                 var suffix = string.Format("-{0}", size.ToString().ToLower());
-                return virtualPath.Insert(extensionStartIndex, suffix);
+                var resized = virtualPath.Insert(extensionStartIndex, suffix);
+
+                if (normalizeExtension)
+                {
+                    resized = Path.ChangeExtension(resized, "jpg");
+                }
+
+                return resized;
             }
         }
 

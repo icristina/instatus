@@ -19,7 +19,7 @@ namespace Instatus.Services
 
         public static List<IRule<string>> FilterRules = new List<IRule<string>>()
         {
-            new RegexRule(@"-(thumb|small|medium|large)\.(jpg|png|gif)", false)
+            new RegexRule(@"-(thumb|small|medium|large|debug)\.(jpg|png|gif)", false)
         };
 
         public static void EnsureFolderExists(string absolutePath)
@@ -64,7 +64,14 @@ namespace Instatus.Services
 
         public Stream Stream(string key)
         {
-            return new FileStream(WebPath.Server(key), FileMode.Open, FileAccess.Read);
+            try
+            {
+                return new FileStream(WebPath.Server(key), FileMode.Open, FileAccess.Read);
+            } 
+            catch(FileNotFoundException fileNotFound) 
+            {
+                return null;
+            }            
         }
 
         public string[] Query(string folder)
