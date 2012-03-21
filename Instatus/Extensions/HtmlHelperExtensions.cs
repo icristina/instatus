@@ -433,7 +433,7 @@ namespace Instatus
             return new MvcHtmlString(sb.ToString());
         }
 
-        public static MvcHtmlString Paging<T>(this HtmlHelper<T> html, IWebView webView = null, string seperator = "", string absolutePath = "", bool unorderedList = false)
+        public static MvcHtmlString Paging<T>(this HtmlHelper<T> html, IWebView webView = null, string seperator = "", string absolutePath = "", bool unorderedList = true)
         {
             int i = 0;
             int prev = i;

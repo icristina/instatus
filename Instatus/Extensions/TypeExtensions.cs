@@ -16,5 +16,20 @@ namespace Instatus
         {
             return typeof(T).GetCustomAttributes(typeof(TAttribute), true).OfType<TAttribute>().Any();
         }
+
+        public static string GetNamespaceByConvention(this Type type, string conventionName = "Areas")
+        {
+            var namespaces = type.Namespace.Split('.').ToList();
+            var indexOfAreas = namespaces.IndexOf(conventionName);
+
+            if (indexOfAreas > 0 && indexOfAreas < namespaces.Count - 1)
+            {
+                return namespaces[indexOfAreas + 1];
+            }
+            else
+            {
+                return string.Empty;
+            }
+        }
     }
 }

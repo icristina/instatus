@@ -57,13 +57,7 @@ namespace Instatus
                             || (!roles.IsEmpty() && !roles.Any(r => user.IsInRole(r)))) // required role
                             return null;
 
-                        string url;
-                        var namespaces = controllerType.Namespace.Split('.');
-
-                        if (namespaces.Length == 4) // Namespace(0).Areas(1).AreaName(2).Controllers(3)
-                            url = urlHelper.Action(actionName, descriptor.ControllerName, new { area = namespaces[2] });
-                        else
-                            url = urlHelper.Action(actionName, descriptor.ControllerName, new { area = string.Empty });
+                        var url = urlHelper.Action(actionName, descriptor.ControllerName, new { area = controllerType.GetNamespaceByConvention() });
 
                         return new SiteMapNode(siteMapProvider, descriptor.ControllerName, url, description);
                     })
