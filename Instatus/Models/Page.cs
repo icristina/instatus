@@ -60,15 +60,28 @@ namespace Instatus.Models
         public Card Card { get; set; }
 
         public virtual ICollection<Tag> Tags { get; set; }
+
+        [IgnoreDataMember]
         public virtual ICollection<Message> Replies { get; set; }
+
         public virtual ICollection<Link> Links { get; set; }
+
+        [IgnoreDataMember]
         public virtual ICollection<Activity> Activities { get; set; }
+
+        [IgnoreDataMember]
         public virtual ICollection<Selection> Selections { get; set; }
+
         public virtual ICollection<Restriction> Restrictions { get; set; }
+
         public virtual ICollection<Source> Sources { get; set; }
+        
+        [IgnoreDataMember]
         public virtual ICollection<Log> Logs { get; set; }
 
+        [IgnoreDataMember]
         public virtual ICollection<Page> Pages { get; set; }
+        
         public virtual ICollection<Page> Parents { get; set; }
 
         [NotMapped]

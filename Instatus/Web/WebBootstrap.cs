@@ -10,6 +10,8 @@ using System.Collections.Specialized;
 using System.Web.Routing;
 using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 using System.ComponentModel;
+using Instatus.Services;
+using Instatus.Models;
 
 namespace Instatus.Web
 {
@@ -40,7 +42,7 @@ namespace Instatus.Web
         public static void Auth()
         {
             Membership.Providers.Clear();
-            Membership.Providers.Add(new DbMembershipProvider());
+            Membership.Providers.Add(new SimpleMembershipProvider());
 
             FormsAuthentication.EnableFormsAuthentication(new NameValueCollection() {
                     { "loginUrl", "Auth/Account/LogOn" }
@@ -48,7 +50,7 @@ namespace Instatus.Web
 
             Roles.Enabled = true;
             Roles.Providers.Clear();
-            Roles.Providers.Add(new DbRoleProvider());
+            Roles.Providers.Add(new SimpleRoleProvider());
         }
 
         public static void Routes()
@@ -93,8 +95,6 @@ namespace Instatus.Web
             ViewEngines.Engines.Add(razorViewEngine);
         }
 
-        public static bool LoggingEnabled { get; set; }
-
         // http://serverfault.com/questions/24885/how-to-remove-iis-asp-net-response-headers
         public static void RemoveServerFingerprint()
         {
@@ -105,6 +105,16 @@ namespace Instatus.Web
 
             // [3] remove all redundant server headers
             DynamicModuleUtility.RegisterModule(typeof(FilterResponseHeadersModule));
+        }
+
+        public static void DefaultServices()
+        {
+            DependencyResolver.Current.RegisterTypes(
+                typeof(InMemoryLoggingService),
+                typeof(FileSystemBlobService),
+                typeof(RazorTemplateService),
+                typeof(DbPageContext),
+                typeof(DbMembershipService));
         }
     }
 }

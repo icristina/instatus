@@ -158,7 +158,7 @@ namespace Instatus.Areas.Facebook
                     Source = "Facebook",
                     Title = entry.name,
                     Description = entry.message,
-                    Timestamp = DateTime.Parse(entry.created_time),
+                    CreatedTime = DateTime.Parse(entry.created_time),
                     // Uri = entry.actionsentry.actions[0].link
                     Uri = Facebook.Permalink(entry.id)
                 });

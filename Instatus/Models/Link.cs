@@ -26,7 +26,10 @@ namespace Instatus.Models
         public string Rel { get; set; }
         public int Priority { get; set; }
 
+        [IgnoreDataMember]
         public virtual ICollection<Page> Pages { get; set; }
+        
+        [IgnoreDataMember]
         public virtual ICollection<Tag> Tags { get; set; }
 
         public Link() { }

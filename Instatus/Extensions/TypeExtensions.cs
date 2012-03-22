@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 
 namespace Instatus
@@ -15,6 +16,11 @@ namespace Instatus
         public static bool HasAttribute<TAttribute, T>() 
         {
             return typeof(T).GetCustomAttributes(typeof(TAttribute), true).OfType<TAttribute>().Any();
+        }
+
+        public static bool HasAttribute<TAttribute>(this MemberInfo property)
+        {
+            return property.GetCustomAttributes(typeof(TAttribute), true).OfType<TAttribute>().Any();
         }
 
         public static string GetNamespaceByConvention(this Type type, string conventionName = "Areas")

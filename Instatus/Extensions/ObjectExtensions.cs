@@ -201,7 +201,11 @@ namespace Instatus
 
         public static void ActivateCollections(this object target)
         {
-            foreach (var property in target.GetType().GetProperties().Where(p => p.PropertyType.IsGenericType && p.PropertyType.GetGenericTypeDefinition() == typeof(ICollection<>)).ToList())
+            foreach (var property in target.GetType().GetProperties()
+                .Where(p => p.PropertyType.IsGenericType 
+                    && p.PropertyType.GetGenericTypeDefinition() == typeof(ICollection<>)
+                    && !p.HasAttribute<IgnoreDataMemberAttribute>()) // ensure tables such as logs are not accessed
+                    .ToList())
             {
                 if (property.GetValue(target, null) == null)
                 {

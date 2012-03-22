@@ -5,6 +5,7 @@ using System.Web;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.Web.Mvc;
+using Instatus;
 
 namespace Instatus.Web
 {
@@ -12,28 +13,33 @@ namespace Instatus.Web
     public class MefDependencyResolver : IDependencyResolver
     {
         public const string HttpContextKey = "MefDependencyResolver_Container";       
-        private static Type[] Types = new Type[] { };
+        private static IList<Type> registeredTypes = new List<Type>();
 
         public static void RegisterTypes(Type[] types) {
-            Types = types;
+            registeredTypes.Append(types);
         }
 
+        public static void UnregisterType(Type type)
+        {
+            registeredTypes.Remove(type);
+        }
+
+        public static Type[] GetTypes<T>()
+        {
+            return registeredTypes.Where(t => typeof(T).IsAssignableFrom(t)).ToArray();
+        }
+        
         public CompositionContainer Container
         {
             get
             {
                 if (!HttpContext.Current.Items.Contains(MefDependencyResolver.HttpContextKey))
                 {
-                    HttpContext.Current.Items.Add(HttpContextKey, new CompositionContainer(new TypeCatalog(Types), true, null));
+                    HttpContext.Current.Items.Add(HttpContextKey, new CompositionContainer(new TypeCatalog(registeredTypes), true, null));
                 }
 
                 return (CompositionContainer)HttpContext.Current.Items[HttpContextKey];
             }
-        }
-
-        public static Type[] GetTypes<T>()
-        {
-            return Types.Where(t => typeof(T).IsAssignableFrom(t)).ToArray();
         }
 
         public object GetService(Type serviceType)
@@ -42,7 +48,7 @@ namespace Instatus.Web
             
             if (exports.Any())
             {
-                return exports.First().Value;
+                return exports.Last().Value; // convention of last in first out
             }
             
             return null;

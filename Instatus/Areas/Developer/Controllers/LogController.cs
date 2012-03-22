@@ -17,18 +17,23 @@ namespace Instatus.Areas.Developer.Controllers
 {   
     [Authorize(Roles = "Developer")]
     [Description("Logs")]
-    public class LogController : ScaffoldController<BaseViewModel<Log>, Log, IApplicationContext, int>
+    public class LogController : ScaffoldController<BaseViewModel<ITimestamp>, ITimestamp, ILoggingService, int>
     {
-        public override IEnumerable<Log> Query(IEnumerable<Log> set, WebQuery query)
+        public override IEnumerable<ITimestamp> Query(IEnumerable<ITimestamp> set, WebQuery query)
         {
-            return set.OrderByDescending(d => d.CreatedTime);
+            return Context.Query();
         }
 
-        public override void ConfigureWebView(WebView<Log> webView)
+        public override void ConfigureWebView(WebView<ITimestamp> webView)
         {
             base.ConfigureWebView(webView);
 
-            webView.Permissions = WebRole.Member.ToPermissions();            
+            webView.Permissions = null;
+        }
+
+        public ActionResult ThrowException(string message)
+        {
+            throw new Exception(message);
         }
     }
 }

@@ -7,6 +7,8 @@ using Instatus.Data;
 using Instatus.Models;
 using System.Threading.Tasks;
 using System.Text;
+using Instatus.Services;
+using System.ComponentModel.Composition;
 
 namespace Instatus.Web
 {
@@ -14,14 +16,9 @@ namespace Instatus.Web
     {
         public void OnException(ExceptionContext filterContext)
         {
-            using (var db = WebApp.GetService<IApplicationContext>())
-            {
-                if (db != null)
-                {
-                    db.LogError(filterContext.Exception);
-                    db.SaveChanges();
-                }
-            }
+            var loggingService = WebApp.GetService<ILoggingService>();
+
+            loggingService.LogError(filterContext.Exception);
         }
     }
 }

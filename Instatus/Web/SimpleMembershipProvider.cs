@@ -5,10 +5,11 @@ using System.Web;
 using Instatus.Data;
 using System.Web.Security;
 using Instatus.Models;
+using Instatus.Services;
 
 namespace Instatus.Web
 {
-    public class DbMembershipProvider : System.Web.Security.MembershipProvider
+    public class SimpleMembershipProvider : System.Web.Security.MembershipProvider
     {
         public override string Name
         {
@@ -157,14 +158,9 @@ namespace Instatus.Web
 
         public override bool ValidateUser(string username, string password)
         {
-            if (username.IsEmpty() || password.IsEmpty())
-                return false;
-            
-            using (var db = WebApp.GetService<IApplicationContext>())
-            {
-                var user = db.GetUser(username);                
-                return user != null && user.Password == password.ToEncrypted();
-            }
+            var membershipService = WebApp.GetService<IMembershipService>();
+
+            return membershipService.ValidateUser(username, password);            
         }
     }
 }

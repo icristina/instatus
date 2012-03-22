@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
+using Instatus.Data;
 
 namespace Instatus.Web
 {
@@ -17,7 +18,7 @@ namespace Instatus.Web
         public double Latitude { get; set; }
     }
     
-    public class WebEntry : IResource
+    public class WebEntry : IResource, ITimestamp
     {
         [Key]
         public string Uri { get; set; }
@@ -28,7 +29,7 @@ namespace Instatus.Web
         public string Caption { get; set; }
         public string User { get; set; }
         public string Source { get; set; }
-        public DateTime Timestamp { get; set; }
+        public DateTime CreatedTime { get; set; }
         public string Rel { get; set; }
 
         public override string ToString()

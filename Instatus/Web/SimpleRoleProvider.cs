@@ -4,10 +4,11 @@ using System.Linq;
 using System.Web;
 using Instatus.Data;
 using Instatus.Models;
+using Instatus.Services;
 
 namespace Instatus.Web
 {
-    public class DbRoleProvider : System.Web.Security.RoleProvider
+    public class SimpleRoleProvider : System.Web.Security.RoleProvider
     {
         public override string Name
         {
@@ -56,16 +57,9 @@ namespace Instatus.Web
 
         public override string[] GetRolesForUser(string username)
         {
-            using (var db = WebApp.GetService<IApplicationContext>())
-            {
-                var user = db.GetUser(username);
-                
-                if(user == null) return null;
-
-                return user.Roles
-                        .Select(r => r.Name)
-                        .ToArray();
-            }
+            var membershipService = WebApp.GetService<IMembershipService>();
+            
+            return membershipService.GetRolesForUser(username);
         }
 
         public override string[] GetUsersInRole(string roleName)

@@ -40,7 +40,7 @@ namespace Instatus.Areas.Twitter
                     Kind = "Tweet",
                     Source = "Twitter",
                     Description = includeEntities ? ReplaceEntitiesWithHtml(entry.text, entry.entities) : entry.text,
-                    Timestamp = DateTime.ParseExact(entry.created_at, SearchDateFormat, CultureInfo.InvariantCulture),
+                    CreatedTime = DateTime.ParseExact(entry.created_at, SearchDateFormat, CultureInfo.InvariantCulture),
                     Picture = entry.profile_image_url,
                     User = entry.from_user,
                     Uri = Twitter.Permalink(entry.from_user, entry.id_str)
@@ -71,7 +71,7 @@ namespace Instatus.Areas.Twitter
                     Kind = "Tweet",
                     Source = "Twitter",
                     Description = includeEntities ? ReplaceEntitiesWithHtml(entry.text, entry.entities) : entry.text,
-                    Timestamp = DateTime.ParseExact(entry.created_at, StatusesDateFormat, CultureInfo.InvariantCulture),
+                    CreatedTime = DateTime.ParseExact(entry.created_at, StatusesDateFormat, CultureInfo.InvariantCulture),
                     Picture = entry.user.profile_image_url_https,
                     User = entry.user.screen_name,
                     Uri = Twitter.Permalink(entry.user.screen_name, entry.id_str)

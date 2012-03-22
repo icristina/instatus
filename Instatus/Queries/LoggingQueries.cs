@@ -13,48 +13,8 @@ namespace Instatus
 {
     public static class LoggingQueries
     {
-        public static void LogError(this IApplicationContext context, Exception error)
-        {
-            if (!WebBootstrap.LoggingEnabled)
-                return;
-
-            var message = new StringBuilder();
-            var uri = string.Empty;
-
-            message.AppendSection("Message", error.Message);
-            message.AppendSection("Stack Trace", error.StackTrace);
-
-            var innerException = error.InnerException;
-
-            if (innerException != null)
-            {
-                message.AppendSection("Inner Exception Message", innerException.Message);
-                message.AppendSection("Inner Exception Stack Trace", innerException.StackTrace);
-            }
-
-            if (HttpContext.Current.Request != null)
-            {
-                uri = HttpContext.Current.Request.RawUrl;
-
-                if (WebOperationContext.Current == null)
-                {
-                    message.AppendSection("Server Variables", HttpContext.Current.Request.ServerVariables["ALL_RAW"]);
-                }
-            }
-
-            context.Logs.Add(new Log()
-            {
-                Verb = WebVerb.Error.ToString(),
-                Uri = uri,
-                Message = message.ToString()
-            });
-        }
-
         public static void LogChange(this IApplicationContext context, object resource, string action, string uri = null)
         {
-            if (!WebBootstrap.LoggingEnabled)
-                return;
-
             var now = DateTime.UtcNow;
             var user = context.GetCurrentUser();
             var description = resource is string ? resource : string.Format("{0} {1}", ObjectContext.GetObjectType(resource.GetType()).Name, resource.GetKey());

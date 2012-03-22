@@ -145,10 +145,16 @@
     <Compile Include="Data\IMessageQueue.cs" />
     <Compile Include="Data\INamed.cs" />
     <Compile Include="Data\ITimestamp.cs" />
+    <Compile Include="Extensions\ExceptionExtensions.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="Models\Milestone.cs" />
     <Compile Include="Models\DbPageContext.cs" />
     <Compile Include="Queries\ActivityQueries.cs" />
+    <Compile Include="Services\DbLoggingService.cs" />
+    <Compile Include="Services\DbMembershipService.cs" />
+    <Compile Include="Services\ILoggingService.cs" />
+    <Compile Include="Services\IMembershipService.cs" />
+    <Compile Include="Services\InMemoryLoggingService.cs" />
     <Compile Include="Web\FilterResponseHeadersModule.cs" />
     <Compile Include="Web\IContentAdapter.cs" />
     <Compile Include="Export\SubscriberExport.cs" />
@@ -267,8 +273,8 @@
     <Compile Include="Web\SimpleSiteMapProvider.cs" />
     <Compile Include="Web\WebAction.cs" />
     <Compile Include="Web\EmbeddedVirtualPathProvider.cs" />
-    <Compile Include="Web\DbMembershipProvider.cs" />
-    <Compile Include="Web\DbRoleProvider.cs" />
+    <Compile Include="Web\SimpleMembershipProvider.cs" />
+    <Compile Include="Web\SimpleRoleProvider.cs" />
     <Compile Include="Areas\Facebook\FacebookAreaRegistration.cs" />
     <Compile Include="Areas\Google\Controllers\GoogleController.cs" />
     <Compile Include="Areas\Google\GoogleAreaRegistration.cs" />

@@ -317,10 +317,13 @@ namespace Instatus
 
         public static StringBuilder AppendSection(this StringBuilder sb, string title, string body)
         {
-            sb.AppendLine();
-            sb.AppendFormat("<section title=\"{0}\">", title);
-            sb.AppendLine(body);
-            sb.AppendLine("</section>");
+            if (!title.IsEmpty())
+            {
+                sb.AppendLine();
+                sb.AppendFormat("<section title=\"{0}\">", title);
+                sb.AppendLine(body);
+                sb.AppendLine("</section>");
+            }
             return sb;
         }
 
