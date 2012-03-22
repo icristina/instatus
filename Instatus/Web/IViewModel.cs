@@ -173,5 +173,14 @@ namespace Instatus
 
             return model;
         }
+
+        public static IViewModel<TModel> ApplyDefaults<TModel>(this IViewModel<TModel> viewModel)
+        {
+            var model = Activator.CreateInstance<TModel>();
+
+            viewModel.Load(model);            
+            
+            return viewModel;
+        }
     }
 }

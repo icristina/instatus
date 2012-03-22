@@ -8,7 +8,7 @@ namespace Instatus.Services
 {
     public interface ILoggingService
     {
-        void LogError(Exception error);
+        void Log(Exception error);
         IQueryable<ITimestamp> Query();
     }
 }

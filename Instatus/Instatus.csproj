@@ -155,6 +155,7 @@
     <Compile Include="Services\ILoggingService.cs" />
     <Compile Include="Services\IMembershipService.cs" />
     <Compile Include="Services\InMemoryLoggingService.cs" />
+    <Compile Include="Services\MockMembershipService.cs" />
     <Compile Include="Web\FilterResponseHeadersModule.cs" />
     <Compile Include="Web\IContentAdapter.cs" />
     <Compile Include="Export\SubscriberExport.cs" />

@@ -6,6 +6,7 @@ using System.IO;
 using Instatus.Services;
 using System.Web.Helpers;
 using Instatus.Web;
+using System.Drawing;
 
 namespace Instatus.Services
 {
@@ -28,19 +29,21 @@ namespace Instatus
             
             var thumbnailKey = WebPath.Resize(WebSize.Thumb, key);
 
-            using(var stream = blobService.Stream(key)) 
+            using (var stream = blobService.Stream(key)) 
+            using (var image = (Bitmap)Bitmap.FromStream(stream))
             {
-                var webImage = new WebImage(stream);
+                var resizedImage = image.BoundingBox(boundingBoxSize);
 
-                webImage.BoundingBox(200);
-
-                blobService.Save("image/jpeg", thumbnailKey, webImage.GetJpgAsStream());
+                using (var fileStream = resizedImage.SaveJpgToStream())
+                {
+                    blobService.Save("image/jpeg", thumbnailKey, fileStream);
+                }
             }
         }
 
         public static bool BlobExists(this IBlobService blobService, string key) 
         {
-            using(var stream = blobService.Stream(key)) 
+            using (var stream = blobService.Stream(key)) 
             {
                 return stream != null;
             }

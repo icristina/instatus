@@ -16,7 +16,7 @@ namespace Instatus.Services
     {
         private IApplicationContext applicationContext;
         
-        public void LogError(Exception error)
+        public void Log(Exception error)
         {
             applicationContext.Logs.Add(new Log()
             {

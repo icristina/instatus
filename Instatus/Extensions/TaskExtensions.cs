@@ -5,6 +5,7 @@ using System.Web;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Collections.Concurrent;
+using Instatus.Web;
 
 namespace Instatus
 {
@@ -42,9 +43,12 @@ namespace Instatus
                     action();
                     break;
                 }
-                catch
+                catch(Exception error)
                 {
-
+                    if (times == 0)
+                    {
+                        WebApp.Log(error);
+                    }
                 }
             }
         }

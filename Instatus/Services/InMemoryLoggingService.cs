@@ -14,7 +14,7 @@ namespace Instatus.Services
     {
         private static Queue<WebEntry> queue = new LimitedQueue<WebEntry>(1000);
         
-        public void LogError(Exception error)
+        public void Log(Exception error)
         {
             queue.Enqueue(new WebEntry() {
                 CreatedTime = DateTime.UtcNow,

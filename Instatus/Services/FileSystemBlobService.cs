@@ -32,7 +32,10 @@ namespace Instatus.Services
 
         private string GetRelativePath(string contentType, string slug)
         {
-            if (slug.Contains('.'))
+            if (Path.IsPathRooted(slug))
+                return slug;
+            
+            if (Path.HasExtension(slug))
                 return BasePath + slug;
             
             var extension = WebMimeType.GetExtension(contentType);
