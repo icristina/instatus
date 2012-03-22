@@ -33,24 +33,32 @@ namespace Instatus.Data
 
         public PagedCollection(IEnumerable<T> list, int pageSize = 10, int pageIndex = 0, bool count = false)
         {
-            if (list is IPagedCollection<T>)
+            if (list != null)
             {
-                var pagedCollection = (IPagedCollection<T>)list;
-                
-                this.Append(pagedCollection);
+                if (list is IPagedCollection<T>)
+                {
+                    var pagedCollection = (IPagedCollection<T>)list;
 
-                TotalItemCount = pagedCollection.TotalItemCount;
+                    this.Append(pagedCollection);
+
+                    TotalItemCount = pagedCollection.TotalItemCount;
+                }
+                else
+                {
+                    this.Append(list.Paging(pageIndex, pageSize).ToList());
+
+                    if (count)
+                        TotalItemCount = list.Count();
+                }
+
+                PageIndex = pageIndex;
             }
             else
             {
-                this.Append(list.Paging(pageIndex, pageSize).ToList());
-                
-                if(count)
-                    TotalItemCount = list.Count();
+                PageIndex = 0;
             }
 
             PageSize = pageSize;
-            PageIndex = pageIndex;
         }
 
         public PagedCollection(IQueryable<Record<T>> queryable, Func<Record<T>, T> mapping, int pageSize = 10, int pageIndex = 0, bool count = false)
