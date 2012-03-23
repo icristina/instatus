@@ -12,14 +12,12 @@ namespace Instatus
     {
         public static void RegisterTypes(this IDependencyResolver dependencyResolver, params Type[] types)
         {
-            if (dependencyResolver is MefDependencyResolver)
-            {
-                MefDependencyResolver.RegisterTypes(types);
-            }
-            else
-            {
-                throw new Exception("Only available with MefDependencyResolver");
-            }
+            MefDependencyResolver.RegisterTypes(types);
+        }
+
+        public static void UnregisterType(this IDependencyResolver dependencyResolver, Type type)
+        {
+            MefDependencyResolver.UnregisterType(type);
         }
     }
 }

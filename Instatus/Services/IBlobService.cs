@@ -7,6 +7,7 @@ using Instatus.Services;
 using System.Web.Helpers;
 using Instatus.Web;
 using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace Instatus.Services
 {
@@ -14,7 +15,7 @@ namespace Instatus.Services
     {
         string Save(string contentType, string slug, Stream stream);
         Stream Stream(string key);
-        string[] Query(string folder);
+        string[] Query();
     }
 }
 
@@ -22,6 +23,23 @@ namespace Instatus
 {
     public static class BlobServiceExtensions
     {
+        public static Image LoadImage(this IBlobService blobService, string key)
+        {
+            using (var stream = blobService.Stream(key))
+            {
+                return Bitmap.FromStream(stream);
+            }
+        }
+
+        public static void SaveImage(this IBlobService blobService, Image image, string key)
+        {
+            using (var memoryStream = new MemoryStream())
+            {
+                image.Save(memoryStream, ImageFormat.Jpeg);
+                blobService.Save("image/jpeg", key, memoryStream);
+            }
+        }
+        
         public static void GenerateThumbnail(this IBlobService blobService, string key, int boundingBoxSize = 200, bool alwaysCreate = false) 
         {
             if (!alwaysCreate && blobService.HasThumbnail(key))
@@ -30,18 +48,14 @@ namespace Instatus
             var thumbnailKey = WebPath.Resize(WebSize.Thumb, key);
 
             using (var stream = blobService.Stream(key)) 
-            using (var image = (Bitmap)Bitmap.FromStream(stream))
+            using (var originalImage = (Bitmap)Bitmap.FromStream(stream))
+            using (var resizedImage = originalImage.BoundingBox(boundingBoxSize))
             {
-                var resizedImage = image.BoundingBox(boundingBoxSize);
-
-                using (var fileStream = resizedImage.SaveJpgToStream())
-                {
-                    blobService.Save("image/jpeg", thumbnailKey, fileStream);
-                }
+                blobService.SaveImage(resizedImage, thumbnailKey);
             }
         }
 
-        public static bool BlobExists(this IBlobService blobService, string key) 
+        public static bool Exists(this IBlobService blobService, string key) 
         {
             using (var stream = blobService.Stream(key)) 
             {
@@ -52,7 +66,7 @@ namespace Instatus
         public static bool HasThumbnail(this IBlobService blobService, string key) 
         {
             var thumbnailKey = WebPath.Resize(WebSize.Thumb, key);
-            return blobService.BlobExists(thumbnailKey);
+            return blobService.Exists(thumbnailKey);
         }
     }
 }

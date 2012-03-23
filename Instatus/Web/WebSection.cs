@@ -46,5 +46,22 @@ namespace Instatus.Web
                 parts = value;
             }
         }
+
+        private List<WebElement> elements;
+
+        public List<WebElement> Elements
+        {
+            get
+            {
+                if (elements == null)
+                    elements = new List<WebElement>();
+
+                return elements;
+            }
+            set
+            {
+                elements = value;
+            }
+        }
     }
 }

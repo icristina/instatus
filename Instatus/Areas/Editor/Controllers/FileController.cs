@@ -37,18 +37,16 @@ namespace Instatus.Areas.Editor.Controllers
         
         public override IEnumerable<WebLink> Query(IEnumerable<WebLink> set, WebQuery query)
         {
-            var files = blobService.Query(null);
+            var files = blobService.Query();
 
             set = files
                 .Select(file =>
                 {
-                    var fileName = Path.GetFileName(file);
-                    var uri = FileSystemBlobService.BasePath + fileName;
                     return new WebLink()
                     {
-                        Uri = uri,
-                        Picture = WebMimeType.IsRelativePathPhoto(uri) ? uri : null,
-                        Title = fileName
+                        Uri = file,
+                        Picture = WebMimeType.IsRelativePathPhoto(file) ? file : null,
+                        Title = Path.GetFileName(file)
                     };
                 })
                 .ToList();            

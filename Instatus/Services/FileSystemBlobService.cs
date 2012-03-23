@@ -15,11 +15,13 @@ namespace Instatus.Services
     [PartCreationPolicy(CreationPolicy.NonShared)]
     public class FileSystemBlobService : IBlobService
     {       
-        public static string BasePath = "~/Media/";
+        public static string BasePath = "~/Media/"; 
+        public static string VirtualPath = "~/Media/";
 
         public static List<IRule<string>> FilterRules = new List<IRule<string>>()
         {
-            new RegexRule(@"-(thumb|small|medium|large|debug)\.(jpg|png|gif)", false)
+            new RegexRule(@"-(thumb|small|medium|large)\.(jpg|png|gif)", false), // no resized images, only original
+            new RegexRule(@"thumbs\.db", false) // no windows thumbnail database
         };
 
         public static void EnsureFolderExists(string absolutePath)
@@ -34,8 +36,11 @@ namespace Instatus.Services
         {
             if (Path.IsPathRooted(slug))
                 return slug;
-            
-            if (Path.HasExtension(slug))
+
+            if (slug.StartsWith(VirtualPath))
+                slug = slug.SubstringAfter(VirtualPath);
+
+            if (Path.HasExtension(slug) || contentType.IsEmpty())
                 return BasePath + slug;
             
             var extension = WebMimeType.GetExtension(contentType);
@@ -69,22 +74,36 @@ namespace Instatus.Services
         {
             try
             {
-                return new FileStream(WebPath.Server(key), FileMode.Open, FileAccess.Read);
+                var relativePath = GetRelativePath(null, key);
+                var absolutePath = WebPath.Server(relativePath);
+                
+                return new FileStream(absolutePath, FileMode.Open, FileAccess.Read);
             } 
-            catch(FileNotFoundException fileNotFound) 
+            catch(Exception error) 
             {
                 return null;
             }            
         }
 
-        public string[] Query(string folder)
+        public string[] Query()
         {
-            var path = WebPath.Server(folder ?? BasePath);
-            var files = Directory.GetFiles(path);
-            
-            return files
+            return Query(BasePath)
+                .Select(f =>
+                {
+                    return Path.GetFileName(f);
+                })
                 .FilterByRules(FilterRules)
+                .Select(f =>
+                {
+                    return VirtualPath + f;
+                })
                 .ToArray();
+        }
+
+        public static string[] Query(string directory) 
+        {
+            var path = WebPath.Server(directory);
+            return Directory.GetFiles(path);
         }
     }
 }

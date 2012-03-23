@@ -37,18 +37,6 @@ namespace Instatus
             return image.Resize(width, height > 0 ? height : width, true, true);
         }
 
-        public static Stream GetJpgFileStream(this WebImage image)
-        {
-            return image.GetBytes("jpeg").ToStream();
-        }
-
-        public static Stream SaveJpgToStream(this Image image)
-        {
-            var stream = new MemoryStream();
-            image.Save(stream, ImageFormat.Jpeg);
-            return stream;
-        }
-        
         // http://stackoverflow.com/questions/249587/high-quality-image-scaling-c-sharp    
         public static Graphics AsHighQuality(this Graphics graphics)
         {
@@ -72,7 +60,7 @@ namespace Instatus
             
             bool flag = (((image.PixelFormat == PixelFormat.Format1bppIndexed) || (image.PixelFormat == PixelFormat.Format4bppIndexed)) || (image.PixelFormat == PixelFormat.Format8bppIndexed)) || (image.PixelFormat == PixelFormat.Indexed);
 
-            Bitmap bitmap = flag ? new Bitmap(width, height) : new Bitmap(width, height, image.PixelFormat);
+            var bitmap = flag ? new Bitmap(width, height) : new Bitmap(width, height, image.PixelFormat);
 
             if (preserveAspectRatio)
             {
@@ -86,7 +74,7 @@ namespace Instatus
             using (Graphics graphics = Graphics.FromImage(bitmap))
             {
                 graphics.FillRectangle(Brushes.White, 0, 0, width, height);
-                graphics.InterpolationMode = InterpolationMode.HighQualityBicubic; 
+                graphics.InterpolationMode = InterpolationMode.HighQualityBicubic; // cannot be prior to rectangle or creates incorrect border
                 graphics.DrawImage(image, 0, 0, width, height);
             }
             

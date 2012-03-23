@@ -227,6 +227,7 @@
     <Compile Include="Web\WebBootstrap.cs" />
     <Compile Include="Web\WebCache.cs" />
     <Compile Include="Web\WebCategory.cs" />
+    <Compile Include="Web\WebElement.cs" />
     <Compile Include="Web\WebFeed.cs" />
     <Compile Include="Web\WebForm.cs" />
     <Compile Include="Web\WebFormatting.cs" />
