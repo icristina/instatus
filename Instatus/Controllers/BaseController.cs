@@ -49,7 +49,19 @@ namespace Instatus.Controllers
 
     [SessionState(SessionStateBehavior.Disabled)]
     public class BaseController : Controller
-    {                
+    {
+        public void UpdateObject(object viewModel)
+        {
+            var modelBindingContext = new ModelBindingContext()
+            {
+                ValueProvider = ValueProvider,
+                ModelMetadata = ModelMetadataProviders.Current.GetMetadataForType(() => viewModel, viewModel.GetType()),
+                ModelState = new ModelStateDictionary()
+            };
+
+            ModelBinders.Binders.DefaultBinder.BindModel(ControllerContext, modelBindingContext);
+        }        
+        
         public HttpApplication Application
         {
             get

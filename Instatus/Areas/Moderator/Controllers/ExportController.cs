@@ -78,7 +78,7 @@ namespace Instatus.Areas.Moderator.Controllers
 
             if (configuration != null)
             {
-                UpdateModel(configuration);
+                UpdateObject(configuration);
             }
 
             Response.ContentType = WebContentType.Csv.ToMimeType();
