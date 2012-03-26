@@ -18,27 +18,159 @@ namespace Instatus.Models
         public new IDbSet<T> Set<T>() where T : class
         {
             return base.Set<T>();
-        }  
-        
-        public IDbSet<Page> Pages { get; set; }
-        public IDbSet<User> Users { get; set; }
-        public IDbSet<Role> Roles { get; set; }
-        public IDbSet<Preference> Preferences { get; set; }
-        public IDbSet<Message> Messages { get; set; }
-        public IDbSet<Domain> Domains { get; set; }
-        public IDbSet<Link> Links { get; set; }
-        public IDbSet<Tag> Tags { get; set; }
-        public IDbSet<Activity> Activities { get; set; }
-        public IDbSet<Source> Sources { get; set; }
-        public IDbSet<Price> Prices { get; set; }
-        public IDbSet<Schedule> Schedules { get; set; }
-        public IDbSet<Subscription> Subscriptions { get; set; }
-        public IDbSet<Restriction> Restrictions { get; set; }
-        public IDbSet<List> Lists { get; set; }
-        public IDbSet<Selection> Selections { get; set; }
-        public IDbSet<Taxonomy> Taxonomies { get; set; }
-        public IDbSet<Log> Logs { get; set; }
-        public IDbSet<Phrase> Phrases { get; set; }
+        }
+
+        public IDbSet<Page> Pages
+        {
+            get
+            {
+                return Set<Page>(); // no public setter
+            }
+        }
+
+        public IDbSet<User> Users
+        {
+            get
+            {
+                return Set<User>();
+            }
+        }
+
+        public IDbSet<Role> Roles
+        {
+            get
+            {
+                return Set<Role>();
+            }
+        }
+
+        public IDbSet<Preference> Preferences
+        {
+            get
+            {
+                return Set<Preference>();
+            }
+        }
+
+        public IDbSet<Message> Messages
+        {
+            get
+            {
+                return Set<Message>();
+            }
+        }
+
+        public IDbSet<Domain> Domains
+        {
+            get
+            {
+                return Set<Domain>();
+            }
+        }
+
+        public IDbSet<Link> Links
+        {
+            get
+            {
+                return Set<Link>();
+            }
+        }
+
+        public IDbSet<Tag> Tags
+        {
+            get
+            {
+                return Set<Tag>();
+            }
+        }
+
+        public IDbSet<Activity> Activities
+        {
+            get
+            {
+                return Set<Activity>();
+            }
+        }
+
+        public IDbSet<Source> Sources
+        {
+            get
+            {
+                return Set<Source>();
+            }
+        }
+
+        public IDbSet<Price> Prices
+        {
+            get
+            {
+                return Set<Price>();
+            }
+        }
+
+        public IDbSet<Schedule> Schedules
+        {
+            get
+            {
+                return Set<Schedule>();
+            }
+        }
+
+        public IDbSet<Subscription> Subscriptions
+        {
+            get
+            {
+                return Set<Subscription>();
+            }
+        }
+
+        public IDbSet<Restriction> Restrictions
+        {
+            get
+            {
+                return Set<Restriction>();
+            }
+        }
+
+        public IDbSet<List> Lists
+        {
+            get
+            {
+                return Set<List>();
+            }
+        }
+
+        public IDbSet<Selection> Selections
+        {
+            get
+            {
+                return Set<Selection>();
+            }
+        }
+
+        public IDbSet<Taxonomy> Taxonomies
+        {
+            get
+            {
+                return Set<Taxonomy>();
+            }
+        }
+
+        public IDbSet<Log> Logs
+        {
+            get
+            {
+                return Set<Log>();
+            }
+        }
+
+        public IDbSet<Phrase> Phrases
+        {
+            get
+            {
+                return Set<Phrase>();
+            }
+        }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

@@ -55,11 +55,6 @@ namespace Instatus.Models
                     .OfKind(query.Kind)
                     .Sort(query.Sort);
         }
-
-        public void Dispose()
-        {
-            
-        }
         
         [ImportingConstructor]
         public DbPageContext(IApplicationContext applicationContext)
