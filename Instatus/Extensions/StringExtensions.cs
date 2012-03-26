@@ -64,6 +64,18 @@ namespace Instatus
             return Regex.Replace(text, pattern, replacement, RegexOptions.IgnoreCase);
         }
 
+        public static string RegexReplace(this string text, string pattern, Func<string, string> replacement)
+        {
+            if (text == null || pattern == null)
+                return text;
+
+            return Regex.Replace(text, pattern, delegate(Match m)
+            {
+                return replacement(m.Value);
+            }, 
+            RegexOptions.IgnoreCase);
+        }
+
         // http://stackoverflow.com/questions/244531/is-there-an-alternative-to-string-replace-that-is-case-insensitive
         public static string ReplaceString(this string str, string oldValue, string newValue, StringComparison comparison = StringComparison.OrdinalIgnoreCase)
         {
@@ -151,9 +163,9 @@ namespace Instatus
             return text.RemoveHtmlAttribute("(class|style|size|face)");
         }
 
-        public static string RemoveSpecialCharacters(this string text)
+        public static string RemoveSpecialCharacters(this string text, bool allowDashes = true)
         {
-            return text.RegexReplace(@"[^a-z0-9\-\s]");
+            return allowDashes ? text.RegexReplace(@"[^a-z0-9\-\s]") : text.RegexReplace(@"[^a-z0-9\s]");
         }
 
         public static string FindHtmlElement(this string text, string elementName)

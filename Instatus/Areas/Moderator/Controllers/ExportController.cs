@@ -43,7 +43,7 @@ namespace Instatus.Areas.Moderator.Controllers
 
             ViewData.Model = configuration;
 
-            ViewData["form"] = new WebForm()
+            ViewData.AddSingle(new WebForm()
             {
                 ActionName = "Download",
                 ActionText = "Export",
@@ -51,7 +51,7 @@ namespace Instatus.Areas.Moderator.Controllers
                 {
                     new WebParameter("name", name)
                 }
-            };
+            });
 
             return View("Edit");
         }

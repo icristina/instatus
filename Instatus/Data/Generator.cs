@@ -28,6 +28,7 @@ namespace Instatus.Data
         public static string[] FamilyNames = new string[] { "Smith", "Jones", "Taylor", "Brown", "Williams", "Wilson", "Johnson", "Davis", "Robinson", "Wright", "Thompson", "Evans", "Walker", "White", "Roberts", "Green", "Hall", "Wood", "Jackson", "Clarke" };
         
         public static string[] Words = new string[] { "lorem", "ipsum", "dolor", "sit", "amet", "consectetur", "adipisicing", "elit", "sed", "do", "eiusmod", "tempor" };
+        
         public static string[] Sentences = new string[] {
             "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
             "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
@@ -39,10 +40,15 @@ namespace Instatus.Data
             "Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?",
             "Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"
         };
+
         public static string[] UnitedKingdomCities = new string[] { "London", "Birmingham", "Glasgow", "Liverpool", "Manchester", "Leeds", "Sheffield", "Edinburgh", "Bristol", "Cardiff", "Leicester", "Coventry", "Hull", "Bradford", "Belfast", "Newcastle", "Stoke", "Wolverhampton", "Nottingham", "Plymouth" };
 
         public static List<char> LowerCaseLetters = Enumerable.Range('a', 'z' - 'a' + 1).Select(c => (Char)c).ToList();
         public static List<char> UpperCaseLetters = Enumerable.Range('A', 'Z' - 'A' + 1).Select(c => (Char)c).ToList();
+
+        // http://en.wiktionary.org/wiki/Appendix:Official_Scrabble_2-letter_words
+        public static string[] OneCharacterWords = new string[] { "a", "i", "o" };
+        public static string[] TwoCharacterWords = new string[] { "aa", "ab", "ad", "ae", "ag", "ah", "ai", "al", "am", "an", "ar", "as", "at", "aw", "ax", "ay", "ba", "be", "bi", "bo", "by", "ch", "da", "de", "di", "do", "ea", "ed", "ee", "ef", "eh", "el", "em", "en", "er", "es", "et", "ex", "fa", "fe", "fy", "gi", "go", "gu", "ha", "he", "hi", "hm", "ho", "id", "if", "in", "io", "is", "it", "ja", "jo", "ka", "ki", "ko", "ky", "la", "li", "lo", "ma", "me", "mi", "mm", "mo", "mu", "my", "na", "ne", "no", "nu", "ny", "ob", "od", "oe", "of", "oh", "oi", "om", "on", "oo", "op", "or", "os", "ou", "ow", "ox", "oy", "pa", "pe", "pi", "po", "qi", "re", "sh", "si", "so", "st", "ta", "te", "ti", "to", "ug", "uh", "um", "un", "up", "ur", "us", "ut", "we", "wo", "xi", "xu", "ya", "ye", "yo", "yu", "za", "zo" };
 
         public static double Price()
         {

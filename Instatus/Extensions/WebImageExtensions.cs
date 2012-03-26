@@ -53,14 +53,13 @@ namespace Instatus
             var originalDimensions = new Tuple<int, int>(image.Width, image.Height);
             var newDimensions = new Tuple<int, int>(width, height);
 
-            newDimensions = originalDimensions.Resize(newDimensions);
+            newDimensions = originalDimensions.Resize(newDimensions, preserveAspectRatio, preventEnlarge);
 
             width = newDimensions.Item1;
             height = newDimensions.Item2;
             
-            bool flag = (((image.PixelFormat == PixelFormat.Format1bppIndexed) || (image.PixelFormat == PixelFormat.Format4bppIndexed)) || (image.PixelFormat == PixelFormat.Format8bppIndexed)) || (image.PixelFormat == PixelFormat.Indexed);
-
-            var bitmap = flag ? new Bitmap(width, height) : new Bitmap(width, height, image.PixelFormat);
+            var isIndexedColor = (((image.PixelFormat == PixelFormat.Format1bppIndexed) || (image.PixelFormat == PixelFormat.Format4bppIndexed)) || (image.PixelFormat == PixelFormat.Format8bppIndexed)) || (image.PixelFormat == PixelFormat.Indexed);
+            var bitmap = isIndexedColor ? new Bitmap(width, height) : new Bitmap(width, height, image.PixelFormat);
 
             if (preserveAspectRatio)
             {
@@ -71,7 +70,7 @@ namespace Instatus
                 bitmap.SetResolution(96f, 96f);
             }
 
-            using (Graphics graphics = Graphics.FromImage(bitmap))
+            using (var graphics = Graphics.FromImage(bitmap))
             {
                 graphics.FillRectangle(Brushes.White, 0, 0, width, height);
                 graphics.InterpolationMode = InterpolationMode.HighQualityBicubic; // cannot be prior to rectangle or creates incorrect border
