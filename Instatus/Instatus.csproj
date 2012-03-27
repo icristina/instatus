@@ -220,6 +220,7 @@
     <Compile Include="Web\IWebView.cs" />
     <Compile Include="Web\MvcConfigurationModule.cs" />
     <Compile Include="Web\SchemaOrgVocabulary.cs" />
+    <Compile Include="Web\SyndicationFeedResult.cs" />
     <Compile Include="Web\TwoLevelViewCache.cs" />
     <Compile Include="Web\WebApp.cs" />
     <Compile Include="Web\WebAppSetting.cs" />

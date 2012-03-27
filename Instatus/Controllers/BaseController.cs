@@ -61,14 +61,6 @@ namespace Instatus.Controllers
 
             ModelBinders.Binders.DefaultBinder.BindModel(ControllerContext, modelBindingContext);
         }        
-        
-        public HttpApplication Application
-        {
-            get
-            {
-                return ControllerContext.HttpContext.ApplicationInstance;
-            }
-        }
 
         public ActionResult CommandResult(ICollection<IWebCommand> commands, string commandName, object model)
         {
@@ -128,8 +120,6 @@ namespace Instatus.Controllers
             var pageContext = WebApp.GetService<IPageContext>();
 
             ViewData.Model = pageContext.GetPage(slug ?? RouteData.ActionName());
-            
-            pageContext.TryDispose();
 
             return View("Page");
         }
@@ -190,46 +180,7 @@ namespace Instatus.Controllers
         [NonAction]
         public ActionResult Feed(WebContentType format, SyndicationFeed feed)
         {
-            return new FeedResult(format, feed);
-        }
-
-        private class FeedResult : ActionResult
-        {
-            public WebContentType Format { get; set; }
-            public SyndicationFeed Feed { get; set; }
-
-            public FeedResult(WebContentType format, SyndicationFeed feed)
-            {
-                Format = format;
-                Feed = feed;
-            }
-
-            public override void ExecuteResult(ControllerContext context)
-            {
-                var response = context.HttpContext.Response;
-
-                SyndicationFeedFormatter formatter;
-
-                switch (Format)
-                {
-                    case WebContentType.Atom:
-                        formatter = Feed.GetAtom10Formatter();
-                        break;
-                    case WebContentType.Rss:
-                        formatter = Feed.GetRss20Formatter();
-                        break;
-                    default:
-                        throw new Exception("Invalid content type");
-                }
-
-                response.ContentType = Format.ToMimeType();
-
-                using (var xmlWriter = new XmlTextWriter(response.Output))
-                {
-                    xmlWriter.Formatting = Formatting.Indented;
-                    formatter.WriteTo(xmlWriter);
-                }
-            }
+            return new SyndicationFeedResult(format, feed);
         }
     }
 }

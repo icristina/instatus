@@ -176,10 +176,7 @@ namespace Instatus
 
         public static string RewriteRelativePaths(this string text)
         {
-            return Regex.Replace(text, "~/[^\"]+", delegate(Match m)
-            {
-                return WebPath.Absolute(m.Value);
-            });
+            return text.RegexReplace("~/[^\"]+", match => WebPath.Absolute(match));
         }
 
         public static bool IsEncrypted(this string text)
