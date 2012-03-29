@@ -46,6 +46,8 @@ namespace Instatus.Widgets
         public JsApiWidget(WebProvider provider, WebZone zone = WebZone.Scripts)
         {
             this.provider = provider;
+
+            Zone = zone;
         }
     }
 }
