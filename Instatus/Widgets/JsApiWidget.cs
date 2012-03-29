@@ -40,7 +40,7 @@ namespace Instatus.Widgets
 
                 return new MvcHtmlString(inlineData + embed);
             },
-            provider.ToString());
+            "JspApiWidget." + provider.ToString());
         }
 
         public JsApiWidget(WebProvider provider, WebZone zone = WebZone.Scripts)
