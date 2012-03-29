@@ -1,6 +1,7 @@
 ﻿using System.Web.Mvc;
 using Instatus.Web;
 using System.Collections.Generic;
+using Instatus.Widgets;
 
 namespace Instatus.Areas.Typekit
 {
@@ -24,16 +25,29 @@ namespace Instatus.Areas.Typekit
                 new string[] { "Instatus.Areas.Typekit.Controllers" }
             );
 
-            WebPart.Catalog.Add(new WebPartial()
-            {
-                Zone = WebZone.Head,
-                ActionName = "RegisterScripts",
-                Parameters = new List<WebParameter>()
-                {
-                    new WebParameter("area", AreaName),
-                    new WebParameter("controller", "typekit")
-                }
-            });
+            WebPart.Catalog.Add(new TypekitApiWidget());
+        }
+    }
+
+    public class TypekitApiWidget : JsApiWidget
+    {
+        public TypekitApiWidget()
+            : base(WebProvider.Typekit)
+        {
+
+        }
+
+        public override string Embed
+        {
+            get {
+                return @"<script src='http://use.typekit.com/{uri}.js'></script>
+                    <script>try { Typekit.load(); } catch (e) { }</script>";
+            }
+        }
+
+        public override object Settings(UrlHelper urlHelper, Models.Credential credential)
+        {
+            return null;
         }
     }
 }

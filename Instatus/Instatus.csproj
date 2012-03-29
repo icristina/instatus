@@ -24,6 +24,10 @@
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>4.0</OldToolsVersion>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -117,6 +121,7 @@
     <Compile Include="Areas\Editor\Models\PublishingViewModel.cs" />
     <Compile Include="Areas\Editor\Models\MetaTagsViewModel.cs" />
     <Compile Include="Areas\Google\Google.cs" />
+    <Compile Include="Areas\Microsite\Controllers\PageController.cs" />
     <Compile Include="Areas\Moderator\Controllers\ActivityController.cs" />
     <Compile Include="Areas\Moderator\Controllers\NotificationController.cs" />
     <Compile Include="Areas\Developer\Controllers\DomainController.cs" />
@@ -126,13 +131,10 @@
     <Compile Include="Areas\Editor\Controllers\TagController.cs" />
     <Compile Include="Areas\Moderator\ModeratorAreaRegistration.cs" />
     <Compile Include="Areas\Twitter\Twitter.cs" />
-    <Compile Include="Areas\Typekit\Controllers\TypekitController.cs" />
     <Compile Include="Areas\Typekit\TypekitAreaRegistration.cs" />
     <Compile Include="Areas\Facebook\Controllers\FacebookController.cs" />
     <Compile Include="Areas\Facebook\Facebook.cs" />
     <Compile Include="Areas\Facebook\FacebookAttribute.cs" />
-    <Compile Include="Areas\Wordpress\Controllers\WordpressApiController.cs" />
-    <Compile Include="Areas\Wordpress\WordpressAreaRegistration.cs" />
     <Compile Include="Areas\YouTube\YouTube.cs" />
     <Compile Include="Commands\BanCommand.cs" />
     <Compile Include="Commands\AwardCommand.cs" />
@@ -279,7 +281,6 @@
     <Compile Include="Web\SimpleMembershipProvider.cs" />
     <Compile Include="Web\SimpleRoleProvider.cs" />
     <Compile Include="Areas\Facebook\FacebookAreaRegistration.cs" />
-    <Compile Include="Areas\Google\Controllers\GoogleController.cs" />
     <Compile Include="Areas\Google\GoogleAreaRegistration.cs" />
     <Compile Include="Areas\Microsite\MicrositeAreaRegistration.cs" />
     <Compile Include="Controllers\ScaffoldController.cs" />
@@ -369,7 +370,8 @@
     <Compile Include="Web\WebSort.cs" />
     <Compile Include="Web\WebView.cs" />
     <Compile Include="Web\RedirectModule.cs" />
-    <Compile Include="Web\XmlRpcValueProvider.cs" />
+    <Compile Include="Widgets\JsApiWidget.cs" />
+    <Compile Include="Widgets\NavigationWidget.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\_ViewStart.cshtml" />
@@ -402,18 +404,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Shared\LogOn.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Areas\Facebook\Views\Shared\RegisterScripts.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Areas\Facebook\Views\Web.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Areas\Google\Views\Web.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Areas\Google\Views\Shared\RegisterScripts.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Shared\DisplayTemplates\DateTime.cshtml" />
@@ -482,11 +472,8 @@
     <EmbeddedResource Include="Views\Shared\Playlist.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Areas\Typekit\Views\Shared\RegisterScripts.cshtml" />
-    <EmbeddedResource Include="Areas\Typekit\Views\Web.config" />
     <EmbeddedResource Include="Areas\Developer\Views\Web.config" />
     <EmbeddedResource Include="Areas\Developer\Views\Dashboard\Index.cshtml" />
-    <EmbeddedResource Include="Areas\Facebook\Views\Facebook\Index.cshtml" />
     <None Include="App.config" />
     <None Include="packages.config" />
     <EmbeddedResource Include="Views\Shared\DisplayTemplates\LinkList.cshtml" />

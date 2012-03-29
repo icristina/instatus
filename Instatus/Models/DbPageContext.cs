@@ -9,7 +9,7 @@ using Instatus.Web;
 namespace Instatus.Models
 {
     [Export(typeof(IPageContext))]
-    [PartCreationPolicy(CreationPolicy.Shared)]     
+    [PartCreationPolicy(CreationPolicy.NonShared)]     
     public class DbPageContext : IPageContext
     {
         private IApplicationContext applicationContext;

@@ -15,7 +15,14 @@ else if (Model is WebPartial)
 
     if (webPartial.ActionName.IsEmpty())
     {
-        @Html.Partial(webPartial.ViewName)
+        var webPartialModel = webPartial.GetModel(ViewContext.RequestContext);
+
+        if (webPartialModel is MvcHtmlString)
+        {
+            @webPartialModel
+        } else {
+            @Html.Partial(webPartial.ViewName, webPartialModel)            
+        }
     }
     else
     {

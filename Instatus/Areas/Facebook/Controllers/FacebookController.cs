@@ -10,21 +10,8 @@ using Instatus.Web;
 
 namespace Instatus.Areas.Facebook.Controllers
 {
-    public class FacebookController : BaseController<IApplicationContext>
+    public class FacebookController : BaseController
     {
-        [Authorize(Roles = "Administrator")]
-        public ActionResult Index()
-        {
-            return View();
-        }
-        
-        [OutputCache(Duration = WebCache.Duration, VaryByParam = WebCache.VaryByParam)]
-        public ActionResult RegisterScripts()
-        {
-            ViewData.Model = Context.GetApplicationCredential(WebProvider.Facebook);
-            return PartialViewOrEmpty();
-        }
-
         [HttpPost]
         public ActionResult Authenticated(string accessToken)
         {

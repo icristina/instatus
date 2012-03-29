@@ -114,7 +114,8 @@ namespace Instatus.Web
                 typeof(FileSystemBlobService),
                 typeof(RazorTemplateService),
                 typeof(DbPageContext),
-                typeof(DbMembershipService));
+                typeof(DbMembershipService),
+                typeof(SchemaOrgVocabulary));
         }
     }
 }

@@ -18,6 +18,7 @@ namespace Instatus.Areas.Microsite.Controllers
         private IApplicationContext applicationContext;
         private IPageContext pageContext;
 
+        [ChildActionOnly]
         public ActionResult Index(WebQuery query, string viewName = "")
         {
             ViewData.Model = GetStream(query);

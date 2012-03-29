@@ -16,7 +16,10 @@ namespace Instatus.Web
         private static IList<Type> registeredTypes = new List<Type>();
 
         public static void RegisterTypes(Type[] types) {
-            registeredTypes.Append(types);
+            registeredTypes = registeredTypes
+                                .Append(types)
+                                .Distinct() // duplicates cause composition container to not resolve type
+                                .ToList();
         }
 
         public static void UnregisterType(Type type)

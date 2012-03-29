@@ -112,17 +112,7 @@ namespace Instatus.Controllers
             }
 
             base.OnActionExecuted(filterContext);
-        }
-        
-        [NonAction]
-        public ActionResult Page(string slug = null)
-        {
-            var pageContext = WebApp.GetService<IPageContext>();
-
-            ViewData.Model = pageContext.GetPage(slug ?? RouteData.ActionName());
-
-            return View("Page");
-        }
+        }       
 
         [NonAction]
         public new ActionResult View()

@@ -89,7 +89,7 @@ namespace Instatus
                 .AddAreaDataTokens(areaName);
         }
 
-        public static Route MapPageRoute(this RouteCollection routes, string prefix, string controllerName = "Page", string actionName = "Details", string areaName = null, string ns = null)
+        public static Route MapContentPageRoute(this RouteCollection routes, string prefix, string controllerName = "Page", string actionName = "Details", string areaName = null, string ns = null)
         {
             return routes
                 .RemoveRoute(WebRoute.Page)

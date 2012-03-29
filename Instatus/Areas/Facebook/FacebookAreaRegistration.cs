@@ -1,6 +1,9 @@
 ﻿using System.Web.Mvc;
 using Instatus.Web;
 using System.Collections.Generic;
+using System;
+using Instatus.Models;
+using Instatus.Widgets;
 
 namespace Instatus.Areas.Facebook
 {
@@ -34,16 +37,45 @@ namespace Instatus.Areas.Facebook
                 new string[] { "Instatus.Areas.Facebook.Controllers" }
             );
 
-            WebPart.Catalog.Add(new WebPartial()
+            WebPart.Catalog.Add(new FacebookApiWidget());
+        }
+    }
+
+    public class FacebookApiWidget : JsApiWidget
+    {
+        public override string Embed
+        {
+            get {
+                return @"<div id='fb-root'></div>
+                    <script src='//connect.facebook.net/en_US/all.js'></script>
+                    <script>
+                        FB.init(facebookSettings.init);
+                        FB.Canvas.setAutoGrow();
+                    </script>";    
+            }
+        }
+
+        public override object Settings(UrlHelper urlHelper, Credential credential)
+        {
+            return new
             {
-                Zone = WebZone.Scripts,
-                ActionName = "RegisterScripts",
-                Parameters = new List<WebParameter>()
+                init = new
                 {
-                    new WebParameter("area", AreaName),
-                    new WebParameter("controller", "facebook")
-                }
-            });
+                    appId = credential.Uri,
+                    status = true,
+                    cookie = true,
+                    xfbml = credential.HasFeature("xfbml"),
+                    channelUrl = WebPath.MatchProtocol(WebPath.Absolute(urlHelper.Action("Channel", "Facebook", new { area = "Facebook" }))),
+                    oauth = true
+                },
+                scope = credential.Scope
+            };
+        }
+
+        public FacebookApiWidget()
+            : base(WebProvider.Facebook)
+        {
+
         }
     }
 }

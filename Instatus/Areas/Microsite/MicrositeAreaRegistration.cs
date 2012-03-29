@@ -1,4 +1,6 @@
-﻿using System.Web.Mvc;
+﻿using System.Web.Routing;
+using System.Web.Mvc;
+using Instatus;
 using Instatus.Web;
 
 namespace Instatus.Areas.Microsite
@@ -15,6 +17,8 @@ namespace Instatus.Areas.Microsite
 
         public override void RegisterArea(AreaRegistrationContext context)
         {
+            RouteTable.Routes.MapContentPageRoute("page", areaName: AreaName);
+            
             context.MapRouteLowercase(
                 "Microsite_Default",
                 "Microsite/{controller}/{action}/{id}",
