@@ -2,6 +2,7 @@
 using Instatus.Web;
 using System.Collections.Generic;
 using Instatus.Widgets;
+using Instatus.Models;
 
 namespace Instatus.Areas.Typekit
 {
@@ -37,12 +38,10 @@ namespace Instatus.Areas.Typekit
 
         }
 
-        public override string Embed
+        public override string Embed(UrlHelper urlHelper, Credential credential)
         {
-            get {
-                return @"<script src='http://use.typekit.com/{uri}.js'></script>
-                    <script>try { Typekit.load(); } catch (e) { }</script>";
-            }
+            return string.Format(@"<script src='http://use.typekit.com/{0}.js'></script>
+                <script>try { Typekit.load(); } catch (e) { }</script>", credential.Uri);
         }
 
         public override object Settings(UrlHelper urlHelper, Models.Credential credential)

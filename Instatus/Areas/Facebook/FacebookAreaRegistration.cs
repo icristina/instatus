@@ -43,16 +43,14 @@ namespace Instatus.Areas.Facebook
 
     public class FacebookApiWidget : JsApiWidget
     {
-        public override string Embed
+        public override string Embed(UrlHelper urlHelper, Credential credential)
         {
-            get {
-                return @"<div id='fb-root'></div>
-                    <script src='//connect.facebook.net/en_US/all.js'></script>
-                    <script>
-                        FB.init(facebookSettings.init);
-                        FB.Canvas.setAutoGrow();
-                    </script>";    
-            }
+            return @"<div id='fb-root'></div>
+                <script src='//connect.facebook.net/en_US/all.js'></script>
+                <script>
+                    FB.init(facebookSettings.init);
+                    FB.Canvas.setAutoGrow();
+                </script>";    
         }
 
         public override object Settings(UrlHelper urlHelper, Credential credential)

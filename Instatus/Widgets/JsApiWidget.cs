@@ -13,7 +13,7 @@ namespace Instatus.Widgets
     {
         private WebProvider provider;
 
-        public abstract string Embed { get; }
+        public abstract string Embed(UrlHelper urlHelper, Credential credential);
         public abstract object Settings(UrlHelper urlHelper, Credential credential);
 
         public override object GetModel(RequestContext requestContext)
@@ -36,7 +36,9 @@ namespace Instatus.Widgets
                     inlineData = HtmlHelperExtensions.InlineData(provider.ToString().ToCamelCase() + "Settings", settings);
                 }
 
-                return new MvcHtmlString(inlineData + Embed);
+                string embed = Embed(urlHelper, credential);
+
+                return new MvcHtmlString(inlineData + embed);
             },
             provider.ToString());
         }
