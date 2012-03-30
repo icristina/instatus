@@ -16,7 +16,7 @@ namespace Instatus.Areas.Editor.Models
     {
         [DisplayName("Friendly Url")]
         [Required]
-        [RegularExpression(ValidationPatterns.Slug, ErrorMessage = ValidationMessages.InvalidSlug)]
+        [RegularExpression(ValidationPatterns.Slug, ErrorMessageResourceName = WebPhrase.ErrorMessage.InvalidFriendlyIdentifier, ErrorMessageResourceType = typeof(WebPhrase))]
         public string Slug { get; set; }      
        
         public int Priority { get; set; }

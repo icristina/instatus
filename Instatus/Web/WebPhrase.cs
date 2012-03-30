@@ -104,6 +104,7 @@ namespace Instatus.Web
 
         public class ErrorMessage
         {
+            public const string InvalidFriendlyIdentifier = "InvalidFriendlyIdentifier";
             public const string InvalidEmailAddress = "InvalidEmailAddress";
             public const string RequiredEmailAddress = "RequiredEmailAddress";
             public const string RequiredGivenName = "RequiredGivenName";
@@ -112,6 +113,7 @@ namespace Instatus.Web
             public const string DuplicateUser = "DuplicateUser";
             public const string DuplicateSubscription = "DuplicateSubscription";
             public const string VerificationTokenRejected = "VerificationTokenRejected";
+            public const string AcceptTerms = "AcceptTerms";
         }
         
         public static string JustNow { get { return Localize(Common.JustNow, "just now"); } }
@@ -195,6 +197,7 @@ namespace Instatus.Web
         public static string PublishedDate(DateTime date) { return Format(FormatString.PublishedDate, "{0:dd/MM/yyyy}", date); }
         public static string HtmlTitle(string value) { return Format(FormatString.HtmlTitle, "{0}", value); }
 
+        public static string InvalidFriendlyIdentifier { get { return Localize(ErrorMessage.InvalidFriendlyIdentifier, "Invalid friendly url, slug or identifier"); } }
         public static string InvalidEmailAddress { get { return Localize(ErrorMessage.InvalidEmailAddress, "Please enter a valid email address"); } }
         public static string RequiredEmailAddress { get { return Localize(ErrorMessage.RequiredEmailAddress, "Please enter a valid email address"); } }
         public static string RequiredGivenName { get { return Localize(ErrorMessage.RequiredGivenName, "Please enter your first name"); } }
@@ -202,7 +205,8 @@ namespace Instatus.Web
         public static string RequiredFullName { get { return Localize(ErrorMessage.RequiredFullName, "Please enter your name"); } }
         public static string DuplicateSubscription { get { return Localize(ErrorMessage.DuplicateSubscription, "You have already subscribed"); } }
         public static string DuplicateUser { get { return Localize(ErrorMessage.DuplicateUser, "You have already registered"); } }
-        public static string VerificationTokenRejected { get { return Localize(ErrorMessage.VerificationTokenRejected, "The verification token has been rejected."); } }
+        public static string VerificationTokenRejected { get { return Localize(ErrorMessage.VerificationTokenRejected, "The verification token has been rejected"); } }
+        public static string AcceptTerms { get { return Localize(ErrorMessage.AcceptTerms, "Please confirm you have read and accept the terms and conditions"); } }
 
         public static string Localize(object phraseOrKey, string defaultPhrase = null, bool keyAsDefault = true)
         {
