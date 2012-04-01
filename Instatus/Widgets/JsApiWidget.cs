@@ -16,11 +16,10 @@ namespace Instatus.Widgets
         public abstract string Embed(UrlHelper urlHelper, Credential credential);
         public abstract object Settings(UrlHelper urlHelper, Credential credential);
 
-        public override object GetModel(RequestContext requestContext)
+        public override object GetModel(WebPartialContext context)
         {
             return WebCache.Value<MvcHtmlString>(() =>
             {
-                UrlHelper urlHelper = new UrlHelper(requestContext);
                 Credential credential;
 
                 using (var applicationContext = WebApp.GetService<IApplicationContext>())
@@ -29,14 +28,14 @@ namespace Instatus.Widgets
                 }
 
                 string inlineData = string.Empty;
-                object settings = Settings(urlHelper, credential);
+                object settings = Settings(context.Url, credential);
 
                 if (settings != null)
                 {
                     inlineData = HtmlHelperExtensions.InlineData(provider.ToString().ToCamelCase() + "Settings", settings);
                 }
 
-                string embed = Embed(urlHelper, credential);
+                string embed = Embed(context.Url, credential);
 
                 return new MvcHtmlString(inlineData + embed);
             },

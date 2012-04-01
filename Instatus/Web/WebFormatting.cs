@@ -7,6 +7,7 @@ namespace Instatus.Web
 {
     public class WebFormatting
     {
+        public string Label { get; set; }
         public int MaxLength { get; set; }
 
         public WebFormatting()

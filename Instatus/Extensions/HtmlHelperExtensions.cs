@@ -119,13 +119,13 @@ namespace Instatus
             }
         }
 
-        public static MvcHtmlString ImageLink<T>(this HtmlHelper<T> html, string alternativeText, string contentPath, string actionName, string controllerName = null)
+        public static MvcHtmlString ImageLink<T>(this HtmlHelper<T> html, string alternativeText, string contentPath, string actionName, string controllerName = null, string className = null)
         {
             var urlHelper = new UrlHelper(html.ViewContext.RequestContext);
             var routeData = html.ViewContext.RouteData;
-            var markup = string.Format("<a href=\"{0}\" class=\"{1} {2}\"><img src=\"{3}\" alt=\"{4}\"/></a>", 
+            var markup = string.Format("<a href=\"{0}\" class=\"{1}\"><img src=\"{2}\" alt=\"{3}\"/></a>", 
                             urlHelper.Action(actionName, controllerName),
-                            (controllerName ?? routeData.ControllerName()).ToCamelCase(),
+                            className ?? (controllerName ?? routeData.ControllerName()).ToCamelCase(),
                             actionName.ToCamelCase(),
                             urlHelper.Relative(contentPath),
                             alternativeText);

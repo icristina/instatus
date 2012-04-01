@@ -1,9 +1,0 @@
-﻿@model WebView<Instatus.Models.Article>
-
-<p id="legal">
-    &copy; @Model.Name
-    @foreach (var article in Model)
-    {
-        @Html.PageLink(article.Name, article.Slug)
-    }
-</p>

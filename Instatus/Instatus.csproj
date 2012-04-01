@@ -370,6 +370,7 @@
     <Compile Include="Web\WebSort.cs" />
     <Compile Include="Web\WebView.cs" />
     <Compile Include="Web\RedirectModule.cs" />
+    <Compile Include="Widgets\BrandingWidget.cs" />
     <Compile Include="Widgets\JsApiWidget.cs" />
     <Compile Include="Widgets\NavigationWidget.cs" />
   </ItemGroup>
@@ -477,15 +478,12 @@
     <None Include="App.config" />
     <None Include="packages.config" />
     <EmbeddedResource Include="Views\Shared\DisplayTemplates\LinkList.cshtml" />
-    <EmbeddedResource Include="Views\Shared\Brand.cshtml" />
     <EmbeddedResource Include="Views\Shared\Part.cshtml" />
     <EmbeddedResource Include="Views\Shared\ValidationSummary.cshtml" />
     <EmbeddedResource Include="Views\Shared\Parameters.cshtml" />
     <EmbeddedResource Include="Views\Shared\MetaTags.cshtml" />
-    <EmbeddedResource Include="Views\Shared\Sitemap.cshtml" />
     <EmbeddedResource Include="Views\Shared\Gallery.cshtml" />
     <EmbeddedResource Include="Views\Shared\Places.cshtml" />
-    <EmbeddedResource Include="Views\Shared\Legal.cshtml" />
     <EmbeddedResource Include="Views\Shared\Links.cshtml" />
     <EmbeddedResource Include="Views\Shared\Users.cshtml" />
     <EmbeddedResource Include="Views\Shared\Subscribe.cshtml" />
