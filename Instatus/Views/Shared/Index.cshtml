@@ -38,7 +38,54 @@
         @Html.Tag("h1", Model.Document.Title)    
     </header>
     <menu>
-        @Html.Partial("Menu", Model)
+        <div id="actions">
+            @if (Model.Can(WebAction.Create.ToString(), null))
+            {
+                @Html.ActionLink(WebPhrase.Create, "Create", null, new { target = "_blank", @class = "btn btn-primary" })
+            }
+        </div>
+        @if (Model.Query.IsDateView)
+        {
+            var startDate = Model.Query.StartDate.Value;    
+            <div id="date">
+                <a href="@Url.Action("Index", Model.Query.WithStartDate(startDate.Previous(Model.Query.Mode)).ToRouteValueDictionary())">
+                    @Html.LeftArrow()
+                </a> 
+                @Model.Query.StartDate.Value.ToString(Model.Query.Mode)
+                <a href="@Url.Action("Index", Model.Query.WithStartDate(startDate.Next(Model.Query.Mode)).ToRouteValueDictionary())">
+                    @Html.RightArrow()
+                </a>    
+            </div>
+        }
+        @if (!Model.Filter.IsEmpty())
+        {
+            using (Html.BeginNamedForm("filter"))
+            {
+                @Html.DropDownList("filter", Model.Filter)
+                @Html.SubmitButton(WebPhrase.Filter)
+            }
+        }  
+        <div class="btn-toolbar">
+            @if (Model.Query.Mode == WebMode.Index)
+            {
+                <div class="btn-group">
+                    @Html.ActionLink("0 - 9", "Index", new { Mode = WebMode.Index, Filter = WebQuery.NonWordCharacter, Command = Model.Query.Command }, new { @class = "btn".Append(" active", Model.Query.Filter.Match(WebQuery.NonWordCharacter)) })
+                    @foreach (var letter in Instatus.Data.Generator.UpperCaseLetters)
+                    {
+                        @Html.ActionLink(letter.ToString(), "Index", new { Mode = WebMode.Index, Filter = letter, Command = Model.Query.Command }, new { @class = "btn".Append(" active", Model.Query.Filter.Match(letter)) })
+                    }        
+                </div>
+            }
+            @if (!Model.Mode.IsEmpty())
+            {
+                <div class="btn-group">
+                    @foreach (var mode in Model.Mode)
+                    {
+                        @Html.ActionLink(mode.Text, "Index", new { Mode = mode.Value, Command = Model.Query.Command }, new { @class = "btn".Append(" active", mode.Selected) })
+                    }
+                </div>
+            } 
+        </div>
         @Html.Paging()
     </menu>
     <table class="table table-striped">

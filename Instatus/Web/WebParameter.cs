@@ -68,18 +68,20 @@ namespace Instatus.Web
             return parameter.IsEmpty() ? string.Empty : parameter.Content;
         }
 
-        public static IDictionary<string, object> GetParameterSet(this List<WebParameter> parameters, WebNamespace ns)
+        public static IDictionary<string, object> GetParameterSet(this List<WebParameter> parameters, WebNamespace ns, bool trimNamespace = false)
         {
             return parameters.GetParameterSet(ns.ToDescriptiveString());
         }
 
-        public static IDictionary<string, object> GetParameterSet(this List<WebParameter> parameters, string ns)
+        public static IDictionary<string, object> GetParameterSet(this List<WebParameter> parameters, string ns, bool trimNamespace = false)
         {
             var dictionary = new Dictionary<string, object>();
 
             foreach (var parameter in parameters.Where(p => p.Name.StartsWith(ns)))
             {
-                dictionary[parameter.Name.SubstringAfter(":")] = parameter.Content;
+                var key = trimNamespace ? parameter.Name.SubstringAfter(":") : parameter.Name;
+                
+                dictionary[key] = parameter.Content;
             }
 
             return dictionary;

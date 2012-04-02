@@ -2,7 +2,9 @@
 <html @Html.BrowserCapabilitiesAttributes()>
 <head>
     <meta charset="utf-8" />
-    <title>@Html.Title()</title>
+    @Html.Title()
+    @Html.Viewport()
+    @Html.MetaTags()
     @Html.Stylesheet("bootstrap.css")
     @Html.Stylesheet("bootstrap-responsive.css")
     @Html.Scripts("modernizr.js", "jquery.js", "respond.js", "bootstrap.js")

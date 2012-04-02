@@ -24,10 +24,14 @@
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>4.0</OldToolsVersion>
-    <SccProjectName>SAK</SccProjectName>
-    <SccLocalPath>SAK</SccLocalPath>
-    <SccAuxPath>SAK</SccAuxPath>
-    <SccProvider>SAK</SccProvider>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -148,6 +152,15 @@
     <Compile Include="Data\INamed.cs" />
     <Compile Include="Data\ITimestamp.cs" />
     <Compile Include="Extensions\ExceptionExtensions.cs" />
+    <Compile Include="Extensions\Html\ButtonExtensions.cs" />
+    <Compile Include="Extensions\Html\FormExtensions.cs" />
+    <Compile Include="Extensions\Html\InputExtensions.cs" />
+    <Compile Include="Extensions\Html\LinkExtensions.cs" />
+    <Compile Include="Extensions\Html\MetaExtensions.cs" />
+    <Compile Include="Extensions\Html\PagingExtensions.cs" />
+    <Compile Include="Extensions\Html\ValidationExtensions.cs" />
+    <Compile Include="Extensions\Html\WebPartExtensions.cs" />
+    <Compile Include="Extensions\TagBuilderExtensions.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="Models\Milestone.cs" />
     <Compile Include="Models\DbPageContext.cs" />
@@ -159,6 +172,7 @@
     <Compile Include="Services\InMemoryLoggingService.cs" />
     <Compile Include="Services\MockMembershipService.cs" />
     <Compile Include="Web\FilterResponseHeadersModule.cs" />
+    <Compile Include="Web\HtmlBuilder.cs" />
     <Compile Include="Web\IContentAdapter.cs" />
     <Compile Include="Export\SubscriberExport.cs" />
     <Compile Include="Models\IPageContext.cs" />
@@ -459,9 +473,6 @@
     <EmbeddedResource Include="Views\Shared\Section.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\Menu.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Views\Shared\Page.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -481,13 +492,11 @@
     <EmbeddedResource Include="Views\Shared\DisplayTemplates\LinkList.cshtml" />
     <EmbeddedResource Include="Views\Shared\ValidationSummary.cshtml" />
     <EmbeddedResource Include="Views\Shared\Parameters.cshtml" />
-    <EmbeddedResource Include="Views\Shared\MetaTags.cshtml" />
     <EmbeddedResource Include="Views\Shared\Gallery.cshtml" />
     <EmbeddedResource Include="Views\Shared\Places.cshtml" />
     <EmbeddedResource Include="Views\Shared\Links.cshtml" />
     <EmbeddedResource Include="Views\Shared\Users.cshtml" />
     <EmbeddedResource Include="Views\Shared\Subscribe.cshtml" />
-    <EmbeddedResource Include="Views\Shared\List.cshtml" />
     <EmbeddedResource Include="Views\Shared\Verification.cshtml" />
     <EmbeddedResource Include="Views\Shared\Notification.cshtml" />
     <EmbeddedResource Include="Views\Shared\FatalError.cshtml" />
@@ -495,7 +504,6 @@
     <EmbeddedResource Include="Views\Shared\EditorTemplates\Password.cshtml" />
     <EmbeddedResource Include="Views\Shared\EditorTemplates\ImageUrl.cshtml" />
     <EmbeddedResource Include="Views\Shared\EditorTemplates\File.cshtml" />
-    <EmbeddedResource Include="Views\Shared\Markup.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup>
