@@ -12,7 +12,7 @@ namespace Instatus.Widgets
 {
     public abstract class BrandingWidget : WebPartial
     {
-        public override object GetModel(WebPartialContext context)
+        public override object GetViewModel(WebPartialContext context)
         {
             return context.Html.ImageLink("Logo", "~/Content/logo.png", "Index", "Home", "brand");
         }

@@ -13,7 +13,8 @@ using System.ComponentModel.Composition;
 namespace Instatus.Areas.Microsite.Controllers
 {
     [Export]
-    [PartCreationPolicy(CreationPolicy.NonShared)]    
+    [PartCreationPolicy(CreationPolicy.NonShared)]
+    [WebDescriptor(Scope = WebPart.Constants.Public)]
     public class PageController : BaseController
     {
         private IPageContext pageContext;

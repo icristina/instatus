@@ -1,21 +1,8 @@
 ﻿@model Instatus.Models.Page
 
-@{
-    ViewBag.Title = Model.Name;
-}
-
-@section head {
-    @Html.Parts(WebZone.Head)
-}
-
-@Html.Parts(WebZone.Tracking)
-
-<div role="main" itemscope itemtype="@Model.GetVocabularyItemType()" itemid="@Model.Id">
-    <header>
+<section role="main" itemscope itemtype="@Model.GetVocabularyItemType()" itemid="@Model.Id">
+    <header class="page-header">
         <h1 itemprop="name">@Model.Name</h1>  
-        <div>
-            @Html.Parts(WebZone.Header)          
-        </div>
     </header>
     @if (!Model.Description.IsEmpty())
     {
@@ -23,25 +10,12 @@
             @Html.Content(Model.Description)        
         </div>
     }
-    @if (Model.Document != null)
-    {
-        <div itemprop="mainContentOfPage">
-            @Html.Parts(WebZone.Figure)
+    @Html.Parts(WebZone.Figure)    
+    <div itemprop="mainContentOfPage">
+        @if (Model.Document != null)
+        {
             @Html.Content(Model.Document.Body)
-            @Html.Parts(WebZone.Body)
-        </div>
-    }
-    <aside>
-        @Html.Parts(WebZone.Aside)
-    </aside>
-</div>
-<nav role="navigation">
-    <div>
-        @Html.Parts(WebZone.Navigation)        
+        }
+        @Html.Parts(WebZone.Body)        
     </div>
-</nav>
-<footer>
-    <div>
-        @Html.Parts(WebZone.Footer) 
-    </div>
-</footer>
+</section>

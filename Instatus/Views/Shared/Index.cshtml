@@ -15,8 +15,8 @@
     @Html.Scripts("scaffold.js")
 }
 
-@section nav {
-    <nav class="navbar navbar-fixed-top">
+@section navigation {
+    <div class="navbar navbar-fixed-top">
         <div class="navbar-inner">
             <div class="container">    
                 <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -25,12 +25,12 @@
                     <span class="icon-bar"></span>
                 </a>
                 <div class="nav-collapse">
-                    @Html.Partial("Nav", Model.Navigation, new WebFormatting() { MaxLength = 6 })
+                    @Html.Partial("Navigation", Model.Navigation, new WebFormatting() { MaxLength = 6 })
                     @Html.Partial("LoginStatus")
                 </div>
             </div>
         </div>
-    </nav>   
+    </div>  
 }
 
 <section>

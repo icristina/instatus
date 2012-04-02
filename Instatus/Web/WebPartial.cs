@@ -13,7 +13,7 @@ namespace Instatus.Web
     {
         public string ActionName { get; set; }
 
-        public virtual object GetModel(WebPartialContext context)
+        public virtual object GetViewModel(WebPartialContext context)
         {
             return null;
         }

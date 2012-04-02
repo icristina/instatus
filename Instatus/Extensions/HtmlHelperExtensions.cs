@@ -421,21 +421,101 @@ namespace Instatus
 
             if (routeData != null)
             {
+                scope.Add(routeData.ControllerName());
                 scope.Add(routeData.ActionName());
                 scope.Add(routeData.AreaName());
                 scope.Add(routeData.ToUniqueId());
             }
-            
-            parts.AddRange(WebPart.Catalog.Where(p => p.Scope.IsEmpty() || scope.Contains(p.Scope)));
+
+            var controllerScope = html.ViewContext.Controller.GetCustomAttributeValue<WebDescriptorAttribute, string>(a => a.Scope);
+
+            if (controllerScope.NonEmpty())
+            {
+                scope.Add(controllerScope);
+            }
+
+            parts.AddRange(WebPart.Catalog.Where(p => p.Scope.IsEmpty() || scope.Intersect(p.Scope.ToList(' '), StringComparer.OrdinalIgnoreCase).Any()));
 
             var sb = new StringBuilder();
 
             foreach (var part in parts.Where(p => p.Zone == zoneName))
             {
-                sb.Append(html.Partial("Part", part));
+                sb.Append(html.Part(part).ToString());
             }
 
             return new MvcHtmlString(sb.ToString());
+        }
+
+        public static MvcHtmlString Part<T>(this HtmlHelper<T> html, WebPart part)
+        {
+            if (part is WebStream)
+            {
+                var stream = (WebStream)part;
+    
+                return html.Action("Index", "Stream", stream.Query.ToRouteValueDictionary()
+                    .AddRequestParams()
+                    .AddNonEmptyValue("viewName", stream.ViewName)
+                    .AddNonEmptyValue("area", "Microsite"));
+            }
+            else if (part is WebPartial)
+            {
+                var webPartial = (WebPartial)part;
+
+                if (webPartial.ActionName.IsEmpty())
+                {
+                    var urlHelper = new UrlHelper(html.ViewContext.RequestContext);
+                    var webPartialContext = new WebPartialContext(urlHelper, WebMock.CreateHtmlHelper(part));
+                    var webPartialModel = webPartial.GetViewModel(webPartialContext);
+
+                    if (webPartialModel is MvcHtmlString)
+                    {
+                        return (MvcHtmlString)webPartialModel;
+                    } 
+                    else if (webPartialModel is ViewDataDictionary) 
+                    {
+                        return html.Partial(webPartial.ViewName, webPartialModel as ViewDataDictionary);            
+                    }
+                    else 
+                    {
+                        return html.Partial(webPartial.ViewName, webPartialModel);          
+                    }        
+                }
+                else
+                {
+                    var routeValues = new RouteValueDictionary() {
+                        { "viewName", webPartial.ViewName },
+                        { "controller", "home" },
+                        { "area", "" }    
+                    };
+        
+                    foreach(var param in webPartial.Parameters) {
+                        routeValues.AddNonEmptyValue(param.Name, param.Content);
+                    }
+        
+                    return html.Action(webPartial.ActionName, routeValues);
+                }
+            } 
+            else if (part is WebSection)
+            {
+                var webSection = (WebSection)part;
+    
+                return html.Partial(webSection.ViewName ?? "Section", webSection);
+            }
+
+            return null;
+        }
+
+        public static MvcHtmlString ValidationAlert<T>(this HtmlHelper<T> html)
+        {
+            if(html.ViewData.ModelState.IsValid)
+                return null;
+
+            TagBuilder tagBuilder = new TagBuilder("p");
+
+            tagBuilder.AddCssClass("alert");
+            tagBuilder.SetInnerText(html.ViewData.ModelState.FirstErrorMessage());
+            
+            return tagBuilder.ToMvcHtmlString();
         }
 
         public static MvcHtmlString Paging<T>(this HtmlHelper<T> html, IWebView webView = null, string seperator = "", string absolutePath = "", bool unorderedList = true)
@@ -624,6 +704,11 @@ namespace Instatus
 
     internal static class HtmlBuilder
     {
+        public static MvcHtmlString ToMvcHtmlString(this TagBuilder tagBuilder)
+        {
+            return new MvcHtmlString(tagBuilder.ToString(TagRenderMode.Normal));
+        }        
+        
         public static TagBuilder MergeDataAttribute(this TagBuilder tagBuilder, string key, object value)
         {
             return tagBuilder.MergeAttributeOrEmpty("data-" + key, value);

@@ -10,10 +10,32 @@
     @Html.Parts(WebZone.Head)
 </head>
 <body@(Html.RouteDataAttributes())>
-    @RenderSection("nav", false)
+    @Html.Parts(WebZone.Tracking)
+    <header role="banner">
+        <div>
+            @RenderSection("header", false)
+            @Html.Parts(WebZone.Header)                
+        </div>
+    </header>
+    <nav role="navigation">
+        <div>
+            @RenderSection("navigation", false)
+            @Html.Parts(WebZone.Navigation)        
+        </div>
+    </nav>    
     <div class="container">
-        @RenderBody()    
+        @RenderBody()  
+        <aside>
+            @RenderSection("aside", false)
+            @Html.Parts(WebZone.Aside)
+        </aside>
     </div>
+    <footer role="contentinfo">
+        <div>
+            @RenderSection("footer", false)
+            @Html.Parts(WebZone.Footer) 
+        </div>
+    </footer>
     @RenderSection("scripts", false)
     @Html.Parts(WebZone.Scripts)
 </body>

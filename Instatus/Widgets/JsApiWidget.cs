@@ -16,7 +16,7 @@ namespace Instatus.Widgets
         public abstract string Embed(UrlHelper urlHelper, Credential credential);
         public abstract object Settings(UrlHelper urlHelper, Credential credential);
 
-        public override object GetModel(WebPartialContext context)
+        public override object GetViewModel(WebPartialContext context)
         {
             return WebCache.Value<MvcHtmlString>(() =>
             {

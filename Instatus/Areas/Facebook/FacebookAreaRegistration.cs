@@ -73,7 +73,7 @@ namespace Instatus.Areas.Facebook
         public FacebookApiWidget()
             : base(WebProvider.Facebook)
         {
-
+            Scope = WebPart.Constants.Public;
         }
     }
 }

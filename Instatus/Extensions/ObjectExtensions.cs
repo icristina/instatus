@@ -37,7 +37,7 @@ namespace Instatus
         {
             var nameValueCollection = new NameValueCollection();
 
-            foreach(var keyValuePair in new RouteValueDictionary(graph).Where(v => !v.Value.IsEmpty())) {
+            foreach(var keyValuePair in new RouteValueDictionary(graph).Where(v => v.Value.NonEmpty())) {
                 var key = keyValuePair.Key;
 
                 if (lowerCasePropertyNames)
@@ -106,6 +106,11 @@ namespace Instatus
                 || (graph is IEnumerable && EnumerableExtensions.Count(((IEnumerable)graph)) == 0)
                 || (graph is DateTime && (DateTime)graph == DateTime.MinValue)
                 || (graph is HttpPostedFileBase && ((HttpPostedFileBase)graph).ContentLength == 0);
+        }
+
+        public static bool NonEmpty(this object graph)
+        {
+            return !graph.IsEmpty();
         }
 
         public static MvcHtmlString ToAttr(this object graph, string attributeName)

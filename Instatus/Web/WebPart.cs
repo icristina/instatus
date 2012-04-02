@@ -48,5 +48,24 @@ namespace Instatus.Web
                 return catalog;
             }
         }
+
+        public static class Constants
+        {
+            public const string Public = "Public";
+        }
+    }
+
+    public static class WebPartExtensions
+    {
+        public static T WithScope<T>(this T webPart, params string[] scope) where T : WebPart
+        {
+            webPart.Scope = string.Join(" ", scope);
+            return webPart;
+        }
+
+        public static T WithPublicScope<T>(this T webPart) where T : WebPart
+        {
+            return webPart.WithScope(WebPart.Constants.Public);
+        }
     }
 }

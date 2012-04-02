@@ -120,7 +120,10 @@ namespace Instatus
 
         public static IDictionary<string, object> AddSingle<T>(this IDictionary<string, object> dictionary, T item) where T : class
         {
-            dictionary.Add(dictionaryPrefix + item.GetType().FullName, item);
+            if (dictionary != null && item != null)
+            {
+                dictionary.Add(dictionaryPrefix + item.GetType().FullName, item);
+            }
             
             return dictionary;
         }

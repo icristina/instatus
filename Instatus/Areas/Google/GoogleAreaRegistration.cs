@@ -50,7 +50,7 @@ namespace Instatus.Areas.Google
         public GoogleApiWidget()
             : base(WebProvider.Google)
         {
-
+            Scope = WebPart.Constants.Public;
         }
     }
 }

@@ -13,7 +13,7 @@ namespace Instatus.Widgets
         Func<UrlHelper, SiteMapNodeCollection> buildSiteMapNodeCollection;
         WebFormatting webFormatting;
 
-        public override object GetModel(WebPartialContext context)
+        public override object GetViewModel(WebPartialContext context)
         {
             var viewDataDictionary = new ViewDataDictionary<SiteMapNodeCollection>(buildSiteMapNodeCollection(context.Url));
 
@@ -22,13 +22,14 @@ namespace Instatus.Widgets
             return viewDataDictionary;
         }
 
-        public NavigationWidget(Func<UrlHelper, SiteMapNodeCollection> buildSiteMapNodeCollection, WebZone zone = WebZone.Navigation, string viewName = "nav", WebFormatting webFormatting = null)
+        public NavigationWidget(Func<UrlHelper, SiteMapNodeCollection> buildSiteMapNodeCollection, WebZone zone = WebZone.Navigation, string viewName = "Navigation", WebFormatting webFormatting = null, string scope = null)
         {
             this.buildSiteMapNodeCollection = buildSiteMapNodeCollection;
             this.webFormatting = webFormatting;
 
             Zone = zone;
             ViewName = viewName;
+            Scope = scope;
         }
 
         public static NavigationWidget Legal() {
@@ -39,11 +40,12 @@ namespace Instatus.Widgets
                     .Page(WebPhrase.PrivacyPolicy, "privacy")
                     .ToSiteMapNodeCollection();
             }, 
-            zone: WebZone.Footer, 
+            zone: WebZone.Footer,
             webFormatting: new WebFormatting() 
             { 
                 Label = WebPhrase.Copyright     
-            });
+            })
+            .WithPublicScope();
         }
     }
 }

@@ -230,6 +230,7 @@
     <Compile Include="Web\WebBootstrap.cs" />
     <Compile Include="Web\WebCache.cs" />
     <Compile Include="Web\WebCategory.cs" />
+    <Compile Include="Web\WebDescriptorAttribute.cs" />
     <Compile Include="Web\WebElement.cs" />
     <Compile Include="Web\WebFeed.cs" />
     <Compile Include="Web\WebForm.cs" />
@@ -431,7 +432,7 @@
     <EmbeddedResource Include="Views\Shared\EditorTemplates\Html.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\Nav.cshtml" />
+    <EmbeddedResource Include="Views\Shared\Navigation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Web.config">
@@ -478,7 +479,6 @@
     <None Include="App.config" />
     <None Include="packages.config" />
     <EmbeddedResource Include="Views\Shared\DisplayTemplates\LinkList.cshtml" />
-    <EmbeddedResource Include="Views\Shared\Part.cshtml" />
     <EmbeddedResource Include="Views\Shared\ValidationSummary.cshtml" />
     <EmbeddedResource Include="Views\Shared\Parameters.cshtml" />
     <EmbeddedResource Include="Views\Shared\MetaTags.cshtml" />
