@@ -79,7 +79,7 @@ namespace Instatus.Services
                 
                 return new FileStream(absolutePath, FileMode.Open, FileAccess.Read);
             } 
-            catch(Exception error) 
+            catch
             {
                 return null;
             }            

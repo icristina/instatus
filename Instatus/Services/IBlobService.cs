@@ -54,19 +54,26 @@ namespace Instatus
             }
         }
         
-        public static void GenerateThumbnail(this IBlobService blobService, string key, int boundingBoxSize = 200, bool alwaysCreate = false) 
+        public static string GenerateThumbnail(this IBlobService blobService, string key, int boundingBoxSize = 200, bool crop = false, bool alwaysCreate = false) 
         {
-            if (!alwaysCreate && blobService.HasThumbnail(key))
-                return;
-            
-            var thumbnailKey = WebPath.Resize(WebSize.Thumb, key);
+            return blobService.GenerateSize(key, WebSize.Thumb, boundingBoxSize, crop, alwaysCreate);
+        }
 
+        public static string GenerateSize(this IBlobService blobService, string key, WebSize size, int boundingBoxSize, bool crop = false, bool alwaysCreate = false)
+        {
+            var resizeKey = WebPath.Resize(size, key);
+            
+            if (!alwaysCreate && blobService.Exists(resizeKey))
+                return resizeKey;
+            
             using (var stream = blobService.Stream(key)) 
             using (var originalImage = (Bitmap)Bitmap.FromStream(stream))
-            using (var resizedImage = originalImage.BoundingBox(boundingBoxSize))
+            using (var resizedImage = crop ? originalImage.Square(boundingBoxSize) : originalImage.BoundingBox(boundingBoxSize))
             {
-                blobService.SaveImage(resizedImage, thumbnailKey);
+                blobService.SaveImage(resizedImage, resizeKey);
             }
+
+            return resizeKey;
         }
 
         public static bool Exists(this IBlobService blobService, string key) 
