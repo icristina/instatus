@@ -16,6 +16,7 @@ namespace Instatus.Web
     {
         public string ViewName { get; set; }
         public WebZone Zone { get; set; }
+        public WebFormatting Formatting { get; set; }
         public string Scope { get; set; } // actionName, areaName, slug or kind
 
         private List<WebParameter> parameters;
@@ -38,6 +39,7 @@ namespace Instatus.Web
         public WebPart()
         {
             Zone = WebZone.Body;
+            Formatting = new WebFormatting();
         }
 
         private static List<WebPart> catalog = new List<WebPart>();
@@ -47,11 +49,6 @@ namespace Instatus.Web
             {
                 return catalog;
             }
-        }
-
-        public static class Constants
-        {
-            public const string Public = "Public";
         }
     }
 
@@ -65,7 +62,7 @@ namespace Instatus.Web
 
         public static T WithPublicScope<T>(this T webPart) where T : WebPart
         {
-            return webPart.WithScope(WebPart.Constants.Public);
+            return webPart.WithScope(WebConstant.Scope.Public);
         }
     }
 }

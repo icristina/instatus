@@ -20,10 +20,10 @@ using System.Text.RegularExpressions;
 
 namespace Instatus.Areas.Editor.Controllers
 {
-    [AdditionalMetadata("File", true)]
+    [AllowUpload]
     public class FileViewModel : BaseViewModel<WebLink>
     {
-        [UIHint("File")]
+        [DataType(WebConstant.DataType.File)]
         public string File { get; set; }
     }
 

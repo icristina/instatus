@@ -3,6 +3,10 @@ body[data-route-action=index] td
     vertical-align: middle;
 }
 
+body[data-route-action=create] .page-heading, body[data-route-action=edit] .page-heading, body[data-route-action=details] .page-heading {
+    display:  none;
+}
+
 img.thumbnail
 {
     display: block;

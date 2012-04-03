@@ -33,169 +33,170 @@
     </div>  
 }
 
-<section>
-    <header class="page-header">
-        @Html.Tag("h1", Model.Document.Title)    
-    </header>
-    <menu>
-        <div id="actions">
-            @if (Model.Can(WebAction.Create.ToString(), null))
-            {
-                @Html.ActionLink(WebPhrase.Create, "Create", null, new { target = "_blank", @class = "btn btn-primary" })
-            }
-        </div>
-        @if (Model.Query.IsDateView)
+@section header {
+    @Html.Tag("h1", Model.Document.Title)     
+}
+
+@section menu {
+    <div id="actions">
+        @if (Model.Can(WebAction.Create.ToString(), null))
         {
-            var startDate = Model.Query.StartDate.Value;    
-            <div id="date">
-                <a href="@Url.Action("Index", Model.Query.WithStartDate(startDate.Previous(Model.Query.Mode)).ToRouteValueDictionary())">
-                    @Html.LeftArrow()
-                </a> 
-                @Model.Query.StartDate.Value.ToString(Model.Query.Mode)
-                <a href="@Url.Action("Index", Model.Query.WithStartDate(startDate.Next(Model.Query.Mode)).ToRouteValueDictionary())">
-                    @Html.RightArrow()
-                </a>    
+            @Html.ActionLink(WebPhrase.Create, "Create", null, new { target = "_blank", @class = "btn btn-primary" })
+        }
+    </div>
+    @if (Model.Query.IsDateView)
+    {
+        var startDate = Model.Query.StartDate.Value;    
+        <div id="date">
+            <a href="@Url.Action("Index", Model.Query.WithStartDate(startDate.Previous(Model.Query.Mode)).ToRouteValueDictionary())">
+                @Html.LeftArrow()
+            </a> 
+            @Model.Query.StartDate.Value.ToString(Model.Query.Mode)
+            <a href="@Url.Action("Index", Model.Query.WithStartDate(startDate.Next(Model.Query.Mode)).ToRouteValueDictionary())">
+                @Html.RightArrow()
+            </a>    
+        </div>
+    }
+    @if (!Model.Filter.IsEmpty())
+    {
+        using (Html.BeginActionForm(id: "filter"))
+        {
+            @Html.DropDownList("filter", Model.Filter)
+            @Html.SubmitButton(WebPhrase.Filter)
+        }
+    }  
+    <div class="btn-toolbar">
+        @if (Model.Query.Mode == WebMode.Index)
+        {
+            <div class="btn-group">
+                @Html.ActionLink("0 - 9", "Index", new { Mode = WebMode.Index, Filter = WebQuery.NonWordCharacter, Command = Model.Query.Command }, new { @class = "btn".Append(" active", Model.Query.Filter.Match(WebQuery.NonWordCharacter)) })
+                @foreach (var letter in Instatus.Data.Generator.UpperCaseLetters)
+                {
+                    @Html.ActionLink(letter.ToString(), "Index", new { Mode = WebMode.Index, Filter = letter, Command = Model.Query.Command }, new { @class = "btn".Append(" active", Model.Query.Filter.Match(letter)) })
+                }        
             </div>
         }
-        @if (!Model.Filter.IsEmpty())
+        @if (!Model.Mode.IsEmpty())
         {
-            using (Html.BeginNamedForm("filter"))
-            {
-                @Html.DropDownList("filter", Model.Filter)
-                @Html.SubmitButton(WebPhrase.Filter)
-            }
-        }  
-        <div class="btn-toolbar">
-            @if (Model.Query.Mode == WebMode.Index)
-            {
-                <div class="btn-group">
-                    @Html.ActionLink("0 - 9", "Index", new { Mode = WebMode.Index, Filter = WebQuery.NonWordCharacter, Command = Model.Query.Command }, new { @class = "btn".Append(" active", Model.Query.Filter.Match(WebQuery.NonWordCharacter)) })
-                    @foreach (var letter in Instatus.Data.Generator.UpperCaseLetters)
-                    {
-                        @Html.ActionLink(letter.ToString(), "Index", new { Mode = WebMode.Index, Filter = letter, Command = Model.Query.Command }, new { @class = "btn".Append(" active", Model.Query.Filter.Match(letter)) })
-                    }        
-                </div>
-            }
-            @if (!Model.Mode.IsEmpty())
-            {
-                <div class="btn-group">
-                    @foreach (var mode in Model.Mode)
-                    {
-                        @Html.ActionLink(mode.Text, "Index", new { Mode = mode.Value, Command = Model.Query.Command }, new { @class = "btn".Append(" active", mode.Selected) })
-                    }
-                </div>
-            } 
-        </div>
-        @Html.Parts(WebZone.Menu)
-        @Html.Paging()
-    </menu>
-    <table class="table table-striped">
-        <colgroup>
-            @if (Model.Columns.Contains("Id"))
-            {
-                <col class="id" />
-            }
-            @if (Model.Columns.Contains("Slug"))
-            {
-                <col class="slug" />
-            }
-            <col class="description" />
-            <col class="icon" />
-            <col class="actions" />
-        </colgroup>
-        <thead>
-            <tr>
-                @if (Model.Columns.Contains("Id"))
+            <div class="btn-group">
+                @foreach (var mode in Model.Mode)
                 {
-                    <th>@WebPhrase.Id</th>
-                }                
-                @if (Model.Columns.Contains("Slug"))
-                {
-                    <th>@WebPhrase.Slug</th>
+                    @Html.ActionLink(mode.Text, "Index", new { Mode = mode.Value, Command = Model.Query.Command }, new { @class = "btn".Append(" active", mode.Selected) })
                 }
-                <th>@WebPhrase.Description</th>
-                <th></th>
-                <th>@WebPhrase.Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (dynamic entry in Model)
-            {
-                var row = entry as object;
-                var key = row.GetKey().AsString().ToUrlEncoded();
-                var routeData = new { id = key };
-                var commandButton = new { target = "_blank", @class = "btn" };                    
-                <tr>
-                    @if (Model.Columns.Contains("Id")) 
-                    {
-                        <td>
-                            @row.GetKey()
-                        </td>
-                    }
-                    @if (Model.Columns.Contains("Slug"))
-                    {
-                        <td>
-                            @entry.Slug                  
-                        </td>
-                    }
-                    <td>
-                        @if ((entry is WebEntry || entry is WebLink) && entry.Picture != null)
-                        {
-                            @Html.Image(entry.Picture as string, className: "thumbnail")
-                        }
-                        else
-                        {
-                            @Html.Raw(row.ToString())
-                        }
-                    </td>
-                    <td>
-                        @if (Model.Columns.Contains("Status"))
-                        {
-                            if ((entry.Status as String).AsEnum<WebStatus>() != WebStatus.Published)
-                            {
-                                <i class="icon-ban-circle" title="@entry.Status"></i>
-                            }   
-                        }
-                    </td>
-                    <td>
-                        <span class="btn-group">
-                            @if (Model.Can(WebAction.Details.ToString(), row))
-                            {
-                                @Html.ActionLink(WebPhrase.Details, "Details", routeData, commandButton)
-                            }
-                            @if (Model.Can(WebAction.Edit.ToString(), row))
-                            {
-                                @Html.ActionLink(WebPhrase.Edit, "Edit", routeData, commandButton)
-                            }                    
-                            @if (Model.Can(WebAction.Delete.ToString(), row))
-                            {
-                                using (Html.BeginForm("Delete", ViewContext.RouteData.ControllerName(), routeData))
-                                {
-                                    <span></span>
-                                    @Html.SubmitButton(WebPhrase.Delete, "btn")
-                                }
-                            }
-                            @if (!Model.Commands.IsEmpty())
-                            {
-                                foreach (var command in Model.Commands.OfType<IWebCommand>())
-                                {
-                                    var link = command.GetLink(entry, Url);
-                                    if (link != null)
-                                    {
-                                        <a href="@link.Uri" rel="@(link.Rel ?? "command")" class="btn">@link.Title</a>
-                                    }
-                                }
-                            }                            
-                        </span>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+            </div>
+        } 
+    </div>
+    @Html.Parts(WebZone.Menu)
+    @Html.Paging()    
+}
+
+@section aside {
     @if (!Model.Document.IsEmpty() && !Model.Document.Body.IsEmpty())
     {
-        <aside>
-            @Html.Content(Model.Document.Body)
-        </aside>
+        @Html.Content(Model.Document.Body)
     }
-</section>
+}
+
+<table class="table table-striped">
+    <colgroup>
+        @if (Model.Columns.Contains("Id"))
+        {
+            <col class="id" />
+        }
+        @if (Model.Columns.Contains("Slug"))
+        {
+            <col class="slug" />
+        }
+        <col class="description" />
+        <col class="icon" />
+        <col class="actions" />
+    </colgroup>
+    <thead>
+        <tr>
+            @if (Model.Columns.Contains("Id"))
+            {
+                <th>@WebPhrase.Id</th>
+            }                
+            @if (Model.Columns.Contains("Slug"))
+            {
+                <th>@WebPhrase.Slug</th>
+            }
+            <th>@WebPhrase.Description</th>
+            <th></th>
+            <th>@WebPhrase.Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (dynamic entry in Model)
+        {
+            var row = entry as object;
+            var key = row.GetKey().AsString().ToUrlEncoded();
+            var routeData = new { id = key };
+            var commandButton = new { target = "_blank", @class = "btn" };                    
+            <tr>
+                @if (Model.Columns.Contains("Id")) 
+                {
+                    <td>
+                        @row.GetKey()
+                    </td>
+                }
+                @if (Model.Columns.Contains("Slug"))
+                {
+                    <td>
+                        @entry.Slug                  
+                    </td>
+                }
+                <td>
+                    @if ((entry is WebEntry || entry is WebLink) && entry.Picture != null)
+                    {
+                        @Html.Image(entry.Picture as string, className: "thumbnail")
+                    }
+                    else
+                    {
+                        @Html.Raw(row.ToString())
+                    }
+                </td>
+                <td>
+                    @if (Model.Columns.Contains("Status"))
+                    {
+                        if ((entry.Status as String).AsEnum<WebStatus>() != WebStatus.Published)
+                        {
+                            <i class="icon-ban-circle" title="@entry.Status"></i>
+                        }   
+                    }
+                </td>
+                <td>
+                    <span class="btn-group">
+                        @if (Model.Can(WebAction.Details.ToString(), row))
+                        {
+                            @Html.ActionLink(WebPhrase.Details, "Details", routeData, commandButton)
+                        }
+                        @if (Model.Can(WebAction.Edit.ToString(), row))
+                        {
+                            @Html.ActionLink(WebPhrase.Edit, "Edit", routeData, commandButton)
+                        }                    
+                        @if (Model.Can(WebAction.Delete.ToString(), row))
+                        {
+                            using (Html.BeginForm("Delete", ViewContext.RouteData.ControllerName(), routeData))
+                            {
+                                <span></span>
+                                @Html.SubmitButton(WebPhrase.Delete, "btn")
+                            }
+                        }
+                        @if (!Model.Commands.IsEmpty())
+                        {
+                            foreach (var command in Model.Commands.OfType<IWebCommand>())
+                            {
+                                var link = command.GetLink(entry, Url);
+                                if (link != null)
+                                {
+                                    <a href="@link.Uri" rel="@(link.Rel ?? "command")" class="btn">@link.Title</a>
+                                }
+                            }
+                        }                            
+                    </span>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

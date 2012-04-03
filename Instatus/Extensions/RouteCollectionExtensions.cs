@@ -68,9 +68,9 @@ namespace Instatus
         public static Route MapHomeRoute(this RouteCollection routes, string controllerName = "Home", string actionName = "Index", string areaName = null, string ns = null)
         {
             return routes
-                .RemoveRoute(WebRoute.Home)
+                .RemoveRoute(WebConstant.Route.Home)
                 .MapRouteLowercase(
-                    WebRoute.Home,
+                    WebConstant.Route.Home,
                     "",
                     new
                     {
@@ -92,9 +92,9 @@ namespace Instatus
         public static Route MapContentPageRoute(this RouteCollection routes, string prefix, string controllerName = "Page", string actionName = "Details", string areaName = null, string ns = null)
         {
             return routes
-                .RemoveRoute(WebRoute.Page)
+                .RemoveRoute(WebConstant.Route.Page)
                 .MapRouteLowercase(
-                    WebRoute.Page, 
+                    WebConstant.Route.Page, 
                     prefix + "/{slug}",
                     new
                     {
@@ -112,9 +112,9 @@ namespace Instatus
         public static Route MapPostRoute(this RouteCollection routes, string controllerName = "Post", string actionName = "Details", string areaName = null, string ns = null)
         {
             return routes
-                .RemoveRoute(WebRoute.Post)
+                .RemoveRoute(WebConstant.Route.Post)
                 .MapRouteLowercase(
-                    WebRoute.Post,
+                    WebConstant.Route.Post,
                     controllerName + "/" + actionName + "/{slug}",
                     new
                     {
@@ -131,9 +131,9 @@ namespace Instatus
         public static Route MapPagesRoute(this RouteCollection routes, string prefix, string[] slugs, string controllerName = "Page", string actionName = "Details", string areaName = null, string ns = null)
         {
             return routes
-                .RemoveRoute(WebRoute.Page)
+                .RemoveRoute(WebConstant.Route.Page)
                 .MapRouteLowercase(
-                    WebRoute.Page,
+                    WebConstant.Route.Page,
                     prefix + "/{slug}",
                     new
                     {
@@ -175,9 +175,9 @@ namespace Instatus
         public static Route MapDefaultRoute(this RouteCollection routes, string controllerName = "Home", string actionName = "Index", string areaName = null, string[] excludeControllerNames = null, string ns = null)
         {
             return routes
-                .RemoveRoute(WebRoute.Default)
+                .RemoveRoute(WebConstant.Route.Default)
                 .MapRouteLowercase(
-                    WebRoute.Default,
+                    WebConstant.Route.Default,
                     "{controller}/{action}/{slug}",
                     new
                     {

@@ -150,7 +150,7 @@ namespace Instatus.Models
 
         public string GenerateVerificationUri(UrlHelper urlHelper)
         {
-            return urlHelper.Absolute(WebRoute.AccountVerification, new { id = Id, token = GetVerificationToken() });
+            return urlHelper.Absolute(WebConstant.Route.AccountVerification, new { id = Id, token = GetVerificationToken() });
         }
 
         public void GenerateVerificationEmail(string subject = null, string senderEmailAddress = null, string senderDisplayName = null)

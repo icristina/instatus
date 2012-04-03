@@ -36,29 +36,14 @@
     }    
 }
 
-@helper Edit() {
-    var webForm = ViewData.GetSingle<WebForm>();
+@using (Html.BeginActionForm(multipart: ViewData.ModelMetadata.AdditionalValues.Value("File").AsBoolean()))
+{
     foreach (var parameter in webForm.HiddenParameters) {
         @Html.Hidden(parameter.Name, parameter.Content)    
     }    
-    <div class="form-actions">
+    <menu class="form-actions">
         @Html.SubmitButton(webForm.ActionText, "btn btn-primary")
-    </div>
+    </menu>
     @Html.ValidationAlert()     
     @Html.EditorForModel()    
-}
-
-@if (ViewData.ModelMetadata.AdditionalValues.Value("File").AsBoolean())
-{
-    using (Html.BeginMultipartForm(className: "form-horizontal container"))
-    {
-        @Edit()
-    }
-}
-else
-{
-    using (Html.BeginForm(webForm.ActionName, ViewContext.RouteData.ControllerName(), FormMethod.Post, new { @class = "form-horizontal container" }))
-    {
-        @Edit()
-    }
 }

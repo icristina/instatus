@@ -8,9 +8,10 @@ namespace Instatus.Web
     public enum WebZone
     {
         Head,
-        Header,
+        Banner,
         Navigation,
         Menu,
+        Header,
         Figure,
         Body,
         Aside,

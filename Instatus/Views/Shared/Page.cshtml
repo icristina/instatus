@@ -1,19 +1,10 @@
 ﻿@model Instatus.Models.Page
 
-<section role="main" itemscope itemtype="@Model.GetVocabularyItemType()" itemid="@Model.Id">
-    <header class="page-header">
-        <h1 itemprop="name">@Model.Name</h1>  
-    </header>
-    @if (!Model.Description.IsEmpty())
-    {
-        <div itemprop="description">
-            @Html.Content(Model.Description)        
-        </div>
-    }
-    @if (Model.Document != null)
-    {
-        <div itemprop="mainContentOfPage">
-            @Html.Content(Model.Document.Body)
-        </div>
-    }     
-</section>
+@section header {
+    <h1>@Model.Name</h1>
+}
+
+@Html.Content(Model.Description)  
+@if (Model.Document != null) {
+    @Html.Content(Model.Document.Body)
+}

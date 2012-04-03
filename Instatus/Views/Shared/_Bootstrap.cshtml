@@ -14,29 +14,39 @@
 <body@(Html.RouteDataAttributes())>
     @RenderSection("tracking", false)
     @Html.Parts(WebZone.Tracking)
-    <header role="banner">
+    <header role="banner" class="container">
         <div>
-            @RenderSection("header", false)
-            @Html.Parts(WebZone.Header)                
+            @RenderSection("banner", false)
+            @Html.Parts(WebZone.Banner)                
         </div>
     </header>
-    <nav role="navigation">
+    <nav role="navigation" class="container">
         <div>
             @RenderSection("navigation", false)
             @Html.Parts(WebZone.Navigation)        
         </div>
     </nav>    
-    <div class="container">
-        @RenderSection("figure", false)
-        @Html.Parts(WebZone.Figure)   
+    <section role="main" class="container">
+        <header class="page-header">
+            @RenderSection("header", false)
+            @Html.Parts(WebZone.Header)                
+        </header>      
+        <figure>
+            @RenderSection("figure", false)
+            @Html.Parts(WebZone.Figure) 
+        </figure>
+        <menu>
+            @RenderSection("menu", false)
+            @Html.Parts(WebZone.Menu) 
+        </menu>
         @RenderBody()  
         @Html.Parts(WebZone.Body)   
         <aside>
             @RenderSection("aside", false)
             @Html.Parts(WebZone.Aside)
         </aside>
-    </div>
-    <footer role="contentinfo">
+    </section>
+    <footer role="contentinfo" class="container">
         <div>
             @RenderSection("footer", false)
             @Html.Parts(WebZone.Footer) 

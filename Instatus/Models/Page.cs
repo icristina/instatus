@@ -183,14 +183,14 @@ namespace Instatus.Models
             return PageQueries.SelectWebEntry(this);
         }
 
-        public SiteMapNode ToSiteMapNode(SiteMapProvider sitemap, string routeName = WebRoute.Page)
+        public SiteMapNode ToSiteMapNode(SiteMapProvider sitemap, string routeName = WebConstant.Route.Page)
         {
             var routeData = new { slug = Slug };
             var virtualPath = RouteTable.Routes.GetVirtualPath(routeName, routeData);
             return new SiteMapNode(sitemap, Slug, virtualPath, Name);
         }
 
-        public SyndicationItem ToSyndicationItem(string routeName = WebRoute.Post)
+        public SyndicationItem ToSyndicationItem(string routeName = WebConstant.Route.Post)
         {
             var routeData = new { slug = Slug };
             var virtualPath = RouteTable.Routes.GetVirtualPath(routeName, routeData);

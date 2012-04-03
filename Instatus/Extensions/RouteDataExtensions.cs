@@ -73,8 +73,9 @@ namespace Instatus
 
         public static bool IsAncestorOrSelf(this SiteMapNode siteMapNode)
         {
+            var url = HttpContext.Current.Request.Url.AbsolutePath;
             var routeData = HttpContext.Current.Request.RequestContext.RouteData;
-            return siteMapNode.Key.Match(routeData.Slug()) || siteMapNode.Key.Match(routeData.ControllerName());
+            return siteMapNode.Url.Match(url) || siteMapNode.Key.Match(routeData.Slug()) || siteMapNode.Key.Match(routeData.ControllerName());
         }
     }
 }

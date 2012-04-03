@@ -67,12 +67,17 @@ namespace Instatus
             return new SiteMapNodeCollection(siteMapNodes);
         }
 
+        public static string Details(this UrlHelper urlHelper, int id)
+        {
+            return urlHelper.Action("Details", new { id = id });
+        }
+
         public static string Page(this UrlHelper urlHelper, string slug)
         {
-            if (slug.Match(WebRoute.HomeSlug))
-                return urlHelper.RouteUrl(WebRoute.Home);
+            if (slug.Match(WebConstant.Route.HomeSlug))
+                return urlHelper.RouteUrl(WebConstant.Route.Home);
             
-            return urlHelper.RouteUrl(WebRoute.Page, new { slug = slug });
+            return urlHelper.RouteUrl(WebConstant.Route.Page, new { slug = slug });
         }
 
         public static string Self(this UrlHelper urlHelper)
@@ -120,7 +125,7 @@ namespace Instatus.Web
 
         public SiteMapNodeCollectionBuilder Home(string title)
         {
-            siteMapNodes.Add(new SiteMapNode(siteMapProvider, WebRoute.Home, WebPath.Home, title));
+            siteMapNodes.Add(new SiteMapNode(siteMapProvider, WebConstant.Route.Home, WebPath.Home, title));
             return this;
         }
 

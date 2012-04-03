@@ -63,7 +63,7 @@ namespace Instatus
             return contentItem;
         }
 
-        public static IEnumerable<SyndicationItem> AsSyndicationItems(this IEnumerable<Page> pages, string routeName = WebRoute.Post)
+        public static IEnumerable<SyndicationItem> AsSyndicationItems(this IEnumerable<Page> pages, string routeName = WebConstant.Route.Post)
         {
             return pages.ToList().Select(s => s.ToSyndicationItem(routeName));
         }

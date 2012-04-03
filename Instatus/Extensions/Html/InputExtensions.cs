@@ -11,7 +11,7 @@ namespace Instatus
 {
     public static class InputExtensions
     {
-        public static MvcHtmlString FileInput<T>(this HtmlHelper<T> html, string name = "file", string className = null)
+        public static MvcHtmlString FileInput<T>(this HtmlHelper<T> html, string name = "file", string className = "input-file")
         {
             var tag = new TagBuilder("input");
 

@@ -155,7 +155,7 @@ namespace Instatus.Web
         public static string Home {
             get 
             {
-                //var route = RouteTable.Routes[WebRoute.Home];
+                //var route = RouteTable.Routes[WebConstant.RouteHome];
                 //return route != null ? route.GetVirtualPath(null, null).VirtualPath : "/";
                 return "/";
             }

@@ -5,7 +5,7 @@
         @Html.Tag("h1", Model.Heading)
         @Html.Tag("h2", Model.Strapline)
         @Html.Content(Model.Body)  
-        @if (Model.Links.NotEmpty())
+        @if (Model.Links.NonEmpty())
         {
             <ul>
                 @foreach (var link in Model.Links)

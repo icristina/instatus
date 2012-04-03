@@ -153,6 +153,7 @@
     <Compile Include="Data\ITimestamp.cs" />
     <Compile Include="Extensions\ExceptionExtensions.cs" />
     <Compile Include="Extensions\Html\ButtonExtensions.cs" />
+    <Compile Include="Extensions\Html\MediaExtensions.cs" />
     <Compile Include="Extensions\Html\FormExtensions.cs" />
     <Compile Include="Extensions\Html\InputExtensions.cs" />
     <Compile Include="Extensions\Html\LinkExtensions.cs" />
@@ -162,6 +163,7 @@
     <Compile Include="Extensions\Html\WebPartExtensions.cs" />
     <Compile Include="Extensions\TagBuilderExtensions.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
+    <Compile Include="Web\AllowUploadAttribute.cs" />
     <Compile Include="Models\Milestone.cs" />
     <Compile Include="Models\DbPageContext.cs" />
     <Compile Include="Queries\ActivityQueries.cs" />
@@ -244,13 +246,13 @@
     <Compile Include="Web\WebBootstrap.cs" />
     <Compile Include="Web\WebCache.cs" />
     <Compile Include="Web\WebCategory.cs" />
+    <Compile Include="Web\WebConstant.cs" />
     <Compile Include="Web\WebDescriptorAttribute.cs" />
     <Compile Include="Web\WebElement.cs" />
     <Compile Include="Web\WebFeed.cs" />
     <Compile Include="Web\WebForm.cs" />
     <Compile Include="Web\WebFormatting.cs" />
     <Compile Include="Web\WebMock.cs" />
-    <Compile Include="Web\WebRoute.cs" />
     <Compile Include="Web\WebStep.cs" />
     <Compile Include="Web\DbResourceReader.cs" />
     <Compile Include="Web\LowercaseRoute.cs" />
@@ -386,6 +388,7 @@
     <Compile Include="Web\WebView.cs" />
     <Compile Include="Web\RedirectModule.cs" />
     <Compile Include="Widgets\BrandingWidget.cs" />
+    <Compile Include="Widgets\ThemeWidget.cs" />
     <Compile Include="Widgets\JsApiWidget.cs" />
     <Compile Include="Widgets\NavigationWidget.cs" />
   </ItemGroup>

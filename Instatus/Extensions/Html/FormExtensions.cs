@@ -4,22 +4,34 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
+using System.Web.Routing;
 using Instatus;
+using Instatus.Web;
 
 namespace Instatus
 {
     public static class FormExtensions
     {
-        public static MvcForm BeginNamedForm<T>(this HtmlHelper<T> html, string id)
+        public static MvcForm BeginActionForm<T>(this HtmlHelper<T> html,
+            object routeValues = null,
+            string id = null, 
+            string actionName = null, 
+            string controllerName = null, 
+            string className = "form-horizontal", 
+            bool multipart = false)
         {
             var routeData = html.ViewContext.RouteData;
-            return html.BeginForm(routeData.ActionName(), routeData.ControllerName(), FormMethod.Post, new { id = id });
-        }
 
-        public static MvcForm BeginMultipartForm<T>(this HtmlHelper<T> html, string actionName = null, string controllerName = null, string className = null)
-        {
-            var routeData = html.ViewContext.RouteData;
-            return html.BeginForm(actionName ?? routeData.ActionName(), controllerName ?? routeData.ControllerName(), FormMethod.Post, new { enctype = "multipart/form-data", @class = className });
+            var htmlAttributes = new Dictionary<string, object>()
+                .AddNonEmptyValue("id", id)
+                .AddNonEmptyValue("class", className);
+
+            if (multipart || html.ViewData.Model.GetCustomAttributeValue<AllowUploadAttribute, bool>(a => a.Allow))
+                htmlAttributes.Add("enctype", "multipart/form-data");
+
+            var routeValueDictionary = new RouteValueDictionary(routeValues);
+
+            return html.BeginForm(actionName ?? routeData.ActionName(), controllerName ?? routeData.ControllerName(), routeValueDictionary, FormMethod.Post, htmlAttributes);
         }
     }
 }

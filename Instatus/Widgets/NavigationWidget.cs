@@ -11,13 +11,12 @@ namespace Instatus.Widgets
     public class NavigationWidget : WebPartial
     {
         Func<UrlHelper, SiteMapNodeCollection> buildSiteMapNodeCollection;
-        WebFormatting webFormatting;
 
         public override object GetViewModel(WebPartialContext context)
         {
             var viewDataDictionary = new ViewDataDictionary<SiteMapNodeCollection>(buildSiteMapNodeCollection(context.Url));
 
-            viewDataDictionary.AddSingle(webFormatting);
+            viewDataDictionary.AddSingle(Formatting);
             
             return viewDataDictionary;
         }
@@ -25,11 +24,19 @@ namespace Instatus.Widgets
         public NavigationWidget(Func<UrlHelper, SiteMapNodeCollection> buildSiteMapNodeCollection, WebZone zone = WebZone.Navigation, string viewName = "Navigation", WebFormatting webFormatting = null, string scope = null)
         {
             this.buildSiteMapNodeCollection = buildSiteMapNodeCollection;
-            this.webFormatting = webFormatting;
+
+            if (webFormatting != null)
+                Formatting = webFormatting;
 
             Zone = zone;
             ViewName = viewName;
             Scope = scope;
+        }
+
+        public NavigationWidget WithClassName(string className)
+        {
+            Formatting.ClassName = className;
+            return this;
         }
 
         public static NavigationWidget Legal() {
@@ -43,7 +50,8 @@ namespace Instatus.Widgets
             zone: WebZone.Footer,
             webFormatting: new WebFormatting() 
             { 
-                Label = WebPhrase.Copyright     
+                Label = WebPhrase.Copyright,
+                ClassName = "nav-pills"
             })
             .WithPublicScope();
         }
