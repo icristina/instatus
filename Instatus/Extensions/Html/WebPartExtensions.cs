@@ -80,7 +80,11 @@ namespace Instatus
                 if (webPartial.ActionName.IsEmpty())
                 {
                     var urlHelper = new UrlHelper(html.ViewContext.RequestContext);
-                    var webPartialContext = new WebPartialContext(urlHelper, WebMock.CreateHtmlHelper(part));
+                    var htmlHelper = WebMock.CreateHtmlHelper(part);
+                    var routeData = html.ViewContext.RouteData;
+                    var parentModel = html.ViewData.Model;
+
+                    var webPartialContext = new WebPartialContext(urlHelper, htmlHelper, parentModel, routeData);
                     var webPartialModel = webPartial.GetViewModel(webPartialContext);
 
                     if (webPartialModel is MvcHtmlString)

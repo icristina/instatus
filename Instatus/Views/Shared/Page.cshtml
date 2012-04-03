@@ -10,12 +10,10 @@
             @Html.Content(Model.Description)        
         </div>
     }
-    @Html.Parts(WebZone.Figure)    
-    <div itemprop="mainContentOfPage">
-        @if (Model.Document != null)
-        {
+    @if (Model.Document != null)
+    {
+        <div itemprop="mainContentOfPage">
             @Html.Content(Model.Document.Body)
-        }
-        @Html.Parts(WebZone.Body)        
-    </div>
+        </div>
+    }     
 </section>

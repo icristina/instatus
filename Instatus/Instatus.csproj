@@ -482,9 +482,6 @@
     <EmbeddedResource Include="Views\Shared\Figure.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\Playlist.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Areas\Developer\Views\Web.config" />
     <EmbeddedResource Include="Areas\Developer\Views\Dashboard\Index.cshtml" />
     <None Include="App.config" />
@@ -492,7 +489,6 @@
     <EmbeddedResource Include="Views\Shared\DisplayTemplates\LinkList.cshtml" />
     <EmbeddedResource Include="Views\Shared\ValidationSummary.cshtml" />
     <EmbeddedResource Include="Views\Shared\Parameters.cshtml" />
-    <EmbeddedResource Include="Views\Shared\Gallery.cshtml" />
     <EmbeddedResource Include="Views\Shared\Places.cshtml" />
     <EmbeddedResource Include="Views\Shared\Links.cshtml" />
     <EmbeddedResource Include="Views\Shared\Users.cshtml" />

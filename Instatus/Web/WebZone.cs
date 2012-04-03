@@ -10,6 +10,7 @@ namespace Instatus.Web
         Head,
         Header,
         Navigation,
+        Menu,
         Figure,
         Body,
         Aside,

@@ -23,11 +23,15 @@ namespace Instatus.Web
     {
         public UrlHelper Url { get; private set; }
         public HtmlHelper<WebPart> Html { get; private set; }
+        public object ParentModel { get; private set; }
+        public RouteData RouteData { get; private set; }
 
-        public WebPartialContext(UrlHelper urlHelper, HtmlHelper<WebPart> htmlHelper)
+        public WebPartialContext(UrlHelper urlHelper, HtmlHelper<WebPart> htmlHelper, object parentModel, RouteData routeData)
         {
             Url = urlHelper;
             Html = htmlHelper;
+            ParentModel = parentModel;
+            RouteData = routeData;
         }
     }
 }
