@@ -112,6 +112,8 @@ namespace Instatus.Web
             public const string RequiredGivenName = "RequiredGivenName";
             public const string RequiredFamilyName = "RequiredFamilyName";
             public const string RequiredFullName = "RequiredFullName";
+            public const string RequiredFile = "RequiredFile";
+            public const string RequiredFriendEmailAddress = "RequiredFriendEmailAddress";
             public const string DuplicateUser = "DuplicateUser";
             public const string DuplicateSubscription = "DuplicateSubscription";
             public const string VerificationTokenRejected = "VerificationTokenRejected";
@@ -206,6 +208,8 @@ namespace Instatus.Web
         public static string RequiredGivenName { get { return Localize(ErrorMessage.RequiredGivenName, "Please enter your first name"); } }
         public static string RequiredFamilyName { get { return Localize(ErrorMessage.RequiredFamilyName, "Please enter your surname"); } }
         public static string RequiredFullName { get { return Localize(ErrorMessage.RequiredFullName, "Please enter your name"); } }
+        public static string RequiredFile { get { return Localize(ErrorMessage.RequiredFile, "Please select a file"); } }
+        public static string RequiredFriendEmailAddress { get { return Localize(ErrorMessage.RequiredFriendEmailAddress, "Please enter a valid email address for your friend"); } }
         public static string DuplicateSubscription { get { return Localize(ErrorMessage.DuplicateSubscription, "You have already subscribed"); } }
         public static string DuplicateUser { get { return Localize(ErrorMessage.DuplicateUser, "You have already registered"); } }
         public static string VerificationTokenRejected { get { return Localize(ErrorMessage.VerificationTokenRejected, "The verification token has been rejected"); } }

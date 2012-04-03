@@ -36,7 +36,7 @@ namespace Instatus
             return new MvcHtmlString(tag.ToString());
         }
 
-        public static MvcHtmlString SubmitButton<T>(this HtmlHelper<T> html, string text = null, string className = null)
+        public static MvcHtmlString SubmitButton<T>(this HtmlHelper<T> html, string text = null, string className = "btn btn-primary")
         {
             var tag = new TagBuilder("button");
 

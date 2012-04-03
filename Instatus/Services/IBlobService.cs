@@ -8,6 +8,7 @@ using System.Web.Helpers;
 using Instatus.Web;
 using System.Drawing;
 using System.Drawing.Imaging;
+using Instatus.Data;
 
 namespace Instatus.Services
 {
@@ -31,12 +32,25 @@ namespace Instatus
             }
         }
 
-        public static void SaveImage(this IBlobService blobService, Image image, string key)
+        public static string SaveImage(this IBlobService blobService, Stream stream)
+        {
+            try
+            {
+                var image = Bitmap.FromStream(stream);
+                return blobService.SaveImage(image, Generator.TimeStamp());
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public static string SaveImage(this IBlobService blobService, Image image, string key)
         {
             using (var memoryStream = new MemoryStream())
             {
                 image.Save(memoryStream, ImageFormat.Jpeg);
-                blobService.Save("image/jpeg", key, memoryStream);
+                return blobService.Save("image/jpeg", key, memoryStream);
             }
         }
         

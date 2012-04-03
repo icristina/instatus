@@ -36,13 +36,13 @@
     }    
 }
 
-@using (Html.BeginActionForm(multipart: ViewData.ModelMetadata.AdditionalValues.Value("File").AsBoolean()))
+@using (Html.BeginActionForm())
 {
     foreach (var parameter in webForm.HiddenParameters) {
         @Html.Hidden(parameter.Name, parameter.Content)    
     }    
     <menu class="form-actions">
-        @Html.SubmitButton(webForm.ActionText, "btn btn-primary")
+        @Html.SubmitButton(webForm.ActionText)
     </menu>
     @Html.ValidationAlert()     
     @Html.EditorForModel()    
