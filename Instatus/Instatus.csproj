@@ -252,6 +252,7 @@
     <Compile Include="Web\WebFeed.cs" />
     <Compile Include="Web\WebForm.cs" />
     <Compile Include="Web\WebFormatting.cs" />
+    <Compile Include="Web\WebMarkup.cs" />
     <Compile Include="Web\WebMock.cs" />
     <Compile Include="Web\WebStep.cs" />
     <Compile Include="Web\DbResourceReader.cs" />

@@ -8,8 +8,9 @@ using System.Dynamic;
 
 namespace Instatus.Web
 {
-    [KnownType(typeof(WebSection))]
     [KnownType(typeof(WebPartial))]
+    [KnownType(typeof(WebMarkup))]
+    [KnownType(typeof(WebSection))]
     [KnownType(typeof(WebStream))]
     [KnownType(typeof(WebInclude))]
     public class WebPart

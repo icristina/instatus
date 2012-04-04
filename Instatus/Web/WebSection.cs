@@ -6,12 +6,11 @@ using System.Runtime.Serialization;
 
 namespace Instatus.Web
 {
-    public class WebSection : WebPart
+    public class WebSection : WebMarkup
     {
         public string Heading { get; set; }
         public string Strapline { get; set; }
         public string Abstract { get; set; }
-        public string Body { get; set; }
 
         private List<WebLink> links;
 
@@ -61,6 +60,14 @@ namespace Instatus.Web
             set
             {
                 elements = value;
+            }
+        }
+
+        public bool IsRawHtml
+        {
+            get
+            {
+                return ViewName.IsEmpty() && Body.NonEmpty();
             }
         }
     }

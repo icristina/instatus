@@ -13,7 +13,7 @@ namespace Instatus
 {
     public static class WebPartExtensions
     {
-        public static MvcHtmlString Parts<T>(this HtmlHelper<T> html, WebZone zoneName = WebZone.Body)
+        public static IHtmlString Parts<T>(this HtmlHelper<T> html, WebZone zoneName = WebZone.Body)
         {
             var viewModel = html.ViewData.Model;
             var routeData = html.ViewContext.RouteData;
@@ -62,9 +62,13 @@ namespace Instatus
             return new MvcHtmlString(sb.ToString());
         }
 
-        public static MvcHtmlString Part<T>(this HtmlHelper<T> html, WebPart part)
+        public static IHtmlString Part<T>(this HtmlHelper<T> html, WebPart part)
         {
-            if (part is WebStream)
+            if (part is WebMarkup)
+            {
+                return html.Raw(((WebMarkup)part).Body);
+            }
+            else if (part is WebStream)
             {
                 var stream = (WebStream)part;
 

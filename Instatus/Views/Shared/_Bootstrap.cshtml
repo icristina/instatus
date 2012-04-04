@@ -12,8 +12,6 @@
     @Html.Parts(WebZone.Head)
 </head>
 <body@(Html.RouteDataAttributes())>
-    @RenderSection("tracking", false)
-    @Html.Parts(WebZone.Tracking)
     <header role="banner" class="container">
         <div>
             @RenderSection("banner", false)
@@ -39,8 +37,10 @@
             @RenderSection("menu", false)
             @Html.Parts(WebZone.Menu) 
         </menu>
-        @RenderBody()  
-        @Html.Parts(WebZone.Body)   
+        <div class="page-body">
+            @RenderBody()  
+            @Html.Parts(WebZone.Body)
+        </div>   
         <aside>
             @RenderSection("aside", false)
             @Html.Parts(WebZone.Aside)
