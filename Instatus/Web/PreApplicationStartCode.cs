@@ -35,6 +35,7 @@ namespace Instatus.Web
             WebBootstrap.ViewLocation();
             WebBootstrap.RemoveServerFingerprint();
             WebBootstrap.DefaultServices();
+            WebBootstrap.Imaging();
         }
     }
 }

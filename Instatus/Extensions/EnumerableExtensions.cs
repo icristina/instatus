@@ -108,10 +108,17 @@ namespace Instatus
         public static IDictionary<TKey, TValue> AddNonEmptyValue<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey name, TValue value)
         {
             if (!value.IsEmpty() && !value.Equals(default(TValue)))
-                if (dictionary.ContainsKey(name))
-                    dictionary[name] = value;
-                else
-                    dictionary.Add(name, value);
+                dictionary.AddOrReplace(name, value);
+
+            return dictionary;
+        }
+
+        public static IDictionary<TKey, TValue> AddOrReplace<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey name, TValue value)
+        {
+            if (dictionary.ContainsKey(name))
+                dictionary[name] = value;
+            else
+                dictionary.Add(name, value);
 
             return dictionary;
         }

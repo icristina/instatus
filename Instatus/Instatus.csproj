@@ -252,6 +252,7 @@
     <Compile Include="Web\WebFeed.cs" />
     <Compile Include="Web\WebForm.cs" />
     <Compile Include="Web\WebFormatting.cs" />
+    <Compile Include="Web\WebImaging.cs" />
     <Compile Include="Web\WebMarkup.cs" />
     <Compile Include="Web\WebMock.cs" />
     <Compile Include="Web\WebStep.cs" />
@@ -366,6 +367,7 @@
     <Compile Include="Web\WebEnvironment.cs" />
     <Compile Include="Web\WebListType.cs" />
     <Compile Include="Web\WebParameter.cs" />
+    <Compile Include="Web\WebTransform.cs" />
     <Compile Include="Web\WebUtility.cs" />
     <Compile Include="Web\WebVariable.cs" />
     <Compile Include="Web\WebPermission.cs" />

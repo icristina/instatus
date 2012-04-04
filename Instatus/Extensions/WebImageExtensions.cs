@@ -12,31 +12,6 @@ namespace Instatus
 {
     public static class WebImageExtensions
     {
-        public static WebImage Square(this WebImage image, int size)
-        {
-            int offset;
-
-            if (image.Height > image.Width) //portrait
-            {
-                offset = (image.Height - image.Width) / 2;
-                image.Crop(offset, 0, offset, 0);
-            }
-            else // landscape
-            {
-                offset = (image.Width - image.Height) / 2;
-                image.Crop(0, offset, 0, offset);
-            }
-
-            image.Resize(size, size);
-
-            return image;
-        }
-
-        public static WebImage BoundingBox(this WebImage image, int width, int height = 0)
-        {
-            return image.Resize(width, height > 0 ? height : width, true, true);
-        }
-
         // http://stackoverflow.com/questions/249587/high-quality-image-scaling-c-sharp    
         public static Graphics AsHighQuality(this Graphics graphics)
         {
@@ -134,9 +109,14 @@ namespace Instatus
             return new Tuple<int, int>(width, height);
         }
 
-        public static Image BoundingBox(this Image image, int width, int height = 0)
+        public static Image BoundingBox(this Image image, int width)
         {
-            return image.Resize(width, height > 0 ? height : width, true, true);
+            return image.Resize(width, width, true, true);
+        }
+
+        public static Image BoundingBox(this Image image, int width, int height)
+        {
+            return image.Resize(width, height, true, true);
         }
 
         public static Image Crop(this Image image, int top, int right, int bottom, int left)
@@ -166,35 +146,36 @@ namespace Instatus
 
         public static Image Square(this Image image, int size)
         {
-            return image.AspectRatio(size, size, true);
+            using (var croppedImage = image.AspectRatio(size, size))
+            {
+                return croppedImage.Resize(size, size);
+            }
         }
 
-        public static Image AspectRatio(this Image image, int width, int height, bool resize = false)
+        public static Image Mask(this Image image, int width, int height)
         {
-            Image croppedImage;
-            int offset;
-
-            var imageAspectRatio = image.Width / image.Height;
-            var cropAspectRatio = width / height;
-
-            if (cropAspectRatio < imageAspectRatio) // crop width, keep height fixed
-            {
-                offset = (image.Height * cropAspectRatio) / 2;
-                croppedImage = image.Crop(0, offset, 0, offset);
-            }
-            else // crop height
-            {
-                offset = (image.Width / cropAspectRatio) / 2;
-                croppedImage = image.Crop(offset, 0, offset, 0);
-            }
-
-            if (resize)
+            using (var croppedImage = image.AspectRatio(width, height))
             {
                 return croppedImage.Resize(width, height);
             }
-            else
+        }
+
+        public static Image AspectRatio(this Image image, int width, int height)
+        {
+            int offset;
+
+            double imageAspectRatio = (double)image.Width / (double)image.Height;
+            double cropAspectRatio = (double)width / (double)height;
+
+            if (cropAspectRatio < imageAspectRatio) // crop width, keep height fixed
             {
-                return croppedImage;
+                offset = (image.Height - height) / 2;
+                return image.Crop(0, offset, 0, offset);
+            }
+            else // crop height
+            {
+                offset = (image.Width - width) / 2;
+                return image.Crop(offset, 0, offset, 0);
             }
         }
     }

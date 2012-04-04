@@ -37,7 +37,14 @@ namespace Instatus
             try
             {
                 var image = Bitmap.FromStream(stream);
-                return blobService.SaveImage(image, Generator.TimeStamp());
+                var key = blobService.SaveImage(image, Generator.TimeStamp());
+
+                foreach (var size in WebImaging.Sizes)
+                {
+                    blobService.GenerateSize(key, size.Key, size.Value, false);
+                }
+
+                return key;
             }
             catch
             {
@@ -54,13 +61,16 @@ namespace Instatus
             }
         }
         
-        public static string GenerateThumbnail(this IBlobService blobService, string key, int boundingBoxSize = 200, bool crop = false, bool alwaysCreate = false) 
+        public static string GenerateThumbnail(this IBlobService blobService, string key)
         {
-            return blobService.GenerateSize(key, WebSize.Thumb, boundingBoxSize, crop, alwaysCreate);
+            return blobService.GenerateSize(key, WebSize.Thumb);
         }
 
-        public static string GenerateSize(this IBlobService blobService, string key, WebSize size, int boundingBoxSize, bool crop = false, bool alwaysCreate = false)
+        public static string GenerateSize(this IBlobService blobService, string key, WebSize size, WebTransform transform = null, bool alwaysCreate = false)
         {
+            if (transform == null)
+                transform = WebImaging.Sizes[size];
+            
             var resizeKey = WebPath.Resize(size, key);
             
             if (!alwaysCreate && blobService.Exists(resizeKey))
@@ -68,7 +78,9 @@ namespace Instatus
             
             using (var stream = blobService.Stream(key)) 
             using (var originalImage = (Bitmap)Bitmap.FromStream(stream))
-            using (var resizedImage = crop ? originalImage.Square(boundingBoxSize) : originalImage.BoundingBox(boundingBoxSize))
+            using (var resizedImage = transform.Mask ? 
+                originalImage.Mask(transform.Width, transform.Height) : 
+                originalImage.BoundingBox(transform.Width, transform.Height))
             {
                 blobService.SaveImage(resizedImage, resizeKey);
             }

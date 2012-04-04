@@ -117,5 +117,10 @@ namespace Instatus.Web
                 typeof(DbMembershipService),
                 typeof(SchemaOrgVocabulary));
         }
+
+        public static void Imaging()
+        {
+            WebImaging.Sizes.Add(WebSize.Thumb, new WebTransform(200, 200, false));
+        }
     }
 }
