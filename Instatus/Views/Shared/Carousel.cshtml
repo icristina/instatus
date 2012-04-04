@@ -1,0 +1,36 @@
+﻿@model WebSection
+
+<section id="carousel" class="carousel">
+    @Html.Tag("h1", Model.Heading)
+    @Html.Tag("h2", Model.Strapline)
+    @Html.Content(Model.Body)  
+    <div class="carousel-inner">      
+        @if (Model.Links.NonEmpty())
+        {
+            foreach (var link in Model.Links)
+            {
+                <div class="item">
+                    @if (WebMimeType.IsPhoto(link.ContentType))
+                    {
+                        <figure>
+                            <caption>@link.Title</caption>
+                            @Html.Content(link.Description)
+                            @Html.Image(link.Uri, link.Title)
+                        </figure>
+                    }
+                    else
+                    {
+                        @Html.Tag("b", link.Title)
+                        @Html.Anchor(WebPhrase.View, WebPath.Absolute(link.Uri))
+                    }
+                </div>
+            }
+        } 
+    </div>
+    <a class="carousel-control left" href="#carousel" data-slide="prev">@Html.LeftArrow()</a>
+    <a class="carousel-control right" href="#carousel" data-slide="next">@Html.RightArrow()</a>
+</section>
+
+<script>
+    $('#carousel').carousel();
+</script>

@@ -33,6 +33,11 @@ namespace Instatus
                 && (!contentType.HasValue || contentType.Value.IsContentType(request.Files[0].ContentType)); 
         }
 
+        public static int FileContentLength(this HttpRequestBase request)
+        {
+            return request.Files[0].ContentLength;
+        }
+
         public static Stream FileInputStream(this HttpRequestBase request)
         {
             return request.Files[0].InputStream;

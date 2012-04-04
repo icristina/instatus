@@ -368,6 +368,7 @@
     <Compile Include="Web\WebListType.cs" />
     <Compile Include="Web\WebParameter.cs" />
     <Compile Include="Web\WebTransform.cs" />
+    <Compile Include="Web\WebUnits.cs" />
     <Compile Include="Web\WebUtility.cs" />
     <Compile Include="Web\WebVariable.cs" />
     <Compile Include="Web\WebPermission.cs" />
@@ -497,7 +498,6 @@
     <EmbeddedResource Include="Views\Shared\Parameters.cshtml" />
     <EmbeddedResource Include="Views\Shared\Places.cshtml" />
     <EmbeddedResource Include="Views\Shared\Links.cshtml" />
-    <EmbeddedResource Include="Views\Shared\Users.cshtml" />
     <EmbeddedResource Include="Views\Shared\Subscribe.cshtml" />
     <EmbeddedResource Include="Views\Shared\Verification.cshtml" />
     <EmbeddedResource Include="Views\Shared\Notification.cshtml" />
@@ -506,6 +506,7 @@
     <EmbeddedResource Include="Views\Shared\EditorTemplates\Password.cshtml" />
     <EmbeddedResource Include="Views\Shared\EditorTemplates\ImageUrl.cshtml" />
     <EmbeddedResource Include="Views\Shared\EditorTemplates\File.cshtml" />
+    <EmbeddedResource Include="Views\Shared\Carousel.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup>

@@ -74,7 +74,7 @@ namespace Instatus
 
         public static string Page(this UrlHelper urlHelper, string slug)
         {
-            if (slug.Match(WebConstant.Route.HomeSlug))
+            if (slug.Match(WebConstant.Slug.Home))
                 return urlHelper.RouteUrl(WebConstant.Route.Home);
             
             return urlHelper.RouteUrl(WebConstant.Route.Page, new { slug = slug });

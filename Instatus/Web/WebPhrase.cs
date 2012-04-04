@@ -109,6 +109,7 @@ namespace Instatus.Web
             public const string InvalidFriendlyIdentifier = "InvalidFriendlyIdentifier";
             public const string InvalidEmailAddress = "InvalidEmailAddress";
             public const string InvalidFile = "InvalidFile";
+            public const string InvalidPermissions = "InvalidPermissions";
             public const string RequiredEmailAddress = "RequiredEmailAddress";
             public const string RequiredGivenName = "RequiredGivenName";
             public const string RequiredFamilyName = "RequiredFamilyName";
@@ -208,6 +209,7 @@ namespace Instatus.Web
         public static string InvalidFriendlyIdentifier { get { return Localize(ErrorMessage.InvalidFriendlyIdentifier, "Invalid friendly url, slug or identifier"); } }
         public static string InvalidEmailAddress { get { return Localize(ErrorMessage.InvalidEmailAddress, "Please enter a valid email address"); } }
         public static string InvalidFile { get { return Localize(ErrorMessage.InvalidFile, "Please rety or replace file"); } }
+        public static string InvalidPermissions { get { return Localize(ErrorMessage.InvalidPermissions, "You do not have permission to complete this action"); } }
         public static string RequiredEmailAddress { get { return Localize(ErrorMessage.RequiredEmailAddress, "Please enter a valid email address"); } }
         public static string RequiredGivenName { get { return Localize(ErrorMessage.RequiredGivenName, "Please enter your first name"); } }
         public static string RequiredFamilyName { get { return Localize(ErrorMessage.RequiredFamilyName, "Please enter your surname"); } }
@@ -253,6 +255,19 @@ namespace Instatus.Web
                 result = WebPhrase.Localize(binder.Name);
                 return true;
             }
+        }
+
+        // custom formatters
+        // http://stackoverflow.com/questions/1242266/converting-bytes-to-gb-in-c
+        public static string Bytes(float bytes)
+        {
+            string[] suffix = { "B", "KB", "MB", "GB", "TB" };
+            int i;
+            double dblSByte = 0;
+            for (i = 0; (int)(bytes / 1024) > 0; i++, bytes /= 1024)
+                dblSByte = bytes / 1024.0;
+            
+            return string.Format("{0:0.00} {1}", dblSByte, suffix[i]);
         }
     }
 }
