@@ -108,6 +108,7 @@ namespace Instatus.Web
         {
             public const string InvalidFriendlyIdentifier = "InvalidFriendlyIdentifier";
             public const string InvalidEmailAddress = "InvalidEmailAddress";
+            public const string InvalidFile = "InvalidFile";
             public const string RequiredEmailAddress = "RequiredEmailAddress";
             public const string RequiredGivenName = "RequiredGivenName";
             public const string RequiredFamilyName = "RequiredFamilyName";
@@ -116,8 +117,10 @@ namespace Instatus.Web
             public const string RequiredFriendEmailAddress = "RequiredFriendEmailAddress";
             public const string DuplicateUser = "DuplicateUser";
             public const string DuplicateSubscription = "DuplicateSubscription";
+            public const string DuplicateEntry = "DuplicateEntry";
             public const string VerificationTokenRejected = "VerificationTokenRejected";
             public const string AcceptTerms = "AcceptTerms";
+            public const string OfferExpired = "OfferExpired";
         }
         
         public static string JustNow { get { return Localize(Common.JustNow, "just now"); } }
@@ -204,6 +207,7 @@ namespace Instatus.Web
 
         public static string InvalidFriendlyIdentifier { get { return Localize(ErrorMessage.InvalidFriendlyIdentifier, "Invalid friendly url, slug or identifier"); } }
         public static string InvalidEmailAddress { get { return Localize(ErrorMessage.InvalidEmailAddress, "Please enter a valid email address"); } }
+        public static string InvalidFile { get { return Localize(ErrorMessage.InvalidFile, "Please rety or replace file"); } }
         public static string RequiredEmailAddress { get { return Localize(ErrorMessage.RequiredEmailAddress, "Please enter a valid email address"); } }
         public static string RequiredGivenName { get { return Localize(ErrorMessage.RequiredGivenName, "Please enter your first name"); } }
         public static string RequiredFamilyName { get { return Localize(ErrorMessage.RequiredFamilyName, "Please enter your surname"); } }
@@ -212,8 +216,10 @@ namespace Instatus.Web
         public static string RequiredFriendEmailAddress { get { return Localize(ErrorMessage.RequiredFriendEmailAddress, "Please enter a valid email address for your friend"); } }
         public static string DuplicateSubscription { get { return Localize(ErrorMessage.DuplicateSubscription, "You have already subscribed"); } }
         public static string DuplicateUser { get { return Localize(ErrorMessage.DuplicateUser, "You have already registered"); } }
+        public static string DuplicateEntry { get { return Localize(ErrorMessage.DuplicateEntry, "Sorry. You have already entered."); } }
         public static string VerificationTokenRejected { get { return Localize(ErrorMessage.VerificationTokenRejected, "The verification token has been rejected"); } }
         public static string AcceptTerms { get { return Localize(ErrorMessage.AcceptTerms, "Please confirm you have read and accept the terms and conditions"); } }
+        public static string OfferExpired { get { return Localize(ErrorMessage.OfferExpired, "Sorry. The offer or competition has now closed."); } }
 
         public static string Localize(object phraseOrKey, string defaultPhrase = null, bool keyAsDefault = true)
         {

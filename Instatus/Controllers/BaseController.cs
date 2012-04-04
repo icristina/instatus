@@ -74,6 +74,11 @@ namespace Instatus.Controllers
             return RedirectToAction("Index", null);
         }
 
+        public ActionResult RedirectToController(string controllerName)
+        {
+            return RedirectToAction("Index", controllerName, null);
+        }
+
         public new ActionResult RedirectToAction(string actionName, object values = null)
         {
             var returnUrl = Request.Unvalidated(HtmlConstants.ReturnUrl); // fix to allow redirect to action from form that includes HTML
@@ -126,6 +131,13 @@ namespace Instatus.Controllers
             }
 
             return viewName.IsEmpty() ? base.View() : base.View(viewName);
+        }
+
+        [NonAction]
+        public ActionResult Error(object viewModel = null, string errorMessage = null)
+        {
+            ModelState.AddGenericError(errorMessage ?? WebPhrase.ErrorDescription);
+            return View(viewModel);
         }
 
         [NonAction]

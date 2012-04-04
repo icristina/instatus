@@ -8,12 +8,7 @@ using System.Web.Helpers;
 namespace Instatus
 {
     public static class ByteExtensions
-    {
-        public static Stream ToStream(this WebImage image)
-        {
-            return image.GetBytes().ToStream();
-        }
-        
+    {       
         public static Stream ToStream(this byte[] bytes) {
             return new MemoryStream(bytes);
         }
