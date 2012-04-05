@@ -83,6 +83,16 @@ namespace Instatus.Web
             return base.MemberwiseClone();
         }
 
+        public WebQuery PreviousPage()
+        {
+            return this.WithPageIndex(PageIndex - 1);
+        }
+
+        public WebQuery NextPage()
+        {
+            return this.WithPageIndex(PageIndex + 1);
+        }
+
         public WebQuery WithPageSize(int size)
         {
             var query = (WebQuery)this.Clone();
