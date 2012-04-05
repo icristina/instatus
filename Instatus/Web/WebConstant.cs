@@ -24,12 +24,13 @@ namespace Instatus.Web
             public const string Page = "Instatus_Web_WebRoute_Page";
             public const string Default = "Instatus_Web_WebRoute_Default";
             public const string AccountVerification = "Instatus_Web_WebRoute_AccountVerification";
-            public static string PagePrefix = "site";
         }
 
         public static class Slug
         {
             public const string Home = "home";
+            public const string Terms = "terms";
+            public const string Privacy = "privacy";
         }
 
         public static class ContentType
@@ -40,6 +41,7 @@ namespace Instatus.Web
         public static class ViewName
         {
             public const string Carousel = "Carousel";
+            public const string Page = "Page";
         }
     }
 }

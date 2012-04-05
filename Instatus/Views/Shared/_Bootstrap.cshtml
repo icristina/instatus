@@ -11,7 +11,7 @@
     @RenderSection("head", false)
     @Html.Parts(WebZone.Head)
 </head>
-<body@(Html.RouteDataAttributes())>
+<body@(Html.RouteDataAttributes())@(Html.FormattingAttributes())>
     <div class="application-canvas">
         <header role="banner" class="container">
             <div>

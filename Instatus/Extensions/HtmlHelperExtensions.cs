@@ -131,6 +131,16 @@ namespace Instatus
             return html.Attr(html.ViewContext.RouteData.ToDataAttributeDictionary());
         }
 
+        public static MvcHtmlString FormattingAttributes<T>(this HtmlHelper<T> html)
+        {
+            var webFormatting = html.ViewData.GetSingle<WebFormatting>();
+
+            if(webFormatting == null)
+                return null;
+
+            return html.Attr("class", webFormatting.ClassName);
+        }
+
         public static MvcHtmlString OptionalAttr<T>(this HtmlHelper<T> html, string attributeName, object value, bool condition)
         {
             if (!condition)

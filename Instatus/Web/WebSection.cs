@@ -62,13 +62,5 @@ namespace Instatus.Web
                 elements = value;
             }
         }
-
-        public bool IsRawHtml
-        {
-            get
-            {
-                return ViewName.IsEmpty() && Body.NonEmpty();
-            }
-        }
     }
 }

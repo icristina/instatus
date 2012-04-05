@@ -4,16 +4,24 @@
     @Html.Tag("h1", Model.Heading)
     @Html.Tag("h2", Model.Strapline)
     @Html.Content(Model.Body)  
+    <menu>
+        @for(var i = 0; i < Model.Links.Count; i++)
+        {
+            <a class="badge @Model.Links.ToPositionString(Model.Links[i], "active")" data-target="#carousel" data-to="@i">
+                @(i + 1)
+            </a>
+        }
+    </menu>
     <div class="carousel-inner">      
         @if (Model.Links.NonEmpty())
         {
             foreach (var link in Model.Links)
             {
-                <div class="item">
+                <div class="item @Model.Links.ToPositionString(link, "active")">
                     @if (WebMimeType.IsPhoto(link.ContentType))
                     {
                         <figure>
-                            <caption>@link.Title</caption>
+                            <figcaption>@link.Title</figcaption>
                             @Html.Content(link.Description)
                             @Html.Image(link.Uri, link.Title)
                         </figure>
@@ -33,4 +41,10 @@
 
 <script>
     $('#carousel').carousel();
+    $('body').on('click', '[data-to]', function() {
+        var button = $(this);
+        var target = $(button.data('target'))
+        var to = parseInt(button.data('to'));
+        target.carousel(index);
+    });
 </script>

@@ -64,11 +64,7 @@ namespace Instatus
 
         public static IHtmlString Part<T>(this HtmlHelper<T> html, WebPart part)
         {
-            if (part is WebMarkup)
-            {
-                return html.Raw(((WebMarkup)part).Body);
-            }
-            else if (part is WebStream)
+            if (part is WebStream)
             {
                 var stream = (WebStream)part;
 
@@ -125,6 +121,10 @@ namespace Instatus
                 var webSection = (WebSection)part;
 
                 return html.Partial(webSection.ViewName ?? "Section", webSection);
+            }
+            else if (part is WebMarkup)
+            {
+                return html.Raw(((WebMarkup)part).Body);
             }
 
             return null;

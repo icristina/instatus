@@ -128,30 +128,6 @@ namespace Instatus
                 .AddAreaDataTokens(areaName);
         }
 
-        public static Route MapPagesRoute(this RouteCollection routes, string prefix, string[] slugs, string controllerName = "Page", string actionName = "Details", string areaName = null, string ns = null)
-        {
-            return routes
-                .RemoveRoute(WebConstant.Route.Page)
-                .MapRouteLowercase(
-                    WebConstant.Route.Page,
-                    prefix + "/{slug}",
-                    new
-                    {
-                        controller = controllerName,
-                        action = actionName,
-                        slug = UrlParameter.Optional,
-                        area = areaName
-                    },
-                    new
-                    {
-                        slug = string.Join("|", slugs)
-                    },
-                    new string[] {
-                        ns ?? GetDefaultNamespace()    
-                    })
-                .AddAreaDataTokens(areaName);
-        }
-
         public static Route MapHubRoute(this RouteCollection routes, string hubName, string slug = null, string controllerName = "Page", string actionName = "Details", string areaName = null, string ns = null)
         {
             return routes
