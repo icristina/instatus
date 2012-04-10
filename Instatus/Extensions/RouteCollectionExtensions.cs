@@ -6,6 +6,7 @@ using System.Web.Routing;
 using System.Web.Mvc;
 using Instatus.Areas.Microsite;
 using Instatus.Web;
+using System.Reflection;
 
 namespace Instatus
 {
@@ -61,10 +62,6 @@ namespace Instatus
             return routes;
         }
 
-        private static string GetDefaultNamespace() {
-            return HttpContext.Current.ApplicationInstance.GetType().BaseType.Namespace + ".Controllers";
-        }
-
         public static Route MapHomeRoute(this RouteCollection routes, string controllerName = "Home", string actionName = "Index", string areaName = null, string ns = null)
         {
             return routes
@@ -84,7 +81,7 @@ namespace Instatus
                         action = actionName
                     },
                     new string[] {
-                        ns ?? GetDefaultNamespace()    
+                        ns  
                     })
                 .AddAreaDataTokens(areaName);
         }
@@ -104,7 +101,7 @@ namespace Instatus
                         area = areaName
                     },
                     new string[] {
-                        ns ?? GetDefaultNamespace()    
+                        ns   
                     })
                 .AddAreaDataTokens(areaName);
         }
@@ -123,7 +120,7 @@ namespace Instatus
                         area = areaName
                     },
                     new string[] {
-                        ns ?? GetDefaultNamespace()    
+                       ns
                     })
                 .AddAreaDataTokens(areaName);
         }
@@ -143,7 +140,7 @@ namespace Instatus
                         area = areaName
                     },
                     new string[] {
-                        ns ?? GetDefaultNamespace()    
+                        ns   
                     })
                 .AddAreaDataTokens(areaName);
         }
@@ -167,7 +164,7 @@ namespace Instatus
                         controller = new ExcludeConstraint(excludeControllerNames)
                     },
                     new string[] {
-                        ns ?? GetDefaultNamespace()    
+                        ns  
                     })
                 .AddAreaDataTokens(areaName);
         }
@@ -191,7 +188,7 @@ namespace Instatus
                         controller = controllerName
                     },
                     new string[] {
-                        ns ?? GetDefaultNamespace()    
+                        ns   
                     })
                 .AddAreaDataTokens(areaName);
         }
@@ -214,7 +211,7 @@ namespace Instatus
                     action = actionName
                 },
                 new string[] {
-                    ns ?? GetDefaultNamespace()    
+                    ns   
                 }
             ).AddAreaDataTokens(areaName);
         }
@@ -236,7 +233,7 @@ namespace Instatus
                     controller = controllerName
                 },
                 new string[] {
-                    ns ?? GetDefaultNamespace()    
+                    ns  
                 }
             ).AddAreaDataTokens(areaName);
         }
