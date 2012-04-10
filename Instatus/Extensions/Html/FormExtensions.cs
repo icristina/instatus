@@ -23,7 +23,7 @@ namespace Instatus
             var routeData = html.ViewContext.RouteData;
 
             var htmlAttributes = new Dictionary<string, object>()
-                .AddNonEmptyValue("id", id)
+                .AddNonEmptyValue("id", id ?? string.Format("{0}-{1}", routeData.ActionName().ToCamelCase(), routeData.ControllerName().ToCamelCase()))
                 .AddNonEmptyValue("class", className);
 
             if (multipart || html.ViewData.Model.GetCustomAttributeValue<AllowUploadAttribute, bool>(a => a.Allow))

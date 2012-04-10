@@ -8,9 +8,9 @@ namespace Instatus
 {
     public static class TagBuilderExtensions
     {
-        public static MvcHtmlString ToMvcHtmlString(this TagBuilder tagBuilder)
+        public static MvcHtmlString ToMvcHtmlString(this TagBuilder tagBuilder, TagRenderMode tagRenderMode = TagRenderMode.Normal)
         {
-            return new MvcHtmlString(tagBuilder.ToString(TagRenderMode.Normal));
+            return new MvcHtmlString(tagBuilder.ToString(tagRenderMode));
         }
 
         public static TagBuilder MergeDataAttribute(this TagBuilder tagBuilder, string key, object value)

@@ -51,9 +51,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework, Version=4.3.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+    <Reference Include="EntityFramework, Version=4.3.1.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Users\andrew.booth\Documents\Visual Studio 2010\Projects\MvcApplication6\packages\EntityFramework.4.3.0\lib\net40\EntityFramework.dll</HintPath>
+      <HintPath>..\..\..\..\Visual Studio 11\Projects\PalmersCelebratingOriginality\packages\EntityFramework.4.3.1\lib\net40\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
@@ -392,7 +392,7 @@
     <Compile Include="Web\WebView.cs" />
     <Compile Include="Web\RedirectModule.cs" />
     <Compile Include="Widgets\BrandingWidget.cs" />
-    <Compile Include="Widgets\ThemeWidget.cs" />
+    <Compile Include="Widgets\TagWidget.cs" />
     <Compile Include="Widgets\JsApiWidget.cs" />
     <Compile Include="Widgets\NavigationWidget.cs" />
   </ItemGroup>
@@ -507,6 +507,7 @@
     <EmbeddedResource Include="Views\Shared\EditorTemplates\ImageUrl.cshtml" />
     <EmbeddedResource Include="Views\Shared\EditorTemplates\File.cshtml" />
     <EmbeddedResource Include="Views\Shared\Carousel.cshtml" />
+    <EmbeddedResource Include="Views\Shared\EditorTemplates\MultilineText.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup>

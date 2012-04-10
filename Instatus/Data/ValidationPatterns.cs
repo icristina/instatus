@@ -9,5 +9,6 @@ namespace Instatus.Data
     {
         public const string EmailAddress = @"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$";
         public const string Slug = @"^[a-z0-9-]+$";
+        public const string RealName = @"^[A-Za-z-\s]+$";
     }
 }
