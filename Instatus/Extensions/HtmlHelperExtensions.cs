@@ -57,6 +57,18 @@ namespace Instatus
             return new MvcHtmlString(sb.ToString());
         }
 
+        public static MvcHtmlString Stylesheets<T>(this HtmlHelper<T> html, params string[] stylesheets)
+        {
+            var sb = new StringBuilder();
+
+            foreach (var stylesheet in stylesheets)
+            {
+                sb.Append(html.Stylesheet(stylesheet.ToString()));
+            }
+
+            return new MvcHtmlString(sb.ToString());
+        }
+
         public static MvcHtmlString Stylesheet<T>(this HtmlHelper<T> html, string stylesheet, string rel = "stylesheet")
         {
             var urlHelper = new UrlHelper(html.ViewContext.RequestContext);
@@ -65,7 +77,7 @@ namespace Instatus
             tag.MergeAttribute("href", stylesheet.IsAbsoluteUri() ? stylesheet : urlHelper.Relative("~/Content/" + stylesheet));
             tag.MergeAttribute("rel", rel);
             
-            return new MvcHtmlString(tag.ToString());
+            return new MvcHtmlString(tag.ToString(TagRenderMode.SelfClosing));
         }
 
         public static MvcHtmlString Link<T>(this HtmlHelper<T> html, string rel, string href)

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Instatus.Data;
+using Instatus.Web;
 
 namespace Instatus
 {
@@ -30,6 +31,14 @@ namespace Instatus
                     from error in modelState.Value.Errors
                     where !string.IsNullOrEmpty(error.ErrorMessage)
                     select error.ErrorMessage).FirstOrDefault(); // first error message
+        }
+
+        public static IContentItem GetContentItem(this ViewDataDictionary viewDataDictionary)
+        {
+            if (viewDataDictionary.Model != null && viewDataDictionary.Model is IContentItem)
+                return (IContentItem)viewDataDictionary.Model;
+
+            return viewDataDictionary.GetSingle<WebContentItem>();
         }
     }
 }

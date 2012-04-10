@@ -127,6 +127,7 @@
     <Compile Include="Areas\Google\Google.cs" />
     <Compile Include="Areas\Microsite\Controllers\PageController.cs" />
     <Compile Include="Areas\Moderator\Controllers\ActivityController.cs" />
+    <Compile Include="Areas\Moderator\Controllers\PostController.cs" />
     <Compile Include="Areas\Moderator\Controllers\NotificationController.cs" />
     <Compile Include="Areas\Developer\Controllers\DomainController.cs" />
     <Compile Include="Areas\Developer\Controllers\CredentialController.cs" />
@@ -134,6 +135,7 @@
     <Compile Include="Areas\Developer\Controllers\UserController.cs" />
     <Compile Include="Areas\Editor\Controllers\TagController.cs" />
     <Compile Include="Areas\Moderator\ModeratorAreaRegistration.cs" />
+    <Compile Include="Areas\Twitter\Bootstrap.cs" />
     <Compile Include="Areas\Twitter\Twitter.cs" />
     <Compile Include="Areas\Typekit\TypekitAreaRegistration.cs" />
     <Compile Include="Areas\Facebook\Controllers\FacebookController.cs" />
@@ -247,6 +249,7 @@
     <Compile Include="Web\WebCache.cs" />
     <Compile Include="Web\WebCategory.cs" />
     <Compile Include="Web\WebConstant.cs" />
+    <Compile Include="Web\WebContentItem.cs" />
     <Compile Include="Web\WebDescriptorAttribute.cs" />
     <Compile Include="Web\WebElement.cs" />
     <Compile Include="Web\WebFeed.cs" />
@@ -255,6 +258,7 @@
     <Compile Include="Web\WebImaging.cs" />
     <Compile Include="Web\WebMarkup.cs" />
     <Compile Include="Web\WebMock.cs" />
+    <Compile Include="Web\WebPartsAttribute.cs" />
     <Compile Include="Web\WebStep.cs" />
     <Compile Include="Web\DbResourceReader.cs" />
     <Compile Include="Web\LowercaseRoute.cs" />

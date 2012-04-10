@@ -5,54 +5,74 @@
     @Html.Title()
     @Html.Viewport()
     @Html.MetaTags()
-    @Html.Stylesheet("bootstrap.css")
-    @Html.Stylesheet("bootstrap-responsive.css")
-    @Html.Scripts("modernizr.js", "jquery.js", "respond.js", "bootstrap.js")
+    @Html.Stylesheets(Instatus.Areas.Twitter.Bootstrap.Stylesheets.ToArray())
+    @Html.Scripts(Instatus.Areas.Twitter.Bootstrap.Scripts.ToArray())
     @RenderSection("head", false)
     @Html.Parts(WebZone.Head)
 </head>
-<body@(Html.RouteDataAttributes())@(Html.FormattingAttributes())>
-    <div class="application-canvas">
-        <header role="banner" class="container">
-            <div>
-                @RenderSection("banner", false)
-                @Html.Parts(WebZone.Banner)                
-            </div>
-        </header>
-        <nav role="navigation" class="container">
-            <div>
-                @RenderSection("navigation", false)
-                @Html.Parts(WebZone.Navigation)        
-            </div>
-        </nav>    
-        <section role="main" class="page-canvas container">
-            <header class="page-header">
-                @RenderSection("header", false)
-                @Html.Parts(WebZone.Header)                
-            </header>      
-            <figure>
-                @RenderSection("figure", false)
-                @Html.Parts(WebZone.Figure) 
-            </figure>
-            <menu>
-                @RenderSection("menu", false)
-                @Html.Parts(WebZone.Menu) 
-            </menu>
+<body@(Html.RouteDataAttributes()) @(Html.FormattingAttributes())>
+    <div class="application-container">        
+        @if(IsSectionDefined("banner") || Html.HasZone(WebZone.Banner)) 
+        {
+            <header role="banner" class="container">
+                <div>
+                    @RenderSection("banner", false)
+                    @Html.Parts(WebZone.Banner)                
+                </div>
+            </header>
+        }
+        @if (IsSectionDefined("navigation") || Html.HasZone(WebZone.Navigation))
+        {
+            <nav role="navigation" class="container">
+                <div>
+                    @RenderSection("navigation", false)
+                    @Html.Parts(WebZone.Navigation)        
+                </div>
+            </nav>    
+        }
+        <section role="main" class="page-container container">
+            @if (IsSectionDefined("header") || Html.HasZone(WebZone.Header))
+            {
+                <header class="page-header">
+                    @RenderSection("header", false)
+                    @Html.Parts(WebZone.Header)                
+                </header>  
+            }    
+            @if (IsSectionDefined("figure") || Html.HasZone(WebZone.Figure))
+            {
+                <figure>
+                    @RenderSection("figure", false)
+                    @Html.Parts(WebZone.Figure) 
+                </figure>
+            }
+            @if (IsSectionDefined("menu") || Html.HasZone(WebZone.Menu))
+            {            
+                <menu>
+                    @RenderSection("menu", false)
+                    @Html.Parts(WebZone.Menu) 
+                </menu>
+            }
             <div class="page-body">
                 @RenderBody()  
                 @Html.Parts(WebZone.Body)
-            </div>   
-            <aside>
-                @RenderSection("aside", false)
-                @Html.Parts(WebZone.Aside)
-            </aside>
+            </div> 
+            @if (IsSectionDefined("aside") || Html.HasZone(WebZone.Aside))
+            {  
+                <aside>
+                    @RenderSection("aside", false)
+                    @Html.Parts(WebZone.Aside)
+                </aside>
+            }
         </section>
-        <footer role="contentinfo" class="container">
-            <div>
-                @RenderSection("footer", false)
-                @Html.Parts(WebZone.Footer) 
-            </div>
-        </footer>
+        @if (IsSectionDefined("footer") || Html.HasZone(WebZone.Footer))
+        {
+            <footer role="contentinfo" class="container">
+                <div>
+                    @RenderSection("footer", false)
+                    @Html.Parts(WebZone.Footer) 
+                </div>
+            </footer>
+        }
     </div>
     @RenderSection("scripts", false)
     @Html.Parts(WebZone.Scripts)

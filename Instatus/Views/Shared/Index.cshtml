@@ -107,6 +107,10 @@
         {
             <col class="slug" />
         }
+        @if (Model.Columns.Contains("Picture"))
+        {
+            <col class="picture" />
+        }        
         <col class="description" />
         <col class="icon" />
         <col class="actions" />
@@ -121,6 +125,10 @@
             {
                 <th>@WebPhrase.Slug</th>
             }
+            @if (Model.Columns.Contains("Picture"))
+            {
+                <th>@WebPhrase.Picture</th>
+            }            
             <th>@WebPhrase.Description</th>
             <th></th>
             <th>@WebPhrase.Actions</th>
@@ -146,11 +154,17 @@
                         @entry.Slug                  
                     </td>
                 }
+                @if (Model.Columns.Contains("Picture"))
+                {
+                    <td>
+                        @Html.Image(entry.Picture as string, className: "thumbnail", size: WebSize.Thumb)               
+                    </td>
+                }                
                 <td>
-                    @if ((entry is WebEntry || entry is WebLink) && entry.Picture != null)
+                    @if (((entry is WebEntry || entry is WebLink) && entry.Picture != null))
                     {
                         @Html.Image(entry.Picture as string, className: "thumbnail")
-                    }
+                    }              
                     else
                     {
                         @Html.Raw(row.ToString())

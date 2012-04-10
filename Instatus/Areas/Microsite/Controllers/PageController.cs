@@ -15,6 +15,7 @@ namespace Instatus.Areas.Microsite.Controllers
     [Export]
     [PartCreationPolicy(CreationPolicy.NonShared)]
     [WebDescriptor(Scope = WebConstant.Scope.Public)]
+    [WebParts]
     public class PageController : BaseController
     {
         private IPageContext pageContext;

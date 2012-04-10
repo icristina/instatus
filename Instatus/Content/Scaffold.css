@@ -58,6 +58,11 @@ form span.controls
     overflow-y: scroll;
 }
 
+.actions {
+    width: 20%;
+    white-space: nowrap;
+}
+
 @media (min-width: 480px)  
 {   
     textarea, textarea.input-xlarge

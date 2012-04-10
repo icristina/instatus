@@ -13,48 +13,19 @@ namespace Instatus
 {
     public static class WebPartExtensions
     {
+        public static bool HasZone<T>(this HtmlHelper<T> html, WebZone zone)
+        {
+            var contentItem = html.ViewData.GetContentItem();
+
+            return contentItem != null && contentItem.Document != null && contentItem.Document.Parts.Any(p => p.Zone == zone);
+        }
+        
         public static IHtmlString Parts<T>(this HtmlHelper<T> html, WebZone zoneName = WebZone.Body)
         {
-            var viewModel = html.ViewData.Model;
-            var routeData = html.ViewContext.RouteData;
-            var parts = new List<WebPart>();
-
-            if (viewModel is IContentItem)
-            {
-                var contentItem = (IContentItem)viewModel;
-
-                if (contentItem.Document != null)
-                    parts.AddRange(contentItem.Document.Parts);
-            }
-
-            // include WebParts that are unscoped or scope matches routeData parameter
-            var scope = new List<string>();
-
-            if (viewModel != null)
-            {
-                scope.Add(html.ViewData.Model.GetType().Name);
-            }
-
-            if (routeData != null)
-            {
-                scope.Add(routeData.ControllerName());
-                scope.Add(routeData.ActionName());
-                scope.Add(routeData.AreaName());
-                scope.Add(routeData.ToUniqueId());
-            }
-
-            var controllerScope = html.ViewContext.Controller.GetCustomAttributeValue<WebDescriptorAttribute, string>(a => a.Scope);
-
-            if (controllerScope.NonEmpty())
-            {
-                scope.Add(controllerScope);
-            }
-
-            parts.AddRange(WebPart.Catalog.Where(p => p.Scope.IsEmpty() || scope.Intersect(p.Scope.ToList(' '), StringComparer.OrdinalIgnoreCase).Any()));
-
             var sb = new StringBuilder();
+            var contentItem = html.ViewData.Model as IContentItem ?? html.ViewData.GetSingle<WebContentItem>();
 
-            foreach (var part in parts.Where(p => p.Zone == zoneName))
+            foreach (var part in contentItem.Document.Parts.Where(p => p.Zone == zoneName))
             {
                 sb.Append(html.Part(part).ToString());
             }

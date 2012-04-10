@@ -74,6 +74,7 @@ namespace Instatus.Web
             Mode,
             Tags,
             Slug,
+            Picture,
             // phrases
             LogOnErrorDescription,
             ErrorDescription,
@@ -154,6 +155,7 @@ namespace Instatus.Web
         public static string Delete { get { return Localize(Common.Delete, "Delete"); } }
         public static string Id { get { return Localize(Common.Id, "Id"); } }
         public static string Slug { get { return Localize(Common.Slug, "Slug"); } }
+        public static string Picture { get { return Localize(Common.Picture, "Picture"); } }
         public static string Description { get { return Localize(Common.Description, "Description"); } }
         public static string Actions { get { return Localize(Common.Actions, "Actions"); } }
         public static string All { get { return Localize(Common.All, "All"); } }
