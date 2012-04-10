@@ -10,11 +10,26 @@ using Instatus;
 
 namespace Instatus.Widgets
 {
-    public abstract class BrandingWidget : WebPartial
+    public class HtmlHelperWidget : WebPartial
     {
+        private Func<HtmlHelper<WebPart>, IHtmlString> func;
+        
         public override object GetViewModel(WebPartialContext context)
         {
-            return context.Html.ImageLink("Logo", "~/Content/logo.png", "Index", "Home", "brand");
+            return func(context.Html);
+        }
+
+        public HtmlHelperWidget(Func<HtmlHelper<WebPart>, IHtmlString> func)
+        {
+            this.func = func;
+        }
+
+        public static HtmlHelperWidget Logo()
+        {
+            return new HtmlHelperWidget(html => html.ImageLink("Logo", "~/Content/logo.png", "Index", "Home", "brand"))
+            {
+                Zone = WebZone.Banner
+            };
         }
     }
 }

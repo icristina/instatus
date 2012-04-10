@@ -27,6 +27,9 @@ namespace Instatus.Widgets
                     credential = applicationContext.GetApplicationCredential(provider);
                 }
 
+                if (credential == null)
+                    return null;
+
                 string inlineData = string.Empty;
                 object settings = Settings(context.Url, credential);
 
