@@ -21,8 +21,10 @@ namespace Instatus.Web
         {
             // app settings
             ConfigurationManager.AppSettings["webpages:Version"] = "1.0.0.0";
-            ConfigurationManager.AppSettings["ClientValidationEnabled"] = "false";
-            ConfigurationManager.AppSettings["UnobtrusiveJavaScriptEnabled"] = "false";            
+
+            // client validation
+            HtmlHelper.ClientValidationEnabled = false;
+            HtmlHelper.UnobtrusiveJavaScriptEnabled = false;
             
             // model metadata provider
             ModelMetadataProviders.Current = new ExtendedModelMetadataProvider();

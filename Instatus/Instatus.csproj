@@ -57,6 +57,9 @@
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\InstatusWebTests\packages\Newtonsoft.Json.4.5.2\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Data.Entity.Design" />
@@ -424,7 +427,7 @@
     <EmbeddedResource Include="Scripts\Instatus.js" />
     <EmbeddedResource Include="Scripts\Bootstrap.js" />
     <EmbeddedResource Include="Scripts\Masonry.js" />
-    <EmbeddedResource Include="Scripts\JqueryValidation.js" />
+    <EmbeddedResource Include="Scripts\Jquery-validation.js" />
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
