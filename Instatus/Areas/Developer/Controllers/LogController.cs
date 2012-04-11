@@ -12,11 +12,14 @@ using System.IO;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.ComponentModel;
+using System.ComponentModel.Composition;
 
 namespace Instatus.Areas.Developer.Controllers
 {   
     [Authorize(Roles = "Developer")]
     [Description("Logs")]
+    [Export]
+    [PartCreationPolicy(CreationPolicy.NonShared)]
     public class LogController : ScaffoldController<BaseViewModel<ITimestamp>, ITimestamp, ILoggingService, int>
     {
         public override IEnumerable<ITimestamp> Query(IEnumerable<ITimestamp> set, WebQuery query)

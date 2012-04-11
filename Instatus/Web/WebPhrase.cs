@@ -119,6 +119,7 @@ namespace Instatus.Web
             public const string RequiredFriendEmailAddress = "RequiredFriendEmailAddress";
             public const string RequiredFriendName = "RequiredFriendName";
             public const string RequiredApproval = "RequiredApproval";
+            public const string RequiredDescription = "RequiredDescription";
             public const string DuplicateUser = "DuplicateUser";
             public const string DuplicateSubscription = "DuplicateSubscription";
             public const string DuplicateEntry = "DuplicateEntry";
@@ -222,6 +223,7 @@ namespace Instatus.Web
         public static string RequiredFriendEmailAddress { get { return Localize(ErrorMessage.RequiredFriendEmailAddress, "Please enter a valid email address for your friend"); } }
         public static string RequiredFriendName { get { return Localize(ErrorMessage.RequiredFriendName, "Please enter a valid friend name"); } }
         public static string RequiredApproval { get { return Localize(ErrorMessage.RequiredApproval, "Please obtain approval before submission"); } }
+        public static string RequiredDescription { get { return Localize(ErrorMessage.RequiredDescription, "Please enter a description"); } }
         public static string DuplicateSubscription { get { return Localize(ErrorMessage.DuplicateSubscription, "You have already subscribed"); } }
         public static string DuplicateUser { get { return Localize(ErrorMessage.DuplicateUser, "You have already registered"); } }
         public static string DuplicateEntry { get { return Localize(ErrorMessage.DuplicateEntry, "Sorry. You have already entered."); } }

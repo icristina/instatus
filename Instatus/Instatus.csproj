@@ -396,6 +396,7 @@
     <Compile Include="Web\WebView.cs" />
     <Compile Include="Web\RedirectModule.cs" />
     <Compile Include="Widgets\BrandingWidget.cs" />
+    <Compile Include="Widgets\JsDataWidget.cs" />
     <Compile Include="Widgets\TagWidget.cs" />
     <Compile Include="Widgets\JsApiWidget.cs" />
     <Compile Include="Widgets\NavigationWidget.cs" />

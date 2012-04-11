@@ -18,7 +18,8 @@ namespace Instatus
             string actionName = null, 
             string controllerName = null, 
             string className = "form-horizontal", 
-            bool multipart = false)
+            bool multipart = false,
+            bool novalidate = false)
         {
             var routeData = html.ViewContext.RouteData;
 
@@ -28,6 +29,9 @@ namespace Instatus
 
             if (multipart || html.ViewData.Model.GetCustomAttributeValue<AllowUploadAttribute, bool>(a => a.Allow))
                 htmlAttributes.Add("enctype", "multipart/form-data");
+
+            if (novalidate)
+                htmlAttributes.Add("novalidate", "novalidate");
 
             var routeValueDictionary = new RouteValueDictionary(routeValues);
 
