@@ -42,16 +42,19 @@ namespace Instatus
                 bitmap.SetResolution(FixedResolution, FixedResolution);
             }
 
-            // offset stops 1px border on top and left
-            int offset = 2;
-
             using (Graphics graphic = Graphics.FromImage(bitmap).AsHighQuality())
             {
                 if (indexed)
                 {
                     graphic.FillRectangle(Brushes.White, 0, 0, width, height);
                 }
-                graphic.DrawImage(image, - offset, - offset, width + offset, height + offset);
+
+                // offset stops 1px border on top and left
+                int widthOffset = 1;
+                var aspectRatio = (double)width / (double)height;
+                var heightOffset = (int)Math.Round((double)widthOffset / aspectRatio);
+
+                graphic.DrawImage(image, - widthOffset, - widthOffset, width + widthOffset, height + heightOffset);
             }
 
             return bitmap;
@@ -167,15 +170,19 @@ namespace Instatus
             double imageAspectRatio = (double)image.Width / (double)image.Height;
             double cropAspectRatio = (double)width / (double)height;
 
-            if (cropAspectRatio < imageAspectRatio) // crop width, keep height fixed
+            if (imageAspectRatio == cropAspectRatio)
             {
-                offset = (image.Height - height) / 2;
-                return image.Crop(0, offset, 0, offset);
+                return image;
             }
-            else // crop height
+            if (cropAspectRatio > imageAspectRatio)
             {
-                offset = (image.Width - width) / 2;
+                offset = (image.Height - (height * (image.Width / width))) / 2;
                 return image.Crop(offset, 0, offset, 0);
+            }
+            else
+            {
+                offset = (image.Width - (width * (image.Height / height))) / 2;
+                return image.Crop(0, offset, 0, offset);
             }
         }
     }

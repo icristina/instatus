@@ -104,6 +104,19 @@ namespace Instatus.Areas.Editor.Controllers
                 new string[] { "List", "Alphabetical" });
         }
 
+        [Authorize(Roles = "Developer")]
+        public ActionResult RegenerateThumbnails()
+        {
+            var images = blobService.Query().Where(f => WebMimeType.IsRelativePathPhoto(f));
+
+            foreach (var image in images)
+            {
+                blobService.GenerateSize(image, WebSize.Thumb, null, true);
+            }
+
+            return Content("Complete");
+        }
+
         [ImportingConstructor]
         public FileController(IBlobService blobService)
         {
