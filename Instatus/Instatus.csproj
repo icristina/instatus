@@ -241,6 +241,7 @@
     <Compile Include="Web\IVirtualPathRewriter.cs" />
     <Compile Include="Web\IWebVocabulary.cs" />
     <Compile Include="Web\IWebView.cs" />
+    <Compile Include="Web\JsModelClientValidationRule.cs" />
     <Compile Include="Web\MvcConfigurationModule.cs" />
     <Compile Include="Web\SchemaOrgVocabulary.cs" />
     <Compile Include="Web\SyndicationFeedResult.cs" />

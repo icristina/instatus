@@ -8,6 +8,7 @@ using Instatus;
 using System.Web.Helpers;
 using System.Dynamic;
 using Newtonsoft.Json;
+using Instatus.Web;
 
 namespace Instatus
 {
@@ -98,34 +99,45 @@ namespace Instatus
 
             clientRules.messages = new ExpandoObject();
 
+            var clientRulesDictionary = clientRules as IDictionary<String, object>;
+            var errorMessagesDictionary = clientRules.messages as IDictionary<String, object>;
+
             foreach (var validator in html.ViewData.ModelMetadata.GetValidators(html.ViewContext)
                                         .SelectMany(v => v.GetClientValidationRules()))
             {
                 var parameters = validator.ValidationParameters;
+                var errorMessage = validator.ErrorMessage;
 
-                if (validator is ModelClientValidationRequiredRule)
+                if (validator is JsModelClientValidationRule)
+                {
+                    var rule = (JsModelClientValidationRule)validator;
+
+                    clientRulesDictionary[rule.RuleName] = rule.Test;
+                    errorMessagesDictionary[rule.RuleName] = errorMessage;
+                }
+                else if (validator is ModelClientValidationRequiredRule)
                 {
                     clientRules.required = true;
-                    clientRules.messages.required = validator.ErrorMessage;
+                    clientRules.messages.required = errorMessage;
                 }
                 else if (validator is ModelClientValidationRegexRule)
                 {
                     clientRules.pattern = parameters["pattern"];
-                    clientRules.messages.pattern = validator.ErrorMessage;
+                    clientRules.messages.pattern = errorMessage;
                 }
                 else if (validator is ModelClientValidationRangeRule)
                 {
                     clientRules.min = parameters["min"];
                     clientRules.max = parameters["max"];
-                    clientRules.messages.min = validator.ErrorMessage;
-                    clientRules.messages.max = validator.ErrorMessage;
+                    clientRules.messages.min = errorMessage;
+                    clientRules.messages.max = errorMessage;
                 }
                 else if (validator is ModelClientValidationStringLengthRule)
                 {
                     clientRules.minlength = parameters["minlength"];
                     clientRules.maxlength = parameters["maxlength"];
-                    clientRules.messages.minlength = validator.ErrorMessage;
-                    clientRules.messages.minlength = validator.ErrorMessage;
+                    clientRules.messages.minlength = errorMessage;
+                    clientRules.messages.minlength = errorMessage;
                 }
             }
 
