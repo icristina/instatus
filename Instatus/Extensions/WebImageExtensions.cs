@@ -149,7 +149,7 @@ namespace Instatus
 
         public static Image Square(this Image image, int size)
         {
-            using (var croppedImage = image.AspectRatio(size, size))
+            using (var croppedImage = image.AspectRatio(1.0))
             {
                 return croppedImage.Resize(size, size);
             }
@@ -157,31 +157,30 @@ namespace Instatus
 
         public static Image Mask(this Image image, int width, int height)
         {
-            using (var croppedImage = image.AspectRatio(width, height))
+            using (var croppedImage = image.AspectRatio((double)width / (double)height))
             {
                 return croppedImage.Resize(width, height);
             }
         }
 
-        public static Image AspectRatio(this Image image, int width, int height)
+        public static Image AspectRatio(this Image image, double aspectRatio)
         {
             int offset;
 
             double imageAspectRatio = (double)image.Width / (double)image.Height;
-            double cropAspectRatio = (double)width / (double)height;
 
-            if (imageAspectRatio == cropAspectRatio)
+            if (imageAspectRatio == aspectRatio)
             {
                 return image;
-            }
-            if (cropAspectRatio > imageAspectRatio)
+            } 
+            else if (aspectRatio > imageAspectRatio)
             {
-                offset = (image.Height - (height * (image.Width / width))) / 2;
+                offset = (int)Math.Round(((double)image.Height - ((double)image.Width / aspectRatio)) / 2.0);
                 return image.Crop(offset, 0, offset, 0);
             }
             else
             {
-                offset = (image.Width - (width * (image.Height / height))) / 2;
+                offset = (int)Math.Round(((double)image.Width - ((double)image.Height * aspectRatio)) / 2.0);
                 return image.Crop(0, offset, 0, offset);
             }
         }
