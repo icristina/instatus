@@ -9,6 +9,7 @@ using System.Web.Helpers;
 using System.Dynamic;
 using Newtonsoft.Json;
 using Instatus.Web;
+using System.Web.Mvc.Html;
 
 namespace Instatus
 {
@@ -87,7 +88,9 @@ namespace Instatus
 
         public static MvcHtmlString ValidationRules<T>(this HtmlHelper<T> html, string clientId = null)
         {
-            if (!HttpContext.Current.Request.Browser.Browser.Match("IE"))
+            var formContext = html.ViewContext.FormContext as JsFormContext;
+
+            if (formContext == null || !formContext.EnableJavascriptValidation)
                 return null;
 
             var modelMetadata = html.ViewData.ModelMetadata;
@@ -96,11 +99,7 @@ namespace Instatus
                 clientId = html.ViewData.TemplateInfo.HtmlFieldPrefix;
             
             dynamic clientRules = new ExpandoObject();
-
-            clientRules.messages = new ExpandoObject();
-
-            var clientRulesDictionary = clientRules as IDictionary<String, object>;
-            var errorMessagesDictionary = clientRules.messages as IDictionary<String, object>;
+            dynamic clientMessages = new ExpandoObject();
 
             foreach (var validator in html.ViewData.ModelMetadata.GetValidators(html.ViewContext)
                                         .SelectMany(v => v.GetClientValidationRules()))
@@ -112,32 +111,32 @@ namespace Instatus
                 {
                     var rule = (JsModelClientValidationRule)validator;
 
-                    clientRulesDictionary[rule.RuleName] = rule.Test;
-                    errorMessagesDictionary[rule.RuleName] = errorMessage;
+                    clientRules[rule.RuleName] = rule.Test;
+                    clientMessages[rule.RuleName] = errorMessage;
                 }
                 else if (validator is ModelClientValidationRequiredRule)
                 {
                     clientRules.required = true;
-                    clientRules.messages.required = errorMessage;
+                    clientMessages.required = errorMessage;
                 }
                 else if (validator is ModelClientValidationRegexRule)
                 {
                     clientRules.pattern = parameters["pattern"];
-                    clientRules.messages.pattern = errorMessage;
+                    clientMessages.pattern = errorMessage;
                 }
                 else if (validator is ModelClientValidationRangeRule)
                 {
                     clientRules.min = parameters["min"];
                     clientRules.max = parameters["max"];
-                    clientRules.messages.min = errorMessage;
-                    clientRules.messages.max = errorMessage;
+                    clientMessages.min = errorMessage;
+                    clientMessages.max = errorMessage;
                 }
                 else if (validator is ModelClientValidationStringLengthRule)
                 {
                     clientRules.minlength = parameters["minlength"];
                     clientRules.maxlength = parameters["maxlength"];
-                    clientRules.messages.minlength = errorMessage;
-                    clientRules.messages.minlength = errorMessage;
+                    clientMessages.minlength = errorMessage;
+                    clientMessages.minlength = errorMessage;
                 }
             }
 
@@ -158,24 +157,10 @@ namespace Instatus
                 clientRules.number = true;
             }
 
-            return new MvcHtmlString(string.Format("<script>$(function() {{ $('#{0}').rules('add', {1}); }});</script>", clientId, JsonConvert.SerializeObject(clientRules)));
-        }
+            formContext.Rules.Add(clientId, clientRules);
+            formContext.Messages.Add(clientId, clientMessages);
 
-        public static MvcHtmlString ValidateOnSubmit<T>(this HtmlHelper<T> html, string clientId = null)
-        {
-            if (!HttpContext.Current.Request.Browser.Browser.Match("IE"))
-                return null;            
-            
-            var routeData = html.ViewContext.RouteData;
-
-            if (clientId.IsEmpty())
-                clientId = string.Format("{0}-{1}", routeData.ActionName().ToCamelCase(), routeData.ControllerName().ToCamelCase());
-
-            var patternValidator = @"jQuery.validator.addMethod('pattern', function(value, element, param) {
-                    return this.optional(element) || new RegExp(param, 'i').test(value);
-                        }, 'Invalid format.');";
-
-            return new MvcHtmlString(string.Format("<script>{0} $('#{1}').validate();</script>", patternValidator, clientId));
+            return null;
         }
     }
 }
