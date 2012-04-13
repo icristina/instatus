@@ -37,7 +37,7 @@ namespace Instatus.Services
             if (Path.IsPathRooted(slug))
                 return slug;
 
-            if (slug.StartsWith(VirtualPath))
+            if (slug.StartsWith(VirtualPath, StringComparison.OrdinalIgnoreCase))
                 slug = slug.SubstringAfter(VirtualPath);
 
             if (Path.HasExtension(slug) || contentType.IsEmpty())
