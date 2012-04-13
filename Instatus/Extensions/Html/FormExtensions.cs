@@ -77,8 +77,16 @@ namespace Instatus
             {
                 var patternValidator = @"jQuery.validator.addMethod('pattern', function(value, element, param) {
                         return this.optional(element) || new RegExp(param, 'i').test(value);
-                            }, 'Invalid format.');";
+                    }, 'Invalid format.');";
 
+                var setDefaults = @"jQuery.validator.setDefaults({
+                        errorElement: 'span',
+                        errorPlacement: function(error, element) {
+                            error
+                                .insertAfter(element)
+                                .addClass('alert alert-error');
+                        }
+                    });";
 
                 var validateOptions = new
                 {
@@ -86,7 +94,7 @@ namespace Instatus
                     messages = formContext.Messages
                 };
 
-                viewContext.Writer.WriteLine("<script>{0} $('#{1}').validate({2});</script>", patternValidator, clientId, JsonConvert.SerializeObject(validateOptions));
+                viewContext.Writer.WriteLine("<script>{0} {1} $('#{2}').validate({3});</script>", setDefaults, patternValidator, clientId, JsonConvert.SerializeObject(validateOptions));
             }
         }
     }

@@ -63,6 +63,11 @@ form span.controls
     white-space: nowrap;
 }
 
+.alert-error {
+    margin-left: 1.0em;
+    display: inline-block;
+}
+
 @media (min-width: 480px)  
 {   
     textarea, textarea.input-xlarge

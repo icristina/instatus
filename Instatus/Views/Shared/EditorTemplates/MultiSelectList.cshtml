@@ -7,13 +7,17 @@
     var htmlFieldName = ViewData.ModelMetadata.AdditionalValues.ContainsKey("ColumnName") ?
         ViewData.ModelMetadata.AdditionalValues["ColumnName"].ToString() : "Selected" + ViewData.ModelMetadata.PropertyName;
 
-    var htmlFieldNameParts = new string[] { htmlFieldPrefix, htmlFieldName }.RemoveNullOrEmpty(); 
+    var htmlFieldNameParts = new string[] { htmlFieldPrefix, htmlFieldName }.RemoveNullOrEmpty();
+
+    var htmlFieldName = string.Join(".", htmlFieldNameParts);
+    
+    var validationAttributes = Html.ValidationAttributes(htmlFieldName);
 }
 
 <div class="checkbox-list">
     @foreach(var item in Model.OrderByDescending(m => m.Selected)) {
         <label class="checkbox">
-            <input type="checkbox" name="@(string.Join(".", htmlFieldNameParts))" value="@(item.Value ?? item.Text)"
+            <input type="checkbox" name="@htmlFieldName" value="@(item.Value ?? item.Text)"
                 @if(item.Selected) {
                     @:checked    
                 }

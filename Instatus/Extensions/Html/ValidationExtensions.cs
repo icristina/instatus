@@ -15,7 +15,7 @@ namespace Instatus
 {
     public static class ValidationExtensions
     {
-        public static IDictionary<string, object> ValidationAttributes<T>(this HtmlHelper<T> html)
+        public static IDictionary<string, object> ValidationAttributes<T>(this HtmlHelper<T> html, string clientId = null)
         {
             var modelMetadata = html.ViewData.ModelMetadata;
             var attr = new Dictionary<string, object>();
@@ -59,6 +59,8 @@ namespace Instatus
                 }
             }
 
+            ValidationRules(html, clientId);
+
             return attr;
         }
 
@@ -86,12 +88,12 @@ namespace Instatus
             return tagBuilder.ToMvcHtmlString();
         }
 
-        public static MvcHtmlString ValidationRules<T>(this HtmlHelper<T> html, string clientId = null)
+        private static void ValidationRules<T>(this HtmlHelper<T> html, string clientId = null)
         {
             var formContext = html.ViewContext.FormContext as JsFormContext;
 
             if (formContext == null || !formContext.EnableJavascriptValidation)
-                return null;
+                return;
 
             var modelMetadata = html.ViewData.ModelMetadata;
 
@@ -157,10 +159,11 @@ namespace Instatus
                 clientRules.number = true;
             }
 
-            formContext.Rules.Add(clientId, clientRules);
-            formContext.Messages.Add(clientId, clientMessages);
-
-            return null;
+            if ((clientRules as object).NonEmpty())
+                formContext.Rules.Add(clientId, clientRules);
+            
+            if ((clientMessages as object).NonEmpty())
+                formContext.Messages.Add(clientId, clientMessages);
         }
     }
 }
