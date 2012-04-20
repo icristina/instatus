@@ -13,4 +13,9 @@
     <copyright>Copyright 2012</copyright>
     <tags></tags>
   </metadata>
+  <files>
+    <file src="Content\mixins.less" target="content\Content" />
+    <file src="Content\normalize.css" target="content\Content" />
+    <file src="Views\Shared\_Bootstrap.cshtml" target="content\Views\Shared" />
+  </files>
 </package>

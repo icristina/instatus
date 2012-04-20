@@ -28,8 +28,9 @@ namespace Instatus.Web
             HtmlHelper.ClientValidationEnabled = false;
             HtmlHelper.UnobtrusiveJavaScriptEnabled = false;
 
-            // script bundles
-            BundleTable.Bundles.AddScripts("jquery", "jquery-1.7.2.min.js", "jquery.validate.min.js");       
+            // bundles
+            BundleTable.Bundles.AddScripts("bootstrap", "jquery-1.7.2.min.js", "jquery.validate.min.js", "bootstrap.min.js"); 
+            BundleTable.Bundles.AddTheme("bootstrap", "bootstrap.min.css", "bootstrap-responsive.min.css"); 
         }
 
         private static void PostApplicationStart()
