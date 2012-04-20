@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using System.Web.Optimization;
 using System.Web.Routing;
 using Autofac;
 using Autofac.Integration.Mvc;
@@ -26,10 +27,13 @@ namespace Instatus.Web
             // client validation
             HtmlHelper.ClientValidationEnabled = false;
             HtmlHelper.UnobtrusiveJavaScriptEnabled = false;
+
+            // script bundles
+            BundleTable.Bundles.AddScripts("jquery", "jquery-1.7.2.min.js", "jquery.validate.min.js");       
         }
 
         private static void PostApplicationStart()
-        {
+        {                      
             // dependency resolver
             if (Build != null)
             {

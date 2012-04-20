@@ -4,11 +4,33 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Optimization;
+using Instatus;
 
 namespace Instatus.Web
 {
     public static class BundleExtenions
     {
+        private static string MakeRelative(string path, string directory)
+        {
+            return path.StartsWith("~") ? path : "~/" + directory + "/" + path;
+        }
+        
+        public static BundleCollection AddScripts(this BundleCollection bundleCollection, string name, params string[] paths)
+        {
+            var scripts = new Bundle(
+                        "~/js/" + name,
+                        new JsMinify());
+
+            foreach (var path in paths)
+            {
+                scripts.AddFile(MakeRelative(path, "Scripts"), false);
+            }
+
+            bundleCollection.Add(scripts);
+
+            return bundleCollection;
+        }
+        
         public static BundleCollection AddTheme(this BundleCollection bundleCollection, string name, params string[] paths)
         {
             var styles = new Bundle(
@@ -18,9 +40,7 @@ namespace Instatus.Web
 
             foreach (var path in paths)
             {
-                var virtualPath = VirtualPathUtility.IsAppRelative(path) ? path : "~/Content/" + path;
-
-                styles.AddFile(virtualPath, false);
+                styles.AddFile(MakeRelative(path, "Content"), false);
             }
 
             bundleCollection.Add(styles);

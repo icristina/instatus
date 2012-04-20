@@ -32,6 +32,8 @@
     </SccAuxPath>
     <SccProvider>
     </SccProvider>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -58,7 +60,7 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\InstatusWebTests\packages\Newtonsoft.Json.4.5.2\lib\net40\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.4.5.3\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data.Entity" />
@@ -413,12 +415,10 @@
     <EmbeddedResource Include="Scripts\Modernizr.js" />
     <EmbeddedResource Include="Content\Scaffold.css" />
     <EmbeddedResource Include="Data\DropTables.sql" />
-    <Content Include="boilerplate.htm" />
     <EmbeddedResource Include="Content\Bootstrap.css" />
     <EmbeddedResource Include="Content\Bootstrap-responsive.css" />
     <EmbeddedResource Include="Content\Glyphicons-halflings-white.png" />
     <EmbeddedResource Include="Content\Glyphicons-halflings.png" />
-    <Content Include="Favicon.ico" />
     <EmbeddedResource Include="Scripts\Respond.js" />
     <EmbeddedResource Include="Scripts\Scaffold.js" />
     <EmbeddedResource Include="Scripts\Less.js" />
@@ -465,9 +465,9 @@
     <EmbeddedResource Include="Views\Shared\Navigation.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Web.config">
+    <None Include="Web.config">
       <SubType>Designer</SubType>
-    </Content>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Shared\Index.cshtml" />
@@ -501,7 +501,12 @@
     <EmbeddedResource Include="Areas\Developer\Views\Web.config" />
     <EmbeddedResource Include="Areas\Developer\Views\Dashboard\Index.cshtml" />
     <None Include="App.config" />
-    <None Include="packages.config" />
+    <None Include="Instatus.nuspec">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <EmbeddedResource Include="Views\Shared\DisplayTemplates\LinkList.cshtml" />
     <EmbeddedResource Include="Views\Shared\ValidationSummary.cshtml" />
     <EmbeddedResource Include="Views\Shared\Parameters.cshtml" />
@@ -536,4 +541,8 @@
     <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
   </Target>
   <ProjectExtensions />
+  <PropertyGroup>
+    <PostBuildEvent>"$(SolutionDir).nuget\NuGet.exe" pack "$(ProjectDir)Instatus.csproj" -OutputDirectory "$(SolutionDir).nuget"</PostBuildEvent>
+  </PropertyGroup>
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
 </Project>
