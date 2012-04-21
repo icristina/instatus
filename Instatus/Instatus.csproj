@@ -542,7 +542,7 @@
   </Target>
   <ProjectExtensions />
   <PropertyGroup>
-    <PostBuildEvent>"$(SolutionDir).nuget\NuGet.exe" pack "$(ProjectDir)Instatus.csproj" -OutputDirectory "$(SolutionDir).nuget"</PostBuildEvent>
+    <PostBuildEvent>"$(SolutionDir).nuget\NuGet.exe" pack "$(ProjectDir)\Instatus.csproj" -OutputDirectory "c:\NugetPackages"</PostBuildEvent>
   </PropertyGroup>
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
 </Project>

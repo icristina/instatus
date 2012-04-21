@@ -27,15 +27,11 @@ namespace Instatus.Web
             // client validation
             HtmlHelper.ClientValidationEnabled = false;
             HtmlHelper.UnobtrusiveJavaScriptEnabled = false;
-
-            // bundles
-            BundleTable.Bundles.AddScripts("bootstrap", "jquery-1.7.2.min.js", "jquery.validate.min.js", "bootstrap.min.js"); 
-            BundleTable.Bundles.AddTheme("bootstrap", "bootstrap.min.css", "bootstrap-responsive.min.css"); 
         }
 
         private static void PostApplicationStart()
         {                      
-            // dependency resolver
+            // autofac dependency resolver
             if (Build != null)
             {
                 var builder = new ContainerBuilder();
@@ -51,6 +47,10 @@ namespace Instatus.Web
                 "{controller}/{action}/{id}",
                 new { controller = "Home", action = "Index", id = "" }
             );
+
+            // bundles, cannot be added during PreApplicationStart
+            BundleTable.Bundles.AddScriptsBundle("bootstrap", "jquery-1.7.2.js", "jquery.validate.js", "bootstrap.js");
+            BundleTable.Bundles.AddStylesBundle("bootstrap", "bootstrap.css", "bootstrap-responsive.css"); 
         }
     }
 }

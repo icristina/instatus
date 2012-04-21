@@ -12,38 +12,44 @@ namespace Instatus.Web
     {
         private static string MakeRelative(string path, string directory)
         {
-            return path.StartsWith("~") ? path : "~/" + directory + "/" + path;
+            return path.StartsWith("~") ? path : directory + path;
         }
-        
-        public static BundleCollection AddScripts(this BundleCollection bundleCollection, string name, params string[] paths)
+
+        private static void AddFiles(Bundle bundle, string[] paths, string defaultDirectory)
         {
-            var scripts = new Bundle(
-                        "~/js/" + name,
-                        new JsMinify());
+            var bundleOrdering = new BundleFileSetOrdering(Guid.NewGuid().ToString());
 
             foreach (var path in paths)
             {
-                scripts.AddFile(MakeRelative(path, "Scripts"), false);
+                var virtualPath = MakeRelative(path, defaultDirectory);
+                
+                bundle.AddFile(virtualPath, false);
+                bundleOrdering.Files.Add(path);
             }
 
-            bundleCollection.Add(scripts);
+            BundleTable.Bundles.Add(bundle);
+            BundleTable.Bundles.FileSetOrderList.Add(bundleOrdering);
+        }
+
+        public static BundleCollection AddScriptsBundle(this BundleCollection bundleCollection, string name, params string[] paths)
+        {
+            var bundle = new Bundle(
+                        "~/js/" + name,
+                        new JsMinify());
+
+            AddFiles(bundle, paths, "~/Scripts/");
 
             return bundleCollection;
         }
         
-        public static BundleCollection AddTheme(this BundleCollection bundleCollection, string name, params string[] paths)
+        public static BundleCollection AddStylesBundle(this BundleCollection bundleCollection, string name, params string[] paths)
         {
-            var styles = new Bundle(
+            var bundle = new Bundle(
                         "~/css/" + name,
                         new LessTransform()
                         .Then(new CssMinify()));
 
-            foreach (var path in paths)
-            {
-                styles.AddFile(MakeRelative(path, "Content"), false);
-            }
-
-            bundleCollection.Add(styles);
+            AddFiles(bundle, paths, "~/Content/");
 
             return bundleCollection;
         }

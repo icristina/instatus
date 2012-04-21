@@ -12,7 +12,11 @@ namespace Instatus.Web
         public void Process(BundleContext context, BundleResponse response)
         {
             response.ContentType = "text/css";
-            response.Content = dotless.Core.Less.Parse(response.Content);
+            
+            var parsedContent = dotless.Core.Less.Parse(response.Content);
+
+            if (!parsedContent.IsEmpty())
+                response.Content = parsedContent;
         }
     }
 }
