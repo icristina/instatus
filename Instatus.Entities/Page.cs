@@ -20,17 +20,24 @@ namespace Instatus.Entities
         public string Name { get; set; }
         public string Description { get; set; }
         public string Picture { get; set; }
-        public double Priority { get; set; }
-        public Kind Kind { get; set; }
-        public Published Published { get; set; }
-        public Privacy Privacy { get; set; }
         public Source Source { get; set; }
         public Card Card { get; set; }
         public Location Location { get; set; }
         public Schedule Schedule { get; set; }
         public Availability Availability { get; set; }
         public User User { get; set; }
+        public Application Application { get; set; }
         public virtual ICollection<Tag> Tags { get; set; }
+        public virtual ICollection<Association> Associations { get; set; }
+#if NET45
+        public Kind Kind { get; set; }
+        public Published Published { get; set; }
+        public Privacy Privacy { get; set; }
+#else
+        public string Kind { get; set; }
+        public string Published { get; set; }
+        public string Privacy { get; set; }
+#endif
 
         public Page()
         {
@@ -61,9 +68,9 @@ namespace Instatus.Entities
     {
         Achievement,
         Album,
-        Application,
         Article,
         Brand,
+        Campaign,
         CaseStudy,
         Catalog,
         Event,
@@ -98,8 +105,12 @@ namespace Instatus.Entities
     [ComplexType]
     public class Source
     {
-        public Provider Provider { get; set; }
         public string Uri { get; set; }
+#if NET45
+        public Provider Provider { get; set; }
+#else
+        public string Provider { get; set; }
+#endif
     }
 
     [ComplexType]
@@ -114,13 +125,19 @@ namespace Instatus.Entities
     [ComplexType]
     public class Location
     {
+        public string Name { get; set; }
         public string FormattedAddress { get; set; }
         public string StreetAddress { get; set; }
         public string Locality { get; set; }
         public string Country { get; set; }
         public string PostalCode { get; set; }
-        public DbGeography Spatial { get; set; }
         public double ZoomLevel { get; set; }
+#if NET45
+        public DbGeography Spatial { get; set; }
+#else
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
+#endif
     }
 
     [ComplexType]

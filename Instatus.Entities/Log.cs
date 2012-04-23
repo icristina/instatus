@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace Instatus.Entities
 {
-    public class Tag
+    public class Log
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public virtual ICollection<Page> Pages { get; set; }
-        public Taxonomy Taxonomy { get; set; }
+        public string Uri { get; set; }
+        public string Message { get; set; }
     }
 }
