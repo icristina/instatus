@@ -10,10 +10,11 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using Instatus.Models;
+using Instatus.Web;
 
 namespace Instatus.Entities
 {   
-    public class Page
+    public class Page : IContentItem
     {
         public int Id { get; set; }
         public int Locale { get; set; }

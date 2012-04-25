@@ -40,7 +40,7 @@ namespace Instatus
                 var image = Bitmap.FromStream(stream);
                 var key = blobService.SaveImage(image, Generator.TimeStamp());
 
-                foreach (var size in WebImaging.Sizes)
+                foreach (var size in WebCatalog.ImageSizes)
                 {
                     blobService.GenerateSize(key, size.Key, size.Value, false);
                 }
@@ -70,7 +70,7 @@ namespace Instatus
         public static string GenerateSize(this IBlobService blobService, string key, ImageSize size, Transform transform = null, bool alwaysCreate = false)
         {
             if (transform == null)
-                transform = WebImaging.Sizes[size];
+                transform = WebCatalog.ImageSizes[size];
             
             var resizeKey = WebPath.Resize(size, key);
             

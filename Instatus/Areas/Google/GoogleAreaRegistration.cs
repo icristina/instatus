@@ -3,6 +3,7 @@ using Instatus.Web;
 using System.Collections.Generic;
 using Instatus.Models;
 using Instatus.Widgets;
+using Instatus.Entities;
 
 namespace Instatus.Areas.Google
 {
@@ -18,7 +19,7 @@ namespace Instatus.Areas.Google
 
         public override void RegisterArea(AreaRegistrationContext context)
         {
-            WebPart.Catalog.Add(new GoogleApiWidget());
+            WebCatalog.Parts.Add(new GoogleApiWidget());
         }
     }
 
@@ -43,12 +44,12 @@ namespace Instatus.Areas.Google
         {
             return new
             {
-                profileId = credential.Uri
+                profileId = credential.ApplicationId
             };
         }
 
         public GoogleApiWidget()
-            : base(WebProvider.Google)
+            : base(Provider.Google)
         {
             Scope = WebConstant.Scope.Public;
         }

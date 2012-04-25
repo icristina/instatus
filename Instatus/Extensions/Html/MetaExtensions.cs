@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
 using Instatus;
+using Instatus.Models;
 using Instatus.Web;
 
 namespace Instatus
@@ -45,7 +46,7 @@ namespace Instatus
             return new MvcHtmlString(HtmlBuilder.Meta("viewport", content));
         }
 
-        public static MvcHtmlString MetaTags<T>(this HtmlHelper<T> html, IList<WebParameter> parameters)
+        public static MvcHtmlString MetaTags<T>(this HtmlHelper<T> html, IList<Parameter> parameters)
         {
             if (parameters.IsEmpty())
                 return null;

@@ -5,6 +5,7 @@ using System.Web;
 using Instatus.Data;
 using Instatus.Web;
 using System.ComponentModel.Composition;
+using Instatus.Models;
 
 namespace Instatus.Services
 {
@@ -12,11 +13,11 @@ namespace Instatus.Services
     [PartCreationPolicy(CreationPolicy.NonShared)]    
     public class InMemoryLoggingService : ILoggingService
     {
-        private static Queue<WebEntry> queue = new LimitedQueue<WebEntry>(1000);
+        private static Queue<Entry> queue = new LimitedQueue<Entry>(1000);
         
         public void Log(Exception error)
         {
-            queue.Enqueue(new WebEntry() {
+            queue.Enqueue(new Entry() {
                 CreatedTime = DateTime.UtcNow,
                 Description = error.ToHtml(),
                 Uri = error.GetUri()

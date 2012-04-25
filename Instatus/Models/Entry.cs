@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Instatus.Data;
 
 namespace Instatus.Models
 {
-    public class Entry
+    public class Entry : ITimestamp
     {
         public string Uri { get; set; }
         public string Kind { get; set; }
@@ -17,5 +18,7 @@ namespace Instatus.Models
         public string Source { get; set; }
         public DateTime CreatedTime { get; set; }
         public string Rel { get; set; }
+        public double Longitude { get; set; }
+        public double Latitude { get; set; }
     }
 }

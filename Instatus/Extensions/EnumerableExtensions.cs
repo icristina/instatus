@@ -288,10 +288,10 @@ namespace Instatus
             return list.OrderBy(a => true);
         }
 
-        public static IEnumerable<WebEntry> DistinctByUri(this IEnumerable<WebEntry> resources)
-        {
-            return resources.Distinct(new ResourceComparer<WebEntry>());
-        }
+        //public static IEnumerable<WebEntry> DistinctByUri(this IEnumerable<WebEntry> resources)
+        //{
+        //    return resources.Distinct(new ResourceComparer<WebEntry>());
+        //}
 
         public static List<string> ToStringList(this IEnumerable set)
         {

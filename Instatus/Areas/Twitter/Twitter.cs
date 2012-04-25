@@ -6,6 +6,7 @@ using Instatus.Web;
 using System.Net;
 using System.Text;
 using System.Globalization;
+using Instatus.Models;
 
 namespace Instatus.Areas.Twitter
 {
@@ -20,7 +21,7 @@ namespace Instatus.Areas.Twitter
             return string.Format("http://twitter.com/{0}/status/{1}", user, id);
         }
         
-        public static List<WebEntry> Search(string[] terms, bool includeEntities = true)
+        public static List<Entry> Search(string[] terms, bool includeEntities = true)
         {
             var uriTemplate = "http://search.twitter.com/search.json?q={0}&include_entities={1}";
             var uri = string.Format(uriTemplate, HttpUtility.UrlEncode(string.Join(" OR ", terms)), includeEntities);
@@ -31,11 +32,11 @@ namespace Instatus.Areas.Twitter
                 response = webClient.DownloadJson(uri);
             }
 
-            var feed = new List<WebEntry>();
+            var feed = new List<Entry>();
 
             foreach (var entry in response.results)
             {
-                feed.Add(new WebEntry()
+                feed.Add(new Entry()
                 {
                     Kind = "Tweet",
                     Source = "Twitter",
@@ -50,7 +51,7 @@ namespace Instatus.Areas.Twitter
             return feed;
         }
 
-        public static List<WebEntry> Statuses(string screenName, bool includeEntities = true)
+        public static List<Entry> Statuses(string screenName, bool includeEntities = true)
         {
             var uriTemplate = "https://api.twitter.com/1/statuses/user_timeline.json?screen_name={0}&include_entities={1}";
             var uri = string.Format(uriTemplate, screenName, includeEntities);
@@ -62,11 +63,11 @@ namespace Instatus.Areas.Twitter
                 response = webClient.DownloadJson(uri);
             }
 
-            var feed = new List<WebEntry>();
+            var feed = new List<Entry>();
 
             foreach (var entry in response)
             {
-                feed.Add(new WebEntry()
+                feed.Add(new Entry()
                 {
                     Kind = "Tweet",
                     Source = "Twitter",

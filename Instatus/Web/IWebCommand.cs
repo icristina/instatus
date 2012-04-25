@@ -5,13 +5,14 @@ using System.Text;
 using System.Web.Mvc;
 using System.Web.Routing;
 using System.Collections.Specialized;
+using Instatus.Models;
 
 namespace Instatus.Web
 {
     public interface IWebCommand
     {
         string Name { get; }
-        WebLink GetLink(dynamic viewModel, UrlHelper urlHelper);
+        Link GetLink(dynamic viewModel, UrlHelper urlHelper);
         bool Execute(dynamic viewModel, UrlHelper urlHelper, RouteData routeData, NameValueCollection requestParams);
     }
 }

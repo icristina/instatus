@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System;
 using Instatus.Models;
 using Instatus.Widgets;
+using Instatus.Entities;
 
 namespace Instatus.Areas.Facebook
 {
@@ -37,7 +38,7 @@ namespace Instatus.Areas.Facebook
                 new string[] { "Instatus.Areas.Facebook.Controllers" }
             );
 
-            WebPart.Catalog.Add(new FacebookApiWidget());
+            WebCatalog.Parts.Add(new FacebookApiWidget());
         }
     }
 
@@ -59,7 +60,7 @@ namespace Instatus.Areas.Facebook
             {
                 init = new
                 {
-                    appId = credential.Uri,
+                    appId = credential.ApplicationId,
                     status = true,
                     cookie = true,
                     xfbml = credential.HasFeature("xfbml"),
@@ -71,7 +72,7 @@ namespace Instatus.Areas.Facebook
         }
 
         public FacebookApiWidget()
-            : base(WebProvider.Facebook)
+            : base(Provider.Facebook)
         {
             Scope = WebConstant.Scope.Public;
         }

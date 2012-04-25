@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using Instatus.Web;
 using Instatus.Data;
+using Instatus.Models;
 
 namespace Instatus
 {
@@ -35,45 +36,45 @@ namespace Instatus
             return Math.Floor(diff.TotalSeconds);
         }
 
-        public static DateTime Next(this DateTime date, WebMode mode)
+        public static DateTime Next(this DateTime date, ViewMode mode)
         {
             switch (mode)
             {
-                case WebMode.Year:
+                case ViewMode.Year:
                     return date.AddYears(1);
-                case WebMode.Month:
+                case ViewMode.Month:
                     return date.AddMonths(1);
-                case WebMode.Week:
+                case ViewMode.Week:
                     return date.AddDays(7);
                 default:
                     return date.AddDays(1);
             }
         }
 
-        public static DateTime Previous(this DateTime date, WebMode mode)
+        public static DateTime Previous(this DateTime date, ViewMode mode)
         {
             switch (mode)
             {
-                case WebMode.Year:
+                case ViewMode.Year:
                     return date.AddYears(-1);
-                case WebMode.Month:
+                case ViewMode.Month:
                     return date.AddMonths(-1);
-                case WebMode.Week:
+                case ViewMode.Week:
                     return date.AddDays(-7);
                 default:
                     return date.AddDays(-1);
             }
         }
 
-        public static string ToString(this DateTime date, WebMode mode)
+        public static string ToString(this DateTime date, ViewMode mode)
         {
             switch (mode)
             {
-                case WebMode.Year:
+                case ViewMode.Year:
                     return date.ToString("yyyy");
-                case WebMode.Month:
+                case ViewMode.Month:
                     return date.ToString("MMMM yyyy");
-                case WebMode.Week:
+                case ViewMode.Week:
                     return date.ToString("dddd dd MMMM yyyy");
                 default:
                     return date.ToString("dddd dd MMMM yyyy");
@@ -134,34 +135,34 @@ namespace Instatus
             return Range.Max(t1, t2);
         }
 
-        public static DateTime StartDate(WebMode mode)
+        public static DateTime StartDate(ViewMode mode)
         {
             var today = DateTime.Today;
 
             switch (mode)
             {
-                case WebMode.Year:
+                case ViewMode.Year:
                     return new DateTime(today.Year, 1, 1);
-                case WebMode.Month:
+                case ViewMode.Month:
                     return new DateTime(today.Year, today.Month, 1);
-                case WebMode.Week:
+                case ViewMode.Week:
                     return today.AddDays((int)today.DayOfWeek);
                 default:
                     return today;
             }
         }
 
-        public static DateTime? EndDate(this DateTime startTime, WebMode mode)
+        public static DateTime? EndDate(this DateTime startTime, ViewMode mode)
         {
             switch (mode)
             {
-                case WebMode.Day:
+                case ViewMode.Day:
                     return startTime.AddDays(1);
-                case WebMode.Week:
+                case ViewMode.Week:
                     return startTime.AddDays(7);
-                case WebMode.Month:
+                case ViewMode.Month:
                     return startTime.AddMonths(1);
-                case WebMode.Year:
+                case ViewMode.Year:
                     return startTime.AddYears(1);
                 default:
                     return null;

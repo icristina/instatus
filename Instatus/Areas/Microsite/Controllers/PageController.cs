@@ -9,27 +9,35 @@ using Instatus.Data;
 using Instatus.Controllers;
 using Instatus.Web;
 using System.ComponentModel.Composition;
+using Instatus.Entities;
 
 namespace Instatus.Areas.Microsite.Controllers
 {
-    [Export]
-    [PartCreationPolicy(CreationPolicy.NonShared)]
     [WebDescriptor(Scope = WebConstant.Scope.Public)]
     [WebParts]
     public class PageController : BaseController
     {
-        private IPageContext pageContext;
+        private IPageModel pageModel;
+        private IEnumerable<IContentAdapter> adapters;
 
         public ActionResult Details(string slug)
         {
-            ViewData.Model = pageContext.GetPage(slug).ApplyAdapters();
+            var page = pageModel.GetPage(slug);
+            
+            foreach(var contentAdapter in adapters) 
+            {
+                contentAdapter.Process(page, slug);
+            }
+
+            ViewData.Model = page;
+
             return View("Page");
         }
 
-        [ImportingConstructor]
-        public PageController(IPageContext pageContext)
+        public PageController(IPageModel pageContext, IEnumerable<IContentAdapter> adapters)
         {
-            this.pageContext = pageContext;
+            this.pageModel = pageContext;
+            this.adapters = adapters;
         }
     }
 }

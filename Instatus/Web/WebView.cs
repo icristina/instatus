@@ -19,7 +19,7 @@ namespace Instatus.Web
         public SelectList Filter { get; set; }
         public SelectList Mode { get; set; }
         public SelectList Sort { get; set; }
-        public ICollection<WebLink> Links { get; set; }
+        public ICollection<Link> Links { get; set; }
         public Query Query { get; set; }
         public ICollection<IWebCommand> Commands { get; set; }
         public SiteMapNodeCollection Navigation { get; set; }

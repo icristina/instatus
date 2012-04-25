@@ -7,9 +7,18 @@ namespace Instatus.Web
 {
     public static class WebConstant
     {
+        public static class AppSetting
+        {
+            public const string Bootstrap = "Bootstrap";
+            public const string Environment = "Environment";
+            public const string Simulate = "Simulate";
+            public const string DatabaseInitialize = "DatabaseInitialize";
+        }
+        
         public static class Scope
         {
             public const string Public = "Public";
+            public const string Admin = "Admin";
         }
 
         public static class DataType
@@ -19,11 +28,11 @@ namespace Instatus.Web
 
         public static class Route
         {
-            public const string Home = "Instatus_Web_WebRoute_Home";
-            public const string Post = "Instatus_Web_WebRoute_Post";
-            public const string Page = "Instatus_Web_WebRoute_Page";
-            public const string Default = "Instatus_Web_WebRoute_Default";
-            public const string AccountVerification = "Instatus_Web_WebRoute_AccountVerification";
+            public const string Home = "Route_Home";
+            public const string Post = "Route_Post";
+            public const string Page = "Route_Page";
+            public const string Default = "Route_Default";
+            public const string AccountVerification = "Route_AccountVerification";
         }
 
         public static class Slug

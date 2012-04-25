@@ -9,6 +9,7 @@ using System.Security.Principal;
 using Instatus.Data;
 using Instatus;
 using System.Data.Entity;
+using Instatus.Entities;
 
 namespace Instatus
 {
@@ -27,12 +28,7 @@ namespace Instatus
             if (userName.Contains("@"))
             {
                 userName = userName.ToLower(); // normalize email address
-
-                return context.Users
-                    .Include(u => u.Credentials)
-                    .Include(u => u.Roles)
-                    .Include(u => u.Preferences)
-                    .FirstOrDefault(u => u.EmailAddress == userName);
+                return context.Users.FirstOrDefault(u => u.EmailAddress == userName);
             }
 
             var parts = userName.ToList(':');
@@ -40,7 +36,7 @@ namespace Instatus
             if (parts.Count != 3 || parts[0] != "urn")
                 return null;
 
-            var provider = parts[1].AsEnum<WebProvider>();
+            var provider = parts[1].AsEnum<Provider>();
             var uri = parts[2];
 
             return GetUser(context, provider, uri);
@@ -51,27 +47,24 @@ namespace Instatus
             return GetUser(context, HttpContext.Current.User);
         }
 
-        public static User GetUser(this IApplicationModel context, WebProvider webProvider, string uri)
+        public static User GetUser(this IApplicationModel context, Provider webProvider, string uri)
         {
             var provider = webProvider.ToString();
-            return context.Users
-                    .Include(u => u.Credentials)
-                    .Include(u => u.Roles)
-                    .FirstOrDefault(u => u.Credentials.Any(c => c.Provider == provider && c.Uri == uri));
+            return context.Users.FirstOrDefault(u => u.Identity.Provider == provider && u.Identity.UserId == uri);
         }
 
-        public static IQueryable<User> GetUsers(this IApplicationModel context, WebRole webRole)
-        {
-            var roleName = webRole.ToString();
-            return context.Users.Where(u => u.Roles.Any(r => r.Name == roleName));
-        }
+        //public static IQueryable<User> GetUsers(this IApplicationModel context, WebRole webRole)
+        //{
+        //    var roleName = webRole.ToString();
+        //    return context.Users.Where(u => u.Roles.Any(r => r.Name == roleName));
+        //}
 
-        public static List<MailAddress> GetMailAddresses(this IApplicationModel context, WebRole webRole)
-        {
-            return context.GetUsers(webRole)
-                    .ToList()
-                    .Select(u => new MailAddress(u.EmailAddress, u.FullName))
-                    .ToList();
-        }
+        //public static List<MailAddress> GetMailAddresses(this IApplicationModel context, WebRole webRole)
+        //{
+        //    return context.GetUsers(webRole)
+        //            .ToList()
+        //            .Select(u => new MailAddress(u.EmailAddress, u.FullName))
+        //            .ToList();
+        //}
     }
 }

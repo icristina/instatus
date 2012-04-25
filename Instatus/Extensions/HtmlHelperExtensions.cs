@@ -93,7 +93,7 @@ namespace Instatus
             return new MvcHtmlString(tag.ToString());
         }
 
-        public static MvcHtmlString Partial<T>(this HtmlHelper<T> html, string partialViewName, object model, WebFormatting singleViewDataEntry)
+        public static MvcHtmlString Partial<T>(this HtmlHelper<T> html, string partialViewName, object model, Formatting singleViewDataEntry)
         {
             var viewDataDictionary = new ViewDataDictionary(model);
 
@@ -145,7 +145,7 @@ namespace Instatus
 
         public static MvcHtmlString FormattingAttributes<T>(this HtmlHelper<T> html)
         {
-            var webFormatting = html.ViewData.GetSingle<WebFormatting>();
+            var webFormatting = html.ViewData.GetSingle<Formatting>();
 
             if(webFormatting == null)
                 return null;

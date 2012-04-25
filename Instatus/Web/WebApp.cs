@@ -10,6 +10,7 @@ using Instatus.Services;
 using System.Web.Mvc;
 using Instatus.Data;
 using System.Net;
+using Instatus.Models;
 
 namespace Instatus.Web
 {
@@ -44,11 +45,11 @@ namespace Instatus.Web
             return ConfigurationManager.AppSettings.Value<T>(name.ToString());
         }
 
-        public static WebEnvironment Environment
+        public static Deployment Environment
         {
-            get 
+            get
             {
-                return Setting<string>(WebAppSetting.Environment).AsEnum<WebEnvironment>();
+                return Setting<string>(WebConstant.AppSetting.Environment).AsEnum<Deployment>();
             }
         }
 

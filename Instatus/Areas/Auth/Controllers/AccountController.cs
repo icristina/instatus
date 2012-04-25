@@ -14,8 +14,11 @@ using Instatus.Services;
 
 namespace Instatus.Areas.Auth.Controllers
 {
-    public class AccountController : BaseController<IApplicationModel>
+    public class AccountController : BaseController
     {
+        private IMembershipService membershipService;
+        private IApplicationModel applicationModel;
+        
         [HttpGet]
         public ActionResult LogOn(string returnUrl)
         {
@@ -44,14 +47,9 @@ namespace Instatus.Areas.Auth.Controllers
 
         public ActionResult Verification(int id, string token)
         {
-            var membershipService = DependencyResolver.Current.GetService<IMembershipService>();
-            var user = Context.Users.Find(id);
-
             if (membershipService.ValidateVerificationToken(id, token))
             {
-                Context.SaveChanges();
-
-                ViewData.Model = user;
+                ViewData.Model = applicationModel.Users.Find(id);
             }
             else
             {
@@ -65,6 +63,12 @@ namespace Instatus.Areas.Auth.Controllers
         {
             FormsAuthentication.SignOut();
             return Redirect(returnUrl.OrDefault(WebPath.Home));
+        }
+
+        public AccountController(IMembershipService membershipService, IApplicationModel applicationModel)
+        {
+            this.membershipService = membershipService;
+            this.applicationModel = applicationModel;
         }
     }
 }

@@ -14,7 +14,7 @@
 
 <section@(Html.Attr(sectionAttributes))>
     <div>
-        @if (Model.Query.Mode == WebMode.PagedList)
+        @if (Model.Query.Mode == ViewMode.PagedList)
         {
             <nav>
                 @Html.Paging()

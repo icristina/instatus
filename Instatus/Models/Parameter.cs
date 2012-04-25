@@ -9,5 +9,13 @@ namespace Instatus.Models
     {
         public string Name { get; set; }
         public string Content { get; set; }
+
+        public Parameter() { }
+
+        public Parameter(object name, object content)
+        {
+            Name = name.AsString();
+            Content = content.AsString();
+        }
     }
 }

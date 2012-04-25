@@ -17,7 +17,9 @@ namespace Instatus.Entities
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string EmailAddress { get; set; }
+        public DateTime? DateOfBirth { get; set; }
         public string Password { get; set; }
+        public string Location { get; set; }
         public Identity Identity { get; set; }
         public bool Verified { get; set; }
         public bool Suspended { get; set; }
@@ -52,6 +54,11 @@ namespace Instatus.Entities
 #else
         public string Provider { get; set; }
 #endif
+
+        public string ToUrn()
+        {
+            return string.Format("urn:{0}:{1}", Provider.ToLower(), UserId.ToLower());
+        }
     }
 
     public enum Gender

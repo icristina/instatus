@@ -10,23 +10,22 @@ namespace Instatus.Entities
     {
         public int Id { get; set; }
         public string ApplicationId { get; set; }
+        public string ApplicationAlias { get; set; }
         public string ApplicationSecret { get; set; }
         public Application Application { get; set; }
         public string Scope { get; set; }
+        public string Features { get; set; }
 #if NET45
-        public Environment Environment { get; set; }
+        public Deployment Environment { get; set; }
         public Provider Provider { get; set; }
 #else
         public string Environment { get; set; }
         public string Provider { get; set; }
 #endif
-    }
 
-    public enum Environment
-    {
-        All,
-        Production,
-        Staging,
-        Development
+        public bool HasFeature(string name)
+        {
+            return Features.ToList().Any(f => f.Match(name));
+        }
     }
 }

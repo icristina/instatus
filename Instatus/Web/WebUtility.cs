@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Instatus.Models;
 
 namespace Instatus.Web
 {
@@ -13,7 +14,7 @@ namespace Instatus.Web
             if (labels == null)
                 labels = data.Select(s => s.ToString()).ToList();
 
-            return new SelectList(data.Zip(labels, (d, l) => new WebParameter(d, l)), "Name", "Content", selectedValue);
+            return new SelectList(data.Zip(labels, (d, l) => new Parameter(d, l)), "Name", "Content", selectedValue);
         }
     }
 }

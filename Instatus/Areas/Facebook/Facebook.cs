@@ -17,6 +17,7 @@ using System.Data.Entity;
 using System.Configuration;
 using Instatus.Services;
 using System.Web.Mvc;
+using Instatus.Entities;
 
 namespace Instatus.Areas.Facebook
 {
@@ -144,14 +145,14 @@ namespace Instatus.Areas.Facebook
             }
         }
 
-        public static List<WebEntry> Feed(object resource, string accessToken, Connection connection = Connection.Feed)
+        public static List<Entry> Feed(object resource, string accessToken, Connection connection = Connection.Feed)
         {
             var response = Request(resource, accessToken, connection);
-            var feed = new List<WebEntry>();
+            var feed = new List<Entry>();
 
             foreach (var entry in response.data)
             {               
-                feed.Add(new WebEntry()
+                feed.Add(new Entry()
                 {
                     Picture = Facebook.Picture(entry.from.id, PictureSize.Square),
                     Kind = (entry.type as string).ToCapitalized(),
@@ -175,10 +176,9 @@ namespace Instatus.Areas.Facebook
             {               
                 if (credential.IsEmpty())
                 {
-                    using (var db = WebApp.GetService<IApplicationModel>())
-                    {
-                        credential = db.GetApplicationCredential(WebProvider.Facebook);
-                    }
+                    var applicationModel = WebApp.GetService<IApplicationModel>();
+
+                    credential = applicationModel.GetApplicationCredential(Provider.Facebook);
                 }
 
                 return credential;
@@ -193,11 +193,11 @@ namespace Instatus.Areas.Facebook
             }
         }
 
-        public static string ApplicationName
+        public static string ApplicationAlias
         {
             get
             {
-                return Credential.Name;
+                return Credential.ApplicationAlias;
             }
         }
 
@@ -205,7 +205,7 @@ namespace Instatus.Areas.Facebook
         {
             get
             {
-                return Credential.Secret;
+                return Credential.ApplicationSecret;
             }
         }
 
@@ -213,7 +213,7 @@ namespace Instatus.Areas.Facebook
         {
             get
             {
-                return Credential.Uri;
+                return Credential.ApplicationId;
             }
         }
 
@@ -221,7 +221,7 @@ namespace Instatus.Areas.Facebook
         {
             get
             {
-                return string.Format("https://apps.facebook.com/{0}", Credential.Name);
+                return string.Format("https://apps.facebook.com/{0}", ApplicationAlias);
             }
         }
 
@@ -348,59 +348,46 @@ namespace Instatus.Areas.Facebook
 
             if ((Facebook.Scope.Contains("email") && !emailAddress.IsEmpty()) || facebookUser.first_name != null)
             {
-                var credential = new Credential(WebProvider.Facebook, facebookId, accessToken);
+                var identity = new Identity() 
+                {
+                    Provider = "Facebook",
+                    UserId = facebookId,
+                    AccessToken = accessToken
+                };
 
-                string userName = emailAddress ?? credential.ToUrn();
+                string userName = emailAddress ?? identity.ToUrn();
                 
                 FormsAuthentication.SetAuthCookie(userName, false); // persistant cookie not required, as signed_request will re-login user
 
-                using (var db = WebApp.GetService<IApplicationModel>())
-                {
-                    var user = db.GetUser(WebProvider.Facebook, facebookId) ?? db.GetUser(emailAddress);
+                var applicationModel = WebApp.GetService<IApplicationModel>();
+                var user = applicationModel.GetUser(Provider.Facebook, facebookId) ?? applicationModel.GetUser(emailAddress);
                     
-                    if (user == null)
-                    {                       
-                        string location = facebookUser.location == null ? string.Empty : facebookUser.location.name;
-                        string birthday = facebookUser.birthday;
+                if (user == null)
+                {                       
+                    string location = facebookUser.location == null ? string.Empty : facebookUser.location.name;
+                    string birthday = facebookUser.birthday;
 
-                        user = new User()
-                        {
-                            FullName = facebookUser.name,
-                            Name = new Name()
-                            {
-                                GivenName = facebookUser.first_name,
-                                FamilyName = facebookUser.last_name
-                            },
-                            EmailAddress = emailAddress,
-                            Locale = facebookUser.locale,
-                            Location = location,
-                            Credentials = new List<Credential>() {
-                                credential
-                            },
-                            DateOfBirth = birthday.AsDateTime()
-                        };
-
-                        db.Users.Add(user);
-                    }
-                    else
+                    user = new User()
                     {
-                        if (user.Credentials.IsEmpty())
-                            user.Credentials = new List<Credential>();
+                        FirstName = facebookUser.first_name,
+                        LastName = facebookUser.last_name,
+                        EmailAddress = emailAddress,
+                        Locale = facebookUser.locale,
+                        Location = location,
+                        Identity = identity,
+                        DateOfBirth = birthday.AsDateTime()
+                    };
 
-                        var existingCredential = user.Credentials
-                                .Where(c => c.Provider == WebProvider.Facebook.ToString())
-                                .FirstOrDefault();
-
-                        if (existingCredential != null)
-                            db.Sources.Remove(existingCredential);
-
-                        user.Credentials.Add(credential);
-                    }
-
-                    db.SaveChanges();
-
-                    return user;
+                    applicationModel.Users.Add(user);
                 }
+                else
+                {
+                    user.Identity = identity;
+                }
+
+                applicationModel.SaveChanges();
+
+                return user;
             }
             else
             {
