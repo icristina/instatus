@@ -13,7 +13,7 @@ namespace Instatus
 {
     public static class LoggingQueries
     {
-        public static void LogChange(this IApplicationContext context, object resource, string action, string uri = null)
+        public static void LogChange(this IApplicationModel context, object resource, string action, string uri = null)
         {
             var now = DateTime.UtcNow;
             var user = context.GetCurrentUser();
@@ -34,7 +34,7 @@ namespace Instatus
             });
         }
 
-        public static void LogChange(this IApplicationContext context, object resource, string propertyName, object originalValue, object newValue, string uri = null)
+        public static void LogChange(this IApplicationModel context, object resource, string propertyName, object originalValue, object newValue, string uri = null)
         {
             var action = string.Format("changed {0} from {1} to {2}", propertyName, originalValue, newValue);
             context.LogChange(resource, action, uri);

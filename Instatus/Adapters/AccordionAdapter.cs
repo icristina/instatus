@@ -10,8 +10,6 @@ using System.ComponentModel.Composition;
 namespace Instatus.Adapters
 {
     // split Document.Body into multiple sections
-    [Export(typeof(IContentAdapter))]
-    [PartCreationPolicy(CreationPolicy.NonShared)]   
     public class AccordionAdapter : IContentAdapter
     {
         public void Process(IContentItem contentItem, string hint)

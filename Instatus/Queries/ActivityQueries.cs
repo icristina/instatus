@@ -9,7 +9,7 @@ namespace Instatus
 {
     public static class ActivityQueries
     {
-        public static IEnumerable<Activity> GetActivities(this IApplicationContext context, WebQuery query)
+        public static IEnumerable<Activity> GetActivities(this IApplicationModel context, Query query)
         {
             return context
                     .SerializationSafe()
@@ -19,14 +19,7 @@ namespace Instatus
                     .Sort(query.Sort);
         }
 
-        public static IEnumerable<T> GetActivities<T>(this IApplicationContext context, WebQuery query) where T : Activity
-        {
-            query.Kind = typeof(T).Name.AsEnum<WebKind>();
-
-            return context.GetActivities(query).Cast<T>();
-        }
-
-        public static IQueryable<Activity> Filter(this IQueryable<Activity> queryable, WebQuery query)
+        public static IQueryable<Activity> Filter(this IQueryable<Activity> queryable, Query query)
         {
             var filtered = queryable;
 

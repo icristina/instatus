@@ -26,7 +26,7 @@ namespace Instatus
             return links.Where(l => l.Location != null && l.HttpStatusCode > 300 && l.HttpStatusCode < 303);
         }
 
-        public static IEnumerable<Link> GetLinks(this IApplicationContext context, WebQuery filter)
+        public static IEnumerable<Link> GetLinks(this IApplicationModel context, Query filter)
         {
             return context
                     .SerializationSafe()
@@ -35,7 +35,7 @@ namespace Instatus
                     .Sort(filter.Sort);
         }
 
-        public static IQueryable<Link> Filter(this IQueryable<Link> queryable, WebQuery filter)
+        public static IQueryable<Link> Filter(this IQueryable<Link> queryable, Query filter)
         {
             var filtered = queryable;
 

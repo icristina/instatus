@@ -30,7 +30,7 @@ namespace Instatus.Adapters
             
             var applicationNotifications = WebCache.Value(() =>
             {
-                using (var context = WebApp.GetService<IApplicationContext>())
+                using (var context = WebApp.GetService<IApplicationModel>())
                 {
                     return context.Messages.OfType<Notification>().Where(n => n.Page is Application).ToList().Randomize();
                 }

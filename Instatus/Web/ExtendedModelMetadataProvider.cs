@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 using Instatus;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Instatus.Web
 {

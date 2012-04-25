@@ -1,80 +1,68 @@
 ﻿<!DOCTYPE html>
-<html @Html.BrowserCapabilitiesAttributes()>
+<html class="no-js">
 <head>
     <meta charset="utf-8" />
-    @Html.Title()
-    @Html.Viewport()
-    @Html.MetaTags()
-    @Html.Stylesheets(Instatus.Areas.Twitter.Bootstrap.Stylesheets.ToArray())
-    @Html.Scripts(Instatus.Areas.Twitter.Bootstrap.Scripts.ToArray())
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="/css/bootstrap" />
+    <script src="/scripts/bootstrap"></script>
     @RenderSection("head", false)
-    @Html.Parts(WebZone.Head)
 </head>
-<body@(Html.RouteDataAttributes()) @(Html.FormattingAttributes())>
+<body>
     <div class="application-container">        
-        @if(IsSectionDefined("banner") || Html.HasZone(WebZone.Banner)) 
+        @if(IsSectionDefined("banner")) 
         {
             <header role="banner" class="container">
                 <div>
-                    @RenderSection("banner", false)
-                    @Html.Parts(WebZone.Banner)                
+                    @RenderSection("banner", false)            
                 </div>
             </header>
         }
-        @if (IsSectionDefined("navigation") || Html.HasZone(WebZone.Navigation))
+        @if (IsSectionDefined("navigation"))
         {
             <nav role="navigation" class="container">
                 <div>
-                    @RenderSection("navigation", false)
-                    @Html.Parts(WebZone.Navigation)        
+                    @RenderSection("navigation", false)      
                 </div>
             </nav>    
         }
         <section role="main" class="page-container container">
-            @if (IsSectionDefined("header") || Html.HasZone(WebZone.Header))
+            @if (IsSectionDefined("header"))
             {
                 <header class="page-header">
-                    @RenderSection("header", false)
-                    @Html.Parts(WebZone.Header)                
+                    @RenderSection("header", false)            
                 </header>  
             }    
-            @if (IsSectionDefined("figure") || Html.HasZone(WebZone.Figure))
+            @if (IsSectionDefined("figure"))
             {
                 <figure>
                     @RenderSection("figure", false)
-                    @Html.Parts(WebZone.Figure) 
                 </figure>
             }
-            @if (IsSectionDefined("menu") || Html.HasZone(WebZone.Menu))
+            @if (IsSectionDefined("menu"))
             {            
                 <menu>
                     @RenderSection("menu", false)
-                    @Html.Parts(WebZone.Menu) 
                 </menu>
             }
             <div class="page-body">
                 @RenderBody()  
-                @Html.Parts(WebZone.Body)
             </div> 
-            @if (IsSectionDefined("aside") || Html.HasZone(WebZone.Aside))
+            @if (IsSectionDefined("aside"))
             {  
                 <aside>
                     @RenderSection("aside", false)
-                    @Html.Parts(WebZone.Aside)
                 </aside>
             }
         </section>
-        @if (IsSectionDefined("footer") || Html.HasZone(WebZone.Footer))
+        @if (IsSectionDefined("footer"))
         {
             <footer role="contentinfo" class="container">
                 <div>
                     @RenderSection("footer", false)
-                    @Html.Parts(WebZone.Footer) 
                 </div>
             </footer>
         }
     </div>
     @RenderSection("scripts", false)
-    @Html.Parts(WebZone.Scripts)
 </body>
 </html>

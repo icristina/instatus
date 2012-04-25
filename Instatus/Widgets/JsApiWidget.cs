@@ -4,28 +4,29 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Instatus.Entities;
 using Instatus.Models;
 using Instatus.Web;
 
 namespace Instatus.Widgets
 {
-    public abstract class JsApiWidget : WebPartial
+    public abstract class JsApiWidget : Part, IModelProvider
     {
-        private WebProvider provider;
+        private Provider provider;
 
         public abstract string Embed(UrlHelper urlHelper, Credential credential);
         public abstract object Settings(UrlHelper urlHelper, Credential credential);
 
-        public override object GetViewModel(WebPartialContext context)
+        public object GetModel(ModelProviderContext context)
         {
-            return WebCache.Value<MvcHtmlString>(() =>
+            return WebCache.Value<IHtmlString>(() =>
             {
-                Credential credential;
+                Credential credential = null;
 
-                using (var applicationContext = WebApp.GetService<IApplicationContext>())
-                {
-                    credential = applicationContext.GetApplicationCredential(provider);
-                }
+                //using (var applicationContext = WebApp.GetService<IApplicationModel>())
+                //{
+                //    credential = applicationContext.GetApplicationCredential(provider);
+                //}
 
                 if (credential == null)
                     return null;
@@ -45,7 +46,7 @@ namespace Instatus.Widgets
             "JspApiWidget." + provider.ToString());
         }
 
-        public JsApiWidget(WebProvider provider, WebZone zone = WebZone.Scripts)
+        public JsApiWidget(Provider provider, Zone zone = Zone.Scripts)
         {
             this.provider = provider;
 

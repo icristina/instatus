@@ -35,16 +35,6 @@ namespace Instatus
             return routeData.Values["slug"].AsString();
         }
 
-        public static WebAction WebAction(this RouteData routeData)
-        {
-            return routeData.ActionName().AsEnum<WebAction>();
-        }
-
-        public static WebAction WebAction(this ActionDescriptor actionDescriptor)
-        {
-            return actionDescriptor.ActionName.AsEnum<WebAction>();
-        }
-
         public static string ToUniqueId(this RouteData routeData)
         {
             var id = routeData.Values["id"] ?? routeData.Values["slug"] ?? string.Empty;

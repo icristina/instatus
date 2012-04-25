@@ -9,18 +9,18 @@ using Instatus.Web;
 
 namespace Instatus.Widgets
 {
-    public abstract class JsDataWidget : WebPartial
+    public abstract class JsDataWidget : Part, IModelProvider
     {
         private string propertyName;
         
         protected abstract object GetData();
         
-        public override object GetViewModel(WebPartialContext context)
+        public object GetModel(ModelProviderContext context)
         {
             return context.Html.InlineData(propertyName, GetData());
         }
 
-        public JsDataWidget(string propertyName, WebZone zone = WebZone.Scripts)
+        public JsDataWidget(string propertyName, Zone zone = Zone.Scripts)
         {
             this.propertyName = propertyName;
 

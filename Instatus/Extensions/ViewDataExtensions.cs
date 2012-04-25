@@ -38,7 +38,7 @@ namespace Instatus
             if (viewDataDictionary.Model != null && viewDataDictionary.Model is IContentItem)
                 return (IContentItem)viewDataDictionary.Model;
 
-            return viewDataDictionary.GetSingle<WebContentItem>();
+            return viewDataDictionary.GetSingle<IContentItem>();
         }
     }
 }

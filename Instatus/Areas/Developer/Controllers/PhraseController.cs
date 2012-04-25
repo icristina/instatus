@@ -12,6 +12,7 @@ using System.IO;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.ComponentModel;
+using Instatus.Entities;
 
 namespace Instatus.Areas.Developer.Controllers
 {
@@ -26,7 +27,7 @@ namespace Instatus.Areas.Developer.Controllers
 
     [Authorize(Roles = "Developer")]
     [Description("Localization")]
-    public class PhraseController : ScaffoldController<PhraseViewModel, Phrase, IApplicationContext, int>
+    public class PhraseController : ScaffoldController<PhraseViewModel, Phrase, IApplicationModel, int>
     {
         public override IEnumerable<Phrase> Query(IEnumerable<Phrase> set, WebQuery query)
         {

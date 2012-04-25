@@ -15,7 +15,7 @@ using System.ComponentModel;
 
 namespace Instatus.Areas.Moderator.Controllers
 {
-    public class NotificationViewModel : BaseViewModel<Notification, IApplicationContext>
+    public class NotificationViewModel : BaseViewModel<Notification, IApplicationModel>
     {
         [AllowHtml]
         [DataType(DataType.MultilineText)]
@@ -38,7 +38,7 @@ namespace Instatus.Areas.Moderator.Controllers
     
     [Authorize(Roles = "Moderator")]
     [Description("Notifications")]
-    public class NotificationController : ScaffoldController<NotificationViewModel, Notification, IApplicationContext, int>
+    public class NotificationController : ScaffoldController<NotificationViewModel, Notification, IApplicationModel, int>
     {
         public override IEnumerable<Notification> Query(IEnumerable<Notification> set, WebQuery query)
         {

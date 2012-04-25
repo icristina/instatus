@@ -16,7 +16,9 @@ namespace Instatus.Web
     {
         public void OnException(ExceptionContext filterContext)
         {
-            WebApp.Log(filterContext.Exception);
+            var loggingService = DependencyResolver.Current.GetService<ILoggingService>();
+            
+            loggingService.Log(filterContext.Exception);
         }
     }
 }

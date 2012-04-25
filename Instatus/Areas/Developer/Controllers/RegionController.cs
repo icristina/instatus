@@ -17,7 +17,7 @@ using Instatus.Areas.Editor.Models;
 
 namespace Instatus.Areas.Developer.Controllers
 {
-    public class RegionViewModel : BaseViewModel<Region, IApplicationContext>
+    public class RegionViewModel : BaseViewModel<Region, IApplicationModel>
     {
         [Category("Overview")]
         [Display(Order = 1)]      
@@ -39,7 +39,7 @@ namespace Instatus.Areas.Developer.Controllers
 
     [Authorize(Roles = "Editor")]
     [Description("Regions")]
-    public class RegionController : ScaffoldController<RegionViewModel, Region, IApplicationContext, int>
+    public class RegionController : ScaffoldController<RegionViewModel, Region, IApplicationModel, int>
     {
         public override IEnumerable<Region> Query(IEnumerable<Region> set, WebQuery query)
         {

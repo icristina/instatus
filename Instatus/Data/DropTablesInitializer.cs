@@ -5,6 +5,7 @@ using System.Web;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using Instatus.Web;
+using System.IO;
 
 namespace Instatus.Data
 {
@@ -15,10 +16,7 @@ namespace Instatus.Data
         public void InitializeDatabase(T context)
         {
             var objectContext = context.ObjectContext();
-            var sql = new EmbeddedVirtualPathProvider()
-                                    .GetFile("~/Data/DropTables.sql")
-                                    .Open()
-                                    .CopyToString();
+            var sql = File.ReadAllText(WebPath.Server("~/Data/DropTables.sql"));
 
             // split on GO statements, ensure that final GO has line break or space after it
             foreach (var command in sql.Split(new string[] { "GO\r\n", "GO ", "GO\t" }, StringSplitOptions.RemoveEmptyEntries))

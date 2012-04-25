@@ -4,7 +4,6 @@ using System.Linq;
 using System.Web;
 using System.Web.Routing;
 using System.Web.Mvc;
-using Instatus.Areas.Microsite;
 using Instatus.Web;
 using System.Reflection;
 

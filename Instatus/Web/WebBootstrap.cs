@@ -12,6 +12,7 @@ using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 using System.ComponentModel;
 using Instatus.Services;
 using Instatus.Models;
+using Instatus.Entities;
 
 namespace Instatus.Web
 {
@@ -28,17 +29,6 @@ namespace Instatus.Web
             
             // model metadata provider
             ModelMetadataProviders.Current = new ExtendedModelMetadataProvider();
-
-            // dependency injection
-            DependencyResolver.SetResolver(new MefDependencyResolver());
-            DynamicModuleUtility.RegisterModule(typeof(MefDependencyResolverModule));
-
-            // virtual path providers
-            HostingEnvironment.RegisterVirtualPathProvider(new EmbeddedVirtualPathProvider());
-            HostingEnvironment.RegisterVirtualPathProvider(new PackageVirtualPathProvider());
-
-            // namespaces
-            DynamicModuleUtility.RegisterModule(typeof(MvcConfigurationModule));
         }
 
         public static void Auth()
@@ -71,7 +61,7 @@ namespace Instatus.Web
 
         public static void Rewriting()
         {
-            DynamicModuleUtility.RegisterModule(typeof(RedirectModule));
+            // DynamicModuleUtility.RegisterModule(typeof(RedirectModule));
         }
 
         public static void ErrorHandling()
@@ -111,18 +101,18 @@ namespace Instatus.Web
 
         public static void DefaultServices()
         {
-            DependencyResolver.Current.RegisterTypes(
-                typeof(InMemoryLoggingService),
-                typeof(FileSystemBlobService),
-                typeof(RazorTemplateService),
-                typeof(DbPageContext),
-                typeof(DbMembershipService),
-                typeof(SchemaOrgVocabulary));
+            //DependencyResolver.Current.RegisterTypes(
+            //    typeof(InMemoryLoggingService),
+            //    typeof(FileSystemBlobService),
+            //    typeof(RazorTemplateService),
+            //    typeof(DbPageContext),
+            //    typeof(DbMembershipService),
+            //    typeof(SchemaOrgVocabulary));
         }
 
         public static void Imaging()
         {
-            WebImaging.Sizes.Add(WebSize.Thumb, new WebTransform(200, 200, false));
+            WebImaging.Sizes.Add(ImageSize.Thumb, new Transform(200, 200, false));
         }
     }
 }

@@ -7,8 +7,6 @@ using System.ComponentModel.Composition;
 
 namespace Instatus.Services
 {
-    [Export(typeof(IMembershipService))]
-    [PartCreationPolicy(CreationPolicy.NonShared)]    
     public class MockMembershipService : IMembershipService
     {
         public bool ValidateUser(string username, string password)
@@ -31,6 +29,11 @@ namespace Instatus.Services
             }
             .ToStringList()
             .ToArray();
+        }
+
+        public bool ValidateVerificationToken(int userId, string token)
+        {
+            return true;
         }
     }
 }

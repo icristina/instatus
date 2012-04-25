@@ -7,10 +7,9 @@ using Instatus.Models;
 
 namespace Instatus.Web
 {
-    public interface IContentItem : IExtensionPoint
+    public interface IContentItem
     {
         string Name { get; set; }
-        WebDocument Document { get; set; }
-        IDictionary<WebVerb, IWebFeed> Feeds { get; }
+        Document Document { get; set; }
     }
 }

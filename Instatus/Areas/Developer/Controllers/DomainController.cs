@@ -13,7 +13,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Instatus.Areas.Developer.Controllers
 {
-    public class DomainViewModel : BaseViewModel<Domain, IApplicationContext>
+    public class DomainViewModel : BaseViewModel<Domain, IApplicationModel>
     {
         public string Environment { get; set; }
         public string Uri { get; set; }
@@ -32,7 +32,7 @@ namespace Instatus.Areas.Developer.Controllers
     }
     
     [Authorize(Roles = "Administrator")]
-    public class DomainController : ScaffoldController<DomainViewModel, Domain, IApplicationContext, int>
+    public class DomainController : ScaffoldController<DomainViewModel, Domain, IApplicationModel, int>
     {
         public override void SaveChanges()
         {

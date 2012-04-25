@@ -14,7 +14,7 @@ namespace Instatus
 {
     public static class SyncQueries
     {
-        public static Page GetPage(this IApplicationContext context, Source source)
+        public static Page GetPage(this IApplicationModel context, Source source)
         {
             return context.Pages.FirstOrDefault(p => p.Sources.Any(s => s.Uri == source.Uri && s.Provider == source.Provider));;
         }        

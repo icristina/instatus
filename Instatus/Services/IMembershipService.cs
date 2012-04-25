@@ -9,5 +9,6 @@ namespace Instatus.Services
     {
         bool ValidateUser(string username, string password);
         string[] GetRolesForUser(string username);
+        bool ValidateVerificationToken(int userId, string token);
     }
 }

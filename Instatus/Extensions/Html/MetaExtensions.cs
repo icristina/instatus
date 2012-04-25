@@ -18,7 +18,7 @@ namespace Instatus
             var model = html.ViewData.Model;
 
             if (model is IContentItem && (IContentItem)model != null && ((IContentItem)model).Document != null)
-                title = ((IContentItem)model).Document.Parameters.GetParameter(WebNamespace.Html, "Title");
+                title = ((IContentItem)model).Document.Parameters.Where(p => p.Name.Match("Title")).Select(p => p.Content).FirstOrDefault();
 
             if (title.IsEmpty())
                 title = model.AsString(); // WebView and Page ToString() customized to give descriptive title for html pages
@@ -68,16 +68,11 @@ namespace Instatus
             {
                 var sb = new StringBuilder();
                 var parameters = ((IContentItem)model).Document.Parameters;
-                var htmlParameters = parameters.GetParameterSet(WebNamespace.Html);
-                var openGraphParameters = parameters.GetParameterSet(WebNamespace.OpenGraph);
+                var description = parameters.Where(p => p.Name.Match("Description")).Select(p => p.Content).FirstOrDefault();
+                var keywords = parameters.Where(p => p.Name.Match("Keywords")).Select(p => p.Content).FirstOrDefault();
     
-                sb.AppendLine(HtmlBuilder.Meta("description", htmlParameters.Value("Description").AsString()));
-                sb.AppendLine(HtmlBuilder.Meta("keywords", htmlParameters.Value("Keywords").AsString()));
-
-                foreach (var og in openGraphParameters)
-                {
-                    sb.AppendLine(HtmlBuilder.Meta("og:" + og.Key, og.Value.AsString()));
-                }
+                sb.AppendLine(HtmlBuilder.Meta("description", description));
+                sb.AppendLine(HtmlBuilder.Meta("keywords", keywords));
 
                 return new MvcHtmlString(sb.ToString());
             }

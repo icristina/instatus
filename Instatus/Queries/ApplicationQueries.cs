@@ -11,7 +11,7 @@ namespace Instatus
 {
     public static class ApplicationQueries
     {
-        public static Domain GetApplicationDomain(this IApplicationContext context)
+        public static Domain GetApplicationDomain(this IApplicationModel context)
         {
             var environment = WebApp.Environment.ToString();
             var all = WebEnvironment.All.ToString();
@@ -24,7 +24,7 @@ namespace Instatus
                     .FirstOrDefault();
         }        
         
-        public static Credential GetApplicationCredential(this IApplicationContext context, WebProvider webProvider)
+        public static Credential GetApplicationCredential(this IApplicationModel context, WebProvider webProvider)
         {
             var provider = webProvider.ToString();
 
@@ -37,7 +37,7 @@ namespace Instatus
                         && (s.Environment == environment || s.Environment == all));
         }
 
-        public static Message GetApplicationMessage(this IApplicationContext context)
+        public static Message GetApplicationMessage(this IApplicationModel context)
         {
             var published = WebStatus.Published.ToString();
             return context.Messages
@@ -46,7 +46,7 @@ namespace Instatus
                     .FirstOrDefault();
         }
 
-        public static IEnumerable<Source> GetApplicationSources(this IApplicationContext context, WebCategory webCategory)
+        public static IEnumerable<Source> GetApplicationSources(this IApplicationModel context, WebCategory webCategory)
         {
             var category = webCategory.ToString();
 
@@ -55,7 +55,7 @@ namespace Instatus
                     .ToList();
         }
 
-        public static Application GetCurrentApplication(this IApplicationContext context)
+        public static Application GetCurrentApplication(this IApplicationModel context)
         {
             return context                    
                     .Pages
@@ -64,7 +64,7 @@ namespace Instatus
                     .First();
         }
 
-        public static Brand GetCurrentBrand(this IApplicationContext context)
+        public static Brand GetCurrentBrand(this IApplicationModel context)
         {
             return context.Pages
                     .Include(p => p.Links)
@@ -72,7 +72,7 @@ namespace Instatus
                     .FirstOrDefault();
         }
 
-        public static Offer GetLatestOffer(this IApplicationContext context)
+        public static Offer GetLatestOffer(this IApplicationModel context)
         {
             var now = DateTime.UtcNow;
             var published = WebStatus.Published.ToString();

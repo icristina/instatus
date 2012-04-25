@@ -53,13 +53,29 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+    <Reference Include="Autofac">
+      <HintPath>..\packages\Autofac.2.6.1.841\lib\NET40\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac.Configuration">
+      <HintPath>..\packages\Autofac.2.6.1.841\lib\NET40\Autofac.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac.Integration.Mvc">
+      <HintPath>..\packages\Autofac.Mvc3.2.6.1.841\lib\NET40\Autofac.Integration.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="dotless.Core">
+      <HintPath>..\packages\dotless.1.3.0.0\lib\dotless.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=4.4.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\EntityFramework.4.3.1\lib\net40\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.5.0.0-beta2\lib\net40\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="Newtonsoft.Json">
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.4.5.3\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System.ComponentModel.Composition" />
@@ -72,6 +88,9 @@
     <Reference Include="System.ServiceModel.Activation" />
     <Reference Include="System.ServiceModel.Web" />
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.Web.Optimization.1.0.0-beta\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.WebPages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.Helpers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System" />
@@ -92,72 +111,43 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
+    <Reference Include="WebActivator">
+      <HintPath>..\packages\WebActivator.1.5\lib\net40\WebActivator.dll</HintPath>
+    </Reference>
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Adapters\NotificationsAdapter.cs" />
-    <Compile Include="Adapters\IncludeAdapter.cs" />
-    <Compile Include="Adapters\AccordionAdapter.cs" />
-    <Compile Include="Adapters\DocumentAdapter.cs" />
-    <Compile Include="Areas\Auth\AuthAreaRegistration.cs" />
-    <Compile Include="Areas\Auth\Controllers\AccountController.cs" />
-    <Compile Include="Areas\Auth\Models\LogOnViewModel.cs" />
-    <Compile Include="Areas\Developer\Controllers\PhraseController.cs" />
-    <Compile Include="Areas\Developer\DeveloperAreaRegistration.cs" />
-    <Compile Include="Areas\Editor\Controllers\BrandController.cs" />
-    <Compile Include="Areas\Editor\Controllers\ArticleController.cs" />
-    <Compile Include="Areas\Editor\Controllers\CatalogController.cs" />
-    <Compile Include="Areas\Developer\Controllers\TaxonomyController.cs" />
-    <Compile Include="Areas\Developer\Controllers\RegionController.cs" />
-    <Compile Include="Areas\Editor\Controllers\ProfileController.cs" />
-    <Compile Include="Areas\Editor\Controllers\NewsController.cs" />
-    <Compile Include="Areas\Editor\Controllers\FileController.cs" />
-    <Compile Include="Areas\Editor\Controllers\OrganizationController.cs" />
-    <Compile Include="Areas\Editor\EditorAreaRegistration.cs" />
-    <Compile Include="Areas\Editor\Controllers\PostController.cs" />
-    <Compile Include="Areas\Developer\Controllers\LogController.cs" />
-    <Compile Include="Areas\Developer\Controllers\LinkController.cs" />
-    <Compile Include="Areas\Editor\Models\CallToActionViewModel.cs" />
-    <Compile Include="Areas\Editor\Models\CreativeViewModel.cs" />
-    <Compile Include="Areas\Editor\Models\RelatedViewModel.cs" />
-    <Compile Include="Areas\Editor\Models\PeopleViewModel.cs" />
-    <Compile Include="Areas\Editor\Models\MarkupViewModel.cs" />
-    <Compile Include="Areas\Editor\Models\LinkViewModel.cs" />
-    <Compile Include="Areas\Editor\Models\VideoViewModel.cs" />
-    <Compile Include="Areas\Editor\Models\LocationViewModel.cs" />
-    <Compile Include="Areas\Editor\Models\DocumentViewModel.cs" />
-    <Compile Include="Areas\Editor\Models\OverviewViewModel.cs" />
-    <Compile Include="Areas\Editor\Models\PublishingViewModel.cs" />
-    <Compile Include="Areas\Editor\Models\MetaTagsViewModel.cs" />
-    <Compile Include="Areas\Google\Google.cs" />
-    <Compile Include="Areas\Microsite\Controllers\PageController.cs" />
-    <Compile Include="Areas\Moderator\Controllers\ActivityController.cs" />
-    <Compile Include="Areas\Moderator\Controllers\PostController.cs" />
-    <Compile Include="Areas\Moderator\Controllers\NotificationController.cs" />
-    <Compile Include="Areas\Developer\Controllers\DomainController.cs" />
-    <Compile Include="Areas\Developer\Controllers\CredentialController.cs" />
-    <Compile Include="Areas\Moderator\Controllers\ExportController.cs" />
-    <Compile Include="Areas\Developer\Controllers\UserController.cs" />
-    <Compile Include="Areas\Editor\Controllers\TagController.cs" />
-    <Compile Include="Areas\Moderator\ModeratorAreaRegistration.cs" />
-    <Compile Include="Areas\Twitter\Bootstrap.cs" />
-    <Compile Include="Areas\Twitter\Twitter.cs" />
-    <Compile Include="Areas\Typekit\TypekitAreaRegistration.cs" />
-    <Compile Include="Areas\Facebook\Controllers\FacebookController.cs" />
-    <Compile Include="Areas\Facebook\Facebook.cs" />
-    <Compile Include="Areas\Facebook\FacebookAttribute.cs" />
-    <Compile Include="Areas\YouTube\YouTube.cs" />
-    <Compile Include="Commands\BanCommand.cs" />
-    <Compile Include="Commands\AwardCommand.cs" />
-    <Compile Include="Commands\GenericCommand.cs" />
-    <Compile Include="Commands\StatusCommand.cs" />
-    <Compile Include="Commands\SpamCommand.cs" />
+    <Compile Include="Data\IContentQuery.cs" />
     <Compile Include="Data\IEntity.cs" />
     <Compile Include="Data\IJob.cs" />
     <Compile Include="Data\IMessageBus.cs" />
     <Compile Include="Data\IMessageQueue.cs" />
     <Compile Include="Data\INamed.cs" />
     <Compile Include="Data\ITimestamp.cs" />
+    <Compile Include="Entities\Activity.cs" />
+    <Compile Include="Entities\Application.cs" />
+    <Compile Include="Entities\Association.cs" />
+    <Compile Include="Entities\Comment.cs" />
+    <Compile Include="Entities\Credential.cs" />
+    <Compile Include="Entities\DbApplicationModel.cs" />
+    <Compile Include="Entities\DbLoggingService.cs" />
+    <Compile Include="Entities\DbMembershipService.cs" />
+    <Compile Include="Entities\DbResourceReader.cs" />
+    <Compile Include="Entities\Domain.cs" />
+    <Compile Include="Entities\IApplicationModel.cs" />
+    <Compile Include="Entities\InMemoryApplicationModel.cs" />
+    <Compile Include="Entities\IContentModel.cs" />
+    <Compile Include="Entities\List.cs" />
+    <Compile Include="Entities\Log.cs" />
+    <Compile Include="Entities\Page.cs" />
+    <Compile Include="Entities\Phrase.cs" />
+    <Compile Include="Entities\Redirect.cs" />
+    <Compile Include="Entities\Selection.cs" />
+    <Compile Include="Entities\Subscription.cs" />
+    <Compile Include="Entities\Tag.cs" />
+    <Compile Include="Entities\Taxonomy.cs" />
+    <Compile Include="Entities\User.cs" />
+    <Compile Include="Extensions\BundleExtensions.cs" />
     <Compile Include="Extensions\ExceptionExtensions.cs" />
     <Compile Include="Extensions\Html\ButtonExtensions.cs" />
     <Compile Include="Extensions\Html\MediaExtensions.cs" />
@@ -170,12 +160,28 @@
     <Compile Include="Extensions\Html\WebPartExtensions.cs" />
     <Compile Include="Extensions\TagBuilderExtensions.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
+    <Compile Include="Models\Document.cs" />
+    <Compile Include="Models\Element.cs" />
+    <Compile Include="Models\Entry.cs" />
+    <Compile Include="Models\Form.cs" />
+    <Compile Include="Models\Formatting.cs" />
+    <Compile Include="Models\ImageSize.cs" />
+    <Compile Include="Models\Insight.cs" />
+    <Compile Include="Models\Kind.cs" />
+    <Compile Include="Models\Link.cs" />
+    <Compile Include="Models\Media.cs" />
+    <Compile Include="Models\Parameter.cs" />
+    <Compile Include="Models\Part.cs" />
+    <Compile Include="Models\Published.cs" />
+    <Compile Include="Models\Query.cs" />
+    <Compile Include="Models\Set.cs" />
+    <Compile Include="Models\SortOrder.cs" />
+    <Compile Include="Models\Step.cs" />
+    <Compile Include="Models\Transform.cs" />
+    <Compile Include="Models\ViewMode.cs" />
+    <Compile Include="Models\Zone.cs" />
+    <Compile Include="Startup.cs" />
     <Compile Include="Web\AllowUploadAttribute.cs" />
-    <Compile Include="Models\Milestone.cs" />
-    <Compile Include="Models\DbPageContext.cs" />
-    <Compile Include="Queries\ActivityQueries.cs" />
-    <Compile Include="Services\DbLoggingService.cs" />
-    <Compile Include="Services\DbMembershipService.cs" />
     <Compile Include="Services\ILoggingService.cs" />
     <Compile Include="Services\IMembershipService.cs" />
     <Compile Include="Services\InMemoryLoggingService.cs" />
@@ -184,14 +190,11 @@
     <Compile Include="Web\HtmlBuilder.cs" />
     <Compile Include="Web\IContentAdapter.cs" />
     <Compile Include="Export\SubscriberExport.cs" />
-    <Compile Include="Models\IPageContext.cs" />
-    <Compile Include="Models\IApplicationContext.cs" />
     <Compile Include="Data\IDataExport.cs" />
     <Compile Include="Data\IDataImport.cs" />
     <Compile Include="Data\IDbContext.cs" />
     <Compile Include="Data\IHasPermission.cs" />
     <Compile Include="Data\IHasValue.cs" />
-    <Compile Include="Models\InMemoryApplicationContext.cs" />
     <Compile Include="Data\IObjectMapping.cs" />
     <Compile Include="Data\IPayload.cs" />
     <Compile Include="Data\IRepository.cs" />
@@ -208,43 +211,20 @@
     <Compile Include="Extensions\StreamExtensions.cs" />
     <Compile Include="Extensions\ViewDataExtensions.cs" />
     <Compile Include="Extensions\WebClientExtensions.cs" />
-    <Compile Include="Models\Award.cs" />
-    <Compile Include="Models\Brand.cs" />
     <Compile Include="Data\IFriendlyIdentifier.cs" />
-    <Compile Include="Models\Listing.cs" />
-    <Compile Include="Models\Notification.cs" />
-    <Compile Include="Models\News.cs" />
-    <Compile Include="Models\Region.cs" />
-    <Compile Include="Models\INavigableContent.cs" />
-    <Compile Include="Models\Note.cs" />
-    <Compile Include="Models\Media.cs" />
-    <Compile Include="Models\Journey.cs" />
     <Compile Include="Data\IExtensionPoint.cs" />
-    <Compile Include="Models\Phrase.cs" />
-    <Compile Include="Models\Catalog.cs" />
-    <Compile Include="Models\IUserGeneratedContent.cs" />
-    <Compile Include="Models\Review.cs" />
-    <Compile Include="Queries\ApplicationQueries.cs" />
-    <Compile Include="Queries\PageQueries.cs" />
-    <Compile Include="Queries\EventQueries.cs" />
-    <Compile Include="Queries\LinkQueries.cs" />
-    <Compile Include="Queries\LoggingQueries.cs" />
-    <Compile Include="Queries\MembershipQueries.cs" />
-    <Compile Include="Queries\SocialQueries.cs" />
-    <Compile Include="Queries\SyncQueries.cs" />
-    <Compile Include="Queries\TaxonomyQueries.cs" />
-    <Compile Include="Restrictions\ActivityRestriction.cs" />
-    <Compile Include="Restrictions\DateRestriction.cs" />
     <Compile Include="Services\IZipService.cs" />
     <Compile Include="Data\InMemoryMessageBus.cs" />
     <Compile Include="Web\EmptyResultOnExceptionAttribute.cs" />
     <Compile Include="Web\FatalErrorResult.cs" />
     <Compile Include="Web\IContentItem.cs" />
+    <Compile Include="Web\IModelProvider.cs" />
+    <Compile Include="Web\INavigableContent.cs" />
     <Compile Include="Web\IVirtualPathRewriter.cs" />
     <Compile Include="Web\IWebVocabulary.cs" />
     <Compile Include="Web\IWebView.cs" />
     <Compile Include="Web\JsModelClientValidationRule.cs" />
-    <Compile Include="Web\MvcConfigurationModule.cs" />
+    <Compile Include="Web\LessTransform.cs" />
     <Compile Include="Web\SchemaOrgVocabulary.cs" />
     <Compile Include="Web\SyndicationFeedResult.cs" />
     <Compile Include="Web\TwoLevelViewCache.cs" />
@@ -253,65 +233,32 @@
     <Compile Include="Data\InMemoryMessageQueue.cs" />
     <Compile Include="Web\WebBootstrap.cs" />
     <Compile Include="Web\WebCache.cs" />
-    <Compile Include="Web\WebCategory.cs" />
     <Compile Include="Web\WebConstant.cs" />
-    <Compile Include="Web\WebContentItem.cs" />
     <Compile Include="Web\WebDescriptorAttribute.cs" />
-    <Compile Include="Web\WebElement.cs" />
-    <Compile Include="Web\WebFeed.cs" />
-    <Compile Include="Web\WebForm.cs" />
     <Compile Include="Web\WebFormatting.cs" />
     <Compile Include="Web\WebImaging.cs" />
-    <Compile Include="Web\WebMarkup.cs" />
-    <Compile Include="Web\WebMock.cs" />
+    <Compile Include="Web\Mock.cs" />
     <Compile Include="Web\WebPartsAttribute.cs" />
-    <Compile Include="Web\WebStep.cs" />
-    <Compile Include="Web\DbResourceReader.cs" />
     <Compile Include="Web\LowercaseRoute.cs" />
-    <Compile Include="Web\WebInclude.cs" />
-    <Compile Include="Web\HttpTraceModule.cs" />
     <Compile Include="Web\ExcludeConstraint.cs" />
-    <Compile Include="Web\HtmlConstants.cs" />
     <Compile Include="Web\IViewModel.cs" />
     <Compile Include="Data\Record.cs" />
     <Compile Include="Extensions\ByteExtensions.cs" />
-    <Compile Include="Extensions\DependencyResolverExtensions.cs" />
     <Compile Include="Extensions\MailMessageExtensions.cs" />
     <Compile Include="Extensions\PrincipalExtensions.cs" />
     <Compile Include="Extensions\TaskExtensions.cs" />
     <Compile Include="Extensions\UriBuilderExtensions.cs" />
     <Compile Include="Extensions\UrlHelperExtensions.cs" />
     <Compile Include="Extensions\WebImageExtensions.cs" />
-    <Compile Include="Models\Checkin.cs" />
-    <Compile Include="Models\CaseStudy.cs" />
-    <Compile Include="Models\Group.cs" />
-    <Compile Include="Models\Job.cs" />
-    <Compile Include="Models\List.cs" />
-    <Compile Include="Models\Log.cs" />
-    <Compile Include="Models\Name.cs" />
-    <Compile Include="Models\Point.cs" />
-    <Compile Include="Models\Preference.cs" />
-    <Compile Include="Models\Selection.cs" />
-    <Compile Include="Models\Source.cs" />
-    <Compile Include="Models\Subscription.cs" />
-    <Compile Include="Models\Taxonomy.cs" />
-    <Compile Include="Queries\UserQueries.cs" />
     <Compile Include="Services\IBlobService.cs" />
     <Compile Include="Services\ITemplateService.cs" />
     <Compile Include="Services\FileSystemBlobService.cs" />
     <Compile Include="Services\RazorTemplateService.cs" />
-    <Compile Include="Restrictions\LocaleRestriction.cs" />
-    <Compile Include="Restrictions\RoleRestriction.cs" />
     <Compile Include="Data\ValidationPatterns.cs" />
     <Compile Include="Web\IWebCommand.cs" />
     <Compile Include="Web\SimpleSiteMapProvider.cs" />
-    <Compile Include="Web\WebAction.cs" />
-    <Compile Include="Web\EmbeddedVirtualPathProvider.cs" />
     <Compile Include="Web\SimpleMembershipProvider.cs" />
     <Compile Include="Web\SimpleRoleProvider.cs" />
-    <Compile Include="Areas\Facebook\FacebookAreaRegistration.cs" />
-    <Compile Include="Areas\Google\GoogleAreaRegistration.cs" />
-    <Compile Include="Areas\Microsite\MicrositeAreaRegistration.cs" />
     <Compile Include="Controllers\ScaffoldController.cs" />
     <Compile Include="Data\InMemorySet.cs" />
     <Compile Include="Data\Generator.cs" />
@@ -320,88 +267,37 @@
     <Compile Include="Extensions\NumericExtensions.cs" />
     <Compile Include="Extensions\RouteCollectionExtensions.cs" />
     <Compile Include="Extensions\RouteDataExtensions.cs" />
-    <Compile Include="Models\Achievement.cs" />
-    <Compile Include="Models\Activity.cs" />
-    <Compile Include="Models\Address.cs" />
-    <Compile Include="Models\Application.cs" />
-    <Compile Include="Models\Article.cs" />
-    <Compile Include="Models\Card.cs" />
-    <Compile Include="Models\Comment.cs" />
     <Compile Include="Web\LogErrorAttribute.cs" />
-    <Compile Include="Web\PackageVirtualPathProvider.cs" />
-    <Compile Include="Web\HttpTraceAttribute.cs" />
     <Compile Include="Web\WebContentType.cs" />
     <Compile Include="Controllers\BaseController.cs" />
-    <Compile Include="Areas\Microsite\Controllers\StreamController.cs" />
     <Compile Include="Data\DropTablesInitializer.cs" />
     <Compile Include="Extensions\HtmlHelperExtensions.cs" />
     <Compile Include="Extensions\ObjectExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\DbContextExtensions.cs" />
-    <Compile Include="Models\Credential.cs" />
-    <Compile Include="Models\Organization.cs" />
-    <Compile Include="Models\Photo.cs" />
-    <Compile Include="Models\Price.cs" />
-    <Compile Include="Models\Product.cs" />
-    <Compile Include="Models\Coupon.cs" />
-    <Compile Include="Models\Offer.cs" />
     <Compile Include="Web\WebNamespace.cs" />
     <Compile Include="Web\WebPhrase.cs" />
     <Compile Include="Web\WebMedia.cs" />
-    <Compile Include="Web\WebPart.cs" />
-    <Compile Include="Web\WebPartial.cs" />
-    <Compile Include="Web\WebDocument.cs" />
-    <Compile Include="Models\Domain.cs" />
-    <Compile Include="Models\Event.cs" />
-    <Compile Include="Models\Link.cs" />
-    <Compile Include="Models\Highscore.cs" />
-    <Compile Include="Models\Message.cs" />
-    <Compile Include="Models\Page.cs" />
-    <Compile Include="Models\Place.cs" />
-    <Compile Include="Models\Post.cs" />
-    <Compile Include="Models\Profile.cs" />
-    <Compile Include="Models\Role.cs" />
-    <Compile Include="Models\Restriction.cs" />
-    <Compile Include="Models\Schedule.cs" />
     <Compile Include="Web\WebPath.cs" />
-    <Compile Include="Web\WebSection.cs" />
-    <Compile Include="Models\Tag.cs" />
-    <Compile Include="Models\User.cs" />
     <Compile Include="Data\PagedCollection.cs" />
-    <Compile Include="Models\Video.cs" />
-    <Compile Include="Web\WebSet.cs" />
-    <Compile Include="Web\WebStream.cs" />
-    <Compile Include="Web\DbSitemapProvider.cs" />
+    <Compile Include="Entities\DbSitemapProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Models\DbApplicationContext.cs" />
     <Compile Include="Web\WebEnvironment.cs" />
     <Compile Include="Web\WebListType.cs" />
     <Compile Include="Web\WebParameter.cs" />
-    <Compile Include="Web\WebTransform.cs" />
     <Compile Include="Web\WebUnits.cs" />
     <Compile Include="Web\WebUtility.cs" />
-    <Compile Include="Web\WebVariable.cs" />
     <Compile Include="Web\WebPermission.cs" />
     <Compile Include="Web\WebProvider.cs" />
     <Compile Include="Web\WebEntry.cs" />
     <Compile Include="Web\WebRole.cs" />
-    <Compile Include="Web\WebSize.cs" />
     <Compile Include="Web\WebInsight.cs" />
-    <Compile Include="Web\WebStatus.cs" />
-    <Compile Include="Web\WebVerb.cs" />
-    <Compile Include="Web\WebZone.cs" />
-    <Compile Include="Web\WebKind.cs" />
     <Compile Include="Web\ExtendedModelMetadataProvider.cs" />
-    <Compile Include="Web\MefDependencyResolver.cs" />
-    <Compile Include="Web\PreApplicationStartCode.cs" />
     <Compile Include="Web\UserAgentAttribute.cs" />
     <Compile Include="Web\WebLink.cs" />
     <Compile Include="Web\WebMode.cs" />
-    <Compile Include="Web\WebQuery.cs" />
-    <Compile Include="Web\WebSort.cs" />
     <Compile Include="Web\WebView.cs" />
-    <Compile Include="Web\RedirectModule.cs" />
-    <Compile Include="Widgets\BrandingWidget.cs" />
+    <Compile Include="Widgets\HtmlHelperWidget.cs" />
     <Compile Include="Widgets\JsDataWidget.cs" />
     <Compile Include="Widgets\TagWidget.cs" />
     <Compile Include="Widgets\JsApiWidget.cs" />
@@ -410,25 +306,23 @@
   <ItemGroup>
     <EmbeddedResource Include="Views\_ViewStart.cshtml" />
     <EmbeddedResource Include="Views\Shared\Error.cshtml" />
-    <EmbeddedResource Include="Content\Normalize.css" />
-    <EmbeddedResource Include="Scripts\Jquery.js" />
-    <EmbeddedResource Include="Scripts\Modernizr.js" />
-    <EmbeddedResource Include="Content\Scaffold.css" />
+    <EmbeddedResource Include="Content\scaffold.css" />
     <EmbeddedResource Include="Data\DropTables.sql" />
-    <EmbeddedResource Include="Content\Bootstrap.css" />
-    <EmbeddedResource Include="Content\Bootstrap-responsive.css" />
-    <EmbeddedResource Include="Content\Glyphicons-halflings-white.png" />
-    <EmbeddedResource Include="Content\Glyphicons-halflings.png" />
-    <EmbeddedResource Include="Scripts\Respond.js" />
-    <EmbeddedResource Include="Scripts\Scaffold.js" />
-    <EmbeddedResource Include="Scripts\Less.js" />
-    <EmbeddedResource Include="Scripts\Swfobject.js" />
-    <EmbeddedResource Include="Scripts\Knockout.js" />
-    <EmbeddedResource Include="Scripts\Underscore.js" />
-    <EmbeddedResource Include="Scripts\Instatus.js" />
-    <EmbeddedResource Include="Scripts\Bootstrap.js" />
-    <EmbeddedResource Include="Scripts\Masonry.js" />
-    <EmbeddedResource Include="Scripts\Jquery-validation.js" />
+    <EmbeddedResource Include="Scripts\scaffold.js" />
+    <Content Include="Content\bootstrap-responsive.css" />
+    <Content Include="Content\bootstrap-responsive.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\images\glyphicons-halflings-white.png" />
+    <Content Include="Content\images\glyphicons-halflings.png" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\jquery-1.7.2.intellisense.js" />
+    <Content Include="Scripts\jquery-1.7.2.js" />
+    <Content Include="Scripts\jquery-1.7.2.min.js" />
+    <Content Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -465,6 +359,7 @@
     <EmbeddedResource Include="Views\Shared\Navigation.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Content\mixins.less" />
     <None Include="Web.config">
       <SubType>Designer</SubType>
     </None>
@@ -498,8 +393,6 @@
     <EmbeddedResource Include="Views\Shared\Figure.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Areas\Developer\Views\Web.config" />
-    <EmbeddedResource Include="Areas\Developer\Views\Dashboard\Index.cshtml" />
     <None Include="App.config" />
     <None Include="Instatus.nuspec">
       <SubType>Designer</SubType>

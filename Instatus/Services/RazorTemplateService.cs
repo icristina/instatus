@@ -20,7 +20,7 @@ namespace Instatus.Services
             var tempData = new TempDataDictionary();
             var routeData = new RouteData();
 
-            context.HttpContext = WebMock.CreateHttpContextBase();
+            context.HttpContext = Mock.CreateHttpContextBase();
             context.RouteData.Values.Add("controller", "Home");
 
             using (var sw = new StringWriter())

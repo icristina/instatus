@@ -18,7 +18,7 @@ namespace Instatus.Areas.Moderator.Controllers
 {
     [Authorize(Roles = "Moderator")]
     [Description("User Generated Content")]
-    public class PostController : ScaffoldController<BaseViewModel<Post>, Post, IApplicationContext, int>
+    public class PostController : ScaffoldController<BaseViewModel<Post>, Post, IApplicationModel, int>
     {
         public override IEnumerable<Post> Query(IEnumerable<Post> set, WebQuery query)
         {

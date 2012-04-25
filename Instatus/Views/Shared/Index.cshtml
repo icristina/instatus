@@ -69,7 +69,7 @@
         @if (Model.Query.Mode == WebMode.Index)
         {
             <div class="btn-group">
-                @Html.ActionLink("0 - 9", "Index", new { Mode = WebMode.Index, Filter = WebQuery.NonWordCharacter, Command = Model.Query.Command }, new { @class = "btn".Append(" active", Model.Query.Filter.Match(WebQuery.NonWordCharacter)) })
+                @Html.ActionLink("0 - 9", "Index", new { Mode = WebMode.Index, Filter = Query.NonWordCharacter, Command = Model.Query.Command }, new { @class = "btn".Append(" active", Model.Query.Filter.Match(Query.NonWordCharacter)) })
                 @foreach (var letter in Instatus.Data.Generator.UpperCaseLetters)
                 {
                     @Html.ActionLink(letter.ToString(), "Index", new { Mode = WebMode.Index, Filter = letter, Command = Model.Query.Command }, new { @class = "btn".Append(" active", Model.Query.Filter.Match(letter)) })

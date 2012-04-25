@@ -7,8 +7,7 @@ using Instatus.Web;
 using Instatus.Data;
 using System.Configuration;
 using System.ComponentModel;
-using Instatus.Areas.Microsite;
-using Instatus.Areas.Microsite.Controllers;
+using Instatus.Models;
 
 namespace Instatus
 {
@@ -34,37 +33,9 @@ namespace Instatus
             return WebPath.Absolute(urlHelper.RouteUrl(routeName, routeValues));
         }
 
-        public static string Resize(this UrlHelper urlHelper, WebSize size, string virtualPath)
+        public static string Resize(this UrlHelper urlHelper, ImageSize size, string virtualPath)
         {
             return WebPath.Relative(WebPath.Resize(size, virtualPath));
-        }
-
-        public static SiteMapNodeCollection Controllers(this UrlHelper urlHelper, Func<ControllerDescriptor, bool> isNavigable = null, string actionName = "Index")
-        {
-            var siteMapProvider = new SimpleSiteMapProvider();
-            var siteMapNodes = MefDependencyResolver
-                    .GetTypes<IController>()
-                    .Select(controllerType =>
-                    {
-                        var descriptor = new ReflectedControllerDescriptor(controllerType);
-                        var description = controllerType.GetCustomAttributeValue<DescriptionAttribute, string>(d => d.Description);
-                        var roles = controllerType.GetCustomAttributeValue<AuthorizeAttribute, string>(a => a.Roles).ToList();
-                        var user = urlHelper.RequestContext.HttpContext.User;
-
-                        if ((isNavigable != null && !isNavigable(descriptor))
-                            || !descriptor.GetCanonicalActions().Any(a => a.ActionName == actionName) 
-                            || description.IsEmpty() // requires node title from description
-                            || (!roles.IsEmpty() && !roles.Any(r => user.IsInRole(r)))) // required role
-                            return null;
-
-                        var url = urlHelper.Action(actionName, descriptor.ControllerName, new { area = controllerType.GetNamespaceByConvention() });
-
-                        return new SiteMapNode(siteMapProvider, descriptor.ControllerName, url, description);
-                    })
-                    .RemoveNulls()
-                    .ToArray();
-
-            return new SiteMapNodeCollection(siteMapNodes);
         }
 
         public static string Details(this UrlHelper urlHelper, int id)
@@ -114,6 +85,26 @@ namespace Instatus.Web
         public SiteMapNodeCollectionBuilder Action(string title, string actionName, string controllerName, string area = null)
         {
             siteMapNodes.Add(new SiteMapNode(siteMapProvider, controllerName, urlHelper.Action(actionName, controllerName, new { area = area }), title));
+            return this;
+        }
+
+        public SiteMapNodeCollectionBuilder Controller<T>(string title = null, string actionName = "Index") where T : Controller
+        {
+            var controllerType = typeof(T);
+            var descriptor = new ReflectedControllerDescriptor(controllerType);
+            var description = title ?? controllerType.GetCustomAttributeValue<DescriptionAttribute, string>(d => d.Description);
+            var roles = controllerType.GetCustomAttributeValue<AuthorizeAttribute, string>(a => a.Roles).ToList();
+            var user = urlHelper.RequestContext.HttpContext.User;
+
+            if (!descriptor.GetCanonicalActions().Any(a => a.ActionName == actionName)
+                  || (title.IsEmpty() && description.IsEmpty())
+                  || (!roles.IsEmpty() && !roles.Any(r => user.IsInRole(r)))) // required role
+                return this;
+
+            var url = urlHelper.Action(actionName, descriptor.ControllerName, new { area = controllerType.GetNamespaceByConvention() });
+
+            siteMapNodes.Add(new SiteMapNode(siteMapProvider, descriptor.ControllerName, url, description));
+
             return this;
         }
 

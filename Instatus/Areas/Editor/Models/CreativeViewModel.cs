@@ -12,20 +12,20 @@ using Instatus.Data;
 namespace Instatus.Areas.Editor.Models
 {
     [ComplexType]
-    public class CreativeViewModel<T> : BaseViewModel<T, IApplicationContext> where T : Page
+    public class CreativeViewModel : BaseViewModel<Page, IApplicationModel>
     {
         [ScaffoldColumn(true)]
         [Display(Order = 5)]
         public IEnumerable<LinkViewModel> Links { get; set; }
 
-        public override void Load(T model)
+        public override void Load(Page model)
         {
             base.Load(model);
 
             Links = model.Document.Links.Select(l => new LinkViewModel(l.Title, l.Uri, l.Picture)).ToList().Pad(10);
         }
 
-        public override void Save(T model)
+        public override void Save(Page model)
         {
             base.Save(model);
 

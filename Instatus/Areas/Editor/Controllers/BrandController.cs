@@ -13,21 +13,21 @@ using Instatus;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
+using Instatus.Entities;
 
 namespace Instatus.Areas.Editor.Controllers
 {
-    public class BrandViewModel : BaseViewModel<Brand, IApplicationContext>
+    public class BrandViewModel : BaseViewModel<Page, IApplicationModel>
     {
         [Required]
         public string Name { get; set; }
-        public string Data { get; set; }
 
         [Required]
         public string Href { get; set; }
 
         public string Visual { get; set; }
 
-        public override void Load(Brand model)
+        public override void Load(Page model)
         {
             base.Load(model);
 
@@ -35,7 +35,7 @@ namespace Instatus.Areas.Editor.Controllers
             Visual = model.Links.Uri(WebContentType.Jpeg);
         }
 
-        public override void Save(Brand model)
+        public override void Save(Page model)
         {
             base.Save(model);
 
@@ -53,7 +53,7 @@ namespace Instatus.Areas.Editor.Controllers
 
     [Authorize(Roles = "Editor")]
     [Description("Brands")]
-    public class BrandController : ScaffoldController<BrandViewModel, Brand, IApplicationContext, int>
+    public class BrandController : ScaffoldController<BrandViewModel, Brand, IApplicationModel, int>
     {
         public override IEnumerable<Brand> Query(IEnumerable<Brand> set, WebQuery query)
         {

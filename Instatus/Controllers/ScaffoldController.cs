@@ -10,7 +10,6 @@ using Instatus.Web;
 using System.Linq.Expressions;
 using Instatus.Data;
 using System.ComponentModel;
-using System.Web.SessionState;
 
 namespace Instatus.Controllers
 {
@@ -54,14 +53,14 @@ namespace Instatus.Controllers
             }
         }
 
-        public ActionResult Index(WebQuery query)
+        public ActionResult Index(Query query)
         {
             var webView = new WebView<TModel>(Query(Set, query), query);
             ConfigureWebView(webView);
             return View(IndexViewName, webView);
         }
 
-        public virtual IEnumerable<TModel> Query(IEnumerable<TModel> set, WebQuery query)
+        public virtual IEnumerable<TModel> Query(IEnumerable<TModel> set, Query query)
         {
             return set.OrderBy(m => true);
         }
@@ -69,9 +68,8 @@ namespace Instatus.Controllers
         public virtual void ConfigureWebView(WebView<TModel> webView) {
             var controller = ControllerContext.Controller;
             
-            webView.Navigation = Url.Controllers();
             webView.Commands = GetCommands(webView.Query);
-            webView.Document = new WebDocument()
+            webView.Document = new Document()
             {
                 Title = controller.GetCustomAttributeValue<DescriptionAttribute, string>(d => d.Description)
             };
@@ -80,19 +78,6 @@ namespace Instatus.Controllers
 
             if (roles.Count > 0)
                 webView.Permissions = roles[0].AsEnum<WebRole>().ToPermissions();
-
-            var columns = new List<string>();
-
-            if (TypeExtensions.Implements<IEntity, TModel>())
-                columns.Add("Id");
-
-            if (TypeExtensions.Implements<IFriendlyIdentifier, TModel>())
-                columns.Add("Slug");
-
-            if (TypeExtensions.Implements<IUserGeneratedContent, TModel>())
-                columns.Add("Status");
-
-            webView.Columns = columns.ToArray();
         }
 
         public virtual void AttachContext(TViewModel viewModel)
@@ -119,7 +104,7 @@ namespace Instatus.Controllers
             viewModel.Load(model);
             viewModel.Databind();
 
-            ViewData.AddSingle(WebForm.Edit());
+            ViewData.AddSingle(Form.Edit());
             
             return View(EditViewName, viewModel);
         }
@@ -140,7 +125,7 @@ namespace Instatus.Controllers
 
             viewModel.Databind();
 
-            ViewData.AddSingle(WebForm.Edit());
+            ViewData.AddSingle(Form.Edit());
 
             return View(EditViewName, viewModel);
         }
@@ -156,7 +141,7 @@ namespace Instatus.Controllers
             viewModel.Load(model);
             viewModel.Databind();
 
-            ViewData.AddSingle(WebForm.Create());
+            ViewData.AddSingle(Form.Create());
 
             return View(CreateViewName, viewModel);
         }
@@ -178,12 +163,12 @@ namespace Instatus.Controllers
 
             viewModel.Databind();
 
-            ViewData.AddSingle(WebForm.Create());
+            ViewData.AddSingle(Form.Create());
 
             return View(CreateViewName, viewModel);
         }
 
-        public virtual ICollection<IWebCommand> GetCommands(WebQuery query)
+        public virtual ICollection<IWebCommand> GetCommands(Query query)
         {
             return new List<IWebCommand>();
         }

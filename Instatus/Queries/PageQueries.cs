@@ -13,9 +13,9 @@ namespace Instatus
 {
     public static class PageQueries
     {
-        public static IEnumerable<T> GetPages<T>(this IPageContext content, WebQuery query = null, bool cache = false, string expand = null, string category = null, WebSort sort = WebSort.Recency, string cacheKey = null, int cacheDuration = WebCache.Duration) where T : Page
+        public static IEnumerable<T> GetPages<T>(this IPageContext content, Query query = null, bool cache = false, string expand = null, string category = null, WebSort sort = WebSort.Recency, string cacheKey = null, int cacheDuration = WebCache.Duration) where T : Page
         {
-            query = query ?? new WebQuery();
+            query = query ?? new Query();
             query.Category = category ?? query.Category;
             query.Kind = typeof(T).Name.AsEnum<WebKind>();
 
@@ -158,7 +158,7 @@ namespace Instatus
             return pages;
         }
 
-        public static IQueryable<T> Filter<T>(this IQueryable<T> pages, WebQuery query) where T : Page
+        public static IQueryable<T> Filter<T>(this IQueryable<T> pages, Query query) where T : Page
         {
             if (!query.Tag.IsEmpty())
                 pages = pages.Where(p => p.Tags.Any(t => t.Name == query.Tag));

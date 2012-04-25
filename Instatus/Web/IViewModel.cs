@@ -8,6 +8,7 @@ using Instatus.Data;
 using System.Collections;
 using System.Web.Mvc;
 using Instatus.Web;
+using Instatus.Models;
 
 namespace Instatus.Web
 {
@@ -18,7 +19,7 @@ namespace Instatus.Web
     
     public interface IViewModel
     {
-        WebStep Step { get; }
+        Step Step { get; }
     }
     
     public interface IViewModel<TModel> : IViewModel, IDataboundModel
@@ -30,7 +31,7 @@ namespace Instatus.Web
     public class BaseViewModel<TModel> : IViewModel<TModel>
     {
         [ScaffoldColumn(false)]
-        public WebStep Step { get; set; }
+        public Step Step { get; set; }
         
         public virtual void Load(TModel model)
         {
@@ -52,7 +53,7 @@ namespace Instatus.Web
 
         public BaseViewModel()
         {
-            Step = WebStep.Start;
+            Step = Step.Start;
         }
     }
 

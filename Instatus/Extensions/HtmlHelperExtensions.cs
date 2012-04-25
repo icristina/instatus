@@ -25,7 +25,7 @@ namespace Instatus
         public static MvcHtmlString ReturnUrl<T>(this HtmlHelper<T> html, string returnUrl = null)
         {
             var request = html.ViewContext.RequestContext.HttpContext.Request;
-            return html.Hidden(HtmlConstants.ReturnUrl, returnUrl ?? request.Params[HtmlConstants.ReturnUrl] ?? request.RawUrl);
+            return html.Hidden(WebConstant.QueryParameter.ReturnUrl, returnUrl ?? request.Params[WebConstant.QueryParameter.ReturnUrl] ?? request.RawUrl);
         }
         
         public static MvcHtmlString Tag<T>(this HtmlHelper<T> html, string tagName, object value, string itemPropertyName = null)

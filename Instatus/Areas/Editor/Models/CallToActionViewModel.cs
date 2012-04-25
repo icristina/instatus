@@ -8,20 +8,22 @@ using Instatus.Web;
 using System.Web.Mvc;
 using Instatus.Models;
 using Instatus.Data;
+using Instatus.Entities;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Instatus.Areas.Editor.Models
 {
     [ComplexType]
-    public class CallToActionViewModel<T> : BaseViewModel<T, IApplicationContext> where T : Page
+    public class CallToActionViewModel : BaseViewModel<Page, IApplicationModel>
     {       
         public string Uri { get; set; }
 
-        public override void Load(T model)
+        public override void Load(Page model)
         {
             Uri = model.Links.Uri();
         }
 
-        public override void Save(T model)
+        public override void Save(Page model)
         {
             var html = WebContentType.Html.ToMimeType();
             

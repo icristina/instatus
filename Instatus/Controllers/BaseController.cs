@@ -81,7 +81,7 @@ namespace Instatus.Controllers
 
         public new ActionResult RedirectToAction(string actionName, object values = null)
         {
-            var returnUrl = Request.Unvalidated(HtmlConstants.ReturnUrl); // fix to allow redirect to action from form that includes HTML
+            var returnUrl = Request.Unvalidated(WebConstant.QueryParameter.ReturnUrl); // fix to allow redirect to action from form that includes HTML
             
             if (!returnUrl.IsEmpty())
                 return Redirect(returnUrl);
@@ -122,7 +122,7 @@ namespace Instatus.Controllers
         [NonAction]
         public new ActionResult View()
         {                      
-            if (RouteData.WebAction().Equals(WebAction.Details) && ViewData.Model.IsEmpty())
+            if (RouteData.ActionName().Match("Details") && ViewData.Model.IsEmpty())
                 return HttpNotFound();
 
             if (Request.IsAjaxRequest())

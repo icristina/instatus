@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 using Instatus.Data;
 using Instatus.Models;
 using Instatus.Services;
@@ -57,7 +58,7 @@ namespace Instatus.Web
 
         public override string[] GetRolesForUser(string username)
         {
-            var membershipService = WebApp.GetService<IMembershipService>();
+            var membershipService = DependencyResolver.Current.GetService<IMembershipService>();
             
             return membershipService.GetRolesForUser(username);
         }

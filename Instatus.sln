@@ -9,10 +9,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{D51383
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instatus.Web", "Instatus.Web\Instatus.Web.csproj", "{B7BF0E62-612C-4649-8672-12F44F48F5E8}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instatus.Entities", "Instatus.Entities\Instatus.Entities.csproj", "{848E077E-6530-418C-A3D3-429D7E691E4C}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,14 +19,6 @@ Global
 		{23396A12-A04A-46B8-90EF-7C1D8F548810}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{23396A12-A04A-46B8-90EF-7C1D8F548810}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{23396A12-A04A-46B8-90EF-7C1D8F548810}.Release|Any CPU.Build.0 = Release|Any CPU
-		{848E077E-6530-418C-A3D3-429D7E691E4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{848E077E-6530-418C-A3D3-429D7E691E4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{848E077E-6530-418C-A3D3-429D7E691E4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{848E077E-6530-418C-A3D3-429D7E691E4C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B7BF0E62-612C-4649-8672-12F44F48F5E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B7BF0E62-612C-4649-8672-12F44F48F5E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B7BF0E62-612C-4649-8672-12F44F48F5E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B7BF0E62-612C-4649-8672-12F44F48F5E8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

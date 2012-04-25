@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using Instatus.Models;
 using System.IO;
+using Instatus.Entities;
 
 namespace Instatus.Web
 {
@@ -27,24 +28,23 @@ namespace Instatus.Web
             {
                 if (baseUri.IsEmpty())
                 {
-                    using (var db = WebApp.GetService<IApplicationContext>())
+                    var applicationModel = DependencyResolver.Current.GetService<IApplicationModel>();
+
+                    if (applicationModel == null && HttpContext.Current.Request != null)
                     {
-                        if (db == null && HttpContext.Current.Request != null)
+                        baseUri = new Uri(HttpContext.Current.Request.BaseUri());
+                    }
+                    else
+                    {
+                        var domain = applicationModel.Domains.Where(d => d.Canonical).FirstOrDefault();
+
+                        if (!domain.IsEmpty())
+                        {
+                            baseUri = domain.Hostname.StartsWith("http://") ? new Uri(domain.Hostname) : new Uri("http://" + domain.Hostname);
+                        }
+                        else if (HttpContext.Current.Request != null)
                         {
                             baseUri = new Uri(HttpContext.Current.Request.BaseUri());
-                        }
-                        else
-                        {
-                            var domain = db.GetApplicationDomain();
-
-                            if (!domain.IsEmpty())
-                            {
-                                baseUri = domain.Uri.StartsWith("http://") ? new Uri(domain.Uri) : new Uri("http://" + domain.Uri);
-                            }
-                            else if (HttpContext.Current.Request != null)
-                            {
-                                baseUri = new Uri(HttpContext.Current.Request.BaseUri());
-                            }
                         }
                     }
                 }
@@ -126,9 +126,9 @@ namespace Instatus.Web
             return uriBuilder.Uri.ToString(); // user uri property to ensure :80 or :443 default ports not returned
         }
 
-        public static string Resize(WebSize size, string virtualPath, bool normalizeExtension = true)
+        public static string Resize(ImageSize size, string virtualPath, bool normalizeExtension = true)
         {
-            if (size == WebSize.Original)
+            if (size == ImageSize.Original)
             {
                 return virtualPath;
             }
@@ -147,7 +147,7 @@ namespace Instatus.Web
             }
         }
 
-        public static string ResizeAbsolute(WebSize size, string virtualPath)
+        public static string ResizeAbsolute(ImageSize size, string virtualPath)
         {
             return Absolute(Resize(size, virtualPath));
         }

@@ -17,7 +17,7 @@ using Instatus.Areas.Editor.Models;
 
 namespace Instatus.Areas.Editor.Controllers
 {
-    public class OrganizationViewModel : BaseViewModel<Organization, IApplicationContext>
+    public class OrganizationViewModel : BaseViewModel<Organization, IApplicationModel>
     {
         [Category("Overview")]
         [Display(Order = 1)]
@@ -73,7 +73,7 @@ namespace Instatus.Areas.Editor.Controllers
 
     [Authorize(Roles = "Editor")]
     [Description("Organizations")]
-    public class OrganizationController : ScaffoldController<OrganizationViewModel, Organization, IApplicationContext, int>
+    public class OrganizationController : ScaffoldController<OrganizationViewModel, Organization, IApplicationModel, int>
     {
         public override IEnumerable<Organization> Query(IEnumerable<Organization> set, WebQuery query)
         {

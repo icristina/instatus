@@ -70,7 +70,7 @@ namespace Instatus
             return credentials != null ? credentials.AccessToken : string.Empty;
         }
 
-        public static T GetLatestAwarded<T>(this IApplicationContext context, string achievementSlug) where T : Page
+        public static T GetLatestAwarded<T>(this IApplicationModel context, string achievementSlug) where T : Page
         {
             var award = context.Activities
                         .OfType<Award>()
@@ -80,7 +80,7 @@ namespace Instatus
             return award.IsEmpty() ? null : (T)award.Page;
         }
 
-        public static IEnumerable<User> GetUsers(this IApplicationContext context, WebQuery query)
+        public static IEnumerable<User> GetUsers(this IApplicationModel context, Query query)
         {
             return context
                     .SerializationSafe()
@@ -90,7 +90,7 @@ namespace Instatus
                     .Sort(query.Sort);
         }
 
-        public static IQueryable<User> Filter(this IQueryable<User> queryable, WebQuery query)
+        public static IQueryable<User> Filter(this IQueryable<User> queryable, Query query)
         {
             var filtered = queryable;
 

@@ -14,12 +14,12 @@ namespace Instatus
 {
     public static class MembershipQueries
     {
-        public static User GetUser(this IApplicationContext context, IPrincipal user)
+        public static User GetUser(this IApplicationModel context, IPrincipal user)
         {
             return GetUser(context, user.Identity.Name);
         }
 
-        public static User GetUser(this IApplicationContext context, string userName)
+        public static User GetUser(this IApplicationModel context, string userName)
         {
             if (userName.IsEmpty())
                 return null;
@@ -46,12 +46,12 @@ namespace Instatus
             return GetUser(context, provider, uri);
         }
 
-        public static User GetCurrentUser(this IApplicationContext context)
+        public static User GetCurrentUser(this IApplicationModel context)
         {
             return GetUser(context, HttpContext.Current.User);
         }
 
-        public static User GetUser(this IApplicationContext context, WebProvider webProvider, string uri)
+        public static User GetUser(this IApplicationModel context, WebProvider webProvider, string uri)
         {
             var provider = webProvider.ToString();
             return context.Users
@@ -60,13 +60,13 @@ namespace Instatus
                     .FirstOrDefault(u => u.Credentials.Any(c => c.Provider == provider && c.Uri == uri));
         }
 
-        public static IQueryable<User> GetUsers(this IApplicationContext context, WebRole webRole)
+        public static IQueryable<User> GetUsers(this IApplicationModel context, WebRole webRole)
         {
             var roleName = webRole.ToString();
             return context.Users.Where(u => u.Roles.Any(r => r.Name == roleName));
         }
 
-        public static List<MailAddress> GetMailAddresses(this IApplicationContext context, WebRole webRole)
+        public static List<MailAddress> GetMailAddresses(this IApplicationModel context, WebRole webRole)
         {
             return context.GetUsers(webRole)
                     .ToList()

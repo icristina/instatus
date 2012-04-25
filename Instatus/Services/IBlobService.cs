@@ -9,6 +9,7 @@ using Instatus.Web;
 using System.Drawing;
 using System.Drawing.Imaging;
 using Instatus.Data;
+using Instatus.Models;
 
 namespace Instatus.Services
 {
@@ -63,10 +64,10 @@ namespace Instatus
         
         public static string GenerateThumbnail(this IBlobService blobService, string key)
         {
-            return blobService.GenerateSize(key, WebSize.Thumb);
+            return blobService.GenerateSize(key, ImageSize.Thumb);
         }
 
-        public static string GenerateSize(this IBlobService blobService, string key, WebSize size, WebTransform transform = null, bool alwaysCreate = false)
+        public static string GenerateSize(this IBlobService blobService, string key, ImageSize size, Transform transform = null, bool alwaysCreate = false)
         {
             if (transform == null)
                 transform = WebImaging.Sizes[size];
@@ -98,7 +99,7 @@ namespace Instatus
 
         public static bool HasThumbnail(this IBlobService blobService, string key) 
         {
-            var thumbnailKey = WebPath.Resize(WebSize.Thumb, key);
+            var thumbnailKey = WebPath.Resize(ImageSize.Thumb, key);
             return blobService.Exists(thumbnailKey);
         }
     }

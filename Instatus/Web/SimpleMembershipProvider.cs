@@ -6,6 +6,7 @@ using Instatus.Data;
 using System.Web.Security;
 using Instatus.Models;
 using Instatus.Services;
+using System.Web.Mvc;
 
 namespace Instatus.Web
 {
@@ -158,7 +159,7 @@ namespace Instatus.Web
 
         public override bool ValidateUser(string username, string password)
         {
-            var membershipService = WebApp.GetService<IMembershipService>();
+            var membershipService = DependencyResolver.Current.GetService<IMembershipService>();
 
             return membershipService.ValidateUser(username, password);            
         }

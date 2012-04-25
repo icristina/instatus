@@ -5,6 +5,7 @@ using System.Web;
 using Instatus.Models;
 using Instatus.Data;
 using Instatus.Services;
+using Instatus.Entities;
 
 namespace Instatus.Web
 {
@@ -22,7 +23,7 @@ namespace Instatus.Web
             get
             {
                 if(links == null) {
-                    using (var db = WebApp.GetService<IApplicationContext>())
+                    using (var db = WebApp.GetService<IApplicationModel>())
                     {
                         if (db != null)
                         {
@@ -47,7 +48,7 @@ namespace Instatus.Web
             {
                 if (domains == null)
                 {
-                    using (var db = WebApp.GetService<IApplicationContext>())
+                    using (var db = WebApp.GetService<IApplicationModel>())
                     {
                         if (db != null)
                         {

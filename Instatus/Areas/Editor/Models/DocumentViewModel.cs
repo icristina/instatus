@@ -6,12 +6,13 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 using Instatus.Web;
 using System.Web.Mvc;
-using Instatus.Models;
+using Instatus.Entities;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Instatus.Areas.Editor.Models
 {
     [ComplexType]
-    public class DocumentViewModel<T> : BaseViewModel<T> where T : Page
+    public class DocumentViewModel : BaseViewModel<Page>
     {       
         public string Heading { get; set; }
 
@@ -19,13 +20,13 @@ namespace Instatus.Areas.Editor.Models
         [AllowHtml]
         public string Body { get; set; }
 
-        public override void Load(T model)
+        public override void Load(Page model)
         {
             Heading = model.Document.Title.TrimOrNull();
             Body = model.Document.Body.TrimOrNull();
         }
 
-        public override void Save(T model)
+        public override void Save(Page model)
         {
             model.Document.Title = Heading.TrimOrNull();
             model.Document.Body = Body.TrimOrNull();

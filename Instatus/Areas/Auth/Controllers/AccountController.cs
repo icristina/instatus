@@ -9,10 +9,12 @@ using Instatus.Data;
 using Instatus.Web;
 using Instatus.Areas.Auth.Models;
 using Instatus.Models;
+using Instatus.Entities;
+using Instatus.Services;
 
 namespace Instatus.Areas.Auth.Controllers
 {
-    public class AccountController : BaseController<IApplicationContext>
+    public class AccountController : BaseController<IApplicationModel>
     {
         [HttpGet]
         public ActionResult LogOn(string returnUrl)
@@ -42,9 +44,10 @@ namespace Instatus.Areas.Auth.Controllers
 
         public ActionResult Verification(int id, string token)
         {
+            var membershipService = DependencyResolver.Current.GetService<IMembershipService>();
             var user = Context.Users.Find(id);
 
-            if (user.ValidateVerificationToken(token))
+            if (membershipService.ValidateVerificationToken(id, token))
             {
                 Context.SaveChanges();
 

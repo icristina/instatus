@@ -12,7 +12,7 @@ using Instatus.Data;
 namespace Instatus.Areas.Editor.Models
 {
     [ComplexType]
-    public class LocationViewModel<T> : BaseViewModel<T, IApplicationContext> where T : Place
+    public class LocationViewModel<T> : BaseViewModel<T, IApplicationModel> where T : Place
     {
         public double Longitude { get; set; }
 

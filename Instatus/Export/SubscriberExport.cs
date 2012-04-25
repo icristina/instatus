@@ -9,6 +9,8 @@ using System.Collections;
 using Instatus.Models;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
+using System.ComponentModel.DataAnnotations.Schema;
+using Instatus.Entities;
 
 namespace Instatus.Export
 {
@@ -25,31 +27,29 @@ namespace Instatus.Export
         
         public IEnumerable Export(object configuration)
         {
-            using (var db = WebApp.GetService<IApplicationContext>())
-            {
-                var subscriberExportConfiguration = configuration as SubscriberExportConfiguration;
-                var users = db.Users.AsQueryable();
+            var applicationModel = DependencyResolver.Current.GetService<IApplicationModel>();
+            var subscriberExportConfiguration = configuration as SubscriberExportConfiguration;
+            var users = applicationModel.Users.AsQueryable();
 
-                if (subscriberExportConfiguration.Subscription.HasValue)
-                {
-                    users = users.Where(u => u.Subscriptions.Any(s => s.Id == subscriberExportConfiguration.Subscription));
-                }
-                else
-                {
-                    users = users.Where(u => u.Subscriptions.Any());
-                }
-                
-                return users
-                        .OrderBy(u => u.CreatedTime)
-                        .Select(u => new
-                        {
-                            GivenName = u.Name.GivenName,
-                            FamilyName = u.Name.FamilyName,
-                            EmailAddress = u.EmailAddress,
-                            CreatedTime = u.CreatedTime
-                        })
-                        .ToList();
+            if (subscriberExportConfiguration.Subscription.HasValue)
+            {
+                users = users.Where(u => u.Subscriptions.Any(s => s.Page.Id == subscriberExportConfiguration.Subscription));
             }
+            else
+            {
+                users = users.Where(u => u.Subscriptions.Any());
+            }
+                
+            return users
+                    .OrderBy(u => u.CreatedTime)
+                    .Select(u => new
+                    {
+                        FirstName = u.FirstName,
+                        LastName = u.LastName,
+                        EmailAddress = u.EmailAddress,
+                        CreatedTime = u.CreatedTime
+                    })
+                    .ToList();
         }
 
         public string Name
@@ -72,10 +72,10 @@ namespace Instatus.Export
 
         public void Databind()
         {
-            using (var db = WebApp.GetService<IApplicationContext>())
-            {
-                SubscriptionList = new SelectList(db.Subscriptions.ToList(), "Id", "Name");
-            }  
+            var applicationModel = DependencyResolver.Current.GetService<IApplicationModel>();
+            var campaigns = applicationModel.Pages.Where(p => p.Kind == "Campaign").ToList();
+
+            SubscriptionList = new SelectList(campaigns, "Id", "Name");
         }
     }
 }

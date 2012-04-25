@@ -14,17 +14,16 @@ namespace Instatus.Web
     {
         public string Name { get; set; }
         public object Context { get; set; }
-        public WebDocument Document { get; set; }
-        public IDictionary<WebVerb, IWebFeed> Feeds { get; private set; }
+        public Document Document { get; set; }
         public SelectList Tags { get; set; }
         public SelectList Filter { get; set; }
         public SelectList Mode { get; set; }
         public SelectList Sort { get; set; }
         public ICollection<WebLink> Links { get; set; }
-        public WebQuery Query { get; set; }
+        public Query Query { get; set; }
         public ICollection<IWebCommand> Commands { get; set; }
         public SiteMapNodeCollection Navigation { get; set; }
-        public WebStep Step { get; set; }
+        public Step Step { get; set; }
         public dynamic Extensions { get; set; }
         public string[] Columns { get; set; }
 
@@ -63,12 +62,12 @@ namespace Instatus.Web
             }
         }
 
-        public WebQuery Previous()
+        public Query Previous()
         {
             return HasPrevious ? Query.WithPageIndex(PageIndex - 1) : null;
         }
 
-        public WebQuery Next()
+        public Query Next()
         {
             return HasNext ? Query.WithPageIndex(PageIndex + 1) : null;
         }
@@ -76,18 +75,17 @@ namespace Instatus.Web
         private void Init()
         {
             Extensions = new ExpandoObject();
-            Feeds = new Dictionary<WebVerb, IWebFeed>();
             Columns = new string[] { };
         }
 
-        public WebView(IEnumerable<T> list, WebQuery query)
+        public WebView(IEnumerable<T> list, Query query)
             : base(list, query.PageSize, query.PageIndex, query.CountTotal)
         {
             Init();
             Query = query;
         }
 
-        public WebView(IQueryable<Record<T>> queryable, Func<Record<T>, T> projection, WebQuery query)
+        public WebView(IQueryable<Record<T>> queryable, Func<Record<T>, T> projection, Query query)
             : base(queryable, projection, query.PageSize, query.PageIndex, query.CountTotal)
         {
             Init();

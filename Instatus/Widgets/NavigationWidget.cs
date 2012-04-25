@@ -4,15 +4,16 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Instatus.Models;
 using Instatus.Web;
 
 namespace Instatus.Widgets
 {
-    public class NavigationWidget : WebPartial
+    public class NavigationWidget : Part, IModelProvider
     {
         Func<UrlHelper, SiteMapNodeCollection> buildSiteMapNodeCollection;
 
-        public override object GetViewModel(WebPartialContext context)
+        public object GetModel(ModelProviderContext context)
         {
             var viewDataDictionary = new ViewDataDictionary<SiteMapNodeCollection>(buildSiteMapNodeCollection(context.Url));
 
@@ -21,15 +22,15 @@ namespace Instatus.Widgets
             return viewDataDictionary;
         }
 
-        public NavigationWidget(Func<UrlHelper, SiteMapNodeCollection> buildSiteMapNodeCollection, WebZone zone = WebZone.Navigation, string viewName = "Navigation", WebFormatting webFormatting = null, string scope = null)
+        public NavigationWidget(Func<UrlHelper, SiteMapNodeCollection> buildSiteMapNodeCollection, Zone zone = Zone.Navigation, string viewName = "Navigation", Formatting formatting = null, string scope = null)
         {
             this.buildSiteMapNodeCollection = buildSiteMapNodeCollection;
 
-            if (webFormatting != null)
-                Formatting = webFormatting;
+            if (formatting != null)
+                Formatting = formatting;
 
             Zone = zone;
-            ViewName = viewName;
+            Template = viewName;
             Scope = scope;
         }
 
@@ -47,13 +48,13 @@ namespace Instatus.Widgets
                     .Page(WebPhrase.PrivacyPolicy, "privacy")
                     .ToSiteMapNodeCollection();
             }, 
-            zone: WebZone.Footer,
-            webFormatting: new WebFormatting() 
+            zone: Zone.Footer,
+            formatting: new Formatting() 
             { 
                 Label = WebPhrase.Copyright,
                 ClassName = "nav-pills"
-            })
-            .WithPublicScope();
+            },
+            scope: "Public");
         }
     }
 }

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Instatus;
+using Instatus.Entities;
+using Instatus.Models;
 
 namespace Instatus.Web
 {
@@ -14,15 +16,15 @@ namespace Instatus.Web
             var viewData = filterContext.Controller.ViewData;
             var routeData = filterContext.RouteData;
             var viewModel = viewData.Model;
-            var contentItem = viewData.Model as IContentItem ?? viewData.GetSingle<WebContentItem>();
+            var contentItem = viewData.Model as IContentItem ?? viewData.GetSingle<IContentItem>();
 
             if (contentItem == null) {
-                contentItem = new WebContentItem();                
+                // contentItem = new Page();                
             }
 
             if (contentItem.Document == null)
             {
-                contentItem.Document = new WebDocument();
+                contentItem.Document = new Document();
             }
 
             // include WebParts that are unscoped or scope matches routeData parameter
@@ -45,10 +47,11 @@ namespace Instatus.Web
                 scope.Add(controllerScope);
             }
 
-            contentItem.Document.Parts.AddRange(WebPart.Catalog.Where(p => p.Scope.IsEmpty() || scope.Intersect(p.Scope.ToList(' '), StringComparer.OrdinalIgnoreCase).Any()));
+            // TODO: reinstate
+            //contentItem.Document.Parts.AddRange(WebPart.Catalog.Where(p => p.Scope.IsEmpty() || scope.Intersect(p.Scope.ToList(' '), StringComparer.OrdinalIgnoreCase).Any()));
 
-            if(contentItem is WebContentItem)
-                viewData.AddSingle(contentItem);
+            //if(contentItem is WebContentItem)
+            //    viewData.AddSingle(contentItem);
 
             base.OnActionExecuted(filterContext);
         }

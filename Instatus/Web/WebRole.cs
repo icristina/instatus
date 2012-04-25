@@ -20,19 +20,19 @@ namespace Instatus.Web
 
     public static class WebRoleExtensions
     {
-        public static WebAction[] ToPermissions(this WebRole role)
+        public static string[] ToPermissions(this WebRole role)
         {
             switch (role)
             {
                 case WebRole.Member:
-                    return new WebAction[] { WebAction.Index, WebAction.Details };
+                    return new string[] { "Index", "Details" };
                 case WebRole.Author:
-                    return new WebAction[] { WebAction.Index, WebAction.Details, WebAction.Edit, WebAction.Create };
+                    return new string[] { "Index", "Details", "Edit", "Create" };
                 case WebRole.Editor:
                 case WebRole.Moderator:
                 case WebRole.Administrator:
                 case WebRole.Developer:
-                    return new WebAction[] { WebAction.Index, WebAction.Details, WebAction.Edit, WebAction.Create, WebAction.Delete };
+                    return new string[] { "Index", "Details", "Edit", "Create", "Delete" };
                 default:
                     return null;
             }

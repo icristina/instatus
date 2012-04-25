@@ -13,7 +13,7 @@ using Instatus;
 namespace Instatus.Areas.Editor.Models
 {
     [ComplexType]
-    public class PeopleViewModel<T> : BaseViewModel<T, IApplicationContext> where T : Page
+    public class PeopleViewModel<T> : BaseViewModel<T, IApplicationModel> where T : Page
     {
         [Column("Profiles")]
         [Display(Name = "People", Order = 2)]

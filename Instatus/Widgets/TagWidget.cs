@@ -10,14 +10,14 @@ using Instatus;
 
 namespace Instatus.Widgets
 {
-    public class TagWidget : WebPartial
+    public class TagWidget : Part
     {
         private TagRenderMode tagRenderMode;
         private string innerHtml;
         private string tagName;
         private IDictionary<string, object> attributes;
         
-        public override object GetViewModel(WebPartialContext context)
+        public object GetViewModel(ModelProviderContext context)
         {
             var tagBuilder = new TagBuilder(tagName);
 
@@ -37,7 +37,7 @@ namespace Instatus.Widgets
             return tagBuilder.ToMvcHtmlString(tagRenderMode);
         }
 
-        public TagWidget(WebZone zone, string tagName, IDictionary<string, object> attributes, string innerHtml = null, TagRenderMode tagRenderMode = TagRenderMode.Normal, string scope = WebConstant.Scope.Public)
+        public TagWidget(Zone zone, string tagName, IDictionary<string, object> attributes, string innerHtml = null, TagRenderMode tagRenderMode = TagRenderMode.Normal, string scope = WebConstant.Scope.Public)
         {
             this.tagName = tagName;
             this.attributes = attributes;
@@ -50,14 +50,14 @@ namespace Instatus.Widgets
 
         public static TagWidget Script(string src)
         {
-            return new TagWidget(WebZone.Scripts, "script", new Dictionary<string, object>() {
+            return new TagWidget(Zone.Scripts, "script", new Dictionary<string, object>() {
                 { "src", src }
             });
         }
 
         public static TagWidget Stylesheet(string href)
         {
-            return new TagWidget(WebZone.Head, "link", new Dictionary<string, object>() {
+            return new TagWidget(Zone.Head, "link", new Dictionary<string, object>() {
                 { "href", href },
                 { "rel", "stylesheet" }
             },

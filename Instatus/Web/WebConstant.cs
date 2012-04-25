@@ -43,5 +43,10 @@ namespace Instatus.Web
             public const string Carousel = "Carousel";
             public const string Page = "Page";
         }
+
+        public static class QueryParameter
+        {
+            public const string ReturnUrl = "returnUrl";
+        }
     }
 }

@@ -9,6 +9,7 @@ using Instatus;
 using Instatus.Models;
 using Instatus.Web;
 using System.Web.Mvc.Html;
+using Instatus.Entities;
 
 namespace Instatus
 {
@@ -79,7 +80,7 @@ namespace Instatus
                     }
                     else
                     {
-                        link = html.ActionLink(label, WebAction.Index.ToString(), query.WithPageIndex(i).ToRouteValueDictionary());
+                        link = html.ActionLink(label, "Index", query.WithPageIndex(i).ToRouteValueDictionary());
                     }
 
                     sb.Append(link);
@@ -132,7 +133,7 @@ namespace Instatus
                 if (!tags.First().Equals(tag))
                     sb.Append(seperator);
 
-                sb.Append(html.ActionLinkOrText(webView.Tags.SelectedValue.AsString().Equals(tag.Name), tag.Name, WebAction.Index.ToString(), webView.Query.WithTag(tag.Name)));
+                sb.Append(html.ActionLinkOrText(webView.Tags.SelectedValue.AsString().Equals(tag.Name), tag.Name, "Index", webView.Query.WithTag(tag.Name)));
             }
 
             return new MvcHtmlString(sb.ToString());

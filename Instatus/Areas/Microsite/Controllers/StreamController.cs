@@ -15,7 +15,7 @@ namespace Instatus.Areas.Microsite.Controllers
     [PartCreationPolicy(CreationPolicy.NonShared)]    
     public class StreamController : BaseController
     {
-        private IApplicationContext applicationContext;
+        private IApplicationModel applicationContext;
         private IPageContext pageContext;
 
         [ChildActionOnly]
@@ -39,7 +39,7 @@ namespace Instatus.Areas.Microsite.Controllers
         }
 
         [ImportingConstructor]
-        public StreamController(IApplicationContext applicationContext, IPageContext pageContext)
+        public StreamController(IApplicationModel applicationContext, IPageContext pageContext)
         {
             this.applicationContext = applicationContext;
             this.pageContext = pageContext;

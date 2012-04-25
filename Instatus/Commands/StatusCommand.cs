@@ -58,7 +58,7 @@ namespace Instatus.Commands
             var id = routeData.Id();
             var status = requestParams.Value<WebStatus>("commandValue");
             
-            using (var db = WebApp.GetService<IApplicationContext>())
+            using (var db = WebApp.GetService<IApplicationModel>())
             {
                 if (db is DbContext)
                 {

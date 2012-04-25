@@ -5,13 +5,11 @@ using System.Web;
 using Instatus.Web;
 using Instatus.Data;
 using Instatus.Models;
-using System.ComponentModel.Composition;
+using Instatus.Entities;
 
 namespace Instatus.Adapters
 {
     // add WebDocument and optionally name and description to a Page or WebView based on slug
-    [Export(typeof(IContentAdapter))]
-    [PartCreationPolicy(CreationPolicy.NonShared)]    
     public class DocumentAdapter : IContentAdapter
     {
         private IPageContext pageContext;
@@ -45,7 +43,6 @@ namespace Instatus.Adapters
             }
         }
 
-        [ImportingConstructor]
         public DocumentAdapter(IPageContext pageContext)
         {
             this.pageContext = pageContext;

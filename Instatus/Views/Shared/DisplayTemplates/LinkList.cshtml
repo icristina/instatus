@@ -5,7 +5,7 @@
     {
         <li>
             @Html.ActionLinkOrText(item.Selected, item.Text, ViewContext.RouteData.ActionName(), 
-                ((WebQuery)ViewBag.Query)
+                ((Query)ViewBag.Query)
                     .WithPageIndex(0)
                     .ToRouteValueDictionary()
                     .AddNonEmptyValue(ViewData.ModelMetadata.PropertyName.ToCamelCase(), item.Value ?? item.Text))
