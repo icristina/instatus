@@ -66,7 +66,7 @@ namespace Instatus.Web
 
         public static void ErrorHandling()
         {
-            GlobalFilters.Filters.Add(new LogErrorAttribute());
+            //GlobalFilters.Filters.Add(new LogErrorAttribute());
             GlobalFilters.Filters.Add(new HandleErrorAttribute());
         }
 

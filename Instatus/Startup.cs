@@ -9,6 +9,7 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using Autofac;
 using Autofac.Integration.Mvc;
+using Instatus.Web;
 
 [assembly: WebActivator.PreApplicationStartMethod(typeof(Instatus.Startup), "PreApplicationStart")]
 [assembly: WebActivator.PostApplicationStartMethod(typeof(Instatus.Startup), "PostApplicationStart")]
@@ -21,12 +22,11 @@ namespace Instatus
         
         private static void PreApplicationStart()
         {
-            // app settings
-            ConfigurationManager.AppSettings["webpages:Version"] = "1.0.0.0";
-
-            // client validation
-            HtmlHelper.ClientValidationEnabled = false;
-            HtmlHelper.UnobtrusiveJavaScriptEnabled = false;
+            WebBootstrap.Core();
+            WebBootstrap.Routes();
+            WebBootstrap.Auth();
+            WebBootstrap.ErrorHandling();
+            WebBootstrap.ViewLocation();
         }
 
         private static void PostApplicationStart()
