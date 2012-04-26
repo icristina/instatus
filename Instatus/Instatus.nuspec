@@ -29,6 +29,7 @@
     <file src="Views\Shared\EditorTemplates\String.cshtml" target="content\Views\Shared\EditorTemplates" />
     <file src="Views\Shared\EditorTemplates\MultilineText.cshtml" target="content\Views\Shared\EditorTemplates" />
     <file src="Views\Shared\EditorTemplates\Int32.cshtml" target="content\Views\Shared\EditorTemplates" />
+    <file src="Views\Shared\EditorTemplates\Object.cshtml" target="content\Views\Shared\EditorTemplates" />
     <file src="Content\scaffold.css" target="content\Content" />
     <file src="Scripts\scaffold.js" target="content\Scripts" />
   </files>  

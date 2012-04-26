@@ -14,7 +14,7 @@ namespace Instatus.Commands
     public class SpamCommand<T> : StatusCommand<T> where T : class, IUserGeneratedContent
     {
         public SpamCommand()
-            : base(WebStatus.Spam, WebPhrase.Flag("spam"), WebStatus.Published, WebPhrase.RemoveFlag("spam"))
+            : base(Published.Spam, WebPhrase.Flag("spam"), Published.Active, WebPhrase.RemoveFlag("spam"))
         {
 
         }

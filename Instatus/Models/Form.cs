@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Instatus.Web;
 
 namespace Instatus.Models
 {
@@ -9,14 +10,30 @@ namespace Instatus.Models
     {
         public string ActionText { get; set; }
         public string ActionName { get; set; }
-        public IList<Parameter> HiddenParameters { get; set; }
+
+        private List<Parameter> hiddenParameters;
+
+        public List<Parameter> HiddenParameters
+        {
+            get
+            {
+                if (hiddenParameters == null)
+                    hiddenParameters = new List<Parameter>();
+
+                return hiddenParameters;
+            }
+            set
+            {
+                hiddenParameters = value;
+            }
+        }
 
         public static Form Edit()
         {
             return new Form()
             {
                 ActionText = "Edit",
-                ActionName = "Edit"
+                ActionName = WebPhrase.Submit
             };
         }
 
@@ -25,7 +42,7 @@ namespace Instatus.Models
             return new Form()
             {
                 ActionText = "Save",
-                ActionName = "Create"
+                ActionName = WebPhrase.Submit
             };
         }
     }

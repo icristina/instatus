@@ -9,6 +9,5 @@ namespace Instatus.Web
     {
         string Name { get; }
         string Picture { get; }
-        int Priority { get; }
     }
 }

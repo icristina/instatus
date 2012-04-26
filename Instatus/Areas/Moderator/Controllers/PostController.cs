@@ -13,31 +13,32 @@ using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.ComponentModel;
 using Instatus.Commands;
+using Instatus.Entities;
+using Instatus;
 
 namespace Instatus.Areas.Moderator.Controllers
 {
     [Authorize(Roles = "Moderator")]
-    [Description("User Generated Content")]
-    public class PostController : ScaffoldController<BaseViewModel<Post>, Post, IApplicationModel, int>
+    public class PostController : ScaffoldController<BaseViewModel<Page>, Page, IApplicationModel, int>
     {
-        public override IEnumerable<Post> Query(IEnumerable<Post> set, WebQuery query)
+        public override IEnumerable<Page> Query(IEnumerable<Page> set, Query query)
         {
-            return set.ByRecency();
+            return set.Where(p => p.Kind == "Post").ByRecency();
         }
 
-        public override ICollection<IWebCommand> GetCommands(WebQuery query)
+        public override ICollection<IWebCommand> GetCommands(Query query)
         {
             return new List<IWebCommand>()
             {
-                new SpamCommand<Post>()
+                new SpamCommand<Page>()
             };
         }
 
-        public override void ConfigureWebView(WebView<Post> webView)
+        public override void ConfigureWebView(WebView<Page> webView)
         {
             base.ConfigureWebView(webView);
 
-            webView.Permissions = new WebAction[] { WebAction.Details };
+            webView.Permissions = new string[] { "Details" };
             
             var additionalColumns = webView.Columns.ToList();
 

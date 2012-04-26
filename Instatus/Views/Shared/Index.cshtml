@@ -6,33 +6,6 @@
     Layout = "~/Views/Shared/_Bootstrap.cshtml";
 }
 
-@section head {
-    @Html.Link("self", Url.Self(Model))
-    @Html.Stylesheet("scaffold.css")
-}
-
-@section scripts {
-    @Html.Scripts("scaffold.js")
-}
-
-@section navigation {
-    <div class="navbar navbar-fixed-top">
-        <div class="navbar-inner">
-            <div class="container">    
-                <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </a>
-                <div class="nav-collapse">
-                    @Html.Partial("Navigation", Model.Navigation, new Formatting() { MaxLength = 6 })
-                    @Html.Partial("LoginStatus")
-                </div>
-            </div>
-        </div>
-    </div>  
-}
-
 @section header {
     @Html.Tag("h1", Model.Document.Title)     
 }

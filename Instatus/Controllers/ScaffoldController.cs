@@ -86,6 +86,11 @@ namespace Instatus.Controllers
                 (viewModel as BaseViewModel<TModel, TContext>).Context = Context;
         }
 
+        public virtual TModel CreateModelInstance()
+        {
+            return Activator.CreateInstance<TModel>();
+        }
+
         [HttpGet]
         public ActionResult Details(TKey id)
         {
@@ -133,7 +138,7 @@ namespace Instatus.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            var model = Activator.CreateInstance<TModel>();
+            var model = CreateModelInstance();
             var viewModel = Activator.CreateInstance<TViewModel>();
 
             AttachContext(viewModel);
@@ -153,7 +158,7 @@ namespace Instatus.Controllers
             
             if (ModelState.IsValid)
             {
-                var model = Activator.CreateInstance<TModel>();
+                var model = CreateModelInstance();
                 viewModel.Save(model);
                 Set.Add(model);
                 SaveChanges();

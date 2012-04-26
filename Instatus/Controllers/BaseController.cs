@@ -25,7 +25,7 @@ namespace Instatus.Controllers
             {
                 if (context == null)
                 {
-                    context = WebApp.GetService<TContext>();
+                    context = DependencyResolver.Current.GetService<TContext>();
                 }
 
                 return context;

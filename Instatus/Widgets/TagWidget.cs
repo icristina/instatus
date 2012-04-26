@@ -10,14 +10,14 @@ using Instatus;
 
 namespace Instatus.Widgets
 {
-    public class TagWidget : Part
+    public class TagWidget : Part, IModelProvider
     {
         private TagRenderMode tagRenderMode;
         private string innerHtml;
         private string tagName;
         private IDictionary<string, object> attributes;
         
-        public object GetViewModel(ModelProviderContext context)
+        public object GetModel(ModelProviderContext context)
         {
             var tagBuilder = new TagBuilder(tagName);
 
@@ -48,20 +48,28 @@ namespace Instatus.Widgets
             Scope = scope;
         }
 
-        public static TagWidget Script(string src)
+        public static TagWidget Script(string src, bool footer = true, string scope = WebConstant.Scope.Public)
         {
-            return new TagWidget(Zone.Scripts, "script", new Dictionary<string, object>() {
+            var tagWidget = new TagWidget(Zone.Scripts, "script", new Dictionary<string, object>() {
                 { "src", src }
             });
+
+            if (!footer)
+                tagWidget.Zone = Zone.Head;
+
+            tagWidget.Scope = scope;
+
+            return tagWidget;
         }
 
-        public static TagWidget Stylesheet(string href)
+        public static TagWidget Stylesheet(string href, string scope = WebConstant.Scope.Public)
         {
             return new TagWidget(Zone.Head, "link", new Dictionary<string, object>() {
                 { "href", href },
                 { "rel", "stylesheet" }
             },
-            tagRenderMode: TagRenderMode.SelfClosing);
+            tagRenderMode: TagRenderMode.SelfClosing,
+            scope: scope);
         }
     }
 }

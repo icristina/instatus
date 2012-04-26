@@ -7,7 +7,7 @@ using System.Web.Routing;
 using Instatus.Models;
 
 namespace Instatus.Web
-{
+{   
     public interface IModelProvider
     {
         object GetModel(ModelProviderContext modelProviderContext);

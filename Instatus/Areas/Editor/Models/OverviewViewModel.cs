@@ -8,11 +8,13 @@ using Instatus.Web;
 using Instatus.Models;
 using Instatus.Data;
 using System.Web.Mvc;
+using System.ComponentModel.DataAnnotations.Schema;
+using Instatus.Entities;
 
 namespace Instatus.Areas.Editor.Models
 {
     [ComplexType]
-    public class OverviewViewModel<T> : BaseViewModel<T> where T : Page
+    public class OverviewViewModel : BaseViewModel<Page>
     {
         [DisplayName("Title")]
         [Required]

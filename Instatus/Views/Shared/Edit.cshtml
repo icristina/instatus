@@ -1,39 +1,7 @@
 ﻿@{
     Layout = "~/Views/Shared/_Bootstrap.cshtml";
-    ViewBag.Title = Model.ToString();
 
     var webForm = ViewData.GetSingle<Form>();
-}
-
-@section head {
-    @Html.Stylesheet("scaffold.css")
-}
-
-@section scripts {
-    @Html.Scripts("scaffold.js")
-}
-
-@section navigation {
-    @{
-        var navigation = ViewData.GetSingle<SiteMapNodeCollection>();    
-    }
-    @if (!navigation.IsEmpty()) {
-        <div class="navbar navbar-fixed-top">
-            <div class="navbar-inner">
-                <div class="container">    
-                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </a>
-                    <div class="nav-collapse">
-                        @Html.Partial("Navigation", navigation, new WebFormatting() { MaxLength = 6 })
-                        @Html.Partial("LoginStatus")
-                    </div>
-                </div>
-            </div>
-        </div>   
-    }    
 }
 
 @using (Html.BeginActionForm())

@@ -18,11 +18,7 @@ namespace Instatus.Web
             var viewData = filterContext.Controller.ViewData;
             var routeData = filterContext.RouteData;
             var viewModel = viewData.Model;
-            var contentItem = viewData.Model as IContentItem ?? viewData.GetSingle<Page>();
-
-            if (contentItem == null) {
-                contentItem = new Page();                
-            }
+            var contentItem = viewData.Model as IContentItem ?? new Page();
 
             if (contentItem.Document == null)
             {
@@ -47,7 +43,7 @@ namespace Instatus.Web
 
             contentItem.Document.Parts.AddRange(WebCatalog.Parts.Where(p => p.Scope.IsEmpty() || scope.Intersect(p.Scope.ToList(' '), StringComparer.OrdinalIgnoreCase).Any()));
 
-            viewData.AddSingle(contentItem);
+            viewData.AddSingle<IContentItem>(contentItem);
 
             base.OnActionExecuted(filterContext);
         }

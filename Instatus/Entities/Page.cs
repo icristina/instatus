@@ -11,10 +11,11 @@ using System.Runtime.Serialization;
 using System.Text;
 using Instatus.Models;
 using Instatus.Web;
+using Instatus.Data;
 
 namespace Instatus.Entities
 {   
-    public class Page : IContentItem
+    public class Page : IContentItem, IUserGeneratedContent, INavigableContent
     {
         public int Id { get; set; }
         public int Locale { get; set; }
@@ -103,6 +104,11 @@ namespace Instatus.Entities
         public override string ToString()
         {
             return Name ?? base.ToString();
+        }
+
+        public Page(Kind kind)
+        {
+            Kind = kind.ToString();
         }
 
         public Page()

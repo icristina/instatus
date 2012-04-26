@@ -14,92 +14,99 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using Instatus.Areas.Editor.Models;
+using System.ComponentModel.DataAnnotations.Schema;
+using Instatus.Entities;
 
 namespace Instatus.Areas.Editor.Controllers
 {
-    public class ArticleViewModel : BaseViewModel<Article, IApplicationModel>
+    public class ArticleViewModel : BaseViewModel<Page, IApplicationModel>
     {
         [Category("Overview")]
         [Display(Order = 1)]
-        public OverviewViewModel<Article> Overview { get; set; }
+        public OverviewViewModel Overview { get; set; }
 
-        [Category("Overview")]
-        [Column("Parent")]
-        [Display(Name = "Parent", Order = 2)]
-        public SelectList ParentList { get; set; }
+        //[Category("Overview")]
+        //[Column("Parent")]
+        //[Display(Name = "Parent", Order = 2)]
+        //public SelectList ParentList { get; set; }
 
-        [ScaffoldColumn(false)]
-        public int? Parent { get; set; }
+        //[ScaffoldColumn(false)]
+        //public int? Parent { get; set; }
 
         [Category("Body")]
         [Display(Order = 3)]
-        public DocumentViewModel<Article> Document { get; set; }
+        public DocumentViewModel Document { get; set; }
 
-        [Category("Video")]
-        [Display(Order = 4)]
-        public VideoViewModel<Article> Video { get; set; }
+        //[Category("Video")]
+        //[Display(Order = 4)]
+        //public VideoViewModel Video { get; set; }
 
-        [Category("Links")]
-        [Display(Order = 5)]
-        public CreativeViewModel<Article> Creative { get; set; }
+        //[Category("Links")]
+        //[Display(Order = 5)]
+        //public CreativeViewModel Creative { get; set; }
 
-        [Category("Meta Tags")]
-        [Display(Order = 6)]
-        public MetaTagsViewModel<Article> MetaTags { get; set; }
+        //[Category("Meta Tags")]
+        //[Display(Order = 6)]
+        //public MetaTagsViewModel MetaTags { get; set; }
 
-        [Category("Custom Markup")]
-        [Display(Order = 7)]
-        public MarkupViewModel<Article> Markup { get; set; }
+        //[Category("Custom Markup")]
+        //[Display(Order = 7)]
+        //public MarkupViewModel Markup { get; set; }
 
-        [Category("People")]
-        [Display(Order = 8)]
-        public PeopleViewModel<Article> People { get; set; }
+        //[Category("People")]
+        //[Display(Order = 8)]
+        //public PeopleViewModel People { get; set; }
 
-        [Category("Publishing")]
-        [Display(Order = 9)]
-        public PublishingViewModel<Article> Publishing { get; set; }
+        //[Category("Publishing")]
+        //[Display(Order = 9)]
+        //public PublishingViewModel Publishing { get; set; }
 
-        public override void Load(Article model)
+        public override void Load(Page model)
         {
             base.Load(model);
 
-            Parent = LoadAssociation<Page, Article>(model.Parents);
+            //Parent = LoadAssociation<Page, Article>(model.Parents);
         }
 
-        public override void Save(Article model)
+        public override void Save(Page model)
         {
             base.Save(model);
 
-            model.Parents = SaveAssociation<Page, Article>(Context.Pages, model.Parents, Parent);
+            //model.Parents = SaveAssociation<Page, Article>(Context.Pages, model.Parents, Parent);
         }
 
         public override void Databind()
         {
             base.Databind();
 
-            ParentList = DatabindSelectList<Page, Article>(Context.Pages, Parent);
+            //ParentList = DatabindSelectList<Page, Article>(Context.Pages, Parent);
         }
 
         public ArticleViewModel()
         {
-            Overview = new OverviewViewModel<Article>();
-            Document = new DocumentViewModel<Article>();
-            Creative = new CreativeViewModel<Article>();
-            Video = new VideoViewModel<Article>();
-            MetaTags = new MetaTagsViewModel<Article>();
-            Markup = new MarkupViewModel<Article>();
-            People = new PeopleViewModel<Article>();
-            Publishing = new PublishingViewModel<Article>();
+            Overview = new OverviewViewModel();
+            Document = new DocumentViewModel();
+            //Creative = new CreativeViewModel();
+            //Video = new VideoViewModel();
+            //MetaTags = new MetaTagsViewModel();
+            //Markup = new MarkupViewModel();
+            //People = new PeopleViewModel();
+            //Publishing = new PublishingViewModel();
         }
     }
 
     [Authorize(Roles = "Editor")]
-    [Description("Articles")]
-    public class ArticleController : ScaffoldController<ArticleViewModel, Article, IApplicationModel, int>
+    [AddParts(Scope = WebConstant.Scope.Admin)]
+    public class ArticleController : ScaffoldController<ArticleViewModel, Page, IApplicationModel, int>
     {
-        public override IEnumerable<Article> Query(IEnumerable<Article> set, WebQuery query)
+        public override IEnumerable<Page> Query(IEnumerable<Page> set, Query query)
         {
-            return set.ByAlphabetical();
+            return set.Where(p => p.Kind == "Article").ByAlphabetical();
+        }
+
+        public override Page CreateModelInstance()
+        {
+            return new Page(Kind.Article);
         }
     }
 }

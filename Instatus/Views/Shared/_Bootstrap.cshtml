@@ -6,11 +6,11 @@
     @Html.Viewport()
     @Html.MetaTags()
     <link rel="stylesheet" href="/css/bootstrap" />
-    <script src="/scripts/bootstrap"></script>
+    <script src="/js/bootstrap"></script>
     @Html.Parts(Instatus.Models.Zone.Head) 
     @RenderSection("head", false)    
 </head>
-<body>
+<body @Html.RouteDataAttributes()>
     <div class="application-container">        
         @if(IsSectionDefined("banner") || Html.HasZone(Instatus.Models.Zone.Banner)) 
         {

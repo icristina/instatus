@@ -120,6 +120,10 @@
     <Compile Include="Areas\Auth\AuthAreaRegistration.cs" />
     <Compile Include="Areas\Auth\Controllers\AccountController.cs" />
     <Compile Include="Areas\Auth\Models\LogOnViewModel.cs" />
+    <Compile Include="Areas\Editor\Controllers\ArticleController.cs" />
+    <Compile Include="Areas\Editor\EditorAreaRegistration.cs" />
+    <Compile Include="Areas\Editor\Models\DocumentViewModel.cs" />
+    <Compile Include="Areas\Editor\Models\OverviewViewModel.cs" />
     <Compile Include="Areas\Facebook\Controllers\FacebookController.cs" />
     <Compile Include="Areas\Facebook\Facebook.cs" />
     <Compile Include="Areas\Facebook\FacebookAreaRegistration.cs" />
@@ -129,10 +133,13 @@
     <Compile Include="Areas\Microsite\Controllers\PageController.cs" />
     <Compile Include="Areas\Microsite\MicrositeAreaRegistration.cs" />
     <Compile Include="Areas\Moderator\Controllers\ActivityController.cs" />
+    <Compile Include="Areas\Moderator\Controllers\PostController.cs" />
     <Compile Include="Areas\Moderator\ModeratorAreaRegistration.cs" />
     <Compile Include="Areas\Twitter\Bootstrap.cs" />
     <Compile Include="Areas\Twitter\Twitter.cs" />
     <Compile Include="Areas\YouTube\YouTube.cs" />
+    <Compile Include="Commands\SpamCommand.cs" />
+    <Compile Include="Commands\PublishedCommand.cs" />
     <Compile Include="Data\IContentQuery.cs" />
     <Compile Include="Data\IEntity.cs" />
     <Compile Include="Data\IJob.cs" />
@@ -140,6 +147,7 @@
     <Compile Include="Data\IMessageQueue.cs" />
     <Compile Include="Data\INamed.cs" />
     <Compile Include="Data\ITimestamp.cs" />
+    <Compile Include="Data\IUserGeneratedContent.cs" />
     <Compile Include="Entities\Activity.cs" />
     <Compile Include="Entities\Application.cs" />
     <Compile Include="Entities\Association.cs" />
@@ -359,6 +367,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Content\mixins.less" />
+    <EmbeddedResource Include="Views\Shared\NavBar.cshtml" />
     <None Include="Views\Web.config.transform" />
     <None Include="Web.config.transform">
       <SubType>Designer</SubType>

@@ -25,7 +25,7 @@ namespace Instatus
         public static IHtmlString Parts<T>(this HtmlHelper<T> html, Zone zoneName = Zone.Body)
         {
             var sb = new StringBuilder();
-            var contentItem = html.ViewData.GetSingle<Page>();
+            var contentItem = html.ViewData.GetSingle<IContentItem>();
 
             foreach (var part in contentItem.Document.Parts.Where(p => p.Zone == zoneName))
             {

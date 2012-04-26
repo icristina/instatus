@@ -32,6 +32,7 @@ namespace Instatus.Areas.Moderator
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<Instatus.Areas.Moderator.Controllers.ActivityController>().InstancePerDependency();
+            builder.RegisterType<Instatus.Areas.Moderator.Controllers.PostController>().InstancePerDependency();
         }
 
         public ModeratorAreaModule()
