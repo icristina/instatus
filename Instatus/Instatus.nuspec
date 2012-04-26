@@ -17,6 +17,8 @@
     <file src="Views\_ViewStart.cshtml" target="content\Views" />
     <file src="Views\Shared\_Bootstrap.cshtml" target="content\Views\Shared" />
     <file src="Views\Shared\Navigation.cshtml" target="content\Views\Shared" />
+    <file src="Views\Shared\LoginStatus.cshtml" target="content\Views\Shared" />
+    <file src="Views\Shared\LogOn.cshtml" target="content\Views\Shared" />
     <file src="Views\Shared\EditorTemplates\String.cshtml" target="content\Views\Shared\EditorTemplates" />
     <file src="Views\Shared\EditorTemplates\MultilineText.cshtml" target="content\Views\Shared\EditorTemplates" />
     <file src="Views\Shared\EditorTemplates\Int32.cshtml" target="content\Views\Shared\EditorTemplates" />

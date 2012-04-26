@@ -10,8 +10,11 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using System.Web.Security;
 using Autofac;
+using Autofac.Core;
 using Autofac.Integration.Mvc;
+using Instatus.Entities;
 using Instatus.Models;
+using Instatus.Services;
 using Instatus.Web;
 using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 
@@ -153,6 +156,43 @@ namespace Instatus
         public static void Rewriting()
         {
             // DynamicModuleUtility.RegisterModule(typeof(RedirectModule));
+        }
+    }
+
+    // http://code.google.com/p/autofac/wiki/Mvc3Integration
+    public class MockServicesModule : Module
+    {
+        protected override void Load(ContainerBuilder builder)
+        {
+            builder.RegisterType<MockMembershipService>().As<IMembershipService>().InstancePerLifetimeScope();
+            builder.RegisterType<InMemoryApplicationModel>().As<IApplicationModel>().InstancePerLifetimeScope();
+        }
+    }
+
+    public class DbServicesModule : Module
+    {
+        public string Alias { get; set; } 
+
+        protected override void Load(ContainerBuilder builder)
+        {
+            builder.RegisterType<DbMembershipService>().As<IMembershipService>().InstancePerHttpRequest();
+            builder.Register(c => new DbApplicationModel(Alias)).As<IApplicationModel>().InstancePerHttpRequest();
+            builder.RegisterType<DbLoggingService>().As<ILoggingService>().InstancePerHttpRequest();
+        }
+
+        public DbServicesModule() { }
+
+        public DbServicesModule(string alias)
+        {
+            Alias = alias;
+        }
+    }
+
+    public class CommonServicesModule : Module
+    {
+        protected override void Load(ContainerBuilder builder)
+        {
+            builder.RegisterType<RazorTemplateService>().As<ITemplateService>().InstancePerLifetimeScope();
         }
     }
 }

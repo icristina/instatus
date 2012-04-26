@@ -337,9 +337,6 @@
     <EmbeddedResource Include="Views\Shared\LogOn.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\DisplayTemplates\DateTime.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Views\Shared\Tags.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -356,9 +353,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Shared\DisplayTemplates\Html.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\EditorTemplates\Html.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Shared\Navigation.cshtml" />
@@ -405,7 +399,6 @@
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
-    <EmbeddedResource Include="Views\Shared\DisplayTemplates\LinkList.cshtml" />
     <EmbeddedResource Include="Views\Shared\ValidationSummary.cshtml" />
     <EmbeddedResource Include="Views\Shared\Parameters.cshtml" />
     <EmbeddedResource Include="Views\Shared\Places.cshtml" />
