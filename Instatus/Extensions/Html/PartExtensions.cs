@@ -9,14 +9,15 @@ using Instatus.Web;
 using Instatus;
 using System.Web.Mvc.Html;
 using Instatus.Models;
+using Instatus.Entities;
 
 namespace Instatus
 {
-    public static class WebPartExtensions
+    public static class PartExtensions
     {
         public static bool HasZone<T>(this HtmlHelper<T> html, Zone zone)
         {
-            var contentItem = html.ViewData.GetContentItem();
+            var contentItem = html.ViewData.GetSingle<Page>();
 
             return contentItem != null && contentItem.Document != null && contentItem.Document.Parts.Any(p => p.Zone == zone);
         }
@@ -24,7 +25,7 @@ namespace Instatus
         public static IHtmlString Parts<T>(this HtmlHelper<T> html, Zone zoneName = Zone.Body)
         {
             var sb = new StringBuilder();
-            var contentItem = html.ViewData.Model as IContentItem ?? html.ViewData.GetSingle<IContentItem>();
+            var contentItem = html.ViewData.GetSingle<Page>();
 
             foreach (var part in contentItem.Document.Parts.Where(p => p.Zone == zoneName))
             {

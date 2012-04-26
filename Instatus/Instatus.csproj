@@ -63,7 +63,7 @@
       <HintPath>..\packages\Autofac.Mvc3.2.6.1.841\lib\NET40\Autofac.Integration.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="dotless.Core">
-      <HintPath>..\packages\dotless.1.3.0.0\lib\dotless.Core.dll</HintPath>
+      <HintPath>..\packages\dotless.1.3.0.2\lib\dotless.Core.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=4.4.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -172,7 +172,7 @@
     <Compile Include="Extensions\Html\MetaExtensions.cs" />
     <Compile Include="Extensions\Html\PagingExtensions.cs" />
     <Compile Include="Extensions\Html\ValidationExtensions.cs" />
-    <Compile Include="Extensions\Html\WebPartExtensions.cs" />
+    <Compile Include="Extensions\Html\PartExtensions.cs" />
     <Compile Include="Extensions\TagBuilderExtensions.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="Models\Deployment.cs" />
@@ -250,10 +250,9 @@
     <Compile Include="Data\InMemoryMessageQueue.cs" />
     <Compile Include="Web\WebCache.cs" />
     <Compile Include="Web\WebConstant.cs" />
-    <Compile Include="Web\WebDescriptorAttribute.cs" />
     <Compile Include="Web\WebCatalog.cs" />
     <Compile Include="Web\Mock.cs" />
-    <Compile Include="Web\WebPartsAttribute.cs" />
+    <Compile Include="Web\AddPartsAttribute.cs" />
     <Compile Include="Web\LowercaseRoute.cs" />
     <Compile Include="Web\ExcludeConstraint.cs" />
     <Compile Include="Web\IViewModel.cs" />
@@ -359,6 +358,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Content\mixins.less" />
+    <None Include="Views\Web.config.transform" />
+    <None Include="Web.config.transform">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Web.config">
       <SubType>Designer</SubType>
     </None>

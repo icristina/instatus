@@ -1,68 +1,80 @@
 ﻿<!DOCTYPE html>
-<html class="no-js">
+<html @Html.BrowserCapabilitiesAttributes()>
 <head>
     <meta charset="utf-8" />
-    <title>@ViewBag.Title</title>
+    @Html.Title()
+    @Html.Viewport()
+    @Html.MetaTags()
     <link rel="stylesheet" href="/css/bootstrap" />
     <script src="/scripts/bootstrap"></script>
-    @RenderSection("head", false)
+    @Html.Parts(Instatus.Models.Zone.Head) 
+    @RenderSection("head", false)    
 </head>
 <body>
     <div class="application-container">        
-        @if(IsSectionDefined("banner")) 
+        @if(IsSectionDefined("banner") || Html.HasZone(Instatus.Models.Zone.Banner)) 
         {
             <header role="banner" class="container">
                 <div>
-                    @RenderSection("banner", false)            
+                    @RenderSection("banner", false)     
+                    @Html.Parts(Instatus.Models.Zone.Banner)       
                 </div>
             </header>
         }
-        @if (IsSectionDefined("navigation"))
+        @if (IsSectionDefined("navigation") || Html.HasZone(Instatus.Models.Zone.Navigation))
         {
             <nav role="navigation" class="container">
                 <div>
-                    @RenderSection("navigation", false)      
+                    @RenderSection("navigation", false)  
+                    @Html.Parts(Instatus.Models.Zone.Navigation)       
                 </div>
             </nav>    
         }
         <section role="main" class="page-container container">
-            @if (IsSectionDefined("header"))
+            @if (IsSectionDefined("header") || Html.HasZone(Instatus.Models.Zone.Header))
             {
                 <header class="page-header">
-                    @RenderSection("header", false)            
+                    @RenderSection("header", false)  
+                    @Html.Parts(Instatus.Models.Zone.Header)             
                 </header>  
             }    
-            @if (IsSectionDefined("figure"))
+            @if (IsSectionDefined("figure") || Html.HasZone(Instatus.Models.Zone.Figure))
             {
                 <figure>
                     @RenderSection("figure", false)
+                    @Html.Parts(Instatus.Models.Zone.Figure)   
                 </figure>
             }
-            @if (IsSectionDefined("menu"))
+            @if (IsSectionDefined("menu") || Html.HasZone(Instatus.Models.Zone.Menu))
             {            
                 <menu>
                     @RenderSection("menu", false)
+                    @Html.Parts(Instatus.Models.Zone.Menu)   
                 </menu>
             }
             <div class="page-body">
                 @RenderBody()  
+                @Html.Parts(Instatus.Models.Zone.Body)   
             </div> 
-            @if (IsSectionDefined("aside"))
+            @if (IsSectionDefined("aside") || Html.HasZone(Instatus.Models.Zone.Aside))
             {  
                 <aside>
                     @RenderSection("aside", false)
+                    @Html.Parts(Instatus.Models.Zone.Aside)   
                 </aside>
             }
         </section>
-        @if (IsSectionDefined("footer"))
+        @if (IsSectionDefined("footer") || Html.HasZone(Instatus.Models.Zone.Footer))
         {
             <footer role="contentinfo" class="container">
                 <div>
                     @RenderSection("footer", false)
+                    @Html.Parts(Instatus.Models.Zone.Footer)   
                 </div>
             </footer>
         }
     </div>
-    @RenderSection("scripts", false)
+    @Html.Parts(Instatus.Models.Zone.Scripts)   
+    @RenderSection("scripts", false)    
 </body>
 </html>

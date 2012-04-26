@@ -25,7 +25,7 @@ namespace Instatus
 {
     public static class Startup
     {
-        public static Action<ContainerBuilder> Build { get; set; }
+        public static List<Module> Modules = new List<Module>();
         public static string LogOnUrl = "Auth/Account/LogOn";
 
         private static bool AutoStartup
@@ -71,16 +71,16 @@ namespace Instatus
 
         public static void AutofacDependencyResolver()
         {
-            if (Build != null)
+            var builder = new ContainerBuilder();
+
+            foreach (var module in Modules)
             {
-                var builder = new ContainerBuilder();
-
-                Build(builder);
-
-                builder.RegisterFilterProvider(); // property injection for filter attributes
-
-                DependencyResolver.SetResolver(new AutofacDependencyResolver(builder.Build()));
+                builder.RegisterModule(module);
             }
+
+            builder.RegisterFilterProvider(); // property injection for filter attributes
+
+            DependencyResolver.SetResolver(new AutofacDependencyResolver(builder.Build()));
         }
 
         public static void IgnoreRoutes()
@@ -120,7 +120,8 @@ namespace Instatus
 
         public static void ErrorHandling()
         {
-            GlobalFilters.Filters.Add(new LogErrorAttribute());
+            //GlobalFilters.Filters.Add(new LogErrorAttribute());
+            Startup.Modules.Add(new CommonGlobalFiltersModule()); // autofac approach to global filters            
             GlobalFilters.Filters.Add(new HandleErrorAttribute());
         }
 
@@ -166,6 +167,7 @@ namespace Instatus
         {
             builder.RegisterType<MockMembershipService>().As<IMembershipService>().InstancePerLifetimeScope();
             builder.RegisterType<InMemoryApplicationModel>().As<IApplicationModel>().InstancePerLifetimeScope();
+            builder.RegisterType<InMemoryLoggingService>().As<ILoggingService>().InstancePerLifetimeScope();
         }
     }
 
@@ -193,6 +195,14 @@ namespace Instatus
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<RazorTemplateService>().As<ITemplateService>().InstancePerLifetimeScope();
+        }
+    }
+
+    public class CommonGlobalFiltersModule : Module
+    {
+        protected override void Load(ContainerBuilder builder)
+        {
+            builder.RegisterType<LogErrorAttribute>().As<IMvcFilter>();
         }
     }
 }

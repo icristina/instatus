@@ -5,6 +5,9 @@ using System;
 using Instatus.Models;
 using Instatus.Widgets;
 using Instatus.Entities;
+using Autofac;
+using Autofac.Integration.Mvc;
+using System.Web.Routing;
 
 namespace Instatus.Areas.Facebook
 {
@@ -42,6 +45,14 @@ namespace Instatus.Areas.Facebook
         }
     }
 
+    public class FacebookAreaModule : CommonGlobalFiltersModule
+    {
+        public FacebookAreaModule()
+        {
+            RouteTable.Routes.RegisterArea<FacebookAreaRegistration>();
+        }
+    }
+
     public class FacebookApiWidget : JsApiWidget
     {
         public override string Embed(UrlHelper urlHelper, Credential credential)
@@ -64,7 +75,7 @@ namespace Instatus.Areas.Facebook
                     status = true,
                     cookie = true,
                     xfbml = credential.HasFeature("xfbml"),
-                    channelUrl = WebPath.MatchProtocol(WebPath.Absolute(urlHelper.Action("Channel", "Facebook", new { area = "Facebook" }))),
+                    channelUrl = WebPath.ProtocolRelative(WebPath.Absolute(urlHelper.Action("Channel", "Facebook", new { area = "Facebook" }))),
                     oauth = true
                 },
                 scope = credential.Scope

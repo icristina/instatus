@@ -13,8 +13,7 @@ using Instatus.Entities;
 
 namespace Instatus.Areas.Microsite.Controllers
 {
-    [WebDescriptor(Scope = WebConstant.Scope.Public)]
-    [WebParts]
+    [AddParts(Scope = WebConstant.Scope.Public)]
     public class PageController : BaseController
     {
         private IPageModel pageModel;

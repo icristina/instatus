@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <system.web>
+    <globalization resourceProviderFactoryType="Instatus.Entities.DbResourceProviderFactory, Instatus"/>
+  </system.web>
+  <entityFramework>
+    <defaultConnectionFactory type="System.Data.Entity.Infrastructure.SqlConnectionFactory, EntityFramework">
+      <parameters>
+        <parameter value="Data Source=.\SQLEXPRESS; Integrated Security=True; MultipleActiveResultSets=True" />
+      </parameters>
+    </defaultConnectionFactory>
+  </entityFramework>
+</configuration>

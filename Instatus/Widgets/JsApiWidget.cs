@@ -21,12 +21,8 @@ namespace Instatus.Widgets
         {
             return WebCache.Value<IHtmlString>(() =>
             {
-                Credential credential = null;
-
-                //using (var applicationContext = WebApp.GetService<IApplicationModel>())
-                //{
-                //    credential = applicationContext.GetApplicationCredential(provider);
-                //}
+                var applicationModel = DependencyResolver.Current.GetService<IApplicationModel>();
+                var credential = applicationModel.GetApplicationCredential(Provider.Facebook);
 
                 if (credential == null)
                     return null;

@@ -32,13 +32,5 @@ namespace Instatus
                     where !string.IsNullOrEmpty(error.ErrorMessage)
                     select error.ErrorMessage).FirstOrDefault(); // first error message
         }
-
-        public static IContentItem GetContentItem(this ViewDataDictionary viewDataDictionary)
-        {
-            if (viewDataDictionary.Model != null && viewDataDictionary.Model is IContentItem)
-                return (IContentItem)viewDataDictionary.Model;
-
-            return viewDataDictionary.GetSingle<IContentItem>();
-        }
     }
 }

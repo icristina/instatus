@@ -9,17 +9,19 @@ using Instatus.Models;
 
 namespace Instatus.Web
 {
-    public class WebPartsAttribute : ActionFilterAttribute
+    public class AddPartsAttribute : ActionFilterAttribute
     {
+        public string Scope { get; set; }
+        
         public override void OnActionExecuted(ActionExecutedContext filterContext)
         {
             var viewData = filterContext.Controller.ViewData;
             var routeData = filterContext.RouteData;
             var viewModel = viewData.Model;
-            var contentItem = viewData.Model as IContentItem ?? viewData.GetSingle<IContentItem>();
+            var contentItem = viewData.Model as IContentItem ?? viewData.GetSingle<Page>();
 
             if (contentItem == null) {
-                // contentItem = new Page();                
+                contentItem = new Page();                
             }
 
             if (contentItem.Document == null)
@@ -27,10 +29,11 @@ namespace Instatus.Web
                 contentItem.Document = new Document();
             }
 
-            // include WebParts that are unscoped or scope matches routeData parameter
+            // include parts that are unscoped or scope matches routeData parameter
             var scope = new List<string>();
 
-            scope.Add(viewModel.GetType().Name);
+            if (viewModel != null)
+                scope.Add(viewModel.GetType().Name);
 
             if (routeData != null)
             {
@@ -40,18 +43,11 @@ namespace Instatus.Web
                 scope.Add(routeData.ToUniqueId());
             }
 
-            var controllerScope = filterContext.Controller.GetCustomAttributeValue<WebDescriptorAttribute, string>(a => a.Scope);
+            scope.Add(Scope);
 
-            if (controllerScope.NonEmpty())
-            {
-                scope.Add(controllerScope);
-            }
+            contentItem.Document.Parts.AddRange(WebCatalog.Parts.Where(p => p.Scope.IsEmpty() || scope.Intersect(p.Scope.ToList(' '), StringComparer.OrdinalIgnoreCase).Any()));
 
-            // TODO: reinstate
-            //contentItem.Document.Parts.AddRange(WebPart.Catalog.Where(p => p.Scope.IsEmpty() || scope.Intersect(p.Scope.ToList(' '), StringComparer.OrdinalIgnoreCase).Any()));
-
-            //if(contentItem is WebContentItem)
-            //    viewData.AddSingle(contentItem);
+            viewData.AddSingle(contentItem);
 
             base.OnActionExecuted(filterContext);
         }

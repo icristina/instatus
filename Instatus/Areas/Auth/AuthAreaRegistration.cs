@@ -1,6 +1,9 @@
 ﻿using System.Web.Mvc;
 using Instatus;
 using Instatus.Web;
+using Autofac;
+using Autofac.Integration.Mvc;
+using System.Web.Routing;
 
 namespace Instatus.Areas.Auth
 {
@@ -34,6 +37,19 @@ namespace Instatus.Areas.Auth
                 null,
                 new string[] { "Instatus.Areas.Auth.Controllers" }
             );
+        }
+    }
+
+    public class AuthAreaModule : Module
+    {
+        protected override void Load(ContainerBuilder builder)
+        {            
+            builder.RegisterType<Instatus.Areas.Auth.Controllers.AccountController>().InstancePerDependency();
+        }
+
+        public AuthAreaModule()
+        {
+            RouteTable.Routes.RegisterArea<AuthAreaRegistration>();
         }
     }
 }
