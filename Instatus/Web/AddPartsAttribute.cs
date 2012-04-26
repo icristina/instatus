@@ -41,7 +41,7 @@ namespace Instatus.Web
 
             scope.Add(Scope);
 
-            contentItem.Document.Parts.AddRange(WebCatalog.Parts.Where(p => p.Scope.IsEmpty() || scope.Intersect(p.Scope.ToList(' '), StringComparer.OrdinalIgnoreCase).Any()));
+            contentItem.Document.Parts.AddRange(Startup.Parts.Where(p => p.Scope.IsEmpty() || scope.Intersect(p.Scope.ToList(' '), StringComparer.OrdinalIgnoreCase).Any()));
 
             viewData.AddSingle<IContentItem>(contentItem);
 

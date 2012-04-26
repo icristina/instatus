@@ -24,6 +24,7 @@
     <file src="Views\Shared\Index.cshtml" target="content\Views\Shared" />
     <file src="Views\Shared\Details.cshtml" target="content\Views\Shared" />
     <file src="Views\Shared\Edit.cshtml" target="content\Views\Shared" />
+    <file src="Views\Shared\NavBar.cshtml" target="content\Views\Shared" />
     <file src="Views\Shared\DisplayTemplates\Html.cshtml" target="content\Views\Shared\DisplayTemplates" />
     <file src="Views\Shared\DisplayTemplates\Object.cshtml" target="content\Views\Shared\DisplayTemplates" />
     <file src="Views\Shared\EditorTemplates\String.cshtml" target="content\Views\Shared\EditorTemplates" />

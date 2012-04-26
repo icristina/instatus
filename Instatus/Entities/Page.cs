@@ -106,7 +106,7 @@ namespace Instatus.Entities
             return Name ?? base.ToString();
         }
 
-        public Page(Kind kind)
+        public Page(Kind kind) : this()
         {
             Kind = kind.ToString();
         }

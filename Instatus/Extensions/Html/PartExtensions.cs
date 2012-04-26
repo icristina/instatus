@@ -17,7 +17,7 @@ namespace Instatus
     {
         public static bool HasZone<T>(this HtmlHelper<T> html, Zone zone)
         {
-            var contentItem = html.ViewData.GetSingle<Page>();
+            var contentItem = html.ViewData.GetSingle<IContentItem>();
 
             return contentItem != null && contentItem.Document != null && contentItem.Document.Parts.Any(p => p.Zone == zone);
         }
@@ -27,9 +27,12 @@ namespace Instatus
             var sb = new StringBuilder();
             var contentItem = html.ViewData.GetSingle<IContentItem>();
 
-            foreach (var part in contentItem.Document.Parts.Where(p => p.Zone == zoneName))
+            if (contentItem != null)
             {
-                sb.Append(html.Part(part).ToString());
+                foreach (var part in contentItem.Document.Parts.Where(p => p.Zone == zoneName))
+                {
+                    sb.Append(html.Part(part).ToString());
+                }
             }
 
             return new MvcHtmlString(sb.ToString());

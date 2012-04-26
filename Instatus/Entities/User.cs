@@ -16,9 +16,13 @@ namespace Instatus.Entities
         public string Username { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        
         public string EmailAddress { get; set; }
+
         public DateTime? DateOfBirth { get; set; }
+        
         public string Password { get; set; }
+        
         public string Location { get; set; }
         public Identity Identity { get; set; }
         public bool Verified { get; set; }

@@ -19,7 +19,7 @@ namespace Instatus.Areas.Google
 
         public override void RegisterArea(AreaRegistrationContext context)
         {
-            WebCatalog.Parts.Add(new GoogleApiWidget());
+            Startup.Parts.Add(new GoogleApiWidget());
         }
     }
 

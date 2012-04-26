@@ -27,7 +27,7 @@ namespace Instatus.Entities
             if (user == null) return null;
 
             return user.Role
-                    .ToStringList()
+                    .ToList()
                     .ToArray();
         }
 

@@ -7,6 +7,10 @@ body[data-route-action=create] .page-heading, body[data-route-action=edit] .page
     display:  none;
 }
 
+body[data-route-action=edit] .navbar, body[data-route-action=create] .navbar, body[data-route-action=details] .navbar   {
+    display: none;
+}
+
 img.thumbnail
 {
     display: block;

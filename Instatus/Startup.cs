@@ -26,6 +26,8 @@ namespace Instatus
     public static class Startup
     {
         public static List<Module> Modules = new List<Module>();
+        public static Dictionary<ImageSize, Transform> ImageSizes = new Dictionary<ImageSize, Transform>();
+        public static IList<Part> Parts = new List<Part>();
         public static string LogOnUrl = "Auth/Account/LogOn";
 
         private static bool AutoStartup
@@ -151,7 +153,7 @@ namespace Instatus
 
         public static void Imaging()
         {
-            WebCatalog.ImageSizes.Add(ImageSize.Thumb, new Transform(200, 200, false));
+            ImageSizes.Add(ImageSize.Thumb, new Transform(200, 200, false));
         }
 
         public static void Rewriting()
@@ -181,8 +183,6 @@ namespace Instatus
             builder.Register(c => new DbApplicationModel(Alias)).As<IApplicationModel>().InstancePerHttpRequest();
             builder.RegisterType<DbLoggingService>().As<ILoggingService>().InstancePerHttpRequest();
         }
-
-        public DbServicesModule() { }
 
         public DbServicesModule(string alias)
         {

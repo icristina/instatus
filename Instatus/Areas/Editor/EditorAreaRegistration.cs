@@ -28,8 +28,8 @@ namespace Instatus.Areas.Editor
                 new string[] { "Instatus.Areas.Editor.Controllers" }
             );
 
-            WebCatalog.Parts.Add(TagWidget.Script("~/Scripts/scaffold.js", false, WebConstant.Scope.Admin));
-            WebCatalog.Parts.Add(TagWidget.Stylesheet("~/Content/scaffold.css", WebConstant.Scope.Admin));
+            Startup.Parts.Add(TagWidget.Script("~/Scripts/scaffold.js", false, WebConstant.Scope.Admin));
+            Startup.Parts.Add(TagWidget.Stylesheet("~/Content/scaffold.css", WebConstant.Scope.Admin));
         }
     }
 

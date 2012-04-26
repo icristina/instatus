@@ -41,7 +41,7 @@ namespace Instatus.Areas.Facebook
                 new string[] { "Instatus.Areas.Facebook.Controllers" }
             );
 
-            WebCatalog.Parts.Add(new FacebookApiWidget());
+            Startup.Parts.Add(new FacebookApiWidget());
         }
     }
 

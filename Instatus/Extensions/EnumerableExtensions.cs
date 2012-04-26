@@ -137,7 +137,8 @@ namespace Instatus
 
         public static T GetSingle<T>(this IDictionary<string, object> dictionary) where T : class
         {
-            return dictionary[dictionaryPrefix + typeof(T).FullName] as T ?? Activator.CreateInstance<T>();
+            return dictionary[dictionaryPrefix + typeof(T).FullName] as T 
+                ?? (typeof(T).IsInterface ? null : Activator.CreateInstance<T>());
         }
 
         public static T AddRequestParams<T>(this T dictionary) where T : IDictionary<string, object>
