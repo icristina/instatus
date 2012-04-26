@@ -114,14 +114,6 @@ namespace Instatus.Web
                 new WebClient().DownloadString(PingUrl ?? WebPath.BaseUri.ToString());
             }, 60 * 1000 * 1); 
         }
-
-        public static void Log(Exception error)
-        {
-            var loggingService = WebApp.GetService<ILoggingService>();
-            
-            loggingService.Log(error);
-            loggingService.TryDispose();
-        }
     }
 
     internal class WebAppReset

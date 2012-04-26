@@ -6,6 +6,7 @@
       <namespaces>
         <add namespace="Instatus" />
         <add namespace="Instatus.Web"/>
+        <add namespace="Instatus.Models"/>
       </namespaces>
     </pages>
   </system.web.webPages.razor>

@@ -1,4 +1,7 @@
 ﻿using System.Web.Mvc;
+using Autofac;
+using Autofac.Integration.Mvc;
+using System.Web.Routing;
 
 namespace Instatus.Areas.Moderator
 {
@@ -21,6 +24,19 @@ namespace Instatus.Areas.Moderator
                 null,
                 new string[] { "Instatus.Areas.Moderator.Controllers" }
             );
+        }
+    }
+
+    public class ModeratorAreaModule : Module
+    {
+        protected override void Load(ContainerBuilder builder)
+        {
+            builder.RegisterType<Instatus.Areas.Moderator.Controllers.ActivityController>().InstancePerDependency();
+        }
+
+        public ModeratorAreaModule()
+        {
+            RouteTable.Routes.RegisterArea<ModeratorAreaRegistration>();
         }
     }
 }

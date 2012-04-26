@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Instatus.Data;
 
 namespace Instatus.Entities
 {
-    public class Activity
+    public class Activity : ITimestamp
     {
         public int Id { get; set; }
         public DateTime CreatedTime { get; set; }
@@ -23,6 +24,11 @@ namespace Instatus.Entities
 #else
         public string Verb { get; set; }
 #endif
+
+        public override string ToString()
+        {
+            return Description ?? base.ToString();
+        }
 
         public Activity()
         {

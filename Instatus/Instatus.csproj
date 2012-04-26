@@ -128,6 +128,8 @@
     <Compile Include="Areas\Google\GoogleAreaRegistration.cs" />
     <Compile Include="Areas\Microsite\Controllers\PageController.cs" />
     <Compile Include="Areas\Microsite\MicrositeAreaRegistration.cs" />
+    <Compile Include="Areas\Moderator\Controllers\ActivityController.cs" />
+    <Compile Include="Areas\Moderator\ModeratorAreaRegistration.cs" />
     <Compile Include="Areas\Twitter\Bootstrap.cs" />
     <Compile Include="Areas\Twitter\Twitter.cs" />
     <Compile Include="Areas\YouTube\YouTube.cs" />
@@ -296,7 +298,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Web\WebUnits.cs" />
     <Compile Include="Web\WebUtility.cs" />
-    <Compile Include="Web\WebProvider.cs" />
     <Compile Include="Web\WebRole.cs" />
     <Compile Include="Web\ExtendedModelMetadataProvider.cs" />
     <Compile Include="Web\UserAgentAttribute.cs" />

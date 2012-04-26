@@ -12,14 +12,14 @@ using System.IO;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.ComponentModel;
+using Instatus.Entities;
 
 namespace Instatus.Areas.Moderator.Controllers
 {
     [Authorize(Roles = "Moderator")]
-    [Description("Activities")]
     public class ActivityController : ScaffoldController<BaseViewModel<Activity>, Activity, IApplicationModel, int>
     {
-        public override IEnumerable<Activity> Query(IEnumerable<Activity> set, WebQuery query)
+        public override IEnumerable<Activity> Query(IEnumerable<Activity> set, Query query)
         {
             return Context.Activities
                     .Include(a => a.Page)
@@ -31,7 +31,7 @@ namespace Instatus.Areas.Moderator.Controllers
         {
             base.ConfigureWebView(webView);
 
-            webView.Permissions = new WebAction[] { WebAction.Details };
+            webView.Permissions = new string[] { "Details" };
         }
     }
 }

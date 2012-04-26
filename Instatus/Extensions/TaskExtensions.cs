@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.Collections.Concurrent;
 using Instatus.Web;
+using System.Web.Mvc;
+using Instatus.Services;
 
 namespace Instatus
 {
@@ -47,7 +49,10 @@ namespace Instatus
                 {
                     if (times == 0)
                     {
-                        WebApp.Log(error);
+                        var loggingService = DependencyResolver.Current.GetService<ILoggingService>();
+
+                        if (loggingService != null)
+                            loggingService.Log(error);
                     }
                 }
             }

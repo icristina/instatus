@@ -100,6 +100,11 @@ namespace Instatus.Entities
             }
         }
 
+        public override string ToString()
+        {
+            return Name ?? base.ToString();
+        }
+
         public Page()
         {
             Source = new Source();
