@@ -13,6 +13,21 @@ namespace Instatus
 {
     public static class TaskExtensions
     {
+        //public async static void Repeat(this Action action, int delay = 1000)
+        //{
+        //    try
+        //    {
+        //        await TaskEx.Run(action);
+        //    }
+        //    catch
+        //    {
+        //        // ignore exceptions
+        //    }
+
+        //    await TaskEx.Delay(delay);
+        //    Repeat(action, delay);
+        //}        
+        
         public static Task IgnoreExceptions(this Task task)
         {
             task.ContinueWith(t => { },

@@ -27,6 +27,10 @@ namespace Instatus.Data
             {
                 return regex.GetHashCode().AsString();
             }
+            set
+            {
+                throw new NotImplementedException();
+            }
         }
 
         public bool Evaluate(string instance)
@@ -51,6 +55,10 @@ namespace Instatus.Data
             get
             {
                 return deligate.GetHashCode().AsString();
+            }
+            set
+            {
+                throw new NotImplementedException();
             }
         }
 

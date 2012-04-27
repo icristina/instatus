@@ -29,7 +29,8 @@ namespace Instatus.Web
 
         public void Init(HttpApplication context)
         {
-            context.PreSendRequestHeaders += this.OnPreSendRequestHeaders;
+            if (HttpRuntime.UsingIntegratedPipeline)       
+                context.PreSendRequestHeaders += this.OnPreSendRequestHeaders;
         }
 
         private void OnPreSendRequestHeaders(object sender, EventArgs e)

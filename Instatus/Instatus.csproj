@@ -62,13 +62,16 @@
     <Reference Include="Autofac.Integration.Mvc">
       <HintPath>..\packages\Autofac.Mvc3.2.6.1.841\lib\NET40\Autofac.Integration.Mvc.dll</HintPath>
     </Reference>
-    <Reference Include="dotless.Core, Version=1.3.0.0, Culture=neutral, PublicKeyToken=96b446c9e63eae34, processorArchitecture=MSIL">
+    <Reference Include="dotless.Core, Version=1.3.0.2, Culture=neutral, PublicKeyToken=96b446c9e63eae34, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\dotless.1.3.0.0\lib\dotless.Core.dll</HintPath>
+      <HintPath>..\..\..\..\Visual Studio 11\Projects\MvcApplication4\packages\dotless.1.3.0.2\lib\dotless.Core.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=4.4.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.5.0.0-beta2\lib\net40\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CompilerServices.AsyncTargetingPack.Net4">
+      <HintPath>..\..\..\..\Visual Studio 11\Projects\MvcApplication4\packages\Microsoft.CompilerServices.AsyncTargetingPack.1.0.0\lib\net40\Microsoft.CompilerServices.AsyncTargetingPack.Net4.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -78,6 +81,10 @@
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.4.5.3\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NuGet.Core, Version=1.7.30402.9028, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Visual Studio 11\Projects\MvcApplication4\packages\NuGet.Core.1.7.0\lib\net40-Client\NuGet.Core.dll</HintPath>
     </Reference>
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data.Entity" />
@@ -122,9 +129,17 @@
     <Compile Include="Areas\Auth\Controllers\AccountController.cs" />
     <Compile Include="Areas\Auth\Models\LogOnViewModel.cs" />
     <Compile Include="Areas\Editor\Controllers\ArticleController.cs" />
+    <Compile Include="Areas\Editor\Controllers\PostController.cs" />
     <Compile Include="Areas\Editor\EditorAreaRegistration.cs" />
+    <Compile Include="Areas\Editor\Models\CallToActionViewModel.cs" />
+    <Compile Include="Areas\Editor\Models\CreativeViewModel.cs" />
     <Compile Include="Areas\Editor\Models\DocumentViewModel.cs" />
+    <Compile Include="Areas\Editor\Models\LinkViewModel.cs" />
+    <Compile Include="Areas\Editor\Models\MarkupViewModel.cs" />
+    <Compile Include="Areas\Editor\Models\MetaTagsViewModel.cs" />
     <Compile Include="Areas\Editor\Models\OverviewViewModel.cs" />
+    <Compile Include="Areas\Editor\Models\PublishingViewModel.cs" />
+    <Compile Include="Areas\Editor\Models\VideoViewModel.cs" />
     <Compile Include="Areas\Facebook\Controllers\FacebookController.cs" />
     <Compile Include="Areas\Facebook\Facebook.cs" />
     <Compile Include="Areas\Facebook\FacebookAreaRegistration.cs" />
@@ -208,6 +223,7 @@
     <Compile Include="Models\ViewMode.cs" />
     <Compile Include="Models\Zone.cs" />
     <Compile Include="Queries\ApplicationQueries.cs" />
+    <Compile Include="Queries\LinkQueries.cs" />
     <Compile Include="Queries\MembershipQueries.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Web\AllowUploadAttribute.cs" />

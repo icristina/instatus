@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Instatus.Data;
 
 namespace Instatus.Models
 {
-    public class Parameter
+    public class Parameter : INamed
     {
         public string Name { get; set; }
         public string Content { get; set; }

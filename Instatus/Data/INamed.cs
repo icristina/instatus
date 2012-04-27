@@ -7,6 +7,6 @@ namespace Instatus.Data
 {
     public interface INamed
     {
-        string Name { get; }
+        string Name { get; set; }
     }
 }

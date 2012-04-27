@@ -6,11 +6,13 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 using Instatus.Web;
 using Instatus.Models;
+using System.ComponentModel.DataAnnotations.Schema;
+using Instatus.Entities;
 
 namespace Instatus.Areas.Editor.Models
 {
     [ComplexType]
-    public class MetaTagsViewModel<T> : BaseViewModel<T> where T : Page
+    public class MetaTagsViewModel : BaseViewModel<Page>
     {
         [DisplayName("Title")]
         public string TitleString { get; set; }
@@ -21,28 +23,28 @@ namespace Instatus.Areas.Editor.Models
         [DataType(DataType.MultilineText)]
         public string Keywords { get; set; }
 
-        public override void Load(T model)
+        public override void Load(Page model)
         {
             var document = model.Document;
 
             if (document != null)
             {
-                TitleString = document.Parameters.GetParameter(WebNamespace.Html, "Title");
-                Description = document.Parameters.GetParameter(WebNamespace.Html, "Description");
-                Keywords = document.Parameters.GetParameter(WebNamespace.Html, "Keywords");
+                TitleString = document.Parameters.Value("html:Title", s => s.Content);
+                Description = document.Parameters.Value("html:Description", s => s.Content);
+                Keywords = document.Parameters.Value("html:Keywords", s => s.Content);
             }
         }
 
-        public override void Save(T model)
+        public override void Save(Page model)
         {
             if(model.Document == null)
-                model.Document = new WebDocument();
+                model.Document = new Document();
             
             var document = model.Document;
             
-            document.Parameters.SetParameter(WebNamespace.Html, "Title", TitleString);
-            document.Parameters.SetParameter(WebNamespace.Html, "Description", Description);
-            document.Parameters.SetParameter(WebNamespace.Html, "Keywords", Keywords);
+            document.Parameters.Get("html:Title").Content = TitleString;
+            document.Parameters.Get("html:Description").Content = Description;
+            document.Parameters.Get("html:Keywords").Content = Keywords;
         }
     }
 }

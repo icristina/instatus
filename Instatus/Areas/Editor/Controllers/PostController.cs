@@ -13,22 +13,24 @@ using Instatus;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using Instatus.Areas.Editor.Models;
+using Instatus.Entities;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Instatus.Areas.Editor.Controllers
 {
-    public class PostViewModel : BaseViewModel<Post, IApplicationModel>
+    public class PostViewModel : BaseViewModel<Page, IApplicationModel>
     {
         [Category("Overview")]
         [Display(Order = 1)]
-        public OverviewViewModel<Post> Overview { get; set; }
+        public OverviewViewModel Overview { get; set; }
 
-        [Category("Overview")]
-        [Column("Tags")]
-        [Display(Name = "Tags", Order = 2)]
-        public MultiSelectList TagsList { get; set; }
+        //[Category("Overview")]
+        //[Column("Tags")]
+        //[Display(Name = "Tags", Order = 2)]
+        //public MultiSelectList TagsList { get; set; }
 
-        [ScaffoldColumn(false)]
-        public int[] Tags { get; set; }
+        //[ScaffoldColumn(false)]
+        //public int[] Tags { get; set; }
 
         [Category("Overview")]
         [Column("Organization")]
@@ -40,57 +42,63 @@ namespace Instatus.Areas.Editor.Controllers
 
         [Category("Video")]
         [Display(Order = 4)]
-        public VideoViewModel<Post> Video { get; set; }
+        public VideoViewModel Video { get; set; }
 
-        [Category("People")]
-        [Display(Order = 5)]
-        public PeopleViewModel<Post> People { get; set; }
+        //[Category("People")]
+        //[Display(Order = 5)]
+        //public PeopleViewModel<Post> People { get; set; }
 
         [Category("Publishing")]
         [Display(Order = 6)]
-        public PublishingViewModel<Post> Publishing { get; set; }
+        public PublishingViewModel Publishing { get; set; }
 
-        public override void Load(Post model)
+        public override void Load(Page model)
         {
             base.Load(model);
 
-            Tags = model.Tags.IsEmpty() ? null : model.Tags.Select(t => t.Id).ToArray();
+            //Tags = model.Tags.IsEmpty() ? null : model.Tags.Select(t => t.Id).ToArray();
 
-            Organization = LoadAssociation<Page, Organization>(model.Parents);
+            //Organization = LoadAssociation<Page, Organization>(model.Parents);
         }
 
-        public override void Save(Post model)
+        public override void Save(Page model)
         {            
             base.Save(model);
 
-            model.Tags = SaveMultiAssociation<Tag>(Context.Tags, model.Tags, Tags);
-            model.Parents = SaveAssociation<Page, Organization>(Context.Pages, model.Parents, Organization);
+            //model.Tags = SaveMultiAssociation<Tag>(Context.Tags, model.Tags, Tags);
+            //model.Parents = SaveAssociation<Page, Organization>(Context.Pages, model.Parents, Organization);
         }
 
         public override void Databind()
         {
             base.Databind();
             
-            TagsList = new MultiSelectList(Context.Tags.ToList(), "Id", "Name", Tags);
-            OrganizationList = DatabindSelectList<Page, Organization>(Context.Pages, Organization);
+            //TagsList = new MultiSelectList(Context.Tags.ToList(), "Id", "Name", Tags);
+            //OrganizationList = DatabindSelectList<Page, Organization>(Context.Pages, Organization);
         }
 
         public PostViewModel()
         {
-            Overview = new OverviewViewModel<Post>();
-            Video = new VideoViewModel<Post>();
-            People = new PeopleViewModel<Post>();
-            Publishing = new PublishingViewModel<Post>();
+            Overview = new OverviewViewModel();
+            Video = new VideoViewModel();
+            //People = new PeopleViewModel<Post>();
+            Publishing = new PublishingViewModel();
         }
     }
     
     [Authorize(Roles = "Editor")]
     [Description("Posts")]
-    public class PostController : ScaffoldController<PostViewModel, Post, IApplicationModel, int>
+    [AddParts(Scope = WebConstant.Scope.Admin)]
+    public class PostController : ScaffoldController<PostViewModel, Page, IApplicationModel, int>
     {
-        public override IEnumerable<Post> Query(IEnumerable<Post> set, WebQuery query)
+        public override IEnumerable<Page> Query(IEnumerable<Page> set, Query query)
         {
-            return set.ByRecency();
+            return set.Where(p => p.Kind == "Post").ByRecency();
+        }
+
+        public override Page CreateModelInstance()
+        {           
+            return new Page(Kind.Post);
         }
     }
 }

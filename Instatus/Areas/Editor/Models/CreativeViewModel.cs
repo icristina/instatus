@@ -8,11 +8,13 @@ using Instatus.Web;
 using System.Web.Mvc;
 using Instatus.Models;
 using Instatus.Data;
+using Instatus.Entities;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Instatus.Areas.Editor.Models
 {
     [ComplexType]
-    public class CreativeViewModel : BaseViewModel<Page, IApplicationModel>
+    public class CreativeViewModel : BaseViewModel<Page>
     {
         [ScaffoldColumn(true)]
         [Display(Order = 5)]
@@ -29,7 +31,7 @@ namespace Instatus.Areas.Editor.Models
         {
             base.Save(model);
 
-            model.Document.Links = Links.RemoveNullOrEmpty().Select(l => l.ToWebLink()).ToList();
+            model.Document.Links = Links.RemoveNullOrEmpty().Select(l => l.ToLink()).ToList();
         }
     }
 }

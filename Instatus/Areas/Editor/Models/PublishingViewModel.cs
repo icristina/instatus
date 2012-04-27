@@ -8,37 +8,33 @@ using Instatus.Web;
 using Instatus.Models;
 using Instatus.Data;
 using System.Web.Mvc;
+using System.ComponentModel.DataAnnotations.Schema;
+using Instatus.Entities;
 
 namespace Instatus.Areas.Editor.Models
 {
     [ComplexType]
-    public class PublishingViewModel<T> : BaseViewModel<T> where T : Page
+    public class PublishingViewModel : BaseViewModel<Page>
     {
         [DisplayName("Friendly Url")]
         [Required]
         [RegularExpression(ValidationPatterns.Alias, ErrorMessageResourceName = WebPhrase.ErrorMessage.InvalidFriendlyIdentifier, ErrorMessageResourceType = typeof(WebPhrase))]
-        public string Slug { get; set; }      
+        public string Alias { get; set; }      
        
-        public int Priority { get; set; }
-
         [DisplayName("Published Time")]
         public DateTime PublishedTime { get; set; }
 
-        [Column("Status")]
-        [Display(Name = "Status")]
+        [Column("Published")]
+        [Display(Name = "Published")]
         [AdditionalMetadata("Required", true)]
-        public SelectList StatusList { get; set; }
+        public SelectList PublishedList { get; set; }
 
         [ScaffoldColumn(false)]
-        public string Status { get; set; }
-        
-        public string Data { get; set; }
-
-        public string Category { get; set; }
+        public string Published { get; set; }
 
         public override void Databind()
         {
-            StatusList = WebUtility.CreateSelectList(new WebStatus[] { WebStatus.Published, WebStatus.Draft }, Status, new string[] { "Published", "Draft" });
+            PublishedList = WebUtility.CreateSelectList(new Published[] { Instatus.Models.Published.Active, Instatus.Models.Published.Draft }, Published, new string[] { "Active", "Draft" });
         }
     }
 }

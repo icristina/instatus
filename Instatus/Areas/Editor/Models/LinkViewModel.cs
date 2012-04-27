@@ -5,6 +5,7 @@ using System.Web;
 using Instatus.Data;
 using System.ComponentModel.DataAnnotations;
 using Instatus.Web;
+using Instatus.Models;
 
 namespace Instatus.Areas.Editor.Models
 {
@@ -36,9 +37,9 @@ namespace Instatus.Areas.Editor.Models
             Picture = picture;
         }
 
-        public WebLink ToWebLink()
+        public Link ToLink()
         {
-            return new WebLink()
+            return new Link()
             {
                 Uri = Uri,
                 Title = Name,

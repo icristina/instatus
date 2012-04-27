@@ -21,5 +21,13 @@ namespace Instatus.Models
         public IList<Link> Links { get; set; }
         public Query Query { get; set; }
         public Formatting Formatting { get; set; }
+
+        public bool IsRawHtml
+        {
+            get
+            {
+                return Body.NonEmpty() && Template.IsEmpty() && RouteData.IsEmpty();
+            }
+        }
     }
 }

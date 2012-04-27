@@ -26,9 +26,12 @@ namespace Instatus.Entities
             var entries = new Dictionary<object, object>();
             var applicationModel = DependencyResolver.Current.GetService<IApplicationModel>();
 
-            foreach (var phrase in applicationModel.Phrases.ToList())
-                entries.AddNonEmptyValue(phrase.Name, phrase.Value);
-            
+            if (applicationModel != null)
+            {
+                foreach (var phrase in applicationModel.Phrases.ToList())
+                    entries.AddNonEmptyValue(phrase.Name, phrase.Value);
+            }
+
             return entries.GetEnumerator();
         }
 

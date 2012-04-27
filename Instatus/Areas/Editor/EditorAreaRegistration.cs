@@ -38,6 +38,7 @@ namespace Instatus.Areas.Editor
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<Instatus.Areas.Editor.Controllers.ArticleController>().InstancePerDependency();
+            builder.RegisterType<Instatus.Areas.Editor.Controllers.PostController>().InstancePerDependency();
         }
 
         public EditorAreaModule()

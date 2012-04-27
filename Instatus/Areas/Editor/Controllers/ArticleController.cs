@@ -19,7 +19,7 @@ using Instatus.Entities;
 
 namespace Instatus.Areas.Editor.Controllers
 {
-    public class ArticleViewModel : BaseViewModel<Page, IApplicationModel>
+    public class ArticleViewModel : BaseViewModel<Page>
     {
         [Category("Overview")]
         [Display(Order = 1)]
@@ -37,29 +37,29 @@ namespace Instatus.Areas.Editor.Controllers
         [Display(Order = 3)]
         public DocumentViewModel Document { get; set; }
 
-        //[Category("Video")]
-        //[Display(Order = 4)]
-        //public VideoViewModel Video { get; set; }
+        [Category("Video")]
+        [Display(Order = 4)]
+        public VideoViewModel Video { get; set; }
 
-        //[Category("Links")]
-        //[Display(Order = 5)]
-        //public CreativeViewModel Creative { get; set; }
+        [Category("Links")]
+        [Display(Order = 5)]
+        public CreativeViewModel Creative { get; set; }
 
-        //[Category("Meta Tags")]
-        //[Display(Order = 6)]
-        //public MetaTagsViewModel MetaTags { get; set; }
+        [Category("Meta Tags")]
+        [Display(Order = 6)]
+        public MetaTagsViewModel MetaTags { get; set; }
 
-        //[Category("Custom Markup")]
-        //[Display(Order = 7)]
-        //public MarkupViewModel Markup { get; set; }
+        [Category("Custom Markup")]
+        [Display(Order = 7)]
+        public MarkupViewModel Markup { get; set; }
 
         //[Category("People")]
         //[Display(Order = 8)]
         //public PeopleViewModel People { get; set; }
 
-        //[Category("Publishing")]
-        //[Display(Order = 9)]
-        //public PublishingViewModel Publishing { get; set; }
+        [Category("Publishing")]
+        [Display(Order = 9)]
+        public PublishingViewModel Publishing { get; set; }
 
         public override void Load(Page model)
         {
@@ -86,17 +86,18 @@ namespace Instatus.Areas.Editor.Controllers
         {
             Overview = new OverviewViewModel();
             Document = new DocumentViewModel();
-            //Creative = new CreativeViewModel();
-            //Video = new VideoViewModel();
-            //MetaTags = new MetaTagsViewModel();
-            //Markup = new MarkupViewModel();
+            Creative = new CreativeViewModel();
+            Video = new VideoViewModel();
+            MetaTags = new MetaTagsViewModel();
+            Markup = new MarkupViewModel();
             //People = new PeopleViewModel();
-            //Publishing = new PublishingViewModel();
+            Publishing = new PublishingViewModel();
         }
     }
 
     [Authorize(Roles = "Editor")]
     [AddParts(Scope = WebConstant.Scope.Admin)]
+    [Description("Pages")]
     public class ArticleController : ScaffoldController<ArticleViewModel, Page, IApplicationModel, int>
     {
         public override IEnumerable<Page> Query(IEnumerable<Page> set, Query query)

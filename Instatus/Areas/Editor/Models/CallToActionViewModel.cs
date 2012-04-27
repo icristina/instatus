@@ -14,24 +14,24 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Instatus.Areas.Editor.Models
 {
     [ComplexType]
-    public class CallToActionViewModel : BaseViewModel<Page, IApplicationModel>
+    public class CallToActionViewModel : BaseViewModel<Page>
     {       
         public string Uri { get; set; }
 
         public override void Load(Page model)
         {
-            Uri = model.Links.Uri();
+            Uri = model.Document.Links.Uri();
         }
 
         public override void Save(Page model)
         {
             var html = WebContentType.Html.ToMimeType();
             
-            model.Links.Where(l => l.ContentType == html).ToList().ForEach(l => Context.Links.Remove(l));
+            model.Document.Links.Where(l => l.ContentType == html).ToList().ForEach(l => model.Document.Links.Remove(l));
 
             if (!Uri.IsEmpty())
             {
-                model.Links.Add(new Link()
+                model.Document.Links.Add(new Link()
                 {
                     ContentType = html,
                     Uri = Uri

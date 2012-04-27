@@ -8,28 +8,31 @@ using Instatus.Web;
 using System.Web.Mvc;
 using Instatus.Models;
 using Instatus.Data;
+using System.ComponentModel.DataAnnotations.Schema;
+using Instatus.Entities;
 
 namespace Instatus.Areas.Editor.Models
 {
     [ComplexType]
-    public class VideoViewModel<T> : BaseViewModel<T, IApplicationModel> where T : Page
+    public class VideoViewModel : BaseViewModel<Page>
     {       
         public string Uri { get; set; }
 
-        public override void Load(T model)
+        public override void Load(Page model)
         {
-            model.Links.OfType<Video>().ForFirst(v => Uri = v.Uri);
+            Uri = model.Document.Links.Uri(WebConstant.Rel.Video);
         }
 
-        public override void Save(T model)
+        public override void Save(Page model)
         {
-            model.Links.OfType<Video>().ForFirst(v => model.Links.Remove(v));
+            model.Document.Links.Where(l => l.Rel.Match(WebConstant.Rel.Video)).ForFirst(v => model.Document.Links.Remove(v));
             
             if (!Uri.IsEmpty())
             {
-                model.Links.Add(new Video()
+                model.Document.Links.Add(new Link()
                 {
-                    Uri = Uri
+                    Uri = Uri,
+                    Rel = WebConstant.Rel.Video
                 });
             }            
         }

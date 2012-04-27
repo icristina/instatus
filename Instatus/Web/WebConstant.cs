@@ -57,5 +57,16 @@ namespace Instatus.Web
         {
             public const string ReturnUrl = "returnUrl";
         }
+
+        public static class NamespacePrefix
+        {
+            public const string Html = "html";
+            public const string OpenGraph = "og";
+        }
+
+        public static class Rel
+        {
+            public const string Video = "video";
+        }
     }
 }
