@@ -11,20 +11,24 @@ namespace Instatus.Widgets
 {
     public class NavigationWidget : Part, IModelProvider
     {
-        Func<UrlHelper, SiteMapNodeCollection> buildSiteMapNodeCollection;
+        Action<SiteMapNodeCollectionBuilder> action;
 
         public object GetModel(ModelProviderContext context)
         {
-            var viewDataDictionary = new ViewDataDictionary<SiteMapNodeCollection>(buildSiteMapNodeCollection(context.Url));
+            var builder = context.Url.SiteMapBuilder();
+
+            action(builder);
+
+            var viewDataDictionary = new ViewDataDictionary<SiteMapNodeCollection>(builder.ToSiteMapNodeCollection());
 
             viewDataDictionary.AddSingle(Formatting);
             
             return viewDataDictionary;
         }
 
-        public NavigationWidget(Func<UrlHelper, SiteMapNodeCollection> buildSiteMapNodeCollection, Zone zone = Zone.Navigation, string viewName = "Navigation", Formatting formatting = null, string scope = null)
+        public NavigationWidget(Action<SiteMapNodeCollectionBuilder> action, Zone zone = Zone.Navigation, string viewName = "Navigation", Formatting formatting = null, string scope = null)
         {
-            this.buildSiteMapNodeCollection = buildSiteMapNodeCollection;
+            this.action = action;
 
             if (formatting != null)
                 Formatting = formatting;
@@ -41,12 +45,11 @@ namespace Instatus.Widgets
         }
 
         public static NavigationWidget Legal() {
-            return new NavigationWidget(url => {
-                return url.Navigation()
+            return new NavigationWidget(builder => {
+                builder
                     .Home(WebPhrase.Homepage)
                     .Page(WebPhrase.TermsAndConditions, "terms")
-                    .Page(WebPhrase.PrivacyPolicy, "privacy")
-                    .ToSiteMapNodeCollection();
+                    .Page(WebPhrase.PrivacyPolicy, "privacy");
             }, 
             zone: Zone.Footer,
             formatting: new Formatting() 

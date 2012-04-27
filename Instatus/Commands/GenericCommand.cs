@@ -25,11 +25,11 @@ namespace Instatus.Commands
             }
         }
         
-        public WebLink GetLink(dynamic viewModel, UrlHelper urlHelper)
+        public Link GetLink(dynamic viewModel, UrlHelper urlHelper)
         {
-            return new WebLink()
+            return new Link()
             {
-                Uri = viewModel is IResource ? viewModel.Uri : viewModel.GetKey(),
+                Uri = viewModel.GetKey(),
                 Title = title ?? name.ToCapitalized(),
                 Rel = name
             };           

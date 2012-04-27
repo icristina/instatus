@@ -103,6 +103,7 @@ namespace Instatus.Services
         public static string[] Query(string directory) 
         {
             var path = WebPath.Server(directory);
+            EnsureFolderExists(path);
             return Directory.GetFiles(path);
         }
     }

@@ -13,43 +13,50 @@ using Instatus;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using Instatus.Areas.Editor.Models;
+using Instatus.Entities;
 
 namespace Instatus.Areas.Editor.Controllers
 {
-    public class NewsViewModel : BaseViewModel<News, IApplicationModel>
+    public class NewsViewModel : BaseViewModel<Page, IApplicationModel>
     {
         [Category("Overview")]
         [Display(Order = 1)]
-        public OverviewViewModel<News> Overview { get; set; }
+        public OverviewViewModel Overview { get; set; }
 
         [Category("Body")]
         [Display(Order = 2)]
-        public DocumentViewModel<News> Document { get; set; }
+        public DocumentViewModel Document { get; set; }
 
         [Category("Call To Action")]
         [Display(Order = 3)]
-        public CallToActionViewModel<News> CallToAction { get; set; }
+        public CallToActionViewModel CallToAction { get; set; }
 
         [Category("Publishing")]
         [Display(Order = 4)]
-        public PublishingViewModel<News> Publishing { get; set; }
+        public PublishingViewModel Publishing { get; set; }
 
         public NewsViewModel()
         {
-            Overview = new OverviewViewModel<News>();
-            Document = new DocumentViewModel<News>();
-            CallToAction = new CallToActionViewModel<News>();
-            Publishing = new PublishingViewModel<News>();
+            Overview = new OverviewViewModel();
+            Document = new DocumentViewModel();
+            CallToAction = new CallToActionViewModel();
+            Publishing = new PublishingViewModel();
         }
     }
     
     [Authorize(Roles = "Editor")]
     [Description("News")]
-    public class NewsController : ScaffoldController<NewsViewModel, News, IApplicationModel, int>
+    [AddParts(Scope = WebConstant.Scope.Admin)]
+    public class NewsController : ScaffoldController<NewsViewModel, Page, IApplicationModel, int>
     {
-        public override IEnumerable<News> Query(IEnumerable<News> set, WebQuery query)
+        public override IEnumerable<Page> Query(IEnumerable<Page> set, Query query)
         {
-            return set.ByRecency();
+            return set.Where(p => p.Kind == "News").ByRecency();
+        }
+
+        public override Page CreateModelInstance()
+        {
+            return new Page(Kind.News);
         }
     }
 }

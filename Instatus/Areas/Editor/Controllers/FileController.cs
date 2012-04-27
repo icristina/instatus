@@ -21,7 +21,7 @@ using System.Text.RegularExpressions;
 namespace Instatus.Areas.Editor.Controllers
 {
     [AllowUpload]
-    public class FileViewModel : BaseViewModel<WebLink>
+    public class FileViewModel : BaseViewModel<Link>
     {
         [DataType(WebConstant.DataType.File)]
         public string File { get; set; }
@@ -29,20 +29,19 @@ namespace Instatus.Areas.Editor.Controllers
 
     [Authorize(Roles = "Editor")]
     [Description("Files")]
-    [Export]
-    [PartCreationPolicy(CreationPolicy.NonShared)]
-    public class FileController : ScaffoldController<FileViewModel, WebLink, IDbSet<WebLink>, int>
+    [AddParts(Scope = WebConstant.Scope.Admin)]
+    public class FileController : ScaffoldController<FileViewModel, Link, IDbSet<Link>, int>
     {
         private IBlobService blobService;
         
-        public override IEnumerable<WebLink> Query(IEnumerable<WebLink> set, WebQuery query)
+        public override IEnumerable<Link> Query(IEnumerable<Link> set, Query query)
         {
             var files = blobService.Query();
 
             set = files
                 .Select(file =>
                 {
-                    return new WebLink()
+                    return new Link()
                     {
                         Uri = file,
                         Picture = WebMimeType.IsRelativePathPhoto(file) ? file : null,
@@ -51,12 +50,12 @@ namespace Instatus.Areas.Editor.Controllers
                 })
                 .ToList();            
             
-            if (query.Mode == WebMode.Index)
+            if (query.ViewMode == ViewMode.Index)
             {
                 if (query.Filter.IsEmpty())
                     query.Filter = "A";
                 
-                if (query.Filter.Match(WebQuery.NonWordCharacter))
+                if (query.Filter.Match("0"))
                 {
                     set = set.Where(l => !Generator.UpperCaseLetters.Any(c => l.Title.ToUpper().StartsWith(c.ToString())));
                 }
@@ -80,7 +79,7 @@ namespace Instatus.Areas.Editor.Controllers
             return RedirectToIndex();
         }
 
-        public override ICollection<IWebCommand> GetCommands(WebQuery query)
+        public override ICollection<IWebCommand> GetCommands(Query query)
         {
             if (query.Command.Match("picker"))
             {
@@ -92,15 +91,15 @@ namespace Instatus.Areas.Editor.Controllers
             return null;
         }
 
-        public override void ConfigureWebView(WebView<WebLink> webView)
+        public override void ConfigureWebView(WebView<Link> webView)
         {
             base.ConfigureWebView(webView);
 
-            webView.Permissions = new WebAction[] { WebAction.Create };
+            webView.Permissions = new string[] { "Create" };
 
             webView.Mode = WebUtility.CreateSelectList(
-                new WebMode[] { WebMode.PagedList, WebMode.Index }, 
-                webView.Query.Mode,
+                new ViewMode[] { ViewMode.PagedList, ViewMode.Index }, 
+                webView.Query.ViewMode,
                 new string[] { "List", "Alphabetical" });
         }
 
@@ -111,7 +110,7 @@ namespace Instatus.Areas.Editor.Controllers
 
             foreach (var image in images)
             {
-                blobService.GenerateSize(image, WebSize.Thumb, null, true);
+                blobService.GenerateSize(image, ImageSize.Thumb, null, true);
             }
 
             return Content("Complete");

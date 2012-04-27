@@ -129,12 +129,20 @@
     <Compile Include="Areas\Auth\Controllers\AccountController.cs" />
     <Compile Include="Areas\Auth\Models\LogOnViewModel.cs" />
     <Compile Include="Areas\Editor\Controllers\ArticleController.cs" />
+    <Compile Include="Areas\Editor\Controllers\BrandController.cs" />
+    <Compile Include="Areas\Editor\Controllers\CatalogController.cs" />
+    <Compile Include="Areas\Editor\Controllers\FileController.cs" />
+    <Compile Include="Areas\Editor\Controllers\NewsController.cs" />
+    <Compile Include="Areas\Editor\Controllers\OrganizationController.cs" />
     <Compile Include="Areas\Editor\Controllers\PostController.cs" />
+    <Compile Include="Areas\Editor\Controllers\ProfileController.cs" />
+    <Compile Include="Areas\Editor\Controllers\TagController.cs" />
     <Compile Include="Areas\Editor\EditorAreaRegistration.cs" />
     <Compile Include="Areas\Editor\Models\CallToActionViewModel.cs" />
     <Compile Include="Areas\Editor\Models\CreativeViewModel.cs" />
     <Compile Include="Areas\Editor\Models\DocumentViewModel.cs" />
     <Compile Include="Areas\Editor\Models\LinkViewModel.cs" />
+    <Compile Include="Areas\Editor\Models\LocationViewModel.cs" />
     <Compile Include="Areas\Editor\Models\MarkupViewModel.cs" />
     <Compile Include="Areas\Editor\Models\MetaTagsViewModel.cs" />
     <Compile Include="Areas\Editor\Models\OverviewViewModel.cs" />
@@ -154,6 +162,7 @@
     <Compile Include="Areas\Twitter\Bootstrap.cs" />
     <Compile Include="Areas\Twitter\Twitter.cs" />
     <Compile Include="Areas\YouTube\YouTube.cs" />
+    <Compile Include="Commands\GenericCommand.cs" />
     <Compile Include="Commands\SpamCommand.cs" />
     <Compile Include="Commands\PublishedCommand.cs" />
     <Compile Include="Data\IContentQuery.cs" />
@@ -276,7 +285,7 @@
     <Compile Include="Web\WebApp.cs" />
     <Compile Include="Data\InMemoryMessageQueue.cs" />
     <Compile Include="Web\WebCache.cs" />
-    <Compile Include="Web\WebConstant.cs" />
+    <Compile Include="WebConstant.cs" />
     <Compile Include="Web\Mock.cs" />
     <Compile Include="Web\AddPartsAttribute.cs" />
     <Compile Include="Web\LowercaseRoute.cs" />
@@ -294,7 +303,6 @@
     <Compile Include="Services\ITemplateService.cs" />
     <Compile Include="Services\FileSystemBlobService.cs" />
     <Compile Include="Services\RazorTemplateService.cs" />
-    <Compile Include="Data\ValidationPatterns.cs" />
     <Compile Include="Web\IWebCommand.cs" />
     <Compile Include="Web\SimpleSiteMapProvider.cs" />
     <Compile Include="Web\SimpleMembershipProvider.cs" />

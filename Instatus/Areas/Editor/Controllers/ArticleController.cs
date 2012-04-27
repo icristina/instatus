@@ -96,8 +96,8 @@ namespace Instatus.Areas.Editor.Controllers
     }
 
     [Authorize(Roles = "Editor")]
-    [AddParts(Scope = WebConstant.Scope.Admin)]
     [Description("Pages")]
+    [AddParts(Scope = WebConstant.Scope.Admin)]
     public class ArticleController : ScaffoldController<ArticleViewModel, Page, IApplicationModel, int>
     {
         public override IEnumerable<Page> Query(IEnumerable<Page> set, Query query)

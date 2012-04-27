@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Configuration;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -184,9 +185,19 @@ namespace Instatus
             builder.RegisterType<DbLoggingService>().As<ILoggingService>().InstancePerHttpRequest();
         }
 
-        public DbServicesModule(string alias)
+        public DbServicesModule(string alias, IDatabaseInitializer<DbApplicationModel> initializer)
         {
             Alias = alias;
+
+            Database.SetInitializer<DbApplicationModel>(initializer);
+        }
+    }
+
+    public class FileSystemModule : Module
+    {
+        protected override void Load(ContainerBuilder builder)
+        {
+            builder.RegisterType<FileSystemBlobService>().As<IBlobService>().InstancePerLifetimeScope();
         }
     }
 

@@ -42,10 +42,10 @@
         @if (Model.Query.ViewMode == ViewMode.Index)
         {
             <div class="btn-group">
-                @Html.ActionLink("0 - 9", "Index", new { Mode = ViewMode.Index, Filter = "0", Command = Model.Query.Command }, new { @class = "btn".Append(" active", Model.Query.Filter.Match("0")) })
+                @Html.ActionLink("0 - 9", "Index", new { ViewMode = ViewMode.Index, Filter = "0", Command = Model.Query.Command }, new { @class = "btn".Append(" active", Model.Query.Filter.Match("0")) })
                 @foreach (var letter in Instatus.Data.Generator.UpperCaseLetters)
                 {
-                    @Html.ActionLink(letter.ToString(), "Index", new { Mode = ViewMode.Index, Filter = letter, Command = Model.Query.Command }, new { @class = "btn".Append(" active", Model.Query.Filter.Match(letter)) })
+                    @Html.ActionLink(letter.ToString(), "Index", new { ViewMode = ViewMode.Index, Filter = letter, Command = Model.Query.Command }, new { @class = "btn".Append(" active", Model.Query.Filter.Match(letter)) })
                 }        
             </div>
         }
@@ -54,7 +54,7 @@
             <div class="btn-group">
                 @foreach (var mode in Model.Mode)
                 {
-                    @Html.ActionLink(mode.Text, "Index", new { Mode = mode.Value, Command = Model.Query.Command }, new { @class = "btn".Append(" active", mode.Selected) })
+                    @Html.ActionLink(mode.Text, "Index", new { ViewMode = mode.Value, Command = Model.Query.Command }, new { @class = "btn".Append(" active", mode.Selected) })
                 }
             </div>
         } 

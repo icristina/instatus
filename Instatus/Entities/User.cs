@@ -4,7 +4,10 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
+using Instatus.Data;
+using Instatus.Web;
 
 namespace Instatus.Entities
 {
@@ -16,12 +19,57 @@ namespace Instatus.Entities
         public string Username { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        
-        public string EmailAddress { get; set; }
+
+        private string emailAddress;
+
+        [Required]
+        [RegularExpression(WebConstant.RegularExpression.EmailAddress)]
+        public string EmailAddress
+        {
+            get
+            {
+                return emailAddress;
+            }
+            set
+            {
+                if (value.IsEmpty())
+                {
+                    emailAddress = null;
+                }
+                else
+                {
+                    emailAddress = value.ToLower(); // normalize email address, ensure lowercase
+                }
+            }
+        }
+
+        private string password;
+
+        [IgnoreDataMember]
+        public string Password
+        {
+            get
+            {
+                return password;
+            }
+            set
+            {
+                if (value.IsEmpty())
+                {
+                    password = Generator.Password().ToEncrypted();
+                }
+                else if (!value.IsEncrypted())
+                {
+                    password = value.ToEncrypted();
+                }
+                else
+                {
+                    password = value;
+                }
+            }
+        }
 
         public DateTime? DateOfBirth { get; set; }
-        
-        public string Password { get; set; }
         
         public string Location { get; set; }
         public Identity Identity { get; set; }

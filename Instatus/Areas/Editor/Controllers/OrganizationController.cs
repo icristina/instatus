@@ -14,70 +14,77 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using Instatus.Areas.Editor.Models;
+using Instatus.Entities;
 
 namespace Instatus.Areas.Editor.Controllers
 {
-    public class OrganizationViewModel : BaseViewModel<Organization, IApplicationModel>
+    public class OrganizationViewModel : BaseViewModel<Page, IApplicationModel>
     {
         [Category("Overview")]
         [Display(Order = 1)]
-        public OverviewViewModel<Organization> Overview { get; set; }
+        public OverviewViewModel Overview { get; set; }
 
-        [Category("Overview")]
-        [Column("Catalog")]
-        [Display(Name = "Category")]       
-        [AdditionalMetadata("Required", true)]
-        public SelectList CatalogList { get; set; }
+        //[Category("Overview")]
+        //[Column("Catalog")]
+        //[Display(Name = "Category")]       
+        //[AdditionalMetadata("Required", true)]
+        //public SelectList CatalogList { get; set; }
 
-        [ScaffoldColumn(false)]
-        public int Catalog { get; set; }
+        //[ScaffoldColumn(false)]
+        //public int Catalog { get; set; }
 
         [Category("Location")]
-        public LocationViewModel<Organization> Location { get; set; }
+        public LocationViewModel Location { get; set; }
 
         [Category("Meta Tags")]
-        public MetaTagsViewModel<Organization> MetaTags { get; set; }
+        public MetaTagsViewModel MetaTags { get; set; }
 
         [Category("Publishing")]
-        public PublishingViewModel<Organization> Publishing { get; set; }
+        public PublishingViewModel Publishing { get; set; }
 
-        public override void Load(Organization model)
+        public override void Load(Page model)
         {
             base.Load(model);
 
-            Catalog = LoadAssociation<Page, Catalog>(model.Parents) ?? 0;
+            //Catalog = LoadAssociation<Page, Catalog>(model.Parents) ?? 0;
         }
 
-        public override void Save(Organization model)
+        public override void Save(Page model)
         {
             base.Save(model);
 
-            model.Parents = SaveAssociation<Page, Catalog>(Context.Pages, model.Parents, Catalog);
+            //model.Parents = SaveAssociation<Page, Catalog>(Context.Pages, model.Parents, Catalog);
         }
 
         public override void Databind()
         {
             base.Databind();
 
-            CatalogList = DatabindSelectList<Page, Catalog>(Context.Pages, Catalog);
+            //CatalogList = DatabindSelectList<Page, Catalog>(Context.Pages, Catalog);
         }
 
         public OrganizationViewModel()
         {
-            Overview = new OverviewViewModel<Organization>();
-            Location = new LocationViewModel<Organization>();
-            MetaTags = new MetaTagsViewModel<Organization>();
-            Publishing = new PublishingViewModel<Organization>();
+            Overview = new OverviewViewModel();
+            Location = new LocationViewModel();
+            MetaTags = new MetaTagsViewModel();
+            Publishing = new PublishingViewModel();
         }
     }
 
     [Authorize(Roles = "Editor")]
     [Description("Organizations")]
-    public class OrganizationController : ScaffoldController<OrganizationViewModel, Organization, IApplicationModel, int>
+    [AddParts(Scope = WebConstant.Scope.Admin)]
+    public class OrganizationController : ScaffoldController<OrganizationViewModel, Page, IApplicationModel, int>
     {
-        public override IEnumerable<Organization> Query(IEnumerable<Organization> set, WebQuery query)
+        public override IEnumerable<Page> Query(IEnumerable<Page> set, Query query)
         {
-            return set.ByAlphabetical();
+            return set.Where(p => p.Kind == "Organization").ByAlphabetical();
+        }
+
+        public override Page CreateModelInstance()
+        {
+            return new Page(Kind.Organization);
         }
     }
 }

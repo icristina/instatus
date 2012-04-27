@@ -31,33 +31,35 @@ namespace Instatus.Areas.Editor.Controllers
         {
             base.Load(model);
 
-            Href = model.Links.Uri(WebContentType.Html);
-            Visual = model.Links.Uri(WebContentType.Jpeg);
+            Href = model.Document.Links.Uri(WebContentType.Html);
+            Visual = model.Document.Links.Uri(WebContentType.Jpeg);
         }
 
         public override void Save(Page model)
         {
             base.Save(model);
 
-            model.Links.ToList().ForEach(l => Context.Links.Remove(l));
-
-            model.Links = new List<Link>()
-            {
-                new Link(WebContentType.Html, Href)
-            };
+            model.Document.Links.Clear();
+            model.Document.Links.Add(new Link(WebConstant.ContentType.Html, Href));
 
             if (!Visual.IsEmpty())
-                model.Links.Add(new Link(WebContentType.Jpeg, Visual));
+                model.Document.Links.Add(new Link(WebConstant.ContentType.Jpg, Visual));
         }
     }
 
     [Authorize(Roles = "Editor")]
     [Description("Brands")]
-    public class BrandController : ScaffoldController<BrandViewModel, Brand, IApplicationModel, int>
+    [AddParts(Scope = WebConstant.Scope.Admin)]
+    public class BrandController : ScaffoldController<BrandViewModel, Page, IApplicationModel, int>
     {
-        public override IEnumerable<Brand> Query(IEnumerable<Brand> set, WebQuery query)
+        public override IEnumerable<Page> Query(IEnumerable<Page> set, Query query)
         {
-            return set.ByAlphabetical();
+            return set.Where(p => p.Kind == "Brand").ByAlphabetical();
+        }
+
+        public override Page CreateModelInstance()
+        {
+            return new Page(Kind.Brand);
         }
     }
 }

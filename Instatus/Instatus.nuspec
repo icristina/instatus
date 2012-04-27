@@ -33,6 +33,8 @@
     <file src="Views\Shared\EditorTemplates\Object.cshtml" target="content\Views\Shared\EditorTemplates" />
     <file src="Views\Shared\EditorTemplates\MultiSelectList.cshtml" target="content\Views\Shared\EditorTemplates" />
     <file src="Views\Shared\EditorTemplates\SelectList.cshtml" target="content\Views\Shared\EditorTemplates" />
+    <file src="Views\Shared\EditorTemplates\File.cshtml" target="content\Views\Shared\EditorTemplates" />
+    <file src="Views\Shared\EditorTemplates\ImageUrl.cshtml" target="content\Views\Shared\EditorTemplates" />
     <file src="Content\scaffold.css" target="content\Content" />
     <file src="Scripts\scaffold.js" target="content\Scripts" />
   </files>  

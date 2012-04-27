@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Instatus.Web
+namespace Instatus
 {
     public static class WebConstant
     {
@@ -44,6 +44,7 @@ namespace Instatus.Web
 
         public static class ContentType
         {
+            public const string Html = "text/html";
             public const string Jpg = "image/jpeg";
         }
 
@@ -51,6 +52,8 @@ namespace Instatus.Web
         {
             public const string Carousel = "Carousel";
             public const string Page = "Page";
+            public const string Navigation = "Navigation";
+            public const string NavBar = "NavBar";
         }
 
         public static class QueryParameter
@@ -67,6 +70,13 @@ namespace Instatus.Web
         public static class Rel
         {
             public const string Video = "video";
+        }
+
+        public static class RegularExpression
+        {
+            public const string EmailAddress = @"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$";
+            public const string Alias = @"^[a-z0-9-]+$";
+            public const string RealName = @"^[A-Za-z-\s]+$";
         }
     }
 }

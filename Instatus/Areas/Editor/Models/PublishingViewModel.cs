@@ -18,7 +18,7 @@ namespace Instatus.Areas.Editor.Models
     {
         [DisplayName("Friendly Url")]
         [Required]
-        [RegularExpression(ValidationPatterns.Alias, ErrorMessageResourceName = WebPhrase.ErrorMessage.InvalidFriendlyIdentifier, ErrorMessageResourceType = typeof(WebPhrase))]
+        [RegularExpression(WebConstant.RegularExpression.Alias, ErrorMessageResourceName = WebPhrase.ErrorMessage.InvalidFriendlyIdentifier, ErrorMessageResourceType = typeof(WebPhrase))]
         public string Alias { get; set; }      
        
         [DisplayName("Published Time")]

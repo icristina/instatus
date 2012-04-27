@@ -28,7 +28,7 @@ namespace Instatus.Areas.Editor
                 new string[] { "Instatus.Areas.Editor.Controllers" }
             );
 
-            Startup.Parts.Add(TagWidget.Script("~/Scripts/scaffold.js", false, WebConstant.Scope.Admin));
+            Startup.Parts.Add(TagWidget.Script("~/Scripts/scaffold.js", true, WebConstant.Scope.Admin));
             Startup.Parts.Add(TagWidget.Stylesheet("~/Content/scaffold.css", WebConstant.Scope.Admin));
         }
     }
@@ -38,7 +38,14 @@ namespace Instatus.Areas.Editor
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<Instatus.Areas.Editor.Controllers.ArticleController>().InstancePerDependency();
+            builder.RegisterType<Instatus.Areas.Editor.Controllers.BrandController>().InstancePerDependency();
+            builder.RegisterType<Instatus.Areas.Editor.Controllers.CatalogController>().InstancePerDependency();
+            builder.RegisterType<Instatus.Areas.Editor.Controllers.FileController>().InstancePerDependency();
+            builder.RegisterType<Instatus.Areas.Editor.Controllers.NewsController>().InstancePerDependency();
+            builder.RegisterType<Instatus.Areas.Editor.Controllers.OrganizationController>().InstancePerDependency();
             builder.RegisterType<Instatus.Areas.Editor.Controllers.PostController>().InstancePerDependency();
+            builder.RegisterType<Instatus.Areas.Editor.Controllers.ProfileController>().InstancePerDependency();
+            builder.RegisterType<Instatus.Areas.Editor.Controllers.TagController>().InstancePerDependency();
         }
 
         public EditorAreaModule()

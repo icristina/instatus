@@ -13,5 +13,13 @@ namespace Instatus.Models
         public string Rel { get; set; }
         public string ContentType { get; set; }
         public string Picture { get; set; }
+
+        public Link() { }
+
+        public Link(string contentType, string uri)
+        {
+            ContentType = contentType;
+            Uri = uri;
+        }
     }
 }

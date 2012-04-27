@@ -62,7 +62,7 @@ namespace Instatus
             return urlHelper.Action(routeData.ActionName(), routeData.ControllerName(), webView.Query.ToRouteValueDictionary());
         }
 
-        public static SiteMapNodeCollectionBuilder Navigation(this UrlHelper urlHelper)
+        public static SiteMapNodeCollectionBuilder SiteMapBuilder(this UrlHelper urlHelper)
         {
             return new SiteMapNodeCollectionBuilder(urlHelper);
         }
