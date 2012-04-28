@@ -9,11 +9,13 @@ using System.Web.Mvc;
 using Instatus.Models;
 using Instatus.Data;
 using Instatus;
+using System.ComponentModel.DataAnnotations.Schema;
+using Instatus.Entities;
 
 namespace Instatus.Areas.Editor.Models
 {
     [ComplexType]
-    public class PeopleViewModel<T> : BaseViewModel<T, IApplicationModel> where T : Page
+    public class PeopleViewModel : BaseViewModel<Page, IApplicationModel>
     {
         [Column("Profiles")]
         [Display(Name = "People", Order = 2)]
@@ -22,24 +24,28 @@ namespace Instatus.Areas.Editor.Models
         [ScaffoldColumn(false)]
         public int[] Profiles { get; set; }
 
-        public override void Load(T model)
+        public override void Load(Page model)
         {
             base.Load(model);
 
-            Profiles = model.Parents.OfType<Profile>().Select(p => p.Id).ToArray();
+            Profiles = model.Parents.Where(p => p.Parent.Kind == "Profile").Select(p => p.Id).ToArray();
         }
 
-        public override void Save(T model)
+        public override void Save(Page model)
         {
             base.Save(model);
 
-            model.Parents.RemoveAll<Profile, Page>();
+            foreach (var association in model.Parents.Where(p => p.Parent.Kind == "Profile").ToList())
+                Context.Associations.Remove(association);
 
             if (!Profiles.IsEmpty())
             {
                 foreach (var profileId in Profiles)
                 {
-                    model.Parents.Add(Context.Pages.Find(profileId));
+                    model.Parents.Add(new Association()
+                    {
+                        ParentId = profileId
+                    });
                 }
             }
         }
@@ -48,7 +54,11 @@ namespace Instatus.Areas.Editor.Models
         {
             base.Databind();
 
-            ProfilesList = DatabindMultiSelectList<Page, Profile>(Context.Pages, Profiles);
+            ProfilesList = new SelectList(Context.Pages.Where(p => p.Kind == "Profile").Select(p => new
+            {
+                Id = p.Id,
+                Name = p.Name
+            }).ToList(), "Id", "Name", Profiles);
         }
     }
 }

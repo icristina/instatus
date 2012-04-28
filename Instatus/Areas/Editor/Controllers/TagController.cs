@@ -36,6 +36,7 @@ namespace Instatus.Areas.Editor.Controllers
     
     [Authorize(Roles = "Editor")]
     [Description("Tags")]
+    [AddParts(Scope = WebConstant.Scope.Admin)]
     public class TagController : ScaffoldController<TagViewModel, Tag, IApplicationModel, int>
     {
 

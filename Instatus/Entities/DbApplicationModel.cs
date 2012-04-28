@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -42,5 +43,13 @@ namespace Instatus.Entities
         public IDbSet<Comment> Comments { get; set; }
         public IDbSet<Association> Associations { get; set; }
         public IDbSet<Phrase> Phrases { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>(); 
+            
+            modelBuilder.Entity<Association>().HasRequired(a => a.Parent).WithMany(a => a.Children).HasForeignKey(a => a.ParentId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<Association>().HasRequired(a => a.Child).WithMany(a => a.Parents).HasForeignKey(a => a.ChildId).WillCascadeOnDelete(false);
+        }
     }
 }

@@ -146,7 +146,9 @@
     <Compile Include="Areas\Editor\Models\MarkupViewModel.cs" />
     <Compile Include="Areas\Editor\Models\MetaTagsViewModel.cs" />
     <Compile Include="Areas\Editor\Models\OverviewViewModel.cs" />
+    <Compile Include="Areas\Editor\Models\PeopleViewModel.cs" />
     <Compile Include="Areas\Editor\Models\PublishingViewModel.cs" />
+    <Compile Include="Areas\Editor\Models\RelatedViewModel.cs" />
     <Compile Include="Areas\Editor\Models\VideoViewModel.cs" />
     <Compile Include="Areas\Facebook\Controllers\FacebookController.cs" />
     <Compile Include="Areas\Facebook\Facebook.cs" />

@@ -15,23 +15,24 @@ using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using Instatus.Areas.Editor.Models;
 using Instatus.Entities;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Instatus.Areas.Editor.Controllers
 {
-    public class OrganizationViewModel : BaseViewModel<Page, IApplicationModel>
+    public class OrganizationViewModel : PageViewModel
     {
         [Category("Overview")]
         [Display(Order = 1)]
         public OverviewViewModel Overview { get; set; }
 
-        //[Category("Overview")]
-        //[Column("Catalog")]
-        //[Display(Name = "Category")]       
-        //[AdditionalMetadata("Required", true)]
-        //public SelectList CatalogList { get; set; }
+        [Category("Overview")]
+        [Column("Catalog")]
+        [Display(Name = "Category")]
+        [AdditionalMetadata("Required", true)]
+        public SelectList CatalogList { get; set; }
 
-        //[ScaffoldColumn(false)]
-        //public int Catalog { get; set; }
+        [ScaffoldColumn(false)]
+        public int? Catalog { get; set; }
 
         [Category("Location")]
         public LocationViewModel Location { get; set; }
@@ -46,21 +47,21 @@ namespace Instatus.Areas.Editor.Controllers
         {
             base.Load(model);
 
-            //Catalog = LoadAssociation<Page, Catalog>(model.Parents) ?? 0;
+            Catalog = ParentId(model, Kind.Catalog);
         }
 
         public override void Save(Page model)
         {
             base.Save(model);
 
-            //model.Parents = SaveAssociation<Page, Catalog>(Context.Pages, model.Parents, Catalog);
+            SaveAssociation(model, Kind.Catalog, Catalog);
         }
 
         public override void Databind()
         {
             base.Databind();
 
-            //CatalogList = DatabindSelectList<Page, Catalog>(Context.Pages, Catalog);
+            CatalogList = SelectByKind(Kind.Catalog, Catalog);
         }
 
         public OrganizationViewModel()

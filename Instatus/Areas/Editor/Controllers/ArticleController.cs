@@ -19,19 +19,19 @@ using Instatus.Entities;
 
 namespace Instatus.Areas.Editor.Controllers
 {
-    public class ArticleViewModel : BaseViewModel<Page>
+    public class ArticleViewModel : PageViewModel
     {
         [Category("Overview")]
         [Display(Order = 1)]
         public OverviewViewModel Overview { get; set; }
 
-        //[Category("Overview")]
-        //[Column("Parent")]
-        //[Display(Name = "Parent", Order = 2)]
-        //public SelectList ParentList { get; set; }
+        [Category("Overview")]
+        [Column("Parent")]
+        [Display(Name = "Parent", Order = 2)]
+        public SelectList ParentList { get; set; }
 
-        //[ScaffoldColumn(false)]
-        //public int? Parent { get; set; }
+        [ScaffoldColumn(false)]
+        public int? Parent { get; set; }
 
         [Category("Body")]
         [Display(Order = 3)]
@@ -53,9 +53,9 @@ namespace Instatus.Areas.Editor.Controllers
         [Display(Order = 7)]
         public MarkupViewModel Markup { get; set; }
 
-        //[Category("People")]
-        //[Display(Order = 8)]
-        //public PeopleViewModel People { get; set; }
+        [Category("People")]
+        [Display(Order = 8)]
+        public PeopleViewModel People { get; set; }
 
         [Category("Publishing")]
         [Display(Order = 9)]
@@ -65,21 +65,21 @@ namespace Instatus.Areas.Editor.Controllers
         {
             base.Load(model);
 
-            //Parent = LoadAssociation<Page, Article>(model.Parents);
+            Parent = ParentId(model, Kind.Article);
         }
 
         public override void Save(Page model)
         {
             base.Save(model);
 
-            //model.Parents = SaveAssociation<Page, Article>(Context.Pages, model.Parents, Parent);
+            SaveAssociation(model, Kind.Article, Parent);
         }
 
         public override void Databind()
         {
             base.Databind();
 
-            //ParentList = DatabindSelectList<Page, Article>(Context.Pages, Parent);
+            ParentList = SelectByKind(Kind.Article, Parent);
         }
 
         public ArticleViewModel()
@@ -90,7 +90,7 @@ namespace Instatus.Areas.Editor.Controllers
             Video = new VideoViewModel();
             MetaTags = new MetaTagsViewModel();
             Markup = new MarkupViewModel();
-            //People = new PeopleViewModel();
+            People = new PeopleViewModel();
             Publishing = new PublishingViewModel();
         }
     }

@@ -15,7 +15,7 @@ using Instatus.Data;
 
 namespace Instatus.Entities
 {   
-    public class Page : IContentItem, IUserGeneratedContent, INavigableContent
+    public class Page : IEntity, IContentItem, IUserGeneratedContent, INavigableContent, INamed
     {
         public int Id { get; set; }
         public int Locale { get; set; }
@@ -34,8 +34,10 @@ namespace Instatus.Entities
         public User User { get; set; }
         public Application Application { get; set; }
         public virtual ICollection<Tag> Tags { get; set; }
-        public virtual ICollection<Association> Associations { get; set; }
         public virtual ICollection<Subscription> Subscriptions { get; set; }
+
+        public virtual ICollection<Association> Parents { get; set; }
+        public virtual ICollection<Association> Children { get; set; }
 #if NET45
         public Kind Kind { get; set; }
         public Published Published { get; set; }

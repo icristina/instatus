@@ -10,8 +10,10 @@ namespace Instatus.Entities
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public Page Parent { get; set; }
-        public Page Child { get; set; }
-        public int SortOrder { get; set; }
+        public virtual Page Parent { get; set; }
+        public int ParentId { get; set; }
+        public virtual Page Child { get; set; }
+        public int ChildId { get; set; }
+        public int? SortOrder { get; set; }
     }
 }

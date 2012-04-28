@@ -18,19 +18,19 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Instatus.Areas.Editor.Controllers
 {
-    public class PostViewModel : BaseViewModel<Page, IApplicationModel>
+    public class PostViewModel : PageViewModel
     {
         [Category("Overview")]
         [Display(Order = 1)]
         public OverviewViewModel Overview { get; set; }
 
-        //[Category("Overview")]
-        //[Column("Tags")]
-        //[Display(Name = "Tags", Order = 2)]
-        //public MultiSelectList TagsList { get; set; }
+        [Category("Overview")]
+        [Column("Tags")]
+        [Display(Name = "Tags", Order = 2)]
+        public MultiSelectList TagsList { get; set; }
 
-        //[ScaffoldColumn(false)]
-        //public int[] Tags { get; set; }
+        [ScaffoldColumn(false)]
+        public int[] Tags { get; set; }
 
         [Category("Overview")]
         [Column("Organization")]
@@ -44,9 +44,9 @@ namespace Instatus.Areas.Editor.Controllers
         [Display(Order = 4)]
         public VideoViewModel Video { get; set; }
 
-        //[Category("People")]
-        //[Display(Order = 5)]
-        //public PeopleViewModel<Post> People { get; set; }
+        [Category("People")]
+        [Display(Order = 5)]
+        public PeopleViewModel People { get; set; }
 
         [Category("Publishing")]
         [Display(Order = 6)]
@@ -56,32 +56,32 @@ namespace Instatus.Areas.Editor.Controllers
         {
             base.Load(model);
 
-            //Tags = model.Tags.IsEmpty() ? null : model.Tags.Select(t => t.Id).ToArray();
-
-            //Organization = LoadAssociation<Page, Organization>(model.Parents);
+            Tags = model.Tags.IsEmpty() ? null : model.Tags.Select(t => t.Id).ToArray();
+            Organization = ParentId(model, Kind.Organization);
         }
 
         public override void Save(Page model)
         {            
             base.Save(model);
 
-            //model.Tags = SaveMultiAssociation<Tag>(Context.Tags, model.Tags, Tags);
-            //model.Parents = SaveAssociation<Page, Organization>(Context.Pages, model.Parents, Organization);
+            model.Tags = SaveMultiAssociation<Tag>(Context.Tags, model.Tags, Tags);
+
+            SaveAssociation(model, Kind.Organization, Organization);
         }
 
         public override void Databind()
         {
             base.Databind();
             
-            //TagsList = new MultiSelectList(Context.Tags.ToList(), "Id", "Name", Tags);
-            //OrganizationList = DatabindSelectList<Page, Organization>(Context.Pages, Organization);
+            TagsList = new MultiSelectList(Context.Tags.ToList(), "Id", "Name", Tags);
+            OrganizationList = SelectByKind(Kind.Organization, Organization);
         }
 
         public PostViewModel()
         {
             Overview = new OverviewViewModel();
             Video = new VideoViewModel();
-            //People = new PeopleViewModel<Post>();
+            People = new PeopleViewModel();
             Publishing = new PublishingViewModel();
         }
     }
