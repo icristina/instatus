@@ -69,11 +69,11 @@ namespace Instatus.Areas.Editor.Models
         public int? ParentId(Page model, Kind kind)
         {
             var kindName = kind.ToString();
-            var parentId = model.Parents.Where(p => p.Parent.Kind == kindName).Select(p => p.Id).FirstOrDefault();
+            var parentId = model.Parents.Where(p => p.Parent.Kind == kindName).Select(p => p.ParentId).FirstOrDefault();
             return parentId == 0 ? default(int?) : parentId;
         }
 
-        public SelectList SelectByKind(Kind kind, int? selectedValue)
+        public SelectList SelectByKind(Kind kind, object selectedValue)
         {
             var kindName = kind.ToString();
             return new SelectList(Context.Pages.Where(p => p.Kind == kindName).Select(p => new

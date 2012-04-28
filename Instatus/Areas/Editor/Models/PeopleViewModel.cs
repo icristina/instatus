@@ -15,7 +15,7 @@ using Instatus.Entities;
 namespace Instatus.Areas.Editor.Models
 {
     [ComplexType]
-    public class PeopleViewModel : BaseViewModel<Page, IApplicationModel>
+    public class PeopleViewModel : PageViewModel
     {
         [Column("Profiles")]
         [Display(Name = "People", Order = 2)]
@@ -28,7 +28,7 @@ namespace Instatus.Areas.Editor.Models
         {
             base.Load(model);
 
-            Profiles = model.Parents.Where(p => p.Parent.Kind == "Profile").Select(p => p.Id).ToArray();
+            Profiles = model.Parents.Where(p => p.Parent.Kind == "Profile").Select(p => p.ParentId).ToArray();
         }
 
         public override void Save(Page model)
@@ -54,7 +54,7 @@ namespace Instatus.Areas.Editor.Models
         {
             base.Databind();
 
-            ProfilesList = new SelectList(Context.Pages.Where(p => p.Kind == "Profile").Select(p => new
+            ProfilesList = new MultiSelectList(Context.Pages.Where(p => p.Kind == "Profile").Select(p => new
             {
                 Id = p.Id,
                 Name = p.Name

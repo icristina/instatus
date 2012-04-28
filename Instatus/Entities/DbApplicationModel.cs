@@ -46,9 +46,8 @@ namespace Instatus.Entities
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>(); 
-            
-            modelBuilder.Entity<Association>().HasRequired(a => a.Parent).WithMany(a => a.Children).HasForeignKey(a => a.ParentId).WillCascadeOnDelete(false);
+            // association, cascade delete on only one end of relationship
+            modelBuilder.Entity<Association>().HasRequired(a => a.Parent).WithMany(a => a.Children).HasForeignKey(a => a.ParentId).WillCascadeOnDelete(true);
             modelBuilder.Entity<Association>().HasRequired(a => a.Child).WithMany(a => a.Parents).HasForeignKey(a => a.ChildId).WillCascadeOnDelete(false);
         }
     }
