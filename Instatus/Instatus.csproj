@@ -281,6 +281,7 @@
     <Compile Include="Web\IWebView.cs" />
     <Compile Include="Web\JsModelClientValidationRule.cs" />
     <Compile Include="Web\LessTransform.cs" />
+    <Compile Include="Web\RedirectModule.cs" />
     <Compile Include="Web\SchemaOrgVocabulary.cs" />
     <Compile Include="Web\SyndicationFeedResult.cs" />
     <Compile Include="Web\TwoLevelViewCache.cs" />

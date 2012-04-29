@@ -13,10 +13,13 @@ using System.Web.Security;
 using Autofac;
 using Autofac.Core;
 using Autofac.Integration.Mvc;
+using Instatus.Areas.Auth;
+using Instatus.Areas.Editor;
 using Instatus.Entities;
 using Instatus.Models;
 using Instatus.Services;
 using Instatus.Web;
+using Instatus.Widgets;
 using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 
 [assembly: WebActivator.PreApplicationStartMethod(typeof(Instatus.Startup), "PreApplicationStart")]
@@ -50,6 +53,7 @@ namespace Instatus
             ErrorHandling();
             ViewLocation();
             RemoveServerFingerprint();
+            Rewriting();
         }
 
         private static void PostApplicationStart()
@@ -159,7 +163,30 @@ namespace Instatus
 
         public static void Rewriting()
         {
-            // DynamicModuleUtility.RegisterModule(typeof(RedirectModule));
+            DynamicModuleUtility.RegisterModule(typeof(RedirectModule));
+        }
+
+        public static void Admin()
+        {
+            Modules.Add(new AuthAreaModule());
+            Modules.Add(new EditorAreaModule());
+            Modules.Add(new FileSystemModule());            
+
+            Parts.Add(new NavigationWidget(builder =>
+            {
+                builder
+                    .Controller<Instatus.Areas.Editor.Controllers.ArticleController>("Pages")
+                    .Controller<Instatus.Areas.Editor.Controllers.BrandController>("Brand")
+                    .Controller<Instatus.Areas.Editor.Controllers.CatalogController>("Catalog")
+                    .Controller<Instatus.Areas.Editor.Controllers.FileController>("Files")
+                    .Controller<Instatus.Areas.Editor.Controllers.NewsController>("News")
+                    .Controller<Instatus.Areas.Editor.Controllers.OrganizationController>("Projects")
+                    .Controller<Instatus.Areas.Editor.Controllers.PostController>("Blog Posts")
+                    .Controller<Instatus.Areas.Editor.Controllers.ProfileController>("People")
+                    .Controller<Instatus.Areas.Editor.Controllers.TagController>("Tags");
+            },
+            viewName: WebConstant.ViewName.NavBar,
+            scope: WebConstant.Scope.Admin));
         }
     }
 

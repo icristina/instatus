@@ -18,12 +18,20 @@ namespace Instatus.Entities
     public class Page : IEntity, IContentItem, IUserGeneratedContent, INavigableContent, INamed
     {
         public int Id { get; set; }
+        
         public int Locale { get; set; }
+        
         public DateTime CreatedTime { get; set; }
         public DateTime UpdatedTime { get; set; }
         public DateTime PublishedTime { get; set; }
+
+        [Required]
+        [RegularExpression(WebConstant.RegularExpression.Alias)]
         public string Alias { get; set; }
+
+        [Required]
         public string Name { get; set; }
+
         public string Description { get; set; }
         public string Picture { get; set; }
         public Source Source { get; set; }
@@ -192,6 +200,6 @@ namespace Instatus.Entities
     [ComplexType]
     public class Availability
     {
-        public float? Price { get; set; }
+        public float Price { get; set; }
     }
 }

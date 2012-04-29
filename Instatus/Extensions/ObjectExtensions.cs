@@ -178,7 +178,7 @@ namespace Instatus
                 }
             }
             
-            var keyNameConventions = new string[] { "Id", graph.GetType().Name + "Id" };
+            var keyNameConventions = new string[] { "Id", graph.GetType().Name + "Id", "Uri" };
 
             foreach(var propertyName in keyNameConventions) {
                 var property = properties.Find(propertyName, true);

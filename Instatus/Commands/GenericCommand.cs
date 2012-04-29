@@ -29,7 +29,7 @@ namespace Instatus.Commands
         {
             return new Link()
             {
-                Uri = viewModel.GetKey(),
+                Uri = (viewModel as object).GetKey().ToString(),
                 Title = title ?? name.ToCapitalized(),
                 Rel = name
             };           

@@ -6,6 +6,7 @@ using Instatus.Models;
 using Instatus.Data;
 using Instatus.Services;
 using Instatus.Entities;
+using System.Web.Mvc;
 
 namespace Instatus.Web
 {
@@ -16,27 +17,26 @@ namespace Instatus.Web
 
         }
 
-        private static List<Link> links;
+        private static List<Redirect> redirects;
 
-        private List<Link> Links
+        private List<Redirect> Redirects
         {
             get
             {
-                if(links == null) {
-                    using (var db = WebApp.GetService<IApplicationModel>())
+                if(redirects == null) {
+                    var applicationModel = DependencyResolver.Current.GetService<IApplicationModel>();
+
+                    if (applicationModel == null)
                     {
-                        if (db != null)
-                        {
-                            links = db.Links.Redirects().ToList();
-                        }
-                        else
-                        {
-                            links = new List<Link>();
-                        }
+                        redirects = new List<Redirect>();
+                    }
+                    else
+                    {
+                        redirects = applicationModel.Redirects.ToList();
                     }
                 }
 
-                return links;
+                return redirects;
             }
         }
 
@@ -48,22 +48,21 @@ namespace Instatus.Web
             {
                 if (domains == null)
                 {
-                    using (var db = WebApp.GetService<IApplicationModel>())
-                    {
-                        if (db != null)
-                        {
-                            var environment = WebApp.Environment.ToString();
-                            var all = WebEnvironment.All.ToString();
+                    var applicationModel = DependencyResolver.Current.GetService<IApplicationModel>();
 
-                            domains = db.Domains
-                                .OrderBy(d => d.IsCanonical)
-                                .Where(d => d.Application != null && (d.Environment == environment || d.Environment == all))
-                                .ToList();
-                        }
-                        else
-                        {
-                            domains = new List<Domain>();
-                        }
+                    if (applicationModel == null)
+                    {
+                        domains = new List<Domain>();
+                    }
+                    else
+                    {
+                        var environment = WebApp.Environment.ToString();
+                        var all = Deployment.All.ToString();
+
+                        domains = applicationModel.Domains
+                            .OrderBy(d => d.Canonical)
+                            .Where(d => d.Application != null && (d.Environment == environment || d.Environment == all))
+                            .ToList();
                     }
                 }
 
@@ -75,7 +74,7 @@ namespace Instatus.Web
         {
             WebApp.OnReset(() =>
             {
-                links = null;
+                redirects = null;
                 domains = null;
             });
 
@@ -85,7 +84,7 @@ namespace Instatus.Web
 
         private void Alternative(Object source, EventArgs e)
         {
-            var link = Links.FirstOrDefault(l => l.Uri == HttpContext.Current.Request.RawUrl);
+            var link = Redirects.FirstOrDefault(l => l.Source == HttpContext.Current.Request.RawUrl);
 
             if (link != null)
             {
@@ -105,9 +104,9 @@ namespace Instatus.Web
             var url = HttpContext.Current.Request.Url;
             var hostAndPort = url.Authority;
             
-            if(Domains.Any(d => d.Uri.Match(hostAndPort) && d.IsCanonical == false) && Domains.Any(d => d.IsCanonical)) {
-                var canonicalDomain = Domains.First(d => d.IsCanonical);
-                var baseUri = new Uri("http://" + canonicalDomain.Uri);
+            if(Domains.Any(d => d.Hostname.Match(hostAndPort) && d.Canonical == false) && Domains.Any(d => d.Canonical)) {
+                var canonicalDomain = Domains.First(d => d.Canonical);
+                var baseUri = new Uri("http://" + canonicalDomain.Hostname);
                 var canonicalUri = new Uri(baseUri, url.PathAndQuery);
 
                 HttpContext.Current.Response.RedirectPermanent(canonicalUri.ToString(), true);

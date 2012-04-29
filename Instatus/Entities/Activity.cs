@@ -14,9 +14,9 @@ namespace Instatus.Entities
         public string Description { get; set; }
         public User User { get; set; }
         public Page Page { get; set; }
-        public int? Rating { get; set; }
-        public int? Score { get; set; }
-        public int? Duration { get; set; }
+        public int Rating { get; set; }
+        public int Score { get; set; }
+        public int Duration { get; set; }
         public Location Location { get; set; }
         public Application Application { get; set; }
 #if NET45
