@@ -21,6 +21,9 @@ namespace Instatus.Web
 
         public static string Meta(string name, string content)
         {
+            if (name.IsEmpty() || content.IsEmpty())
+                return null;
+            
             var tag = new TagBuilder("meta");
 
             tag.MergeAttribute("name", name);

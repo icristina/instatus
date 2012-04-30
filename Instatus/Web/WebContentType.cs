@@ -115,7 +115,7 @@ namespace Instatus.Web
             if (extension.IsEmpty())
                 return false;
 
-            var normalizedExtension = Path.GetExtension(relativePath).ToLower().Substring(1);
+            var normalizedExtension = extension.ToLower().Substring(1);
             
             return definitions.Any(d => d.Category == category && d.Extensions.Any(e => e == normalizedExtension));
         }

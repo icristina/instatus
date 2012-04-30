@@ -69,8 +69,8 @@ namespace Instatus
             {
                 var sb = new StringBuilder();
                 var parameters = ((IContentItem)model).Document.Parameters;
-                var description = parameters.Where(p => p.Name.Match("Description")).Select(p => p.Content).FirstOrDefault();
-                var keywords = parameters.Where(p => p.Name.Match("Keywords")).Select(p => p.Content).FirstOrDefault();
+                var description = parameters.Where(p => p.Name.Match("html:description")).Select(p => p.Content).FirstOrDefault();
+                var keywords = parameters.Where(p => p.Name.Match("html:keywords")).Select(p => p.Content).FirstOrDefault();
     
                 sb.AppendLine(HtmlBuilder.Meta("description", description));
                 sb.AppendLine(HtmlBuilder.Meta("keywords", keywords));
