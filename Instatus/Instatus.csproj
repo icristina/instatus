@@ -186,6 +186,7 @@
     <Compile Include="Entities\DbResourceReader.cs" />
     <Compile Include="Entities\Domain.cs" />
     <Compile Include="Entities\IApplicationModel.cs" />
+    <Compile Include="Entities\Identity.cs" />
     <Compile Include="Entities\InMemoryApplicationModel.cs" />
     <Compile Include="Entities\IContentModel.cs" />
     <Compile Include="Entities\IPageModel.cs" />

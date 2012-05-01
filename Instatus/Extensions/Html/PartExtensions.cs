@@ -31,7 +31,10 @@ namespace Instatus
             {
                 foreach (var part in contentItem.Document.Parts.Where(p => p.Zone == zoneName))
                 {
-                    sb.Append(html.Part(part).ToString());
+                    var htmlString = html.Part(part);
+
+                    if (htmlString != null)
+                        sb.Append(htmlString.ToString());
                 }
             }
 
