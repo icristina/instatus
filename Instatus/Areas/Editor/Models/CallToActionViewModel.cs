@@ -25,15 +25,13 @@ namespace Instatus.Areas.Editor.Models
 
         public override void Save(Page model)
         {
-            var html = WebContentType.Html.ToMimeType();
-            
-            model.Document.Links.Where(l => l.ContentType == html).ToList().ForEach(l => model.Document.Links.Remove(l));
+            model.Document.Links.RemoveAll(l => l.ContentType == WebConstant.ContentType.Html);
 
             if (!Uri.IsEmpty())
             {
                 model.Document.Links.Add(new Link()
                 {
-                    ContentType = html,
+                    ContentType = WebConstant.ContentType.Html,
                     Uri = Uri
                 });
             }

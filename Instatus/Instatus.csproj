@@ -135,6 +135,8 @@
     <Compile Include="Areas\Editor\Controllers\TagController.cs" />
     <Compile Include="Areas\Editor\EditorAreaRegistration.cs" />
     <Compile Include="Areas\Editor\Models\CallToActionViewModel.cs" />
+    <Compile Include="Areas\Editor\Models\PageViewModel.cs" />
+    <Compile Include="Areas\Editor\Models\PartsViewModel.cs" />
     <Compile Include="Areas\Editor\Models\CreativeViewModel.cs" />
     <Compile Include="Areas\Editor\Models\DocumentViewModel.cs" />
     <Compile Include="Areas\Editor\Models\LinkViewModel.cs" />

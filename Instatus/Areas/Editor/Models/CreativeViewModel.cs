@@ -10,6 +10,7 @@ using Instatus.Models;
 using Instatus.Data;
 using Instatus.Entities;
 using System.ComponentModel.DataAnnotations.Schema;
+using Instatus;
 
 namespace Instatus.Areas.Editor.Models
 {
@@ -22,16 +23,19 @@ namespace Instatus.Areas.Editor.Models
 
         public override void Load(Page model)
         {
-            base.Load(model);
-
-            Links = model.Document.Links.Select(l => new LinkViewModel(l.Title, l.Uri, l.Picture)).ToList().Pad(10);
+            Links = model.Document.Links.Select(l =>
+            {
+                var viewModel = new LinkViewModel();
+                viewModel.Load(l);
+                return viewModel;
+            })
+            .ToList()
+            .Pad(10);
         }
 
         public override void Save(Page model)
         {
-            base.Save(model);
-
-            model.Document.Links = Links.RemoveNullOrEmpty().Select(l => l.ToLink()).ToList();
+            model.Document.Links = Links.RemoveNullOrEmpty().Select(l => l.ToModel()).ToList();
         }
     }
 }

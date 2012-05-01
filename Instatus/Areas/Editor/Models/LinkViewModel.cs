@@ -9,7 +9,7 @@ using Instatus.Models;
 
 namespace Instatus.Areas.Editor.Models
 {
-    public class LinkViewModel : IHasValue
+    public class LinkViewModel : BaseViewModel<Link>, IHasValue
     {
         public string Name { get; set; }
 
@@ -30,21 +30,18 @@ namespace Instatus.Areas.Editor.Models
 
         public LinkViewModel() { }
 
-        public LinkViewModel(string name, string uri, string picture)
+        public override void Load(Link model)
         {
-            Name = name;
-            Uri = uri;
-            Picture = picture;
+            base.Load(model);
+
+            Name = model.Title;
         }
 
-        public Link ToLink()
+        public override void Save(Link model)
         {
-            return new Link()
-            {
-                Uri = Uri,
-                Title = Name,
-                Picture = Picture
-            };
+            base.Save(model);
+
+            model.Title = Name;
         }
     }
 }
