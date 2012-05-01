@@ -194,6 +194,7 @@
     <Compile Include="Entities\Page.cs" />
     <Compile Include="Entities\Phrase.cs" />
     <Compile Include="Entities\Redirect.cs" />
+    <Compile Include="Entities\Segment.cs" />
     <Compile Include="Entities\Selection.cs" />
     <Compile Include="Entities\Subscription.cs" />
     <Compile Include="Entities\Tag.cs" />
@@ -218,6 +219,7 @@
     <Compile Include="Models\Entry.cs" />
     <Compile Include="Models\Form.cs" />
     <Compile Include="Models\Formatting.cs" />
+    <Compile Include="Models\Gender.cs" />
     <Compile Include="Models\ImageSize.cs" />
     <Compile Include="Models\Insight.cs" />
     <Compile Include="Models\Kind.cs" />

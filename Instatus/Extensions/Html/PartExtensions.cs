@@ -75,14 +75,17 @@ namespace Instatus
                     return html.Partial(part.Template, webPartialModel);
                 }
             }
-            else if (part.Template.IsEmpty())
+            else if (part.Formatting != null && part.Formatting.IsHtml)
             {
                 return html.Raw(part.Body);
             }
-            else
+            else if (part.Template.NonEmpty())
             {
                 return html.Partial(part.Template, part);
             }
+
+            // may wish to format parts within action's primary view
+            return null;
         }
     }
 }

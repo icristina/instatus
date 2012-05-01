@@ -53,7 +53,7 @@ namespace Instatus.Areas.Editor.Models
 
         public override void Load(Page model)
         {
-            var markupSections = model.Document.Parts.Where(p => p.IsRawHtml).ToList();
+            var markupSections = model.Document.Parts.Where(p => p.Formatting.IsHtml).ToList();
 
             if (!markupSections.IsEmpty())
             {
@@ -71,7 +71,7 @@ namespace Instatus.Areas.Editor.Models
 
         public override void Save(Page model)
         {
-            model.Document.Parts.RemoveAll(p => p.IsRawHtml);
+            model.Document.Parts.RemoveAll(p => p.Formatting.IsHtml);
 
             model.Document.Parts
                             .AddMarkupPart(Zone.Head, Head)
@@ -95,7 +95,11 @@ namespace Instatus.Areas.Editor.Models
                 parts.Add(new Part()
                 {
                     Zone = zone,
-                    Body = body
+                    Body = body,
+                    Formatting = new Formatting()
+                    {
+                        IsHtml = true
+                    }
                 });
             }
             

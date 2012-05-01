@@ -22,12 +22,9 @@ namespace Instatus.Models
         public Query Query { get; set; }
         public Formatting Formatting { get; set; }
 
-        public bool IsRawHtml
+        public Part()
         {
-            get
-            {
-                return Body.NonEmpty() && Template.IsEmpty() && RouteData.IsEmpty();
-            }
+            Formatting = new Formatting();
         }
     }
 }

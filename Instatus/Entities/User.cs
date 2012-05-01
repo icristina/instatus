@@ -73,6 +73,7 @@ namespace Instatus.Entities
         
         public string Location { get; set; }
         public Identity Identity { get; set; }
+        public Segment Segment { get; set; }
         public bool Verified { get; set; }
         public bool Suspended { get; set; }
         public virtual ICollection<Page> Pages { get; set; }
@@ -111,11 +112,5 @@ namespace Instatus.Entities
         {
             return string.Format("urn:{0}:{1}", Provider.ToLower(), UserId.ToLower());
         }
-    }
-
-    public enum Gender
-    {
-        Male,
-        Female
     }
 }

@@ -10,5 +10,6 @@ namespace Instatus.Models
         public string Label { get; set; }
         public int MaxLength { get; set; }
         public string ClassName { get; set; }
+        public bool IsHtml { get; set; }
     }
 }
