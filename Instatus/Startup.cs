@@ -15,6 +15,8 @@ using Autofac.Core;
 using Autofac.Integration.Mvc;
 using Instatus.Areas.Auth;
 using Instatus.Areas.Editor;
+using Instatus.Areas.Facebook;
+using Instatus.Areas.Google;
 using Instatus.Entities;
 using Instatus.Models;
 using Instatus.Services;
@@ -72,7 +74,8 @@ namespace Instatus
 
             HtmlHelper.ClientValidationEnabled = false;
             HtmlHelper.UnobtrusiveJavaScriptEnabled = false;
-            
+
+            ModelBinders.Binders.DefaultBinder = new SubTypeModelBinder();
             ModelMetadataProviders.Current = new ExtendedModelMetadataProvider();
         }
 
@@ -166,27 +169,36 @@ namespace Instatus
             DynamicModuleUtility.RegisterModule(typeof(RedirectModule));
         }
 
-        public static void Admin()
+        public static void Admin(bool registerNavigationWidget = true)
         {
             Modules.Add(new AuthAreaModule());
             Modules.Add(new EditorAreaModule());
-            Modules.Add(new FileSystemModule());            
+            Modules.Add(new FileSystemModule());
 
-            Parts.Add(new NavigationWidget(builder =>
+            if (registerNavigationWidget)
             {
-                builder
-                    .Controller<Instatus.Areas.Editor.Controllers.ArticleController>("Pages")
-                    .Controller<Instatus.Areas.Editor.Controllers.BrandController>("Brand")
-                    .Controller<Instatus.Areas.Editor.Controllers.CatalogController>("Catalog")
-                    .Controller<Instatus.Areas.Editor.Controllers.FileController>("Files")
-                    .Controller<Instatus.Areas.Editor.Controllers.NewsController>("News")
-                    .Controller<Instatus.Areas.Editor.Controllers.OrganizationController>("Projects")
-                    .Controller<Instatus.Areas.Editor.Controllers.PostController>("Blog Posts")
-                    .Controller<Instatus.Areas.Editor.Controllers.ProfileController>("People")
-                    .Controller<Instatus.Areas.Editor.Controllers.TagController>("Tags");
-            },
-            viewName: WebConstant.ViewName.NavBar,
-            scope: WebConstant.Scope.Admin));
+                Parts.Add(new NavigationWidget(builder =>
+                {
+                    builder
+                        .Controller<Instatus.Areas.Editor.Controllers.ArticleController>("Pages")
+                        .Controller<Instatus.Areas.Editor.Controllers.BrandController>("Brand")
+                        .Controller<Instatus.Areas.Editor.Controllers.CatalogController>("Catalog")
+                        .Controller<Instatus.Areas.Editor.Controllers.FileController>("Files")
+                        .Controller<Instatus.Areas.Editor.Controllers.NewsController>("News")
+                        .Controller<Instatus.Areas.Editor.Controllers.OrganizationController>("Projects")
+                        .Controller<Instatus.Areas.Editor.Controllers.PostController>("Blog Posts")
+                        .Controller<Instatus.Areas.Editor.Controllers.ProfileController>("People")
+                        .Controller<Instatus.Areas.Editor.Controllers.TagController>("Tags");
+                },
+                viewName: WebConstant.ViewName.NavBar,
+                scope: WebConstant.Scope.Admin));
+            }
+        }
+
+        public static void Social()
+        {
+            Modules.Add(new GoogleAreaModule());
+            Modules.Add(new FacebookAreaModule());
         }
     }
 

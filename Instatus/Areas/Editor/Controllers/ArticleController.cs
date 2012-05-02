@@ -33,7 +33,7 @@ namespace Instatus.Areas.Editor.Controllers
         [ScaffoldColumn(false)]
         public int? Parent { get; set; }
 
-        [Category("Body")]
+        [Category("Text")]
         [Display(Order = 3)]
         public DocumentViewModel Document { get; set; }
 
@@ -53,20 +53,24 @@ namespace Instatus.Areas.Editor.Controllers
         [Display(Order = 7)]
         public BaseViewModel<Page> Body { get; set; }
 
-        [Category("Meta Tags")]
+        [Category("Aside")]
         [Display(Order = 8)]
+        public BaseViewModel<Page> Aside { get; set; }
+
+        [Category("Meta Tags")]
+        [Display(Order = 9)]
         public MetaTagsViewModel MetaTags { get; set; }
 
         [Category("Custom Markup")]
-        [Display(Order = 9)]
+        [Display(Order = 10)]
         public MarkupViewModel Markup { get; set; }
 
         [Category("People")]
-        [Display(Order = 10)]
+        [Display(Order = 11)]
         public PeopleViewModel People { get; set; }
 
         [Category("Publishing")]
-        [Display(Order = 11)]
+        [Display(Order = 12)]
         public PublishingViewModel Publishing { get; set; }
 
         public override void Load(Page model)
@@ -100,6 +104,21 @@ namespace Instatus.Areas.Editor.Controllers
             Markup = new MarkupViewModel();
             People = new PeopleViewModel();
             Publishing = new PublishingViewModel();
+        }
+
+        public static void CustomFigureViewModel<TViewModel>() where TViewModel : BaseViewModel<Page>
+        {
+            SubTypeModelBinder.RegisterSubType<BaseViewModel<Page>, TViewModel>(typeof(ArticleViewModel), "Figure");
+        }
+
+        public static void CustomBodyViewModel<TViewModel>() where TViewModel : BaseViewModel<Page>
+        {
+            SubTypeModelBinder.RegisterSubType<BaseViewModel<Page>, TViewModel>(typeof(ArticleViewModel), "Body");
+        }
+
+        public static void CustomAsideViewModel<TViewModel>() where TViewModel : BaseViewModel<Page>
+        {
+            SubTypeModelBinder.RegisterSubType<BaseViewModel<Page>, TViewModel>(typeof(ArticleViewModel), "Aside");
         }
     }
 

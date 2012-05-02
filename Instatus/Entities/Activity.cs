@@ -35,6 +35,11 @@ namespace Instatus.Entities
             CreatedTime = DateTime.UtcNow;
             Location = new Location();
         }
+
+        public Activity(Verb verb) : this()
+        {
+            Verb = verb.ToString();
+        }
     }
 
     public enum Verb

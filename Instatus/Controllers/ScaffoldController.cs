@@ -86,6 +86,16 @@ namespace Instatus.Controllers
                 (viewModel as BaseViewModel<TModel, TContext>).Context = Context;
         }
 
+        public virtual void AttachSubTypes(TViewModel viewModel)
+        {
+            foreach (var subTypeDefinition in SubTypeModelBinder.SubTypeDefinitions.Where(t => t.Item1 == typeof(TViewModel)))
+            {
+                viewModel.GetType()
+                    .GetProperty(subTypeDefinition.Item2)
+                    .SetValue(viewModel, Activator.CreateInstance(subTypeDefinition.Item4), null);
+            }
+        }
+
         public virtual TModel CreateModelInstance()
         {
             return Activator.CreateInstance<TModel>();
@@ -103,7 +113,8 @@ namespace Instatus.Controllers
         {
             var model = Set.Find(id);
             var viewModel = Activator.CreateInstance<TViewModel>();
-            
+
+            AttachSubTypes(viewModel);
             AttachContext(viewModel);
             
             viewModel.Load(model);
@@ -114,7 +125,7 @@ namespace Instatus.Controllers
             return View(EditViewName, viewModel);
         }
 
-        [HttpPost]        
+        [HttpPost]
         public ActionResult Edit(TKey id, TViewModel viewModel)
         {
             AttachContext(viewModel);         
@@ -141,6 +152,7 @@ namespace Instatus.Controllers
             var model = CreateModelInstance();
             var viewModel = Activator.CreateInstance<TViewModel>();
 
+            AttachSubTypes(viewModel);
             AttachContext(viewModel);
 
             viewModel.Load(model);

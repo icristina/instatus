@@ -24,14 +24,10 @@
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>4.0</OldToolsVersion>
-    <SccProjectName>
-    </SccProjectName>
-    <SccLocalPath>
-    </SccLocalPath>
-    <SccAuxPath>
-    </SccAuxPath>
-    <SccProvider>
-    </SccProvider>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
   </PropertyGroup>
@@ -284,6 +280,7 @@
     <Compile Include="Web\LessTransform.cs" />
     <Compile Include="Web\RedirectModule.cs" />
     <Compile Include="Web\SchemaOrgVocabulary.cs" />
+    <Compile Include="Web\SubTypeModelBinder.cs" />
     <Compile Include="Web\SyndicationFeedResult.cs" />
     <Compile Include="Web\TwoLevelViewCache.cs" />
     <Compile Include="Web\WebApp.cs" />

@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using Instatus.Models;
 using Instatus.Widgets;
 using Instatus.Entities;
+using Autofac;
+using System.Web.Routing;
 
 namespace Instatus.Areas.Google
 {
@@ -19,11 +21,19 @@ namespace Instatus.Areas.Google
 
         public override void RegisterArea(AreaRegistrationContext context)
         {
-            Startup.Parts.Add(new GoogleApiWidget());
+            Startup.Parts.Add(new GoogleAnalyticsApiWidget());
         }
     }
 
-    public class GoogleApiWidget : JsApiWidget
+    public class GoogleAreaModule : Module
+    {
+        public GoogleAreaModule()
+        {
+            RouteTable.Routes.RegisterArea<GoogleAreaRegistration>();
+        }
+    }
+
+    public class GoogleAnalyticsApiWidget : JsApiWidget
     {
         public override string Embed(UrlHelper urlHelper, Credential credential)
         {
@@ -48,8 +58,8 @@ namespace Instatus.Areas.Google
             };
         }
 
-        public GoogleApiWidget()
-            : base(Provider.Google)
+        public GoogleAnalyticsApiWidget()
+            : base(Provider.GoogleAnalytics)
         {
             Scope = WebConstant.Scope.Public;
         }

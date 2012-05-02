@@ -27,6 +27,9 @@ namespace Instatus.Models
         Note,
         Listing,
         Milestone,
-        Region
+        Region,
+        Custom1,
+        Custom2,
+        Custom3
     }
 }

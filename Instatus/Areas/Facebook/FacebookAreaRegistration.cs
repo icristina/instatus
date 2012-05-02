@@ -45,7 +45,7 @@ namespace Instatus.Areas.Facebook
         }
     }
 
-    public class FacebookAreaModule : CommonGlobalFiltersModule
+    public class FacebookAreaModule : Module
     {
         public FacebookAreaModule()
         {

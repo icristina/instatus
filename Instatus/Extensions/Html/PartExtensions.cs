@@ -52,7 +52,8 @@ namespace Instatus
             }
             else if (part.RouteData != null)
             {
-                return html.Action(null, part.RouteData);
+                dynamic routeData = part.RouteData;                
+                return html.Action(routeData.action as string, part.RouteData);
             }
             else if (part is IModelProvider)
             {

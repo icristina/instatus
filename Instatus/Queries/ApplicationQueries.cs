@@ -34,7 +34,7 @@ namespace Instatus
 
             return context.Credentials
                     .FirstOrDefault(s => s.Provider == providerName
-                        && (s.Environment == environment || s.Environment == all));
+                        && (s.Deployment == environment || s.Deployment == all));
         }
 
         //public static Message GetApplicationMessage(this IApplicationModel context)
