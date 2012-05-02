@@ -9,6 +9,7 @@ using System.Collections;
 using System.Web.Mvc;
 using Instatus.Web;
 using Instatus.Models;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Instatus.Web
 {
@@ -28,6 +29,7 @@ namespace Instatus.Web
         void Save(TModel model);
     }
 
+    [ComplexType]
     public class BaseViewModel<TModel> : IViewModel<TModel>
     {
         [ScaffoldColumn(false)]

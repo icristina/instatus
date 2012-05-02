@@ -15,7 +15,7 @@ using Instatus;
 namespace Instatus.Areas.Editor.Models
 {
     [ComplexType]
-    public class CreativeViewModel : BaseViewModel<Page>
+    public class LinkListViewModel : BaseViewModel<Page>
     {
         [ScaffoldColumn(true)]
         [Display(Order = 5)]

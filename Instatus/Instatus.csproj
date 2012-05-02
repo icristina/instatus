@@ -136,8 +136,8 @@
     <Compile Include="Areas\Editor\EditorAreaRegistration.cs" />
     <Compile Include="Areas\Editor\Models\CallToActionViewModel.cs" />
     <Compile Include="Areas\Editor\Models\PageViewModel.cs" />
-    <Compile Include="Areas\Editor\Models\PartsViewModel.cs" />
-    <Compile Include="Areas\Editor\Models\CreativeViewModel.cs" />
+    <Compile Include="Areas\Editor\Models\PartListViewModel.cs" />
+    <Compile Include="Areas\Editor\Models\LinkListViewModel.cs" />
     <Compile Include="Areas\Editor\Models\DocumentViewModel.cs" />
     <Compile Include="Areas\Editor\Models\LinkViewModel.cs" />
     <Compile Include="Areas\Editor\Models\LocationViewModel.cs" />
@@ -455,7 +455,9 @@
     <EmbeddedResource Include="Views\Shared\Carousel.cshtml" />
     <EmbeddedResource Include="Views\Shared\EditorTemplates\MultilineText.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="bin\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

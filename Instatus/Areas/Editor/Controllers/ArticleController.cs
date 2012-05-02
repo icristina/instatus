@@ -43,22 +43,30 @@ namespace Instatus.Areas.Editor.Controllers
 
         [Category("Links")]
         [Display(Order = 5)]
-        public CreativeViewModel Creative { get; set; }
+        public LinkListViewModel Links { get; set; }
+
+        [Category("Figure")]
+        [Display(Order = 6)]
+        public BaseViewModel<Page> Figure { get; set; }
+
+        [Category("Body")]
+        [Display(Order = 7)]
+        public BaseViewModel<Page> Body { get; set; }
 
         [Category("Meta Tags")]
-        [Display(Order = 6)]
+        [Display(Order = 8)]
         public MetaTagsViewModel MetaTags { get; set; }
 
         [Category("Custom Markup")]
-        [Display(Order = 7)]
+        [Display(Order = 9)]
         public MarkupViewModel Markup { get; set; }
 
         [Category("People")]
-        [Display(Order = 8)]
+        [Display(Order = 10)]
         public PeopleViewModel People { get; set; }
 
         [Category("Publishing")]
-        [Display(Order = 9)]
+        [Display(Order = 11)]
         public PublishingViewModel Publishing { get; set; }
 
         public override void Load(Page model)
@@ -86,7 +94,7 @@ namespace Instatus.Areas.Editor.Controllers
         {
             Overview = new OverviewViewModel();
             Document = new DocumentViewModel();
-            Creative = new CreativeViewModel();
+            Links = new LinkListViewModel();
             Video = new VideoViewModel();
             MetaTags = new MetaTagsViewModel();
             Markup = new MarkupViewModel();
