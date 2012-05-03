@@ -190,14 +190,9 @@ namespace Instatus
             return new MvcHtmlString(markup);
         }
 
-        public static string InlineData(string variableName, object graph)
-        {
-            return string.Format("<script>var {0} = {1};</script>", variableName, graph.ToJson());
-        }
-
         public static MvcHtmlString InlineData<T>(this HtmlHelper<T> html, string variableName, object graph)
         {
-            return new MvcHtmlString(InlineData(variableName, graph));
+            return new MvcHtmlString(HtmlBuilder.InlineData(variableName, graph));
         }
 
         public static IDictionary<string, object> Attributes<T>(this HtmlHelper<T> html, string className = null, string id = null, string style = null)

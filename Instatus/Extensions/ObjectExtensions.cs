@@ -17,6 +17,7 @@ using Instatus.Data;
 using Instatus.Web;
 using System.Reflection;
 using System.Data.Entity;
+using Newtonsoft.Json;
 
 namespace Instatus
 {
@@ -156,10 +157,7 @@ namespace Instatus
 
         public static string ToJson(this object graph)
         {
-            if (graph is IDictionary<string, object>)
-                return new JavaScriptSerializer().Serialize(graph);
-            
-            return Json.Encode(graph);
+            return JsonConvert.SerializeObject(graph);
         }
 
         public static T OrDefault<T>(this T value, T defaultValue) {
@@ -178,7 +176,7 @@ namespace Instatus
                 }
             }
             
-            var keyNameConventions = new string[] { "Id", graph.GetType().Name + "Id", "Uri" };
+            var keyNameConventions = new string[] { "Id", graph.GetType().Name + "Id", "Uri", "Key", "Reference" };
 
             foreach(var propertyName in keyNameConventions) {
                 var property = properties.Find(propertyName, true);

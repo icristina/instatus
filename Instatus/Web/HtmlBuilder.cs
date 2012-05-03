@@ -31,5 +31,10 @@ namespace Instatus.Web
 
             return tag.ToString(TagRenderMode.SelfClosing);
         }
+
+        public static string InlineData(string variableName, object graph)
+        {
+            return string.Format("<script>var {0} = {1};</script>", variableName, graph.ToJson());
+        }
     }
 }

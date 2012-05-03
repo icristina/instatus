@@ -181,13 +181,13 @@ namespace Instatus
                 {
                     builder
                         .Controller<Instatus.Areas.Editor.Controllers.ArticleController>("Pages")
-                        .Controller<Instatus.Areas.Editor.Controllers.BrandController>("Brand")
-                        .Controller<Instatus.Areas.Editor.Controllers.CatalogController>("Catalog")
+                        .Controller<Instatus.Areas.Editor.Controllers.BrandController>("Brands")
+                        .Controller<Instatus.Areas.Editor.Controllers.CatalogController>("Catalogs")
                         .Controller<Instatus.Areas.Editor.Controllers.FileController>("Files")
                         .Controller<Instatus.Areas.Editor.Controllers.NewsController>("News")
-                        .Controller<Instatus.Areas.Editor.Controllers.OrganizationController>("Projects")
-                        .Controller<Instatus.Areas.Editor.Controllers.PostController>("Blog Posts")
-                        .Controller<Instatus.Areas.Editor.Controllers.ProfileController>("People")
+                        .Controller<Instatus.Areas.Editor.Controllers.OrganizationController>("Organizations")
+                        .Controller<Instatus.Areas.Editor.Controllers.PostController>("Posts")
+                        .Controller<Instatus.Areas.Editor.Controllers.ProfileController>("Profiles")
                         .Controller<Instatus.Areas.Editor.Controllers.TagController>("Tags");
                 },
                 viewName: WebConstant.ViewName.NavBar,
@@ -222,6 +222,7 @@ namespace Instatus
             builder.RegisterType<DbMembershipService>().As<IMembershipService>().InstancePerHttpRequest();
             builder.Register(c => new DbApplicationModel(Alias)).As<IApplicationModel>().InstancePerHttpRequest();
             builder.RegisterType<DbLoggingService>().As<ILoggingService>().InstancePerHttpRequest();
+            builder.RegisterType<DbPageModel>().As<IPageModel>().InstancePerHttpRequest();
         }
 
         public DbServicesModule(string alias, IDatabaseInitializer<DbApplicationModel> initializer)

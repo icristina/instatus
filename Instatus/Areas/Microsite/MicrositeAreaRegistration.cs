@@ -2,6 +2,7 @@
 using System.Web.Mvc;
 using Instatus;
 using Instatus.Web;
+using Autofac;
 
 namespace Instatus.Areas.Microsite
 {
@@ -17,8 +18,6 @@ namespace Instatus.Areas.Microsite
 
         public override void RegisterArea(AreaRegistrationContext context)
         {
-            RouteTable.Routes.MapContentPageRoute("page", areaName: AreaName, ns: "Instatus.Areas.Microsite.Controllers");
-            
             context.MapRouteLowercase(
                 "Microsite_Default",
                 "Microsite/{controller}/{action}/{id}",
@@ -26,6 +25,20 @@ namespace Instatus.Areas.Microsite
                 null,
                 new string[] { "Instatus.Areas.Microsite.Controllers" }
             );
+        }
+    }
+
+    public class MicrositeAreaModule : Module
+    {
+        protected override void Load(ContainerBuilder builder)
+        {
+            builder.RegisterType<Instatus.Areas.Microsite.Controllers.PageController>().InstancePerDependency();
+        }
+        
+        public MicrositeAreaModule(string routePrefix = "page")
+        {
+            RouteTable.Routes.MapContentPageRoute(routePrefix, areaName: "Microsite", ns: "Instatus.Areas.Microsite.Controllers");
+            RouteTable.Routes.RegisterArea<MicrositeAreaRegistration>();
         }
     }
 }

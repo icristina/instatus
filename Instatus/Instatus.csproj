@@ -177,6 +177,7 @@
     <Compile Include="Entities\DbApplicationModel.cs" />
     <Compile Include="Entities\DbLoggingService.cs" />
     <Compile Include="Entities\DbMembershipService.cs" />
+    <Compile Include="Entities\DbPageModel.cs" />
     <Compile Include="Entities\DbResourceReader.cs" />
     <Compile Include="Entities\Domain.cs" />
     <Compile Include="Entities\IApplicationModel.cs" />

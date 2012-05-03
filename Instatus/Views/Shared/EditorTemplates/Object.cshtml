@@ -82,7 +82,7 @@
                         .Where(prop => prop.ShowForEdit && !ViewData.TemplateInfo.Visited(prop))
                         .Where(prop => !prop.IsComplexType
                             || prop.AdditionalValues["IsScaffoldColumn"].AsBoolean()
-                            || prop.AdditionalValues["IsComplexTypeEntity"].AsBoolean()
+                            || prop.AdditionalValues["IsComplexTypeEntity"].AsBoolean() && prop.Model.NonEmpty()
                             || (prop.Model is SelectList && !((SelectList)prop.Model).Items.IsEmpty())
                             || (prop.Model is MultiSelectList && !((MultiSelectList)prop.Model).Items.IsEmpty()));
 

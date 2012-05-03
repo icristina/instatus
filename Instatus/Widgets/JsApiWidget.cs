@@ -22,7 +22,7 @@ namespace Instatus.Widgets
             return WebCache.Value<IHtmlString>(() =>
             {
                 var applicationModel = DependencyResolver.Current.GetService<IApplicationModel>();
-                var credential = applicationModel.GetApplicationCredential(Provider.Facebook);
+                var credential = applicationModel.GetApplicationCredential(provider);
 
                 if (credential == null)
                     return null;
@@ -32,7 +32,7 @@ namespace Instatus.Widgets
 
                 if (settings != null)
                 {
-                    inlineData = HtmlHelperExtensions.InlineData(provider.ToString().ToCamelCase() + "Settings", settings);
+                    inlineData = HtmlBuilder.InlineData(provider.ToString().ToCamelCase() + "Settings", settings);
                 }
 
                 string embed = Embed(context.Url, credential);
