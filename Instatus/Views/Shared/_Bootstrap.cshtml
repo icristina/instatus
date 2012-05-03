@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html @Html.BrowserCapabilitiesAttributes()>
+<html @Html.LayoutAttributes()>
 <head>
     <meta charset="utf-8" />
     @Html.Title()
@@ -10,7 +10,7 @@
     @Html.Parts(Instatus.Models.Zone.Head) 
     @RenderSection("head", false)    
 </head>
-<body @Html.RouteDataAttributes()>
+<body>
     <div class="application-container">        
         @if(IsSectionDefined("banner") || Html.HasZone(Instatus.Models.Zone.Banner)) 
         {

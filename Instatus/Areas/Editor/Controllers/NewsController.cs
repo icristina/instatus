@@ -43,8 +43,8 @@ namespace Instatus.Areas.Editor.Controllers
             Publishing = new PublishingViewModel();
         }
     }
-    
-    [Authorize(Roles = "Editor")]
+
+    [Authorize(Roles = WebConstant.Role.Editor)]
     [Description("News")]
     [AddParts(Scope = WebConstant.Scope.Admin)]
     public class NewsController : ScaffoldController<NewsViewModel, Page, IApplicationModel, int>

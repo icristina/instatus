@@ -10,11 +10,6 @@ namespace Instatus
 {
     public static class PrincipalExtensions
     {
-        public static bool IsInRole(this IPrincipal principal, WebRole role)
-        {
-            return principal.IsInRole(role.ToString());
-        }
-
         // http://abadjimarinov.net/blog/2010/01/24/RenewUserInTheSameRequestInAspdotNET.xhtml
         public static void RefreshFromFormsCookie(this IPrincipal principal)
         {

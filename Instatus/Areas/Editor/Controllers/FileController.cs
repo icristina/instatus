@@ -27,7 +27,7 @@ namespace Instatus.Areas.Editor.Controllers
         public string File { get; set; }
     }
 
-    [Authorize(Roles = "Editor")]
+    [Authorize(Roles = WebConstant.Role.Editor)]
     [Description("Files")]
     [AddParts(Scope = WebConstant.Scope.Admin)]
     public class FileController : ScaffoldController<FileViewModel, Link, IDbSet<Link>, int>

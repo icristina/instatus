@@ -9,6 +9,12 @@ namespace Instatus.Services
 {
     public class MockMembershipService : IMembershipService
     {
+        public static string[] AllRoles = new string[] {
+            WebConstant.Role.Editor,
+            WebConstant.Role.Moderator,
+            WebConstant.Role.Developer
+        };
+        
         public bool ValidateUser(string username, string password)
         {
             return true;
@@ -16,19 +22,7 @@ namespace Instatus.Services
 
         public string[] GetRolesForUser(string username)
         {
-            return new WebRole[] {
-                WebRole.Visitor,
-                WebRole.Member,
-                WebRole.Tester,
-                WebRole.Executive,
-                WebRole.Moderator,
-                WebRole.Author,
-                WebRole.Editor,
-                WebRole.Administrator,
-                WebRole.Developer
-            }
-            .ToStringList()
-            .ToArray();
+            return AllRoles;
         }
 
         public bool ValidateVerificationToken(int userId, string token)

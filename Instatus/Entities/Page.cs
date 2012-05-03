@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-#if NET45
-using System.Data.Spatial;
-#endif
 using System.Globalization;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -95,19 +92,17 @@ namespace Instatus.Entities
             }
         }
 
-        private Type[] knownTypes = new Type[] { typeof(Document) };
-
         [IgnoreDataMember]
         [ScaffoldColumn(false)]
         public byte[] Payload
         {
             get
             {
-                return Fields.AllEmpty() ? null : Fields.Serialize(knownTypes);
+                return Fields.AllEmpty() ? null : Fields.Serialize(Startup.KnownTypes);
             }
             set
             {
-                Fields = value.Deserialize<Dictionary<string, object>>(knownTypes);
+                Fields = value.Deserialize<Dictionary<string, object>>(Startup.KnownTypes);
             }
         }
 
@@ -132,74 +127,5 @@ namespace Instatus.Entities
             UpdatedTime = CreatedTime;
             PublishedTime = CreatedTime;
         }
-    }
-
-    public enum Provider
-    {
-        Facebook,
-        Twitter,
-        Google,
-        GoogleAnalytics,
-        Generated,
-        Custom1,
-        Custom2,
-        Custom3
-    }
-
-    public enum Privacy
-    {
-        Public,
-        Private
-    }
-
-    [ComplexType]
-    public class Source
-    {
-        public string Uri { get; set; }
-#if NET45
-        public Provider Provider { get; set; }
-#else
-        public string Provider { get; set; }
-#endif
-    }
-
-    [ComplexType]
-    public class Card
-    {
-        public string Title { get; set; }
-        public string Phone { get; set; }
-        public string Mobile { get; set; }
-        public string EmailAddress { get; set; }
-    }
-
-    [ComplexType]
-    public class Location
-    {
-        public string Name { get; set; }
-        public string FormattedAddress { get; set; }
-        public string StreetAddress { get; set; }
-        public string Locality { get; set; }
-        public string Country { get; set; }
-        public string PostalCode { get; set; }
-        public double ZoomLevel { get; set; }
-#if NET45
-        public DbGeography Spatial { get; set; }
-#else
-        public double Latitude { get; set; }
-        public double Longitude { get; set; }
-#endif
-    }
-
-    [ComplexType]
-    public class Schedule
-    {
-        public DateTime? StartTime { get; set; }
-        public DateTime? EndTime { get; set; }
-    }
-
-    [ComplexType]
-    public class Availability
-    {
-        public float Price { get; set; }
     }
 }

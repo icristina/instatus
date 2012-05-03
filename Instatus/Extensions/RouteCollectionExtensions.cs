@@ -91,12 +91,12 @@ namespace Instatus
                 .RemoveRoute(WebConstant.Route.Page)
                 .MapRouteLowercase(
                     WebConstant.Route.Page, 
-                    prefix + "/{slug}",
+                    prefix + "/{alias}",
                     new
                     {
                         controller = controllerName,
                         action = actionName,
-                        slug = UrlParameter.Optional,
+                        alias = UrlParameter.Optional,
                         area = areaName
                     },
                     new string[] {

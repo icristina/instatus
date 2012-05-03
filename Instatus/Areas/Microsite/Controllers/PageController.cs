@@ -19,13 +19,13 @@ namespace Instatus.Areas.Microsite.Controllers
         private IPageModel pageModel;
         private IEnumerable<IContentAdapter> adapters;
 
-        public ActionResult Details(string slug)
+        public ActionResult Details(string alias)
         {
-            var page = pageModel.GetPage(slug);
+            var page = pageModel.GetPage(alias);
             
             foreach(var contentAdapter in adapters) 
             {
-                contentAdapter.Process(page, slug);
+                contentAdapter.Process(page, alias);
             }
 
             ViewData.Model = page;

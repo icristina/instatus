@@ -115,10 +115,13 @@ namespace Instatus
 
         public static IDictionary<TKey, TValue> AddOrReplace<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey name, TValue value)
         {
-            if (dictionary.ContainsKey(name))
-                dictionary[name] = value;
-            else
-                dictionary.Add(name, value);
+            if (dictionary != null && name != null)
+            {
+                if (dictionary.ContainsKey(name))
+                    dictionary[name] = value;
+                else
+                    dictionary.Add(name, value);
+            }
 
             return dictionary;
         }
@@ -127,12 +130,7 @@ namespace Instatus
 
         public static IDictionary<string, object> AddSingle<T>(this IDictionary<string, object> dictionary, T item) where T : class
         {
-            if (dictionary != null && item != null)
-            {
-                dictionary.Add(dictionaryPrefix + typeof(T).FullName, item);
-            }
-            
-            return dictionary;
+            return dictionary.AddOrReplace(dictionaryPrefix + typeof(T).FullName, item);
         }
 
         public static T GetSingle<T>(this IDictionary<string, object> dictionary) where T : class

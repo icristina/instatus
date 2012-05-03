@@ -21,20 +21,20 @@ namespace Instatus.Areas.Editor.Controllers
         [Required]
         public string Name { get; set; }
 
-        //[Column("TaxonomyId")]
-        //[Display(Name = "Taxonomy")]
-        //public SelectList TaxonomyList { get; set; }
+        [Column("TaxonomyId")]
+        [Display(Name = "Taxonomy")]
+        public SelectList TaxonomyList { get; set; }
 
-        //[ScaffoldColumn(false)]
-        //public int? TaxonomyId { get; set; }
+        [ScaffoldColumn(false)]
+        public int? TaxonomyId { get; set; }
 
         public override void Databind()
         {
-            //TaxonomyList = new SelectList(Context.Taxonomies.ToList(), "Id", "Name", TaxonomyId);
+            TaxonomyList = new SelectList(Context.Taxonomies.ToList(), "Id", "Name", TaxonomyId);
         }
     }
-    
-    [Authorize(Roles = "Editor")]
+
+    [Authorize(Roles = WebConstant.Role.Editor)]
     [Description("Tags")]
     [AddParts(Scope = WebConstant.Scope.Admin)]
     public class TagController : ScaffoldController<TagViewModel, Tag, IApplicationModel, int>

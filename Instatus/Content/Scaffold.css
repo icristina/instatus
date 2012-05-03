@@ -1,13 +1,10 @@
-body[data-route-action=index] td
+.action-index td
 {
     vertical-align: middle;
 }
 
-body[data-route-action=create] .page-heading, body[data-route-action=edit] .page-heading, body[data-route-action=details] .page-heading {
-    display:  none;
-}
-
-body[data-route-action=edit] .navbar, body[data-route-action=create] .navbar, body[data-route-action=details] .navbar   {
+.action-create .page-heading, .action-edit .page-heading, .action-details .page-heading,
+.action-create .navbar, .action-edit .navbar, .action-details .navbar {
     display: none;
 }
 
@@ -83,7 +80,7 @@ form span.controls
 
 @media (min-width: 980px)  
 {  
-    body[data-route-action=index]
+    .action-index body
     {
         padding-top: 60px;
     }      

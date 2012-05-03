@@ -85,8 +85,8 @@ namespace Instatus.Areas.Editor.Controllers
             Publishing = new PublishingViewModel();
         }
     }
-    
-    [Authorize(Roles = "Editor")]
+
+    [Authorize(Roles = WebConstant.Role.Editor)]
     [Description("Posts")]
     [AddParts(Scope = WebConstant.Scope.Admin)]
     public class PostController : ScaffoldController<PostViewModel, Page, IApplicationModel, int>

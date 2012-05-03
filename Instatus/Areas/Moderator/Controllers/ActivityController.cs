@@ -16,7 +16,9 @@ using Instatus.Entities;
 
 namespace Instatus.Areas.Moderator.Controllers
 {
-    [Authorize(Roles = "Moderator")]
+    [Authorize(Roles = WebConstant.Role.Moderator)]
+    [Description("Activities")]
+    [AddParts(Scope = WebConstant.Scope.Admin)]
     public class ActivityController : ScaffoldController<BaseViewModel<Activity>, Activity, IApplicationModel, int>
     {
         public override IEnumerable<Activity> Query(IEnumerable<Activity> set, Query query)

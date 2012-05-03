@@ -15,22 +15,23 @@ using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using Instatus.Areas.Editor.Models;
 using Instatus.Entities;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Instatus.Areas.Editor.Controllers
 {
-    public class ProfileViewModel : BaseViewModel<Page, IApplicationModel>
+    public class ProfileViewModel : PageViewModel
     {
         [Category("Overview")]
         [Display(Order = 1)]
         public OverviewViewModel Overview { get; set; }
 
-        //[Category("Overview")]
-        //[Column("Catalog")]
-        //[Display(Name = "Category", Order = 2)]
-        //public SelectList CatalogList { get; set; }
+        [Category("Overview")]
+        [Column("Catalog")]
+        [Display(Name = "Category", Order = 2)]
+        public SelectList CatalogList { get; set; }
 
-        //[ScaffoldColumn(false)]
-        //public int? Catalog { get; set; }
+        [ScaffoldColumn(false)]
+        public int? Catalog { get; set; }
 
         [Category("Publishing")]
         [Display(Order = 3)]
@@ -40,21 +41,21 @@ namespace Instatus.Areas.Editor.Controllers
         {
             base.Load(model);
 
-            //Catalog = LoadAssociation<Page, Catalog>(model.Parents);
+            Catalog = ParentId(model, Kind.Catalog);
         }
 
         public override void Save(Page model)
         {
             base.Save(model);
 
-            //model.Parents = SaveAssociation<Page, Catalog>(Context.Pages, model.Parents, Catalog);
+            SaveAssociation(model, Kind.Catalog, Catalog);
         }
 
         public override void Databind()
         {
             base.Databind();
 
-            //CatalogList = DatabindSelectList<Page, Catalog>(Context.Pages, Catalog);
+            CatalogList = SelectByKind(Kind.Catalog, Catalog);
         }
 
         public ProfileViewModel()
@@ -64,7 +65,7 @@ namespace Instatus.Areas.Editor.Controllers
         }
     }
 
-    [Authorize(Roles = "Editor")]
+    [Authorize(Roles = WebConstant.Role.Editor)]
     [Description("Profiles")]
     [AddParts(Scope = WebConstant.Scope.Admin)]
     public class ProfileController : ScaffoldController<ProfileViewModel, Page, IApplicationModel, int>

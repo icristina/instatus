@@ -138,11 +138,6 @@ namespace Instatus
             return new MvcHtmlString(markup.ToString().RemoveDoubleSpaces());
         }
 
-        public static MvcHtmlString RouteDataAttributes<T>(this HtmlHelper<T> html)
-        {
-            return html.Attr(html.ViewContext.RouteData.ToDataAttributeDictionary());
-        }
-
         public static MvcHtmlString FormattingAttributes<T>(this HtmlHelper<T> html)
         {
             var webFormatting = html.ViewData.GetSingle<Formatting>();
@@ -211,18 +206,23 @@ namespace Instatus
             return html.OptionalAttr("hidden", "hidden", !condition); // add hidden attribute based on condition
         }
 
-        private static string BrowserClassName(HttpBrowserCapabilitiesBase browserCapabilities)
+        public static MvcHtmlString LayoutAttributes<T>(this HtmlHelper<T> htmlHelper)
         {
-            return string.Format("{0} {0}{1}", browserCapabilities.Browser.ToSlug(), browserCapabilities.MajorVersion);
-        }
-
-        public static MvcHtmlString BrowserCapabilitiesAttributes<T>(this HtmlHelper<T> htmlHelper)
-        {
+            var routeData = htmlHelper.ViewContext.RouteData;
             var browserCapabilities = htmlHelper.ViewContext.RequestContext.HttpContext.Request.Browser;
             var sb = new StringBuilder();
 
             sb.AppendDelimitedValue("no-js");
-            sb.AppendDelimitedValue(BrowserClassName(browserCapabilities));
+            sb.AppendDelimitedValue(browserCapabilities.Browser.ToSlug());
+            sb.AppendDelimitedValue(browserCapabilities.MajorVersion);
+
+            var areaName = routeData.AreaName();
+
+            if (areaName.NonEmpty())
+                sb.AppendDelimitedValue("area-" + areaName.ToCamelCase());
+
+            sb.AppendDelimitedValue("controller-" + routeData.ControllerName().ToCamelCase());
+            sb.AppendDelimitedValue("action-" + routeData.ActionName().ToCamelCase());
 
             return sb.ToString().ToAttr("class");
         }

@@ -18,7 +18,9 @@ using Instatus;
 
 namespace Instatus.Areas.Moderator.Controllers
 {
-    [Authorize(Roles = "Moderator")]
+    [Authorize(Roles = WebConstant.Role.Moderator)]
+    [Description("User Generated Content")]
+    [AddParts(Scope = WebConstant.Scope.Admin)]
     public class PostController : ScaffoldController<BaseViewModel<Page>, Page, IApplicationModel, int>
     {
         public override IEnumerable<Page> Query(IEnumerable<Page> set, Query query)

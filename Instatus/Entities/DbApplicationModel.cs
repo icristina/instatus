@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Linq;
@@ -24,6 +25,14 @@ namespace Instatus.Entities
 
         public new void SaveChanges()
         {
+            foreach (var deletedEntity in ChangeTracker.Entries().Where(e => e.State == EntityState.Deleted && e.Entity is Page))
+            {
+                var page = (Page)deletedEntity.Entity;
+
+                foreach(var association in page.Parents)
+                    Associations.Remove(association);
+            }
+            
             base.SaveChanges();
         }
         

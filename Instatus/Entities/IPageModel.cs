@@ -9,6 +9,6 @@ namespace Instatus.Entities
     public interface IPageModel
     {
         IEnumerable<Page> GetPages(Query query);
-        Page GetPage(string slug, Set set = null);
+        Page GetPage(string alias, Set set = null);
     }
 }

@@ -122,7 +122,7 @@ namespace Instatus.Areas.Editor.Controllers
         }
     }
 
-    [Authorize(Roles = "Editor")]
+    [Authorize(Roles = WebConstant.Role.Editor)]
     [Description("Pages")]
     [AddParts(Scope = WebConstant.Scope.Admin)]
     public class ArticleController : ScaffoldController<ArticleViewModel, Page, IApplicationModel, int>

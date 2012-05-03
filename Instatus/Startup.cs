@@ -6,6 +6,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
@@ -31,6 +32,7 @@ namespace Instatus
 {
     public static class Startup
     {
+        public static List<Type> KnownTypes = new List<Type>() { typeof(Document) };
         public static List<Module> Modules = new List<Module>();
         public static Dictionary<ImageSize, Transform> ImageSizes = new Dictionary<ImageSize, Transform>();
         public static IList<Part> Parts = new List<Part>();
@@ -91,6 +93,8 @@ namespace Instatus
             builder.RegisterFilterProvider(); // property injection for filter attributes
 
             DependencyResolver.SetResolver(new AutofacDependencyResolver(builder.Build()));
+
+            GlobalConfiguration.Configuration.ServiceResolver.SetResolver(DependencyResolver.Current.ToServiceResolver()); // web api
         }
 
         public static void IgnoreRoutes()
@@ -199,6 +203,11 @@ namespace Instatus
         {
             Modules.Add(new GoogleAreaModule());
             Modules.Add(new FacebookAreaModule());
+        }
+
+        public static void RegisterFieldType<T>()
+        {
+            KnownTypes.Add(typeof(T));
         }
     }
 

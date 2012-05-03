@@ -35,7 +35,7 @@ namespace Instatus
             public const string AccountVerification = "Route_AccountVerification";
         }
 
-        public static class Slug
+        public static class Alias
         {
             public const string Home = "home";
             public const string Terms = "terms";
@@ -73,6 +73,13 @@ namespace Instatus
             public const string Legal = "legal";
             public const string Social = "social";
             public const string Corporate = "corporate";
+        }
+
+        public static class Role
+        {
+            public const string Developer = "Developer";
+            public const string Editor = "Editor";
+            public const string Moderator = "Moderator";
         }
 
         public static class RegularExpression
