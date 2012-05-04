@@ -10,7 +10,6 @@ using Instatus.Web;
 
 namespace Instatus.Services
 {
-    [Export(typeof(ITemplateService))]
     public class RazorTemplateService : ITemplateService
     {
         public string Process(string template, dynamic data)

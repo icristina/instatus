@@ -9,8 +9,6 @@ using Instatus.Models;
 
 namespace Instatus.Services
 {
-    [Export(typeof(ILoggingService))]
-    [PartCreationPolicy(CreationPolicy.NonShared)]    
     public class InMemoryLoggingService : ILoggingService
     {
         private static Queue<Entry> queue = new LimitedQueue<Entry>(1000);

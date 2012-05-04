@@ -14,7 +14,6 @@ using Instatus.Entities;
 
 namespace Instatus.Export
 {
-    [Export(typeof(IDataExport))]
     public class SubscriberExport : IDataExport
     {
         public object DefaultConfiguration

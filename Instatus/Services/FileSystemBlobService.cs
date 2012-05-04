@@ -11,8 +11,6 @@ using Instatus.Data;
 
 namespace Instatus.Services
 {
-    [Export(typeof(IBlobService))]
-    [PartCreationPolicy(CreationPolicy.NonShared)]
     public class FileSystemBlobService : IBlobService
     {       
         public static string BasePath = "~/Media/"; 
