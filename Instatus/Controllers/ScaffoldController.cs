@@ -31,11 +31,7 @@ namespace Instatus.Controllers
             {
                 if (set == null)
                 {
-                    if (Context is DbContext)
-                    {
-                        set = (Context as DbContext).Set<TModel>();
-                    }
-                    else if (Context is IDbContext)
+                    if (Context is IDbContext)
                     {
                         set = (Context as IDbContext).Set<TModel>();
                     }
@@ -46,6 +42,10 @@ namespace Instatus.Controllers
                     else if (Context is IRepository<TModel>)
                     {
                         set = (Context as IRepository<TModel>).Items;
+                    }
+                    else if (Context is DbContext)
+                    {
+                        set = (Context as DbContext).Set<TModel>();
                     }
                 }
 
@@ -203,17 +203,17 @@ namespace Instatus.Controllers
 
         public virtual void SaveChanges()
         {
-            if (Context is DbContext)
-            {
-                (Context as DbContext).SaveChanges();
-            }
-            else if (Context is IDbContext)
+            if (Context is IDbContext)
             {
                 (Context as IDbContext).SaveChanges();
             }
             else if (Context is IRepository<TModel>)
             {
                 (Context as IRepository<TModel>).SaveChanges();
+            }
+            else if (Context is DbContext)
+            {
+                (Context as DbContext).SaveChanges();
             }
         }
     }

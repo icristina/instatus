@@ -12,7 +12,6 @@ using Instatus.Entities;
 
 namespace Instatus.Areas.Editor.Models
 {
-    [ComplexType]
     public class MarkupViewModel : BaseViewModel<Page>
     {
         [DataType(DataType.MultilineText)]

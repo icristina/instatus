@@ -13,7 +13,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Instatus.Areas.Editor.Models
 {
-    [ComplexType]
     public class CallToActionViewModel : BaseViewModel<Page>
     {       
         public string Uri { get; set; }

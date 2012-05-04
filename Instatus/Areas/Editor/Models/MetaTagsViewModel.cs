@@ -11,7 +11,6 @@ using Instatus.Entities;
 
 namespace Instatus.Areas.Editor.Models
 {
-    [ComplexType]
     public class MetaTagsViewModel : BaseViewModel<Page>
     {
         [DisplayName("Title")]

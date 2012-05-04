@@ -14,7 +14,6 @@ using Instatus;
 
 namespace Instatus.Areas.Editor.Models
 {
-    [ComplexType]
     public class LinkListViewModel : BaseViewModel<Page>
     {
         [ScaffoldColumn(true)]

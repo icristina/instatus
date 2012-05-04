@@ -13,7 +13,6 @@ using Instatus.Entities;
 
 namespace Instatus.Areas.Editor.Models
 {
-    [ComplexType]
     public class LocationViewModel : PageViewModel
     {
         public double Longitude { get; set; }

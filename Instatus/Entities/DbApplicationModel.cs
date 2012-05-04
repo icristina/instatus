@@ -29,8 +29,7 @@ namespace Instatus.Entities
             {
                 var page = (Page)deletedEntity.Entity;
 
-                foreach(var association in page.Parents)
-                    Associations.Remove(association);
+                this.ClearCollection(page, p => p.Parents);
             }
             
             base.SaveChanges();
