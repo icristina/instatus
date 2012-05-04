@@ -18,6 +18,8 @@ namespace Instatus.Areas.Developer.Controllers
 {
     public class PhraseViewModel : BaseViewModel<Phrase>
     {
+        public int Locale { get; set; }
+        
         [Required]
         public string Name { get; set; }
 
@@ -25,11 +27,12 @@ namespace Instatus.Areas.Developer.Controllers
         public string Value { get; set; }
     }
 
-    [Authorize(Roles = "Developer")]
+    [Authorize(Roles = WebConstant.Role.Developer)]
     [Description("Localization")]
+    [AddParts(Scope = WebConstant.Scope.Admin)]
     public class PhraseController : ScaffoldController<PhraseViewModel, Phrase, IApplicationModel, int>
     {
-        public override IEnumerable<Phrase> Query(IEnumerable<Phrase> set, WebQuery query)
+        public override IEnumerable<Phrase> Query(IEnumerable<Phrase> set, Query query)
         {
             return set.OrderBy(o => o.Name);
         }

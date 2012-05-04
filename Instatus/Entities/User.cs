@@ -22,6 +22,16 @@ namespace Instatus.Entities
 
         private string emailAddress;
 
+        [IgnoreDataMember]
+        [NotMapped]
+        public string FullName
+        {
+            get
+            {
+                return string.Format("{0} {1}", FirstName, LastName).Trim();
+            }
+        }
+
         [Required]
         [RegularExpression(WebConstant.RegularExpression.EmailAddress)]
         public string EmailAddress
@@ -87,6 +97,11 @@ namespace Instatus.Entities
 #else
         public string Gender { get; set; }
 #endif
+
+        public override string ToString()
+        {
+            return FullName;
+        }
 
         public User()
         {

@@ -43,12 +43,12 @@ namespace Instatus
             return urlHelper.Action("Details", new { id = id });
         }
 
-        public static string Page(this UrlHelper urlHelper, string slug)
+        public static string Page(this UrlHelper urlHelper, string alias)
         {
-            if (slug.Match(WebConstant.Alias.Home))
+            if (alias.Match(WebConstant.Alias.Home))
                 return urlHelper.RouteUrl(WebConstant.Route.Home);
             
-            return urlHelper.RouteUrl(WebConstant.Route.Page, new { slug = slug });
+            return urlHelper.RouteUrl(WebConstant.Route.Page, new { alias = alias });
         }
 
         public static string Self(this UrlHelper urlHelper)

@@ -12,6 +12,8 @@ using System.IO;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.ComponentModel;
+using Instatus.Entities;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Instatus.Areas.Developer.Controllers
 {
@@ -20,13 +22,13 @@ namespace Instatus.Areas.Developer.Controllers
         public string Name { get; set; }
         
         [Required]
-        public string Uri { get; set; }
+        public string ApiKey { get; set; }
 
         [Display(Name = "Secret")]
-        public string UpdatedSecret { get; set; }
+        public string UpdatedApplicationSecret { get; set; }
         
         [Required]
-        public string Environment { get; set; }
+        public string Deployment { get; set; }
         public string Scope { get; set; }
 
         [Required]
@@ -44,30 +46,23 @@ namespace Instatus.Areas.Developer.Controllers
 
         public override void Databind()
         {
-            ApplicationList = DatabindSelectList<Page, Application>(Context.Pages, ApplicationId);
+            ApplicationList = new SelectList(Context.Applications.ToList(), "Id", "Name", ApplicationId);
         }
 
         public override void Save(Credential model)
         {
             base.Save(model);
-            
-            if (!UpdatedSecret.IsEmpty())
-                model.Secret = UpdatedSecret;                                    
+
+            if (!UpdatedApplicationSecret.IsEmpty())
+                model.AppSecret = UpdatedApplicationSecret;                                  
         }
     }
     
-    [Authorize(Roles = "Administrator")]
+    [Authorize(Roles = WebConstant.Role.Developer)]
     [Description("Credentials")]
+    [AddParts(Scope = WebConstant.Scope.Admin)]
     public class CredentialController : ScaffoldController<CredentialViewModel, Credential, IApplicationModel, int>
-    {
-        public override IEnumerable<Credential> Query(IEnumerable<Credential> set, WebQuery query)
-        {
-            return set
-                .AsQueryable()
-                .Where(c => c.Application != null)
-                .OrderBy(c => c.CreatedTime);
-        }       
-
+    { 
         public override void SaveChanges()
         {
             base.SaveChanges();

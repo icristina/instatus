@@ -17,17 +17,15 @@ using System.Data;
 namespace Instatus.Areas.Moderator.Controllers
 {
     [Authorize(Roles = "Moderator")]
-    [Export]
-    [PartCreationPolicy(CreationPolicy.NonShared)]
     [Description("Export")]
-    public class ExportController : ScaffoldController<BaseViewModel<WebEntry>, WebEntry, IDbSet<WebEntry>, string>
+    [AddParts(Scope = WebConstant.Scope.Admin)]
+    public class ExportController : ScaffoldController<BaseViewModel<Entry>, Entry, IDbSet<Entry>, string>
     {
-        [ImportMany]
         private IEnumerable<IDataExport> exports;
 
-        public override IEnumerable<WebEntry> Query(IEnumerable<WebEntry> set, WebQuery query)
+        public override IEnumerable<Entry> Query(IEnumerable<Entry> set, Query query)
         {
-            return exports.Select(e => new WebEntry()
+            return exports.Select(e => new Entry()
             {
                 Title = e.Name,
                 Rel = "Configurable"
@@ -43,26 +41,26 @@ namespace Instatus.Areas.Moderator.Controllers
 
             ViewData.Model = configuration;
 
-            ViewData.AddSingle(new WebForm()
+            ViewData.AddSingle(new Form()
             {
                 ActionName = "Download",
                 ActionText = "Export",
-                HiddenParameters = new List<WebParameter>()
+                HiddenParameters = new List<Parameter>()
                 {
-                    new WebParameter("name", name)
+                    new Parameter("name", name)
                 }
             });
 
             return View("Edit");
         }
 
-        public override void ConfigureWebView(WebView<WebEntry> webView)
+        public override void ConfigureWebView(WebView<Entry> webView)
         {
             base.ConfigureWebView(webView);
             webView.Permissions = new string[] { };
         }
 
-        public override ICollection<IWebCommand> GetCommands(WebQuery query)
+        public override ICollection<IWebCommand> GetCommands(Query query)
         {
             return new List<IWebCommand>()
             {
@@ -98,6 +96,11 @@ namespace Instatus.Areas.Moderator.Controllers
 
             return new EmptyResult();
         }
+
+        public ExportController(IEnumerable<IDataExport> exports)
+        {
+            this.exports = exports;
+        }
     }
 
     public class ExportCommand : IWebCommand
@@ -109,9 +112,9 @@ namespace Instatus.Areas.Moderator.Controllers
             }
         }
 
-        public WebLink GetLink(dynamic viewModel, UrlHelper urlHelper)
+        public Link GetLink(dynamic viewModel, UrlHelper urlHelper)
         {
-            return new WebLink()
+            return new Link()
             {
                 Title = "Export",
                 Uri = urlHelper.Action("Download", new { name = viewModel.Title  })
@@ -134,11 +137,11 @@ namespace Instatus.Areas.Moderator.Controllers
             }
         }
 
-        public WebLink GetLink(dynamic viewModel, UrlHelper urlHelper)
+        public Link GetLink(dynamic viewModel, UrlHelper urlHelper)
         {
             if (viewModel.Rel == "Configurable")
             {
-                return new WebLink()
+                return new Link()
                 {
                     Title = "Configure",
                     Uri = urlHelper.Action("Configure", new { name = viewModel.Title })

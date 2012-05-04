@@ -12,5 +12,10 @@ namespace Instatus.Entities
         public int HttpStatusCode { get; set; }
         public string Source { get; set; }
         public string Location { get; set; }
+
+        public override string ToString()
+        {
+            return string.Format("{0} -> {1}", Source, Location);
+        }
     }
 }

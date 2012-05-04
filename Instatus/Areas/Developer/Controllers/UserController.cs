@@ -12,14 +12,18 @@ using System.IO;
 using Instatus;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using Instatus.Entities;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Instatus.Areas.Developer.Controllers
 {
     public class UserViewModel : BaseViewModel<User, IApplicationModel>
     {
-        [DisplayName("Full Name")]
-        [Required]
-        public string FullName { get; set; }        
+        [DisplayName("First Name")]
+        public string FirstName { get; set; }
+
+        [DisplayName("Last Name")]
+        public string LastName { get; set; }   
         
         [DisplayName("Email Address")]
         [Required]
@@ -28,38 +32,20 @@ namespace Instatus.Areas.Developer.Controllers
         [DisplayName("Password")]
         public string UnencryptedPassword { get; set; }
 
-        [Column("Roles")]
-        [Display(Name = "Roles")]
-        public MultiSelectList RoleList { get; set; }
-
-        [ScaffoldColumn(false)]
-        public int[] Roles { get; set; }
-
-        public override void Load(User model)
-        {
-            base.Load(model);
-            
-            Roles = LoadMultiAssociation(model.Roles);            
-        }
+        public string Role { get; set; }
 
         public override void Save(User model)
         {
             base.Save(model);
             
             if (!UnencryptedPassword.IsEmpty())
-                model.Password = UnencryptedPassword.ToEncrypted();
-
-            model.Roles = SaveMultiAssociation<Role>(Context.Roles, model.Roles, Roles);            
-        }
-
-        public override void Databind()
-        {
-            RoleList = new MultiSelectList(Context.Roles.ToList(), "Id", "Name", Roles);
+                model.Password = UnencryptedPassword.ToEncrypted();  
         }
     }
     
-    [Authorize(Roles = "Administrator")]
+    [Authorize(Roles = WebConstant.Role.Developer)]
     [Description("Users")]
+    [AddParts(Scope = WebConstant.Scope.Admin)]
     public class UserController : ScaffoldController<UserViewModel, User, IApplicationModel, int>
     {
 

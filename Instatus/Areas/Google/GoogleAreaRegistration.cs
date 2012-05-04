@@ -54,7 +54,7 @@ namespace Instatus.Areas.Google
         {
             return new
             {
-                profileId = credential.ApplicationId
+                profileId = credential.ApiKey
             };
         }
 

@@ -9,55 +9,29 @@ namespace Instatus
 {
     public static class LinkQueries
     {
-        public static IEnumerable<Link> WithContentType(this IEnumerable<Link> links, WebContentType webContentType)
+        public static IEnumerable<Link> WithContentType(this IEnumerable<Link> links, string contentType)
         {
-            var contentType = webContentType.ToMimeType();
             return links.Where(l => l.ContentType == contentType);
         }
 
-        public static string Uri(this IEnumerable<Link> links, WebContentType webContentType = WebContentType.Html)
+        private static IEnumerable<Link> Filter(this IEnumerable<Link> links, string contentType, string rel)
         {
-            return links.WithContentType(webContentType).Select(l => l.Uri).FirstOrDefault();
+            links = links.WithContentType(contentType);
+
+            if (rel.NonEmpty())
+                links = links.Where(l => l.Rel == rel);
+
+            return links;
         }
 
-        public static string Uri(this IEnumerable<Link> links, string rel)
+        public static string Uri(this IEnumerable<Link> links, string contentType = WebConstant.ContentType.Html, string rel = null)
         {
-            return links.Where(l => l.Rel.Match(rel)).Select(l => l.Uri).FirstOrDefault();
+            return links.Filter(contentType, rel).Select(l => l.Uri).FirstOrDefault();
         }
 
-        //public static IEnumerable<Link> Redirects(this IEnumerable<Link> links)
-        //{
-        //    return links.Where(l => l.Location != null && l.HttpStatusCode > 300 && l.HttpStatusCode < 303);
-        //}
-
-        //public static IEnumerable<Link> GetLinks(this IApplicationModel context, Query filter)
-        //{
-        //    return context
-        //            .SerializationSafe()
-        //            .Links
-        //            .Filter(filter)
-        //            .Sort(filter.Sort);
-        //}
-
-        //public static IQueryable<Link> Filter(this IQueryable<Link> queryable, Query filter)
-        //{
-        //    var filtered = queryable;
-
-        //    if (!filter.Category.IsEmpty())
-        //        filtered = filtered.Where(l => l.Rel == filter.Category);
-
-        //    return filtered;
-        //}
-
-        //public static IQueryable<Link> Sort(this IQueryable<Link> queryable, WebSort sort)
-        //{
-        //    switch (sort)
-        //    {
-        //        case WebSort.Alphabetical:
-        //            return queryable.OrderByDescending(l => l.Name);
-        //        default:
-        //            return queryable.OrderBy(l => l.Priority);
-        //    }
-        //}
+        public static string Title(this IEnumerable<Link> links, string contentType = WebConstant.ContentType.Html, string rel = null)
+        {
+            return links.Filter(contentType, rel).Select(l => l.Title).FirstOrDefault();
+        }
     }
 }

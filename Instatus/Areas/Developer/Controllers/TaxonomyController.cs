@@ -11,6 +11,7 @@ using Instatus.Services;
 using System.IO;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
+using Instatus.Entities;
 
 namespace Instatus.Areas.Developer.Controllers
 {
@@ -20,8 +21,9 @@ namespace Instatus.Areas.Developer.Controllers
         public string Name { get; set; }
     }
     
-    [Authorize(Roles = "Developer")]
+    [Authorize(Roles = WebConstant.Role.Developer)]
     [Description("Taxonomies")]
+    [AddParts(Scope = WebConstant.Scope.Admin)]
     public class TaxonomyController : ScaffoldController<TaxonomyViewModel, Taxonomy, IApplicationModel, int>
     {
 

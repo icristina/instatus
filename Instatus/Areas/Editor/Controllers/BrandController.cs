@@ -31,8 +31,8 @@ namespace Instatus.Areas.Editor.Controllers
         {
             base.Load(model);
 
-            Href = model.Document.Links.Uri(WebContentType.Html);
-            Visual = model.Document.Links.Uri(WebContentType.Jpeg);
+            Href = model.Document.Links.Uri(WebConstant.ContentType.Html);
+            Visual = model.Document.Links.Uri(WebConstant.ContentType.Jpg);
         }
 
         public override void Save(Page model)

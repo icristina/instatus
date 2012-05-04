@@ -148,6 +148,15 @@
     <Compile Include="Areas\Auth\AuthAreaRegistration.cs" />
     <Compile Include="Areas\Auth\Controllers\AccountController.cs" />
     <Compile Include="Areas\Auth\Models\LogOnViewModel.cs" />
+    <Compile Include="Areas\Developer\Controllers\CredentialController.cs" />
+    <Compile Include="Areas\Developer\Controllers\DomainController.cs" />
+    <Compile Include="Areas\Developer\Controllers\RedirectController.cs" />
+    <Compile Include="Areas\Developer\Controllers\LogController.cs" />
+    <Compile Include="Areas\Developer\Controllers\PhraseController.cs" />
+    <Compile Include="Areas\Developer\Controllers\RegionController.cs" />
+    <Compile Include="Areas\Developer\Controllers\TaxonomyController.cs" />
+    <Compile Include="Areas\Developer\Controllers\UserController.cs" />
+    <Compile Include="Areas\Developer\DeveloperAreaRegistration.cs" />
     <Compile Include="Areas\Editor\Controllers\ArticleController.cs" />
     <Compile Include="Areas\Editor\Controllers\BrandController.cs" />
     <Compile Include="Areas\Editor\Controllers\CatalogController.cs" />
@@ -181,6 +190,7 @@
     <Compile Include="Areas\Microsite\Controllers\PageController.cs" />
     <Compile Include="Areas\Microsite\MicrositeAreaRegistration.cs" />
     <Compile Include="Areas\Moderator\Controllers\ActivityController.cs" />
+    <Compile Include="Areas\Moderator\Controllers\ExportController.cs" />
     <Compile Include="Areas\Moderator\Controllers\PostController.cs" />
     <Compile Include="Areas\Moderator\ModeratorAreaRegistration.cs" />
     <Compile Include="Areas\Twitter\Bootstrap.cs" />

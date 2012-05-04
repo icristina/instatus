@@ -196,7 +196,7 @@ namespace Instatus.Areas.Facebook
         {
             get
             {
-                return Credential.ApplicationAlias;
+                return Credential.AppNamespace;
             }
         }
 
@@ -204,7 +204,7 @@ namespace Instatus.Areas.Facebook
         {
             get
             {
-                return Credential.ApplicationSecret;
+                return Credential.AppSecret;
             }
         }
 
@@ -212,7 +212,7 @@ namespace Instatus.Areas.Facebook
         {
             get
             {
-                return Credential.ApplicationId;
+                return Credential.ApiKey;
             }
         }
 

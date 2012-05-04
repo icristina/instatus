@@ -14,10 +14,11 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using Instatus.Areas.Editor.Models;
+using Instatus.Entities;
 
 namespace Instatus.Areas.Developer.Controllers
 {
-    public class RegionViewModel : BaseViewModel<Region, IApplicationModel>
+    public class RegionViewModel : BaseViewModel<Page, IApplicationModel>
     {
         [Category("Overview")]
         [Display(Order = 1)]      
@@ -25,25 +26,31 @@ namespace Instatus.Areas.Developer.Controllers
         public string Name { get; set; }
 
         [Category("Location")]
-        public LocationViewModel<Region> Location { get; set; }
+        public LocationViewModel Location { get; set; }
 
         [Category("Publishing")]
-        public PublishingViewModel<Region> Publishing { get; set; }
+        public PublishingViewModel Publishing { get; set; }
 
         public RegionViewModel()
         {
-            Location = new LocationViewModel<Region>();
-            Publishing = new PublishingViewModel<Region>();
+            Location = new LocationViewModel();
+            Publishing = new PublishingViewModel();
         }
     }
 
-    [Authorize(Roles = "Editor")]
+    [Authorize(Roles = WebConstant.Role.Developer)]
     [Description("Regions")]
-    public class RegionController : ScaffoldController<RegionViewModel, Region, IApplicationModel, int>
+    [AddParts(Scope = WebConstant.Scope.Admin)]
+    public class RegionController : ScaffoldController<RegionViewModel, Page, IApplicationModel, int>
     {
-        public override IEnumerable<Region> Query(IEnumerable<Region> set, WebQuery query)
+        public override IEnumerable<Page> Query(IEnumerable<Page> set, Query query)
         {
-            return set.ByAlphabetical();
+            return set.Where(p => p.Kind == "Region").ByAlphabetical();
+        }
+
+        public override Page CreateModelInstance()
+        {
+            return new Page(Kind.Region);
         }
     }
 }

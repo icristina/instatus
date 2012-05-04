@@ -12,5 +12,10 @@ namespace Instatus.Entities
         public string Name { get; set; }
         public virtual Application Application { get; set; }
         public virtual ICollection<Tag> Tags { get; set; }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

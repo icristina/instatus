@@ -12,13 +12,16 @@ using System.IO;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 using System.Data.Entity;
+using Instatus.Entities;
+using System.ComponentModel.DataAnnotations.Schema;
+using Instatus;
 
 namespace Instatus.Areas.Developer.Controllers
 {
-    public class LinkViewModel : BaseViewModel<Link, IApplicationModel>
+    public class RedirectViewModel : BaseViewModel<Redirect, IApplicationModel>
     {
         [Required]
-        public string Uri { get; set; }
+        public string Source { get; set; }
 
         [Required]
         public string Location { get; set; }
@@ -37,17 +40,11 @@ namespace Instatus.Areas.Developer.Controllers
         }
     }
     
-    [Authorize(Roles = "Administrator")]
+    [Authorize(Roles = WebConstant.Role.Developer)]
     [Description("Redirects")]
-    public class LinkController : ScaffoldController<LinkViewModel, Link, IApplicationModel, int>
+    [AddParts(Scope = WebConstant.Scope.Admin)]
+    public class RedirectController : ScaffoldController<RedirectViewModel, Redirect, IApplicationModel, int>
     {
-        public override IEnumerable<Link> Query(IEnumerable<Link> set, WebQuery query)
-        {
-            return set
-                .AsQueryable()
-                .Redirects();
-        }
-        
         public override void SaveChanges()
         {
             base.SaveChanges();

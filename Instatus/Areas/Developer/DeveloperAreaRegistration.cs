@@ -1,4 +1,6 @@
 ﻿using System.Web.Mvc;
+using System.Web.Routing;
+using Autofac;
 
 namespace Instatus.Areas.Developer
 {
@@ -21,6 +23,26 @@ namespace Instatus.Areas.Developer
                 null,
                 new string[] { "Instatus.Areas.Developer.Controllers" }
             );
+        }
+    }
+
+    public class DeveloperAreaModule : Module
+    {
+        protected override void Load(ContainerBuilder builder)
+        {
+            builder.RegisterType<Instatus.Areas.Developer.Controllers.CredentialController>().InstancePerDependency();
+            builder.RegisterType<Instatus.Areas.Developer.Controllers.DomainController>().InstancePerDependency();
+            builder.RegisterType<Instatus.Areas.Developer.Controllers.LogController>().InstancePerDependency();
+            builder.RegisterType<Instatus.Areas.Developer.Controllers.PhraseController>().InstancePerDependency();
+            builder.RegisterType<Instatus.Areas.Developer.Controllers.RedirectController>().InstancePerDependency();
+            builder.RegisterType<Instatus.Areas.Developer.Controllers.RegionController>().InstancePerDependency();
+            builder.RegisterType<Instatus.Areas.Developer.Controllers.TaxonomyController>().InstancePerDependency();
+            builder.RegisterType<Instatus.Areas.Developer.Controllers.UserController>().InstancePerDependency();
+        }
+
+        public DeveloperAreaModule()
+        {
+            RouteTable.Routes.RegisterArea<DeveloperAreaRegistration>();
         }
     }
 }

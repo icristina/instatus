@@ -15,9 +15,11 @@ using Autofac;
 using Autofac.Core;
 using Autofac.Integration.Mvc;
 using Instatus.Areas.Auth;
+using Instatus.Areas.Developer;
 using Instatus.Areas.Editor;
 using Instatus.Areas.Facebook;
 using Instatus.Areas.Google;
+using Instatus.Areas.Moderator;
 using Instatus.Entities;
 using Instatus.Models;
 using Instatus.Services;
@@ -54,7 +56,6 @@ namespace Instatus
             MvcConfiguration();
             IgnoreRoutes();
             Auth();
-            ErrorHandling();
             ViewLocation();
             RemoveServerFingerprint();
             Rewriting();
@@ -66,6 +67,7 @@ namespace Instatus
                 return;
             
             AutofacDependencyResolver();
+            ErrorHandling();
             DefaultRoute();
             Bundles();
         }
@@ -117,12 +119,33 @@ namespace Instatus
             Roles.Providers.Add(new SimpleRoleProvider());
         }
 
+        private static string defaultNamespace;
+
+        public static string DefaultNamespace
+        {
+            get
+            {
+                if (defaultNamespace.IsEmpty() && Modules.Any())
+                    defaultNamespace = Modules.First().GetType().Namespace + ".Controllers";
+                
+                return defaultNamespace;
+            }
+            set
+            {
+                defaultNamespace = value;
+            }
+        }
+
         public static void DefaultRoute()
         {
             RouteTable.Routes.MapRoute(
                 "Default",
                 "{controller}/{action}/{id}",
-                new { controller = "Home", action = "Index", id = "" }
+                new { controller = "Home", action = "Index", id = "" },
+                null,
+                new string[] { 
+                    DefaultNamespace
+                }
             );
         }
 
@@ -133,9 +156,8 @@ namespace Instatus
         }
 
         public static void ErrorHandling()
-        {
-            //GlobalFilters.Filters.Add(new LogErrorAttribute());
-            Startup.Modules.Add(new CommonGlobalFiltersModule()); // autofac approach to global filters            
+        {            
+            GlobalFilters.Filters.Add(new LogErrorAttribute());
             GlobalFilters.Filters.Add(new HandleErrorAttribute());
         }
 
@@ -193,6 +215,23 @@ namespace Instatus
                         .Controller<Instatus.Areas.Editor.Controllers.PostController>("Posts")
                         .Controller<Instatus.Areas.Editor.Controllers.ProfileController>("Profiles")
                         .Controller<Instatus.Areas.Editor.Controllers.TagController>("Tags");
+
+                    if (Modules.OfType<ModeratorAreaModule>().Any())
+                        builder
+                            .Controller<Instatus.Areas.Moderator.Controllers.ActivityController>("Activities")
+                            .Controller<Instatus.Areas.Moderator.Controllers.ExportController>("Export")
+                            .Controller<Instatus.Areas.Moderator.Controllers.PostController>("User Generated Content");
+
+                    if (Modules.OfType<DeveloperAreaModule>().Any())
+                        builder
+                            .Controller<Instatus.Areas.Developer.Controllers.TaxonomyController>("Taxonomies")
+                            .Controller<Instatus.Areas.Developer.Controllers.CredentialController>("Credentials")
+                            .Controller<Instatus.Areas.Developer.Controllers.DomainController>("Domains")
+                            .Controller<Instatus.Areas.Developer.Controllers.LogController>("Logs")
+                            .Controller<Instatus.Areas.Developer.Controllers.PhraseController>("Localization")
+                            .Controller<Instatus.Areas.Developer.Controllers.RedirectController>("Redirects")
+                            .Controller<Instatus.Areas.Developer.Controllers.RegionController>("Regions")
+                            .Controller<Instatus.Areas.Developer.Controllers.UserController>("Users");
                 },
                 viewName: WebConstant.ViewName.NavBar,
                 scope: WebConstant.Scope.Admin));
@@ -255,14 +294,6 @@ namespace Instatus
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<RazorTemplateService>().As<ITemplateService>().InstancePerLifetimeScope();
-        }
-    }
-
-    public class CommonGlobalFiltersModule : Module
-    {
-        protected override void Load(ContainerBuilder builder)
-        {
-            builder.RegisterType<LogErrorAttribute>().As<IMvcFilter>();
         }
     }
 }

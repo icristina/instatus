@@ -10,10 +10,13 @@ namespace Instatus.Entities
     public class Credential
     {
         public int Id { get; set; }
-        public string ApplicationId { get; set; }
-        public string ApplicationAlias { get; set; }
-        public string ApplicationSecret { get; set; }
+        public string ApiKey { get; set; }
+        public string AppNamespace { get; set; }
+        public string AppSecret { get; set; }
+
         public Application Application { get; set; }
+        public int ApplicationId { get; set; }
+        
         public string Scope { get; set; }
         public string Features { get; set; }
 #if NET45
@@ -27,6 +30,11 @@ namespace Instatus.Entities
         public bool HasFeature(string name)
         {
             return Features.ToList().Any(f => f.Match(name));
+        }
+
+        public override string ToString()
+        {
+            return string.Format("{0} {1} {2}", Provider, ApiKey, Deployment);
         }
 
         public Credential() 

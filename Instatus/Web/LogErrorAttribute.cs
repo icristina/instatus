@@ -14,11 +14,11 @@ namespace Instatus.Web
 {
     public class LogErrorAttribute : FilterAttribute, IExceptionFilter
     {
-        public ILoggingService LoggingService { get; set; }
-        
         public void OnException(ExceptionContext filterContext)
-        {           
-            LoggingService.Log(filterContext.Exception);
+        {
+            var loggingService = DependencyResolver.Current.GetService<ILoggingService>();
+            
+            loggingService.Log(filterContext.Exception);
         }
     }
 }

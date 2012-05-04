@@ -71,7 +71,7 @@ namespace Instatus.Areas.Facebook
             {
                 init = new
                 {
-                    appId = credential.ApplicationId,
+                    appId = credential.ApiKey,
                     status = true,
                     cookie = true,
                     xfbml = credential.HasFeature("xfbml"),
