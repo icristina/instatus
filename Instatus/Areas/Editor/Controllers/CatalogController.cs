@@ -25,7 +25,7 @@ namespace Instatus.Areas.Editor.Controllers
         public string Name { get; set; }
 
         [Column("Catalog")]
-        [Display(Name = "Category")]
+        [Display(Name = "Parent")]
         [AdditionalMetadata("Required", false)]
         public SelectList CatalogList { get; set; }
 
@@ -44,6 +44,9 @@ namespace Instatus.Areas.Editor.Controllers
             base.Save(model);
 
             SaveAssociation(model, Kind.Catalog, Catalog);
+
+            if (model.Alias.IsEmpty())
+                model.Alias = Name.ToSlug();
         }
 
         public override void Databind()

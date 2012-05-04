@@ -13,7 +13,6 @@ using Instatus;
 
 namespace Instatus.Areas.Editor.Models
 {
-    [ComplexType]
     public class PartsViewModel<T> : BaseViewModel<Page> where T : BaseViewModel<Part>, new()
     {
         private Zone zone;

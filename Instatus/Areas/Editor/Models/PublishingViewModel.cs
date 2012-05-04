@@ -13,10 +13,9 @@ using Instatus.Entities;
 
 namespace Instatus.Areas.Editor.Models
 {
-    [ComplexType]
     public class PublishingViewModel : BaseViewModel<Page>
     {
-        [DisplayName("Friendly Url")]
+        [DisplayName("Alias (for friendly url)")]
         [Required]
         [RegularExpression(WebConstant.RegularExpression.Alias, ErrorMessageResourceName = WebPhrase.ErrorMessage.InvalidFriendlyIdentifier, ErrorMessageResourceType = typeof(WebPhrase))]
         public string Alias { get; set; }      

@@ -13,7 +13,6 @@ using Instatus.Entities;
 
 namespace Instatus.Areas.Editor.Models
 {
-    [ComplexType]
     public class VideoViewModel : BaseViewModel<Page>
     {       
         public string Uri { get; set; }

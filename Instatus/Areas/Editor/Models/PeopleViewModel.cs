@@ -14,7 +14,6 @@ using Instatus.Entities;
 
 namespace Instatus.Areas.Editor.Models
 {
-    [ComplexType]
     public class PeopleViewModel : PageViewModel
     {
         [Column("Profiles")]

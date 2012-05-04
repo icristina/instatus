@@ -11,11 +11,31 @@ using System.Web.Hosting;
 using System.Collections;
 using System.Data;
 using Instatus.Data;
+using System.Linq.Expressions;
 
 namespace Instatus
 {
     public static class DbContextExtensions
     {
+        public static void ClearCollection<TEntity, TCollection>(this DbContext context, TEntity entity, Expression<Func<TEntity, ICollection<TCollection>>> accessor) where TEntity : class where TCollection : class
+        {
+                var entry = context.Entry(entity);
+                var originalState = entry.State;
+
+                if (originalState == EntityState.Deleted)
+                    entry.State = EntityState.Unchanged;
+                
+                var collection = entry.Collection(accessor);
+                var set = context.Set<TCollection>();    
+
+                collection.Load();
+
+                foreach(var association in collection.CurrentValue.ToList())
+                    set.Remove(association);
+
+                entry.State = originalState;
+        }
+        
         private static Type GetRootType(Type type)
         {
             while (type.BaseType != typeof(object)) // assumption, must be TPH inheritense

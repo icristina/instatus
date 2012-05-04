@@ -16,7 +16,7 @@ namespace Instatus.Web
         {
             var metadata = base.CreateMetadata(attributes, containerType, modelAccessor, modelType, propertyName);
 
-            metadata.AdditionalValues["IsComplexTypeEntity"] = attributes.OfType<ComplexTypeAttribute>().Any();
+            metadata.AdditionalValues["IsComplexTypeEntity"] = attributes.OfType<ComplexTypeAttribute>().Any() || modelType is IViewModel;
             metadata.AdditionalValues["IsScaffoldColumn"] = attributes.OfType<ScaffoldColumnAttribute>().Any() && attributes.OfType<ScaffoldColumnAttribute>().First().Scaffold;
 
             DataType dataType;
