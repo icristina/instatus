@@ -318,6 +318,20 @@ namespace Instatus.Areas.Facebook
             return signedRequest != null && signedRequest.page != null && signedRequest.page.admin == true;
         }
 
+        // http://www.colingodsey.com/facebook-api-fql-for-friends-with-app/
+        public static List<string> AppFriends(string accessToken)
+        {
+            var result = new List<string>();
+            var friends = Facebook.Request("fql?q=SELECT uid FROM user WHERE has_added_app=1 and uid IN (SELECT uid2 FROM friend WHERE uid1 = me())", accessToken);
+            
+            foreach (var friend in friends.data)
+            {
+                result.Add(friend.uid);
+            }
+
+            return result;
+        }
+
         public static List<string> Friends(string accessToken)
         {
             var ids = new List<string>();

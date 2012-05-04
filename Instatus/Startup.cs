@@ -138,7 +138,13 @@ namespace Instatus
 
         public static void DefaultRoute()
         {
-            RouteTable.Routes.MapRoute(
+            RouteTable.Routes.MapHttpRoute( // webapi
+                "Api",
+                "api/{controller}/{id}",
+                new { id = RouteParameter.Optional }
+            );            
+            
+            RouteTable.Routes.MapRoute( // mvc
                 "Default",
                 "{controller}/{action}/{id}",
                 new { controller = "Home", action = "Index", id = "" },
