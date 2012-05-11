@@ -10,9 +10,11 @@ namespace Instatus.Entities
     public class Credential
     {
         public int Id { get; set; }
-        public string ApiKey { get; set; }
-        public string AppNamespace { get; set; }
-        public string AppSecret { get; set; }
+
+        public string Key { get; set; }
+        public string Secret { get; set; }
+        
+        public string Alias { get; set; }
 
         public Application Application { get; set; }
         public int ApplicationId { get; set; }
@@ -34,7 +36,7 @@ namespace Instatus.Entities
 
         public override string ToString()
         {
-            return string.Format("{0} {1} {2}", Provider, ApiKey, Deployment);
+            return string.Format("{0} {1} {2}", Provider, Key, Deployment);
         }
 
         public Credential() 

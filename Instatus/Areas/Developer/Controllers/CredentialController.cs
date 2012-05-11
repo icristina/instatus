@@ -54,7 +54,7 @@ namespace Instatus.Areas.Developer.Controllers
             base.Save(model);
 
             if (!UpdatedApplicationSecret.IsEmpty())
-                model.AppSecret = UpdatedApplicationSecret;                                  
+                model.Secret = UpdatedApplicationSecret;                                  
         }
     }
     

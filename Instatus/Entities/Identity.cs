@@ -9,9 +9,10 @@ namespace Instatus.Entities
     [ComplexType]
     public class Identity
     {
-        public string UserId { get; set; }
-        public string Username { get; set; }
+        public string Key { get; set; }
+        public string UserName { get; set; }
         public string AccessToken { get; set; }
+        public DateTime? ExpiryTime { get; set; }
 #if NET45
         public Provider Provider { get; set; }
 #else
@@ -20,7 +21,7 @@ namespace Instatus.Entities
 
         public string ToUrn()
         {
-            return string.Format("urn:{0}:{1}", Provider.ToLower(), UserId.ToLower());
+            return string.Format("urn:{0}:{1}", Provider.ToLower(), Key.ToLower());
         }
     }
 }

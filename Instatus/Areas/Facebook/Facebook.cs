@@ -196,7 +196,7 @@ namespace Instatus.Areas.Facebook
         {
             get
             {
-                return Credential.AppNamespace;
+                return Credential.Alias;
             }
         }
 
@@ -204,7 +204,7 @@ namespace Instatus.Areas.Facebook
         {
             get
             {
-                return Credential.AppSecret;
+                return Credential.Secret;
             }
         }
 
@@ -212,7 +212,7 @@ namespace Instatus.Areas.Facebook
         {
             get
             {
-                return Credential.ApiKey;
+                return Credential.Key;
             }
         }
 
@@ -364,7 +364,7 @@ namespace Instatus.Areas.Facebook
                 var identity = new Identity() 
                 {
                     Provider = "Facebook",
-                    UserId = facebookId,
+                    Key = facebookId,
                     AccessToken = accessToken
                 };
 

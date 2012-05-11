@@ -50,7 +50,7 @@ namespace Instatus
         public static User GetUser(this IApplicationModel context, Provider webProvider, string uri)
         {
             var provider = webProvider.ToString();
-            return context.Users.FirstOrDefault(u => u.Identity.Provider == provider && u.Identity.UserId == uri);
+            return context.Users.FirstOrDefault(u => u.Identity.Provider == provider && u.Identity.Key == uri);
         }
 
         //public static IQueryable<User> GetUsers(this IApplicationModel context, WebRole webRole)

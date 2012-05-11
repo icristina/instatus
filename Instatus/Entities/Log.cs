@@ -11,5 +11,11 @@ namespace Instatus.Entities
         public int Id { get; set; }
         public string Uri { get; set; }
         public string Message { get; set; }
+        public DateTime CreatedTime { get; set; }
+
+        public Log()
+        {
+            CreatedTime = DateTime.UtcNow;
+        }
     }
 }

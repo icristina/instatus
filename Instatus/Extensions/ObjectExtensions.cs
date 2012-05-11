@@ -18,6 +18,7 @@ using Instatus.Web;
 using System.Reflection;
 using System.Data.Entity;
 using Newtonsoft.Json;
+using System.Linq.Expressions;
 
 namespace Instatus
 {
@@ -313,6 +314,16 @@ namespace Instatus
             }
 
             return false;
+        }
+
+        public static bool Test<T>(this T graph, Expression<Func<T, bool>> test)
+        {
+            return graph.Test(test.Compile());
+        }
+
+        public static bool Test<T>(this T graph, Func<T, bool> test)
+        {
+            return test(graph);
         }
     }
 }

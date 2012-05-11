@@ -22,9 +22,23 @@ namespace Instatus.Entities
         public DateTime UpdatedTime { get; set; }
         public DateTime PublishedTime { get; set; }
 
+        private string alias;
+
         [Required]
         [RegularExpression(WebConstant.RegularExpression.Alias)]
-        public string Alias { get; set; }
+        public string Alias {
+            get
+            {
+                if (alias.IsEmpty())
+                    alias = Name.ToSlug();
+
+                return alias;
+            }
+            set
+            {
+                alias = value;
+            }
+        }
 
         [Required]
         public string Name { get; set; }

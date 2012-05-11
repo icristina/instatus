@@ -277,6 +277,7 @@
     <Compile Include="Models\ViewMode.cs" />
     <Compile Include="Models\Zone.cs" />
     <Compile Include="Queries\ApplicationQueries.cs" />
+    <Compile Include="Queries\FilterBy.cs" />
     <Compile Include="Queries\LinkQueries.cs" />
     <Compile Include="Queries\MembershipQueries.cs" />
     <Compile Include="Startup.cs" />

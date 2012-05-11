@@ -16,7 +16,9 @@ namespace Instatus.Entities
         public int Id { get; set; }
         public int Locale { get; set; }
         public DateTime CreatedTime { get; set; }
-        public string Username { get; set; }
+        
+        public string UserName { get; set; }
+
         public string FirstName { get; set; }
         public string LastName { get; set; }
 
@@ -84,13 +86,20 @@ namespace Instatus.Entities
         public string Location { get; set; }
         public Identity Identity { get; set; }
         public Segment Segment { get; set; }
+
+        public string FacebookAccount { get; set; }
+        public string TwitterAccount { get; set; }
+        
         public bool Verified { get; set; }
         public bool Suspended { get; set; }
+
         public virtual ICollection<Page> Pages { get; set; }
         public virtual ICollection<Activity> Activities { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<Subscription> Subscriptions { get; set; }
+
         public Application Application { get; set; }
+
         public string Role { get; set; }
 #if NET45
         public Gender? Gender { get; set; }
