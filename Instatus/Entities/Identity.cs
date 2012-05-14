@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using Instatus.Models;
 
 namespace Instatus.Entities
 {
@@ -19,9 +20,16 @@ namespace Instatus.Entities
         public string Provider { get; set; }
 #endif
 
-        public string ToUrn()
+        public override string ToString()
         {
-            return string.Format("urn:{0}:{1}", Provider.ToLower(), Key.ToLower());
+            return string.Format("{0}:{1}", Provider.ToLower(), Key.ToLower());
+        }
+
+        public Identity() { }
+
+        public Identity(Provider provider)
+        {
+            Provider = provider.ToString();
         }
     }
 }

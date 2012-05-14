@@ -368,7 +368,7 @@ namespace Instatus.Areas.Facebook
                     AccessToken = accessToken
                 };
 
-                string userName = emailAddress ?? identity.ToUrn();
+                string userName = emailAddress ?? identity.ToString();
                 
                 FormsAuthentication.SetAuthCookie(userName, false); // persistant cookie not required, as signed_request will re-login user
 

@@ -20,6 +20,12 @@ namespace Instatus
         public static string DefaultLocale = "en-GB";
         public static StringComparison DefaultComparison = StringComparison.OrdinalIgnoreCase;
 
+        public static string AppendQueryParameter(this string uri, string name, object value)
+        {
+            var seperator = uri.Contains('?') ? '&' : '?';
+            return uri + seperator + name + '=' + HttpUtility.UrlEncode(value.AsString());
+        }
+
         public static string ToLocalized(this string text)
         {
             return WebPhrase.Localize(text);

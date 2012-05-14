@@ -252,6 +252,7 @@
     <Compile Include="Extensions\Html\PartExtensions.cs" />
     <Compile Include="Extensions\TagBuilderExtensions.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
+    <Compile Include="Fb.cs" />
     <Compile Include="Models\Deployment.cs" />
     <Compile Include="Models\Document.cs" />
     <Compile Include="Models\Element.cs" />

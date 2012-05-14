@@ -17,6 +17,13 @@ namespace Instatus
 {
     public static class DbContextExtensions
     {
+        public static T CreateInstance<T>(this IDbContext context) where T : class
+        {
+            var instance = Activator.CreateInstance<T>();
+            context.Set<T>().Add(instance);
+            return instance;
+        }
+        
         public static void ClearCollection<TEntity, TCollection>(this DbContext context, TEntity entity, Expression<Func<TEntity, ICollection<TCollection>>> accessor) where TEntity : class where TCollection : class
         {
                 var entry = context.Entry(entity);

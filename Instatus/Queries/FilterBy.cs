@@ -19,6 +19,12 @@ namespace Instatus
             }
         }
 
+        public static Expression<Func<Activity, bool>> Verb(Verb verb)
+        {
+            var verbName = verb.ToString();
+            return activity => activity.Verb == verbName;
+        }
+
         public static Expression<Func<Page, bool>> Kind(Kind kind)
         {
             var kindName = kind.ToString();
@@ -30,8 +36,31 @@ namespace Instatus
             get 
             {
                 var identity = HttpContext.Current.User.Identity;
-                return user => identity.IsAuthenticated && user.EmailAddress == identity.Name;
+
+                if (!identity.IsAuthenticated)
+                    return user => false;
+
+                return UserName(identity.Name);
             }
+        }
+
+        public static Expression<Func<User, bool>> UserName(string userName)
+        {
+            if (userName.IsEmpty())
+                return user => false;
+
+            var accountId = userName.SubstringAfter(":");
+
+            if (userName.StartsWith("facebook"))
+                return user => user.FacebookAccount == accountId;
+
+            if (userName.StartsWith("twitter"))
+                return user => user.TwitterAccount == accountId;
+
+            if (userName.Contains('@'))
+                return user => user.EmailAddress == userName;
+
+            return user => user.UserName == userName;
         }
 
         public static Expression<Func<Activity, bool>> Friends(IEnumerable<string> friends)

@@ -22,6 +22,8 @@ namespace Instatus.Entities
         public string FirstName { get; set; }
         public string LastName { get; set; }
 
+        public string Picture { get; set; }
+
         private string emailAddress;
 
         [IgnoreDataMember]
@@ -34,7 +36,6 @@ namespace Instatus.Entities
             }
         }
 
-        [Required]
         [RegularExpression(WebConstant.RegularExpression.EmailAddress)]
         public string EmailAddress
         {
@@ -106,6 +107,12 @@ namespace Instatus.Entities
 #else
         public string Gender { get; set; }
 #endif
+
+        public void SetLocale(string locale)
+        {
+            var cultureInfo = new CultureInfo(locale.Replace('_', '-'));
+            Locale = cultureInfo.LCID;
+        }
 
         public override string ToString()
         {

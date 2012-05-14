@@ -35,7 +35,8 @@ namespace Instatus.Web
 
         private void OnPreSendRequestHeaders(object sender, EventArgs e)
         {
-            Headers.ForEach(h => HttpContext.Current.Response.Headers.Remove(h));
+            if (HttpContext.Current != null)
+                Headers.ForEach(h => HttpContext.Current.Response.Headers.Remove(h));
         }
     }
 }
