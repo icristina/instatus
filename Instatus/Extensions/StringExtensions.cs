@@ -12,6 +12,7 @@ using System.Text;
 using System.Web.Mvc;
 using Instatus.Web;
 using System.Web.Security;
+using System.Collections;
 
 namespace Instatus
 {
@@ -22,7 +23,14 @@ namespace Instatus
 
         public static string AppendQueryParameter(this string uri, string name, object value)
         {
+            if (value.IsEmpty())
+                return uri;
+            
             var seperator = uri.Contains('?') ? '&' : '?';
+
+            if (value is string[] || value is int[])
+                value = (value as IEnumerable).ToDelimited();
+
             return uri + seperator + name + '=' + HttpUtility.UrlEncode(value.AsString());
         }
 
