@@ -19,7 +19,7 @@ namespace Instatus.Areas.Editor.Models
 
         public override void Load(Page model)
         {
-            Uri = model.Document.Links.Uri(WebConstant.Rel.Video);
+            Uri = model.Document.Links.Uri(null, WebConstant.Rel.Video);
         }
 
         public override void Save(Page model)

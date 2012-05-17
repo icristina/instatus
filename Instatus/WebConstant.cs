@@ -11,8 +11,6 @@ namespace Instatus
         {
             public const string Bootstrap = "Bootstrap";
             public const string Environment = "Environment";
-            public const string Simulate = "Simulate";
-            public const string DatabaseInitialize = "DatabaseInitialize";
         }
         
         public static class Scope
@@ -73,6 +71,7 @@ namespace Instatus
             public const string Legal = "legal";
             public const string Social = "social";
             public const string Corporate = "corporate";
+            public const string Attachment = "attachment";
         }
 
         public static class Role

@@ -39,7 +39,7 @@ namespace Instatus.Areas.Google
         {
             return @"<script>
                 var _gaq = _gaq || [];
-                _gaq.push(['_setAccount', googleSettings.profileId]);
+                _gaq.push(['_setAccount', googleAnalyticsSettings.profileId]);
                 _gaq.push(['_trackPageview']);
 
                 (function () {

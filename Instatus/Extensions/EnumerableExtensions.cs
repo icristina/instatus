@@ -246,8 +246,9 @@ namespace Instatus
 
         public static IDbSet<T> Append<T>(this IDbSet<T> set, IEnumerable<T> additions) where T : class
         {
-            foreach (var item in additions)
-                set.Add(item);
+            if(additions.NonEmpty())
+                foreach (var item in additions)
+                    set.Add(item);
 
             return set;
         }

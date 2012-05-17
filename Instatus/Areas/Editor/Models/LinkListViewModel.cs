@@ -22,7 +22,7 @@ namespace Instatus.Areas.Editor.Models
 
         public override void Load(Page model)
         {
-            Links = model.Document.Links.Select(l =>
+            Links = model.Document.Links.Where(l => l.Rel == WebConstant.Rel.Attachment).Select(l =>
             {
                 var viewModel = new LinkViewModel();
                 viewModel.Load(l);
@@ -34,7 +34,8 @@ namespace Instatus.Areas.Editor.Models
 
         public override void Save(Page model)
         {
-            model.Document.Links = Links.RemoveNullOrEmpty().Select(l => l.ToModel()).ToList();
+            model.Document.Links.RemoveAll(l => l.Rel == WebConstant.Rel.Attachment);            
+            model.Document.Links.Append(Links.RemoveNullOrEmpty().Select(l => l.ToModel()).ToList());
         }
     }
 }

@@ -42,6 +42,7 @@ namespace Instatus.Areas.Editor.Models
             base.Save(model);
 
             model.Title = Name;
+            model.Rel = WebConstant.Rel.Attachment;
         }
     }
 }
