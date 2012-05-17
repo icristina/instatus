@@ -18,7 +18,8 @@ namespace Instatus.Web
         {
             var loggingService = DependencyResolver.Current.GetService<ILoggingService>();
             
-            loggingService.Log(filterContext.Exception);
+            if(loggingService != null)
+                loggingService.Log(filterContext.Exception);
         }
     }
 }

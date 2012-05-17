@@ -129,19 +129,38 @@ namespace Instatus
             return text.RegexReplace("<[^<>]*>", "");
         }
 
-        public static string RemoveHtmlElement(this string text, string element)
+        public static string RemoveHtmlElement(this string text, string element, bool preserveContent = true)
         {
-            return text.RegexReplace("<[/]?" + element + "[^>]*>");
+            if (preserveContent)
+                return text.RegexReplace("<[/]?" + element + "[^>]*>");
+
+            return text
+                    .RegexReplace("<" + element + "[^>]*/>") // self closing
+                    .RegexReplace("<" + element + @"[^>]*>[.\s\S]*</" + element + "[^>]*>");
+        }
+
+        public static string RemoveHtmlElements(this string text, string[] elements, bool preserveContent = true)
+        {
+            return text.RemoveHtmlElement("(" + string.Join("|", elements)  + ")", preserveContent);
         }
 
         public static string RemoveHtmlEmphasis(this string text)
         {
-            return text.RemoveHtmlElement("(b|em|i)");
+            return text.RemoveHtmlElements(new string[] { "b", "em", "i" });
         }
 
         public static string RemoveHtmlFlowElements(this string text)
         {
-            return text.RemoveHtmlElement("(p|div|section|header|footer|nav)");
+            return text.RemoveHtmlElements(new string[] { "p", "div", "section", "header", "footer", "nav" });
+        }
+
+        public static string TidyHtml(this string text)
+        {
+            return text
+                    .RemoveHtmlAttributes()
+                    .RemoveHtmlElements(new string[] { "html", "head", "body", "span", "ins" })
+                    .RemoveHtmlElements(new string[] { "script", "style", "meta", "link" }, false)
+                    .RegexReplace("<p>&nbsp;</p>");
         }
 
         public static string ReplaceLineBreaksAsHtml(this string text)

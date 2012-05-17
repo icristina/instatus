@@ -126,16 +126,19 @@ namespace Instatus
             return dictionary;
         }
 
-        private const string dictionaryPrefix = "__SingleInstance.";
+        private static string GenerateDictionaryKey<T>()
+        {
+            return "__SingleInstance." + typeof(T).FullName;
+        }
 
         public static IDictionary<string, object> AddSingle<T>(this IDictionary<string, object> dictionary, T item) where T : class
         {
-            return dictionary.AddOrReplace(dictionaryPrefix + typeof(T).FullName, item);
+            return dictionary.AddOrReplace(GenerateDictionaryKey<T>(), item);
         }
 
         public static T GetSingle<T>(this IDictionary<string, object> dictionary) where T : class
         {
-            return dictionary[dictionaryPrefix + typeof(T).FullName] as T 
+            return dictionary.Value(GenerateDictionaryKey<T>()) as T 
                 ?? (typeof(T).IsInterface ? null : Activator.CreateInstance<T>());
         }
 

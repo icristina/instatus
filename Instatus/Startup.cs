@@ -138,21 +138,25 @@ namespace Instatus
 
         public static void DefaultRoute()
         {
-            RouteTable.Routes.MapHttpRoute( // webapi
-                "Api",
-                "api/{controller}/{id}",
-                new { id = RouteParameter.Optional }
-            );            
+            RouteTable.Routes
+                .RemoveRoute("Api")
+                .MapHttpRoute( // webapi
+                    "Api",
+                    "api/{controller}/{id}",
+                    new { id = RouteParameter.Optional }
+                );            
             
-            RouteTable.Routes.MapRoute( // mvc
-                "Default",
-                "{controller}/{action}/{id}",
-                new { controller = "Home", action = "Index", id = "" },
-                null,
-                new string[] { 
-                    DefaultNamespace
-                }
-            );
+            RouteTable.Routes
+                .RemoveRoute("Default")
+                .MapRouteLowercase( // mvc
+                    "Default",
+                    "{controller}/{action}/{id}",
+                    new { controller = "Home", action = "Index", id = "" },
+                    null,
+                    new string[] { 
+                        DefaultNamespace
+                    }
+                );
         }
 
         public static void Bundles()
