@@ -9,6 +9,7 @@ namespace Instatus.Entities
     public class Application
     {
         public int Id { get; set; }
+        public int Locale { get; set; }
         public string Name { get; set; }
         public string Icon { get; set; }
         public string Logo { get; set; }
