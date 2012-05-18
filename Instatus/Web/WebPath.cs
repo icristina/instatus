@@ -126,6 +126,13 @@ namespace Instatus.Web
             return uriBuilder.Uri.ToString(); // user uri property to ensure :80 or :443 default ports not returned
         }
 
+        public static string Variant(string virtualPath, string suffix, char seperator = '.')
+        {
+            var extensionStartIndex = virtualPath.LastIndexOf('.');
+            var suffixAndSeperator = string.Format("-{0}", suffix.ToLower());
+            return virtualPath.Insert(extensionStartIndex, suffixAndSeperator);
+        }
+
         public static string Resize(ImageSize size, string virtualPath, bool normalizeExtension = true)
         {
             if (size == ImageSize.Original)
@@ -134,9 +141,7 @@ namespace Instatus.Web
             }
             else
             {
-                var extensionStartIndex = virtualPath.LastIndexOf('.');
-                var suffix = string.Format("-{0}", size.ToString().ToLower());
-                var resized = virtualPath.Insert(extensionStartIndex, suffix);
+                var resized = Variant(virtualPath, size.ToString());
 
                 if (normalizeExtension)
                 {

@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Helpers;
+using Instatus.Models;
 
 namespace Instatus
 {
@@ -145,6 +146,11 @@ namespace Instatus
                     return image;
                 }
             }
+        }
+
+        public static Image Crop(this Image image, Element element)
+        {
+            return image.Crop(element.Top, image.Width - element.Width, image.Height - element.Height, element.Left);
         }
 
         public static Image Square(this Image image, int size)
