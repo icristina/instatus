@@ -89,6 +89,20 @@ namespace Instatus
             return resizeKey;
         }
 
+        public static string GenerateRegion(this IBlobService blobService, string key, Element element)
+        {
+            var regionKey = WebPath.Variant(key, element.Id);
+            
+            using (var stream = blobService.Stream(key))
+            using (var originalImage = (Bitmap)Bitmap.FromStream(stream))
+            using (var resizedImage = originalImage.Crop(element))
+            {
+                blobService.SaveImage(resizedImage, regionKey);
+            }
+
+            return regionKey;
+        }
+
         public static bool Exists(this IBlobService blobService, string key) 
         {
             using (var stream = blobService.Stream(key)) 
