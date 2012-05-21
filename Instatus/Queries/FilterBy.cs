@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Web;
@@ -17,6 +18,15 @@ namespace Instatus
                 var now = DateTime.UtcNow;
                 return page => (page.Schedule.StartTime.HasValue && page.Schedule.StartTime <= now) && (page.Schedule.EndTime.HasValue && page.Schedule.EndTime >= now);
             }
+        }
+
+        public static Expression<Func<Credential, bool>> Provider(Provider provider)
+        {
+            var providerName = provider.ToString();
+            var deploymentName = ConfigurationManager.AppSettings.Value<string>(WebConstant.AppSetting.Environment).AsEnum<Deployment>().ToString();
+            var allDeployments = Deployment.All.ToString();
+
+            return credential => (credential.Deployment == deploymentName || credential.Deployment == allDeployments) && credential.Provider == providerName;
         }
 
         public static Expression<Func<Activity, bool>> Verb(Verb verb)

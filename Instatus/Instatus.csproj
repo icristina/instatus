@@ -252,6 +252,7 @@
     <Compile Include="Extensions\Html\PartExtensions.cs" />
     <Compile Include="Extensions\TagBuilderExtensions.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
+    <Compile Include="Extensions\UriExtensions.cs" />
     <Compile Include="FacebookClient.cs" />
     <Compile Include="Models\Deployment.cs" />
     <Compile Include="Models\Document.cs" />
@@ -281,6 +282,9 @@
     <Compile Include="Queries\FilterBy.cs" />
     <Compile Include="Queries\LinkQueries.cs" />
     <Compile Include="Queries\MembershipQueries.cs" />
+    <Compile Include="Services\DebugProfilingService.cs" />
+    <Compile Include="Services\ProductionProfilingService.cs" />
+    <Compile Include="Services\IProfilingService.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Web\AllowUploadAttribute.cs" />
     <Compile Include="Services\ILoggingService.cs" />

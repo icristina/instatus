@@ -27,14 +27,7 @@ namespace Instatus
         
         public static Credential GetApplicationCredential(this IApplicationModel context, Provider provider)
         {
-            var providerName = provider.ToString();
-
-            var environment = WebApp.Environment.ToString();
-            var all = "All";
-
-            return context.Credentials
-                    .FirstOrDefault(s => s.Provider == providerName
-                        && (s.Deployment == environment || s.Deployment == all));
+            return context.Credentials.Where(FilterBy.Provider(provider)).FirstOrDefault();
         }
 
         //public static Message GetApplicationMessage(this IApplicationModel context)

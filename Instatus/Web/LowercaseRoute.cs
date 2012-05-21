@@ -38,17 +38,7 @@ namespace Instatus.Web
 
             if (virtualPathData != null)
             {
-                if (virtualPathData.VirtualPath.Contains('?'))
-                {
-                    var path = virtualPathData.VirtualPath.SubstringBefore("?");
-                    var query = virtualPathData.VirtualPath.SubstringAfter("?");
-
-                    virtualPathData.VirtualPath = string.Format("{0}?{1}", path.ToLowerInvariant(), query);
-                }
-                else
-                {
-                    virtualPathData.VirtualPath = virtualPathData.VirtualPath.ToLowerInvariant();
-                }
+                virtualPathData.VirtualPath = WebPath.LowerCasePath(virtualPathData.VirtualPath);
             }
 
             return virtualPathData;

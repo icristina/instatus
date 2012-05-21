@@ -150,7 +150,7 @@ namespace Instatus
 
         public static Image Crop(this Image image, Element element)
         {
-            return image.Crop(element.Top, image.Width - element.Width, image.Height - element.Height, element.Left);
+            return image.Crop(element.Top, Math.Max(0, image.Width - element.Width - element.Left), Math.Max(0, image.Height - element.Height - element.Top), element.Left);
         }
 
         public static Image Square(this Image image, int size)

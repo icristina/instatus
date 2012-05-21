@@ -64,6 +64,21 @@ namespace Instatus.Web
             return HttpContext.Current.Server.MapPath(virtualPath);
         }
 
+        public static string LowerCasePath(string virtualPath) // do not lowercase query parameters
+        {
+            if (virtualPath.Contains('?'))
+            {
+                var path = virtualPath.SubstringBefore("?");
+                var query = virtualPath.SubstringAfter("?");
+
+                return string.Format("{0}?{1}", path.ToLowerInvariant(), query);
+            }
+            else
+            {
+                return virtualPath.ToLowerInvariant();
+            }
+        }
+
         public static string Relative(string virtualPath)
         {
             foreach(var virtualPathRewriter in WebApp.GetServices<IVirtualPathRewriter>()) {
@@ -76,7 +91,9 @@ namespace Instatus.Web
             if (!VirtualPathUtility.IsAppRelative(virtualPath))
                 virtualPath = string.Format("~/{0}", virtualPath);
 
-            return VirtualPathUtility.ToAbsolute(virtualPath).ToLower();
+            virtualPath = VirtualPathUtility.ToAbsolute(virtualPath);
+
+            return LowerCasePath(virtualPath);
         }
 
         public static string Absolute(Uri baseUri, string virtualPath)
