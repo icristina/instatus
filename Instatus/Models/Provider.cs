@@ -11,6 +11,7 @@ namespace Instatus.Models
         Twitter,
         Google,
         GoogleAnalytics,
+        AmazonS3,
         Generated,
         Custom1,
         Custom2,
