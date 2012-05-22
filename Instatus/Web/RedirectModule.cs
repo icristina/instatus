@@ -56,7 +56,7 @@ namespace Instatus.Web
                     }
                     else
                     {
-                        var environment = WebApp.Environment.ToString();
+                        var environment = WebApp.Deployment.ToString();
                         var all = Deployment.All.ToString();
 
                         domains = applicationModel.Domains

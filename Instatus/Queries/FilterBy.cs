@@ -23,7 +23,7 @@ namespace Instatus
         public static Expression<Func<Credential, bool>> Provider(Provider provider)
         {
             var providerName = provider.ToString();
-            var deploymentName = ConfigurationManager.AppSettings.Value<string>(WebConstant.AppSetting.Environment).AsEnum<Deployment>().ToString();
+            var deploymentName = ConfigurationManager.AppSettings.Value<string>(WebConstant.AppSetting.Deployment).AsEnum<Deployment>().ToString();
             var allDeployments = Deployment.All.ToString();
 
             return credential => (credential.Deployment == deploymentName || credential.Deployment == allDeployments) && credential.Provider == providerName;

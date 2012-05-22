@@ -10,7 +10,7 @@ namespace Instatus
         public static class AppSetting
         {
             public const string Bootstrap = "Bootstrap";
-            public const string Environment = "Environment";
+            public const string Deployment = "Deployment";
         }
         
         public static class Scope

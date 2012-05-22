@@ -111,7 +111,7 @@ namespace Instatus.Controllers
                 Response.AddHeader("p3p", "CP=\"CAO PSA OUR\""); // cookies in iframes for IE
             }
 
-            if (Request.IsAjaxRequest() && ConfigurationManager.AppSettings.Value<string>(WebConstant.AppSetting.Environment).AsEnum<Deployment>() == Deployment.Development)
+            if (Request.IsAjaxRequest() && ConfigurationManager.AppSettings.Value<string>(WebConstant.AppSetting.Deployment).AsEnum<Deployment>() == Deployment.Development)
             {
                 System.Threading.Thread.Sleep(3000);
             }

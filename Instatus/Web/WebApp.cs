@@ -45,11 +45,11 @@ namespace Instatus.Web
             return ConfigurationManager.AppSettings.Value<T>(name.ToString());
         }
 
-        public static Deployment Environment
+        public static Deployment Deployment
         {
             get
             {
-                return Setting<string>(WebConstant.AppSetting.Environment).AsEnum<Deployment>();
+                return Setting<string>(WebConstant.AppSetting.Deployment).AsEnum<Deployment>();
             }
         }
 
