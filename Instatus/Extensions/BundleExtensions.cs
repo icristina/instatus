@@ -35,7 +35,7 @@ namespace Instatus
         public static BundleCollection AddScriptsBundle(this BundleCollection bundleCollection, string name, params string[] paths)
         {
             var bundle = new Bundle(
-                        "~/js/" + name,
+                        "~/scripts/" + name,
                         new JsMinify());
 
             AddFiles(bundle, paths, "~/Scripts/");
@@ -46,7 +46,7 @@ namespace Instatus
         public static BundleCollection AddStylesBundle(this BundleCollection bundleCollection, string name, params string[] paths)
         {
             var bundle = new Bundle(
-                        "~/css/" + name,
+                        "~/content/" + name,
                         new LessTransform()
                         .Then(new CssMinify()));
 
