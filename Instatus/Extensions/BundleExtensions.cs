@@ -24,7 +24,7 @@ namespace Instatus
             {
                 var virtualPath = MakeRelative(path, defaultDirectory);
                 
-                bundle.AddFile(virtualPath, false);
+                bundle.Include(virtualPath);
                 bundleOrdering.Files.Add(path);
             }
 

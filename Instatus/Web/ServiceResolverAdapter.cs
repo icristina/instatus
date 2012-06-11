@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Http.Dependencies;
 using System.Web.Http.Services;
 
 namespace Instatus.Web
@@ -13,9 +14,33 @@ namespace Instatus.Web
 
         public ServiceResolverAdapter(System.Web.Mvc.IDependencyResolver dependencyResolver)
         {
-            if (dependencyResolver == null) throw new ArgumentNullException("dependencyResolver");
             this.dependencyResolver = dependencyResolver;
         }
+
+        public IDependencyScope BeginScope()
+        {
+            return new DependencyScopeAdapter(dependencyResolver);
+        }
+
+        public void Dispose()
+        {
+            // not implemented, as uses AutoFac request scope
+        }
+
+        public object GetService(Type serviceType)
+        {
+            return new DependencyScopeAdapter(dependencyResolver).GetService(serviceType);
+        }
+
+        public IEnumerable<object> GetServices(Type serviceType)
+        {
+            return new DependencyScopeAdapter(dependencyResolver).GetServices(serviceType);
+        }
+    }
+
+    public class DependencyScopeAdapter : IDependencyScope
+    {
+        private readonly System.Web.Mvc.IDependencyResolver dependencyResolver;
 
         public object GetService(Type serviceType)
         {
@@ -26,11 +51,21 @@ namespace Instatus.Web
         {
             return dependencyResolver.GetServices(serviceType);
         }
+
+        public void Dispose()
+        {
+            // not implemented, as uses AutoFac request scope
+        }
+
+        public DependencyScopeAdapter(System.Web.Mvc.IDependencyResolver dependencyResolver)
+        {
+            this.dependencyResolver = dependencyResolver;
+        }
     }
 
     public static class ServiceResolverExtensions
     {
-        public static IDependencyResolver ToServiceResolver(this System.Web.Mvc.IDependencyResolver dependencyResolver)
+        public static IDependencyResolver ToWebHttpDependencyResolver(this System.Web.Mvc.IDependencyResolver dependencyResolver)
         {
             return new ServiceResolverAdapter(dependencyResolver);
         }

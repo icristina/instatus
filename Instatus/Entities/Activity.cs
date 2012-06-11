@@ -7,7 +7,7 @@ using Instatus.Data;
 
 namespace Instatus.Entities
 {
-    public class Activity : ITimestamp
+    public class Activity : IUserGeneratedContent
     {
         public int Id { get; set; }
         public DateTime CreatedTime { get; set; }
@@ -21,8 +21,10 @@ namespace Instatus.Entities
         public Application Application { get; set; }
 #if NET45
         public Verb Verb { get; set; }
+        public Published Published { get; set; }
 #else
         public string Verb { get; set; }
+        public string Published { get; set; }
 #endif
 
         public override string ToString()

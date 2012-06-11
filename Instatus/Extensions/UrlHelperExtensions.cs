@@ -33,9 +33,9 @@ namespace Instatus
             return WebPath.Absolute(urlHelper.RouteUrl(routeName, routeValues));
         }
 
-        public static string Resize(this UrlHelper urlHelper, ImageSize size, string virtualPath)
+        public static string Resize(this UrlHelper urlHelper, ImageSize size, string virtualPath, bool normalizeExtension = true)
         {
-            return WebPath.Relative(WebPath.Resize(size, virtualPath));
+            return WebPath.Relative(WebPath.Resize(size, virtualPath, normalizeExtension));
         }
 
         public static string Details(this UrlHelper urlHelper, int id)

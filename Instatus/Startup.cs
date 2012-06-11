@@ -96,7 +96,7 @@ namespace Instatus
 
             DependencyResolver.SetResolver(new AutofacDependencyResolver(builder.Build()));
 
-            GlobalConfiguration.Configuration.ServiceResolver.SetResolver(DependencyResolver.Current.ToServiceResolver()); // web api
+            GlobalConfiguration.Configuration.DependencyResolver = DependencyResolver.Current.ToWebHttpDependencyResolver(); // web api
         }
 
         public static void IgnoreRoutes()

@@ -30,7 +30,7 @@ namespace Instatus.Services
                 Directory.CreateDirectory(directoryName);
         }
 
-        private string GetRelativePath(string contentType, string slug)
+        protected string GetRelativePath(string contentType, string slug)
         {
             if (Path.IsPathRooted(slug))
                 return slug;

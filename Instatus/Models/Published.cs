@@ -9,6 +9,7 @@ namespace Instatus.Models
     {
         Active,
         Draft,
-        Spam
+        Spam,
+        Archived
     }
 }
