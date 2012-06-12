@@ -11,7 +11,7 @@ using Instatus.Data;
 
 namespace Instatus.Services
 {
-    public class FileSystemBlobService : IBlobService
+    public class FileSystemBlobService : ILocalStorageService
     {       
         public static string BasePath = "~/Media/"; 
         public static string VirtualPath = "~/Media/";
@@ -30,7 +30,7 @@ namespace Instatus.Services
                 Directory.CreateDirectory(directoryName);
         }
 
-        protected string GetRelativePath(string contentType, string slug)
+        protected virtual string GetRelativePath(string contentType, string slug)
         {
             if (Path.IsPathRooted(slug))
                 return slug;
@@ -44,6 +44,11 @@ namespace Instatus.Services
             var extension = WebMimeType.GetExtension(contentType);
             var fileName = string.Format("{0}.{1}", slug ?? Generator.TimeStamp(), extension);
             return BasePath + fileName;
+        }
+
+        public string MapPath(string virtualPath)
+        {
+            return HostingEnvironment.MapPath(BasePath + virtualPath);
         }
 
         public string Save(string contentType, string slug, Stream stream)

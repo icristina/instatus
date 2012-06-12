@@ -209,7 +209,6 @@ namespace Instatus
         {
             Modules.Add(new AuthAreaModule());
             Modules.Add(new EditorAreaModule());
-            Modules.Add(new FileSystemModule());
 
             if (registerNavigationWidget)
             {
@@ -281,6 +280,7 @@ namespace Instatus
             builder.Register(c => new DbApplicationModel(Alias)).As<IApplicationModel>().InstancePerHttpRequest();
             builder.RegisterType<DbLoggingService>().As<ILoggingService>().InstancePerHttpRequest();
             builder.RegisterType<DbPageModel>().As<IPageModel>().InstancePerHttpRequest();
+            builder.RegisterType<DbCredentialService>().As<ICredentialService>().InstancePerHttpRequest();
         }
 
         public DbServicesModule(string alias, IDatabaseInitializer<DbApplicationModel> initializer)
@@ -295,7 +295,10 @@ namespace Instatus
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<FileSystemBlobService>().As<IBlobService>().InstancePerLifetimeScope();
+            builder.RegisterType<FileSystemBlobService>()
+                .As<IBlobService>()
+                .As<ILocalStorageService>()
+                .InstancePerLifetimeScope();
         }
     }
 

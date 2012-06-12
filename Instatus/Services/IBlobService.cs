@@ -19,6 +19,11 @@ namespace Instatus.Services
         Stream Stream(string key);
         string[] Query();
     }
+
+    public interface ILocalStorageService : IBlobService
+    {
+        string MapPath(string virtualPath);
+    }
 }
 
 namespace Instatus

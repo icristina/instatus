@@ -89,5 +89,10 @@ namespace Instatus
             public const string Alias = @"^[a-z0-9-]+$";
             public const string RealName = @"^[A-Za-z-\s]+$";
         }
+
+        public static class LocalResources
+        {
+            public const string Output = "Output";
+        }
     }
 }

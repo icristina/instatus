@@ -7,7 +7,7 @@ using Instatus.Models;
 
 namespace Instatus.Entities
 {
-    public class Credential
+    public class Credential : ICredential
     {
         public int Id { get; set; }
 
@@ -28,11 +28,6 @@ namespace Instatus.Entities
         public string Deployment { get; set; }
         public string Provider { get; set; }
 #endif
-
-        public bool HasFeature(string name)
-        {
-            return Features.ToList().Any(f => f.Match(name));
-        }
 
         public override string ToString()
         {

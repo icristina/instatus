@@ -285,6 +285,7 @@
     <Compile Include="Models\Form.cs" />
     <Compile Include="Models\Formatting.cs" />
     <Compile Include="Models\Gender.cs" />
+    <Compile Include="Models\ICredential.cs" />
     <Compile Include="Models\ImageSize.cs" />
     <Compile Include="Models\Insight.cs" />
     <Compile Include="Models\Kind.cs" />
@@ -306,7 +307,9 @@
     <Compile Include="Queries\FilterBy.cs" />
     <Compile Include="Queries\LinkQueries.cs" />
     <Compile Include="Queries\MembershipQueries.cs" />
+    <Compile Include="Services\DbCredentialService.cs" />
     <Compile Include="Services\DebugProfilingService.cs" />
+    <Compile Include="Services\ICredentialService.cs" />
     <Compile Include="Services\ProductionProfilingService.cs" />
     <Compile Include="Services\IProfilingService.cs" />
     <Compile Include="Startup.cs" />

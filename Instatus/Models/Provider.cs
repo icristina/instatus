@@ -13,6 +13,8 @@ namespace Instatus.Models
         GoogleAnalytics,
         AmazonS3,
         Generated,
+        AzureBlobStorage,
+        AzureTableStorage,
         Custom1,
         Custom2,
         Custom3
