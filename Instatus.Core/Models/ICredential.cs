@@ -15,14 +15,3 @@ namespace Instatus.Models
         string Features { get; }
     }
 }
-
-namespace Instatus
-{
-    public static class CredentialExtensions
-    {
-        public static bool HasFeature(this ICredential credential, string name)
-        {
-            return credential.Features.ToList().Any(f => f.Match(name));
-        }
-    }
-}

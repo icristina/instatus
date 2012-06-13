@@ -37,7 +37,7 @@
     </Reference>
     <Reference Include="Instatus.Core, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Instatus.Core.1.0.0-beta-002\lib\net40\Instatus.Core.dll</HintPath>
+      <HintPath>..\packages\Instatus.Core.1.0.0-beta-004\lib\net40\Instatus.Core.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />

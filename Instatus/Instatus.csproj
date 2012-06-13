@@ -78,7 +78,7 @@
     </Reference>
     <Reference Include="Instatus.Core, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Instatus.Core.1.0.0-beta-002\lib\net40\Instatus.Core.dll</HintPath>
+      <HintPath>..\packages\Instatus.Core.1.0.0-beta-004\lib\net40\Instatus.Core.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CompilerServices.AsyncTargetingPack.Net4">
       <HintPath>..\packages\Microsoft.CompilerServices.AsyncTargetingPack.1.0.0\lib\net40\Microsoft.CompilerServices.AsyncTargetingPack.Net4.dll</HintPath>
@@ -292,7 +292,6 @@
     <Compile Include="Models\Form.cs" />
     <Compile Include="Models\Formatting.cs" />
     <Compile Include="Models\Gender.cs" />
-    <Compile Include="Models\ICredential.cs" />
     <Compile Include="Models\ImageSize.cs" />
     <Compile Include="Models\Insight.cs" />
     <Compile Include="Models\Kind.cs" />
@@ -301,7 +300,6 @@
     <Compile Include="Models\Parameter.cs" />
     <Compile Include="Models\Part.cs" />
     <Compile Include="Models\Privacy.cs" />
-    <Compile Include="Models\Provider.cs" />
     <Compile Include="Models\Published.cs" />
     <Compile Include="Models\Query.cs" />
     <Compile Include="Models\Set.cs" />
@@ -316,7 +314,6 @@
     <Compile Include="Queries\MembershipQueries.cs" />
     <Compile Include="Services\DbCredentialService.cs" />
     <Compile Include="Services\DebugProfilingService.cs" />
-    <Compile Include="Services\ICredentialService.cs" />
     <Compile Include="Services\ProductionProfilingService.cs" />
     <Compile Include="Services\IProfilingService.cs" />
     <Compile Include="Startup.cs" />
