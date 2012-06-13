@@ -16,28 +16,22 @@ namespace Instatus
 {
     public class FacebookClient : IDisposable
     {
-        //private HttpClient httpClient;        
+        private HttpClient httpClient;        
         private string accessToken;
         private int limit;
-        private Uri baseUri;
 
-        public Task<T> GetGraphApiAsync<T>(string path, string[] fields = null)
+        public async Task<T> GetGraphApiAsync<T>(string path, string[] fields = null)
         {
             var requestUri = path
                 .AppendQueryParameter("access_token", accessToken)
                 .AppendQueryParameter("limit", limit)
                 .AppendQueryParameter("fields", fields);
 
-            //var httpResponse = httpClient.GetAsync(requestUri).Result;
-            //httpResponse.EnsureSuccessStatusCode();
+            var httpResponse = await httpClient.GetAsync(requestUri);
 
-            using (var webClient = new WebClient()) // httpClient had buffer issue bug, revert to WebClient for time being
-            {
-                var completeUri = new Uri(baseUri, requestUri);
-                var response = webClient.DownloadString(completeUri.ToString());
-                
-                return JsonConvert.DeserializeObjectAsync<T>(response); // use ReadAsAsync<T> with RTM
-            }
+            httpResponse.EnsureSuccessStatusCode();
+
+            return await httpResponse.Content.ReadAsAsync<T>();
         }
 
         public Task<User> Me()
@@ -72,19 +66,18 @@ namespace Instatus
 
         public void Dispose()
         {
-            //httpClient.TryDispose();
+            httpClient.TryDispose();
         }
 
         public FacebookClient(string accessToken, int limit = 25)
         {
-            //this.httpClient = new HttpClient()
-            //{
-            //    BaseAddress = new Uri("https://graph.facebook.com"),                
-            //};
+            this.httpClient = new HttpClient()
+            {
+                BaseAddress = new Uri("https://graph.facebook.com"),
+            };
 
             this.accessToken = accessToken;
             this.limit = limit;
-            this.baseUri = new Uri("https://graph.facebook.com");
         }
 
         // https://developers.facebook.com/docs/reference/api/user/

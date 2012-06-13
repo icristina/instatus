@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Web Developer Express 11
+# Visual Studio Express 2012 for Web
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instatus", "Instatus\Instatus.csproj", "{23396A12-A04A-46B8-90EF-7C1D8F548810}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{D51383C2-8B70-40A0-A80F-3529AB3D5972}"
@@ -9,16 +9,34 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{D51383
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instatus.Integration.Amazon", "Instatus.Integration.Amazon\Instatus.Integration.Amazon.csproj", "{A4E68650-6BA5-43BB-9A58-A8DFB429E1EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instatus.Integration.Azure", "Instatus.Integration.Azure\Instatus.Integration.Azure.csproj", "{6C172011-68C4-4163-82FA-BB4CADC0E16D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instatus.Core", "Instatus.Core\Instatus.Core.csproj", "{066E2EBF-0E4B-4B97-B4DA-60643315536E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{066E2EBF-0E4B-4B97-B4DA-60643315536E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{066E2EBF-0E4B-4B97-B4DA-60643315536E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{066E2EBF-0E4B-4B97-B4DA-60643315536E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{066E2EBF-0E4B-4B97-B4DA-60643315536E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{23396A12-A04A-46B8-90EF-7C1D8F548810}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{23396A12-A04A-46B8-90EF-7C1D8F548810}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{23396A12-A04A-46B8-90EF-7C1D8F548810}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{23396A12-A04A-46B8-90EF-7C1D8F548810}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C172011-68C4-4163-82FA-BB4CADC0E16D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C172011-68C4-4163-82FA-BB4CADC0E16D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C172011-68C4-4163-82FA-BB4CADC0E16D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C172011-68C4-4163-82FA-BB4CADC0E16D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4E68650-6BA5-43BB-9A58-A8DFB429E1EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4E68650-6BA5-43BB-9A58-A8DFB429E1EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4E68650-6BA5-43BB-9A58-A8DFB429E1EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4E68650-6BA5-43BB-9A58-A8DFB429E1EB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

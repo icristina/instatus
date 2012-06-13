@@ -11,21 +11,6 @@ using System.Drawing.Imaging;
 using Instatus.Data;
 using Instatus.Models;
 
-namespace Instatus.Services
-{
-    public interface IBlobService
-    {
-        string Save(string contentType, string slug, Stream stream);
-        Stream Stream(string key);
-        string[] Query();
-    }
-
-    public interface ILocalStorageService : IBlobService
-    {
-        string MapPath(string virtualPath);
-    }
-}
-
 namespace Instatus
 {
     public static class BlobServiceExtensions
