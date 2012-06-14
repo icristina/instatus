@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Instatus.Data
+namespace Instatus.Models
 {
     public interface IHasValue
     {

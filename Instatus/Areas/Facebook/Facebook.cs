@@ -175,9 +175,9 @@ namespace Instatus.Areas.Facebook
             {               
                 if (credential.IsEmpty())
                 {
-                    var applicationModel = WebApp.GetService<IApplicationModel>();
+                    var credentialService = WebApp.GetService<ICredentialService>();
 
-                    credential = applicationModel.GetApplicationCredential(Provider.Facebook);
+                    credential = credentialService.GetCredential(Provider.Facebook) as Credential;
                 }
 
                 return credential;
@@ -373,7 +373,8 @@ namespace Instatus.Areas.Facebook
                 FormsAuthentication.SetAuthCookie(userName, false); // persistant cookie not required, as signed_request will re-login user
 
                 var applicationModel = WebApp.GetService<IApplicationModel>();
-                var user = applicationModel.GetUser(Provider.Facebook, facebookId) ?? applicationModel.GetUser(emailAddress);
+                var user = applicationModel.Users.Where(FilterBy.UserName("facebook:" + facebookId)).FirstOrDefault()
+                    ?? applicationModel.Users.Where(FilterBy.UserName(emailAddress)).FirstOrDefault();
                     
                 if (user == null)
                 {                       

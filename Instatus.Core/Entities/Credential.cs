@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Instatus.Models;
+using Instatus;
 
 namespace Instatus.Entities
 {
@@ -21,13 +22,8 @@ namespace Instatus.Entities
         
         public string Scope { get; set; }
         public string Features { get; set; }
-#if NET45
-        public Deployment Deployment { get; set; }
-        public Provider Provider { get; set; }
-#else
         public string Deployment { get; set; }
         public string Provider { get; set; }
-#endif
 
         public override string ToString()
         {
@@ -53,7 +49,7 @@ namespace Instatus
     {
         public static bool HasFeature(this ICredential credential, string name)
         {
-            return credential.Features.ToList().Any(f => f.Match(name));
+            return credential.Features.ToList().Any(f => f.ToString().Match(name));
         }
     }
 }

@@ -15,8 +15,11 @@ namespace Instatus.Models
 
         public Parameter(object name, object content)
         {
-            Name = name.AsString();
-            Content = content.AsString();
+            if (name != null)
+                Name = name.ToString();
+
+            if (content != null)
+                Content = content.ToString();
         }
     }
 }

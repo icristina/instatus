@@ -161,7 +161,7 @@ namespace Instatus.Web
         {
             var membershipService = DependencyResolver.Current.GetService<IMembershipService>();
 
-            return membershipService.ValidateUser(username, password);            
+            return membershipService.ValidatePassword(username, password);            
         }
     }
 }

@@ -20,7 +20,7 @@ namespace Instatus.Areas.Auth
         public override void RegisterArea(AreaRegistrationContext context)
         {
             context.MapRouteLowercase(
-                WebConstant.Route.AccountVerification,
+                WebConstant.Route.ChangePassword,
                 "Auth/Verification/{id}/{token}",
                 new { 
                     action = "Verification", 

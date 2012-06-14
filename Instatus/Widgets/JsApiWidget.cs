@@ -22,7 +22,7 @@ namespace Instatus.Widgets
             return WebCache.Value<IHtmlString>(() =>
             {
                 var applicationModel = DependencyResolver.Current.GetService<IApplicationModel>();
-                var credential = applicationModel.GetApplicationCredential(provider);
+                var credential = applicationModel.Credentials.Where(FilterBy.Provider(provider)).FirstOrDefault();
 
                 if (credential == null)
                     return null;

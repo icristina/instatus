@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Instatus.Data;
-using Instatus.Models;
 
-namespace Instatus.Web
+namespace Instatus.Models
 {
     public interface IContentItem
     {

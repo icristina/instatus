@@ -70,26 +70,6 @@ namespace Instatus
             return Regex.Replace(text, "(\\B[A-Z])", " $1"); // convert CapitalLetters to Capital Letters
         }
 
-        public static string RegexReplace(this string text, string pattern, string replacement = "")
-        {
-            if (text == null || pattern == null)
-                return text;
-
-            return Regex.Replace(text, pattern, replacement, RegexOptions.IgnoreCase);
-        }
-
-        public static string RegexReplace(this string text, string pattern, Func<string, string> replacement)
-        {
-            if (text == null || pattern == null)
-                return text;
-
-            return Regex.Replace(text, pattern, delegate(Match m)
-            {
-                return replacement(m.Value);
-            }, 
-            RegexOptions.IgnoreCase);
-        }
-
         // http://stackoverflow.com/questions/244531/is-there-an-alternative-to-string-replace-that-is-case-insensitive
         public static string ReplaceString(this string str, string oldValue, string newValue, StringComparison comparison = StringComparison.OrdinalIgnoreCase)
         {
@@ -112,21 +92,6 @@ namespace Instatus
             sb.Append(str.Substring(previousIndex));
 
             return sb.ToString();
-        }
-
-        public static string RemoveDoubleSpaces(this string text)
-        {           
-            return text.RegexReplace(@"\s{1,}", " ");
-        }
-
-        public static string RemoveWhiteSpace(this string text)
-        {
-            return text.RegexReplace(@"\s+");
-        }
-
-        public static string RemoveHtml(this string text)
-        {
-            return text.RegexReplace("<[^<>]*>", "");
         }
 
         public static string RemoveHtmlElement(this string text, string element, bool preserveContent = true)
@@ -196,11 +161,6 @@ namespace Instatus
             return text.RemoveHtmlAttribute("(class|style|size|face)");
         }
 
-        public static string RemoveSpecialCharacters(this string text, bool allowDashes = true)
-        {
-            return allowDashes ? text.RegexReplace(@"[^a-z0-9\-\s]") : text.RegexReplace(@"[^a-z0-9\s]");
-        }
-
         public static string FindHtmlElement(this string text, string elementName)
         {
             var pattern = string.Format("<{0}[^<>]*>([^<>]+)</{0}>", elementName);
@@ -210,16 +170,6 @@ namespace Instatus
         public static string RewriteRelativePaths(this string text)
         {
             return text.RegexReplace("~/[^\"]+", match => WebPath.Absolute(match));
-        }
-
-        public static bool IsEncrypted(this string text)
-        {
-            return !text.IsEmpty() && Regex.IsMatch(text, "^[A-Z0-9]{64}$"); // sha256 64 characters alphanumeric
-        }
-
-        public static string ToEncrypted(this string text)
-        {           
-            return Crypto.Hash(text);
         }
 
         public static string ToEncrypted(this string text, string salt)
@@ -235,36 +185,6 @@ namespace Instatus
         public static string SubstringBefore(this string text, string match)
         {
             return text.Substring(0, text.LastIndexOf(match));
-        }
-
-        public static bool Match(this string text, object match)
-        {
-            if (text.IsEmpty() || match.IsEmpty()) return false;
-            return text.Equals(match.ToString(), DefaultComparison);
-        }
-
-        // &#8230; or &hellip;
-        public static string MaxLength(this string text, int maxLength, bool elipsis = false)
-        {
-            if (text.IsEmpty()) return null;
-            var suffix = elipsis ? "&hellip;" : "";
-            return text.Length > maxLength ? text.Substring(0, maxLength) + suffix : text;
-        }
-
-        public static string ToSlug(this string text)
-        {
-            var slug = text
-                            .ToLower()
-                            .RemoveHtml()
-                            .RemoveSpecialCharacters()
-                            .RemoveDoubleSpaces()
-                            .MaxLength(80)
-                            .Trim();
-
-            slug = Regex.Replace(slug, @"\s+", "-");
-            slug = Regex.Replace(slug, @"\-+", "-");
-            
-            return slug;
         }
 
         public static T AsEnum<T>(this string text) where T : struct

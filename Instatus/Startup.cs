@@ -33,8 +33,7 @@ using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 namespace Instatus
 {
     public static class Startup
-    {
-        public static List<Type> KnownTypes = new List<Type>() { typeof(Document) };
+    {        
         public static List<Module> Modules = new List<Module>();
         public static Dictionary<ImageSize, Transform> ImageSizes = new Dictionary<ImageSize, Transform>();
         public static IList<Part> Parts = new List<Part>();
@@ -255,7 +254,7 @@ namespace Instatus
 
         public static void RegisterFieldType<T>()
         {
-            KnownTypes.Add(typeof(T));
+            WebConstant.Serialization.KnownTypes.Add(typeof(T));
         }
     }
 

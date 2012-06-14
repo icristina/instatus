@@ -109,5 +109,10 @@ namespace Instatus.Services
             EnsureFolderExists(path);
             return Directory.GetFiles(path);
         }
+
+        public Models.Request GenerateSignedRequest(string contentType, string virtualPath)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

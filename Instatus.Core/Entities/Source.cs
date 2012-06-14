@@ -11,10 +11,6 @@ namespace Instatus.Entities
     public class Source
     {
         public string Uri { get; set; }
-#if NET45
-        public Provider Provider { get; set; }
-#else
         public string Provider { get; set; }
-#endif
     }
 }

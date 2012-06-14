@@ -15,7 +15,7 @@ namespace Instatus.Services
             WebConstant.Role.Developer
         };
         
-        public bool ValidateUser(string username, string password)
+        public bool ValidatePassword(string username, string password)
         {
             return true;
         }
@@ -24,8 +24,23 @@ namespace Instatus.Services
         {
             return AllRoles;
         }
+        
+        public string GenerateToken(string username)
+        {
+            return string.Empty;
+        }
+        
+        public bool ValidateToken(string username, string token)
+        {
+            return true;
+        }
 
-        public bool ValidateVerificationToken(int userId, string token)
+        public void ChangePassword(string username, string password)
+        {
+            // do nothing
+        }
+
+        public bool VerifyUser(string username, string token)
         {
             return true;
         }

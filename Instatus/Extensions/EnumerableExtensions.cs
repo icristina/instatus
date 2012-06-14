@@ -86,11 +86,6 @@ namespace Instatus
             return value;
         }
 
-        public static bool AllEmpty<T1, T2>(this IDictionary<T1, T2> source)
-        {
-            return source.All(f => f.Value.IsEmpty());
-        }
-
         public static void ForFirst<T>(this IEnumerable<T> list, Action<T> action)
         {
             if (!list.IsEmpty())
@@ -382,22 +377,6 @@ namespace Instatus
             {
                 source.Remove(item);
             }
-        }
-
-        // http://msmvps.com/blogs/matthieu/archive/2009/04/01/how-to-use-linq-extension-methods-on-non-generic-ienumerable.aspx
-        public static int Count(IEnumerable source)
-        {
-            int count = 0;
-            foreach (var item in source)
-                count++;
-            return count;
-        }
-
-        public static object First(IEnumerable source)
-        {
-            var enumerator = source.GetEnumerator();
-            enumerator.MoveNext();
-            return enumerator.Current;
         }
     }
 }

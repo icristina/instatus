@@ -10,19 +10,19 @@ namespace Instatus.Entities
     {
         private IApplicationModel applicationModel;
         
-        public bool ValidateUser(string username, string password)
+        public bool ValidatePassword(string username, string password)
         {
             if (username.IsEmpty() || password.IsEmpty())
                 return false;
 
-            var user = applicationModel.Users.Where(u => u.EmailAddress == username).FirstOrDefault();
+            var user = applicationModel.Users.Where(FilterBy.UserName(username)).FirstOrDefault();
 
             return user != null && user.Password == password.ToEncrypted();
         }
 
         public string[] GetRolesForUser(string username)
         {
-            var user = applicationModel.Users.Where(u => u.EmailAddress == username).FirstOrDefault();
+            var user = applicationModel.Users.Where(FilterBy.UserName(username)).FirstOrDefault();
 
             if (user == null) return null;
 
@@ -31,29 +31,40 @@ namespace Instatus.Entities
                     .ToArray();
         }
 
-        public bool ValidateVerificationToken(int userId, string token)
+        public bool ValidateToken(string username, string token)
         {
-            var user = applicationModel.Users.Find(userId);
+            return GenerateToken(username).Match(token);
+        }
+
+        public bool VerifyUser(string username, string token)
+        {
+            var user = applicationModel.Users.Where(FilterBy.UserName(username)).FirstOrDefault();
 
             if (user.Verified)
                 return true;
-            
-            var correctVerificationToken = GenerateVerificationToken(user);
 
-            if (token.Match(correctVerificationToken))
-            {
-                user.Verified = true;
-                applicationModel.SaveChanges();
-            }
+            if (!ValidateToken(username, token))
+                return false;
 
-            return false;
+            user.Verified = true;
+            applicationModel.SaveChanges();
+
+            return true;
         }
-
-        private static string GenerateVerificationToken(User user) 
+        
+        public string GenerateToken(string username)
         {
-            return user.Password.Substring(0, 10);;
+            var user = applicationModel.Users.Where(FilterBy.UserName(username)).FirstOrDefault();
+            return user.Password.Substring(0, 10);
         }
-
+        
+        public void ChangePassword(string username, string password)
+        {
+            var user = applicationModel.Users.Where(FilterBy.UserName(username)).FirstOrDefault();
+            user.Password = password;
+            applicationModel.SaveChanges();
+        }        
+        
         public DbMembershipService(IApplicationModel applicationModel)
         {
             this.applicationModel = applicationModel;

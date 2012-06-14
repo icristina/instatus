@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Instatus.Data;
+using Instatus.Models;
 
 namespace Instatus.Entities
 {
@@ -19,13 +19,8 @@ namespace Instatus.Entities
         public int Duration { get; set; }
         public Location Location { get; set; }
         public Application Application { get; set; }
-#if NET45
-        public Verb Verb { get; set; }
-        public Published Published { get; set; }
-#else
         public string Verb { get; set; }
         public string Published { get; set; }
-#endif
 
         public override string ToString()
         {
@@ -42,21 +37,5 @@ namespace Instatus.Entities
         {
             Verb = verb.ToString();
         }
-    }
-
-    public enum Verb
-    {
-        Award,
-        Highscore,
-        Checkin,
-        Coupon,
-        Journey,
-        Vote,
-        Like,
-        Read,
-        Post,
-        Custom1,
-        Custom2,
-        Custom3
     }
 }

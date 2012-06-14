@@ -7,8 +7,11 @@ namespace Instatus.Services
 {
     public interface IMembershipService
     {
-        bool ValidateUser(string username, string password);
+        bool ValidatePassword(string username, string password);
         string[] GetRolesForUser(string username);
-        bool ValidateVerificationToken(int userId, string token);
+        string GenerateToken(string username);
+        bool ValidateToken(string username, string token);
+        bool VerifyUser(string username, string token);
+        void ChangePassword(string username, string password);        
     }
 }

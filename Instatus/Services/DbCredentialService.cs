@@ -13,7 +13,7 @@ namespace Instatus.Services
         
         public ICredential GetCredential(Provider provider)
         {
-            return applicationModel.GetApplicationCredential(provider);
+            return applicationModel.Credentials.Where(FilterBy.Provider(provider)).FirstOrDefault();
         }
 
         public DbCredentialService(IApplicationModel applicationModel)

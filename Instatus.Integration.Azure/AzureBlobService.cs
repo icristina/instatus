@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Instatus;
 using Instatus.Models;
 using Instatus.Services;
 using Microsoft.WindowsAzure;
@@ -30,16 +31,19 @@ namespace Instatus.Integration.Azure
             throw new NotImplementedException();
         }
 
-        private CloudBlob GetBlobReference(string key)
+        private CloudBlob GetBlobReference(string virtualPath)
         {
+            var resource = new Resource(virtualPath);
             var baseUri = string.Format("http://{0}.blob.core.windows.net", Credential.Alias);
             var client = new CloudBlobClient(baseUri, new StorageCredentialsAccountAndKey(Credential.Alias, Credential.Key));
-            return client.GetBlobReference(key);
+            var container = client.GetContainerReference(resource.Bucket);
+
+            return container.GetBlobReference(resource.Key);
         }
 
-        public string Save(string contentType, string slug, Stream stream)
+        public string Save(string contentType, string virtualPath, Stream stream)
         {
-            var blob = GetBlobReference(slug);
+            var blob = GetBlobReference(virtualPath);
 
             blob.Properties.ContentType = contentType;
             blob.UploadFromStream(stream);
@@ -56,6 +60,11 @@ namespace Instatus.Integration.Azure
         }
 
         public string MapPath(string virtualPath)
+        {
+            return GetBlobReference(virtualPath).Uri.ToString();
+        }
+
+        public Request GenerateSignedRequest(string contentType, string virtualPath)
         {
             throw new NotImplementedException();
         }

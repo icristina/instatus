@@ -23,7 +23,7 @@ namespace Instatus.Models
 
         public override string ToString()
         {
-            return Description;
+            return Description ?? Title ?? Uri;
         }
     }
 }

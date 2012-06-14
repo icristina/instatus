@@ -45,11 +45,11 @@ namespace Instatus.Areas.Auth.Controllers
             return View();
         }
 
-        public ActionResult Verification(int id, string token)
+        public ActionResult Verification(string username, string token)
         {
-            if (membershipService.ValidateVerificationToken(id, token))
+            if (membershipService.ValidateToken(username, token))
             {
-                ViewData.Model = applicationModel.Users.Find(id);
+                ViewData.Model = applicationModel.Users.Where(FilterBy.UserName(username)).FirstOrDefault();
             }
             else
             {

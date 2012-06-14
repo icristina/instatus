@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Instatus.Web;
 
 namespace Instatus.Models
 {
@@ -33,7 +32,7 @@ namespace Instatus.Models
             return new Form()
             {
                 ActionText = "Edit",
-                ActionName = WebPhrase.Submit
+                ActionName = "Save"
             };
         }
 
@@ -42,7 +41,7 @@ namespace Instatus.Models
             return new Form()
             {
                 ActionText = "Save",
-                ActionName = WebPhrase.Submit
+                ActionName = "Save"
             };
         }
     }

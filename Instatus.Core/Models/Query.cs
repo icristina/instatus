@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Web.Routing;
 
 namespace Instatus.Models
 {
@@ -109,47 +108,10 @@ namespace Instatus.Models
 
         public override string ToString()
         {
-            if (!Tag.IsEmpty())
+            if (!string.IsNullOrWhiteSpace(Tag))
                 return string.Format("tagged as {0}", Tag);
 
             return string.Empty;
-        }
-
-        public RouteValueDictionary ToRouteValueDictionary()
-        {
-            return new RouteValueDictionary(new Dictionary<string, object>()
-                            .AddNonEmptyValue("user", User)
-                            .AddNonEmptyValue("tag", Tag)
-                            .AddNonEmptyValue("sortOrder", SortOrder)
-                            .AddNonEmptyValue("viewMode", ViewMode)
-                            .AddNonEmptyValue("command", Command)
-                            .AddNonEmptyValue("contentType", ContentType)
-                            .AddNonEmptyValue("pageIndex", PageIndex)
-                            .AddNonEmptyValue("pageSize", PageSize)
-                            .AddNonEmptyValue("maxPageCount", MaxPageCount)
-                            .AddNonEmptyValue("countTotal", CountTotal)
-                            .AddNonEmptyValue("ancestor", Ancestor)
-                            .AddNonEmptyValue("parent", Parent)
-                            .AddNonEmptyValue("startDate", StartDate.HasValue ? StartDate.Value.ToString("yyyy-MM-dd") : null)
-                            .AddNonEmptyValue("term", Term)
-                            .AddNonEmptyValue("filter", Filter)
-                            .AddNonEmptyValue("category", Category)
-                            .AddNonEmptyValue("latitude", Latitude)
-                            .AddNonEmptyValue("longitude", Longitude)
-                            .AddNonEmptyValue("zoom", Zoom)
-                            .AddNonEmptyValue("kind", Kind)
-                            .AddNonEmptyValue("locale", Locale)
-                            .AddNonEmptyValue("expand", string.Join(",", Expand ?? new string[] { })));
-        }
-
-        public IDictionary<string, object> ToDataAttributeDictionary()
-        {
-            return new Dictionary<string, object>()
-                .AddNonEmptyValue("data-set-kind", Kind.ToString().ToCamelCase())
-                .AddNonEmptyValue("data-query-viewMode", ViewMode.ToString().ToCamelCase())
-                .AddNonEmptyValue("data-query-pageSize", PageSize)
-                .AddNonEmptyValue("data-query-category", Category.ToCamelCase())
-                .AddNonEmptyValue("data-query-tag", Tag.ToCamelCase());
         }
     }
 }

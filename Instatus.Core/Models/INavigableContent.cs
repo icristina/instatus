@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Instatus.Web
+namespace Instatus.Models
 {
     public interface INavigableContent
     {

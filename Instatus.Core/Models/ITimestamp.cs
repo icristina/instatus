@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Instatus.Data
+namespace Instatus.Models
 {
     public interface ITimestamp
     {

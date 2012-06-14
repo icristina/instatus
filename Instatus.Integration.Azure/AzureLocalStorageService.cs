@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Instatus.Models;
 using Instatus.Services;
 
 namespace Instatus.Integration.Azure
@@ -25,6 +26,11 @@ namespace Instatus.Integration.Azure
         }
 
         public Stream Stream(string key)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Request GenerateSignedRequest(string contentType, string virtualPath)
         {
             throw new NotImplementedException();
         }

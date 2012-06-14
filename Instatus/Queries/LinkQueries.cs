@@ -14,7 +14,7 @@ namespace Instatus
             return links.Where(l => l.ContentType == contentType);
         }
 
-        private static IEnumerable<Link> Filter(this IEnumerable<Link> links, string contentType, string rel)
+        private static IEnumerable<Link> Filter(this IEnumerable<Link> links, string contentType = WebConstant.ContentType.Html, string rel = null)
         {
             links = links.WithContentType(contentType);
 

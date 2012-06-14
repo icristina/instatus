@@ -7,7 +7,6 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using Instatus.Models;
-using Instatus.Web;
 using Instatus.Data;
 
 namespace Instatus.Entities
@@ -29,7 +28,7 @@ namespace Instatus.Entities
         public string Alias {
             get
             {
-                if (alias.IsEmpty())
+                if (string.IsNullOrWhiteSpace(alias))
                     alias = Name.ToSlug();
 
                 return alias;
@@ -57,15 +56,9 @@ namespace Instatus.Entities
 
         public virtual ICollection<Association> Parents { get; set; }
         public virtual ICollection<Association> Children { get; set; }
-#if NET45
-        public Kind Kind { get; set; }
-        public Published Published { get; set; }
-        public Privacy Privacy { get; set; }
-#else
         public string Kind { get; set; }
         public string Published { get; set; }
         public string Privacy { get; set; }
-#endif
 
         [NotMapped]
         [ScaffoldColumn(false)]
@@ -112,11 +105,11 @@ namespace Instatus.Entities
         {
             get
             {
-                return Fields.AllEmpty() ? null : Fields.Serialize(Startup.KnownTypes);
+                return Fields.AllEmpty() ? null : Fields.Serialize(WebConstant.Serialization.KnownTypes);
             }
             set
             {
-                Fields = value.Deserialize<Dictionary<string, object>>(Startup.KnownTypes);
+                Fields = value.Deserialize<Dictionary<string, object>>(WebConstant.Serialization.KnownTypes);
             }
         }
 

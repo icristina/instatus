@@ -6,8 +6,9 @@ using System.Globalization;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Text.RegularExpressions;
+using System.Web.Helpers;
 using Instatus.Data;
-using Instatus.Web;
 
 namespace Instatus.Entities
 {
@@ -45,7 +46,7 @@ namespace Instatus.Entities
             }
             set
             {
-                if (value.IsEmpty())
+                if (string.IsNullOrWhiteSpace(value))
                 {
                     emailAddress = null;
                 }
@@ -67,9 +68,9 @@ namespace Instatus.Entities
             }
             set
             {
-                if (value.IsEmpty())
+                if (string.IsNullOrWhiteSpace(value))
                 {
-                    password = Generator.Password().ToEncrypted();
+                    password = Guid.NewGuid().ToString().ToEncrypted();                    
                 }
                 else if (!value.IsEncrypted())
                 {
@@ -102,11 +103,7 @@ namespace Instatus.Entities
         public Application Application { get; set; }
 
         public string Role { get; set; }
-#if NET45
-        public Gender? Gender { get; set; }
-#else
         public string Gender { get; set; }
-#endif
 
         public void SetLocale(string locale)
         {

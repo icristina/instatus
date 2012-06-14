@@ -35,9 +35,12 @@
     <Reference Include="AWSSDK">
       <HintPath>..\packages\AWSSDK.1.4.11.0\lib\AWSSDK.dll</HintPath>
     </Reference>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.5.0.0-rc\lib\net40\EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="Instatus.Core, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Instatus.Core.1.0.0-beta-004\lib\net40\Instatus.Core.dll</HintPath>
+      <HintPath>..\packages\Instatus.Core.1.0.0-beta-012\lib\net40\Instatus.Core.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />

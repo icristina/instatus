@@ -61,26 +61,7 @@ namespace Instatus
                 throw new ValidationException();
 
             return isValid;
-        }
-        
-        public static byte[] Serialize<T>(this T graph, IEnumerable<Type> knownTypes = null)
-        {
-            var stream = new MemoryStream();
-            var serializer = new DataContractSerializer(typeof(T), knownTypes);
-            serializer.WriteObject(stream, graph);
-            return stream.ToArray();
-        }
-
-        public static T Deserialize<T>(this byte[] bytes, IEnumerable<Type> knownTypes = null)
-        {
-            if (bytes == null)
-                return default(T);
-            
-            MemoryStream stream = new MemoryStream(bytes);
-            stream.Position = 0;
-            var serializer = new DataContractSerializer(typeof(T), knownTypes);
-            return (T)serializer.ReadObject(stream);
-        }
+        }       
 
         public static void Save(this object instance, string virtualPath)
         {
@@ -97,17 +78,6 @@ namespace Instatus
                 throw new Exception(message);
 
             return graph;
-        }
-
-        public static bool IsEmpty(this object graph)
-        {
-            return graph == null 
-                || (graph is IHasValue && !((IHasValue)graph).HasValue)
-                || (graph is string && string.IsNullOrWhiteSpace((string)graph)) 
-                || (graph is ICollection && ((ICollection)graph).Count == 0)
-                || (graph is IEnumerable && EnumerableExtensions.Count(((IEnumerable)graph)) == 0)
-                || (graph is DateTime && (DateTime)graph == DateTime.MinValue)
-                || (graph is HttpPostedFileBase && ((HttpPostedFileBase)graph).ContentLength == 0);
         }
 
         public static bool NonEmpty(this object graph)

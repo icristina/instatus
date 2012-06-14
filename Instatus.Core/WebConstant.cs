@@ -2,11 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Instatus.Models;
 
 namespace Instatus
 {
     public static class WebConstant
     {
+        public static class Serialization
+        {
+            public static List<Type> KnownTypes = new List<Type>() { typeof(Document) };
+        }
+        
         public static class AppSetting
         {
             public const string Bootstrap = "Bootstrap";
@@ -31,6 +37,7 @@ namespace Instatus
             public const string Page = "Route_Page";
             public const string Default = "Route_Default";
             public const string AccountVerification = "Route_AccountVerification";
+            public const string ChangePassword = "Route_ChangePassword";
         }
 
         public static class Alias
