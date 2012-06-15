@@ -11,20 +11,7 @@ namespace Instatus.Services
     {
         public IDisposable Start(string taskName)
         {
-            return new ProductionProfilingTask();
-        }
-
-        internal class ProductionProfilingTask : IDisposable
-        {
-            public ProductionProfilingTask()
-            {
-                // do nothing
-            }
-
-            public void Dispose()
-            {
-                // do nothing
-            }
+            return null;
         }
     }
 }

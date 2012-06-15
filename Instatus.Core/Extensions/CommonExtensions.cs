@@ -24,19 +24,20 @@ namespace Instatus
         public static Stream ToStream(this string text)
         {
             var stream = new MemoryStream(Encoding.Default.GetBytes(text));
-            stream.Position = 0;
-            return stream;
+            return stream.ResetPosition();
         }
 
         public static string CopyToString(this Stream stream)
         {
-            stream.Position = 0;
-
-            var input = new StreamReader(stream).ReadToEnd();
-
-            stream.Position = 0;
-
+            var input = new StreamReader(stream.ResetPosition()).ReadToEnd();
+            stream.ResetPosition();
             return input;
+        }
+
+        public static Stream ResetPosition(this Stream stream)
+        {
+            stream.Position = 0;
+            return stream;
         }
 
         public static bool IsEncrypted(this string text)
@@ -145,6 +146,27 @@ namespace Instatus
             stream.Position = 0;
             var serializer = new DataContractSerializer(typeof(T), knownTypes);
             return (T)serializer.ReadObject(stream);
+        }
+
+        public static List<string> ToList(this string text, char character = ',', bool toLowerCase = false, bool removeDuplicates = true)
+        {
+            var list = new List<string>();
+
+            if (text.IsEmpty())
+                return list;
+
+            foreach (var item in text.Trim().Split(character))
+            {
+                var trimmedItem = item.Trim();
+
+                if (toLowerCase)
+                    trimmedItem = trimmedItem.ToLower();
+
+                if (!trimmedItem.IsEmpty() && !(removeDuplicates && list.Contains(trimmedItem)))
+                    list.Add(trimmedItem);
+            }
+
+            return list;
         }
 
         // http://msmvps.com/blogs/matthieu/archive/2009/04/01/how-to-use-linq-extension-methods-on-non-generic-ienumerable.aspx

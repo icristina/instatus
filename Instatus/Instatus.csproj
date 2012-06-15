@@ -78,7 +78,7 @@
     </Reference>
     <Reference Include="Instatus.Core, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Instatus.Core.1.0.0-beta-012\lib\net40\Instatus.Core.dll</HintPath>
+      <HintPath>..\packages\Instatus.Core.1.0.0-beta-018\lib\net40\Instatus.Core.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CompilerServices.AsyncTargetingPack.Net4">
       <HintPath>..\packages\Microsoft.CompilerServices.AsyncTargetingPack.1.0.0\lib\net40\Microsoft.CompilerServices.AsyncTargetingPack.Net4.dll</HintPath>
@@ -96,6 +96,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\NuGet.Core.1.8.0\lib\net40-Client\NuGet.Core.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Data.Entity.Design" />
@@ -157,6 +158,7 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.1.0.20105.408\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -261,7 +263,12 @@
     <Compile Include="FacebookClient.cs" />
     <Compile Include="Queries\FilterBy.cs" />
     <Compile Include="Queries\LinkQueries.cs" />
+    <Compile Include="Services\FileSystemBlobService.cs" />
+    <Compile Include="Services\DbProfilingService.cs" />
+    <Compile Include="Services\WpfImagingService.cs" />
     <Compile Include="Services\DbCredentialService.cs" />
+    <Compile Include="Services\GdiImagingService.cs" />
+    <Compile Include="Services\IImagingService.cs" />
     <Compile Include="Services\ProductionProfilingService.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Web\AllowUploadAttribute.cs" />
@@ -326,9 +333,8 @@
     <Compile Include="Extensions\UriBuilderExtensions.cs" />
     <Compile Include="Extensions\UrlHelperExtensions.cs" />
     <Compile Include="Extensions\WebImageExtensions.cs" />
-    <Compile Include="Services\IBlobService.cs" />
+    <Compile Include="Services\BlobServiceExtensions.cs" />
     <Compile Include="Services\ITemplateService.cs" />
-    <Compile Include="Services\FileSystemBlobService.cs" />
     <Compile Include="Services\RazorTemplateService.cs" />
     <Compile Include="Web\IWebCommand.cs" />
     <Compile Include="Web\SimpleSiteMapProvider.cs" />

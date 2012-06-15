@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
+using System.Threading.Tasks;
 using Instatus;
 using Instatus.Models;
 using Instatus.Services;
@@ -68,7 +70,22 @@ namespace Instatus.Integration.Azure
         {
             throw new NotImplementedException();
         }
-
+        
+        public void Copy(string virtualPath, string uri)
+        {
+            var blob = GetBlobReference(virtualPath);
+            
+            using (var webClient = new WebClient())
+            {
+                var byteArray = webClient.DownloadData(uri);
+                blob.UploadByteArray(byteArray);
+            }            
+            
+            // requires 1.7.1, not yet part of official SDK on NuGet
+            //var blob = GetBlobReference(virtualPath);
+            //blob.StartCopyFromBlob(new Uri(uri), null, null, null);
+        }
+        
         public AzureBlobService(ICredentialService credentialService)
         {
             this.credentialService = credentialService;

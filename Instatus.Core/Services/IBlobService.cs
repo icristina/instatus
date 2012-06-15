@@ -14,5 +14,6 @@ namespace Instatus.Services
         string[] Query();
         string MapPath(string virtualPath);
         Request GenerateSignedRequest(string contentType, string virtualPath);
+        void Copy(string virtualPath, string uri);
     }
 }

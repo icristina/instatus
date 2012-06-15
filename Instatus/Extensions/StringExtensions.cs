@@ -13,6 +13,7 @@ using System.Web.Mvc;
 using Instatus.Web;
 using System.Web.Security;
 using System.Collections;
+using Instatus.Data;
 
 namespace Instatus
 {
@@ -32,6 +33,11 @@ namespace Instatus
                 value = (value as IEnumerable).ToDelimited();
 
             return uri + seperator + name + '=' + HttpUtility.UrlEncode(value.AsString());
+        }
+
+        public static string AppendTimestampQueryParameter(this string uri, string name = "timestamp")
+        {
+            return uri.AppendQueryParameter(name, Generator.TimeStamp());
         }
 
         public static string ToLocalized(this string text)
@@ -205,26 +211,6 @@ namespace Instatus
             if(dateTime == DateTime.MinValue) return null;
 
             return dateTime;
-        }
-
-        public static List<string> ToList(this string text, char character = ',', bool toLowerCase = false, bool removeDuplicates = true)
-        {
-            var list = new List<string>();
-
-            if (text.IsEmpty())
-                return list;
-            
-            foreach(var item in text.Trim().Split(character)) {
-                var trimmedItem = item.Trim();
-
-                if (toLowerCase)
-                    trimmedItem = trimmedItem.ToLower();
-
-                if (!trimmedItem.IsEmpty() && !(removeDuplicates && list.Contains(trimmedItem)))
-                    list.Add(trimmedItem);
-            }
-
-            return list;
         }
 
         public static List<Tuple<string, string>> ToLabelledList(this string text, string regex = "<h2[^>]*>([^<]*)</h2>")

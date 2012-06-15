@@ -1,6 +1,7 @@
-﻿                                                                                                                                                                                                                                                  using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using Instatus;
 using Instatus.Data;
@@ -18,17 +19,20 @@ namespace Instatus
 {
     public static class MessageQueueExtensions
     {
-        public static IMessageQueue<TMessage> RegisterBackgroundHandler<TMessage>(this IMessageQueue<TMessage> queue, Action<TMessage> handler, int retry = 0, int delay = 10000)
+        public static IMessageQueue<TMessage> RegisterBackgroundHandler<TMessage>(this IMessageQueue<TMessage> queue, Action<TMessage> handler, int retry = 0, int delay = 10000, int parallelism = 1)
         {
             TaskExtensions.Repeat(() =>
             {
                 while (true)
                 {
-                    TMessage message;
+                    var messages = new List<TMessage>();
 
-                    if (queue.TryDequeue(out message))
+                    if (queue.TryDequeue(messages, parallelism))
                     {
-                        TaskExtensions.Retry(() => handler(message), retry);
+                        Parallel.ForEach(messages, message =>
+                        {
+                            TaskExtensions.Retry(() => handler(message), retry);
+                        });
                     }
                     else
                     {
@@ -38,6 +42,20 @@ namespace Instatus
             }, delay);
 
             return queue;
+        }
+
+        public static bool TryDequeue<TMessage>(this IMessageQueue<TMessage> queue, IList<TMessage> list, int batchSize = 5)
+        {
+            int counter = batchSize;
+            TMessage message;
+
+            while (counter > 0 && queue.TryDequeue(out message))
+            {
+                list.Append(message);
+                counter--;
+            }
+
+            return counter < batchSize;
         }
     }
 }

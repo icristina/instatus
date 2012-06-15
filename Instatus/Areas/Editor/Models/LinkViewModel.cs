@@ -24,7 +24,7 @@ namespace Instatus.Areas.Editor.Models
         {
             get
             {
-                return !Uri.IsEmpty() && !Name.IsEmpty();
+                return Uri.NonEmpty() || Name.NonEmpty() || Picture.NonEmpty();
             }
         }
 

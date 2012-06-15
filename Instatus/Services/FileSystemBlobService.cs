@@ -8,6 +8,7 @@ using System.Web.Hosting;
 using Instatus.Web;
 using System.Web.Helpers;
 using Instatus.Data;
+using System.Net;
 
 namespace Instatus.Services
 {
@@ -39,11 +40,12 @@ namespace Instatus.Services
                 slug = slug.SubstringAfter(VirtualPath);
 
             if (Path.HasExtension(slug) || contentType.IsEmpty())
-                return BasePath + slug;
+                return Path.Combine(BasePath, slug);
             
             var extension = WebMimeType.GetExtension(contentType);
             var fileName = string.Format("{0}.{1}", slug ?? Generator.TimeStamp(), extension);
-            return BasePath + fileName;
+
+            return Path.Combine(BasePath, fileName);
         }
 
         public string MapPath(string virtualPath)
@@ -113,6 +115,21 @@ namespace Instatus.Services
         public Models.Request GenerateSignedRequest(string contentType, string virtualPath)
         {
             throw new NotImplementedException();
+        }
+
+        public void Copy(string virtualPath, string uri)
+        {
+            using (var webClient = new WebClient())
+            {
+                Save(virtualPath, webClient.DownloadData(uri).ToStream());
+            }  
+        }
+
+        public FileSystemBlobService() { }
+
+        public FileSystemBlobService(string basePath)
+        {
+            BasePath = basePath;
         }
     }
 }
