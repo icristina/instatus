@@ -35,6 +35,7 @@ namespace Instatus
             public const string Home = "Route_Home";
             public const string Post = "Route_Post";
             public const string Page = "Route_Page";
+            public const string Profile = "Route_Profile";
             public const string Default = "Route_Default";
             public const string AccountVerification = "Route_AccountVerification";
             public const string ChangePassword = "Route_ChangePassword";

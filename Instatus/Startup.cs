@@ -14,12 +14,14 @@ using System.Web.Security;
 using Autofac;
 using Autofac.Core;
 using Autofac.Integration.Mvc;
+using Instatus;
 using Instatus.Areas.Auth;
 using Instatus.Areas.Developer;
 using Instatus.Areas.Editor;
 using Instatus.Areas.Facebook;
 using Instatus.Areas.Google;
 using Instatus.Areas.Moderator;
+using Instatus.Data;
 using Instatus.Entities;
 using Instatus.Models;
 using Instatus.Services;
@@ -250,6 +252,40 @@ namespace Instatus
         {
             Modules.Add(new GoogleAreaModule());
             Modules.Add(new FacebookAreaModule());
+        }
+
+        public static void RegisterWorker<TJob, TRequest>(int retry = 0, int delay = 10000, int parallelism = 1) where TJob : IJob<TRequest, bool>
+        {           
+            TaskExtensions.Repeat(() =>
+            {
+                // http://aboutcode.net/2010/11/01/start-background-tasks-from-mvc-actions-using-autofac.html
+                using (var container = Autofac.Integration.Mvc.AutofacDependencyResolver.Current.ApplicationContainer.BeginLifetimeScope("httpRequest"))
+                {
+                    var messageQueue = container.Resolve<IMessageQueue<TRequest>>();
+
+                    while (true)
+                    {                    
+                        var messages = new List<TRequest>();
+
+                        if (messageQueue.TryDequeue(messages, parallelism))
+                        {                       
+                            Parallel.ForEach(messages, message =>
+                            {
+                                TaskExtensions.Retry(() => 
+                                {
+                                    var job = container.Resolve<TJob>();
+                                    job.Process(message);
+                                }, 
+                                retry);
+                            });
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                }
+            }, delay);
         }
 
         public static void RegisterFieldType<T>()

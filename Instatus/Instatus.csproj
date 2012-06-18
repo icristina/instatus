@@ -265,6 +265,8 @@
     <Compile Include="Queries\LinkQueries.cs" />
     <Compile Include="Services\FileSystemBlobService.cs" />
     <Compile Include="Services\DbProfilingService.cs" />
+    <Compile Include="Services\IEncryptionService.cs" />
+    <Compile Include="Services\MockEncryptionService.cs" />
     <Compile Include="Services\WpfImagingService.cs" />
     <Compile Include="Services\DbCredentialService.cs" />
     <Compile Include="Services\GdiImagingService.cs" />

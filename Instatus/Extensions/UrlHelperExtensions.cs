@@ -120,7 +120,7 @@ namespace Instatus.Web
             return this;
         }
 
-        public SiteMapNodeCollectionBuilder External(string title, string uri)
+        public SiteMapNodeCollectionBuilder External(string title, string uri) // absolute uri eg. http://www.domain.com/home or absolute url eg. /home 
         {
             siteMapNodes.Add(new SiteMapNode(siteMapProvider, uri, uri, title));
             return this;

@@ -31,7 +31,15 @@ namespace Instatus
 
             httpResponse.EnsureSuccessStatusCode();
 
-            return await httpResponse.Content.ReadAsAsync<T>();
+            var jsonMediaTypeFormatter = new JsonMediaTypeFormatter();
+
+            jsonMediaTypeFormatter.SupportedMediaTypes.Clear();
+            jsonMediaTypeFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/javascript"));
+
+            return await httpResponse.Content.ReadAsAsync<T>(new MediaTypeFormatter[] 
+            { 
+                jsonMediaTypeFormatter 
+            });
         }
 
         public Task<User> Me()
@@ -62,6 +70,11 @@ namespace Instatus
         public Task<Response<Friend>> AppFriends()
         {
             return GetGraphApiAsync<Response<Friend>>("fql?q=SELECT uid, name FROM user WHERE has_added_app=1 and uid IN (SELECT uid2 FROM friend WHERE uid1 = me())");
+        }
+
+        public string Picture(string resource)
+        {
+            return string.Format("http://graph.facebook.com/{0}/picture", resource);
         }
 
         public void Dispose()

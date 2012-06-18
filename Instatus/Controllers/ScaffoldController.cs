@@ -18,10 +18,10 @@ namespace Instatus.Controllers
         where TContext : class 
         where TModel : class
     {
-        public static string IndexViewName = "~/Views/Shared/Index.cshtml"; // view name hard coded in case a view in parent project with the same name
-        public static string DetailsViewName = "~/Views/Shared/Details.cshtml";
-        public static string EditViewName = "~/Views/Shared/Edit.cshtml";
-        public static string CreateViewName = "~/Views/Shared/Edit.cshtml";        
+        public static string IndexViewName = "Index"; // view name hard coded in case a view in parent project with the same name
+        public static string DetailsViewName = "Details";
+        public static string EditViewName = "Edit";
+        public static string CreateViewName = "Edit";        
 
         private IDbSet<TModel> set;
         

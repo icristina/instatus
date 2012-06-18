@@ -6,7 +6,7 @@ using Instatus.Models;
 
 namespace Instatus.Data
 {
-    public interface IJob<TContext, TResult> : INamed
+    public interface IJob<TContext, TResult>
     {
         TResult Process(TContext context);
     }

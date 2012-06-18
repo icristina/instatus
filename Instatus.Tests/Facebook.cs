@@ -8,13 +8,13 @@ namespace Instatus.Tests
     public class Facebook
     {
         [TestMethod]
-        public void Facebook_Me()
+        public void Facebook_User()
         {
             var accessToken = ConfigurationManager.AppSettings["FacebookAccessToken"];
             var facebookClient = new FacebookClient(accessToken);
             var feed = facebookClient.GetGraphApiAsync<FacebookClient.User>("cocacola").Result;
 
-            Assert.Equals(feed.name, "Coca-Cola");
+            Assert.AreEqual(feed.name, "Coca-Cola");
         }
     }
 }

@@ -116,38 +116,16 @@ namespace Instatus.Web
             return HttpContext.Current.Request != null ? "//" + absoluteUrl.SubstringAfter("//") : absoluteUrl; // if web request, allow protocol relative syntax
         }
 
-        public static string MatchProtocol(string absoluteUrl)
-        {
-            if (HttpContext.Current.Request == null)
-                return absoluteUrl;            
-            
-            var uri = new Uri(absoluteUrl);
-            var uriBuilder = new UriBuilder(uri);
-            var port = HttpContext.Current.Request.Url.Port;
-
-            if (HttpContext.Current.Request.IsSecureConnection)
-            {
-                uriBuilder.Scheme = "https";
-
-                if(port == 443)
-                    uriBuilder.Port = 443;
-            }
-            else
-            {
-                uriBuilder.Scheme = "http";
-
-                if (port == 80)
-                    uriBuilder.Port = 80;
-            }
-
-            return uriBuilder.Uri.ToString(); // user uri property to ensure :80 or :443 default ports not returned
-        }
-
-        public static string Variant(string virtualPath, string suffix, char seperator = '.')
+        public static string Variant(string virtualPath, string suffix, char seperator = '.', string extension = null)
         {
             var extensionStartIndex = virtualPath.LastIndexOf('.');
             var suffixAndSeperator = string.Format("-{0}", suffix.ToLower());
-            return virtualPath.Insert(extensionStartIndex, suffixAndSeperator);
+            var ammendedVirtualPath = virtualPath.Insert(extensionStartIndex, suffixAndSeperator);
+
+            if (extension != null)
+                return Path.ChangeExtension(virtualPath, extension);
+
+            return ammendedVirtualPath;
         }
 
         public static string Resize(ImageSize size, string virtualPath, bool normalizeExtension = true)
@@ -158,14 +136,7 @@ namespace Instatus.Web
             }
             else
             {
-                var resized = Variant(virtualPath, size.ToString());
-
-                if (normalizeExtension)
-                {
-                    resized = Path.ChangeExtension(resized, "jpg");
-                }
-
-                return resized;
+                return Variant(virtualPath, size.ToString(), extension: normalizeExtension ? "jpg" : null);
             }
         }
 
@@ -177,8 +148,6 @@ namespace Instatus.Web
         public static string Home {
             get 
             {
-                //var route = RouteTable.Routes[WebConstant.RouteHome];
-                //return route != null ? route.GetVirtualPath(null, null).VirtualPath : "/";
                 return "/";
             }
         }
