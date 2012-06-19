@@ -36,9 +36,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.5.0.0-rc\lib\net40\EntityFramework.dll</HintPath>
     </Reference>
-    <Reference Include="Instatus.Core">
-      <HintPath>..\packages\Instatus.Core.1.0.0-beta-024\lib\net40\Instatus.Core.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.WindowsAzure.Configuration, Version=1.7.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.WindowsAzure.ConfigurationManager.1.7.0.0\lib\net35-full\Microsoft.WindowsAzure.Configuration.dll</HintPath>
     </Reference>
@@ -70,6 +67,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Instatus.Core\Instatus.Core.csproj">
+      <Project>{066e2ebf-0e4b-4b97-b4da-60643315536e}</Project>
+      <Name>Instatus.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Instatus\Instatus.csproj">
       <Project>{23396a12-a04a-46b8-90ef-7c1d8f548810}</Project>
       <Name>Instatus</Name>

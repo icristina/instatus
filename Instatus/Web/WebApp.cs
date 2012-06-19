@@ -12,6 +12,7 @@ using Instatus.Data;
 using System.Net;
 using Instatus.Models;
 using Autofac;
+using Autofac.Integration.Mvc;
 
 namespace Instatus.Web
 {
@@ -36,7 +37,7 @@ namespace Instatus.Web
 
         public static ILifetimeScope GetContainer()
         {
-            return Autofac.Integration.Mvc.AutofacDependencyResolver.Current.ApplicationContainer.BeginLifetimeScope("httpRequest");
+            return AutofacDependencyResolver.Current.ApplicationContainer.BeginLifetimeScope("httpRequest");
         }
 
         public static HttpApplication Instance {

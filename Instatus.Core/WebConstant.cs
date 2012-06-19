@@ -7,7 +7,7 @@ using Instatus.Models;
 namespace Instatus
 {
     public static class WebConstant
-    {
+    {       
         public static class Serialization
         {
             public static List<Type> KnownTypes = new List<Type>() { typeof(Document) };

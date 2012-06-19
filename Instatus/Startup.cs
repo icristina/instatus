@@ -37,9 +37,10 @@ namespace Instatus
     public static class Startup
     {        
         public static List<Module> Modules = new List<Module>();
+        public static List<dynamic> Processors = new List<dynamic>();
         public static Dictionary<ImageSize, Transform> ImageSizes = new Dictionary<ImageSize, Transform>();
         public static IList<Part> Parts = new List<Part>();
-        public static string LogOnUrl = "Auth/Account/LogOn";
+        public static string LogOnUrl = "Auth/Account/LogOn";        
 
         private static bool AutoStartup
         {
@@ -103,6 +104,9 @@ namespace Instatus
             DependencyResolver.SetResolver(new AutofacDependencyResolver(builder.Build()));
 
             GlobalConfiguration.Configuration.DependencyResolver = DependencyResolver.Current.ToWebHttpDependencyResolver(); // web api
+
+            foreach (var processor in Processors) // start after dependency injection container
+                processor.Start();
         }
 
         public static void IgnoreRoutes()
@@ -261,9 +265,7 @@ namespace Instatus
 
         public static void RegisterMessageProcessor<TMessage>(int retry = 0, int delay = 10000, int parallelism = 1, ILifetimeScope lifetimeScope = null)
         {
-            var taskRunner = new ParallelMessageProcessor<TMessage>(retry, delay, parallelism, lifetimeScope);
-
-            taskRunner.Start();
+            Processors.Add(new ParallelMessageProcessor<TMessage>(retry, delay, parallelism, lifetimeScope));
         }
 
         public static void RegisterFieldType<T>()
