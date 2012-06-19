@@ -22,12 +22,12 @@ namespace Instatus.Tests
             var builder = new ContainerBuilder();
 
             builder.RegisterInstance(messageQueue).As<IMessageQueue<MessageProcessingRequest>>().ExternallyOwned();
-            builder.RegisterType<MessageProcessingJob>().As<IJob<MessageProcessingRequest, bool>>().InstancePerDependency();
+            builder.RegisterType<MessageProcessingJob>().As<ITask<MessageProcessingRequest>>().InstancePerDependency();
             builder.RegisterType<InMemoryLoggingService>().As<ILoggingService>().SingleInstance();
 
             var dependencyResolver = new AutofacDependencyResolver(builder.Build());
 
-            Startup.RegisterWorker<MessageProcessingRequest>(delay: 1, parallelism: messageCount, lifetimeScope: dependencyResolver.ApplicationContainer);
+            Startup.RegisterMessageProcessor<MessageProcessingRequest>(delay: 1, parallelism: messageCount, lifetimeScope: dependencyResolver.ApplicationContainer);
             
             for(var i = 0; i < messageCount; i++)
                 messageQueue.Enqueue(new MessageProcessingRequest()
@@ -45,19 +45,17 @@ namespace Instatus.Tests
         public string State { get; set; }
     }
 
-    public class MessageProcessingJob : IJob<MessageProcessingRequest, bool>
+    public class MessageProcessingJob : ITask<MessageProcessingRequest>
     {
         public static int Concurrancy = 0;
         public static int MaxConcurrancy = 0;        
         
-        public bool Process(MessageProcessingRequest context)
+        public void Process(MessageProcessingRequest context)
         {
             Concurrancy++;
             MaxConcurrancy = Math.Max(Concurrancy, MaxConcurrancy);
             Thread.Sleep(10);
             Concurrancy--;
-
-            return true;
         }
     }
 }

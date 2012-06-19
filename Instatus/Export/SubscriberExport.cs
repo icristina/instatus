@@ -57,10 +57,6 @@ namespace Instatus.Export
             {
                 return "Subscribers";
             }
-            set
-            {
-                throw new NotImplementedException();
-            }
         }
     }
 

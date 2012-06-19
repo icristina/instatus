@@ -254,40 +254,11 @@ namespace Instatus
             Modules.Add(new FacebookAreaModule());
         }
 
-        public static void RegisterWorker<TRequest>(int retry = 0, int delay = 10000, int parallelism = 1, ILifetimeScope lifetimeScope = null)
-        {           
-            TaskExtensions.Repeat(() =>
-            {
-                // http://aboutcode.net/2010/11/01/start-background-tasks-from-mvc-actions-using-autofac.html
-                using (var container = lifetimeScope ?? WebApp.GetContainer())
-                {
-                    var messageQueue = container.Resolve<IMessageQueue<TRequest>>();
-                    var loggingService = container.Resolve<ILoggingService>();
+        public static void RegisterMessageProcessor<TMessage>(int retry = 0, int delay = 10000, int parallelism = 1, ILifetimeScope lifetimeScope = null)
+        {
+            var taskRunner = new ParallelMessageProcessor<TMessage>(retry, delay, parallelism, lifetimeScope);
 
-                    while (true)
-                    {                    
-                        var messages = new List<TRequest>();
-
-                        if (messageQueue.TryDequeue(messages, parallelism))
-                        {                       
-                            Parallel.ForEach(messages, message =>
-                            {
-                                TaskExtensions.Retry(() => 
-                                {
-                                    var job = container.Resolve<IJob<TRequest, bool>>();
-                                    job.Process(message);
-                                }, 
-                                retry,
-                                loggingService);
-                            });
-                        }
-                        else
-                        {
-                            break;
-                        }
-                    }
-                }
-            }, delay);
+            taskRunner.Start();
         }
 
         public static void RegisterFieldType<T>()

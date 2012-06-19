@@ -6,8 +6,8 @@ using Instatus.Models;
 
 namespace Instatus.Data
 {
-    public interface IJob<TContext, TResult>
+    public interface ITask<TMessage>
     {
-        TResult Process(TContext context);
+        void Process(TMessage context);
     }
 }

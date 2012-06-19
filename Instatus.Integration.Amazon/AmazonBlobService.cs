@@ -74,7 +74,12 @@ namespace Instatus.Integration.Amazon
             
             return null;
         }
-
+        
+        public void Copy(string virtualPath, string uri)
+        {
+            throw new NotImplementedException();
+        }
+        
         public AmazonBlobService(ICredentialService credentialService)
         {
             this.credentialService = credentialService;

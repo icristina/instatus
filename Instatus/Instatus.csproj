@@ -230,9 +230,11 @@
     <Compile Include="Commands\SpamCommand.cs" />
     <Compile Include="Commands\PublishedCommand.cs" />
     <Compile Include="Data\IContentQuery.cs" />
-    <Compile Include="Data\IJob.cs" />
+    <Compile Include="Data\ITask.cs" />
     <Compile Include="Data\IMessageBus.cs" />
     <Compile Include="Data\IMessageQueue.cs" />
+    <Compile Include="Data\IMessageProcessor.cs" />
+    <Compile Include="Data\ParallelMessageProcessor.cs" />
     <Compile Include="Entities\DbApplicationModel.cs" />
     <Compile Include="Entities\DbLoggingService.cs" />
     <Compile Include="Entities\DbMembershipService.cs" />
