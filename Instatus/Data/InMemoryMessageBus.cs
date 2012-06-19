@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Linq;
 using System.Web;
 
@@ -8,7 +9,7 @@ namespace Instatus.Data
     // http://brentedwards.net/2010/04/13/roll-your-own-simple-message-bus-event-aggregator/    
     public class InMemoryMessageBus : IMessageBus
     {
-        private Dictionary<Type, List<Object>> subscribers = new Dictionary<Type, List<Object>>();
+        private IDictionary<Type, List<Object>> subscribers = new ConcurrentDictionary<Type, List<Object>>();
 
         public void Subscribe<TMessage>(Action<TMessage> handler)
         {

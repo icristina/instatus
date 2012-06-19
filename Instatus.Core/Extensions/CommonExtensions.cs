@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Web.Helpers;
 using Instatus.Models;
 
 namespace Instatus
@@ -45,9 +45,29 @@ namespace Instatus
             return !string.IsNullOrWhiteSpace(text) && Regex.IsMatch(text, "^[A-Z0-9]{64}$"); // sha256 64 characters alphanumeric
         }
 
+        // http://aspnetwebstack.codeplex.com/SourceControl/changeset/view/ecc0b5f2ea9a#src%2fSystem.Web.Helpers%2fCrypto.cs
         public static string ToEncrypted(this string text)
         {
-            return Crypto.Hash(text);
+            //return Crypto.Hash(text);
+            using (var sha256 = SHA256.Create())
+            {
+                var bytes = Encoding.UTF8.GetBytes(text);
+                return sha256.ComputeHash(bytes).ToHex();
+            }
+        }
+
+        public static string ToHex(this byte[] data)
+        {
+            char[] hex = new char[data.Length * 2];
+
+            for (int iter = 0; iter < data.Length; iter++)
+            {
+                byte hexChar = ((byte)(data[iter] >> 4));
+                hex[iter * 2] = (char)(hexChar > 9 ? hexChar + 0x37 : hexChar + 0x30);
+                hexChar = ((byte)(data[iter] & 0xF));
+                hex[(iter * 2) + 1] = (char)(hexChar > 9 ? hexChar + 0x37 : hexChar + 0x30);
+            }
+            return new string(hex);
         }
 
         public static string RegexReplace(this string text, string pattern, string replacement = "")

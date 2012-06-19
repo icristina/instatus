@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Web.Helpers;
 using Instatus.Data;
 
 namespace Instatus.Entities
@@ -28,7 +26,6 @@ namespace Instatus.Entities
         private string emailAddress;
 
         [IgnoreDataMember]
-        [NotMapped]
         public string FullName
         {
             get

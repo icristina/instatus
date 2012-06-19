@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -60,7 +59,6 @@ namespace Instatus.Entities
         public string Published { get; set; }
         public string Privacy { get; set; }
 
-        [NotMapped]
         [ScaffoldColumn(false)]
         public Document Document
         {
@@ -76,7 +74,6 @@ namespace Instatus.Entities
 
         private Dictionary<string, object> fields;
 
-        [NotMapped]
         [IgnoreDataMember]
         [ScaffoldColumn(false)]
         public Dictionary<string, object> Fields
