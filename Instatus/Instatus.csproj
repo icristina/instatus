@@ -75,8 +75,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.5.0.0-rc\lib\net40\EntityFramework.dll</HintPath>
     </Reference>
-    <Reference Include="Instatus.Core">
-      <HintPath>..\packages\Instatus.Core.1.0.0-beta-024\lib\net40\Instatus.Core.dll</HintPath>
+    <Reference Include="Instatus.Core, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Instatus.Core.1.0.0-beta-025\lib\net40\Instatus.Core.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CompilerServices.AsyncTargetingPack.Net4">
       <HintPath>..\packages\Microsoft.CompilerServices.AsyncTargetingPack.1.0.0\lib\net40\Microsoft.CompilerServices.AsyncTargetingPack.Net4.dll</HintPath>
@@ -262,6 +263,7 @@
     <Compile Include="FacebookClient.cs" />
     <Compile Include="Queries\FilterBy.cs" />
     <Compile Include="Queries\LinkQueries.cs" />
+    <Compile Include="Services\DebugLoggingService.cs" />
     <Compile Include="Services\FileSystemBlobService.cs" />
     <Compile Include="Services\DbProfilingService.cs" />
     <Compile Include="Services\IEncryptionService.cs" />

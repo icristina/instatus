@@ -29,8 +29,8 @@ using Instatus.Web;
 using Instatus.Widgets;
 using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 
-[assembly: WebActivator.PreApplicationStartMethod(typeof(Instatus.Startup), "PreApplicationStart")]
-[assembly: WebActivator.PostApplicationStartMethod(typeof(Instatus.Startup), "PostApplicationStart")]
+[assembly: WebActivator.PreApplicationStartMethod(typeof(Instatus.Startup), "PreApplicationStart", Order = 10)]
+[assembly: WebActivator.PostApplicationStartMethod(typeof(Instatus.Startup), "PostApplicationStart", Order = 10)]
 
 namespace Instatus
 {
@@ -67,10 +67,15 @@ namespace Instatus
             if (!AutoStartup)
                 return;
             
-            AutofacDependencyResolver();
+            BuildDependencyContainer();
             ErrorHandling();
             DefaultRoute();
             Bundles();
+        }
+
+        public static void RegisterModules(params Module[] modules)
+        {
+            Modules.AddRange(modules);
         }
 
         public static void MvcConfiguration()
@@ -84,7 +89,7 @@ namespace Instatus
             ModelMetadataProviders.Current = new ExtendedModelMetadataProvider();
         }
 
-        public static void AutofacDependencyResolver()
+        public static void BuildDependencyContainer()
         {
             var builder = new ContainerBuilder();
 
