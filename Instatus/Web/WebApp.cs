@@ -11,6 +11,7 @@ using System.Web.Mvc;
 using Instatus.Data;
 using System.Net;
 using Instatus.Models;
+using Autofac;
 
 namespace Instatus.Web
 {
@@ -31,6 +32,11 @@ namespace Instatus.Web
         public static IEnumerable<T> GetServices<T>()
         {
             return DependencyResolver.Current.GetServices<T>();
+        }
+
+        public static ILifetimeScope GetContainer()
+        {
+            return Autofac.Integration.Mvc.AutofacDependencyResolver.Current.ApplicationContainer.BeginLifetimeScope("httpRequest");
         }
 
         public static HttpApplication Instance {

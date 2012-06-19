@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Threading;
+using System.Web.Mvc;
+using Autofac;
+using Autofac.Integration.Mvc;
 using Instatus;
 using Instatus.Data;
+using Instatus.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Instatus.Tests
@@ -9,30 +13,51 @@ namespace Instatus.Tests
     [TestClass]
     public class MessageQueue
     {
-        private static int Concurrancy = 0;
-        private static int MaxConcurrancy = 0;
+        private static IMessageQueue<MessageProcessingRequest> messageQueue = new InMemoryMessageQueue<MessageProcessingRequest>();
         
         [TestMethod]
         public void Background()
         {
-            var queue = new InMemoryMessageQueue<string>();
             var messageCount = 6;
+            var builder = new ContainerBuilder();
 
-            queue.RegisterBackgroundHandler(ProcessString, 0, 0, messageCount);
+            builder.RegisterInstance(messageQueue).As<IMessageQueue<MessageProcessingRequest>>().ExternallyOwned();
+            builder.RegisterType<MessageProcessingJob>().As<IJob<MessageProcessingRequest, bool>>().InstancePerDependency();
+            builder.RegisterType<InMemoryLoggingService>().As<ILoggingService>().SingleInstance();
+
+            var dependencyResolver = new AutofacDependencyResolver(builder.Build());
+
+            Startup.RegisterWorker<MessageProcessingRequest>(delay: 1, parallelism: messageCount, lifetimeScope: dependencyResolver.ApplicationContainer);
             
-            for(var i = 0; i < messageCount; i++) 
-                queue.Enqueue("Start");
+            for(var i = 0; i < messageCount; i++)
+                messageQueue.Enqueue(new MessageProcessingRequest()
+                {
+                    State = "1234"
+                });
 
-            Thread.Sleep(50);
-            Assert.IsTrue(MaxConcurrancy > (messageCount / 2)); // want concurrancy of at least half the message count
+            Thread.Sleep(100);
+            Assert.IsTrue(MessageProcessingJob.MaxConcurrancy > 1);
         }
+    }
 
-        public void ProcessString(string value)
+    public class MessageProcessingRequest
+    {
+        public string State { get; set; }
+    }
+
+    public class MessageProcessingJob : IJob<MessageProcessingRequest, bool>
+    {
+        public static int Concurrancy = 0;
+        public static int MaxConcurrancy = 0;        
+        
+        public bool Process(MessageProcessingRequest context)
         {
             Concurrancy++;
             MaxConcurrancy = Math.Max(Concurrancy, MaxConcurrancy);
             Thread.Sleep(10);
             Concurrancy--;
+
+            return true;
         }
     }
 }

@@ -51,7 +51,7 @@ namespace Instatus
                             }, TaskContinuationOptions.OnlyOnRanToCompletion);
         }
 
-        public static void Retry(this Action action, int times)
+        public static void Retry(this Action action, int times, ILoggingService loggingService = null)
         {
             while (times-- >= 0)
             {
@@ -62,13 +62,8 @@ namespace Instatus
                 }
                 catch(Exception error)
                 {
-                    if (times == 0)
-                    {
-                        var loggingService = DependencyResolver.Current.GetService<ILoggingService>();
-
-                        if (loggingService != null)
-                            loggingService.Log(error);
-                    }
+                    if (loggingService != null)
+                        loggingService.Log(error);
                 }
             }
         }

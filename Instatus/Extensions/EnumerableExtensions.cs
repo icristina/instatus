@@ -312,25 +312,6 @@ namespace Instatus
             return source.Where(item => item != null);
         }
 
-        public static TValue Value<T, TValue>(this IEnumerable<T> source, string name, Func<T, TValue> accessor) where T : INamed 
-        {
-            return source.Where(s => s.Name.Match(name)).Select(accessor).FirstOrDefault();
-        }
-
-        public static T Get<T>(this ICollection<T> source, string name) where T : INamed
-        {
-            T item = source.Where(s => s.Name.Match(name)).FirstOrDefault();
-
-            if (item == null)
-            {
-                item = Activator.CreateInstance<T>();
-                item.Name = name;
-                source.Add(item);
-            }
-
-            return item;
-        }
-
         public static IEnumerable<T> RemoveNullOrEmpty<T>(this IEnumerable<T> source)
         {
             return source.Where(item => !item.IsEmpty());

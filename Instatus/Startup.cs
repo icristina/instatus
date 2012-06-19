@@ -254,14 +254,15 @@ namespace Instatus
             Modules.Add(new FacebookAreaModule());
         }
 
-        public static void RegisterWorker<TJob, TRequest>(int retry = 0, int delay = 10000, int parallelism = 1) where TJob : IJob<TRequest, bool>
+        public static void RegisterWorker<TRequest>(int retry = 0, int delay = 10000, int parallelism = 1, ILifetimeScope lifetimeScope = null)
         {           
             TaskExtensions.Repeat(() =>
             {
                 // http://aboutcode.net/2010/11/01/start-background-tasks-from-mvc-actions-using-autofac.html
-                using (var container = Autofac.Integration.Mvc.AutofacDependencyResolver.Current.ApplicationContainer.BeginLifetimeScope("httpRequest"))
+                using (var container = lifetimeScope ?? WebApp.GetContainer())
                 {
                     var messageQueue = container.Resolve<IMessageQueue<TRequest>>();
+                    var loggingService = container.Resolve<ILoggingService>();
 
                     while (true)
                     {                    
@@ -273,10 +274,11 @@ namespace Instatus
                             {
                                 TaskExtensions.Retry(() => 
                                 {
-                                    var job = container.Resolve<TJob>();
+                                    var job = container.Resolve<IJob<TRequest, bool>>();
                                     job.Process(message);
                                 }, 
-                                retry);
+                                retry,
+                                loggingService);
                             });
                         }
                         else
