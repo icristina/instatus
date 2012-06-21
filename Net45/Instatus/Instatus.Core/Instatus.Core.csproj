@@ -55,6 +55,8 @@
     <Compile Include="IMessageBus.cs" />
     <Compile Include="IMessaging.cs" />
     <Compile Include="IMetadata.cs" />
+    <Compile Include="InMemory\InMemoryMessageBus.cs" />
+    <Compile Include="InMemory\InMemoryQueue.cs" />
     <Compile Include="IPaged.cs" />
     <Compile Include="IProfiler.cs" />
     <Compile Include="IQueue.cs" />
