@@ -28,9 +28,9 @@ namespace Instatus.Areas.Editor.Models
 
             if (document != null)
             {
-                TitleString = document.Parameters.Value("html:Title", s => s.Content);
-                Description = document.Parameters.Value("html:Description", s => s.Content);
-                Keywords = document.Parameters.Value("html:Keywords", s => s.Content);
+                TitleString = document.Parameters.GetValue("html:Title", s => s.Content);
+                Description = document.Parameters.GetValue("html:Description", s => s.Content);
+                Keywords = document.Parameters.GetValue("html:Keywords", s => s.Content);
             }
         }
 

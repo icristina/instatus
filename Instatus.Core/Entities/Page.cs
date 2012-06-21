@@ -27,7 +27,7 @@ namespace Instatus.Entities
         public string Alias {
             get
             {
-                if (string.IsNullOrWhiteSpace(alias))
+                if (string.IsNullOrWhiteSpace(alias) && !string.IsNullOrWhiteSpace(Name))
                     alias = Name.ToSlug();
 
                 return alias;

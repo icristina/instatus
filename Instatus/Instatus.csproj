@@ -75,6 +75,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.5.0.0-rc\lib\net40\EntityFramework.dll</HintPath>
     </Reference>
+    <Reference Include="Instatus.Core">
+      <HintPath>..\packages\Instatus.Core.1.0.0-beta-028\lib\net40\Instatus.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CompilerServices.AsyncTargetingPack.Net4">
       <HintPath>..\packages\Microsoft.CompilerServices.AsyncTargetingPack.1.0.0\lib\net40\Microsoft.CompilerServices.AsyncTargetingPack.Net4.dll</HintPath>
     </Reference>
@@ -490,12 +493,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Instatus.Core\Instatus.Core.csproj">
-      <Project>{066e2ebf-0e4b-4b97-b4da-60643315536e}</Project>
-      <Name>Instatus.Core</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -13,16 +13,19 @@ using System.ComponentModel;
 
 namespace Instatus.Controllers
 {
+    public static class ScaffoldController
+    {
+        public static string IndexViewName = "~/Views/Shared/Index.cshtml"; // view name hard coded in case a view in parent project with the same name
+        public static string DetailsViewName = "~/Views/Shared/Details.cshtml";
+        public static string EditViewName = "~/Views/Shared/Edit.cshtml";
+        public static string CreateViewName = "~/Views/Shared/Edit.cshtml";      
+    }
+    
     public class ScaffoldController<TViewModel, TModel, TContext, TKey> : BaseController<TContext> 
         where TViewModel : IViewModel<TModel>
         where TContext : class 
         where TModel : class
     {
-        public static string IndexViewName = "Index"; // view name hard coded in case a view in parent project with the same name
-        public static string DetailsViewName = "Details";
-        public static string EditViewName = "Edit";
-        public static string CreateViewName = "Edit";        
-
         private IDbSet<TModel> set;
         
         public IDbSet<TModel> Set
@@ -57,7 +60,7 @@ namespace Instatus.Controllers
         {
             var webView = new WebView<TModel>(Query(Set, query), query);
             ConfigureWebView(webView);
-            return View(IndexViewName, webView);
+            return View(ScaffoldController.IndexViewName, webView);
         }
 
         public virtual IEnumerable<TModel> Query(IEnumerable<TModel> set, Query query)
@@ -102,7 +105,7 @@ namespace Instatus.Controllers
         public ActionResult Details(TKey id)
         {
             ViewData.Model = Set.Find(id);
-            return View(DetailsViewName);
+            return View(ScaffoldController.DetailsViewName);
         }
 
         [HttpGet]
@@ -119,7 +122,7 @@ namespace Instatus.Controllers
 
             ViewData.AddSingle(Form.Edit());
             
-            return View(EditViewName, viewModel);
+            return View(ScaffoldController.EditViewName, viewModel);
         }
 
         [HttpPost]
@@ -140,7 +143,7 @@ namespace Instatus.Controllers
 
             ViewData.AddSingle(Form.Edit());
 
-            return View(EditViewName, viewModel);
+            return View(ScaffoldController.EditViewName, viewModel);
         }
 
         [HttpGet]
@@ -157,7 +160,7 @@ namespace Instatus.Controllers
 
             ViewData.AddSingle(Form.Create());
 
-            return View(CreateViewName, viewModel);
+            return View(ScaffoldController.CreateViewName, viewModel);
         }
 
         [HttpPost]
@@ -179,7 +182,7 @@ namespace Instatus.Controllers
 
             ViewData.AddSingle(Form.Create());
 
-            return View(CreateViewName, viewModel);
+            return View(ScaffoldController.CreateViewName, viewModel);
         }
 
         public virtual ICollection<IWebCommand> GetCommands(Query query)

@@ -19,7 +19,7 @@ namespace Instatus
             var model = html.ViewData.Model;
 
             if (model is IContentItem && (IContentItem)model != null && ((IContentItem)model).Document != null)
-                title = ((IContentItem)model).Document.Parameters.Value("html:title", p => p.Content);
+                title = ((IContentItem)model).Document.Parameters.GetValue("html:title", p => p.Content);
 
             if (title.IsEmpty())
                 title = model.AsString(); // WebView and Page ToString() customized to give descriptive title for html pages
@@ -70,8 +70,8 @@ namespace Instatus
                 var sb = new StringBuilder();
                 var parameters = ((IContentItem)model).Document.Parameters;
 
-                sb.AppendLine(HtmlBuilder.Meta("description", parameters.Value("html:description", p => p.Content)));
-                sb.AppendLine(HtmlBuilder.Meta("keywords", parameters.Value("html:keywords", p => p.Content)));
+                sb.AppendLine(HtmlBuilder.Meta("description", parameters.GetValue("html:description", p => p.Content)));
+                sb.AppendLine(HtmlBuilder.Meta("keywords", parameters.GetValue("html:keywords", p => p.Content)));
 
                 return new MvcHtmlString(sb.ToString());
             }
