@@ -10,6 +10,6 @@ namespace Instatus.Core
     public interface IImaging
     {
         void Crop(Stream inputStream, Stream outputStream, int top, int left, int width, int height);
-        void Resize(Stream inputStream, Stream outputStream, int width, int height);
+        void Resize(Stream inputStream, Stream outputStream, int width, int height, bool mask);
     }
 }

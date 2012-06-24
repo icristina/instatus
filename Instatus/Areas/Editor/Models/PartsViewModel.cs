@@ -45,12 +45,13 @@ namespace Instatus.Areas.Editor.Models
 
             if (!ViewModels.IsEmpty()) 
             {
-                var parts = ViewModels.Select(m => {
-                    var part = m.ToModel();
-                    part.Zone = zone;
-                    return part;
-                })
-                .RemoveNullOrEmpty();
+                var parts = ViewModels
+                    .RemoveNullOrEmpty()
+                    .Select(m => {
+                        var part = m.ToModel();
+                        part.Zone = zone;
+                        return part;
+                    });
                 
                 if(!parts.IsEmpty())
                     model.Document.Parts.AddRange(parts);
