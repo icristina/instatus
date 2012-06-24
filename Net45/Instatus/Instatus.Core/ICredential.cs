@@ -11,7 +11,6 @@ namespace Instatus.Core
         string AccountName { get; }
         string PublicKey { get; }
         string PrivateKey { get; }
-        DateTime ExpiryTime { get; }
         string[] Claims { get; }
     }
 }

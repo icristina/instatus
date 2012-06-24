@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ITokenStorage.cs" />
     <Compile Include="IBlobStorage.cs" />
     <Compile Include="ICampaign.cs" />
     <Compile Include="ICredential.cs" />
@@ -71,6 +72,7 @@
     <Compile Include="ITextTemplating.cs" />
     <Compile Include="ITimestamp.cs" />
     <Compile Include="INamed.cs" />
+    <Compile Include="IToken.cs" />
     <Compile Include="IUser.cs" />
     <Compile Include="IVirtualPathUtility.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

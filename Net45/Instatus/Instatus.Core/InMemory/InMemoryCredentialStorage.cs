@@ -7,10 +7,9 @@ namespace Instatus.Core.InMemory
 {
     public class InMemoryCredentialStorage : ICredentialStorage
     {
-        internal class Credential : ICredential
+        public class Credential : ICredential
         {
             public string ProviderName { get; set; }
-            public string UserName { get; set; }
             public string AccountName { get; set; }
             public string PublicKey { get; set; }
             public string PrivateKey { get; set; }
@@ -18,30 +17,16 @@ namespace Instatus.Core.InMemory
             public string[] Claims { get; set; }
         }
 
-        private IList<Credential> credentials = new List<Credential>();
+        private IList<Credential> credentials;
         
         public ICredential GetCredential(string providerName)
         {
-            return credentials.FirstOrDefault(c => string.IsNullOrEmpty(c.UserName) && c.ProviderName == providerName);
+            return credentials.FirstOrDefault(c => c.ProviderName == providerName);
         }
 
-        public ICredential GetCredential(string providerName, string userName)
+        public InMemoryCredentialStorage(IList<Credential> credentials)
         {
-            return credentials.FirstOrDefault(c => c.ProviderName == providerName && c.UserName == userName);
-        }
-
-        public void SaveCredential(string providerName, string userName, ICredential credential)
-        {
-            credentials.Add(new Credential()
-            {
-                ProviderName = providerName,
-                UserName = userName,
-                AccountName = credential.AccountName,
-                PublicKey = credential.PublicKey,
-                PrivateKey = credential.PrivateKey,
-                ExpiryTime = credential.ExpiryTime,
-                Claims = credential.Claims
-            });
+            this.credentials = credentials;
         }
     }
 }
