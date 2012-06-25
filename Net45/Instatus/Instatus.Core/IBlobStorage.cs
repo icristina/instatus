@@ -13,5 +13,6 @@ namespace Instatus.Core
         void Download(string virtualPath, Stream outputStream);
         void Copy(string virtualPath, string uri);
         string GenerateSignedUrl(string virtualPath, string httpMethod);
+        string MapPath(string virtualPath);
     }
 }

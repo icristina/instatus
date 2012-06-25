@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IEncryption.cs" />
     <Compile Include="ITokenStorage.cs" />
     <Compile Include="IBlobStorage.cs" />
     <Compile Include="ICampaign.cs" />
