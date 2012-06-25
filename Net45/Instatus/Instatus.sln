@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instatus.Tests", "Instatus.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instatus.Integration.EntityFramework", "Instatus.Integration.EntityFramework\Instatus.Integration.EntityFramework.csproj", "{589AFB6B-9423-4703-BCCE-C1DA5EA4BF09}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instatus.Integration.Azure", "Instatus.Integration.Azure\Instatus.Integration.Azure.csproj", "{74AE4ACF-8E3F-4112-894A-6B706EF85A66}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,10 @@ Global
 		{589AFB6B-9423-4703-BCCE-C1DA5EA4BF09}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{589AFB6B-9423-4703-BCCE-C1DA5EA4BF09}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{589AFB6B-9423-4703-BCCE-C1DA5EA4BF09}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74AE4ACF-8E3F-4112-894A-6B706EF85A66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74AE4ACF-8E3F-4112-894A-6B706EF85A66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74AE4ACF-8E3F-4112-894A-6B706EF85A66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74AE4ACF-8E3F-4112-894A-6B706EF85A66}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

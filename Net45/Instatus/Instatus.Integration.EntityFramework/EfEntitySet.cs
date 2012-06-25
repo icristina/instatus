@@ -10,7 +10,7 @@ using Instatus.Core;
 
 namespace Instatus.Integration.EntityFramework
 {
-    public class EfEntitySet<T> : IEntitySet<T>
+    public class EfEntitySet<T> : IEntitySet<T> where T : class
     {
         private IDbSet<T> dbset;
         

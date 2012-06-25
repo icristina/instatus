@@ -8,7 +8,7 @@ namespace Instatus.Core
 {
     public interface IEntityStorage
     {
-        IEntitySet<T> Set<T>();
+        IEntitySet<T> Set<T>() where T : class;
         void SaveChanges();
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Instatus.Core
 {
-    public interface IEntitySet<T> : IQueryable<T>
+    public interface IEntitySet<T> : IQueryable<T> where T : class
     {
         T Find(object key);
         void Delete(object key);

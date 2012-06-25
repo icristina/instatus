@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Instatus.Core.InMemory
 {
-    public class InMemoryEntitySet<T> : IEntitySet<T>
+    public class InMemoryEntitySet<T> : IEntitySet<T> where T : class
     {
         private IList<T> list = new List<T>();
         

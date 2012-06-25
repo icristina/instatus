@@ -10,7 +10,7 @@ namespace Instatus.Core.InMemory
     {
         private IDictionary<Type, object> entitySets = new ConcurrentDictionary<Type, object>();
         
-        public IEntitySet<T> Set<T>()
+        public IEntitySet<T> Set<T>() where T : class
         {
             if (!entitySets.ContainsKey(typeof(T)))
             {
