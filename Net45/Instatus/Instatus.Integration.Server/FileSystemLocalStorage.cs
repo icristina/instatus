@@ -33,7 +33,7 @@ namespace Instatus.Integration.Server
             }
         }
 
-        public string MapPath(string virtualPath)
+        public virtual string MapPath(string virtualPath)
         {
             return HostingEnvironment.MapPath(virtualPath);
         }
