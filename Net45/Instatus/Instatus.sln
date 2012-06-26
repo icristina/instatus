@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instatus.Integration.Entity
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instatus.Integration.Azure", "Instatus.Integration.Azure\Instatus.Integration.Azure.csproj", "{74AE4ACF-8E3F-4112-894A-6B706EF85A66}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instatus.Integration.Server", "Instatus.Integration.Server\Instatus.Integration.Server.csproj", "{D55B42D8-5A78-412F-83F3-EC7A6B59B958}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,10 @@ Global
 		{74AE4ACF-8E3F-4112-894A-6B706EF85A66}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{74AE4ACF-8E3F-4112-894A-6B706EF85A66}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{74AE4ACF-8E3F-4112-894A-6B706EF85A66}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D55B42D8-5A78-412F-83F3-EC7A6B59B958}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D55B42D8-5A78-412F-83F3-EC7A6B59B958}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D55B42D8-5A78-412F-83F3-EC7A6B59B958}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D55B42D8-5A78-412F-83F3-EC7A6B59B958}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

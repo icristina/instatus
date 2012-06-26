@@ -12,6 +12,7 @@ namespace Instatus.Integration.Server
     public class FileSystemBlobStorage : IBlobStorage
     {
         private FileSystemLocalStorage fileSystemLocalStorage = new FileSystemLocalStorage();
+        private IHostingEnvironment hostingEnvironment;
         
         public void Upload(string virtualPath, Stream inputStream, IMetadata metaData)
         {
@@ -38,9 +39,19 @@ namespace Instatus.Integration.Server
             throw new NotImplementedException();
         }
 
+        public static readonly char[] RelativeChars = new char[] { '~', '/', '\\' };
+
         public string MapPath(string virtualPath)
         {
-            throw new NotImplementedException();
+            var baseUri = new Uri(hostingEnvironment.BaseUrl);
+            var absolutePath = virtualPath.TrimStart(RelativeChars);
+            
+            return new Uri(baseUri, absolutePath).ToString();
+        }
+
+        public FileSystemBlobStorage(IHostingEnvironment hostingEnvironment)
+        {
+            this.hostingEnvironment = hostingEnvironment;
         }
     }
 }
