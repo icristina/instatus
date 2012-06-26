@@ -46,8 +46,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppSettingsCredentialStorage.cs" />
+    <Compile Include="DebugMessaging.cs" />
     <Compile Include="FileSystemBlobStorage.cs" />
     <Compile Include="FileSystemLocalStorage.cs" />
+    <Compile Include="SmtpMessaging.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WpfImaging.cs" />
   </ItemGroup>
