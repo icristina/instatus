@@ -123,7 +123,7 @@ namespace Instatus.Web
             var ammendedVirtualPath = virtualPath.Insert(extensionStartIndex, suffixAndSeperator);
 
             if (extension != null)
-                return Path.ChangeExtension(virtualPath, extension);
+                return Path.ChangeExtension(ammendedVirtualPath, extension);
 
             return ammendedVirtualPath;
         }

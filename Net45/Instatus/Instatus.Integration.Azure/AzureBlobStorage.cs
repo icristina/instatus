@@ -69,6 +69,8 @@ namespace Instatus.Integration.Azure
 
             SetMetadata(cloudBlob, metaData);
 
+            inputStream.Position = 0;
+
             cloudBlob.UploadFromStream(inputStream);
         }
 
