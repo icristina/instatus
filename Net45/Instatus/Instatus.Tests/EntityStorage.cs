@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using Instatus.Core.InMemory;
+using Instatus.Core.Impl;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Instatus.Tests

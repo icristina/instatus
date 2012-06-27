@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Instatus.Core.InMemory
+namespace Instatus.Core.Impl
 {
     public class InMemoryMessageBus : IMessageBus
     {

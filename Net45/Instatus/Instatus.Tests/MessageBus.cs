@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Instatus.Core;
-using Instatus.Core.InMemory;
+using Instatus.Core.Impl;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Instatus.Tests

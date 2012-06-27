@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Instatus.Core.InMemory
+namespace Instatus.Core.Impl
 {
     public class InMemoryEntitySet<T> : IEntitySet<T> where T : class
     {

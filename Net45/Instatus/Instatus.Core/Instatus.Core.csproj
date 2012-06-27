@@ -45,8 +45,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Impl\DebugLogger.cs" />
+    <Compile Include="Impl\DebugProfiler.cs" />
     <Compile Include="IEncryption.cs" />
-    <Compile Include="InMemory\InMemoryLogger.cs" />
+    <Compile Include="Impl\InMemoryCredential.cs" />
+    <Compile Include="Impl\InMemoryLogger.cs" />
     <Compile Include="ITokenStorage.cs" />
     <Compile Include="IBlobStorage.cs" />
     <Compile Include="ICampaign.cs" />
@@ -64,11 +67,11 @@
     <Compile Include="IMessageBus.cs" />
     <Compile Include="IMessaging.cs" />
     <Compile Include="IMetadata.cs" />
-    <Compile Include="InMemory\InMemoryCredentialStorage.cs" />
-    <Compile Include="InMemory\InMemoryEntitySet.cs" />
-    <Compile Include="InMemory\InMemoryEntityStorage.cs" />
-    <Compile Include="InMemory\InMemoryMessageBus.cs" />
-    <Compile Include="InMemory\InMemoryQueue.cs" />
+    <Compile Include="Impl\InMemoryCredentialStorage.cs" />
+    <Compile Include="Impl\InMemoryEntitySet.cs" />
+    <Compile Include="Impl\InMemoryEntityStorage.cs" />
+    <Compile Include="Impl\InMemoryMessageBus.cs" />
+    <Compile Include="Impl\InMemoryQueue.cs" />
     <Compile Include="IPaged.cs" />
     <Compile Include="IProfiler.cs" />
     <Compile Include="IQueue.cs" />

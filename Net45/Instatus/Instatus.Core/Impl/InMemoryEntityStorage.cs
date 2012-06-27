@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Instatus.Core.InMemory
+namespace Instatus.Core.Impl
 {
     public class InMemoryEntityStorage : IEntityStorage
     {
