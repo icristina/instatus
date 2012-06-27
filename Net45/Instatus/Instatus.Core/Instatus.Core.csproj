@@ -45,11 +45,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Impl\AbstractProfilerStep.cs" />
     <Compile Include="Impl\DebugLogger.cs" />
     <Compile Include="Impl\DebugProfiler.cs" />
     <Compile Include="IEncryption.cs" />
     <Compile Include="Impl\InMemoryCredential.cs" />
     <Compile Include="Impl\InMemoryLogger.cs" />
+    <Compile Include="Impl\InMemoryProfiler.cs" />
     <Compile Include="ITokenStorage.cs" />
     <Compile Include="IBlobStorage.cs" />
     <Compile Include="ICampaign.cs" />

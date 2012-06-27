@@ -11,17 +11,20 @@ namespace Instatus.Core.Impl
     {
         private int limit;
         private ConcurrentQueue<T> queue = new ConcurrentQueue<T>();
-        
+
+        public void TrimSize(int size)
+        {
+            while (queue.Count >= size)
+            {
+                T removedMessage;
+                queue.TryDequeue(out removedMessage);
+            }
+        }
+
         public void Enqueue(T message)
         {
             if (limit > 0)
-            {
-                while (queue.Count >= limit)
-                {
-                    T removedMessage;
-                    queue.TryDequeue(out removedMessage);
-                }
-            }            
+                TrimSize(limit);           
             
             queue.Enqueue(message);
         }
