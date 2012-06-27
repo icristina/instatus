@@ -64,6 +64,7 @@
     <Compile Include="EntityStorage.cs" />
     <Compile Include="AppSettings.cs" />
     <Compile Include="EntityFramework.cs" />
+    <Compile Include="Queues.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Instatus.Core\Instatus.Core.csproj">

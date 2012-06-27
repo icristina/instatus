@@ -8,6 +8,6 @@ namespace Instatus.Core
 {
     public interface ILogger
     {
-        void Log(Exception exception);
+        void Log(Exception exception, IDictionary<string, string> properties);
     }
 }

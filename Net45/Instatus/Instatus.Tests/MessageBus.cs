@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Instatus.Core;
@@ -55,7 +56,7 @@ namespace Instatus.Tests
         {
             public int Counter = 0;
 
-            public void Log(Exception exception)
+            public void Log(Exception exception, IDictionary<string, string> properties)
             {
                 Counter++;
             }

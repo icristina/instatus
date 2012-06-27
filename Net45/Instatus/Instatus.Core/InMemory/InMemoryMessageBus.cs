@@ -85,7 +85,7 @@ namespace Instatus.Core.InMemory
                     catch (Exception exception)
                     {
                         if (logger != null)
-                            logger.Log(exception);
+                            logger.Log(exception, null);
                     }
                 }
             }
@@ -108,7 +108,7 @@ namespace Instatus.Core.InMemory
                 catch (Exception exception)
                 {
                     if (logger != null)
-                        logger.Log(exception);
+                        logger.Log(exception, null);
                 }
             }
         }
