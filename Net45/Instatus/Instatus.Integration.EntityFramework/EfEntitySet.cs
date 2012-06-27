@@ -26,13 +26,9 @@ namespace Instatus.Integration.EntityFramework
             dbset.Remove(instance);
         }
 
-        public T Create()
+        public void Add(T entity)
         {
-            var instance = Activator.CreateInstance<T>();
-
-            dbset.Add(instance);
-
-            return instance;
+            dbset.Add(entity);
         }
 
         public IEnumerator<T> GetEnumerator()

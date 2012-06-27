@@ -25,13 +25,9 @@ namespace Instatus.Core.InMemory
                 list.Remove(item);
         }
 
-        public T Create()
+        public void Add(T entity)
         {
-            var item = Activator.CreateInstance<T>();
-
-            list.Add(item);
-            
-            return item;
+            list.Add(entity);
         }
 
         public IEnumerator<T> GetEnumerator()

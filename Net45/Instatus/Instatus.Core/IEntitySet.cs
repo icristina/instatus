@@ -10,6 +10,6 @@ namespace Instatus.Core
     {
         T Find(object key);
         void Delete(object key);
-        T Create();
+        void Add(T entity);
     }
 }

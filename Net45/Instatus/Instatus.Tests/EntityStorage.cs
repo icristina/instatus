@@ -19,15 +19,18 @@ namespace Instatus.Tests
             public Storage()
             {
                 var users = Set<User>();
-                var user1 = users.Create();
+                
+                users.Add(new User()
+                {
+                    Id = 1,
+                    FirstName = "a"
+                });
 
-                user1.Id = 1;
-                user1.FirstName = "a";
-
-                var user2 = users.Create();
-
-                user2.Id = 2;
-                user2.FirstName = "b";
+                users.Add(new User()
+                {
+                    Id = 2,
+                    FirstName = "b"
+                });
             }
         }
         
