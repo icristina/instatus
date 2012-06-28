@@ -19,8 +19,10 @@ namespace Instatus.Integration.Facebook
         {
             var requestUri = path
                 .AppendQueryParameter("access_token", accessToken)
-                .AppendQueryParameter("limit", limit)
-                .AppendQueryParameter("fields", string.Join(",", fields));
+                .AppendQueryParameter("limit", limit);
+
+            if (fields != null)
+                requestUri = requestUri.AppendQueryParameter("fields", string.Join(",", fields));
 
             var httpResponse = await httpClient.GetAsync(requestUri);
 
