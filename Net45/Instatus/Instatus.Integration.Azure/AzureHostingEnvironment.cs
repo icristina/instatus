@@ -28,7 +28,14 @@ namespace Instatus.Integration.Azure
 
         public string GetAppSetting(string key)
         {
-            return RoleEnvironment.GetConfigurationSettingValue(key) ?? ConfigurationManager.AppSettings[key];
+            try
+            {
+                return RoleEnvironment.GetConfigurationSettingValue(key);
+            }
+            catch
+            {
+                return ConfigurationManager.AppSettings[key];
+            }
         }
     }
 }
