@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppSettingsCredentialStorage.cs" />
+    <Compile Include="AspNetHostingEnvironment.cs" />
     <Compile Include="DebugMessaging.cs" />
     <Compile Include="FileSystemBlobStorage.cs" />
     <Compile Include="FileSystemLocalStorage.cs" />

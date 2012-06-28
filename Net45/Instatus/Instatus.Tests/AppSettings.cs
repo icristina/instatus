@@ -11,7 +11,8 @@ namespace Instatus.Tests
         public void ParseCredentialFromString()
         {
             var appSetting = "AccountName=a;PrivateKey=b==";
-            var credentialStorage = new AppSettingsCredentialStorage();
+            var hostingEnvironment = new AspNetHostingEnvironment();
+            var credentialStorage = new AppSettingsCredentialStorage(hostingEnvironment);
             var values = credentialStorage.ParseDelimitedString(appSetting);
             var credential = credentialStorage.ConvertToCredential(values);
 

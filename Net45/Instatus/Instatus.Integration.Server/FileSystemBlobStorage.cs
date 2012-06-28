@@ -43,7 +43,7 @@ namespace Instatus.Integration.Server
 
         public string MapPath(string virtualPath)
         {
-            var baseUri = new Uri(hostingEnvironment.BaseUrl);
+            var baseUri = new Uri(hostingEnvironment.BaseUri);
             var absolutePath = virtualPath.TrimStart(RelativeChars);
             
             return new Uri(baseUri, absolutePath).ToString();

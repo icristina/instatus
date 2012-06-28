@@ -11,6 +11,7 @@ namespace Instatus.Integration.Server
 {
     public class AppSettingsCredentialStorage : ICredentialStorage
     {
+        private IHostingEnvironment hostingEnvironment;
         private IDictionary<string, ICredential> credentials = new ConcurrentDictionary<string, ICredential>();
 
         public IDictionary<string, string> ParseDelimitedString(string input)
@@ -62,7 +63,7 @@ namespace Instatus.Integration.Server
             if (!credentials.TryGetValue(providerName, out credential)) 
             {
                 var key = GetAppSettingKey(providerName);
-                var setting = ConfigurationManager.AppSettings[key];
+                var setting = hostingEnvironment.GetAppSetting(key);
                 var dictionary = ParseDelimitedString(setting);
                 
                 credential = ConvertToCredential(dictionary);
@@ -71,6 +72,11 @@ namespace Instatus.Integration.Server
             }
             
             return credential;
+        }
+
+        public AppSettingsCredentialStorage(IHostingEnvironment hostingEnvironment)
+        {
+            this.hostingEnvironment = hostingEnvironment;
         }
 
         public class AppSettingsCredential : ICredential
