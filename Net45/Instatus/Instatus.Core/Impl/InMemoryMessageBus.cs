@@ -30,7 +30,7 @@ namespace Instatus.Core.Impl
             set
             {
                 if (value < 0)
-                    throw new ArgumentException("Retry must be more than 0");
+                    throw new ArgumentException("Retry must be 0 or more");
 
                 retry = value;
             }

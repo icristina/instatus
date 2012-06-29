@@ -12,13 +12,31 @@ namespace Instatus.Integration.Facebook
     public class FacebookClient : IDisposable
     {
         private HttpClient httpClient;
-        private string accessToken;
-        private const int DefaultLimit = 25;
+        private const int defaultLimit = 25;
 
-        public async Task<T> GetGraphApiAsync<T>(string path, int limit = DefaultLimit, string[] fields = null)
+        public string AccessToken { get; set; }
+
+        public async Task<string> GetAppAccessToken(string applicationId, string privateKey)
+        {
+            var requestUri = "https://graph.facebook.com/oauth/access_token?grant_type=client_credentials"
+                .AppendQueryParameter("client_id", applicationId)
+                .AppendQueryParameter("client_secret", privateKey);
+
+            var httpResponse = await httpClient.GetAsync(requestUri);
+
+            httpResponse.EnsureSuccessStatusCode();
+
+            var stringResponse = await httpResponse.Content.ReadAsStringAsync();
+
+            AccessToken = stringResponse.Substring(13);
+
+            return AccessToken;
+        }
+
+        public async Task<T> GetGraphApiAsync<T>(string path, int limit = defaultLimit, string[] fields = null)
         {
             var requestUri = path
-                .AppendQueryParameter("access_token", accessToken)
+                .AppendQueryParameter("access_token", AccessToken)
                 .AppendQueryParameter("limit", limit);
 
             if (fields != null)
@@ -44,27 +62,27 @@ namespace Instatus.Integration.Facebook
             return GetGraphApiAsync<User>("me");
         }
 
-        public Task<Response<Connection>> Friends(int limit = DefaultLimit)
+        public Task<Response<Connection>> Friends(int limit = defaultLimit)
         {
             return GetGraphApiAsync<Response<Connection>>("me/friends", limit);
         }
 
-        public Task<Response<Post>> Posts(string connection = "me/posts", int limit = DefaultLimit, string[] fields = null)
+        public Task<Response<Post>> Posts(string connection = "me/posts", int limit = defaultLimit, string[] fields = null)
         {
             return GetGraphApiAsync<Response<Post>>(connection, limit, fields);
         }
 
-        public Task<Response<Post>> Home(int limit = DefaultLimit, string[] fields = null)
+        public Task<Response<Post>> Home(int limit = defaultLimit, string[] fields = null)
         {
             return Posts("me/home", limit, fields);
         }
 
-        public Task<Response<Post>> Feed(int limit = DefaultLimit, string[] fields = null)
+        public Task<Response<Post>> Feed(int limit = defaultLimit, string[] fields = null)
         {
             return Posts("me/feed", limit, fields);
         }
 
-        public Task<Response<Friend>> AppFriends(int limit = DefaultLimit)
+        public Task<Response<Friend>> AppFriends(int limit = defaultLimit)
         {
             return GetGraphApiAsync<Response<Friend>>("fql?q=SELECT uid, name FROM user WHERE has_added_app=1 and uid IN (SELECT uid2 FROM friend WHERE uid1 = me())", limit);
         }
@@ -76,7 +94,7 @@ namespace Instatus.Integration.Facebook
 
         public FacebookClient(string accessToken)
         {
-            this.accessToken = accessToken;
+            this.AccessToken = accessToken;
             this.httpClient = new HttpClient()
             {
                 BaseAddress = new Uri("https://graph.facebook.com"),
