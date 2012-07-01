@@ -19,7 +19,7 @@ namespace Instatus.Core.Utils
             return list.ElementAt(random.Next(0, list.Count()));
         }
 
-        public IUser User
+        public static IUser User
         {
             get
             {

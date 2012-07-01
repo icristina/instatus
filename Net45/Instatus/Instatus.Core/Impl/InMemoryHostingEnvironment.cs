@@ -7,10 +7,19 @@ namespace Instatus.Core.Impl
 {
     public class InMemoryHostingEnvironment : IHostingEnvironment
     {
+        private string outputPath;
         private string baseUri;
         private string loginUrl;
         private IDictionary<string, string> appSettings;
-        
+
+        public string OutputPath
+        {
+            get
+            {
+                return outputPath;
+            }
+        }
+
         public string BaseUri
         {
             get 

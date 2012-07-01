@@ -11,7 +11,7 @@ namespace Instatus.Integration.Server
 {
     public class FileSystemBlobStorage : IBlobStorage
     {
-        private FileSystemLocalStorage fileSystemLocalStorage = new FileSystemLocalStorage();
+        private FileSystemLocalStorage fileSystemLocalStorage;
         private IHostingEnvironment hostingEnvironment;
         
         public void Upload(string virtualPath, Stream inputStream, IMetadata metaData)
@@ -52,6 +52,7 @@ namespace Instatus.Integration.Server
         public FileSystemBlobStorage(IHostingEnvironment hostingEnvironment)
         {
             this.hostingEnvironment = hostingEnvironment;
+            this.fileSystemLocalStorage =  new FileSystemLocalStorage(hostingEnvironment);
         }
     }
 }

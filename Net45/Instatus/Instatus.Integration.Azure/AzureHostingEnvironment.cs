@@ -11,6 +11,14 @@ namespace Instatus.Integration.Azure
 {
     public class AzureHostingEnvironment : IHostingEnvironment
     {
+        public string OutputPath
+        {
+            get
+            {
+                return RoleEnvironment.GetLocalResource("Output").RootPath;
+            }
+        }
+
         public string BaseUri
         {
             get
@@ -21,7 +29,8 @@ namespace Instatus.Integration.Azure
 
         public string LoginUrl
         {
-            get { 
+            get 
+            { 
                 return GetAppSetting("LoginUrl") ?? FormsAuthentication.LoginUrl; 
             }
         }

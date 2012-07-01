@@ -11,6 +11,8 @@ namespace Instatus.Integration.Server
 {
     public class FileSystemLocalStorage : ILocalStorage
     {
+        private IHostingEnvironment hostingEnvironment;
+        
         public void Save(string virtualPath, Stream inputStream)
         {
             var absolutePath = MapPath(virtualPath);
@@ -33,9 +35,17 @@ namespace Instatus.Integration.Server
             }
         }
 
-        public virtual string MapPath(string virtualPath)
+        public string MapPath(string virtualPath)
         {
-            return HostingEnvironment.MapPath(virtualPath);
+            var fileName = Path.GetFileName(virtualPath);
+            var outputPath = hostingEnvironment.OutputPath;
+
+            return Path.Combine(outputPath, fileName);
+        }
+
+        public FileSystemLocalStorage(IHostingEnvironment hostingEnvironment)
+        {
+            this.hostingEnvironment = hostingEnvironment;
         }
     }
 }

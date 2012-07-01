@@ -8,6 +8,7 @@ namespace Instatus.Core
 {
     public interface IHostingEnvironment
     {
+        string OutputPath { get; }
         string BaseUri { get; }
         string LoginUrl { get; }
         string GetAppSetting(string key);
