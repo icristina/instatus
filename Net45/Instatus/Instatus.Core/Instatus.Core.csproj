@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IMapper.cs" />
     <Compile Include="Impl\AbstractProfilerStep.cs" />
     <Compile Include="Impl\DebugLogger.cs" />
     <Compile Include="Impl\DebugProfiler.cs" />
