@@ -4,14 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{39C44AF6-A1AD-40EE-B1C6-40FDA4AC9C83}</ProjectGuid>
+    <ProjectGuid>{5D273851-C7EF-4C97-A955-EE6DE51232C6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Instatus.Core</RootNamespace>
-    <AssemblyName>Instatus.Core</AssemblyName>
+    <RootNamespace>Instatus.Integration.ValueInjecter</RootNamespace>
+    <AssemblyName>Instatus.Integration.ValueInjecter</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
   </PropertyGroup>
@@ -33,8 +32,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.CompilerServices.AsyncTargetingPack.Net4">
-      <HintPath>..\packages\Microsoft.CompilerServices.AsyncTargetingPack.1.0.0\lib\net40\Microsoft.CompilerServices.AsyncTargetingPack.Net4.dll</HintPath>
+    <Reference Include="Omu.ValueInjecter">
+      <HintPath>..\packages\valueinjecter.2.3.1\lib\net35\Omu.ValueInjecter.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -45,51 +44,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Impl\SingleEntityMapper.cs" />
-    <Compile Include="IMapper.cs" />
-    <Compile Include="Impl\AbstractProfilerStep.cs" />
-    <Compile Include="Impl\DebugLogger.cs" />
-    <Compile Include="Impl\DebugProfiler.cs" />
-    <Compile Include="IEncryption.cs" />
-    <Compile Include="Impl\InMemoryCredential.cs" />
-    <Compile Include="Impl\InMemoryHostingEnvironment.cs" />
-    <Compile Include="Impl\InMemoryLogger.cs" />
-    <Compile Include="Impl\InMemoryProfiler.cs" />
-    <Compile Include="Impl\InMemoryScheduler.cs" />
-    <Compile Include="ITokenStorage.cs" />
-    <Compile Include="IBlobStorage.cs" />
-    <Compile Include="ICampaign.cs" />
-    <Compile Include="ICredential.cs" />
-    <Compile Include="ICredentialStorage.cs" />
-    <Compile Include="IEntitySet.cs" />
-    <Compile Include="IEntityStorage.cs" />
-    <Compile Include="IExport.cs" />
-    <Compile Include="IHostingEnvironment.cs" />
-    <Compile Include="IImaging.cs" />
-    <Compile Include="ILocalization.cs" />
-    <Compile Include="ILocalStorage.cs" />
-    <Compile Include="ILogger.cs" />
-    <Compile Include="IMembershipProvider.cs" />
-    <Compile Include="IMessageBus.cs" />
-    <Compile Include="IMessaging.cs" />
-    <Compile Include="IMetadata.cs" />
-    <Compile Include="Impl\InMemoryCredentialStorage.cs" />
-    <Compile Include="Impl\InMemoryEntitySet.cs" />
-    <Compile Include="Impl\InMemoryEntityStorage.cs" />
-    <Compile Include="Impl\InMemoryMessageBus.cs" />
-    <Compile Include="Impl\InMemoryQueue.cs" />
-    <Compile Include="IPaged.cs" />
-    <Compile Include="IProfiler.cs" />
-    <Compile Include="IQueue.cs" />
-    <Compile Include="ISchedule.cs" />
-    <Compile Include="ITextTemplating.cs" />
-    <Compile Include="ITimestamp.cs" />
-    <Compile Include="INamed.cs" />
-    <Compile Include="IToken.cs" />
-    <Compile Include="IUser.cs" />
-    <Compile Include="IVirtualPathUtility.cs" />
+    <Compile Include="ValueInjecterMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utils\DataGenerator.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Instatus.Core\Instatus.Core.csproj">
+      <Project>{39c44af6-a1ad-40ee-b1c6-40fda4ac9c83}</Project>
+      <Name>Instatus.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

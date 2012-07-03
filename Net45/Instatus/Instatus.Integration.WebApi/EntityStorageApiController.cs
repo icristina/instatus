@@ -9,18 +9,20 @@ using System.Net;
 
 namespace Instatus.Integration.WebApi
 {
-    public class EntityStorageApiController<TEntity, TModel> : ApiController where TEntity : class
+    public class EntityStorageApiController<TEntity, TModel> : ApiController 
+        where TEntity : class
+        where TModel : class
     {
         private IEntityStorage entityStorage;
         private IMapper mapper;
 
         [Queryable]
-        public IQueryable<TEntity> Get()
+        public virtual IQueryable<TEntity> Get()
         {
             return entityStorage.Set<TEntity>();
         }
 
-        public TModel Get(int id)
+        public virtual TModel Get(int id)
         {
             var entity = entityStorage.Set<TEntity>().Find(id);
             
@@ -34,7 +36,7 @@ namespace Instatus.Integration.WebApi
             return model;
         }
 
-        public HttpResponseMessage Put(int id, TModel model)
+        public virtual HttpResponseMessage Put(int id, TModel model)
         {
             if (ModelState.IsValid && id == (model as dynamic).Id)
             {
@@ -59,7 +61,7 @@ namespace Instatus.Integration.WebApi
             }
         }
 
-        public HttpResponseMessage Post(TModel model)
+        public virtual HttpResponseMessage Post(TModel model)
         {
             if (ModelState.IsValid)
             {
@@ -80,7 +82,7 @@ namespace Instatus.Integration.WebApi
             }
         }
 
-        public HttpResponseMessage Delete(int id)
+        public virtual HttpResponseMessage Delete(int id)
         {
             var entity = entityStorage.Set<TEntity>().Find(id);
             

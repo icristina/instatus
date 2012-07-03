@@ -37,6 +37,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper">
+      <HintPath>..\packages\AutoMapper.2.1.267\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.5.0.0-rc\lib\net45\EntityFramework.dll</HintPath>
@@ -66,11 +69,16 @@
     <Compile Include="EntityFramework.cs" />
     <Compile Include="Queues.cs" />
     <Compile Include="Diagnostics.cs" />
+    <Compile Include="Mapper.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Instatus.Core\Instatus.Core.csproj">
       <Project>{39c44af6-a1ad-40ee-b1c6-40fda4ac9c83}</Project>
       <Name>Instatus.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Instatus.Integration.AutoMapper\Instatus.Integration.AutoMapper.csproj">
+      <Project>{66e81e1b-0c7c-47e4-9d1a-514b54e2430e}</Project>
+      <Name>Instatus.Integration.AutoMapper</Name>
     </ProjectReference>
     <ProjectReference Include="..\Instatus.Integration.EntityFramework\Instatus.Integration.EntityFramework.csproj">
       <Project>{589afb6b-9423-4703-bcce-c1da5ea4bf09}</Project>
@@ -79,6 +87,10 @@
     <ProjectReference Include="..\Instatus.Integration.Server\Instatus.Integration.Server.csproj">
       <Project>{d55b42d8-5a78-412f-83f3-ec7a6b59b958}</Project>
       <Name>Instatus.Integration.Server</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Instatus.Integration.ValueInjecter\Instatus.Integration.ValueInjecter.csproj">
+      <Project>{5d273851-c7ef-4c97-a955-ee6de51232c6}</Project>
+      <Name>Instatus.Integration.ValueInjecter</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

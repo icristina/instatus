@@ -7,7 +7,7 @@ namespace Instatus.Core
 {
     public interface IMapper
     {
-        T Map<T>(object source);
+        T Map<T>(object source) where T : class;
         void Inject(object target, object source);
     }
 }
