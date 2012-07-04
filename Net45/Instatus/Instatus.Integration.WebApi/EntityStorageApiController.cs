@@ -17,9 +17,9 @@ namespace Instatus.Integration.WebApi
         private IMapper mapper;
 
         [Queryable]
-        public virtual IQueryable<TEntity> Get()
+        public virtual IQueryable<TModel> Get()
         {
-            return entityStorage.Set<TEntity>();
+            return entityStorage.Set<TEntity>().Select(mapper.Projection<TEntity, TModel>());
         }
 
         public virtual TModel Get(int id)
