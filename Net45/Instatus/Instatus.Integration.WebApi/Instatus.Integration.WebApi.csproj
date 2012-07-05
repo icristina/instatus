@@ -66,6 +66,7 @@
     <Compile Include="EntityStorageApiController.cs" />
     <Compile Include="LogExceptionFilter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UnderscoreMappingResolver.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
