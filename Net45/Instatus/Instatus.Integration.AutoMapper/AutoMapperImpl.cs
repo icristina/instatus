@@ -20,7 +20,7 @@ namespace Instatus.Integration.AutoMapper
         public T Map<T>(object source) 
             where T : class
         {
-            return autoMapper.Mapper.Map<T>(source);
+            return source as T ?? autoMapper.Mapper.Map<T>(source);
         }
 
         public void Inject(object target, object source)

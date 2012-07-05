@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Instatus.Core.Utils
 {
-    public static class DataGenerator
+    public static class DataBuilder
     {
         private static Random random = new Random();
         public static string[] EmailProviders = new string[] { "gmail.com", "hotmail.com", "yahoo.com", "facebook.com" };

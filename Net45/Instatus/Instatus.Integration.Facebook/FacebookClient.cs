@@ -6,6 +6,7 @@ using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using Instatus.Core.Utils;
 
 namespace Instatus.Integration.Facebook
 {
@@ -18,9 +19,11 @@ namespace Instatus.Integration.Facebook
 
         public async Task<string> GetAppAccessToken(string applicationId, string privateKey)
         {
-            var requestUri = "https://graph.facebook.com/oauth/access_token?grant_type=client_credentials"
-                .AppendQueryParameter("client_id", applicationId)
-                .AppendQueryParameter("client_secret", privateKey);
+            var requestUri = new PathBuilder("https://graph.facebook.com/oauth/access_token")
+                .Query("grant_type", "client_credentials")
+                .Query("client_id", applicationId)
+                .Query("client_secret", privateKey)
+                .ToString();
 
             var httpResponse = await httpClient.GetAsync(requestUri);
 
@@ -35,14 +38,13 @@ namespace Instatus.Integration.Facebook
 
         public async Task<T> GetGraphApiAsync<T>(string path, int limit = defaultLimit, string[] fields = null)
         {
-            var requestUri = path
-                .AppendQueryParameter("access_token", AccessToken)
-                .AppendQueryParameter("limit", limit);
+            var uri = new PathBuilder(path)
+                .Query("access_token", AccessToken)
+                .Query("limit", limit)
+                .Query("fields", fields)
+                .ToString();
 
-            if (fields != null)
-                requestUri = requestUri.AppendQueryParameter("fields", string.Join(",", fields));
-
-            var httpResponse = await httpClient.GetAsync(requestUri);
+            var httpResponse = await httpClient.GetAsync(uri);
 
             httpResponse.EnsureSuccessStatusCode();
 
@@ -207,23 +209,6 @@ namespace Instatus.Integration.Facebook
             public string zip;
             public double latitude;
             public double longitude;
-        }
-    }
-
-    internal static class PathExtensions
-    {
-        public static string AppendQueryParameter(this string uri, string name, object value)
-        {
-            if (string.IsNullOrEmpty(uri) || string.IsNullOrEmpty(name) || value == null)
-                return uri;
-
-            var builder = new StringBuilder(uri)
-                .Append(uri.Contains('?') ? '&' : '?')
-                .Append(name)
-                .Append('=')
-                .Append(value);
-
-            return builder.ToString();
         }
     }
 }

@@ -6,9 +6,20 @@ using System.Web.Http;
 using System.Net.Http;
 using Instatus.Core;
 using System.Net;
+using System.Linq.Expressions;
 
 namespace Instatus.Integration.WebApi
 {
+    public class EntityStorageApiController<TEntity> : EntityStorageApiController<TEntity, TEntity>
+        where TEntity : class
+    {
+        public EntityStorageApiController(IEntityStorage entityStorage, IMapper mapper)
+            : base(entityStorage, mapper)
+        {
+
+        }
+    }
+    
     public class EntityStorageApiController<TEntity, TModel> : ApiController 
         where TEntity : class
         where TModel : class
@@ -19,7 +30,14 @@ namespace Instatus.Integration.WebApi
         [Queryable]
         public virtual IQueryable<TModel> Get()
         {
-            return entityStorage.Set<TEntity>().Select(mapper.Projection<TEntity, TModel>());
+            if (typeof(TEntity) == typeof(TModel))
+            {
+                return entityStorage.Set<TEntity>() as IQueryable<TModel>;
+            }
+            else
+            {
+                return entityStorage.Set<TEntity>().Select(mapper.Projection<TEntity, TModel>());
+            }
         }
 
         public virtual TModel Get(int id)

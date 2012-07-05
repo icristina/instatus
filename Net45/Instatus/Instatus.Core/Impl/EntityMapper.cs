@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Instatus.Core.Impl
 {
-    public class SingleEntityMapper<TEntity, TModel> : IMapper 
+    public class EntityMapper<TEntity, TModel> : IMapper 
         where TEntity : class 
         where TModel : class
     {
@@ -44,7 +44,7 @@ namespace Instatus.Core.Impl
             throw new NotSupportedException("No injection exists");
         }
 
-        public SingleEntityMapper(
+        public EntityMapper(
             Expression<Func<TEntity, TModel>> projectEntityToViewModelForQuery, 
             Func<TEntity, TModel> mapEntityToViewModelForSingle,
             Func<TModel, TEntity> mapViewModelToEntity, 

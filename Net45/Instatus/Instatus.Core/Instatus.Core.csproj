@@ -45,7 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Impl\SingleEntityMapper.cs" />
+    <Compile Include="Impl\EntityMapper.cs" />
     <Compile Include="IMapper.cs" />
     <Compile Include="Impl\AbstractProfilerStep.cs" />
     <Compile Include="Impl\DebugLogger.cs" />
@@ -89,7 +89,9 @@
     <Compile Include="IUser.cs" />
     <Compile Include="IVirtualPathUtility.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utils\DataGenerator.cs" />
+    <Compile Include="Utils\DataBuilder.cs" />
+    <Compile Include="Utils\PathBuilder.cs" />
+    <Compile Include="Utils\UriQueryUtility.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
