@@ -35,6 +35,7 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity.Design" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
@@ -48,6 +49,7 @@
     <Compile Include="AppSettingsCredentialStorage.cs" />
     <Compile Include="AspNetHostingEnvironment.cs" />
     <Compile Include="DebugMessaging.cs" />
+    <Compile Include="DefaultLinguistics.cs" />
     <Compile Include="FileSystemBlobStorage.cs" />
     <Compile Include="FileSystemLocalStorage.cs" />
     <Compile Include="SmtpMessaging.cs" />

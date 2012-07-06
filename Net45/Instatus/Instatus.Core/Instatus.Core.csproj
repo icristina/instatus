@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ILinguistics.cs" />
     <Compile Include="Impl\EntityMapper.cs" />
     <Compile Include="IMapper.cs" />
     <Compile Include="Impl\AbstractProfilerStep.cs" />
