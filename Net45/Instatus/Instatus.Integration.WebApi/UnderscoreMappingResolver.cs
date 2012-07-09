@@ -12,7 +12,9 @@ namespace Instatus.Integration.WebApi
     {
         protected override string ResolvePropertyName(string propertyName)
         {
-            return Regex.Replace(propertyName, @"([A-Z])([A-Z][a-z])|([a-z0-9])([A-Z])", "$1$3_$2$4").ToLower();
+            return char.IsUpper(propertyName[0]) ? // if first character is lowercase, assume already customized with [JsonProperty] attribute
+                Regex.Replace(propertyName, @"([A-Z])([A-Z][a-z])|([a-z0-9])([A-Z])", "$1$3_$2$4")
+                    .ToLower() : propertyName;
         }
     }
 }

@@ -64,10 +64,13 @@ namespace Instatus.Integration.Server
             {
                 var key = GetAppSettingKey(providerName);
                 var setting = hostingEnvironment.GetAppSetting(key);
+
+                if (setting == null)
+                    return null;
+
                 var dictionary = ParseDelimitedString(setting);
                 
                 credential = ConvertToCredential(dictionary);
-                
                 credentials.Add(providerName, credential);                
             }
             
