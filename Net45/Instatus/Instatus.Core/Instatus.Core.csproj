@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ILinguistics.cs" />
+    <Compile Include="Impl\BaseMetadata.cs" />
     <Compile Include="Impl\EntityMapper.cs" />
     <Compile Include="IMapper.cs" />
     <Compile Include="Impl\AbstractProfilerStep.cs" />
@@ -57,6 +58,7 @@
     <Compile Include="Impl\InMemoryLogger.cs" />
     <Compile Include="Impl\InMemoryProfiler.cs" />
     <Compile Include="Impl\InMemoryScheduler.cs" />
+    <Compile Include="ITask.cs" />
     <Compile Include="ITokenStorage.cs" />
     <Compile Include="IBlobStorage.cs" />
     <Compile Include="ICampaign.cs" />

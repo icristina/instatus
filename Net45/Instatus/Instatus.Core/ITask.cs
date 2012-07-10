@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace Instatus.Core
 {
-    public interface IMetadata
+    public interface ITask
     {
-        string ContentType { get; set; }
-        IDictionary<string, string> Headers { get; }
+        void Process();
     }
 }
