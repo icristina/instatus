@@ -90,7 +90,7 @@ namespace Instatus.Integration.Azure
             using (var webClient = new WebClient())
             {
                 var byteArray = webClient.DownloadData(uri);
-                cloudBlob.UploadByteArray(byteArray);
+                cloudBlob.UploadByteArray(byteArray); // TODO: transition to Copy operation in 1.7.1 SDK
             }  
         }
 

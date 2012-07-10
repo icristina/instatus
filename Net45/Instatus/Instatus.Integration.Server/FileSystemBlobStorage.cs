@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Instatus.Core;
@@ -24,14 +25,15 @@ namespace Instatus.Integration.Server
             fileSystemLocalStorage.Stream(virtualPath, outputStream);
         }
 
-        public void Copy(string virtualPath, string uri, IMetadata metaData)
+        public async void Copy(string virtualPath, string uri, IMetadata metaData)
         {
             var absolutePath = fileSystemLocalStorage.MapPath(virtualPath);
-            
-            using (var webClient = new WebClient()) 
+
+            using (var httpClient = new HttpClient())
+            using (var inputStream = await httpClient.GetStreamAsync(uri))
             {
-                webClient.DownloadFile(uri, absolutePath);
-            }  
+                Upload(virtualPath, inputStream, metaData);
+            }
         }
 
         public string GenerateSignedUrl(string virtualPath, string httpMethod)
