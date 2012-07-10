@@ -63,6 +63,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiControllerExtensions.cs" />
     <Compile Include="DefaultWebApiConfig.cs" />
     <Compile Include="EntityStorageApiController.cs" />
     <Compile Include="HttpMethodOverrideHandler.cs" />
