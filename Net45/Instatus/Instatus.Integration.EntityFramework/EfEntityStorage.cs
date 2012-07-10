@@ -8,7 +8,7 @@ using Instatus.Core;
 
 namespace Instatus.Integration.EntityFramework
 {
-    public class EfEntityStorage<TContext> : IEntityStorage where TContext : DbContext
+    public class EfEntityStorage<TContext> : IEntityStorage, IDisposable where TContext : DbContext
     {
         private DbContext dbcontext;
 
@@ -31,6 +31,13 @@ namespace Instatus.Integration.EntityFramework
         public void SaveChanges()
         {
             Context.SaveChanges();
+        }
+
+        public void Dispose()
+        {
+            using(dbcontext) { // try dispose
+
+            }
         }
     }
 }
