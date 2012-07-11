@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -63,8 +64,18 @@ namespace Instatus.Tests
         [TestMethod]
         public void FlushQueue()
         {
-            var output = string.Empty;
-            var flushAction = new Action<List<string>>((s) => output = string.Join(",", s.ToArray()));
+            var flushCount = 0;
+            var concurrantBag = new ConcurrentBag<string>();
+            var flushAction = new Action<List<string>>((s) => {
+                Interlocked.Increment(ref flushCount);
+                
+                if (flushCount == 2)
+                    throw new Exception(); // allow exception
+                
+                foreach (var st in s)
+                    concurrantBag.Add(st);
+            });
+            
             var inMemoryQueue = new InMemoryQueue<string>(2, flushAction);
 
             inMemoryQueue.Enqueue("a");
@@ -72,8 +83,15 @@ namespace Instatus.Tests
             inMemoryQueue.Enqueue("c");
             inMemoryQueue.Enqueue("d");
             inMemoryQueue.Enqueue("e");
+            inMemoryQueue.Enqueue("f");
+            inMemoryQueue.Enqueue("g");
+            inMemoryQueue.Enqueue("h");
+            inMemoryQueue.Enqueue("i");
 
-            Assert.AreEqual("c,d", output);
+            Thread.Sleep(200);
+
+            Assert.AreEqual(4, flushCount);
+            Assert.AreEqual(6, concurrantBag.Distinct().Count());
         }
     }
 }

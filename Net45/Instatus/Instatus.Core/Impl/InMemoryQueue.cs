@@ -12,8 +12,9 @@ namespace Instatus.Core.Impl
     {
         private int limit;
         private ConcurrentQueue<T> queue = new ConcurrentQueue<T>();
-        private ReaderWriterLockSlim readLock = new ReaderWriterLockSlim();
+        private ReaderWriterLockSlim flushLock = new ReaderWriterLockSlim();
         private Action<List<T>> flushAction;
+        private int isFlushing = 0;
 
         public void Trim(int size)
         {
@@ -44,25 +45,23 @@ namespace Instatus.Core.Impl
 
         public void Enqueue(T message)
         {
-            if (limit > 0 && queue.Count >= limit && !readLock.IsWriteLockHeld)
+            if (limit > 0 && queue.Count >= limit && !flushLock.IsReadLockHeld)
             {
-                try
+                flushLock.EnterReadLock();
+                
+                if (flushAction != null)
                 {
-                    readLock.EnterWriteLock();
+                    var flushList = Flush(1);
 
-                    if (flushAction != null)
-                    {
-                        flushAction(Flush(1));
-                    }
-                    else
-                    {
-                        Trim(limit);
-                    }
+                    Task.Factory
+                        .StartNew(() => flushAction(flushList));
                 }
-                finally
+                else
                 {
-                    readLock.ExitWriteLock();
+                    Trim(limit);
                 }
+
+                flushLock.ExitReadLock();
             }
 
             queue.Enqueue(message);
