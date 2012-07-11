@@ -7,7 +7,7 @@ namespace Instatus.Core.Impl
 {
     public class InMemoryProfiler : IProfiler
     {
-        private InMemoryQueue<InMemoryProfilerEntry> queue;
+        private InMemoryQueue<BaseEntry> queue;
 
         public IQueryable<ITimestamp> Items
         {
@@ -29,25 +29,13 @@ namespace Instatus.Core.Impl
 
         public InMemoryProfiler(int limit)
         {
-            queue = new InMemoryQueue<InMemoryProfilerEntry>(limit);
-        }
-    }
-
-    public class InMemoryProfilerEntry : ITimestamp
-    {
-        public string Message { get; private set; }
-        public DateTime Timestamp { get; private set; }
-
-        public InMemoryProfilerEntry(string message)
-        {
-            Message = message;
-            Timestamp = DateTime.UtcNow;
+            queue = new InMemoryQueue<BaseEntry>(limit);
         }
     }
 
     internal class InMemoryProfilerStep : AbstractProfilerStep
     {
-        private IQueue<InMemoryProfilerEntry> queue;
+        private IQueue<BaseEntry> queue;
         
         public override void WriteStart(string message)
         {
@@ -56,10 +44,10 @@ namespace Instatus.Core.Impl
 
         public override void WriteEnd(string message)
         {
-            queue.Enqueue(new InMemoryProfilerEntry(message));
+            queue.Enqueue(new BaseEntry(message));
         }
 
-        public InMemoryProfilerStep(string stepName, IQueue<InMemoryProfilerEntry> queue)
+        public InMemoryProfilerStep(string stepName, IQueue<BaseEntry> queue)
             : base(stepName)
         {
             this.queue = queue;
