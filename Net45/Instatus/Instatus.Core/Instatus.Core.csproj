@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="ILinguistics.cs" />
     <Compile Include="Impl\BaseMetadata.cs" />
+    <Compile Include="Impl\BaseUser.cs" />
     <Compile Include="Impl\EntityMapper.cs" />
     <Compile Include="IMapper.cs" />
     <Compile Include="Impl\AbstractProfilerStep.cs" />

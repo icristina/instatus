@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Instatus.Core.Impl;
 
 namespace Instatus.Core.Utils
 {
@@ -19,28 +20,17 @@ namespace Instatus.Core.Utils
             return list.ElementAt(random.Next(0, list.Count()));
         }
 
-        public static IUser User
+        public static IUser CreateMockUser()
         {
-            get
-            {
-                var firstName = Random(FirstNames);
-                var lastName = Random(LastNames);
-                
-                return new DataGeneratorUser()
-                {
-                    FirstName = firstName,
-                    LastName = lastName,
-                    EmailAddress = string.Format("{0}.{1}@{2}", firstName, lastName, Random(EmailProviders)).ToLower()
-                };
-            }
-        }
-    }
+            var firstName = Random(FirstNames);
+            var lastName = Random(LastNames);
 
-    internal class DataGeneratorUser : IUser
-    {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string EmailAddress { get; set; }
-        public string Locale { get; set; }
+            return new BaseUser()
+            {
+                FirstName = firstName,
+                LastName = lastName,
+                EmailAddress = string.Format("{0}.{1}@{2}", firstName, lastName, Random(EmailProviders)).ToLower()
+            };
+        }
     }
 }
