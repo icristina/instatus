@@ -15,7 +15,7 @@ namespace Instatus.Integration.Azure
         public const string TableName = "Logger";
         
         private ICredentialStorage credentialStorage;
-        private IQueue<AzureLoggerEntity> queue;
+        private InMemoryQueue<AzureLoggerEntity> queue;
 
         public void Log(Exception exception, IDictionary<string, string> properties)
         {
@@ -32,6 +32,11 @@ namespace Instatus.Integration.Azure
             }
             
             queue.Enqueue(azureLoggerEntity);
+        }
+
+        public void Flush()
+        {
+            queue.Flush();
         }
 
         public async void Flush(List<AzureLoggerEntity> flushed)

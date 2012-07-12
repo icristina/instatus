@@ -17,11 +17,16 @@ namespace Instatus.Integration.Azure
         public const string TableName = "Profiler";
         
         private ICredentialStorage credentialStorage;
-        private IQueue<BaseEntry> queue;
+        private InMemoryQueue<BaseEntry> queue;
 
         public IDisposable Step(string label)
         {
             return new AzureTableProfilerStep(label, queue);
+        }
+
+        public void Flush()
+        {
+            queue.Flush();
         }
 
         public async void Flush(List<BaseEntry> flushed)
