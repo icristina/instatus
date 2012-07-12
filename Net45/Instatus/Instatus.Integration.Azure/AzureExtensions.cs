@@ -4,6 +4,8 @@ using System.Data.Services.Client;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Instatus.Core;
+using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.StorageClient;
 
 namespace Instatus.Integration.Azure

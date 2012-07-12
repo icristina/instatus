@@ -17,20 +17,7 @@ namespace Instatus.Integration.Azure
         public const string TableName = "Profiler";
         
         private ICredentialStorage credentialStorage;
-        private ICredential credential;
-
-        private InMemoryQueue<BaseEntry> queue;
-
-        public ICredential Credential
-        {
-            get
-            {
-                if (credential == null)
-                    credential = credentialStorage.GetCredential(ProviderName);
-
-                return credential;
-            }
-        }
+        private IQueue<BaseEntry> queue;
 
         public IDisposable Step(string label)
         {
@@ -39,15 +26,12 @@ namespace Instatus.Integration.Azure
 
         public async void Flush(List<BaseEntry> flushed)
         {
-            var baseAddress = string.Format("http://{0}.table.core.windows.net", Credential.AccountName);
-            var storageCredentials = new StorageCredentialsAccountAndKey(Credential.AccountName, Credential.PrivateKey);
-            var tableClient = new CloudTableClient(baseAddress, storageCredentials);
-            var created = await tableClient.CreateTableIfNotExistAsync(TableName);
-            var dataContext = tableClient.GetDataServiceContext();
+            var credential = credentialStorage.GetCredential(ProviderName);
+            var dataContext = await AzureClient.GetTableServiceContext(credential, TableName);
 
             foreach(var entry in flushed) 
             {
-                var profilerEntry = new ProfilerEntity(entry.Text, entry.Timestamp);             
+                var profilerEntry = new AzureProfilerEntity(entry.Text, entry.Timestamp);             
                 
                 dataContext.AddObject(TableName, profilerEntry);
             }
@@ -55,23 +39,23 @@ namespace Instatus.Integration.Azure
             await dataContext.SaveChangesWithRetriesAsync();
         }
 
-        public AzureProfiler(ICredentialStorage credentialStorage, int buffer)
+        public AzureProfiler(ICredentialStorage credentialStorage)
         {
             this.credentialStorage = credentialStorage;
-            this.queue = new InMemoryQueue<BaseEntry>(buffer, Flush);
+            this.queue = new InMemoryQueue<BaseEntry>(AzureClient.TableServiceEntityBufferCount, Flush);
         }
     }
 
-    public class ProfilerEntity : TableServiceEntity
+    public class AzureProfilerEntity : TableServiceEntity
     {
         public string Text { get; set; }
         public DateTime CreatedTime { get; set; }
 
-        public ProfilerEntity(string text, DateTime createdTime) 
+        public AzureProfilerEntity(string text, DateTime createdTime) 
         {
             Text = text;
             CreatedTime = createdTime;
-            PartitionKey = createdTime.ToString("yyyy-MM-dd"); // partition per day
+            PartitionKey = createdTime.ToString(AzureClient.PartitionKeyFormatString);
             RowKey = Guid.NewGuid().ToString();
         }
     }

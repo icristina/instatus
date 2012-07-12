@@ -16,18 +16,6 @@ namespace Instatus.Integration.Azure
         public const string ProviderName = "AzureBlobStorage";
         
         private ICredentialStorage credentialStorage;
-        private ICredential credential;
-
-        public ICredential Credential
-        {
-            get
-            {
-                if (credential == null)
-                    credential = credentialStorage.GetCredential(ProviderName);
-
-                return credential;
-            }
-        }
 
         public static readonly char[] RelativeChars = new char[] { '~', '/', '\\' };
 
@@ -47,8 +35,9 @@ namespace Instatus.Integration.Azure
         public CloudBlob GetBlobReference(string virtualPath)
         {
             var resource = ParseVirtualPath(virtualPath);
-            var baseUri = GetBaseUri(Credential.AccountName);
-            var storageCredential = new StorageCredentialsAccountAndKey(Credential.AccountName, Credential.PrivateKey);
+            var credential = credentialStorage.GetCredential(ProviderName);
+            var baseUri = GetBaseUri(credential.AccountName);
+            var storageCredential = new StorageCredentialsAccountAndKey(credential.AccountName, credential.PrivateKey);
             var client = new CloudBlobClient(baseUri, storageCredential);
             var container = client.GetContainerReference(resource.Item1);
 
@@ -101,7 +90,8 @@ namespace Instatus.Integration.Azure
 
         public string MapPath(string virtualPath)
         {
-            return GetBaseUri(Credential.AccountName) + "/" + virtualPath.TrimStart(RelativeChars);
+            var credential = credentialStorage.GetCredential(ProviderName);
+            return GetBaseUri(credential.AccountName) + "/" + virtualPath.TrimStart(RelativeChars);
         }
 
         public AzureBlobStorage(ICredentialStorage credentialStorage)
