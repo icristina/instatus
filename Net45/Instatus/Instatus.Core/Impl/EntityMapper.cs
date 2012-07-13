@@ -55,5 +55,21 @@ namespace Instatus.Core.Impl
             this.mapViewModelToEntity = mapViewModelToEntity;
             this.injectViewModelValuesToEntity = injectViewModelValuesToEntity;
         }
+
+        public EntityMapper(
+            Expression<Func<TEntity, TModel>> projectEntityToViewModelForQuery,
+            Func<TModel, TEntity> mapViewModelToEntity,
+            Action<TEntity, TModel> injectViewModelValuesToEntity)
+            : this(projectEntityToViewModelForQuery, null, mapViewModelToEntity, injectViewModelValuesToEntity)
+        {
+
+        }
+
+        public EntityMapper(
+            Expression<Func<TEntity, TModel>> projectEntityToViewModelForQuery)
+            : this(projectEntityToViewModelForQuery, null, null, null)
+        {
+
+        }
     }
 }

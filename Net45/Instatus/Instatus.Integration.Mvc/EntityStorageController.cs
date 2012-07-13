@@ -16,26 +16,34 @@ namespace Instatus.Integration.Mvc
         {
 
         }
-    }    
-    
+    }
+
     public class EntityStorageController<TEntity, TModel> : Controller
         where TEntity : class
         where TModel : class
     {
-        private IEntityStorage entityStorage;
-        private IMapper mapper;
+        public IEntityStorage EntityStorage { get; private set; }
+        public IMapper Mapper { get; private set; }
+
+        public IEntitySet<TEntity> EntitySet
+        {
+            get
+            {
+                return EntityStorage.Set<TEntity>();
+            }
+        }
 
         public ActionResult Index(int take = 20, int skip = 0)
         {
             IQueryable<TModel> queryable;
-            
+
             if (typeof(TEntity) == typeof(TModel))
             {
-                queryable = entityStorage.Set<TEntity>().Cast<TModel>();
+                queryable = EntitySet.Cast<TModel>();
             }
             else
             {
-                queryable = entityStorage.Set<TEntity>().Select(mapper.Projection<TEntity, TModel>());
+                queryable = EntitySet.Select(Mapper.Projection<TEntity, TModel>());
             }
 
             ViewData.Model = queryable.OrderBy(b => true).Take(take).Skip(skip).ToList();
@@ -45,14 +53,14 @@ namespace Instatus.Integration.Mvc
 
         public ActionResult Details(int id)
         {
-            var entity = entityStorage.Set<TEntity>().Find(id);
+            var entity = EntitySet.Find(id);
 
             if (entity == null)
             {
                 return HttpNotFound();
             }
 
-            ViewData.Model = mapper.Map<TModel>(entity);
+            ViewData.Model = Mapper.Map<TModel>(entity);
 
             return View();
         }
@@ -70,32 +78,32 @@ namespace Instatus.Integration.Mvc
         {
             if (ModelState.IsValid)
             {
-                var entity = mapper.Map<TEntity>(model);
+                var entity = Mapper.Map<TEntity>(model);
 
-                entityStorage.Set<TEntity>().Add(entity);
-                entityStorage.SaveChanges();
+                EntitySet.Add(entity);
+                EntityStorage.SaveChanges();
 
                 return RedirectToAction("Details", new { id = (entity as dynamic).Id });
             }
             else
             {
                 ViewData.Model = model;
-                
+
                 return View();
-            }            
+            }
         }
 
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            var entity = entityStorage.Set<TEntity>().Find(id);
+            var entity = EntitySet.Find(id);
 
             if (entity == null)
             {
                 return HttpNotFound();
             }
 
-            ViewData.Model = mapper.Map<TModel>(entity);
+            ViewData.Model = Mapper.Map<TModel>(entity);
 
             return View();
         }
@@ -105,30 +113,30 @@ namespace Instatus.Integration.Mvc
         {
             if (ModelState.IsValid)
             {
-                var entity = entityStorage.Set<TEntity>().Find(id);
+                var entity = EntitySet.Find(id);
 
                 if (entity == null)
                 {
                     return HttpNotFound();
                 }
 
-                mapper.Inject(entity, model);
+                Mapper.Inject(entity, model);
 
                 try
                 {
-                    entityStorage.SaveChanges();
+                    EntityStorage.SaveChanges();
                 }
                 catch
                 {
                     return HttpNotFound();
                 }
 
-                return RedirectToAction("Details", new { id = id } );
+                return RedirectToAction("Details", new { id = id });
             }
             else
             {
                 ViewData.Model = model;
-                
+
                 return View();
             }
         }
@@ -136,18 +144,18 @@ namespace Instatus.Integration.Mvc
         [HttpPost]
         public ActionResult Delete(int id)
         {
-            var entity = entityStorage.Set<TEntity>().Find(id);
+            var entity = EntitySet.Find(id);
 
             if (entity == null)
             {
                 return HttpNotFound();
             }
 
-            entityStorage.Set<TEntity>().Delete(id);
+            EntitySet.Delete(id);
 
             try
             {
-                entityStorage.SaveChanges();
+                EntityStorage.SaveChanges();
             }
             catch
             {
@@ -159,8 +167,8 @@ namespace Instatus.Integration.Mvc
 
         public EntityStorageController(IEntityStorage entityStorage, IMapper mapper)
         {
-            this.entityStorage = entityStorage;
-            this.mapper = mapper;
+            EntityStorage = entityStorage;
+            Mapper = mapper;
         }
     }
 }

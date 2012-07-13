@@ -30,6 +30,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instatus.Integration.ValueI
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instatus.Integration.Less", "Instatus.Integration.Less\Instatus.Integration.Less.csproj", "{0DF442DB-C176-4141-849A-C90E998E4FAF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instatus.Integration.FileHelper", "Instatus.Integration.FileHelper\Instatus.Integration.FileHelper.csproj", "{4C01BD4F-7A27-4D39-B980-D2317FCE8722}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -52,6 +54,10 @@ Global
 		{39C44AF6-A1AD-40EE-B1C6-40FDA4AC9C83}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{39C44AF6-A1AD-40EE-B1C6-40FDA4AC9C83}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{39C44AF6-A1AD-40EE-B1C6-40FDA4AC9C83}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C01BD4F-7A27-4D39-B980-D2317FCE8722}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C01BD4F-7A27-4D39-B980-D2317FCE8722}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C01BD4F-7A27-4D39-B980-D2317FCE8722}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C01BD4F-7A27-4D39-B980-D2317FCE8722}.Release|Any CPU.Build.0 = Release|Any CPU
 		{536C5949-6592-42B0-83E9-EBDCFF781747}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{536C5949-6592-42B0-83E9-EBDCFF781747}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{536C5949-6592-42B0-83E9-EBDCFF781747}.Release|Any CPU.ActiveCfg = Release|Any CPU

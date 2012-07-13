@@ -33,9 +33,13 @@ namespace Instatus.Integration.Mvc
             Membership.Providers.Clear();
             Membership.Providers.Add(new SimpleMembershipProvider());
 
-            FormsAuthentication.EnableFormsAuthentication(new NameValueCollection() {
+            if (hostingEnvironment != null)
+            {
+                FormsAuthentication.EnableFormsAuthentication(new NameValueCollection() 
+                {
                     { "loginUrl", hostingEnvironment.LoginUrl }
-            });
+                });
+            }
         }
 
         public static void RegisterRoleProvider()
