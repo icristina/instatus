@@ -21,8 +21,7 @@ namespace Instatus.Integration.FileHelper
             response.ContentType = "text/csv";
             response.AppendHeader("Content-Disposition", string.Format("attachment;filename={0}-{1:yyyy-MM-dd-HH-mm-ss}.csv", slug, DateTime.UtcNow));
 
-            using (var memoryStream = response.OutputStream)
-            using (var textWriter = new StreamWriter(memoryStream))
+            using (var textWriter = new StreamWriter(response.OutputStream))
             {
                 fileHelperEngine.WriteStream(textWriter, results);
             }
