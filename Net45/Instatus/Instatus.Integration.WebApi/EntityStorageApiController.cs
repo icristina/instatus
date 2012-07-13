@@ -40,18 +40,18 @@ namespace Instatus.Integration.WebApi
             }
         }
 
-        public virtual TModel Get(int id)
+        public virtual HttpResponseMessage Get(int id)
         {
             var entity = entityStorage.Set<TEntity>().Find(id);
             
             if (entity == null)
             {
-                throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
+                return Request.CreateResponse(HttpStatusCode.NotFound);
             }
 
             var model = mapper.Map<TModel>(entity);
 
-            return model;
+            return Request.CreateResponse(HttpStatusCode.OK, model);
         }
 
         public virtual HttpResponseMessage Put(int id, TModel model)

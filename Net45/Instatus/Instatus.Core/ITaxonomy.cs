@@ -7,6 +7,6 @@ namespace Instatus.Core
 {
     public interface ITaxonomy
     {
-        public string[] GetTags();
+        string[] GetTags();
     }
 }

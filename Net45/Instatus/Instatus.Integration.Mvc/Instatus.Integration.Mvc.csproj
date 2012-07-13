@@ -82,6 +82,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseMvcConfig.cs" />
+    <Compile Include="EntityStorageController.cs" />
     <Compile Include="FilterResponseHeadersModule.cs" />
     <Compile Include="LogExceptionFilter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
