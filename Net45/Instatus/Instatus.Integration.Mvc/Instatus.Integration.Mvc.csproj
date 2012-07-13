@@ -84,6 +84,7 @@
   <ItemGroup>
     <Compile Include="AccountController.cs" />
     <Compile Include="BaseMvcConfig.cs" />
+    <Compile Include="PagedViewModel.cs" />
     <Compile Include="EntityStorageController.cs" />
     <Compile Include="FilterResponseHeadersModule.cs" />
     <Compile Include="LogExceptionFilter.cs" />
