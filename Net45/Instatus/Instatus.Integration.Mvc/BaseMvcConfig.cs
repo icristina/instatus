@@ -51,7 +51,7 @@ namespace Instatus.Integration.Mvc
         
         public static void RegisterExceptionFilters()
         {
-            GlobalFilters.Filters.Add(new LogExceptionFilter());
+            GlobalFilters.Filters.Add(new LogExceptionAttribute());
             GlobalFilters.Filters.Add(new HandleErrorAttribute());
         }
 
@@ -89,6 +89,11 @@ namespace Instatus.Integration.Mvc
             razorViewEngine.FileExtensions = new string[] { "cshtml" }; 
 
             ViewEngines.Engines.Add(razorViewEngine);
+        }
+
+        public static void RegisterCompactPrivacyPolicy()
+        {
+            GlobalFilters.Filters.Add(new IframeCookieSupportAttribute());
         }
     }
 }

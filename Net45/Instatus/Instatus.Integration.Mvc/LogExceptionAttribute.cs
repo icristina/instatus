@@ -7,7 +7,7 @@ using Instatus.Core;
 
 namespace Instatus.Integration.Mvc
 {
-    public class LogExceptionFilter : FilterAttribute, IExceptionFilter
+    public class LogExceptionAttribute : FilterAttribute, IExceptionFilter
     {
         public IDictionary<string, string> GenerateProperties(ExceptionContext context)
         {

@@ -9,13 +9,19 @@ namespace Instatus.Core.Utils
 {
     public class PathBuilder
     {
+        private bool forceLowerCasePath = false;
         private bool hasQuery = false;
         private StringBuilder stringBuilder;
 
         public PathBuilder Path(string path)
         {
+            if (forceLowerCasePath)
+                path = path.ToLower();
+
+            path = path.TrimStart('/').TrimEnd('/');
+            
             stringBuilder.Append('/');
-            stringBuilder.Append(path.TrimStart('/').TrimEnd('/'));
+            stringBuilder.Append(path);
             
             return this;
         }
@@ -57,10 +63,29 @@ namespace Instatus.Core.Utils
             return stringBuilder.ToString();
         }
 
-        public PathBuilder(string baseAddress)
+        public PathBuilder(string baseAddress, bool forceLowerCasePath = false)
         {
-            hasQuery = baseAddress.Contains('?');
-            stringBuilder = new StringBuilder(baseAddress.TrimEnd('/'));
+            this.forceLowerCasePath = forceLowerCasePath;
+            
+            var queryIndex = baseAddress.LastIndexOf('?');
+
+            hasQuery = (queryIndex >= 0);
+
+            var pathSegment = string.Empty;
+            var querySegment = string.Empty;
+
+            if (hasQuery)
+            {
+                pathSegment = baseAddress.Substring(0, queryIndex).TrimEnd('/');
+                querySegment = baseAddress.Substring(queryIndex);
+            }
+            else
+            {
+                pathSegment = baseAddress.TrimEnd('/');
+            }
+
+            stringBuilder = new StringBuilder(forceLowerCasePath ? pathSegment.ToLower() : pathSegment)
+                .Append(querySegment);
         }
     }
 }

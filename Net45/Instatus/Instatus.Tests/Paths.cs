@@ -29,6 +29,16 @@ namespace Instatus.Tests
 
             Assert.AreEqual("//www.google.com/search?q=dotnet", pathBuilder.ToProtocolRelativeUri());
         }
+
+        [TestMethod]
+        public void LowerCasePaths()
+        {
+            var pathBuilder1 = new PathBuilder("http://Google.com/Search/", true);
+            var pathBuilder2 = new PathBuilder("http://Google.com/Search/?Query=1", true);
+
+            Assert.AreEqual("http://google.com/search", pathBuilder1.ToString(), false);
+            Assert.AreEqual("http://google.com/search?Query=1", pathBuilder2.ToString(), false);
+        }
         
         [TestMethod]
         public void SingleFolder()
