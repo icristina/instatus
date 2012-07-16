@@ -1,0 +1,45 @@
+﻿@{
+    var properties = ViewData.ModelMetadata.Properties
+                        .Where(prop => prop.ShowForEdit && !ViewData.TemplateInfo.Visited(prop));    
+}
+
+@foreach (var prop in properties)
+{
+    <div class="control-group 
+        @(ViewContext.ViewData.ModelState.Any(m => m.Key == prop.PropertyName) ? "error" : "") 
+        @prop.PropertyName.ToLower()">
+        @if (prop.IsReadOnly)
+        {
+            <b>@prop.GetDisplayName()</b>
+            @Html.Display(prop.PropertyName)
+        }
+        else if (prop.HideSurroundingHtml)
+        {
+            @Html.Editor(prop.PropertyName)                    
+        }
+        else
+        {
+            <label class="control-label">
+                @prop.GetDisplayName()
+                @if(prop.IsRequired) {
+                    <span class="required">*</span> 
+                }            
+            </label>                     
+            <div class="controls">
+                @Html.Editor(prop.PropertyName)             
+                @if (ViewContext.ViewData.ModelState.Any(m => m.Key == prop.PropertyName))
+                {
+                    <p class="alert alert-block">
+                        @Html.ValidationMessage(prop.PropertyName)
+                    </p>
+                }
+                @if (!string.IsNullOrWhiteSpace(prop.Description))
+                {
+                    <p class="help-block">
+                        @prop.Description
+                    </p>              
+                }                    
+            </div>
+        }            
+    </div>     
+}
