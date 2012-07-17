@@ -94,6 +94,11 @@ namespace Instatus.Integration.Azure
             return GetBaseUri(credential.AccountName) + "/" + virtualPath.TrimStart(RelativeChars);
         }
 
+        public string[] Query(string virtualPath)
+        {
+            throw new NotImplementedException();
+        }
+
         public AzureBlobStorage(ICredentialStorage credentialStorage)
         {
             this.credentialStorage = credentialStorage;

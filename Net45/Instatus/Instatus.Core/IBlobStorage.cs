@@ -14,5 +14,6 @@ namespace Instatus.Core
         void Copy(string virtualPath, string uri, IMetadata metaData);
         string GenerateSignedUrl(string virtualPath, string httpMethod);
         string MapPath(string virtualPath);
+        string[] Query(string virtualPath);
     }
 }

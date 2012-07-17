@@ -42,6 +42,7 @@ namespace Instatus.Integration.Server
         }
 
         public static readonly char[] RelativeChars = new char[] { '~', '/', '\\' };
+        public static readonly char[] PathDelimiterChars = new char[] { '/', '\\' };
 
         public string MapPath(string virtualPath)
         {
@@ -49,6 +50,18 @@ namespace Instatus.Integration.Server
             var absolutePath = virtualPath.TrimStart(RelativeChars);
             
             return new Uri(baseUri, absolutePath).ToString();
+        }
+
+        public string[] Query(string virtualPath)
+        {
+            var outputPath = hostingEnvironment.OutputPath;
+            var directoryPath = Path.Combine(outputPath, virtualPath.TrimStart(RelativeChars));
+            var files = Directory.GetFiles(directoryPath);
+
+            return files.Select(file => {
+                return virtualPath.TrimEnd(PathDelimiterChars) + "/" + Path.GetFileName(file);
+            })
+            .ToArray();
         }
 
         public FileSystemBlobStorage(IHostingEnvironment hostingEnvironment)
