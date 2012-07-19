@@ -10,7 +10,7 @@ using Instatus.Core.Impl;
 
 namespace Instatus.Integration.Mvc
 {
-    public class PublishBundlesTask : ITask
+    public class PublishBundlesTask
     {
         private IBlobStorage blobStorage;
         

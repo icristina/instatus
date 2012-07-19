@@ -39,9 +39,14 @@ namespace Instatus.Core.Impl
         public void Inject(object target, object source)
         {
             if (target is TEntity && source is TModel)
-                injectViewModelValuesToEntity.Invoke(target as TEntity, source as TModel);
+            {
 
-            throw new NotSupportedException("No injection exists");
+                injectViewModelValuesToEntity.Invoke(target as TEntity, source as TModel);
+            }
+            else
+            {
+                throw new NotSupportedException("No injection exists");
+            }
         }
 
         public EntityMapper(

@@ -64,7 +64,6 @@
     <Compile Include="Impl\InMemoryScheduler.cs" />
     <Compile Include="Impl\InMemoryTaxonomy.cs" />
     <Compile Include="Impl\MockMembershipProvider.cs" />
-    <Compile Include="ITask.cs" />
     <Compile Include="ITaxonomy.cs" />
     <Compile Include="ITokenStorage.cs" />
     <Compile Include="IBlobStorage.cs" />

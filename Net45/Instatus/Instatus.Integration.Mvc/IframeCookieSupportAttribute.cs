@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace Instatus.Integration.Mvc
 {
-    public class IframeCookieSupportAttribute : IActionFilter
+    public class IframeCookieSupportAttribute : Attribute, IActionFilter
     {
         public void OnActionExecuted(ActionExecutedContext filterContext)
         {
