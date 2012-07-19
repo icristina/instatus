@@ -6,21 +6,16 @@ using System.Web.Mvc;
 
 namespace Instatus.Integration.Mvc
 {
-    public class IframeCookieSupportAttribute : Attribute, IActionFilter
+    public class IframeCookieSupportAttribute : ActionFilterAttribute
     {
-        public void OnActionExecuted(ActionExecutedContext filterContext)
+        public override void OnResultExecuted(ResultExecutedContext filterContext)
         {
             var response = filterContext.HttpContext.Response;
-            
+
             if (!filterContext.IsChildAction && !response.IsRequestBeingRedirected)
             {
                 response.AddHeader("p3p", "CP=\"CAO PSA OUR\"");
             }
-        }
-
-        public void OnActionExecuting(ActionExecutingContext filterContext)
-        {
-            
         }
     }
 }
