@@ -15,7 +15,7 @@ namespace Instatus.Integration.Server
         {
             get
             {
-                return GetAppSetting("OutputPath") ?? HostingEnvironment.MapPath("~/media/");
+                return GetAppSetting("OutputPath") ?? HostingEnvironment.MapPath("~/");
             }
         }
         

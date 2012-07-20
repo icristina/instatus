@@ -17,12 +17,24 @@ namespace Instatus.Integration.Server
         
         public void Upload(string virtualPath, Stream inputStream, IMetadata metaData)
         {
-            fileSystemLocalStorage.Save(virtualPath, inputStream);
+            var absolutePath = MapLocalPath(virtualPath);
+
+            using (var fileStream = new FileStream(absolutePath, FileMode.Create, FileAccess.Write))
+            {
+                inputStream.Flush();
+                inputStream.Position = 0;
+                inputStream.CopyTo(fileStream);
+            }
         }
 
         public void Download(string virtualPath, Stream outputStream)
         {
-            fileSystemLocalStorage.Stream(virtualPath, outputStream);
+            var absolutePath = MapLocalPath(virtualPath);
+
+            using (var fileStream = new FileStream(absolutePath, FileMode.Open, FileAccess.Read))
+            {
+                fileStream.CopyTo(outputStream);
+            }
         }
 
         public async void Copy(string virtualPath, string uri, IMetadata metaData)
@@ -62,6 +74,13 @@ namespace Instatus.Integration.Server
                 return virtualPath.TrimEnd(PathDelimiterChars) + "/" + Path.GetFileName(file);
             })
             .ToArray();
+        }
+
+        public string MapLocalPath(string virtualPath)
+        {
+            var outputPath = hostingEnvironment.OutputPath;
+
+            return Path.Combine(outputPath, virtualPath.TrimStart(RelativeChars));
         }
 
         public FileSystemBlobStorage(IHostingEnvironment hostingEnvironment)

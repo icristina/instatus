@@ -85,6 +85,8 @@
   <ItemGroup>
     <Compile Include="AccountController.cs" />
     <Compile Include="BaseMvcConfig.cs" />
+    <Compile Include="FileStorageController.cs" />
+    <Compile Include="FileStorageViewModel.cs" />
     <Compile Include="IframeCookieSupportAttribute.cs" />
     <Compile Include="LowercaseRoute.cs" />
     <Compile Include="PagedViewModel.cs" />
