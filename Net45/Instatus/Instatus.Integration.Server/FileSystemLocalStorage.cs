@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Hosting;
 using Instatus.Core;
+using Instatus.Core.Utils;
 
 namespace Instatus.Integration.Server
 {
@@ -35,12 +36,15 @@ namespace Instatus.Integration.Server
             }
         }
 
+        public bool EnableSubFolders { get; set; }
+
         public string MapPath(string virtualPath)
         {
-            var fileName = Path.GetFileName(virtualPath);
-            var outputPath = hostingEnvironment.OutputPath;
-
-            return Path.Combine(outputPath, fileName);
+            var subPath = EnableSubFolders ? 
+                virtualPath.TrimStart(PathBuilder.RelativeChars) : 
+                Path.GetFileName(virtualPath);
+            
+            return Path.Combine(hostingEnvironment.OutputPath, subPath);
         }
 
         public FileSystemLocalStorage(IHostingEnvironment hostingEnvironment)

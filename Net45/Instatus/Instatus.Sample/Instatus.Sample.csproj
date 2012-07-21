@@ -138,7 +138,6 @@
     <Content Include="Content\images\glyphicons-halflings-white.png" />
     <Content Include="Content\images\glyphicons-halflings.png" />
     <Content Include="Global.asax" />
-    <Content Include="Media\Koala.jpg" />
     <Content Include="Media\Lighthouse.jpg" />
     <Content Include="Media\Penguins.jpg" />
     <Content Include="Media\Tulips.jpg" />

@@ -13,6 +13,9 @@ namespace Instatus.Core.Utils
         private bool hasQuery = false;
         private StringBuilder stringBuilder;
 
+        public static readonly char[] RelativeChars = new char[] { '~', '/', '\\' };
+        public static readonly char[] DelimiterChars = new char[] { '/', '\\' };
+
         public PathBuilder Path(string path)
         {
             if (forceLowerCasePath)
