@@ -7,10 +7,9 @@ using System.Threading.Tasks;
 
 namespace Instatus.Core
 {
-    public interface ILocalStorage
+    public interface ILocalStorage : IVirtualPathUtility
     {
         void Save(string virtualPath, Stream inputStream);
         void Stream(string virtualPath, Stream outputStream);
-        string MapPath(string virtualPath);
     }
 }

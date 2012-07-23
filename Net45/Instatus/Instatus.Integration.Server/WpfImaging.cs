@@ -24,11 +24,21 @@ namespace Instatus.Integration.Server
             WriteToOutputStream(bitmapImage, outputStream);
         }
 
-        public void Resize(Stream inputStream, Stream outputStream, int width, int height, bool mask)
+        public void Resize(Stream inputStream, Stream outputStream, int width, int height)
         {
             throw new NotImplementedException();
         }
 
+        public void Cover(Stream inputStream, Stream outputStream, int width, int height)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Contain(Stream inputStream, Stream outputStream, int width, int height)
+        {
+            throw new NotImplementedException();
+        }
+        
         public void WriteToOutputStream(BitmapSource bitmapSource, Stream outputStream)
         {
             var encoder = new JpegBitmapEncoder();

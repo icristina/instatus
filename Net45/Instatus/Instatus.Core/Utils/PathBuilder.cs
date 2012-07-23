@@ -15,15 +15,16 @@ namespace Instatus.Core.Utils
 
         public static readonly char[] RelativeChars = new char[] { '~', '/', '\\' };
         public static readonly char[] DelimiterChars = new char[] { '/', '\\' };
+        public const char DefaultDelimiter = '/';
 
         public PathBuilder Path(string path)
         {
             if (forceLowerCasePath)
                 path = path.ToLower();
 
-            path = path.TrimStart('/').TrimEnd('/');
+            path = path.TrimStart(DelimiterChars).TrimEnd(DelimiterChars);
             
-            stringBuilder.Append('/');
+            stringBuilder.Append(DefaultDelimiter);
             stringBuilder.Append(path);
             
             return this;
@@ -79,15 +80,18 @@ namespace Instatus.Core.Utils
 
             if (hasQuery)
             {
-                pathSegment = baseAddress.Substring(0, queryIndex).TrimEnd('/');
+                pathSegment = baseAddress.Substring(0, queryIndex).TrimEnd(DelimiterChars);
                 querySegment = baseAddress.Substring(queryIndex);
             }
             else
             {
-                pathSegment = baseAddress.TrimEnd('/');
+                pathSegment = baseAddress.TrimEnd(DelimiterChars);
             }
 
-            stringBuilder = new StringBuilder(forceLowerCasePath ? pathSegment.ToLower() : pathSegment)
+            if (forceLowerCasePath)
+                pathSegment = pathSegment.ToLower();
+
+            stringBuilder = new StringBuilder(pathSegment)
                 .Append(querySegment);
         }
     }

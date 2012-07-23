@@ -7,13 +7,12 @@ using System.Threading.Tasks;
 
 namespace Instatus.Core
 {
-    public interface IBlobStorage
+    public interface IBlobStorage : IVirtualPathUtility
     {
         void Upload(string virtualPath, Stream inputStream, IMetadata metaData);
         void Download(string virtualPath, Stream outputStream);
         void Copy(string virtualPath, string uri, IMetadata metaData);
         string GenerateSignedUrl(string virtualPath, string httpMethod);
-        string MapPath(string virtualPath);
         string[] Query(string virtualPath);
     }
 }
