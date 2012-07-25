@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -8,7 +9,7 @@ using Instatus.Core;
 
 namespace Instatus.Integration.Mvc
 {
-    public class EntityStorageController<TEntity> : EntityStorageController<TEntity, TEntity>
+    public abstract class EntityStorageController<TEntity> : EntityStorageController<TEntity, TEntity>
         where TEntity : class
     {
         public EntityStorageController(IEntityStorage entityStorage, IMapper mapper)
@@ -18,7 +19,7 @@ namespace Instatus.Integration.Mvc
         }
     }
 
-    public class EntityStorageController<TEntity, TModel> : Controller
+    public abstract class EntityStorageController<TEntity, TModel> : Controller
         where TEntity : class
         where TModel : class
     {
@@ -33,7 +34,7 @@ namespace Instatus.Integration.Mvc
             }
         }
 
-        public ActionResult Index(int take = 20, int skip = 0)
+        public virtual IOrderedQueryable<TModel> Query(string orderBy, string filter) 
         {
             IQueryable<TModel> queryable;
 
@@ -46,7 +47,16 @@ namespace Instatus.Integration.Mvc
                 queryable = EntitySet.Select(Mapper.Projection<TEntity, TModel>());
             }
 
-            ViewData.Model = queryable.OrderBy(b => true).Take(take).Skip(skip).ToList();
+            return queryable.OrderBy(b => true);
+        }
+
+        public ActionResult Index(
+            string orderBy, 
+            string filter, 
+            int pageIndex = 0, 
+            int pageSize = 20)
+        {
+            ViewData.Model = new PagedViewModel<TModel>(Query(orderBy, filter), pageIndex, pageSize);
 
             return View();
         }

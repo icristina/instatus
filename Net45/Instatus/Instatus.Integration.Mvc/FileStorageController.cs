@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Web.Mvc;
 using Instatus.Core;
+using Instatus.Core.Utils;
 
 namespace Instatus.Integration.Mvc
 {
@@ -85,7 +86,10 @@ namespace Instatus.Integration.Mvc
 
         public virtual string MapPath(string fileName)
         {
-            return BaseVirtualPath.TrimEnd('/') + "/" + Path.GetFileNameWithoutExtension(fileName) + ".jpg";
+            return BaseVirtualPath.TrimEnd(PathBuilder.DelimiterChars) 
+                + "/" 
+                + Path.GetFileNameWithoutExtension(fileName) 
+                + ".jpg";
         }
 
         public virtual void OnCreated(string virtualPath)
