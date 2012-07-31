@@ -7,6 +7,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using Instatus.Core.Utils;
+using Instatus.Integration.Json;
 
 namespace Instatus.Integration.Facebook
 {
@@ -49,7 +50,11 @@ namespace Instatus.Integration.Facebook
             httpResponse.EnsureSuccessStatusCode();
 
             var jsonMediaTypeFormatter = new JsonMediaTypeFormatter();
+            var jsonSerializationSettings = jsonMediaTypeFormatter.CreateDefaultSerializerSettings();
 
+            jsonSerializationSettings.ContractResolver = new UnderscoreMappingResolver();
+            
+            jsonMediaTypeFormatter.SerializerSettings = jsonSerializationSettings;
             jsonMediaTypeFormatter.SupportedMediaTypes.Clear();
             jsonMediaTypeFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/javascript"));
 
@@ -105,110 +110,110 @@ namespace Instatus.Integration.Facebook
 
         public class User
         {
-            public string id;
-            public string name;
-            public string first_name;
-            public string middle_name;
-            public string last_name;
-            public string gender;
-            public string locale;
-            public string username;
-            public string third_party_id;
-            public string email;
+            public string Id { get; set; }
+            public string Name { get; set; }
+            public string FirstName { get; set; }
+            public string MiddleName { get; set; }
+            public string LastName { get; set; }
+            public string Gender { get; set; }
+            public string Locale { get; set; }
+            public string Username { get; set; }
+            public string ThirdPartyId { get; set; }
+            public string Email { get; set; }
         }
 
         public class Response<T>
         {
-            public IList<T> data;
-            public Paging paging;
+            public IList<T> Data { get; set; }
+            public Paging Paging { get; set; }
         }
 
         public class Paging
         {
-            public string next;
-            public string previous;
+            public string Next { get; set; }
+            public string Previous { get; set; }
         }
 
         public class Connection
         {
-            public string id;
-            public string name;
-            public string category;
+            public string Id { get; set; }
+            public string Name { get; set; }
+            public string Category { get; set; }
         }
 
         public class Friend
         {
-            public string uid;
-            public string name;
+            public string Uid { get; set; }
+            public string Name { get; set; }
         }
 
         public class Post
         {
-            public string id;
-            public Connection from;
-            public string message;
-            public string picture;
-            public string link;
-            public string name;
-            public string caption;
-            public string description;
-            public string icon;
-            public Action[] actions;
-            public Privacy privacy;
-            public string type;
-            public string object_id;
-            public Connection application;
-            public DateTime created_time;
-            public DateTime updated_time;
-            public Statistic comments;
-            public string story;
-            public IDictionary<string, StoryTag[]> story_tags;
-            public Place place;
+            public string Id { get; set; }
+            public Connection From { get; set; }
+            public string Message { get; set; }
+            public string Picture { get; set; }
+            public string Link { get; set; }
+            public string Name { get; set; }
+            public string Caption { get; set; }
+            public string Description { get; set; }
+            public string Icon { get; set; }
+            public Action[] Actions { get; set; }
+            public Privacy Privacy { get; set; }
+            public string Type { get; set; }
+            public string ObjectId { get; set; }
+            public Connection Application { get; set; }
+            public DateTime CreatedTime { get; set; }
+            public DateTime UpdatedTime { get; set; }
+            public Statistic Comments { get; set; }
+            public string Story { get; set; }
+            public IDictionary<string, StoryTag[]> StoryTags { get; set; }
+            public Place Place { get; set; }
         }
 
         public class Action
         {
-            public string name;
-            public string link;
+            public string Name { get; set; }
+            public string Link { get; set; }
         }
 
         public class Privacy
         {
-            public string description;
-            public string value;
-            public string allow;
-            public string deny;
+            public string Description { get; set; }
+            public string Value { get; set; }
+            public string Allow { get; set; }
+            public string Deny { get; set; }
         }
 
         public class Statistic
         {
-            public int count;
+            public int Count { get; set; }
         }
 
         public class StoryTag
         {
-            public long id;
-            public string name;
-            public int offset;
-            public int length;
-            public string type;
+            public long Id { get; set; }
+            public string Name { get; set; }
+            public int Offset { get; set; }
+            public int Length { get; set; }
+            public string Type { get; set; }
         }
 
         public class Place
         {
-            public string id;
-            public string name;
-            public Location location;
+            public string Id { get; set; }
+            public string Name { get; set; }
+            public Location Location { get; set; }
         }
 
         public class Location
         {
-            public string street;
-            public string city;
-            public string country;
-            public string zip;
-            public double latitude;
-            public double longitude;
+            public string Street { get; set; }
+            public string City { get; set; }
+            public string Country { get; set; }
+            public string Zip { get; set; }
+            public double Latitude { get; set; }
+            public double Longitude { get; set; }
         }
     }
 }

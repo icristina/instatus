@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json.Serialization;
 
-namespace Instatus.Integration.WebApi
+namespace Instatus.Integration.Json
 {
     // http://stackoverflow.com/questions/3922874/c-sharp-json-net-convention-that-follows-ruby-property-naming-conventions
     public class UnderscoreMappingResolver : DefaultContractResolver

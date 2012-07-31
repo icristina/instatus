@@ -68,6 +68,10 @@
       <Project>{39c44af6-a1ad-40ee-b1c6-40fda4ac9c83}</Project>
       <Name>Instatus.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Instatus.Integration.Json\Instatus.Integration.Json.csproj">
+      <Project>{99077598-4c9f-4cef-9e11-9af67375ea26}</Project>
+      <Name>Instatus.Integration.Json</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />

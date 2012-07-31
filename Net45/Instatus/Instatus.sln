@@ -40,6 +40,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instatus.Integration.Markdo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instatus.Integration.Razor", "Instatus.Integration.Razor\Instatus.Integration.Razor.csproj", "{E0E98D9E-03A7-4342-BF4F-B48BF41E0BC5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instatus.Integration.Json", "Instatus.Integration.Json\Instatus.Integration.Json.csproj", "{99077598-4C9F-4CEF-9E11-9AF67375EA26}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -90,6 +92,10 @@ Global
 		{74AE4ACF-8E3F-4112-894A-6B706EF85A66}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{74AE4ACF-8E3F-4112-894A-6B706EF85A66}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{74AE4ACF-8E3F-4112-894A-6B706EF85A66}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99077598-4C9F-4CEF-9E11-9AF67375EA26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99077598-4C9F-4CEF-9E11-9AF67375EA26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99077598-4C9F-4CEF-9E11-9AF67375EA26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99077598-4C9F-4CEF-9E11-9AF67375EA26}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AC5368FC-BEB5-4621-831E-CC3473284677}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AC5368FC-BEB5-4621-831E-CC3473284677}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC5368FC-BEB5-4621-831E-CC3473284677}.Release|Any CPU.ActiveCfg = Release|Any CPU

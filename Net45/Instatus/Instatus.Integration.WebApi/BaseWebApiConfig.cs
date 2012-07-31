@@ -6,6 +6,7 @@ using System.Net.Http.Formatting;
 using System.Text;
 using System.Web.Http;
 using System.Web.Routing;
+using Instatus.Integration.Json;
 
 namespace Instatus.Integration.WebApi
 {

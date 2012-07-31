@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Web.Http;
 
 namespace Instatus.Core.Utils
 {
@@ -47,8 +46,8 @@ namespace Instatus.Core.Utils
                 if (value.GetType().IsArray)
                     value = string.Join(",", (value as IEnumerable).Cast<object>().ToArray());
 
-                var encodedName = UriQueryUtility.UrlEncode(name);
-                var encodedValue = UriQueryUtility.UrlEncode(value.ToString());
+                var encodedName = Uri.EscapeDataString(name);
+                var encodedValue = Uri.EscapeDataString(value.ToString());
 
                 stringBuilder.AppendFormat("{0}={1}", encodedName, encodedValue);
             }
