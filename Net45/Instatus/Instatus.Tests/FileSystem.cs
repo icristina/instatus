@@ -17,7 +17,7 @@ namespace Instatus.Tests
             
             var hostingEnvironment = new InMemoryHostingEnvironment(null)
             {
-                OutputPath =  projectFolder
+                RootPath =  projectFolder
             };
 
             var fileSystemBlobStorage = new FileSystemBlobStorage(hostingEnvironment);

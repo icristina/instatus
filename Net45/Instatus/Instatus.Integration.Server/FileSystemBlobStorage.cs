@@ -44,7 +44,7 @@ namespace Instatus.Integration.Server
 
         public string MapPath(string virtualPath)
         {
-            var baseUri = new Uri(hostingEnvironment.BaseUri);
+            var baseUri = new Uri(hostingEnvironment.BaseAddress);
             var absolutePath = virtualPath.TrimStart(PathBuilder.RelativeChars);
             
             return new Uri(baseUri, absolutePath).ToString();
@@ -52,7 +52,7 @@ namespace Instatus.Integration.Server
 
         public string[] Query(string virtualPath)
         {
-            var outputPath = hostingEnvironment.OutputPath;
+            var outputPath = hostingEnvironment.RootPath;
             var directoryPath = Path.Combine(outputPath, virtualPath.TrimStart(PathBuilder.RelativeChars));
             var files = Directory.GetFiles(directoryPath);
 

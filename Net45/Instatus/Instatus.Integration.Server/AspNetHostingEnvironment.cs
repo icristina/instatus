@@ -11,27 +11,19 @@ namespace Instatus.Integration.Server
 {
     public class AspNetHostingEnvironment : IHostingEnvironment
     {
-        public string OutputPath
+        public string RootPath
         {
             get
             {
-                return GetAppSetting("OutputPath") ?? HostingEnvironment.MapPath("~/");
+                return GetAppSetting("RootPath") ?? HostingEnvironment.MapPath("~/");
             }
         }
         
-        public string BaseUri
+        public string BaseAddress
         {
             get 
             { 
-                return GetAppSetting("BaseUri"); 
-            }
-        }
-
-        public string LoginUrl
-        {
-            get 
-            {
-                return GetAppSetting("LoginUrl") ?? FormsAuthentication.LoginUrl;
+                return GetAppSetting("BaseAddress"); 
             }
         }
 

@@ -9,9 +9,8 @@ namespace Instatus.Core.Impl
     {
         private IDictionary<string, string> appSettings;
 
-        public string OutputPath { get; set; }
-        public string BaseUri { get; set; }
-        public string LoginUrl { get; set; }
+        public string RootPath { get; set; }
+        public string BaseAddress { get; set; }
 
         public string GetAppSetting(string key)
         {

@@ -44,7 +44,7 @@ namespace Instatus.Integration.Server
                 virtualPath.TrimStart(PathBuilder.RelativeChars) : 
                 Path.GetFileName(virtualPath);
             
-            return Path.Combine(hostingEnvironment.OutputPath, subPath);
+            return Path.Combine(hostingEnvironment.RootPath, subPath);
         }
 
         public FileSystemLocalStorage(IHostingEnvironment hostingEnvironment)

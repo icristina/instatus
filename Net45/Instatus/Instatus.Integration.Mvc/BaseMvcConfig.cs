@@ -28,18 +28,15 @@ namespace Instatus.Integration.Mvc
             );
         }
 
-        public static void RegisterMembershipProvider(IHostingEnvironment hostingEnvironment)
+        public static void RegisterMembershipProvider(string loginUrl = "/account/logon")
         {
             Membership.Providers.Clear();
             Membership.Providers.Add(new SimpleMembershipProvider());
 
-            if (hostingEnvironment != null)
+            FormsAuthentication.EnableFormsAuthentication(new NameValueCollection() 
             {
-                FormsAuthentication.EnableFormsAuthentication(new NameValueCollection() 
-                {
-                    { "loginUrl", hostingEnvironment.LoginUrl }
-                });
-            }
+                { "loginUrl", loginUrl }
+            });
         }
 
         public static void RegisterRoleProvider()
