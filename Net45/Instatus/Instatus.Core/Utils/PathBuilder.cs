@@ -21,7 +21,10 @@ namespace Instatus.Core.Utils
             if (forceLowerCasePath)
                 path = path.ToLower();
 
-            path = path.TrimStart(DelimiterChars).TrimEnd(DelimiterChars);
+            path = path
+                .TrimStart(RelativeChars)
+                .TrimStart(DelimiterChars)
+                .TrimEnd(DelimiterChars);
             
             stringBuilder.Append(DefaultDelimiter);
             stringBuilder.Append(path);

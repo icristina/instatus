@@ -6,6 +6,7 @@ using System.Text;
 using System.Web.Security;
 using Instatus.Core;
 using Microsoft.WindowsAzure.ServiceRuntime;
+using Microsoft.WindowsAzure;
 
 namespace Instatus.Integration.Azure
 {
@@ -29,14 +30,7 @@ namespace Instatus.Integration.Azure
 
         public string GetAppSetting(string key)
         {
-            try
-            {
-                return RoleEnvironment.GetConfigurationSettingValue(key);
-            }
-            catch
-            {
-                return ConfigurationManager.AppSettings[key];
-            }
+            return CloudConfigurationManager.GetSetting(key);
         }
     }
 }

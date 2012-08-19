@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Instatus.Core;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.StorageClient;
+using Instatus.Core.Utils;
 
 namespace Instatus.Integration.Azure
 {
@@ -91,7 +92,11 @@ namespace Instatus.Integration.Azure
         public string MapPath(string virtualPath)
         {
             var credential = credentialStorage.GetCredential(ProviderName);
-            return GetBaseUri(credential.AccountName) + "/" + virtualPath.TrimStart(RelativeChars);
+            var baseAddress = GetBaseUri(credential.AccountName);
+
+            return new PathBuilder(baseAddress)
+                .Path(virtualPath)
+                .ToProtocolRelativeUri();
         }
 
         public string[] Query(string virtualPath)

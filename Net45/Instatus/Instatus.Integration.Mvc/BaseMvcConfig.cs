@@ -46,10 +46,10 @@ namespace Instatus.Integration.Mvc
             Roles.Providers.Add(new SimpleRoleProvider());
         }
         
-        public static void RegisterExceptionFilters()
+        public static void RegisterExceptionFilters(GlobalFilterCollection filters)
         {
-            GlobalFilters.Filters.Add(new LogExceptionAttribute());
-            GlobalFilters.Filters.Add(new HandleErrorAttribute());
+            filters.Add(new LogExceptionAttribute());
+            filters.Add(new HandleErrorAttribute());
         }
 
         // http://serverfault.com/questions/24885/how-to-remove-iis-asp-net-response-headers
