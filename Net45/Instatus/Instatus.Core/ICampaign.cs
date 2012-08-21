@@ -9,6 +9,5 @@ namespace Instatus.Core
     public interface ICampaign
     {
         ISchedule GetSchedule();
-        void Subscribe(IUser user);
     }
 }

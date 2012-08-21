@@ -7,11 +7,6 @@ namespace Instatus.Core.Impl
 {
     public class MockMembershipProvider : IMembershipProvider
     {
-        public IUser CurrentUser()
-        {
-            throw new NotImplementedException();
-        }
-
         public bool ValidateUser(string userName, string password)
         {
             return true;

@@ -8,7 +8,6 @@ namespace Instatus.Core
 {
     public interface IMembershipProvider
     {
-        IUser CurrentUser();
         bool ValidateUser(string userName, string password);
         string[] GetRoles(string userName);
         string GenerateVerificationToken(string userName);

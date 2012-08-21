@@ -66,7 +66,6 @@
     <Compile Include="Impl\InMemoryTaxonomy.cs" />
     <Compile Include="Impl\MockMembershipProvider.cs" />
     <Compile Include="ITaxonomy.cs" />
-    <Compile Include="ITokenStorage.cs" />
     <Compile Include="IBlobStorage.cs" />
     <Compile Include="ICampaign.cs" />
     <Compile Include="ICredential.cs" />
@@ -94,8 +93,6 @@
     <Compile Include="ISchedule.cs" />
     <Compile Include="ITextTemplating.cs" />
     <Compile Include="ITimestamp.cs" />
-    <Compile Include="INamed.cs" />
-    <Compile Include="IToken.cs" />
     <Compile Include="IUser.cs" />
     <Compile Include="IVirtualPathUtility.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

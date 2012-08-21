@@ -14,11 +14,6 @@ namespace Instatus.Core.Impl
             return schedule;
         }
 
-        public void Subscribe(IUser user)
-        {
-            throw new NotImplementedException();
-        }
-
         public InMemoryCampaign(ISchedule schedule) 
         {
             this.schedule = schedule;
