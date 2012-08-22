@@ -27,7 +27,6 @@ namespace Instatus.Integration.WebApi
         private IEntityStorage entityStorage;
         private IMapper mapper;
 
-        [Queryable]
         public virtual IQueryable<TModel> Get()
         {
             if (typeof(TEntity) == typeof(TModel))
