@@ -8,8 +8,10 @@ using Instatus.Core;
 
 namespace Instatus.Integration.Mvc
 {
+    [Authorize]
     public class AccountController : Controller
     {       
+        [AllowAnonymous]
         [HttpGet]
         public ActionResult LogOn(string returnUrl)
         {
@@ -19,6 +21,7 @@ namespace Instatus.Integration.Mvc
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult LogOn(LogOnViewModel viewModel)
         {
             if (ModelState.IsValid && Membership.ValidateUser(viewModel.EmailAddress, viewModel.Password))

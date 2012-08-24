@@ -84,6 +84,7 @@ namespace Instatus.Integration.Mvc
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create(TModel model)
         {
             if (ModelState.IsValid)
@@ -119,6 +120,7 @@ namespace Instatus.Integration.Mvc
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, TModel model)
         {
             if (ModelState.IsValid)
@@ -152,6 +154,7 @@ namespace Instatus.Integration.Mvc
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Delete(int id)
         {
             var entity = EntitySet.Find(id);
