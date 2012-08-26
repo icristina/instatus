@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace Instatus.Integration.Mvc
 {
-    public class LogOnViewModel
+    public class LoginModel
     {
         [Required]
         [DataType(DataType.EmailAddress)]
@@ -20,9 +20,9 @@ namespace Instatus.Integration.Mvc
         [HiddenInput(DisplayValue = false)]
         public string ReturnUrl { get; set; }
 
-        public LogOnViewModel() { }
+        public LoginModel() { }
 
-        public LogOnViewModel(string returnUrl)
+        public LoginModel(string returnUrl)
         {
             ReturnUrl = returnUrl;
         }

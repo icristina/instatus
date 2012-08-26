@@ -7,6 +7,7 @@ using Autofac;
 using Autofac.Integration.Mvc;
 using Instatus.Core;
 using Instatus.Integration.Server;
+using Instatus.Core.Impl;
 
 namespace Instatus.Sample
 {
@@ -18,8 +19,11 @@ namespace Instatus.Sample
             var assembly = typeof(AutofacConfig).Assembly;
 
             containerBuilder.RegisterControllers(assembly);
+
+            containerBuilder.RegisterType<AppSettingsCredentialStorage>().As<ICredentialStorage>();
             containerBuilder.RegisterType<AspNetHostingEnvironment>().As<IHostingEnvironment>();
             containerBuilder.RegisterType<FileSystemBlobStorage>().As<IBlobStorage>();
+            containerBuilder.RegisterType<MockMembershipProvider>().As<IMembershipProvider>();
 
             var container = containerBuilder.Build();
 

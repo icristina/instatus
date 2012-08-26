@@ -16,10 +16,7 @@ namespace Instatus.Integration.EntityFramework
         {
             get
             {
-                if (dbcontext == null)
-                    dbcontext = Activator.CreateInstance<TContext>();
-
-                return dbcontext;
+                return dbcontext ?? (dbcontext = Activator.CreateInstance<TContext>());
             }
         }
         

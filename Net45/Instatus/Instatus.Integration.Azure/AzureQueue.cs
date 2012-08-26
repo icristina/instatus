@@ -21,10 +21,7 @@ namespace Instatus.Integration.Azure
         {
             get
             {
-                if (credential == null)
-                    credential = credentialStorage.GetCredential(ProviderName);
-
-                return credential;
+                return credential ?? (credential = credentialStorage.GetCredential(ProviderName));
             }
         }
 
