@@ -25,6 +25,7 @@ namespace Instatus.Integration.Mvc
             return View();
         }
 
+        [AllowAnonymous]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginModel viewModel)
@@ -107,24 +108,7 @@ namespace Instatus.Integration.Mvc
         private OpenAuthSecurityManager GetSecurityManager(string provider)
         {
             var authenticationClient = GetAuthenticationClient(provider);
-            return new OpenAuthSecurityManager(ControllerContext.HttpContext, authenticationClient, new MembershipProviderWrapper(membershipProvider));
-        }
-
-        private class MembershipProviderWrapper : IOpenAuthDataProvider
-        {
-            private IMembershipProvider membershipProvider;
-            
-            public string GetUserNameFromOpenAuth(string openAuthProvider, string openAuthId)
-            {
-                string userName;
-                membershipProvider.ValidateExternalUser(openAuthProvider, openAuthId, null, out userName);
-                return userName;
-            }
-
-            public MembershipProviderWrapper(IMembershipProvider membershipProvider)
-            {
-                this.membershipProvider = membershipProvider;
-            }
+            return new OpenAuthSecurityManager(ControllerContext.HttpContext, authenticationClient, null);
         }
 
         private string GenerateCallbackUrl(string returnUrl)

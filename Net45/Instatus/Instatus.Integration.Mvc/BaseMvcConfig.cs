@@ -28,7 +28,7 @@ namespace Instatus.Integration.Mvc
             );
         }
 
-        public static void RegisterMembershipProvider(string loginUrl = "/account/logon")
+        public static void RegisterMembershipProvider(string loginUrl = "/account/login")
         {
             Membership.Providers.Clear();
             Membership.Providers.Add(new SimpleMembershipProvider());
