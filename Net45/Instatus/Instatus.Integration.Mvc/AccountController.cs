@@ -45,7 +45,7 @@ namespace Instatus.Integration.Mvc
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult LogOut(string returnUrl)
+        public ActionResult LogOff(string returnUrl)
         {
             FormsAuthentication.SignOut();
             return Redirect(returnUrl ?? HomeUrl);

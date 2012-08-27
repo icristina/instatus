@@ -9,7 +9,7 @@ namespace Instatus.Core.Impl
     {
         private InMemoryQueue<BaseEntry> queue;
 
-        public IQueryable<ITimestamp> Items
+        public IQueryable<ICreated> Items
         {
             get
             {

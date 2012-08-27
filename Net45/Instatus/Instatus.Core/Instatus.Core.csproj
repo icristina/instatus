@@ -92,7 +92,7 @@
     <Compile Include="IQueue.cs" />
     <Compile Include="ISchedule.cs" />
     <Compile Include="ITextTemplating.cs" />
-    <Compile Include="ITimestamp.cs" />
+    <Compile Include="ICreated.cs" />
     <Compile Include="IUser.cs" />
     <Compile Include="IVirtualPathUtility.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

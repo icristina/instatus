@@ -9,7 +9,7 @@ namespace Instatus.Core.Impl
     {
         private InMemoryQueue<InMemoryError> queue;
 
-        public IQueryable<ITimestamp> Items
+        public IQueryable<ICreated> Items
         {
             get
             {
@@ -44,17 +44,17 @@ namespace Instatus.Core.Impl
             queue = new InMemoryQueue<InMemoryError>(limit);
         }
 
-        public class InMemoryError : ITimestamp
+        public class InMemoryError : ICreated
         {
             public string Exception { get; set; }
             public string InnerException { get; set; }
             public string StackTrace { get; set; }
-            public DateTime Timestamp { get; private set; }
+            public DateTime Created { get; private set; }
             public IDictionary<string, string> Properties { get; set; }
 
             public InMemoryError()
             {
-                Timestamp = DateTime.UtcNow;
+                Created = DateTime.UtcNow;
             }
         }
     }

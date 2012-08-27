@@ -36,7 +36,7 @@ namespace Instatus.Integration.Azure
 
             foreach(var entry in flushed) 
             {
-                var profilerEntry = new AzureProfilerEntity(entry.Text, entry.Timestamp);             
+                var profilerEntry = new AzureProfilerEntity(entry.Text, entry.Created);             
                 
                 dataContext.AddObject(TableName, profilerEntry);
             }

@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Instatus.Core
 {
-    public interface ITimestamp
+    public interface ICreated
     {
-        DateTime Timestamp { get; }
+        DateTime Created { get; }
     }
 }
