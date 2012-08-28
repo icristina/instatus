@@ -93,7 +93,7 @@ namespace Instatus.Integration.Mvc
             switch (provider.ToLower())
             {
                 case "facebook":
-                    return new FacebookClient(credential.PublicKey, credential.PrivateKey);
+                    return new FacebookClientExtended(credential.PublicKey, credential.PrivateKey, credential.Claims);
                 case "microsoft":
                     return new MicrosoftClient(credential.PublicKey, credential.PrivateKey);
                 case "twitter":

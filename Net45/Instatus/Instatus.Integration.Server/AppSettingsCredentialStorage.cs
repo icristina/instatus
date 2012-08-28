@@ -37,7 +37,8 @@ namespace Instatus.Integration.Server
             {
                 AccountName = GetValue<string>(values, "AccountName"),
                 PrivateKey = GetValue<string>(values, "PrivateKey"),
-                PublicKey = GetValue<string>(values, "PublicKey")
+                PublicKey = GetValue<string>(values, "PublicKey"),
+                Claims = (GetValue<string>(values, "Claims") ?? "").Split(',')
             };
         }
 

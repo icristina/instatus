@@ -64,6 +64,11 @@ namespace Instatus.Core.Utils
             return uri.Substring(uri.IndexOf('/'));
         }
 
+        public Uri ToUri()
+        {
+            return new Uri(ToString());
+        }
+
         public override string ToString()
         {
             return stringBuilder.ToString();
