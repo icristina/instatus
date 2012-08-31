@@ -1,4 +1,5 @@
 ﻿using Instatus.Integration.Mvc;
+using Instatus.Integration.Server;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,7 @@ namespace Instatus.Sample
         public static void RegisterRoutes(RouteCollection routes)
         {
             BaseMvcConfig.RegisterIgnoreRoutes(routes);
+            BaseMvcConfig.RegisterImageHandlerRoute(routes);
             BaseMvcConfig.RegisterDefaultRoute(routes);
         }
     }

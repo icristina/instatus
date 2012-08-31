@@ -13,7 +13,6 @@ namespace Instatus.Integration.Azure
 {
     public class AzureProfiler : IProfiler
     {
-        public const string ProviderName = "AzureTableStorage";
         public const string TableName = "Profiler";
         
         private ICredentialStorage credentialStorage;
@@ -31,7 +30,7 @@ namespace Instatus.Integration.Azure
 
         public async void Flush(List<BaseEntry> flushed)
         {
-            var credential = credentialStorage.GetCredential(ProviderName);
+            var credential = credentialStorage.GetCredential(AzureClient.TableProviderName);
             var dataContext = await AzureClient.GetTableServiceContext(credential, TableName);
 
             foreach(var entry in flushed) 

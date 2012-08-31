@@ -13,7 +13,10 @@ namespace Instatus.Integration.Azure
     {
         public const string PartitionKeyFormatString = "yyyy-MM-dd";        
         public static int TableServiceEntityBufferCount = 25;
-        
+
+        public const string TableProviderName = "AzureTableService";
+        public const string QueueProviderName = "AzureQueueService";
+
         public static async Task<TableServiceContext> GetTableServiceContext(ICredential credential, string tableName)
         {
             var baseAddress = string.Format("http://{0}.table.core.windows.net", credential.AccountName);

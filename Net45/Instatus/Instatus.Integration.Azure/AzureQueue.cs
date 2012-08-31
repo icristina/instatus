@@ -12,8 +12,6 @@ namespace Instatus.Integration.Azure
 {
     public class AzureQueue<T> : IQueue<T>
     {
-        public const string ProviderName = "AzureQueueStorage";
-
         private ICredentialStorage credentialStorage;
         private ICredential credential;
 
@@ -21,7 +19,7 @@ namespace Instatus.Integration.Azure
         {
             get
             {
-                return credential ?? (credential = credentialStorage.GetCredential(ProviderName));
+                return credential ?? (credential = credentialStorage.GetCredential(AzureClient.QueueProviderName));
             }
         }
 

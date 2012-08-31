@@ -26,7 +26,15 @@ namespace Instatus.Integration.Server
 
         public void Resize(Stream inputStream, Stream outputStream, int width, int height)
         {
-            throw new NotImplementedException();
+            var bitmapImage = new BitmapImage();
+
+            bitmapImage.BeginInit();
+            bitmapImage.DecodePixelWidth = width;
+            bitmapImage.DecodePixelHeight = height;
+            bitmapImage.StreamSource = inputStream;
+            bitmapImage.EndInit();
+
+            WriteToOutputStream(bitmapImage, outputStream);
         }
 
         public void Cover(Stream inputStream, Stream outputStream, int width, int height)
@@ -42,9 +50,10 @@ namespace Instatus.Integration.Server
         public void WriteToOutputStream(BitmapSource bitmapSource, Stream outputStream)
         {
             var encoder = new JpegBitmapEncoder();
+            var bitmapFrame = BitmapFrame.Create(bitmapSource);
 
             encoder.QualityLevel = 80;
-            encoder.Frames.Add(BitmapFrame.Create(bitmapSource));
+            encoder.Frames.Add(bitmapFrame);
             encoder.Save(outputStream);
         }
     }

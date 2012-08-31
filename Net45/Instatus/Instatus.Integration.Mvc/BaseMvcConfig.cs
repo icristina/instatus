@@ -28,6 +28,11 @@ namespace Instatus.Integration.Mvc
             );
         }
 
+        public static void RegisterImageHandlerRoute(RouteCollection routes, string url = "cdn/media/{*pathInfo}")
+        {
+            routes.Add(new Route(url, new ImageHandlerRoute()));
+        }
+
         public static void RegisterMembershipProvider(string loginUrl = "/account/login")
         {
             Membership.Providers.Clear();
