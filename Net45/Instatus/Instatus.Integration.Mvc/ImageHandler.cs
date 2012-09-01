@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Web;
 using System.Web.Routing;
@@ -52,13 +53,21 @@ namespace Instatus.Integration.Mvc
                 if (width <= 0 || height <= 0)
                     throw new ArgumentOutOfRangeException();
 
-                context.Response.ContentType = "image/jpg";
-                context.Response.ExpiresAbsolute = DateTime.UtcNow.AddDays(1);
-
                 using (var inputMemoryStream = new MemoryStream())
                 using (var outputMemoryStream = new MemoryStream())
                 {
-                    blobStorage.Download("~/media/" + fileName, inputMemoryStream);
+                    try
+                    {
+                        blobStorage.Download("~/media/" + fileName, inputMemoryStream);
+                    }
+                    catch (FileNotFoundException exception)
+                    {
+                        context.Response.StatusCode = (int)HttpStatusCode.NotFound;
+                        return;
+                    }
+
+                    context.Response.ContentType = "image/jpg";
+                    context.Response.ExpiresAbsolute = DateTime.UtcNow.AddDays(1);
 
                     ResetStream(inputMemoryStream);
                     
