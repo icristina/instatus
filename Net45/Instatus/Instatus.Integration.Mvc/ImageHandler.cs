@@ -13,17 +13,19 @@ using System.Web.Routing;
 
 namespace Instatus.Integration.Mvc
 {
-    public class ImageHandler : IHttpHandler
+    public class ImageHandler : IHttpHandler, IRouteHandler
     {
+        private RequestContext requestContext;
+        
         public bool IsReusable
         {
             get 
             {
-                return true;
+                return false;
             }
         }
 
-        public T GetValue<T>(NameValueCollection values, string key)
+        public T GetValue<T>(IDictionary<string, object> values, string key)
         {
             var output = values[key];
 
@@ -38,14 +40,13 @@ namespace Instatus.Integration.Mvc
             stream.Position = 0;
         }
 
-        public const string WidthParameterName = "w";
-        public const string HeightParameterName = "h";
-        public const string LeftParameterName = "x";
-        public const string TopParameterName = "y";
-        public const string ActionParameterName = "a";
-        public const string CropActionName = "cr";
-        public const string CoverActionName = "cv";
-        public const string ContainActionName = "cn";
+        public const string BucketParameterName = "bucket";
+        public const string WidthParameterName = "width";
+        public const string HeightParameterName = "height";
+        public const string ActionParameterName = "action";
+        public const string ResizeActionName = "r";
+        public const string CoverActionName = "c";
+        public const string ContainActionName = "f";
 
         public void ProcessRequest(HttpContext context)
         {
@@ -56,11 +57,19 @@ namespace Instatus.Integration.Mvc
             {
                 var blobStorage = container.Resolve<IBlobStorage>();
                 var imaging = container.Resolve<IImaging>();
-
-                var properties = request.QueryString;
+                var routeData = requestContext.RouteData.Values;
                 var fileName = Path.GetFileName(request.Path);
-                var width = GetValue<int>(properties, WidthParameterName);
-                var height = GetValue<int>(properties, HeightParameterName);
+                var bucketName = GetValue<string>(routeData, BucketParameterName);
+                var width = GetValue<int>(routeData, WidthParameterName);
+                var height = GetValue<int>(routeData, HeightParameterName);
+
+                if (bucketName.Equals(fileName))
+                {
+                    response.StatusCode = (int)HttpStatusCode.NotFound;
+                    return;
+                }
+
+                var virtualPath = string.Format("~/{0}/{1}", bucketName, fileName);
 
                 if (width <= 0 || height <= 0)
                     throw new ArgumentOutOfRangeException();
@@ -70,7 +79,7 @@ namespace Instatus.Integration.Mvc
                 {
                     try
                     {
-                        blobStorage.Download("~/media/" + fileName, inputMemoryStream);
+                        blobStorage.Download(virtualPath, inputMemoryStream);
                     }
                     catch (FileNotFoundException exception)
                     {
@@ -83,13 +92,8 @@ namespace Instatus.Integration.Mvc
 
                     ResetStream(inputMemoryStream);
                     
-                    switch (GetValue<string>(properties, ActionParameterName))
+                    switch (GetValue<string>(routeData, ActionParameterName))
                     {
-                        case CropActionName:
-                            var left = GetValue<int>(properties, LeftParameterName);
-                            var top = GetValue<int>(properties, TopParameterName);
-                            imaging.Crop(inputMemoryStream, outputMemoryStream, left, top, width, height);
-                            break;
                         case CoverActionName:
                             imaging.Cover(inputMemoryStream, outputMemoryStream, width, height);
                             break;
@@ -107,13 +111,11 @@ namespace Instatus.Integration.Mvc
                 }                
             }
         }
-    }
 
-    public class ImageHandlerRoute : IRouteHandler
-    {
         public IHttpHandler GetHttpHandler(RequestContext requestContext)
         {
-            return new ImageHandler();
+            this.requestContext = requestContext;
+            return this;
         }
     }
 }
