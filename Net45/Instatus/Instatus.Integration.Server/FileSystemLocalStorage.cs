@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Web.Hosting;
 using Instatus.Core;
 using Instatus.Core.Utils;
+using Instatus.Core.Extensions;
 
 namespace Instatus.Integration.Server
 {
@@ -21,7 +22,7 @@ namespace Instatus.Integration.Server
             using (var fileStream = new FileStream(absolutePath, FileMode.Create, FileAccess.Write))
             {
                 inputStream.Flush();
-                inputStream.Position = 0;
+                inputStream.ResetPosition();
                 inputStream.CopyTo(fileStream);
             }
         }

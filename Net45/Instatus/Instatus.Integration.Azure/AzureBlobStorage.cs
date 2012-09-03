@@ -9,6 +9,7 @@ using Instatus.Core;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.StorageClient;
 using Instatus.Core.Utils;
+using Instatus.Core.Extensions;
 
 namespace Instatus.Integration.Azure
 {
@@ -59,7 +60,7 @@ namespace Instatus.Integration.Azure
 
             SetMetadata(cloudBlob, metaData);
 
-            inputStream.Position = 0;
+            inputStream.ResetPosition();
 
             cloudBlob.UploadFromStream(inputStream);
         }

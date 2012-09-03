@@ -6,6 +6,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using Instatus.Core;
+using Instatus.Core.Extensions;
 
 namespace Instatus.Integration.Server
 {
@@ -62,11 +63,6 @@ namespace Instatus.Integration.Server
             Resize(inputStream, outputStream, outputDimensions.Item1, outputDimensions.Item2);
         }
 
-        private void ResetStream(Stream stream)
-        {
-            stream.Position = 0;
-        }
-
         private void WriteToOutputStream(BitmapSource bitmapSource, Stream outputStream)
         {
             var encoder = new JpegBitmapEncoder();
@@ -85,7 +81,7 @@ namespace Instatus.Integration.Server
             bitmapImage.StreamSource = inputStream;
             bitmapImage.EndInit();
 
-            ResetStream(inputStream);
+            inputStream.ResetPosition();
 
             return new Tuple<int, int>((int)bitmapImage.Width, (int)bitmapImage.Height);
         }

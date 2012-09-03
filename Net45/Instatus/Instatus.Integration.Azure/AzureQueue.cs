@@ -7,6 +7,7 @@ using System.Text;
 using Instatus.Core;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.StorageClient;
+using Instatus.Core.Extensions;
 
 namespace Instatus.Integration.Azure
 {
@@ -73,7 +74,7 @@ namespace Instatus.Integration.Azure
 
             using (var stream = new MemoryStream(bytes))
             {
-                stream.Position = 0;
+                stream.ResetPosition();
                 var serializer = new DataContractSerializer(typeof(T), knownTypes);
                 return (T)serializer.ReadObject(stream);
             }

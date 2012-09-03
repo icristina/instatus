@@ -10,6 +10,7 @@ using System.Net;
 using System.Text;
 using System.Web;
 using System.Web.Routing;
+using Instatus.Core.Extensions;
 
 namespace Instatus.Integration.Mvc
 {
@@ -23,21 +24,6 @@ namespace Instatus.Integration.Mvc
             {
                 return false;
             }
-        }
-
-        public T GetValue<T>(IDictionary<string, object> values, string key)
-        {
-            var output = values[key];
-
-            if (output != null)
-                return (T)Convert.ChangeType(output, typeof(T));
-
-            return default(T);
-        }
-
-        public void ResetStream(Stream stream)
-        {
-            stream.Position = 0;
         }
 
         public const string BucketParameterName = "bucket";
@@ -59,9 +45,9 @@ namespace Instatus.Integration.Mvc
                 var imaging = container.Resolve<IImaging>();
                 var routeData = requestContext.RouteData.Values;
                 var fileName = Path.GetFileName(request.Path);
-                var bucketName = GetValue<string>(routeData, BucketParameterName);
-                var width = GetValue<int>(routeData, WidthParameterName);
-                var height = GetValue<int>(routeData, HeightParameterName);
+                var bucketName = routeData.GetValue<string>(BucketParameterName);
+                var width = routeData.GetValue<int>(WidthParameterName);
+                var height = routeData.GetValue<int>(HeightParameterName);
 
                 if (bucketName.Equals(fileName))
                 {
@@ -90,9 +76,9 @@ namespace Instatus.Integration.Mvc
                     response.ContentType = "image/jpg";
                     response.ExpiresAbsolute = DateTime.UtcNow.AddDays(1);
 
-                    ResetStream(inputMemoryStream);
+                    inputMemoryStream.ResetPosition();
                     
-                    switch (GetValue<string>(routeData, ActionParameterName))
+                    switch (routeData.GetValue<string>(ActionParameterName))
                     {
                         case CoverActionName:
                             imaging.Cover(inputMemoryStream, outputMemoryStream, width, height);
@@ -105,7 +91,7 @@ namespace Instatus.Integration.Mvc
                             break;
                     }
 
-                    ResetStream(outputMemoryStream);
+                    outputMemoryStream.ResetPosition();
 
                     outputMemoryStream.CopyTo(response.OutputStream);
                 }                

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Instatus.Core;
+using Instatus.Core.Extensions;
 
 namespace Instatus.Integration.Server
 {
@@ -14,9 +15,9 @@ namespace Instatus.Integration.Server
         private IHostingEnvironment hostingEnvironment;
         private ConcurrentDictionary<string, ICredential> credentials = new ConcurrentDictionary<string, ICredential>();
 
-        public IDictionary<string, string> ParseDelimitedString(string input)
+        public IDictionary<string, object> ParseDelimitedString(string input)
         {
-            var values = new Dictionary<string, string>();
+            var values = new Dictionary<string, object>();
             var segments = input.Split(';');
 
             foreach (var setting in segments.Where(s => s.Length >= 3))
@@ -31,25 +32,15 @@ namespace Instatus.Integration.Server
             return values;
         }
 
-        public ICredential ConvertToCredential(IDictionary<string, string> values)
+        public ICredential ConvertToCredential(IDictionary<string, object> values)
         {
             return new AppSettingsCredential()
             {
-                AccountName = GetValue<string>(values, "AccountName"),
-                PrivateKey = GetValue<string>(values, "PrivateKey"),
-                PublicKey = GetValue<string>(values, "PublicKey"),
-                Claims = (GetValue<string>(values, "Claims") ?? "").Split(',')
+                AccountName = values.GetValue<string>("AccountName"),
+                PrivateKey = values.GetValue<string>("PrivateKey"),
+                PublicKey = values.GetValue<string>("PublicKey"),
+                Claims = (values.GetValue<string>("Claims") ?? "").Split(',')
             };
-        }
-
-        public T GetValue<T>(IDictionary<string, string> dictionary, string key)
-        {
-            string output;
-
-            if (dictionary.TryGetValue(key, out output))
-                return (T)Convert.ChangeType(output, typeof(T));
-
-            return default(T);
         }
 
         public string GetAppSettingKey(string providerName) 

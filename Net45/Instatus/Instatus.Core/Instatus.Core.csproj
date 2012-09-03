@@ -45,6 +45,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\DictionaryExtensions.cs" />
+    <Compile Include="Extensions\StreamExtensions.cs" />
     <Compile Include="ITextTransform.cs" />
     <Compile Include="ILinguistics.cs" />
     <Compile Include="Impl\BaseEntry.cs" />
