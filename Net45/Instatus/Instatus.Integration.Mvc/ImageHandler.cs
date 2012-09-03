@@ -38,17 +38,29 @@ namespace Instatus.Integration.Mvc
             stream.Position = 0;
         }
 
+        public const string WidthParameterName = "w";
+        public const string HeightParameterName = "h";
+        public const string LeftParameterName = "x";
+        public const string TopParameterName = "y";
+        public const string ActionParameterName = "a";
+        public const string CropActionName = "cr";
+        public const string CoverActionName = "cv";
+        public const string ContainActionName = "cn";
+
         public void ProcessRequest(HttpContext context)
         {
+            var request = context.Request;
+            var response = context.Response;
+            
             using (ILifetimeScope container = AutofacDependencyResolver.Current.ApplicationContainer.BeginLifetimeScope())
             {
                 var blobStorage = container.Resolve<IBlobStorage>();
                 var imaging = container.Resolve<IImaging>();
 
-                var properties = context.Request.QueryString;
-                var fileName = Path.GetFileName(context.Request.Path);
-                var width = GetValue<int>(properties, "width");
-                var height = GetValue<int>(properties, "height");
+                var properties = request.QueryString;
+                var fileName = Path.GetFileName(request.Path);
+                var width = GetValue<int>(properties, WidthParameterName);
+                var height = GetValue<int>(properties, HeightParameterName);
 
                 if (width <= 0 || height <= 0)
                     throw new ArgumentOutOfRangeException();
@@ -62,26 +74,26 @@ namespace Instatus.Integration.Mvc
                     }
                     catch (FileNotFoundException exception)
                     {
-                        context.Response.StatusCode = (int)HttpStatusCode.NotFound;
+                        response.StatusCode = (int)HttpStatusCode.NotFound;
                         return;
                     }
 
-                    context.Response.ContentType = "image/jpg";
-                    context.Response.ExpiresAbsolute = DateTime.UtcNow.AddDays(1);
+                    response.ContentType = "image/jpg";
+                    response.ExpiresAbsolute = DateTime.UtcNow.AddDays(1);
 
                     ResetStream(inputMemoryStream);
                     
-                    switch (GetValue<string>(properties, "filter")) 
+                    switch (GetValue<string>(properties, ActionParameterName))
                     {
-                        case "crop":
-                            var left = GetValue<int>(properties, "left");
-                            var top = GetValue<int>(properties, "top");
+                        case CropActionName:
+                            var left = GetValue<int>(properties, LeftParameterName);
+                            var top = GetValue<int>(properties, TopParameterName);
                             imaging.Crop(inputMemoryStream, outputMemoryStream, left, top, width, height);
                             break;
-                        case "cover":
+                        case CoverActionName:
                             imaging.Cover(inputMemoryStream, outputMemoryStream, width, height);
                             break;
-                        case "contain":
+                        case ContainActionName:
                             imaging.Contain(inputMemoryStream, outputMemoryStream, width, height);
                             break;
                         default:
@@ -91,7 +103,7 @@ namespace Instatus.Integration.Mvc
 
                     ResetStream(outputMemoryStream);
 
-                    outputMemoryStream.CopyTo(context.Response.OutputStream);
+                    outputMemoryStream.CopyTo(response.OutputStream);
                 }                
             }
         }
