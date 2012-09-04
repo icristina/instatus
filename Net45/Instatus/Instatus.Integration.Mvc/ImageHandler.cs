@@ -11,6 +11,7 @@ using System.Text;
 using System.Web;
 using System.Web.Routing;
 using Instatus.Core.Extensions;
+using System.IO.Compression;
 
 namespace Instatus.Integration.Mvc
 {
@@ -62,6 +63,7 @@ namespace Instatus.Integration.Mvc
 
                 using (var inputMemoryStream = new MemoryStream())
                 using (var outputMemoryStream = new MemoryStream())
+                using (var gzipStream = new GZipStream(response.OutputStream, CompressionMode.Compress))
                 {
                     try
                     {
@@ -74,6 +76,7 @@ namespace Instatus.Integration.Mvc
                     }
 
                     response.ContentType = "image/jpg";
+                    response.AddHeader("Content-Encoding", "gzip");
                     response.ExpiresAbsolute = DateTime.UtcNow.AddDays(1);
 
                     inputMemoryStream.ResetPosition();
@@ -92,8 +95,7 @@ namespace Instatus.Integration.Mvc
                     }
 
                     outputMemoryStream.ResetPosition();
-
-                    outputMemoryStream.CopyTo(response.OutputStream);
+                    outputMemoryStream.CopyTo(gzipStream);
                 }                
             }
         }
