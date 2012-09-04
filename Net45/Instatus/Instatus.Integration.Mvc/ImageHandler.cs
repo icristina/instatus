@@ -28,6 +28,8 @@ namespace Instatus.Integration.Mvc
             }
         }
 
+        public const string JpgContentType = "image/jpeg";
+
         public const string BucketParameterName = "bucket";
         public const string WidthParameterName = "width";
         public const string HeightParameterName = "height";
@@ -105,7 +107,7 @@ namespace Instatus.Integration.Mvc
                         return;
                     }
 
-                    response.ContentType = "image/jpg";
+                    response.ContentType = JpgContentType;
                     response.AddHeader("Content-Encoding", "gzip");
                     response.ExpiresAbsolute = DateTime.UtcNow.AddDays(1);
 
