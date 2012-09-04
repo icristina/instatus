@@ -28,9 +28,11 @@ namespace Instatus.Integration.Mvc
             );
         }
 
-        public static void RegisterImageHandlerRoute(RouteCollection routes, string url = "cdn/photo/{action}/{width}/{height}/{bucket}/{*pathInfo}")
+        public static void RegisterImageHandlerRoute(RouteCollection routes, 
+            string url = "cdn/photo/{action}/{width}/{height}/{bucket}/{*pathInfo}",
+            IEnumerable<Tuple<int, int>> whiteListDimensions = null)
         {
-            routes.Add(new Route(url, new ImageHandler()));
+            routes.Add(new Route(url, new ImageHandler(whiteListDimensions)));
         }
 
         public static void RegisterMembershipProvider(string loginUrl = "/account/login")

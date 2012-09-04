@@ -12,7 +12,16 @@ namespace Instatus.Core.Extensions
             object output;
 
             if (dictionary.TryGetValue(key, out output))
-                return (T)Convert.ChangeType(output, typeof(T));
+            {
+                try
+                {
+                    return (T)Convert.ChangeType(output, typeof(T));
+                }
+                catch
+                {
+                    return default(T);
+                }
+            }
 
             return default(T);
         }

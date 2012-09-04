@@ -18,7 +18,8 @@ namespace Instatus.Integration.Mvc
     public class ImageHandler : IHttpHandler, IRouteHandler
     {
         private RequestContext requestContext;
-        
+        private IEnumerable<Tuple<int, int>> whiteListDimensions;
+
         public bool IsReusable
         {
             get 
@@ -34,6 +35,12 @@ namespace Instatus.Integration.Mvc
         public const string ResizeActionName = "r";
         public const string CoverActionName = "c";
         public const string ContainActionName = "f";
+        
+        public const int MinDimension = 16;
+        public const int MaxDimension = 2000;
+
+        public static readonly string[] WhiteListActions = new string[] { CoverActionName, ResizeActionName, ContainActionName };
+        public static readonly string[] WhiteListExtensions = new string[] { ".jpg", ".gif", ".png", ".tif", ".bmp" };
 
         public void ProcessRequest(HttpContext context)
         {
@@ -44,22 +51,30 @@ namespace Instatus.Integration.Mvc
             {
                 var blobStorage = container.Resolve<IBlobStorage>();
                 var imaging = container.Resolve<IImaging>();
-                var routeData = requestContext.RouteData.Values;
+
                 var fileName = Path.GetFileName(request.Path);
+                var fileExtension = Path.GetExtension(request.Path);
+
+                var routeData = requestContext.RouteData.Values;
+                var action = routeData.GetValue<string>(ActionParameterName);
                 var bucketName = routeData.GetValue<string>(BucketParameterName);
                 var width = routeData.GetValue<int>(WidthParameterName);
                 var height = routeData.GetValue<int>(HeightParameterName);
-
-                if (bucketName.Equals(fileName))
-                {
-                    response.StatusCode = (int)HttpStatusCode.NotFound;
-                    return;
-                }
-
+                var newDimensions = new Tuple<int, int>(width, height);
                 var virtualPath = string.Format("~/{0}/{1}", bucketName, fileName);
 
-                if (width <= 0 || height <= 0)
-                    throw new ArgumentOutOfRangeException();
+                if (bucketName.Equals(fileName)
+                    || width < MinDimension
+                    || height < MinDimension
+                    || width > MaxDimension
+                    || height > MaxDimension
+                    || (whiteListDimensions != null && !whiteListDimensions.Contains(newDimensions))
+                    || !WhiteListActions.Contains(action)
+                    || !WhiteListExtensions.Contains(fileExtension))
+                {
+                    NotFound(context);
+                    return;
+                }
 
                 using (var inputMemoryStream = new MemoryStream())
                 using (var outputMemoryStream = new MemoryStream())
@@ -68,10 +83,25 @@ namespace Instatus.Integration.Mvc
                     try
                     {
                         blobStorage.Download(virtualPath, inputMemoryStream);
+
+                        inputMemoryStream.ResetPosition();
+                    
+                        switch (action)
+                        {
+                            case ResizeActionName:
+                                imaging.Resize(inputMemoryStream, outputMemoryStream, width, height);
+                                break;
+                            case ContainActionName:
+                                imaging.Contain(inputMemoryStream, outputMemoryStream, width, height);
+                                break;
+                            case CoverActionName:
+                                imaging.Cover(inputMemoryStream, outputMemoryStream, width, height);
+                                break;
+                        }
                     }
-                    catch (FileNotFoundException exception)
+                    catch
                     {
-                        response.StatusCode = (int)HttpStatusCode.NotFound;
+                        NotFound(context);
                         return;
                     }
 
@@ -79,31 +109,26 @@ namespace Instatus.Integration.Mvc
                     response.AddHeader("Content-Encoding", "gzip");
                     response.ExpiresAbsolute = DateTime.UtcNow.AddDays(1);
 
-                    inputMemoryStream.ResetPosition();
-                    
-                    switch (routeData.GetValue<string>(ActionParameterName))
-                    {
-                        case CoverActionName:
-                            imaging.Cover(inputMemoryStream, outputMemoryStream, width, height);
-                            break;
-                        case ContainActionName:
-                            imaging.Contain(inputMemoryStream, outputMemoryStream, width, height);
-                            break;
-                        default:
-                            imaging.Resize(inputMemoryStream, outputMemoryStream, width, height);
-                            break;
-                    }
-
                     outputMemoryStream.ResetPosition();
                     outputMemoryStream.CopyTo(gzipStream);
                 }                
             }
         }
 
+        private void NotFound(HttpContext context)
+        {
+            context.Response.StatusCode = (int)HttpStatusCode.NotFound;
+        }
+
         public IHttpHandler GetHttpHandler(RequestContext requestContext)
         {
             this.requestContext = requestContext;
             return this;
+        }
+
+        public ImageHandler(IEnumerable<Tuple<int, int>> whiteListDimensions)
+        {
+            this.whiteListDimensions = whiteListDimensions;
         }
     }
 }
