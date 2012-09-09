@@ -8,9 +8,9 @@ namespace Instatus.Core
 {
     public interface IUser
     {
-        string FirstName { get; set; }
-        string LastName { get; set; }
-        string EmailAddress { get; set; }
-        string Locale { get; set; }
+        string FirstName { get; }
+        string LastName { get; }
+        string EmailAddress { get; }
+        string Locale { get; }
     }
 }
