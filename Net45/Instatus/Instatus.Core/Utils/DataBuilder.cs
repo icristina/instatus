@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Instatus.Core.Impl;
+using Instatus.Core.Models;
 
 namespace Instatus.Core.Utils
 {
@@ -25,7 +26,7 @@ namespace Instatus.Core.Utils
             var firstName = Random(FirstNames);
             var lastName = Random(LastNames);
 
-            return new BaseUser()
+            return new User()
             {
                 FirstName = firstName,
                 LastName = lastName,

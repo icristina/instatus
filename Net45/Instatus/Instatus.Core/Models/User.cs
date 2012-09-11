@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Instatus.Core.Impl
+namespace Instatus.Core.Models
 {
-    public class BaseUser : IUser
+    public class User : IUser
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

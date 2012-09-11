@@ -8,6 +8,7 @@ using Instatus.Core;
 using Instatus.Core.Impl;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.StorageClient;
+using Instatus.Core.Models;
 
 namespace Instatus.Integration.Azure
 {
@@ -16,7 +17,7 @@ namespace Instatus.Integration.Azure
         public const string TableName = "Profiler";
         
         private ICredentialStorage credentialStorage;
-        private InMemoryQueue<BaseEntry> queue;
+        private InMemoryQueue<Entry> queue;
 
         public IDisposable Step(string label)
         {
@@ -28,7 +29,7 @@ namespace Instatus.Integration.Azure
             queue.Flush();
         }
 
-        public async void Flush(List<BaseEntry> flushed)
+        public async void Flush(List<Entry> flushed)
         {
             var credential = credentialStorage.GetCredential(AzureClient.TableProviderName);
             var dataContext = await AzureClient.GetTableServiceContext(credential, TableName);
@@ -46,7 +47,7 @@ namespace Instatus.Integration.Azure
         public AzureProfiler(ICredentialStorage credentialStorage)
         {
             this.credentialStorage = credentialStorage;
-            this.queue = new InMemoryQueue<BaseEntry>(AzureClient.TableServiceEntityBufferCount, Flush);
+            this.queue = new InMemoryQueue<Entry>(AzureClient.TableServiceEntityBufferCount, Flush);
         }
     }
 
@@ -66,7 +67,7 @@ namespace Instatus.Integration.Azure
 
     internal class AzureTableProfilerStep : AbstractProfilerStep
     {
-        private IQueue<BaseEntry> queue;
+        private IQueue<Entry> queue;
         
         public override void WriteStart(string message)
         {
@@ -75,10 +76,10 @@ namespace Instatus.Integration.Azure
 
         public override void WriteEnd(string message)
         {
-            queue.Enqueue(new BaseEntry(message));
+            queue.Enqueue(new Entry(message));
         }
 
-        public AzureTableProfilerStep(string stepName, IQueue<BaseEntry> queue)
+        public AzureTableProfilerStep(string stepName, IQueue<Entry> queue)
             : base(stepName)
         {
             this.queue = queue;

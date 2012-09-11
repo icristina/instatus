@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Instatus.Core.Impl
+namespace Instatus.Core.Models
 {
-    public class BaseMetadata : IMetadata
+    public class Metadata : IMetadata
     {
         public string ContentType { get; set; }
         public IDictionary<string, string> Headers { get; private set; }
 
-        public BaseMetadata()
+        public Metadata()
         {
             Headers = new Dictionary<string, string>();
         }

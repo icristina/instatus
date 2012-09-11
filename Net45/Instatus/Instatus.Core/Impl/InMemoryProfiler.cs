@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Instatus.Core.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +8,7 @@ namespace Instatus.Core.Impl
 {
     public class InMemoryProfiler : IProfiler
     {
-        private InMemoryQueue<BaseEntry> queue;
+        private InMemoryQueue<Entry> queue;
 
         public IQueryable<ICreated> Items
         {
@@ -29,13 +30,13 @@ namespace Instatus.Core.Impl
 
         public InMemoryProfiler(int limit)
         {
-            queue = new InMemoryQueue<BaseEntry>(limit);
+            queue = new InMemoryQueue<Entry>(limit);
         }
     }
 
     internal class InMemoryProfilerStep : AbstractProfilerStep
     {
-        private IQueue<BaseEntry> queue;
+        private IQueue<Entry> queue;
         
         public override void WriteStart(string message)
         {
@@ -44,10 +45,10 @@ namespace Instatus.Core.Impl
 
         public override void WriteEnd(string message)
         {
-            queue.Enqueue(new BaseEntry(message));
+            queue.Enqueue(new Entry(message));
         }
 
-        public InMemoryProfilerStep(string stepName, IQueue<BaseEntry> queue)
+        public InMemoryProfilerStep(string stepName, IQueue<Entry> queue)
             : base(stepName)
         {
             this.queue = queue;
