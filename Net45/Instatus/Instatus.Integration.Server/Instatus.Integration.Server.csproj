@@ -77,6 +77,7 @@
   <ItemGroup>
     <Compile Include="AppSettingsCredentialStorage.cs" />
     <Compile Include="AspNetHostingEnvironment.cs" />
+    <Compile Include="AspNetSession.cs" />
     <Compile Include="DebugMessaging.cs" />
     <Compile Include="DefaultLinguistics.cs" />
     <Compile Include="FileSystemBlobStorage.cs" />
