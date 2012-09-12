@@ -19,67 +19,53 @@ namespace Instatus.Integration.Server
             }
         }
 
-        private const string cookieKey = "userPreferences";
+        private const string cookieKey = "preferences";
         private const string localeKey = "locale";
 
         private string locale;
 
         // override, for example if sourced from facebook signed_request, this takes highest priority
-        public virtual string GetCustomLocale() 
+        public virtual string GetLocale() 
         {
             return null;
         }
 
-        // format en_GB, en_US
+        // format en-GB, en-US, de-DE
         public string Locale
         {
             get
             {
                 // order of precedence
                 // [1] already parsed in memory, requires AspNetSession to be declared as request scope
-                // [2] query string
+                // [2] query string or form param
                 // [3] cookie
                 // [4] thread culture
                 if (locale == null)
                 {
                     var request = HttpContext.Current.Request;
-                    var localeCustomValue = GetCustomLocale();
-                    var localeRequestValue = request.Params[localeKey];
-                    var localeCookieValue = request.Cookies[cookieKey][localeKey];
-
-                    CultureInfo culture = Thread.CurrentThread.CurrentCulture;
-
-                    try
-                    {
-                        culture = new CultureInfo(GetCustomLocale() ?? localeRequestValue ?? localeCookieValue);
-                        Thread.CurrentThread.CurrentCulture = culture;
-                    }
-                    catch
-                    {
-                        // use default culture
-                    }
-
-                    locale = culture.Name;
-
-                    PersistLocale();
+                    
+                    this.Locale = GetLocale() ??
+                        request.Params[localeKey] ??
+                        request.Cookies[cookieKey][localeKey];
                 }
 
                 return locale;
             }
             set
             {
-                if (!locale.Equals(value))
-                {
-                    locale = value;
-                    PersistLocale();
-                }
-            }
-        }
+                CultureInfo culture;
 
-        private void PersistLocale()
-        {
-            var response = HttpContext.Current.Response;
-            response.Cookies[cookieKey][localeKey] = locale;
+                try
+                {
+                    culture = new CultureInfo(value);
+                }
+                catch
+                {
+                    culture = Thread.CurrentThread.CurrentCulture;
+                }
+
+                HttpContext.Current.Response.Cookies[cookieKey][localeKey] = locale = culture.Name;                
+            }
         }
     }
 }

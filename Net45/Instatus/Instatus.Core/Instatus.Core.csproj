@@ -50,10 +50,13 @@
     <Compile Include="ICampaignManager.cs" />
     <Compile Include="IContentManager.cs" />
     <Compile Include="IFilter.cs" />
+    <Compile Include="Impl\InMemoryContentManager.cs" />
+    <Compile Include="Impl\InMemorySession.cs" />
     <Compile Include="ITextTransform.cs" />
     <Compile Include="ILinguistics.cs" />
     <Compile Include="Models\Campaign.cs" />
     <Compile Include="Models\Entry.cs" />
+    <Compile Include="Models\Filter.cs" />
     <Compile Include="Models\Metadata.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Impl\EntityMapper.cs" />
