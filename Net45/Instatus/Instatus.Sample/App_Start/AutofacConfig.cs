@@ -19,6 +19,7 @@ namespace Instatus.Sample
             var assembly = typeof(AutofacConfig).Assembly;
 
             containerBuilder.RegisterControllers(assembly);
+            containerBuilder.RegisterSource(new ViewRegistrationSource());
 
             containerBuilder.RegisterType<AppSettingsCredentialStorage>().As<ICredentialStorage>();
             containerBuilder.RegisterType<AspNetHostingEnvironment>().As<IHostingEnvironment>();

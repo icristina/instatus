@@ -7,6 +7,18 @@ namespace Instatus.Core.Extensions
 {
     public static class DictionaryExtensions
     {
+        public static T GetValue<TKey, T>(this IDictionary<TKey, T> dictionary, TKey key)
+        {
+            T output;
+
+            if (dictionary.TryGetValue(key, out output))
+            {
+                return output;
+            }
+
+            return default(T);
+        }        
+        
         public static T GetValue<T>(this IDictionary<string, object> dictionary, string key)
         {
             object output;
