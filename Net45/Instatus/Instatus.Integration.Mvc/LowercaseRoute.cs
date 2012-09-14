@@ -6,7 +6,7 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using Instatus.Core.Utils;
 
-namespace Instatus.Integration.Server
+namespace Instatus.Integration.Mvc
 {
     public class LowercaseRoute : Route
     {

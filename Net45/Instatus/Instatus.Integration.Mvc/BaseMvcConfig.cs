@@ -21,7 +21,7 @@ namespace Instatus.Integration.Mvc
 
         public static void RegisterDefaultRoute(RouteCollection routes)
         {
-            routes.MapRoute(
+            routes.MapRouteLowercase(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
@@ -59,6 +59,11 @@ namespace Instatus.Integration.Mvc
             filters.Add(new HandleErrorAttribute());
         }
 
+        public static void RegisterCompactPrivacyPolicyFilters(GlobalFilterCollection filters)
+        {
+            filters.Add(new IframeCookieSupportAttribute());
+        }
+
         // http://serverfault.com/questions/24885/how-to-remove-iis-asp-net-response-headers
         public static void RegisterRemoveServerFingerprint()
         {
@@ -93,11 +98,6 @@ namespace Instatus.Integration.Mvc
             razorViewEngine.FileExtensions = new string[] { "cshtml" }; 
 
             ViewEngines.Engines.Add(razorViewEngine);
-        }
-
-        public static void RegisterCompactPrivacyPolicy()
-        {
-            GlobalFilters.Filters.Add(new IframeCookieSupportAttribute());
         }
     }
 }
