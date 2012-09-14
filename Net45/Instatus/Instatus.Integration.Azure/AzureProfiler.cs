@@ -51,17 +51,17 @@ namespace Instatus.Integration.Azure
         }
     }
 
-    public class AzureProfilerEntity : TableServiceEntity
+    public class AzureProfilerEntity : TableServiceEntity, ICreated
     {
         public string Text { get; set; }
-        public DateTime CreatedTime { get; set; }
+        public DateTime Created { get; set; }
 
-        public AzureProfilerEntity(string text, DateTime createdTime) 
+        public AzureProfilerEntity(string text, DateTime created) 
         {
             Text = text;
-            CreatedTime = createdTime;
-            PartitionKey = createdTime.ToString(AzureClient.PartitionKeyFormatString);
-            RowKey = Guid.NewGuid().ToString();
+            Created = created;
+            PartitionKey = string.Format(WellKnown.FormatString.Date, created);
+            RowKey = string.Format(WellKnown.FormatString.TimestampAndGuid, created, Guid.NewGuid());
         }
     }
 

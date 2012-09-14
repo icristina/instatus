@@ -118,6 +118,7 @@
   <ItemGroup>
     <Compile Include="AccountController.cs" />
     <Compile Include="BaseMvcConfig.cs" />
+    <Compile Include="ContentPageController.cs" />
     <Compile Include="DelegateResult.cs" />
     <Compile Include="ExtendedViewPage.cs" />
     <Compile Include="FacebookAttribute.cs" />

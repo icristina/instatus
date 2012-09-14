@@ -64,5 +64,13 @@ namespace Instatus.Core
             public const string Default = "Default";
             public const string ContentPage = "ContentPage";
         }
+
+        public class FormatString
+        {
+            // http://msdn.microsoft.com/en-us/library/8kb3ddd4.aspx
+            public const string Date = "{0:yyyy-MM-dd}";
+            public const string Timestamp = "{0:yyyy-MM-dd-HH-mm-ss-F}";
+            public const string TimestampAndGuid = "{0:yyyy-MM-dd-HH-mm-ss-F}-{1}";
+        }
     }
 }

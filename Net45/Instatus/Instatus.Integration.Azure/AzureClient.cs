@@ -10,8 +10,7 @@ using Microsoft.WindowsAzure.StorageClient;
 namespace Instatus.Integration.Azure
 {
     public static class AzureClient
-    {
-        public const string PartitionKeyFormatString = "yyyy-MM-dd";        
+    {    
         public static int TableServiceEntityBufferCount = 25;
 
         public const string TableProviderName = "AzureTableService";

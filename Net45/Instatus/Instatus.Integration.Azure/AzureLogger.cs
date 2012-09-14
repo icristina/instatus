@@ -58,19 +58,19 @@ namespace Instatus.Integration.Azure
         }
     }
 
-    public class AzureLoggerEntity : TableServiceEntity
+    public class AzureLoggerEntity : TableServiceEntity, ICreated
     {
         public string Exception { get; set; }
         public string StackTrace { get; set; }
         public string InnerException { get; set; }
         public string Properties { get; set; }
-        public DateTime CreatedTime { get; set; }
+        public DateTime Created { get; set; }
 
-        public AzureLoggerEntity(DateTime createdTime)
+        public AzureLoggerEntity(DateTime created)
         {
-            CreatedTime = createdTime;
-            PartitionKey = createdTime.ToString(AzureClient.PartitionKeyFormatString);
-            RowKey = Guid.NewGuid().ToString();
+            Created = created;
+            PartitionKey = string.Format(WellKnown.FormatString.Date, created);
+            RowKey = string.Format(WellKnown.FormatString.TimestampAndGuid, created, Guid.NewGuid());
         }
     }
 }
