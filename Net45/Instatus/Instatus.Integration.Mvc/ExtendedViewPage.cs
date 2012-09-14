@@ -10,6 +10,7 @@ namespace Instatus.Integration.Mvc
     public abstract class ExtendedViewPage : WebViewPage
     {
         public ILocalization Localization { get; set; }
+        public ISessionData SessionData { get; set; }
 
         public string Phrase(string key)
         {

@@ -12,11 +12,11 @@ namespace Instatus.Integration.Server
 {
     public class FileSystemContentManager : IContentManager
     {
-        private ISession session;
+        private ISessionData sessionData;
 
-        private object ReadFile(string locale, string key) 
+        private object ReadFile(string locale, string key, string formatString = "~/App_Data/{0}.{1}.html") 
         {
-            var virtualPath = string.Format("~/App_Data/{0}.{1}.html", key, locale);
+            var virtualPath = string.Format(formatString, key, locale);
             var absolutePath = HostingEnvironment.MapPath(virtualPath);
 
             return File.ReadAllText(absolutePath);
@@ -26,11 +26,18 @@ namespace Instatus.Integration.Server
         {
             try 
             {
-                return ReadFile(session.Locale, key);
+                return ReadFile(sessionData.Locale, key);
             } 
             catch 
             {
-                return ReadFile(InMemoryLocalization.DefaultLocale, key);
+                try
+                {
+                    return ReadFile(WellKnown.Locale.UnitedStates, key);
+                }
+                catch
+                {
+                    return ReadFile(string.Empty, key, "~/App_Data/{0}.html");
+                }
             }
         }
 
@@ -49,9 +56,9 @@ namespace Instatus.Integration.Server
             throw new NotImplementedException();
         }
 
-        public FileSystemContentManager(ISession session)
+        public FileSystemContentManager(ISessionData sessionData)
         {
-            this.session = session;
+            this.sessionData = sessionData;
         }
     }
 }

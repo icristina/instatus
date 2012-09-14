@@ -20,7 +20,7 @@ namespace Instatus.Integration.Server
             using (var smtpClient = new SmtpClient())
             {
                 smtpClient.DeliveryMethod = SmtpDeliveryMethod.SpecifiedPickupDirectory;
-                smtpClient.PickupDirectoryLocation = HostingEnvironment.MapPath("~/App_Data/");                
+                smtpClient.PickupDirectoryLocation = HostingEnvironment.MapPath(WellKnown.VirtualPath.AppData);                
                 
                 smtpClient.SendAsync(mailMessage, null);
             }

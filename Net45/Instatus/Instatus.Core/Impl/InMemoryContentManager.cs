@@ -9,13 +9,13 @@ namespace Instatus.Core.Impl
 {
     public class InMemoryContentManager : IContentManager
     {
-        private ISession session;
+        private ISessionData sessionData;
 
         private static IDictionary<Tuple<string, string>, object> content = new ConcurrentDictionary<Tuple<string, string>, object>();
 
         private Tuple<string, string> GetContentKey(string key)
         {
-            return new Tuple<string, string>(session.Locale, key);
+            return new Tuple<string, string>(sessionData.Locale, key);
         }
 
         public object Get(string key)
@@ -38,9 +38,9 @@ namespace Instatus.Core.Impl
             content.Remove(GetContentKey(key));
         }
 
-        public InMemoryContentManager(ISession session)
+        public InMemoryContentManager(ISessionData sessionData)
         {
-            this.session = session;
+            this.sessionData = sessionData;
         }
     }
 }

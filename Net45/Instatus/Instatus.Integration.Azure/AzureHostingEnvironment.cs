@@ -16,7 +16,7 @@ namespace Instatus.Integration.Azure
         {
             get
             {
-                return RoleEnvironment.GetLocalResource("Output").RootPath;
+                return RoleEnvironment.GetLocalResource(WellKnown.LocalResources.Output).RootPath;
             }
         }
 
@@ -24,7 +24,7 @@ namespace Instatus.Integration.Azure
         {
             get
             {
-                return GetAppSetting("BaseAddress");
+                return GetAppSetting(WellKnown.AppSetting.BaseAddress);
             }
         }
 

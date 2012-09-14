@@ -22,9 +22,18 @@ namespace Instatus.Integration.Mvc
         public static void RegisterDefaultRoute(RouteCollection routes)
         {
             routes.MapRouteLowercase(
-                name: "Default",
+                name: WellKnown.RouteName.Default,
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+            );
+        }
+
+        public static void RegisterContentPageRoute(RouteCollection routes, string prefix = "page", string controllerName = "ContentPage")
+        {
+            routes.MapRouteLowercase(
+                name: WellKnown.RouteName.ContentPage,
+                url: prefix + "/{key}",
+                defaults: new { controller = controllerName, action = "Details" }
             );
         }
 

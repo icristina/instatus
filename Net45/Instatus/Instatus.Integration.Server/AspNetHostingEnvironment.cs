@@ -15,7 +15,8 @@ namespace Instatus.Integration.Server
         {
             get
             {
-                return GetAppSetting("RootPath") ?? HostingEnvironment.MapPath("~/");
+                return GetAppSetting(WellKnown.AppSetting.RootPath) 
+                    ?? HostingEnvironment.MapPath(WellKnown.VirtualPath.AppRoot);
             }
         }
         
@@ -23,7 +24,7 @@ namespace Instatus.Integration.Server
         {
             get 
             { 
-                return GetAppSetting("BaseAddress"); 
+                return GetAppSetting(WellKnown.AppSetting.BaseAddress); 
             }
         }
 

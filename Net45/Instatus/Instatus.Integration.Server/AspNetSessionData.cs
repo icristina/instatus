@@ -9,7 +9,7 @@ using System.Threading;
 
 namespace Instatus.Integration.Server
 {
-    public class AspNetSession : ISession
+    public class AspNetSessionData : ISessionData
     {
         public string SiteName
         {

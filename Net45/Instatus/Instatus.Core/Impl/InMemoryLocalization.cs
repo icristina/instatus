@@ -11,17 +11,15 @@ namespace Instatus.Core.Impl
 {
     public class InMemoryLocalization : ILocalization
     {
-        private ISession session;
+        private ISessionData sessionData;
         
         private static IDictionary<Tuple<string, string>, string> allPhrases = new ConcurrentDictionary<Tuple<string, string>, string>();
         private static List<string> locales = new List<string>();
         
-        public const string DefaultLocale = "en-US";
-
         public string Phrase(string key)
         {
-            return allPhrases.GetValue(new Tuple<string, string>(session.Locale, key)) 
-                ?? allPhrases.GetValue(new Tuple<string, string>(DefaultLocale, key));
+            return allPhrases.GetValue(new Tuple<string, string>(sessionData.Locale, key)) 
+                ?? allPhrases.GetValue(new Tuple<string, string>(WellKnown.Locale.UnitedStates, key));
         }
 
         public string Format(string key, params object[] values)
@@ -38,7 +36,7 @@ namespace Instatus.Core.Impl
 
         public static void Add(IDictionary<string, string> phrases)
         {
-            Add(DefaultLocale, phrases);
+            Add(WellKnown.Locale.UnitedStates, phrases);
         }
 
         public static void Add(string locale, IDictionary<string, string> phrases) 
@@ -61,9 +59,9 @@ namespace Instatus.Core.Impl
             return locales.Select(l => new CultureInfo(l).EnglishName).ToArray();
         }
         
-        public InMemoryLocalization(ISession session)
+        public InMemoryLocalization(ISessionData sessionData)
         {
-            this.session = session;
+            this.sessionData = sessionData;
         }
     }
 }

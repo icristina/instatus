@@ -10,7 +10,7 @@ namespace Instatus.Integration.Server
 {
     public class DefaultLinguistics : ILinguistics
     {
-        private PluralizationService pluralizationService = PluralizationService.CreateService(new CultureInfo("en-GB"));
+        private PluralizationService pluralizationService = PluralizationService.CreateService(new CultureInfo(WellKnown.Locale.UnitedStates));
 
         public string Pluralize(string text)
         {

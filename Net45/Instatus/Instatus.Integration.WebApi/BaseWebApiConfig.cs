@@ -12,7 +12,7 @@ namespace Instatus.Integration.WebApi
 {
     public static class BaseWebApiConfig
     {
-        public static void RegisterDefaultRoute(RouteCollection routes)
+        public static void RegisterDefaultRoute(HttpRouteCollection routes)
         {
             routes.MapHttpRoute(
                 name: "DefaultApi",
