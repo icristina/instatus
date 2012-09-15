@@ -23,9 +23,12 @@ namespace Instatus.Sample
 
             containerBuilder.RegisterType<AppSettingsCredentialStorage>().As<ICredentialStorage>();
             containerBuilder.RegisterType<AspNetHostingEnvironment>().As<IHostingEnvironment>();
+            containerBuilder.RegisterType<AspNetSessionData>().As<ISessionData>();
             containerBuilder.RegisterType<FileSystemBlobStorage>().As<IBlobStorage>();
             containerBuilder.RegisterType<WpfImaging>().As<IImaging>();
             containerBuilder.RegisterType<MockMembershipProvider>().As<IMembershipProvider>();
+            containerBuilder.RegisterType<InMemoryLocalization>().As<ILocalization>();
+            containerBuilder.RegisterType<FileSystemContentManager>().As<IContentManager>();
 
             var container = containerBuilder.Build();
 

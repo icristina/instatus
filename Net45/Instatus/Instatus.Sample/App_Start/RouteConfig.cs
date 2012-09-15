@@ -16,6 +16,7 @@ namespace Instatus.Sample
         {
             BaseMvcConfig.RegisterIgnoreRoutes(routes);
             BaseMvcConfig.RegisterImageHandlerRoute(routes);
+            BaseMvcConfig.RegisterContentPageRoute(routes);
             BaseMvcConfig.RegisterDefaultRoute(routes);
         }
     }

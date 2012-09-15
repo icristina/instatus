@@ -46,7 +46,7 @@ namespace Instatus.Integration.Server
                     
                     this.Locale = GetLocale() ??
                         request.Params[localeKey] ??
-                        request.Cookies[cookieKey][localeKey];
+                        (request.Cookies[cookieKey] != null ? request.Cookies[cookieKey][localeKey] : null);
                 }
 
                 return locale;

@@ -1,19 +1,21 @@
-﻿@{
-    ViewBag.Title = "Login";
+﻿@inherits Instatus.Integration.Mvc.ExtendedViewPage
+
+@{
+    ViewBag.Title = @Phrase("Login");
 }
 
-<h2>Login</h2>
+<h2>@Phrase("Login")</h2>
 
 @using (Html.BeginForm("Login", "Account"))
 {
     @Html.AntiForgeryToken()
     @Html.EditorForModel()
-    <button type="submit">Login</button>
+    <button type="submit">@Phrase("Login")</button>
 }
 
 @using (Html.BeginForm("ExternalLogin", "Account"))
 {
     @Html.AntiForgeryToken()
     @Html.DropDownList("provider", new SelectList(new string[] { "Facebook", "Google" }))
-    <button type="submit">Login via external provider</button>
+    <button type="submit">@Phrase("ExternalLogin")</button>
 }

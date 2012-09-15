@@ -1,7 +1,13 @@
-﻿@{
-    ViewBag.Title = "Index";
+﻿@inherits Instatus.Integration.Mvc.ExtendedViewPage
+
+@{
+    ViewBag.Title = Phrase(WellKnown.Phrase.AppName);
 }
 
-<h1>Index</h1>
+<h1>@Phrase(WellKnown.Phrase.AppName)</h1>
 
-<p>Welcome @User.Identity.Name</p>
+<p>@Phrase("Welcome") @User.Identity.Name</p>
+
+<p>Locale: @SessionData.Locale</p>
+
+<p><a href="@Url.ContentPage("about")">About</a></p>

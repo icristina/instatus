@@ -15,6 +15,7 @@ namespace Instatus.Sample
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+            LocalizationConfig.RegisterPhrases();
             AutofacConfig.RegisterContainer();
         }
     }

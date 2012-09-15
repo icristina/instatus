@@ -19,7 +19,8 @@ namespace Instatus.Core.Impl
         public string Phrase(string key)
         {
             return allPhrases.GetValue(new Tuple<string, string>(sessionData.Locale, key)) 
-                ?? allPhrases.GetValue(new Tuple<string, string>(WellKnown.Locale.UnitedStates, key));
+                ?? allPhrases.GetValue(new Tuple<string, string>(WellKnown.Locale.UnitedStates, key))
+                ?? key;
         }
 
         public string Format(string key, params object[] values)

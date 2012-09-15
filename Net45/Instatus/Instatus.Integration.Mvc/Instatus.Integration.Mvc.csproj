@@ -138,6 +138,7 @@
     <Compile Include="SimpleRoleProvider.cs" />
     <Compile Include="RssResult.cs" />
     <Compile Include="TwoLevelViewCache.cs" />
+    <Compile Include="UrlHelperExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

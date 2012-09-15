@@ -31,6 +31,7 @@ namespace Instatus.Core
         public class Alias
         {
             public const string Home = "home";
+            public const string About = "about";
             public const string Terms = "terms";
             public const string Privacy = "privacy";
         }
