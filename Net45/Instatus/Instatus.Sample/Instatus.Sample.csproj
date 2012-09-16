@@ -164,12 +164,11 @@
     </Content>
     <Content Include="Views\Web.config" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <Content Include="packages.config" />
+    <Folder Include="Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\Index.cshtml" />
@@ -199,15 +198,6 @@
       <Project>{c8cc3179-cee1-473f-ab55-3dada05d523f}</Project>
       <Name>Instatus.Scaffold</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\_ViewStart.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Account\Login.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\ContentPage\Details.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

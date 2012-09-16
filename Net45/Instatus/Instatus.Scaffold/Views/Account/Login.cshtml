@@ -4,8 +4,6 @@
     ViewBag.Title = @Phrase("Login");
 }
 
-<h2>@Phrase("Login")</h2>
-
 @using (Html.BeginForm("Login", "Account"))
 {
     @Html.AntiForgeryToken()
@@ -17,5 +15,5 @@
 {
     @Html.AntiForgeryToken()
     @Html.DropDownList("provider", new SelectList(new string[] { "Facebook", "Google" }))
-    <button type="submit">@Phrase("ExternalLogin")</button>
+    <button type="submit">@Phrase("Login")</button>
 }
