@@ -1,0 +1,30 @@
+﻿@model Instatus.Core.IPaged
+
+@using Instatus.Scaffold
+
+@{
+    var pageSize = Model.PageSize;
+    var pageIndex = Model.PageIndex;
+    var totalItemCount = Model.TotalItemCount;
+    var totalPageCount = PaginationExtensions.TotalPageCount(totalItemCount, pageSize);
+    var actionName = ViewContext.RouteData.GetRequiredString("action");
+    var index = 0;
+}
+
+<ul class="pagination">
+    @if (totalPageCount > 1)
+    {
+        while (index < totalPageCount)
+        {
+            <li class="@(index == pageIndex ? "active" : null)">
+                @Html.ActionLink((index + 1).ToString(), actionName, new { pageSize = pageSize, pageIndex = index }) 
+            </li>
+            var nextIndex = PaginationExtensions.IncrementPager(index, pageIndex, totalPageCount, 10);
+            if ((nextIndex - index) > 1)
+            {
+                <li class="disabled"><a>&hellip;</a></li>
+            }
+            index = nextIndex;
+        }
+    }
+</ul>

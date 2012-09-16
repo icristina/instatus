@@ -119,6 +119,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RazorGeneratorMvcStart.cs" />
+    <Compile Include="PaginationExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -163,10 +164,17 @@
     <Content Include="Views\Account\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Instatus.Core\Instatus.Core.csproj">
+      <Project>{39c44af6-a1ad-40ee-b1c6-40fda4ac9c83}</Project>
+      <Name>Instatus.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Instatus.Integration.Mvc\Instatus.Integration.Mvc.csproj">
       <Project>{5ab12e21-db61-4e3f-834f-136302437509}</Project>
       <Name>Instatus.Integration.Mvc</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_Pagination.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

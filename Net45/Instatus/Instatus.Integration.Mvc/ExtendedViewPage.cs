@@ -22,4 +22,20 @@ namespace Instatus.Integration.Mvc
             return Localization.Format(key, values);
         }
     }
+
+    public abstract class ExtendedViewPage<T> : WebViewPage<T>
+    {
+        public ILocalization Localization { get; set; }
+        public ISessionData SessionData { get; set; }
+
+        public string Phrase(string key)
+        {
+            return Localization.Phrase(key);
+        }
+
+        public string Format(string key, params object[] values)
+        {
+            return Localization.Format(key, values);
+        }
+    }
 }

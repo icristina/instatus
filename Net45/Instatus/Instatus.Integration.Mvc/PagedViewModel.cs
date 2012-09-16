@@ -7,7 +7,7 @@ using Instatus.Core;
 
 namespace Instatus.Integration.Mvc
 {
-    public class PagedViewModel<T> : IPaged<T>
+    public class PagedViewModel<T> : IPaged
     {
         private IList<T> results;
 
@@ -19,10 +19,7 @@ namespace Instatus.Integration.Mvc
         {
             get
             {
-                if (TotalItemCount == 0)
-                    return 0;
-
-                return (int)Math.Ceiling((double)TotalItemCount / PageSize);
+                return TotalItemCount == 0 ? 0 : (int)Math.Ceiling((double)TotalItemCount / PageSize);
             }
         }
 
