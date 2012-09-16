@@ -20,7 +20,7 @@ namespace Instatus.Integration.Azure
         {
             get
             {
-                return credential ?? (credential = credentialStorage.GetCredential(AzureClient.QueueProviderName));
+                return credential ?? (credential = credentialStorage.GetCredential(WellKnown.Provider.WindowsAzure));
             }
         }
 

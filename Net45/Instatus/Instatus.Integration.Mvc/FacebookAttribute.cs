@@ -16,7 +16,7 @@ namespace Instatus.Integration.Mvc
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             var viewBag = filterContext.Controller.ViewBag;
-            var credential = CredentialStorage.GetCredential("Facebook");
+            var credential = CredentialStorage.GetCredential(WellKnown.Provider.Facebook);
 
             viewBag.Facebook = new FacebookConfig
             {

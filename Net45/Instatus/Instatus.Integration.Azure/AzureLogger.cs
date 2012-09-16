@@ -40,7 +40,7 @@ namespace Instatus.Integration.Azure
 
         public async void Flush(List<AzureLoggerEntity> flushed)
         {
-            var credential = credentialStorage.GetCredential(AzureClient.TableProviderName);
+            var credential = credentialStorage.GetCredential(WellKnown.Provider.WindowsAzure);
             var dataContext = await AzureClient.GetTableServiceContext(credential, TableName);
 
             foreach (var entry in flushed)

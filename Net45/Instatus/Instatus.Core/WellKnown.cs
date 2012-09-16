@@ -73,5 +73,12 @@ namespace Instatus.Core
             public const string Timestamp = "{0:yyyy-MM-dd-HH-mm-ss-F}";
             public const string TimestampAndGuid = "{0:yyyy-MM-dd-HH-mm-ss-F}-{1}";
         }
+
+        public class Provider
+        {
+            public const string Facebook = "Facebook";
+            public const string GoogleAnalytics = "GoogleAnalytics";
+            public const string WindowsAzure = "WindowsAzure";
+        }
     }
 }
