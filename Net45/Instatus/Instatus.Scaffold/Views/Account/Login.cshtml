@@ -4,16 +4,24 @@
     ViewBag.Title = @Phrase("Login");
 }
 
-@using (Html.BeginForm("Login", "Account"))
-{
-    @Html.AntiForgeryToken()
-    @Html.EditorForModel()
-    <button type="submit">@Phrase("Login")</button>
-}
-
-@using (Html.BeginForm("ExternalLogin", "Account"))
-{
-    @Html.AntiForgeryToken()
-    @Html.DropDownList("provider", new SelectList(new string[] { "Facebook", "Google" }))
-    <button type="submit">@Phrase("Login")</button>
-}
+<div class="container">
+    <h1 class="page-header">@Phrase("Login")</h1>
+    <div class="row">
+        <div class="span6">
+            @using (Html.BeginForm("Login", "Account"))
+            {
+                @Html.AntiForgeryToken()
+                @Html.EditorForModel()
+                <button type="submit" class="btn btn-primary">@Phrase("Login")</button>
+            }
+        </div>
+        <div class="span6">
+            @using (Html.BeginForm("ExternalLogin", "Account"))
+            {
+                @Html.AntiForgeryToken()
+                <button type="submit" name="provider" value="Facebook" class="btn btn-primary btn-large">Facebook</button>
+                <button type="submit" name="provider" value="Google" class="btn btn-primary btn-large">Google</button>
+            }
+        </div>
+    </div>
+</div>

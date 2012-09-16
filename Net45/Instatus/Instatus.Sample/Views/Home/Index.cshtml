@@ -4,10 +4,9 @@
     ViewBag.Title = Phrase(WellKnown.Phrase.AppName);
 }
 
-<h1>@Phrase(WellKnown.Phrase.AppName)</h1>
-
-<p>@Phrase("Welcome") @User.Identity.Name</p>
-
-<p>Locale: @SessionData.Locale</p>
-
-<p><a href="@Url.ContentPage("about")">About</a></p>
+<div class="container">
+    <h1 class="page-header">@Phrase(WellKnown.Phrase.AppName)</h1>
+    <p>@Phrase("Welcome") @User.Identity.Name</p>
+    <p>Locale: @SessionData.Locale</p>
+    <p><a href="@Url.ContentPage("about")">About</a></p>
+</div>
