@@ -1,4 +1,6 @@
-﻿@inherits Instatus.Integration.Mvc.ExtendedViewPage
+﻿@inherits Instatus.Integration.Mvc.ExtendedViewPage<PagedViewModel<Instatus.Core.Models.Entry>>
+
+@using Instatus.Scaffold
 
 @{
     ViewBag.Title = Phrase(WellKnown.Phrase.AppName);
@@ -9,4 +11,10 @@
     <p>@Phrase("Welcome") @User.Identity.Name</p>
     <p>Locale: @SessionData.Locale</p>
     <p><a href="@Url.ContentPage("about")">About</a></p>
+    <h2>Entries</h2>
+    @foreach (var entry in Model)
+    {
+        <p>@entry.Text</p>
+    }
+    @Html.Pagination(Model)
 </div>

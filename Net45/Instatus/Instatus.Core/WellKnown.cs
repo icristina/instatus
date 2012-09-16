@@ -78,7 +78,10 @@ namespace Instatus.Core
         {
             public const string Facebook = "Facebook";
             public const string GoogleAnalytics = "GoogleAnalytics";
-            public const string WindowsAzure = "WindowsAzure";
+            public const string GoogleMaps = "GoogleMaps";
+            public const string WindowsAzure = "WindowsAzure"; // table, queue, blob storage
+            public const string Microsoft = "Microsoft"; // microsoft account
+            public const string Twitter = "Twitter";
         }
     }
 }
