@@ -1,26 +1,18 @@
-﻿using Instatus.Core;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Mvc.Html;
+using System.Text;
 
-namespace Instatus.Scaffold
+namespace Instatus.Core.Extensions
 {
     public static class PaginationExtensions
     {
-        public static MvcHtmlString Pagination<T>(this HtmlHelper<T> htmlHelper, IPaged paged) 
+        public static int TotalPageCount(this IPaged paged)
         {
-            return htmlHelper.Partial("_Pagination", paged);
+            return paged.TotalItemCount == 0 ? 0 : (int)Math.Ceiling((double)paged.TotalItemCount / paged.PageSize);
         }
 
-        public static int TotalPageCount(int totalItemCount, int pageSize)
-        {
-            return totalItemCount == 0 ? 0 : (int)Math.Ceiling((double)totalItemCount / pageSize);
-        }
-
-        public static int IncrementPager(int i, int currentPage, int totalPages, int maxPagerCount)
+        public static int IncrementPager(this int i, int currentPage, int totalPages, int maxPagerCount)
         {
             var original = i;
             int next;

@@ -1,12 +1,12 @@
 ﻿@model Instatus.Core.IPaged
 
-@using Instatus.Scaffold
+@using Instatus.Core.Extensions
 
 @{
     var pageSize = Model.PageSize;
     var pageIndex = Model.PageIndex;
     var totalItemCount = Model.TotalItemCount;
-    var totalPageCount = PaginationExtensions.TotalPageCount(totalItemCount, pageSize);
+    var totalPageCount = PaginationExtensions.TotalPageCount(Model);
     var actionName = ViewContext.RouteData.GetRequiredString("action");
     var index = 0;
 }

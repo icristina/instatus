@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Instatus.Core;
+using Instatus.Core.Extensions;
 
 namespace Instatus.Integration.Mvc
 {
@@ -19,7 +20,7 @@ namespace Instatus.Integration.Mvc
         {
             get
             {
-                return TotalItemCount == 0 ? 0 : (int)Math.Ceiling((double)TotalItemCount / PageSize);
+                return this.TotalPageCount();
             }
         }
 
