@@ -66,6 +66,15 @@ namespace Instatus.Core
             public const string ContentPage = "ContentPage";
         }
 
+        public class RouteValue
+        {
+            public const string Controller = "controller";
+            public const string Action = "action";
+            public const string Id = "id";
+            public const string Language = "language";
+            public const string Country = "country";
+        }
+
         public class FormatString
         {
             // http://msdn.microsoft.com/en-us/library/8kb3ddd4.aspx
