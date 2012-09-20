@@ -30,12 +30,6 @@ namespace Instatus.Integration.Server
             return null;
         }
 
-        // eg. Accept-Language:en-GB,en-US;q=0.8,en;q=0.6
-        public string ParseAcceptLanguage(string value)
-        {
-            return !string.IsNullOrWhiteSpace(value) ? value.Split(',', ';').FirstOrDefault() : string.Empty;
-        }
-
         // format en-GB, en-US, de-DE
         public string Locale
         {
@@ -54,7 +48,7 @@ namespace Instatus.Integration.Server
                     this.Locale = GetCustomLocale() ??
                         request.Params[localeKey] ??
                         (request.Cookies[cookieKey] != null ? request.Cookies[cookieKey][localeKey] : null) ??
-                        ParseAcceptLanguage(request.Headers["Accept-Language"]);
+                        (request.UserLanguages != null ? request.UserLanguages[0] : null);
                 }
 
                 return locale;
