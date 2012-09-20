@@ -11,5 +11,6 @@ namespace Instatus.Core
         string RootPath { get; }
         string BaseAddress { get; }
         string GetAppSetting(string key);
+        string ServerName { get; }
     }
 }

@@ -32,5 +32,13 @@ namespace Instatus.Integration.Server
         {
             return ConfigurationManager.AppSettings[key];
         }
+
+        public string ServerName
+        {
+            get 
+            {
+                return string.Empty;
+            }
+        }
     }
 }

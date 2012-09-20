@@ -11,6 +11,7 @@ namespace Instatus.Core.Impl
 
         public string RootPath { get; set; }
         public string BaseAddress { get; set; }
+        public string ServerName { get; set; }
 
         public string GetAppSetting(string key)
         {

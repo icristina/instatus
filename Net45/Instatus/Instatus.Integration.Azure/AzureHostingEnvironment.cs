@@ -32,5 +32,14 @@ namespace Instatus.Integration.Azure
         {
             return CloudConfigurationManager.GetSetting(key);
         }
+
+
+        public string ServerName
+        {
+            get 
+            {
+                return RoleEnvironment.CurrentRoleInstance.Id;
+            }
+        }
     }
 }
