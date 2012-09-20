@@ -194,3 +194,26 @@ fieldset.reset {
     padding: 0;
     border: 0;
 }
+
+label {
+    display: block;
+}
+
+/* dropdown */
+
+.dropdown {
+    position: relative;
+}
+
+.dropdown-toggle {
+    cursor: pointer;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+}
+
+.dropdown-menu.active {
+    display: block;
+}
