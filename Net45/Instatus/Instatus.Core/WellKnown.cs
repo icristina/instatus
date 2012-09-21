@@ -58,6 +58,7 @@ namespace Instatus.Core
         public class Phrase
         {
             public const string AppName = "AppName";
+            public const string CopyrightNotice = "CopyrightNotice";
         }
 
         public class RouteName
