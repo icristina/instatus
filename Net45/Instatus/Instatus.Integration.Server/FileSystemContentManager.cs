@@ -36,7 +36,14 @@ namespace Instatus.Integration.Server
                 }
                 catch
                 {
-                    return ReadFile(string.Empty, key, "~/App_Data/{0}.html");
+                    try
+                    {
+                        return ReadFile(string.Empty, key, "~/App_Data/{0}.html");
+                    }
+                    catch
+                    {
+                        return null;
+                    }
                 }
             }
         }

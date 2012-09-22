@@ -1,0 +1,9 @@
+﻿@inherits Instatus.Integration.Mvc.ExtendedViewPage
+
+@using Instatus.Scaffold
+
+@using (Html.BeginForm())
+{
+    @Html.DropDownList("locale", new SelectList(Localization.SupportedCultures, "Name", "DisplayName", SessionData.Locale))
+    @Html.Submit("Change")
+}

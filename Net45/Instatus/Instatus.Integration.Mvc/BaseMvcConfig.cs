@@ -37,6 +37,18 @@ namespace Instatus.Integration.Mvc
             );
         }
 
+        public static void RegisterLocalizedContentPageRoute(RouteCollection routes, string controllerName = "ContentPage", string defaultLocale = "en-US")
+        {
+            var localeSegments = defaultLocale.Split('-');
+
+            routes.MapRoute(
+                name: WellKnown.RouteName.ContentPage,
+                url: "{language}-{country}/{key}",
+                defaults: new { controller = controllerName, action = "Details", language = localeSegments[0], country = localeSegments[1] },
+                constraints: new { language = "[a-z]{2}", country = "[A-Z]{2}" }
+            );
+        }
+
         public static void RegisterImageHandlerRoute(RouteCollection routes, 
             string url = "cdn/photo/{action}/{width}/{height}/{bucket}/{*pathInfo}",
             IEnumerable<Tuple<int, int>> whiteListDimensions = null)

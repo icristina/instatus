@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace Instatus.Integration.Mvc
 {
+    [HttpNotFound]
     public abstract class ContentPageController : Controller
     {
         private IContentManager contentManager;

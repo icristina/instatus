@@ -11,27 +11,33 @@ namespace Instatus.Core.Impl
 {
     public class InMemoryLocalization : ILocalization
     {
-        private ISessionData sessionData;
+        private static IDictionary<Tuple<string, string>, string> phrases = new ConcurrentDictionary<Tuple<string, string>, string>();
+        private static List<CultureInfo> supportedCultures = new List<CultureInfo>();
         
-        private static IDictionary<Tuple<string, string>, string> allPhrases = new ConcurrentDictionary<Tuple<string, string>, string>();
-        private static List<string> locales = new List<string>();
-        
-        public string Phrase(string key)
+        public string Phrase(string locale, string key)
         {
-            return allPhrases.GetValue(new Tuple<string, string>(sessionData.Locale, key)) 
-                ?? allPhrases.GetValue(new Tuple<string, string>(WellKnown.Locale.UnitedStates, key))
+            return phrases.GetValue(new Tuple<string, string>(locale, key)) 
+                ?? phrases.GetValue(new Tuple<string, string>(WellKnown.Locale.UnitedStates, key))
                 ?? key;
         }
 
-        public string Format(string key, params object[] values)
+        public string Format(string locale, string key, params object[] values)
         {
             try
             {
-                return string.Format(Phrase(key), values);
+                return string.Format(Phrase(locale, key), values);
             }
             catch
             {
                 return string.Join(" ", values);
+            }
+        }
+
+        public CultureInfo[] SupportedCultures
+        {
+            get 
+            {
+                return supportedCultures.ToArray();
             }
         }
 
@@ -42,27 +48,12 @@ namespace Instatus.Core.Impl
 
         public static void Add(string locale, IDictionary<string, string> phrases) 
         {
-            if (!locales.Contains(locale))
-                locales.Add(locale);
+            if (!supportedCultures.Any(c => c.Name.Equals(locale)))
+                supportedCultures.Add(CultureInfo.CreateSpecificCulture(locale));
             
             phrases
                 .ToList()
-                .ForEach(x => allPhrases[new Tuple<string, string>(locale, x.Key)] = x.Value);
-        }
-
-        public static string[] GetLocales()
-        {
-            return locales.ToArray();
-        }
-
-        public static string[] GetEnglishLocaleNames()
-        {
-            return locales.Select(l => new CultureInfo(l).EnglishName).ToArray();
-        }
-        
-        public InMemoryLocalization(ISessionData sessionData)
-        {
-            this.sessionData = sessionData;
+                .ForEach(x => InMemoryLocalization.phrases[new Tuple<string, string>(locale, x.Key)] = x.Value);
         }
     }
 }

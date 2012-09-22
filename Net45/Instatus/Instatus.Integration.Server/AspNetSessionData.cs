@@ -12,6 +12,8 @@ namespace Instatus.Integration.Server
 {
     public class AspNetSessionData : ISessionData
     {
+        private ILocalization localization;
+        
         public virtual string SiteName
         {
             get
@@ -93,6 +95,12 @@ namespace Instatus.Integration.Server
                 try
                 {
                     var culture = CultureInfo.CreateSpecificCulture(value); // specific, in format en-GB, en-US, de-DE
+
+                    if (!localization.SupportedCultures.Contains(culture))
+                    {
+                        culture = localization.SupportedCultures.First();
+                    }
+
                     Thread.CurrentThread.CurrentUICulture = culture;
                     HttpContext.Current.Response.Cookies[cookieKey][localeKey] = locale = culture.Name;
                 }
@@ -101,6 +109,11 @@ namespace Instatus.Integration.Server
 
                 }
             }
+        }
+
+        public AspNetSessionData(ILocalization localization)
+        {
+            this.localization = localization;
         }
     }
 }

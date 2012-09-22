@@ -13,7 +13,12 @@ namespace Instatus.Sample
         {
             InMemoryLocalization.Add(new Dictionary<string, string>()
             {
-                { WellKnown.Phrase.AppName, "Instatus" }
+                { WellKnown.Phrase.AppName, "Instatus US" }
+            });
+
+            InMemoryLocalization.Add(WellKnown.Locale.GreatBritain, new Dictionary<string, string>()
+            {
+                { WellKnown.Phrase.AppName, "Instatus GB" }
             });
         }
     }
