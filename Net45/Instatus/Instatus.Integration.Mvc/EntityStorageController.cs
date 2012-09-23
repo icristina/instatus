@@ -6,6 +6,7 @@ using System.Net;
 using System.Text;
 using System.Web.Mvc;
 using Instatus.Core;
+using System.Web.SessionState;
 
 namespace Instatus.Integration.Mvc
 {
@@ -19,6 +20,7 @@ namespace Instatus.Integration.Mvc
         }
     }
 
+    [SessionState(SessionStateBehavior.Disabled)]
     public abstract class EntityStorageController<TEntity, TModel> : Controller
         where TEntity : class
         where TModel : class

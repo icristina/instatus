@@ -1,5 +1,6 @@
 ﻿using Instatus.Core;
 using Instatus.Core.Impl;
+using Instatus.Core.Models;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace Instatus.Integration.Server
     {
         private ISessionData sessionData;
 
-        private object ReadFile(string locale, string key, string formatString = "~/App_Data/{0}.{1}.html") 
+        private string ReadFile(string locale, string key, string formatString = "~/App_Data/{0}.{1}.html") 
         {
             var virtualPath = string.Format(formatString, key, locale);
             var absolutePath = HostingEnvironment.MapPath(virtualPath);
@@ -22,38 +23,45 @@ namespace Instatus.Integration.Server
             return File.ReadAllText(absolutePath);
         }
 
-        public object Get(string key)
+        public Document Get(string key)
         {
+            string content;
+            
             try 
             {
-                return ReadFile(sessionData.Locale, key);
+                content = ReadFile(sessionData.Locale, key);
             } 
             catch 
             {
                 try
                 {
-                    return ReadFile(WellKnown.Locale.UnitedStates, key);
+                    content = ReadFile(WellKnown.Locale.UnitedStates, key);
                 }
                 catch
                 {
                     try
                     {
-                        return ReadFile(string.Empty, key, "~/App_Data/{0}.html");
+                        content = ReadFile(string.Empty, key, "~/App_Data/{0}.html");
                     }
                     catch
                     {
-                        return null;
+                        content = string.Empty;
                     }
                 }
             }
+
+            return new Document()
+            {
+                Description = content
+            };
         }
 
-        public IEnumerable Query(IFilter filter)
+        public IEnumerable<Document> Query(IFilter filter)
         {
             throw new NotImplementedException();
         }
 
-        public void AddOrUpdate(string key, object contentItem)
+        public void AddOrUpdate(string key, Document contentItem)
         {
             throw new NotImplementedException();
         }

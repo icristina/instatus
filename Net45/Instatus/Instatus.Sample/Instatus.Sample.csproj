@@ -51,6 +51,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Autofac.Mvc4.2.6.3.862-beta\lib\NET40\Autofac.Integration.Mvc.dll</HintPath>
     </Reference>
+    <Reference Include="CookComputing.XmlRpcV2, Version=2.5.0.0, Culture=neutral, PublicKeyToken=a7d6e17aa302004d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\xmlrpcnet.2.5.0\lib\net20\CookComputing.XmlRpcV2.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -193,6 +197,10 @@
     <ProjectReference Include="..\Instatus.Integration.WebApi\Instatus.Integration.WebApi.csproj">
       <Project>{0224c553-8412-4982-adf0-9b2a73fd4e2f}</Project>
       <Name>Instatus.Integration.WebApi</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Instatus.Integration.Wordpress\Instatus.Integration.Wordpress.csproj">
+      <Project>{868571da-575e-46c5-890e-7a3b53eb3bfc}</Project>
+      <Name>Instatus.Integration.Wordpress</Name>
     </ProjectReference>
     <ProjectReference Include="..\Instatus.Scaffold\Instatus.Scaffold.csproj">
       <Project>{c8cc3179-cee1-473f-ab55-3dada05d523f}</Project>

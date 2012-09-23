@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Instatus.Core.Models;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +9,9 @@ namespace Instatus.Core
 {
     public interface IContentManager
     {
-        object Get(string key);
-        IEnumerable Query(IFilter filter); // paging applied afterwards if IOrderedQueryable
-        void AddOrUpdate(string key, object contentItem);
+        Document Get(string key);
+        IEnumerable<Document> Query(IFilter filter); // paging applied afterwards if IOrderedQueryable
+        void AddOrUpdate(string key, Document contentItem);
         void Delete(string key);
     }
 }

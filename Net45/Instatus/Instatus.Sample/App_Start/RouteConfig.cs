@@ -1,5 +1,6 @@
 ﻿using Instatus.Integration.Mvc;
 using Instatus.Integration.Server;
+using Instatus.Integration.Wordpress;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,7 @@ namespace Instatus.Sample
             BaseMvcConfig.RegisterImageHandlerRoute(routes);
             BaseMvcConfig.RegisterLocalizedContentPageRoute(routes);
             BaseMvcConfig.RegisterDefaultRoute(routes);
+            WordpressConfig.RegisterRoutes(routes);
         }
     }
 }

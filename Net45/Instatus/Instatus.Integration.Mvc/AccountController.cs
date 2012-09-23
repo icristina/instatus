@@ -8,10 +8,12 @@ using Instatus.Core;
 using DotNetOpenAuth.AspNet;
 using System.Web;
 using DotNetOpenAuth.AspNet.Clients;
+using System.Web.SessionState;
 
 namespace Instatus.Integration.Mvc
 {
     [Authorize]
+    [SessionState(SessionStateBehavior.Disabled)]
     public abstract class AccountController : Controller
     {
         private IMembershipProvider membershipProvider;

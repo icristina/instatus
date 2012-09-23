@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Instatus.Core.Models;
+using System;
 using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -11,24 +12,24 @@ namespace Instatus.Core.Impl
     {
         private ISessionData sessionData;
 
-        private static IDictionary<Tuple<string, string>, object> content = new ConcurrentDictionary<Tuple<string, string>, object>();
+        private static IDictionary<Tuple<string, string>, Document> content = new ConcurrentDictionary<Tuple<string, string>, Document>();
 
         private Tuple<string, string> GetContentKey(string key)
         {
             return new Tuple<string, string>(sessionData.Locale, key);
         }
 
-        public object Get(string key)
+        public Document Get(string key)
         {
             return content[GetContentKey(key)];
         }
 
-        public IEnumerable Query(IFilter filter)
+        public IEnumerable<Document> Query(IFilter filter)
         {
             return content.Select(c => c.Value);
         }
 
-        public void AddOrUpdate(string key, object contentItem)
+        public void AddOrUpdate(string key, Document contentItem)
         {
             content[GetContentKey(key)] = contentItem;
         }

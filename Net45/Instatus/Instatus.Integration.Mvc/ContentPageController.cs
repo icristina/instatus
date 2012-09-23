@@ -4,10 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web.Mvc;
+using System.Web.SessionState;
 
 namespace Instatus.Integration.Mvc
 {
     [HttpNotFound]
+    [SessionState(SessionStateBehavior.Disabled)]
     public abstract class ContentPageController : Controller
     {
         private IContentManager contentManager;

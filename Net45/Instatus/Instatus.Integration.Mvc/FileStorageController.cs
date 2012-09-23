@@ -6,9 +6,11 @@ using System.Text;
 using System.Web.Mvc;
 using Instatus.Core;
 using Instatus.Core.Utils;
+using System.Web.SessionState;
 
 namespace Instatus.Integration.Mvc
 {
+    [SessionState(SessionStateBehavior.Disabled)]
     public abstract class FileStorageController : Controller
     {
         public IBlobStorage BlobStorage { get; private set; }

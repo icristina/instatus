@@ -8,6 +8,7 @@ using Autofac.Integration.Mvc;
 using Instatus.Core;
 using Instatus.Integration.Server;
 using Instatus.Core.Impl;
+using Instatus.Integration.Wordpress;
 
 namespace Instatus.Sample
 {
@@ -29,6 +30,8 @@ namespace Instatus.Sample
             containerBuilder.RegisterType<MockMembershipProvider>().As<IMembershipProvider>();
             containerBuilder.RegisterType<InMemoryLocalization>().As<ILocalization>();
             containerBuilder.RegisterType<FileSystemContentManager>().As<IContentManager>();
+            containerBuilder.RegisterType<InMemoryTaxonomy>().As<ITaxonomy>();
+            containerBuilder.RegisterType<WordpressService>();
 
             var container = containerBuilder.Build();
 

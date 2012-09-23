@@ -7,7 +7,6 @@ namespace Instatus.Core.Models
 {
     public class Document : ICreated
     {
-        public string Locale { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public string Picture { get; set; }
@@ -15,6 +14,7 @@ namespace Instatus.Core.Models
         public DateTime Published { get; set; }
         public IDictionary<string, object> Metadata { get; set; }
         public IList<Section> Sections { get; set; }
+        public string[] Tags { get; set; }
 
         public Document()
         {
