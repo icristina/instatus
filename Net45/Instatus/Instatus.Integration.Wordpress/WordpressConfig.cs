@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Web.Mvc;
 using System.Web.Routing;
 
 namespace Instatus.Integration.Wordpress
@@ -15,8 +16,13 @@ namespace Instatus.Integration.Wordpress
             {
                 Namespaces = new string[] { "Instatus.Integration.Wordpress" }
             });
+
+            var constraints = new RouteValueDictionary(new
+            {
+                Controller = string.Empty
+            });
             
-            routes.Add(new Route("xmlrpc.php", null, null, dataTokens, new WordpressRouteHandler()));
+            routes.Add(new Route("xmlrpc.php", null, constraints, dataTokens, new WordpressRouteHandler()));
         }
     }
 }
