@@ -44,6 +44,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instatus.Integration.Json",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instatus.Integration.Wordpress", "Instatus.Integration.Wordpress\Instatus.Integration.Wordpress.csproj", "{868571DA-575E-46C5-890E-7A3B53EB3BFC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instatus.Integration.Maxmind", "Instatus.Integration.Maxmind\Instatus.Integration.Maxmind.csproj", "{01DD00DD-4313-4380-8BB8-EC332E5FF22D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -122,6 +124,10 @@ Global
 		{868571DA-575E-46C5-890E-7A3B53EB3BFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{868571DA-575E-46C5-890E-7A3B53EB3BFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{868571DA-575E-46C5-890E-7A3B53EB3BFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01DD00DD-4313-4380-8BB8-EC332E5FF22D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01DD00DD-4313-4380-8BB8-EC332E5FF22D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01DD00DD-4313-4380-8BB8-EC332E5FF22D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01DD00DD-4313-4380-8BB8-EC332E5FF22D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

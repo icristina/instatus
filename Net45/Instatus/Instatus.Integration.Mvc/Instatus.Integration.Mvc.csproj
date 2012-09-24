@@ -119,6 +119,7 @@
     <Compile Include="AccountController.cs" />
     <Compile Include="BaseMvcConfig.cs" />
     <Compile Include="ContentPageController.cs" />
+    <Compile Include="ServerNameAttribute.cs" />
     <Compile Include="HttpNotFoundAttribute.cs" />
     <Compile Include="DelegateResult.cs" />
     <Compile Include="ExtendedViewPage.cs" />

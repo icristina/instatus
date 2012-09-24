@@ -92,6 +92,7 @@ namespace Instatus.Core
             public const string WindowsAzure = "WindowsAzure"; // table, queue, blob storage
             public const string Microsoft = "Microsoft"; // microsoft account
             public const string Twitter = "Twitter";
+            public const string Maxmind = "Maxmind";
         }
     }
 }

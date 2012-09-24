@@ -54,6 +54,7 @@
     <Compile Include="ICampaignManager.cs" />
     <Compile Include="IContentManager.cs" />
     <Compile Include="IFilter.cs" />
+    <Compile Include="IGeocode.cs" />
     <Compile Include="Impl\InMemoryContentManager.cs" />
     <Compile Include="Impl\InMemorySession.cs" />
     <Compile Include="ITextTransform.cs" />
