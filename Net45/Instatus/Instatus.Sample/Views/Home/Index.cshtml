@@ -6,6 +6,8 @@
     ViewBag.Title = Phrase(WellKnown.Phrase.AppName);
 }
 
+@Html.Metadata(Model.Document.Metadata)
+
 <div class="container">
     <h1 class="page-header">@Phrase(WellKnown.Phrase.AppName)</h1>
     <p>@Phrase("Welcome") @User.Identity.Name</p>

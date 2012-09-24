@@ -39,5 +39,10 @@ namespace Instatus.Scaffold
         {
             return htmlHelper.Partial("_SelectLocale");
         }
+
+        public static MvcHtmlString Metadata<T>(this HtmlHelper<T> htmlHelper, IDictionary<string, object> metadata) 
+        {
+            return htmlHelper.Partial("_Metadata", metadata);
+        }
     }
 }

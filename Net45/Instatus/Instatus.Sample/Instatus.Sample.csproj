@@ -186,6 +186,10 @@
       <Project>{0df442db-c176-4141-849a-c90e998e4faf}</Project>
       <Name>Instatus.Integration.Less</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Instatus.Integration.Maxmind\Instatus.Integration.Maxmind.csproj">
+      <Project>{01dd00dd-4313-4380-8bb8-ec332e5ff22d}</Project>
+      <Name>Instatus.Integration.Maxmind</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Instatus.Integration.Mvc\Instatus.Integration.Mvc.csproj">
       <Project>{5ab12e21-db61-4e3f-834f-136302437509}</Project>
       <Name>Instatus.Integration.Mvc</Name>
@@ -206,6 +210,9 @@
       <Project>{c8cc3179-cee1-473f-ab55-3dada05d523f}</Project>
       <Name>Instatus.Scaffold</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Data\GeoIP.dat" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using Instatus.Core;
 using Instatus.Core.Extensions;
+using Instatus.Core.Models;
 
 namespace Instatus.Integration.Mvc
 {
@@ -15,6 +16,8 @@ namespace Instatus.Integration.Mvc
         public int TotalItemCount { get; private set; }
         public int PageIndex { get; private set; }
         public int PageSize { get; private set; }
+
+        public Document Document { get; set; }
 
         public int TotalPageCount
         {

@@ -9,6 +9,7 @@ using Instatus.Core;
 using Instatus.Integration.Server;
 using Instatus.Core.Impl;
 using Instatus.Integration.Wordpress;
+using Instatus.Integration.Maxmind;
 
 namespace Instatus.Sample
 {
@@ -31,6 +32,7 @@ namespace Instatus.Sample
             containerBuilder.RegisterType<InMemoryLocalization>().As<ILocalization>();
             containerBuilder.RegisterType<FileSystemContentManager>().As<IContentManager>();
             containerBuilder.RegisterType<InMemoryTaxonomy>().As<ITaxonomy>();
+            containerBuilder.RegisterType<DataFileGeocode>().As<IGeocode>();
             containerBuilder.RegisterType<WordpressService>();
 
             var container = containerBuilder.Build();

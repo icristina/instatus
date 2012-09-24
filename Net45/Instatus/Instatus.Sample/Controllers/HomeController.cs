@@ -1,4 +1,5 @@
-﻿using Instatus.Core.Models;
+﻿using Instatus.Core;
+using Instatus.Core.Models;
 using Instatus.Integration.Mvc;
 using System;
 using System.Collections.Generic;
@@ -10,17 +11,35 @@ namespace Instatus.Sample.Controllers
 {
     public class HomeController : Controller
     {
+        private IGeocode geocode;
+        
         public ActionResult Index(int pageIndex = 0)
         {
-            ViewData.Model = new PagedViewModel<Entry>(Enumerable.Range(1, 1000)
+            var viewModel = new PagedViewModel<Entry>(Enumerable.Range(1, 1000)
                 .Select(s => new Entry(string.Format("Entry {0}", s)))
                 .ToList()
                 .AsQueryable()
                 .OrderBy(e => e.Text), 
                 pageIndex, 
                 10);
+
+            viewModel.Document = new Document()
+            {
+                Metadata = new Dictionary<string, object>()
+                {
+                    { "ipAddress", Request.UserHostAddress },
+                    { "country", geocode.GetCountryCode(Request.UserHostAddress) }
+                }
+            };
+
+            ViewData.Model = viewModel; 
             
             return View();
+        }
+
+        public HomeController(IGeocode geocode)
+        {
+            this.geocode = geocode;
         }
     }
 }

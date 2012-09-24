@@ -9,7 +9,7 @@ using System.Text;
 namespace Instatus.Integration.Maxmind
 {
     // http://dev.maxmind.com/geoip/web-services
-    public class MaxmindGeocode : IGeocode
+    public class RemoteGeocode : IGeocode
     {
         private ICredentialStorage credentialStorage;
 
@@ -37,7 +37,7 @@ namespace Instatus.Integration.Maxmind
             }
         }
 
-        public MaxmindGeocode(ICredentialStorage credentialStorage)
+        public RemoteGeocode(ICredentialStorage credentialStorage)
         {
             this.credentialStorage = credentialStorage;
         }
