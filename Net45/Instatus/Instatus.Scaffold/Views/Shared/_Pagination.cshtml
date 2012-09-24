@@ -8,6 +8,7 @@
     var totalItemCount = Model.TotalItemCount;
     var totalPageCount = PaginationExtensions.TotalPageCount(Model);
     var actionName = ViewContext.RouteData.GetRequiredString("action");
+    var controllerName = ViewContext.RouteData.GetRequiredString("controller");
     var index = 0;
 }
 
@@ -17,7 +18,7 @@
         while (index < totalPageCount)
         {
             <li class="@(index == pageIndex ? "active" : null)">
-                @Html.ActionLink((index + 1).ToString(), actionName, new { pageSize = pageSize, pageIndex = index }) 
+                @Html.ActionLink((index + 1).ToString(), actionName, controllerName, new { pageSize = pageSize, pageIndex = index }, null) 
             </li>
             var nextIndex = PaginationExtensions.IncrementPager(index, pageIndex, totalPageCount, 10);
             if ((nextIndex - index) > 1)

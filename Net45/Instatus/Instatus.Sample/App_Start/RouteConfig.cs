@@ -18,8 +18,8 @@ namespace Instatus.Sample
             BaseMvcConfig.RegisterIgnoreRoutes(routes);
             BaseMvcConfig.RegisterImageHandlerRoute(routes);
             BaseMvcConfig.RegisterLocalizedContentPageRoute(routes);
-            BaseMvcConfig.RegisterDefaultRoute(routes);
             WordpressConfig.RegisterRoutes(routes);
+            BaseMvcConfig.RegisterDefaultRoute(routes);
         }
     }
 }
