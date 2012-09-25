@@ -22,9 +22,6 @@ namespace Instatus.Integration.Server
             }
         }
 
-        private const string cookieKey = "preferences";
-        private const string localeKey = "locale";
-
         private string locale;
 
         // override, for example if sourced from facebook signed_request, this takes highest priority
@@ -44,13 +41,15 @@ namespace Instatus.Integration.Server
 
         public string GetParamsLocale(HttpRequest request)
         {
-            return request.Params[localeKey];
+            return request.Params[WellKnown.Preference.Locale];
         }
 
         public string GetCookieLocale(HttpRequest request)
         {
-            return request.Cookies[cookieKey] == null ? null 
-                : request.Cookies[cookieKey][localeKey];
+            var cookie = request.Cookies[WellKnown.Cookie.Preferences];
+            
+            return cookie == null ? null 
+                : cookie[WellKnown.Preference.Locale];
         }
 
         public string GetAcceptLanguage(HttpRequest request)
@@ -101,8 +100,10 @@ namespace Instatus.Integration.Server
                         culture = localization.SupportedCultures.First();
                     }
 
+                    var response = HttpContext.Current.Response;
+
                     Thread.CurrentThread.CurrentUICulture = culture;
-                    HttpContext.Current.Response.Cookies[cookieKey][localeKey] = locale = culture.Name;
+                    response.Cookies[WellKnown.Cookie.Preferences][WellKnown.Preference.Locale] = locale = culture.Name;
                 }
                 catch
                 {

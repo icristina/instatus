@@ -94,5 +94,15 @@ namespace Instatus.Core
             public const string Twitter = "Twitter";
             public const string Maxmind = "Maxmind";
         }
+
+        public class Cookie
+        {
+            public const string Preferences = "Preferences";
+        }
+
+        public class Preference
+        {
+            public const string Locale = "Locale";
+        }
     }
 }

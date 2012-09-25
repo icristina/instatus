@@ -1,5 +1,6 @@
 ﻿using CookComputing.XmlRpc;
 using Instatus.Core;
+using Instatus.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,11 +14,26 @@ namespace Instatus.Integration.Wordpress
         private IMembershipProvider membershipProvider;
         private ITaxonomy taxonomy;
         private IContentManager contentManager;
+        private IHostingEnvironment hostingEnvironment;
         
+        private const string defaultBlogId = "1";
+
         [XmlRpcMethod("wp.getUsersBlogs")]
         public BlogInfo[] GetUsersBlogs(string username, string password)
         {
-            return null;
+            if (!membershipProvider.ValidateUser(username, password)) return null;
+            
+            return new BlogInfo[] 
+            {
+                new BlogInfo() 
+                {
+                    blogid = defaultBlogId,
+                    blogName = "Blog",
+                    isAdmin = true,
+                    url = hostingEnvironment.BaseAddress,
+                    xmlrpc = hostingEnvironment.BaseAddress + "/" + WordpressConfig.XmlRpcUrl
+                }
+            };
         }
 
         [XmlRpcMethod("wp.getComments")]
@@ -27,8 +43,10 @@ namespace Instatus.Integration.Wordpress
         }
 
         [XmlRpcMethod("wp.getCategories")]
-        public WordpressCategory[] GetCategories(int blogId, string username, string password)
+        public WordpressCategory[] GetCategories(string blogId, string username, string password)
         {
+            if (!membershipProvider.ValidateUser(username, password)) return null;            
+            
             return taxonomy.GetTags().Select(tag => new WordpressCategory()
             {
                 categoryName = tag
@@ -45,54 +63,95 @@ namespace Instatus.Integration.Wordpress
         [XmlRpcMethod("blogger.getUsersBlogs")]
         public BlogInfo[] GetUsersBlogs(string appKey, string username, string password)
         {
-            return null;
+            return GetUsersBlogs(username, password);
         }
 
         [XmlRpcMethod("blogger.deletePost")]
         public bool DeletePost(string appKey, string postid, string username, string password, bool publish)
         {
+            if (!membershipProvider.ValidateUser(username, password)) return false;
+
+            contentManager.Delete(postid);
+
             return true;
         }
 
-        [XmlRpcMethod("metaWeblog.getCategories")]
-        public MetaWeblogCategory[] GetCategories(string blogid, string username, string password)
-        {
-            return taxonomy.GetTags().Select(tag => new MetaWeblogCategory()
-            {
-                title = tag
-            })
-            .ToArray();
-        }
+        //[XmlRpcMethod("metaWeblog.getCategories")]
+        //public MetaWeblogCategory[] GetCategories(string blogid, string username, string password)
+        //{
+        //    null;
+        //}
 
         [XmlRpcMethod("metaWeblog.newPost")]
         public string NewPost(string blogid, string username, string password, MetaWeblogPost post, bool publish)
         {
-            return null;
+            if (!membershipProvider.ValidateUser(username, password)) return null;
+
+            var document = new Document();
+
+            document.Title = post.title;
+            document.Description = post.description;
+
+            contentManager.AddOrUpdate(post.postid, document);
+
+            return post.postid;
         }
 
         [XmlRpcMethod("metaWeblog.getPost")]
         public MetaWeblogPost GetPost(string postid, string username, string password)
         {
-            return null;
+            if (!membershipProvider.ValidateUser(username, password)) return null;
+
+            var document = contentManager.Get(postid);
+
+            return new MetaWeblogPost()
+            {
+                postid = postid,
+                title = document.Title,
+                description = document.Description,
+                dateCreated = document.Created
+            };
         }
 
         [XmlRpcMethod("metaWeblog.getRecentPosts")]
         public MetaWeblogPost[] GetRecentPosts(string blogid, string username, string password, int numberOfPosts)
         {
-            return null;
+            if (!membershipProvider.ValidateUser(username, password)) return null;
+            
+            return contentManager.Query(null).Select(document => new MetaWeblogPost() 
+            {
+                title = document.Title,
+                description = document.Description,
+                dateCreated = document.Created                
+            })
+            .ToArray();
         }
 
         [XmlRpcMethod("metaWeblog.editPost")]
         public bool EditPost(string postid, string username, string password, MetaWeblogPost post, bool publish)
         {
+            if (!membershipProvider.ValidateUser(username, password)) return false;
+
+            var document = contentManager.Get(postid);
+
+            document.Title = post.title;
+            document.Description = post.description;
+
+            contentManager.AddOrUpdate(postid, document);
+
             return true;
         }
 
-        public WordpressService(IMembershipProvider membershipProvider, ITaxonomy taxonomy, IContentManager contentManager)
+        public WordpressService(
+            IMembershipProvider membershipProvider, 
+            ITaxonomy taxonomy, 
+            IContentManager contentManager,
+            IHostingEnvironment hostingEnvironment)
         {
             this.membershipProvider = membershipProvider;
             this.taxonomy = taxonomy;
             this.contentManager = contentManager;
+            this.hostingEnvironment = hostingEnvironment;
         }
     }
 

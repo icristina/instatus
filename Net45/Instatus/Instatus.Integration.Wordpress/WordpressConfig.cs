@@ -9,6 +9,8 @@ namespace Instatus.Integration.Wordpress
 {
     public class WordpressConfig
     {
+        public const string XmlRpcUrl = "xmlrpc.php";
+        
         // http://cookcomputing.com/blog/archives/Implementing%20an%20xml-rpc-service-with-asp-net-mvc
         public static void RegisterRoutes(RouteCollection routes)
         {
@@ -22,7 +24,7 @@ namespace Instatus.Integration.Wordpress
                 Controller = string.Empty
             });
             
-            routes.Add(new Route("xmlrpc.php", null, constraints, dataTokens, new WordpressRouteHandler()));
+            routes.Add(new Route(XmlRpcUrl, null, constraints, dataTokens, new WordpressRouteHandler()));
         }
     }
 }
