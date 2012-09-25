@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Instatus.Core.Models
 {
-    public class User : IUser
+    public class User
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

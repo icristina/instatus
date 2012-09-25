@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Instatus.Core.Models
 {
-    public class Filter : IFilter
+    public class Filter
     {
         public string Query { get; set; }
         public string Sort { get; set; }

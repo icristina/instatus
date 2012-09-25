@@ -19,7 +19,7 @@ namespace Instatus.Core.Utils
         public static string[] LastNames = new string[] { "Smith", "Jones", "Taylor", "Brown", "Williams", "Wilson", "Johnson", "Davis", "Robinson", "Wright", "Thompson", "Evans", "Walker", "White", "Roberts", "Green", "Hall", "Wood", "Jackson", "Clarke" };
         public static string[] Words = new string[] { "lorem", "ipsum", "dolor", "sit", "amet", "consectetur", "adipisicing", "elit", "sed", "do", "eiusmod", "tempor" };
 
-        public static IUser CreateMockUser()
+        public static User CreateMockUser()
         {
             var firstName = FirstNames.Random();
             var lastName = LastNames.Random();

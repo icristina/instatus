@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Instatus.Core.Models
 {
-    public class Credential : ICredential
+    public class Credential
     {
         public string AccountName { get; set; }
         public string PublicKey { get; set; }

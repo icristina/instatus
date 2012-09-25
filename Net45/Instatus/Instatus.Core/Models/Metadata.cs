@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Instatus.Core.Models
 {
-    public class Metadata : IMetadata
+    public class Metadata
     {
         public string ContentType { get; set; }
         public IDictionary<string, string> Headers { get; private set; }

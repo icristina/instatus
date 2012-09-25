@@ -10,7 +10,7 @@ namespace Instatus.Core.Impl
     {
         private IEnumerable<Campaign> campaigns;
         
-        public object GetActiveCampaign()
+        public Campaign GetActiveCampaign()
         {
             var now = DateTime.UtcNow;
             return campaigns.Where(c => c.StartTime <= now && c.EndTime >= now).FirstOrDefault(); 

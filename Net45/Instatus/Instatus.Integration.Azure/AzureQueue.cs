@@ -8,26 +8,19 @@ using Instatus.Core;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.StorageClient;
 using Instatus.Core.Extensions;
+using Instatus.Core.Models;
 
 namespace Instatus.Integration.Azure
 {
     public class AzureQueue<T> : IQueue<T>
     {
         private ICredentialStorage credentialStorage;
-        private ICredential credential;
-
-        public ICredential Credential
-        {
-            get
-            {
-                return credential ?? (credential = credentialStorage.GetCredential(WellKnown.Provider.WindowsAzure));
-            }
-        }
 
         public CloudQueue GetQueue()
         {
-            var baseUri = string.Format("http://{0}.queue.core.windows.net", Credential.AccountName);
-            var storageCredential = new StorageCredentialsAccountAndKey(Credential.AccountName, Credential.PrivateKey);
+            var credential = credentialStorage.GetCredential(WellKnown.Provider.WindowsAzure);
+            var baseUri = string.Format("http://{0}.queue.core.windows.net", credential.AccountName);
+            var storageCredential = new StorageCredentialsAccountAndKey(credential.AccountName, credential.PrivateKey);
             var client = new CloudQueueClient(baseUri, storageCredential);
 
             return client.GetQueueReference(typeof(T).FullName);

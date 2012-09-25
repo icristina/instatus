@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Instatus.Core.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,14 +8,14 @@ namespace Instatus.Core.Impl
 {
     public class InMemoryCredentialStorage : ICredentialStorage
     {
-        private IDictionary<string, ICredential> credentials;
+        private IDictionary<string, Credential> credentials;
         
-        public ICredential GetCredential(string providerName)
+        public Credential GetCredential(string providerName)
         {
             return credentials[providerName];
         }
 
-        public InMemoryCredentialStorage(IDictionary<string, ICredential> credentials)
+        public InMemoryCredentialStorage(IDictionary<string, Credential> credentials)
         {
             this.credentials = credentials;
         }

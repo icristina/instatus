@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Instatus.Core.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,6 @@ namespace Instatus.Core
 {
     public interface ICredentialStorage
     {
-        ICredential GetCredential(string providerName);
+        Credential GetCredential(string providerName);
     }
 }

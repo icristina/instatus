@@ -52,7 +52,6 @@
     <Compile Include="Extensions\StreamExtensions.cs" />
     <Compile Include="ICampaignManager.cs" />
     <Compile Include="IContentManager.cs" />
-    <Compile Include="IFilter.cs" />
     <Compile Include="IGeocode.cs" />
     <Compile Include="Impl\InMemoryContentManager.cs" />
     <Compile Include="Impl\InMemorySession.cs" />
@@ -80,7 +79,6 @@
     <Compile Include="Impl\MockMembershipProvider.cs" />
     <Compile Include="ITaxonomy.cs" />
     <Compile Include="IBlobStorage.cs" />
-    <Compile Include="ICredential.cs" />
     <Compile Include="ICredentialStorage.cs" />
     <Compile Include="IEntitySet.cs" />
     <Compile Include="IEntityStorage.cs" />
@@ -93,7 +91,6 @@
     <Compile Include="IMembershipProvider.cs" />
     <Compile Include="IMessageBus.cs" />
     <Compile Include="IMessaging.cs" />
-    <Compile Include="IMetadata.cs" />
     <Compile Include="Impl\InMemoryCredentialStorage.cs" />
     <Compile Include="Impl\InMemoryEntitySet.cs" />
     <Compile Include="Impl\InMemoryEntityStorage.cs" />
@@ -104,7 +101,6 @@
     <Compile Include="IQueue.cs" />
     <Compile Include="ITextTemplating.cs" />
     <Compile Include="ICreated.cs" />
-    <Compile Include="IUser.cs" />
     <Compile Include="ISessionData.cs" />
     <Compile Include="IVirtualPathUtility.cs" />
     <Compile Include="Models\Document.cs" />

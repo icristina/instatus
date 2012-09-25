@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Instatus.Core.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,6 @@ namespace Instatus.Core
 {
     public interface IMessaging
     {
-        void Send(string from, string to, string subject, string body, IMetadata metaData);
+        void Send(string from, string to, string subject, string body, Metadata metaData);
     }
 }

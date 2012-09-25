@@ -7,13 +7,14 @@ using System.Text;
 using System.Threading.Tasks;
 using Instatus.Core;
 using Instatus.Core.Extensions;
+using Instatus.Core.Models;
 
 namespace Instatus.Integration.Server
 {
     public class AppSettingsCredentialStorage : ICredentialStorage
     {
         private IHostingEnvironment hostingEnvironment;
-        private ConcurrentDictionary<string, ICredential> credentials = new ConcurrentDictionary<string, ICredential>();
+        private ConcurrentDictionary<string, Credential> credentials = new ConcurrentDictionary<string, Credential>();
 
         public IDictionary<string, object> ParseDelimitedString(string input)
         {
@@ -32,9 +33,9 @@ namespace Instatus.Integration.Server
             return values;
         }
 
-        public ICredential ConvertToCredential(IDictionary<string, object> values)
+        public Credential ConvertToCredential(IDictionary<string, object> values)
         {
-            return new AppSettingsCredential()
+            return new Credential()
             {
                 AccountName = values.GetValue<string>("AccountName"),
                 PrivateKey = values.GetValue<string>("PrivateKey"),
@@ -48,9 +49,9 @@ namespace Instatus.Integration.Server
             return providerName + ".Credential";
         }
 
-        public ICredential GetCredential(string providerName)
+        public Credential GetCredential(string providerName)
         {
-            ICredential credential;
+            Credential credential;
             
             if (!credentials.TryGetValue(providerName, out credential)) 
             {
@@ -72,14 +73,6 @@ namespace Instatus.Integration.Server
         public AppSettingsCredentialStorage(IHostingEnvironment hostingEnvironment)
         {
             this.hostingEnvironment = hostingEnvironment;
-        }
-
-        public class AppSettingsCredential : ICredential
-        {
-            public string AccountName { get; set; }
-            public string PublicKey { get; set; }
-            public string PrivateKey { get; set; }
-            public string[] Claims { get; set; }
         }
     }
 }

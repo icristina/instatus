@@ -56,7 +56,7 @@ namespace Instatus.Integration.Server
             };
         }
 
-        public IEnumerable<Document> Query(IFilter filter)
+        public IEnumerable<Document> Query(Filter filter)
         {
             throw new NotImplementedException();
         }

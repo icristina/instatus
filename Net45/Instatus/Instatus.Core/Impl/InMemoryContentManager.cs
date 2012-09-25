@@ -24,7 +24,7 @@ namespace Instatus.Core.Impl
             return content[GetContentKey(key)];
         }
 
-        public IEnumerable<Document> Query(IFilter filter)
+        public IEnumerable<Document> Query(Filter filter)
         {
             return content.Select(c => c.Value);
         }

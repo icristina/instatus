@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Instatus.Core;
 using Instatus.Core.Utils;
+using Instatus.Core.Models;
 
 namespace Instatus.Integration.Server
 {
@@ -16,7 +17,7 @@ namespace Instatus.Integration.Server
         private FileSystemLocalStorage fileSystemLocalStorage;
         private IHostingEnvironment hostingEnvironment;
         
-        public void Upload(string virtualPath, Stream inputStream, IMetadata metaData)
+        public void Upload(string virtualPath, Stream inputStream, Metadata metaData)
         {
             fileSystemLocalStorage.Save(virtualPath, inputStream);
         }
@@ -26,7 +27,7 @@ namespace Instatus.Integration.Server
             fileSystemLocalStorage.Stream(virtualPath, outputStream);
         }
 
-        public async void Copy(string virtualPath, string uri, IMetadata metaData)
+        public async void Copy(string virtualPath, string uri, Metadata metaData)
         {
             var absolutePath = fileSystemLocalStorage.MapPath(virtualPath);
 

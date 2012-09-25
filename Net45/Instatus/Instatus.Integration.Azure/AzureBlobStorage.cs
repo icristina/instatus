@@ -10,6 +10,7 @@ using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.StorageClient;
 using Instatus.Core.Utils;
 using Instatus.Core.Extensions;
+using Instatus.Core.Models;
 
 namespace Instatus.Integration.Azure
 {
@@ -44,7 +45,7 @@ namespace Instatus.Integration.Azure
             return container.GetBlobReference(resource.Item2);
         }
 
-        public void SetMetadata(CloudBlob cloudBlob, IMetadata metaData)
+        public void SetMetadata(CloudBlob cloudBlob, Metadata metaData)
         {
             if (metaData != null)
             {
@@ -52,7 +53,7 @@ namespace Instatus.Integration.Azure
             }
         }
 
-        public void Upload(string virtualPath, Stream inputStream, IMetadata metaData)
+        public void Upload(string virtualPath, Stream inputStream, Metadata metaData)
         {
             var cloudBlob = GetBlobReference(virtualPath);
 
@@ -70,7 +71,7 @@ namespace Instatus.Integration.Azure
             blob.DownloadToStream(outputStream);
         }
 
-        public void Copy(string virtualPath, string uri, IMetadata metaData)
+        public void Copy(string virtualPath, string uri, Metadata metaData)
         {
             var cloudBlob = GetBlobReference(virtualPath);
 
