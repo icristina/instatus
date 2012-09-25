@@ -12,5 +12,17 @@ namespace Instatus.Core.Extensions
         {
             return cultureInfo.Name.Split('-')[1];
         }
+
+        public static CultureInfo CreateSpecificCulture(string language, string country)
+        {
+            try
+            {
+                return CultureInfo.CreateSpecificCulture(string.Format("{0}-{1}", language.ToLower(), country.ToUpper()));
+            }
+            catch
+            {
+                return null;
+            }           
+        }
     }
 }

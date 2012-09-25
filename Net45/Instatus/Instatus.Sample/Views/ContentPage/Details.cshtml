@@ -1,0 +1,8 @@
+﻿@inherits Instatus.Integration.Mvc.ExtendedViewPage<Instatus.Core.Models.Document>
+
+@using Instatus.Scaffold
+
+<div class="container">
+    @Html.Raw(Model.Description)
+    @Html.SelectLocale()
+</div>

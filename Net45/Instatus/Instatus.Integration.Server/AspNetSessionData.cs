@@ -7,6 +7,7 @@ using System.Text;
 using System.Web;
 using System.Threading;
 using System.Web.Routing;
+using Instatus.Core.Extensions;
 
 namespace Instatus.Integration.Server
 {
@@ -46,10 +47,7 @@ namespace Instatus.Integration.Server
 
         public string GetCookieLocale(HttpRequest request)
         {
-            var cookie = request.Cookies[WellKnown.Cookie.Preferences];
-            
-            return cookie == null ? null 
-                : cookie[WellKnown.Preference.Locale];
+            return request.Cookies.GetValue<string>(WellKnown.Cookie.Preferences, WellKnown.Preference.Locale);
         }
 
         public string GetAcceptLanguage(HttpRequest request)
@@ -80,8 +78,8 @@ namespace Instatus.Integration.Server
                     var routeData = request.RequestContext.RouteData;
 
                     this.Locale = GetCustomLocale(request) ??
-                        GetRouteLocale(routeData) ??
                         GetParamsLocale(request) ??
+                        GetRouteLocale(routeData) ??                        
                         GetCookieLocale(request) ??
                         GetAcceptLanguage(request) ??
                         GetDefaultLocale();
@@ -100,10 +98,25 @@ namespace Instatus.Integration.Server
                         culture = localization.SupportedCultures.First();
                     }
 
+                    var request = HttpContext.Current.Request;
                     var response = HttpContext.Current.Response;
 
                     Thread.CurrentThread.CurrentUICulture = culture;
-                    response.Cookies[WellKnown.Cookie.Preferences][WellKnown.Preference.Locale] = locale = culture.Name;
+                    locale = culture.Name;
+                    response.Cookies.SetValue(WellKnown.Cookie.Preferences, WellKnown.Preference.Locale, locale);
+
+                    var routeLocale = GetRouteLocale(request.RequestContext.RouteData);
+
+                    // automatically redirect to correct routed page
+                    if (routeLocale != null && locale != routeLocale)
+                    {
+                        var newRouteData = new RouteValueDictionary(request.RequestContext.RouteData.Values);
+
+                        newRouteData[WellKnown.RouteValue.Language] = culture.TwoLetterISOLanguageName;
+                        newRouteData[WellKnown.RouteValue.Country] = culture.TwoLetterCountryCode();
+
+                        response.RedirectToRoute(newRouteData);
+                    }
                 }
                 catch
                 {

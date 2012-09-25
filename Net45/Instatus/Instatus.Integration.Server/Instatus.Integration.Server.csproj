@@ -83,6 +83,7 @@
     <Compile Include="FileSystemBlobStorage.cs" />
     <Compile Include="FileSystemContentManager.cs" />
     <Compile Include="FileSystemLocalStorage.cs" />
+    <Compile Include="HttpCookieCollectionExtensions.cs" />
     <Compile Include="SmtpMessaging.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TraceInformationProfiler.cs" />
