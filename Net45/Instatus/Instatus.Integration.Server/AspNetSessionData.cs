@@ -33,11 +33,7 @@ namespace Instatus.Integration.Server
 
         public string GetRouteLocale(RouteData routeData)
         {
-            var lang = routeData.Values[WellKnown.RouteValue.Language];
-            var country = routeData.Values[WellKnown.RouteValue.Country];
-            
-            return lang == null || country == null ? null 
-                : string.Format("{0}-{1}", lang, country);
+            return routeData.Values.GetValue<string>(WellKnown.RouteValue.Locale);
         }
 
         public string GetParamsLocale(HttpRequest request)
@@ -67,8 +63,8 @@ namespace Instatus.Integration.Server
             {
                 // order of precedence
                 // [1] already parsed in memory, requires AspNetSession to be declared as request scope
-                // [2] route data
-                // [3] query string or form param
+                // [2] query string or form param
+                // [3] route data
                 // [4] cookie
                 // [5] accept language from browser
                 // [6] default or thread culture
@@ -91,7 +87,7 @@ namespace Instatus.Integration.Server
             {
                 try
                 {
-                    var culture = CultureInfo.CreateSpecificCulture(value); // specific, in format en-GB, en-US, de-DE
+                    var culture = CultureInfo.GetCultureInfo(value);
 
                     if (!localization.SupportedCultures.Contains(culture))
                     {
@@ -107,15 +103,13 @@ namespace Instatus.Integration.Server
 
                     var routeLocale = GetRouteLocale(request.RequestContext.RouteData);
 
-                    // automatically redirect to correct routed page
                     if (routeLocale != null && locale != routeLocale)
                     {
-                        var newRouteData = new RouteValueDictionary(request.RequestContext.RouteData.Values);
+                        var redirectRouteData = new RouteValueDictionary(request.RequestContext.RouteData.Values);
 
-                        newRouteData[WellKnown.RouteValue.Language] = culture.TwoLetterISOLanguageName;
-                        newRouteData[WellKnown.RouteValue.Country] = culture.TwoLetterCountryCode();
+                        redirectRouteData[WellKnown.RouteValue.Locale] = locale;
 
-                        response.RedirectToRoute(newRouteData);
+                        response.RedirectToRoute(redirectRouteData);
                     }
                 }
                 catch
