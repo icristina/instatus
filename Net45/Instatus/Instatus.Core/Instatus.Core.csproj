@@ -53,9 +53,11 @@
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="ICampaignManager.cs" />
     <Compile Include="IContentManager.cs" />
+    <Compile Include="IDocumentHandler.cs" />
     <Compile Include="IGeocode.cs" />
     <Compile Include="Impl\InMemoryContentManager.cs" />
     <Compile Include="Impl\InMemorySession.cs" />
+    <Compile Include="Impl\SimpleHtmlDocumentHandler.cs" />
     <Compile Include="ITextTransform.cs" />
     <Compile Include="ILinguistics.cs" />
     <Compile Include="Models\Campaign.cs" />

@@ -37,6 +37,11 @@ namespace Instatus.Integration.Server
             }
         }
 
+        public void Delete(string virtualPath)
+        {            
+            File.Delete(MapPath(virtualPath));
+        }
+
         public bool EnableSubFolders { get; set; }
 
         public string MapPath(string virtualPath)
@@ -51,6 +56,8 @@ namespace Instatus.Integration.Server
         public FileSystemLocalStorage(IHostingEnvironment hostingEnvironment)
         {
             this.hostingEnvironment = hostingEnvironment;
+
+            EnableSubFolders = true;
         }
     }
 }

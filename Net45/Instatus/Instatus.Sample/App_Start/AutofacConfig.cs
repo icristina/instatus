@@ -10,6 +10,7 @@ using Instatus.Integration.Server;
 using Instatus.Core.Impl;
 using Instatus.Integration.Wordpress;
 using Instatus.Integration.Maxmind;
+using Instatus.Integration.HtmlAgilityPack;
 
 namespace Instatus.Sample
 {
@@ -27,12 +28,14 @@ namespace Instatus.Sample
             containerBuilder.RegisterType<AspNetHostingEnvironment>().As<IHostingEnvironment>();
             containerBuilder.RegisterType<AspNetSessionData>().As<ISessionData>();
             containerBuilder.RegisterType<FileSystemBlobStorage>().As<IBlobStorage>();
+            containerBuilder.RegisterType<FileSystemLocalStorage>().As<ILocalStorage>();
             containerBuilder.RegisterType<WpfImaging>().As<IImaging>();
             containerBuilder.RegisterType<MockMembershipProvider>().As<IMembershipProvider>();
             containerBuilder.RegisterType<InMemoryLocalization>().As<ILocalization>();
-            containerBuilder.RegisterType<FileSystemContentManager>().As<IContentManager>();
+            containerBuilder.RegisterType<LocalStorageContentManager>().As<IContentManager>();
             containerBuilder.RegisterType<InMemoryTaxonomy>().As<ITaxonomy>();
             containerBuilder.RegisterType<DataFileGeocode>().As<IGeocode>();
+            containerBuilder.RegisterType<HtmlDocumentHandler>().As<IDocumentHandler>();
             containerBuilder.RegisterType<WordpressService>();
 
             var container = containerBuilder.Build();

@@ -7,8 +7,7 @@ namespace Instatus.Core
 {
     public interface ILinguistics
     {
-        string Pluralize(string text);
-        string Singularize(string text);
-        string Suggestions(string text);
+        string Plural(string text);
+        string Singular(string text);
     }
 }

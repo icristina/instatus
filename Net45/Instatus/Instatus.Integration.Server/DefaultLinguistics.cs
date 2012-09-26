@@ -10,21 +10,21 @@ namespace Instatus.Integration.Server
 {
     public class DefaultLinguistics : ILinguistics
     {
-        private PluralizationService pluralizationService = PluralizationService.CreateService(new CultureInfo(WellKnown.Locale.UnitedStates));
+        private ISessionData sessionData;
 
-        public string Pluralize(string text)
+        public string Plural(string text)
         {
-            return pluralizationService.Pluralize(text);
+            return PluralizationService.CreateService(new CultureInfo(sessionData.Locale)).Pluralize(text);
         }
 
-        public string Singularize(string text)
+        public string Singular(string text)
         {
-            return pluralizationService.Singularize(text);
+            return PluralizationService.CreateService(new CultureInfo(sessionData.Locale)).Singularize(text);
         }
 
-        public string Suggestions(string text)
+        public DefaultLinguistics(ISessionData sessionData)
         {
-            throw new NotImplementedException();
+            this.sessionData = sessionData;
         }
     }
 }

@@ -11,7 +11,7 @@ namespace Instatus.Core
     {
         Document Get(string key);
         IEnumerable<Document> Query(Filter filter); // paging applied afterwards if IOrderedQueryable
-        void AddOrUpdate(string key, Document contentItem);
+        void AddOrUpdate(string key, Document document);
         void Delete(string key);
     }
 }

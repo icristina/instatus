@@ -29,9 +29,9 @@ namespace Instatus.Core.Impl
             return content.Select(c => c.Value);
         }
 
-        public void AddOrUpdate(string key, Document contentItem)
+        public void AddOrUpdate(string key, Document document)
         {
-            content[GetContentKey(key)] = contentItem;
+            content[GetContentKey(key)] = document;
         }
 
         public void Delete(string key)

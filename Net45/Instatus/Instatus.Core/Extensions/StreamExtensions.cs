@@ -13,5 +13,14 @@ namespace Instatus.Core.Extensions
             stream.Position = 0;
             return stream;
         }
+
+        public static string ReadAsString(this Stream stream)
+        {
+            using (var streamReader = new StreamReader(stream))
+            {
+                stream.ResetPosition();
+                return streamReader.ReadToEnd();
+            }
+        }
     }
 }

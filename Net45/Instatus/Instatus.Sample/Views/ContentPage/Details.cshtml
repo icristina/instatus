@@ -1,6 +1,8 @@
-﻿@inherits Instatus.Integration.Mvc.ExtendedViewPage<Instatus.Core.Models.Document>
+﻿@inherits ExtendedViewPage<Instatus.Core.Models.Document>
 
-@using Instatus.Scaffold
+@{
+    ViewBag.Title = Model.Title;
+}
 
 <div class="container">
     @Html.Raw(Model.Description)
