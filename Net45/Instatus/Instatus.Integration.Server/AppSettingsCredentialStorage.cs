@@ -16,24 +16,7 @@ namespace Instatus.Integration.Server
         private IHostingEnvironment hostingEnvironment;
         private ConcurrentDictionary<string, Credential> credentials = new ConcurrentDictionary<string, Credential>();
 
-        public IDictionary<string, object> ParseDelimitedString(string input)
-        {
-            var values = new Dictionary<string, object>();
-            var segments = input.Split(';');
-
-            foreach (var setting in segments.Where(s => s.Length >= 3))
-            {
-                var startIndex = setting.IndexOf('=');
-                var key = setting.Substring(0, startIndex);
-                var value = setting.Substring(startIndex + 1);
-                
-                values.Add(key.Trim(), value.Trim());
-            }
-
-            return values;
-        }
-
-        public Credential ConvertToCredential(IDictionary<string, object> values)
+        private Credential ConvertToCredential(IDictionary<string, object> values)
         {
             return new Credential()
             {
@@ -44,26 +27,18 @@ namespace Instatus.Integration.Server
             };
         }
 
-        public string GetAppSettingKey(string providerName) 
-        {
-            return providerName + ".Credential";
-        }
-
         public Credential GetCredential(string providerName)
         {
             Credential credential;
             
             if (!credentials.TryGetValue(providerName, out credential)) 
             {
-                var key = GetAppSettingKey(providerName);
-                var setting = hostingEnvironment.GetAppSetting(key);
+                var setting = hostingEnvironment.GetAppSetting("Credential".WithNamespace(providerName));
 
                 if (setting == null)
                     return null;
 
-                var dictionary = ParseDelimitedString(setting);
-                
-                credential = ConvertToCredential(dictionary);
+                credential = ConvertToCredential(setting.AsDictionary());
                 credentials.TryAdd(providerName, credential);                
             }
             

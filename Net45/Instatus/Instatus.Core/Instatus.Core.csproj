@@ -50,6 +50,7 @@
     <Compile Include="Extensions\PaginationExtensions.cs" />
     <Compile Include="Extensions\QueryExtensions.cs" />
     <Compile Include="Extensions\StreamExtensions.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="ICampaignManager.cs" />
     <Compile Include="IContentManager.cs" />
     <Compile Include="IGeocode.cs" />
