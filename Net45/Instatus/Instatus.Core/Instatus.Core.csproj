@@ -58,6 +58,7 @@
     <Compile Include="Impl\InMemoryContentManager.cs" />
     <Compile Include="Impl\InMemorySession.cs" />
     <Compile Include="Impl\SimpleHtmlDocumentHandler.cs" />
+    <Compile Include="Impl\SimpleTextTemplating.cs" />
     <Compile Include="ITextTransform.cs" />
     <Compile Include="ILinguistics.cs" />
     <Compile Include="Models\Campaign.cs" />
