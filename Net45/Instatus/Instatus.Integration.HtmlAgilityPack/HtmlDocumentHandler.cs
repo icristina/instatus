@@ -12,24 +12,27 @@ namespace Instatus.Integration.HtmlAgilityPack
 {
     public class HtmlDocumentHandler : IDocumentHandler
     {
+        private ITextTemplating textTemplating;
+        
         public Document Parse(Stream inputStream)
         {
             var htmlDocument = new HtmlDocument();
 
-            inputStream.ResetPosition();
+            htmlDocument.Load(inputStream.ResetPosition());
 
-            htmlDocument.Load(inputStream);
+            var html = htmlDocument.DocumentNode;
 
             return new Document()
             {
-                Title = htmlDocument.DocumentNode.Descendants("h1").First().InnerText,
-                Description = htmlDocument.DocumentNode.Descendants("body").First().InnerHtml
+                Title = (html.Descendants("title").FirstOrDefault() ?? html.Descendants("h1").First()).InnerText,
+                Description = html.Descendants("body").First().InnerHtml,
+                Metadata = html.Descendants("meta").ToDictionary(m => m.Attributes["name"].Value, m => m.Attributes["content"].Value as object)
             };
         }
 
         public void Write(Document document, Stream outputStream)
         {
-            throw new NotImplementedException();
+            textTemplating.Render("Document", document, outputStream);
         }
 
         public string FileExtension
@@ -39,5 +42,10 @@ namespace Instatus.Integration.HtmlAgilityPack
                 return "html";
             }
         }
+
+        public HtmlDocumentHandler(ITextTemplating textTemplating)
+        {
+            this.textTemplating = textTemplating;
+        }    
     }
 }

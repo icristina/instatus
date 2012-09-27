@@ -199,6 +199,10 @@
       <Project>{5ab12e21-db61-4e3f-834f-136302437509}</Project>
       <Name>Instatus.Integration.Mvc</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Instatus.Integration.Razor\Instatus.Integration.Razor.csproj">
+      <Project>{e0e98d9e-03a7-4342-bf4f-b48bf41e0bc5}</Project>
+      <Name>Instatus.Integration.Razor</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Instatus.Integration.Server\Instatus.Integration.Server.csproj">
       <Project>{d55b42d8-5a78-412f-83f3-ec7a6b59b958}</Project>
       <Name>Instatus.Integration.Server</Name>
