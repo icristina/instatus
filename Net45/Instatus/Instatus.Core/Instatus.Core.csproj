@@ -53,7 +53,7 @@
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="ICampaignManager.cs" />
     <Compile Include="IContentManager.cs" />
-    <Compile Include="IDocumentHandler.cs" />
+    <Compile Include="IHandler.cs" />
     <Compile Include="IGeocode.cs" />
     <Compile Include="Impl\InMemoryContentManager.cs" />
     <Compile Include="Impl\InMemorySession.cs" />

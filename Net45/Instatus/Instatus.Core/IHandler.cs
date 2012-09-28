@@ -7,10 +7,10 @@ using System.Text;
 
 namespace Instatus.Core
 {
-    public interface IDocumentHandler
+    public interface IHandler<T>
     {
-        Document Parse(Stream inputStream);
-        void Write(Document document, Stream outputStream);
+        T Read(Stream inputStream);
+        void Write(T model, Stream outputStream);
         string FileExtension { get; }
     }
 }

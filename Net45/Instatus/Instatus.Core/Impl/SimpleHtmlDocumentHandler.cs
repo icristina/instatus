@@ -8,9 +8,9 @@ using Instatus.Core.Extensions;
 
 namespace Instatus.Core.Impl
 {
-    public class SimpleHtmlDocumentHandler : IDocumentHandler
+    public class SimpleHtmlDocumentHandler : IHandler<Document>
     {
-        public Document Parse(Stream inputStream)
+        public Document Read(Stream inputStream)
         {
             return new Document()
             {

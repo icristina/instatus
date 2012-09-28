@@ -14,7 +14,7 @@ namespace Instatus.Integration.Server
 {
     public class LocalStorageContentManager : IContentManager
     {
-        private IDocumentHandler documentHandler;
+        private IHandler<Document> documentHandler;
         private ILocalStorage localStorage;
         private ISessionData sessionData;
 
@@ -27,7 +27,7 @@ namespace Instatus.Integration.Server
                     using (var inputStream = new MemoryStream()) 
                     {
                         localStorage.Stream(virtualPath, inputStream);
-                        return documentHandler.Parse(inputStream);
+                        return documentHandler.Read(inputStream);
                     }
                 }
                 catch
@@ -80,7 +80,7 @@ namespace Instatus.Integration.Server
             };
         }
 
-        public LocalStorageContentManager(IDocumentHandler documentHandler, ILocalStorage localStorage, ISessionData sessionData)
+        public LocalStorageContentManager(IHandler<Document> documentHandler, ILocalStorage localStorage, ISessionData sessionData)
         {
             this.documentHandler = documentHandler;
             this.localStorage = localStorage;

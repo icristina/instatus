@@ -10,24 +10,46 @@ using HtmlAgilityPack;
 
 namespace Instatus.Integration.HtmlAgilityPack
 {
-    public class HtmlDocumentHandler : IDocumentHandler
+    public class HtmlDocumentHandler : IHandler<Document>
     {
         private ITextTemplating textTemplating;
         
-        public Document Parse(Stream inputStream)
+        public Document Read(Stream inputStream)
         {
             var htmlDocument = new HtmlDocument();
 
             htmlDocument.Load(inputStream.ResetPosition());
 
             var html = htmlDocument.DocumentNode;
+            var body = html.Descendants("body");
+            var sections = html.Descendants("section");
 
-            return new Document()
+            var document = new Document()
             {
-                Title = (html.Descendants("title").FirstOrDefault() ?? html.Descendants("h1").First()).InnerText,
-                Description = html.Descendants("body").First().InnerHtml,
-                Metadata = html.Descendants("meta").ToDictionary(m => m.Attributes["name"].Value, m => m.Attributes["content"].Value as object)
+                Title = html.GetText("title") ?? html.GetText("h1"),
+                Metadata = html.Descendants("meta")
+                    .ToDictionary(
+                        m => m.Attributes["name"].Value, 
+                        m => m.Attributes["content"].Value as object)
             };
+
+            if (sections.Any())
+            {
+                // assumes first child of section is a heading
+                document.Sections = sections.Select(section => new Section()
+                {
+                    Heading = section.GetText("h1") ?? section.GetText("h2"),
+                    Body = section.RemoveChild(section.FirstChild).InnerHtml
+                })
+                .ToArray();
+            }
+            else
+            {
+                // if no sections, currently add all as description
+                document.Description = body.Any() ? body.First().InnerHtml : html.InnerHtml;
+            }
+
+            return document;
         }
 
         public void Write(Document document, Stream outputStream)

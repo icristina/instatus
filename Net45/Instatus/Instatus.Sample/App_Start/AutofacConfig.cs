@@ -12,6 +12,7 @@ using Instatus.Integration.Wordpress;
 using Instatus.Integration.Maxmind;
 using Instatus.Integration.HtmlAgilityPack;
 using Instatus.Integration.Razor;
+using Instatus.Core.Models;
 
 namespace Instatus.Sample
 {
@@ -36,7 +37,7 @@ namespace Instatus.Sample
             containerBuilder.RegisterType<LocalStorageContentManager>().As<IContentManager>();
             containerBuilder.RegisterType<InMemoryTaxonomy>().As<ITaxonomy>();
             containerBuilder.RegisterType<DataFileGeocode>().As<IGeocode>();
-            containerBuilder.RegisterType<HtmlDocumentHandler>().As<IDocumentHandler>();
+            containerBuilder.RegisterType<HtmlDocumentHandler>().As<IHandler<Document>>();
             containerBuilder.RegisterType<RazorTextTemplating>().As<ITextTemplating>();
             containerBuilder.RegisterType<WordpressService>();
 
