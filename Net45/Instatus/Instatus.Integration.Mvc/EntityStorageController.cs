@@ -21,9 +21,9 @@ namespace Instatus.Integration.Mvc
     }
 
     [SessionState(SessionStateBehavior.Disabled)]
-    public abstract class EntityStorageController<TEntity, TModel> : Controller
+    public abstract class EntityStorageController<TEntity, TViewModel> : Controller
         where TEntity : class
-        where TModel : class
+        where TViewModel : class
     {
         public IEntityStorage EntityStorage { get; private set; }
         public IMapper Mapper { get; private set; }
@@ -36,17 +36,17 @@ namespace Instatus.Integration.Mvc
             }
         }
 
-        public virtual IOrderedQueryable<TModel> Query(string orderBy, string filter) 
+        public virtual IOrderedQueryable<TViewModel> Query(string orderBy, string filter) 
         {
-            IQueryable<TModel> queryable;
+            IQueryable<TViewModel> queryable;
 
-            if (typeof(TEntity) == typeof(TModel))
+            if (typeof(TEntity) == typeof(TViewModel))
             {
-                queryable = EntitySet.Cast<TModel>();
+                queryable = EntitySet.Cast<TViewModel>();
             }
             else
             {
-                queryable = EntitySet.Select(Mapper.Projection<TEntity, TModel>());
+                queryable = EntitySet.Select(Mapper.Projection<TEntity, TViewModel>());
             }
 
             return queryable.OrderBy(b => true);
@@ -58,7 +58,7 @@ namespace Instatus.Integration.Mvc
             int pageIndex = 0, 
             int pageSize = 20)
         {
-            ViewData.Model = new PagedViewModel<TModel>(Query(orderBy, filter), pageIndex, pageSize);
+            ViewData.Model = new PagedViewModel<TViewModel>(Query(orderBy, filter), pageIndex, pageSize);
 
             return View();
         }
@@ -72,7 +72,7 @@ namespace Instatus.Integration.Mvc
                 return HttpNotFound();
             }
 
-            ViewData.Model = Mapper.Map<TModel>(entity);
+            ViewData.Model = Mapper.Map<TViewModel>(entity);
 
             return View();
         }
@@ -80,14 +80,14 @@ namespace Instatus.Integration.Mvc
         [HttpGet]
         public ActionResult Create()
         {
-            ViewData.Model = Activator.CreateInstance<TModel>();
+            ViewData.Model = Activator.CreateInstance<TViewModel>();
 
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(TModel model)
+        public ActionResult Create(TViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -116,14 +116,14 @@ namespace Instatus.Integration.Mvc
                 return HttpNotFound();
             }
 
-            ViewData.Model = Mapper.Map<TModel>(entity);
+            ViewData.Model = Mapper.Map<TViewModel>(entity);
 
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, TModel model)
+        public ActionResult Edit(int id, TViewModel model)
         {
             if (ModelState.IsValid)
             {

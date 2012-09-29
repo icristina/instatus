@@ -118,13 +118,15 @@ namespace Instatus.Integration.Wordpress
         {
             if (!membership.ValidateUser(username, password)) return null;
             
-            return documents.Query(null).Select(document => new MetaWeblogPost() 
-            {
-                title = document.Title,
-                description = document.Description,
-                dateCreated = document.Created                
-            })
-            .ToArray();
+            //return documents.Query(null).Select(document => new MetaWeblogPost() 
+            //{
+            //    title = document.Title,
+            //    description = document.Description,
+            //    dateCreated = document.Created                
+            //})
+            //.ToArray();
+
+            return null;
         }
 
         [XmlRpcMethod("metaWeblog.editPost")]

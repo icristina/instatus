@@ -1,0 +1,23 @@
+﻿<div class="container">
+    <table>
+        <thead>
+            <tr>
+                <th>Key</th>
+                <th>Title</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Key</td>
+                    <td>@item.Value.Title</td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Key })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

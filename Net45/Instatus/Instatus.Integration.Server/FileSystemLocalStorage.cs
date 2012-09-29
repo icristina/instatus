@@ -53,6 +53,16 @@ namespace Instatus.Integration.Server
             return Path.Combine(hosting.RootPath, subPath);
         }
 
+        public string[] Query(string virtualPath, string suffix)
+        {
+            var absolutePath = MapPath(virtualPath);
+
+            return Directory.EnumerateFiles(absolutePath)
+                .Where(p => p.EndsWith(suffix))
+                .Select(p => p.Replace(absolutePath, virtualPath))
+                .ToArray();
+        }
+        
         public FileSystemLocalStorage(IHosting hosting)
         {
             this.hosting = hosting;

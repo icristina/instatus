@@ -1,5 +1,6 @@
 ﻿using Instatus.Core.Models;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -34,9 +35,18 @@ namespace Instatus.Core.Impl
             return default(T);
         }
 
-        public IEnumerable<T> Query(Criteria criteria)
+        public IEnumerable<KeyValue<T>> Query(Criteria criteria)
         {
-            throw new NotImplementedException();
+            return localStorage.Query("~/App_Data/", sessionData.Locale + "." + handler.FileExtension)
+                        .Select(f => {
+                            var key = Path.GetFileName(f).Split('.')[0];
+                            return new KeyValue<T>()
+                            {
+                                Key = key,
+                                Value = Get(key)
+                            };
+                        })
+                        .ToList();
         }
 
         public void AddOrUpdate(string key, T model)

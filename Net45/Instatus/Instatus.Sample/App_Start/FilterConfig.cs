@@ -8,7 +8,7 @@ namespace Instatus.Sample
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
-            BaseMvcConfig.RegisterExceptionFilters(filters);
+            // BaseMvcConfig.RegisterExceptionFilters(filters);
         }
     }
 }

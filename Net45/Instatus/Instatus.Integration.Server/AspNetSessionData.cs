@@ -8,6 +8,7 @@ using System.Web;
 using System.Threading;
 using System.Web.Routing;
 using Instatus.Core.Extensions;
+using System.Web.Helpers;
 
 namespace Instatus.Integration.Server
 {
@@ -38,7 +39,7 @@ namespace Instatus.Integration.Server
 
         public string GetParamsLocale(HttpRequest request)
         {
-            return request.Params[WellKnown.Preference.Locale];
+            return request.Unvalidated(WellKnown.Preference.Locale);
         }
 
         public string GetCookieLocale(HttpRequest request)

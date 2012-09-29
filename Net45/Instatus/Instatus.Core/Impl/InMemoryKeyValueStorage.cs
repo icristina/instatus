@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using Instatus.Core.Extensions;
 using Instatus.Core.Models;
+using System.Collections;
 
 namespace Instatus.Core.Impl
 {
@@ -34,9 +35,13 @@ namespace Instatus.Core.Impl
             return model;
         }
 
-        public IEnumerable<T> Query(Criteria criteria)
+        public IEnumerable<KeyValue<T>> Query(Criteria criteria)
         {
-            return cache.Values;
+            return cache.Select(k => new KeyValue<T>() 
+            {
+                Key = k.Key,
+                Value = k.Value
+            });
         }
 
         public void AddOrUpdate(string key, T model)

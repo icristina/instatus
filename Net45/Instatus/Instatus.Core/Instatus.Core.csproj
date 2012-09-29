@@ -66,6 +66,7 @@
     <Compile Include="Models\Campaign.cs" />
     <Compile Include="Models\Entry.cs" />
     <Compile Include="Models\Criteria.cs" />
+    <Compile Include="Models\KeyValue.cs" />
     <Compile Include="Models\Metadata.cs" />
     <Compile Include="Models\ModelBinders.cs" />
     <Compile Include="Models\User.cs" />

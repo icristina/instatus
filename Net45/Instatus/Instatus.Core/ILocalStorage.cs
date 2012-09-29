@@ -12,5 +12,6 @@ namespace Instatus.Core
         void Save(string virtualPath, Stream inputStream);
         void Stream(string virtualPath, Stream outputStream);
         void Delete(string virtualPath);
+        string[] Query(string virtualPath, string suffix);
     }
 }
