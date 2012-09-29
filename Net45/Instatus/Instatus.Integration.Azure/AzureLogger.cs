@@ -6,6 +6,7 @@ using Instatus.Core;
 using Instatus.Core.Impl;
 using Microsoft.WindowsAzure.StorageClient;
 using Newtonsoft.Json;
+using Instatus.Core.Models;
 
 namespace Instatus.Integration.Azure
 {
@@ -13,7 +14,7 @@ namespace Instatus.Integration.Azure
     {
         public const string TableName = "Logger";
         
-        private ICredentialStorage credentialStorage;
+        private IKeyValueStorage<Credential> credentials;
         private InMemoryQueue<AzureLoggerEntity> queue;
 
         public void Log(Exception exception, IDictionary<string, string> properties)
@@ -40,7 +41,7 @@ namespace Instatus.Integration.Azure
 
         public async void Flush(List<AzureLoggerEntity> flushed)
         {
-            var credential = credentialStorage.GetCredential(WellKnown.Provider.WindowsAzure);
+            var credential = credentials.Get(WellKnown.Provider.WindowsAzure);
             var dataContext = await AzureClient.GetTableServiceContext(credential, TableName);
 
             foreach (var entry in flushed)
@@ -51,9 +52,9 @@ namespace Instatus.Integration.Azure
             await dataContext.SaveChangesWithRetriesAsync();
         }
 
-        public AzureLogger(ICredentialStorage credentialStorage)
+        public AzureLogger(IKeyValueStorage<Credential> credentials)
         {
-            this.credentialStorage = credentialStorage;
+            this.credentials = credentials;
             this.queue = new InMemoryQueue<AzureLoggerEntity>(AzureClient.TableServiceEntityBufferCount, Flush);
         }
     }

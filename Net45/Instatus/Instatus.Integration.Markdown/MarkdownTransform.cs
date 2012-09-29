@@ -7,7 +7,7 @@ using Instatus.Core;
 
 namespace Instatus.Integration.Markdown
 {
-    public class MarkdownTextTransform : ITextTransform
+    public class MarkdownTransform : ITransform<string>
     {
         public string Transform(string text)
         {

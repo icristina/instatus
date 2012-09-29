@@ -12,7 +12,7 @@ namespace Instatus.Integration.HtmlAgilityPack
 {
     public class HtmlDocumentHandler : IHandler<Document>
     {
-        private ITextTemplating textTemplating;
+        private ITemplating textTemplating;
         
         public Document Read(Stream inputStream)
         {
@@ -65,7 +65,7 @@ namespace Instatus.Integration.HtmlAgilityPack
             }
         }
 
-        public HtmlDocumentHandler(ITextTemplating textTemplating)
+        public HtmlDocumentHandler(ITemplating textTemplating)
         {
             this.textTemplating = textTemplating;
         }    

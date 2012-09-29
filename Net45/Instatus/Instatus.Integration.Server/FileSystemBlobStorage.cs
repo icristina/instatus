@@ -15,7 +15,7 @@ namespace Instatus.Integration.Server
     public class FileSystemBlobStorage : IBlobStorage
     {
         private FileSystemLocalStorage fileSystemLocalStorage;
-        private IHostingEnvironment hostingEnvironment;
+        private IHosting hosting;
         
         public void Upload(string virtualPath, Stream inputStream, Metadata metaData)
         {
@@ -45,7 +45,7 @@ namespace Instatus.Integration.Server
 
         public string MapPath(string virtualPath)
         {
-            var baseUri = new Uri(hostingEnvironment.BaseAddress);
+            var baseUri = new Uri(hosting.BaseAddress);
             var absolutePath = virtualPath.TrimStart(PathBuilder.RelativeChars);
             
             return new Uri(baseUri, absolutePath).ToString();
@@ -53,7 +53,7 @@ namespace Instatus.Integration.Server
 
         public string[] Query(string virtualPath)
         {
-            var outputPath = hostingEnvironment.RootPath;
+            var outputPath = hosting.RootPath;
             var directoryPath = Path.Combine(outputPath, virtualPath.TrimStart(PathBuilder.RelativeChars));
             var files = Directory.GetFiles(directoryPath);
 
@@ -63,10 +63,10 @@ namespace Instatus.Integration.Server
             .ToArray();
         }
 
-        public FileSystemBlobStorage(IHostingEnvironment hostingEnvironment)
+        public FileSystemBlobStorage(IHosting hosting)
         {
-            this.hostingEnvironment = hostingEnvironment;
-            this.fileSystemLocalStorage = new FileSystemLocalStorage(hostingEnvironment)
+            this.hosting = hosting;
+            this.fileSystemLocalStorage = new FileSystemLocalStorage(hosting)
             {
                 EnableSubFolders = true
             };

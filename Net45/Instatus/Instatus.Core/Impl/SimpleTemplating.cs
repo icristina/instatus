@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Instatus.Core.Impl
 {
-    public class SimpleTextTemplating : ITextTemplating
+    public class SimpleTemplating : ITemplating
     {
         public void Render(string viewName, object viewData, Stream outputStream)
         {

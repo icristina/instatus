@@ -13,7 +13,7 @@ namespace Instatus.Integration.Server
 {
     public class FileSystemLocalStorage : ILocalStorage
     {
-        private IHostingEnvironment hostingEnvironment;
+        private IHosting hosting;
         
         public void Save(string virtualPath, Stream inputStream)
         {
@@ -50,12 +50,12 @@ namespace Instatus.Integration.Server
                 virtualPath.TrimStart(PathBuilder.RelativeChars) : 
                 Path.GetFileName(virtualPath);
             
-            return Path.Combine(hostingEnvironment.RootPath, subPath);
+            return Path.Combine(hosting.RootPath, subPath);
         }
 
-        public FileSystemLocalStorage(IHostingEnvironment hostingEnvironment)
+        public FileSystemLocalStorage(IHosting hosting)
         {
-            this.hostingEnvironment = hostingEnvironment;
+            this.hosting = hosting;
 
             EnableSubFolders = true;
         }

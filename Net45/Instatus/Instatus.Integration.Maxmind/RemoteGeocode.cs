@@ -1,4 +1,5 @@
 ﻿using Instatus.Core;
+using Instatus.Core.Models;
 using Instatus.Core.Utils;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace Instatus.Integration.Maxmind
     // http://dev.maxmind.com/geoip/web-services
     public class RemoteGeocode : IGeocode
     {
-        private ICredentialStorage credentialStorage;
+        private IKeyValueStorage<Credential> credentials;
 
         private const string baseAddress = "http://geoip.maxmind.com";
         
@@ -19,7 +20,7 @@ namespace Instatus.Integration.Maxmind
         {
             var webServiceUri = new PathBuilder(baseAddress)
                 .Path("a")
-                .Query("l", credentialStorage.GetCredential(WellKnown.Provider.Maxmind).PrivateKey)
+                .Query("l", credentials.Get(WellKnown.Provider.Maxmind).PrivateKey)
                 .Query("i", ipAddress)
                 .ToString();
 
@@ -37,9 +38,9 @@ namespace Instatus.Integration.Maxmind
             }
         }
 
-        public RemoteGeocode(ICredentialStorage credentialStorage)
+        public RemoteGeocode(IKeyValueStorage<Credential> credentials)
         {
-            this.credentialStorage = credentialStorage;
+            this.credentials = credentials;
         }
     }
 }

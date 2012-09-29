@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Instatus.Core.Impl
 {
-    public class MockMembershipProvider : IMembershipProvider
+    public class MockMembership : IMembership
     {
         public bool ValidateUser(string userName, string password)
         {

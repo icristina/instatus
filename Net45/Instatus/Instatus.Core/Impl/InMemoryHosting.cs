@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Instatus.Core.Impl
 {
-    public class InMemoryHostingEnvironment : IHostingEnvironment
+    public class InMemoryHosting : IHosting
     {
         private IDictionary<string, string> appSettings;
 
@@ -18,7 +18,7 @@ namespace Instatus.Core.Impl
             return appSettings[key];
         }
 
-        public InMemoryHostingEnvironment(IDictionary<string, string> appSettings)
+        public InMemoryHosting(IDictionary<string, string> appSettings)
         {
             this.appSettings = appSettings;
         }

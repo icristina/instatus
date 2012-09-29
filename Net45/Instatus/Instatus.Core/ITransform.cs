@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Instatus.Core
 {
-    public interface ITextTemplating
+    public interface ITransform<T>
     {
-        void Render(string viewName, object viewData, Stream outputStream);
+        T Transform(T model);
     }
 }

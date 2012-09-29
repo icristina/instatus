@@ -16,7 +16,7 @@ namespace Instatus.Integration.Server
 
         public string Decrypt(string input)
         {
-            throw new NotImplementedException();
+            return input;
         }
     }
 }

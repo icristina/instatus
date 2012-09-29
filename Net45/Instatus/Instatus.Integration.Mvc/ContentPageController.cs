@@ -1,4 +1,5 @@
 ﻿using Instatus.Core;
+using Instatus.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,18 +13,18 @@ namespace Instatus.Integration.Mvc
     [SessionState(SessionStateBehavior.Disabled)]
     public abstract class ContentPageController : Controller
     {
-        private IContentManager contentManager;
+        private IKeyValueStorage<Document> documents;
         
         public ActionResult Details(string key)
         {
-            ViewData.Model = contentManager.Get(key);
+            ViewData.Model = documents.Get(key);
 
             return View();
         }
 
-        public ContentPageController(IContentManager contentManager)
+        public ContentPageController(IKeyValueStorage<Document> contentManager)
         {
-            this.contentManager = contentManager;
+            this.documents = contentManager;
         }
     }
 }

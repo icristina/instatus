@@ -10,7 +10,7 @@ using Microsoft.WindowsAzure;
 
 namespace Instatus.Integration.Azure
 {
-    public class AzureHostingEnvironment : IHostingEnvironment
+    public class Azurehosting : IHosting
     {
         public string RootPath
         {

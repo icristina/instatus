@@ -10,7 +10,7 @@ using Instatus.Core;
 
 namespace Instatus.Integration.Razor
 {
-    public class RazorTextTemplating : ITextTemplating
+    public class RazorTextTemplating : ITemplating
     {
         public void Render(string viewName, object viewData, Stream outputStream)
         {

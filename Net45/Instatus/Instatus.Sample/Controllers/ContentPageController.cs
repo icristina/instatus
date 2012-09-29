@@ -1,4 +1,5 @@
 ﻿using Instatus.Core;
+using Instatus.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +10,8 @@ namespace Instatus.Sample.Controllers
 {
     public class ContentPageController : Instatus.Integration.Mvc.ContentPageController
     {
-        public ContentPageController(IContentManager contentManager)
-            : base(contentManager)
+        public ContentPageController(IKeyValueStorage<Document> documents)
+            : base(documents)
         {
 
         }

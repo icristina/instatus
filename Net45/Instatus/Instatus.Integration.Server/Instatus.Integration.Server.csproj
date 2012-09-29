@@ -75,13 +75,11 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AppSettingsCredentialStorage.cs" />
-    <Compile Include="AspNetHostingEnvironment.cs" />
+    <Compile Include="AspNetHosting.cs" />
     <Compile Include="AspNetSessionData.cs" />
     <Compile Include="DebugMessaging.cs" />
     <Compile Include="DefaultLinguistics.cs" />
     <Compile Include="FileSystemBlobStorage.cs" />
-    <Compile Include="LocalStorageContentManager.cs" />
     <Compile Include="FileSystemLocalStorage.cs" />
     <Compile Include="HttpCookieCollectionExtensions.cs" />
     <Compile Include="SmtpMessaging.cs" />

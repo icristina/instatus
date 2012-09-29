@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Instatus.Core
 {
-    public interface IHostingEnvironment
+    public interface IHosting
     {
         string RootPath { get; }
         string BaseAddress { get; }

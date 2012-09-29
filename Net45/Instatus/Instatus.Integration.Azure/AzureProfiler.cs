@@ -16,7 +16,7 @@ namespace Instatus.Integration.Azure
     {
         public const string TableName = "Profiler";
         
-        private ICredentialStorage credentialStorage;
+        private IKeyValueStorage<Credential> credentials;
         private InMemoryQueue<Entry> queue;
 
         public IDisposable Step(string label)
@@ -31,7 +31,7 @@ namespace Instatus.Integration.Azure
 
         public async void Flush(List<Entry> flushed)
         {
-            var credential = credentialStorage.GetCredential(WellKnown.Provider.WindowsAzure);
+            var credential = credentials.Get(WellKnown.Provider.WindowsAzure);
             var dataContext = await AzureClient.GetTableServiceContext(credential, TableName);
 
             foreach(var entry in flushed) 
@@ -44,9 +44,9 @@ namespace Instatus.Integration.Azure
             await dataContext.SaveChangesWithRetriesAsync();
         }
 
-        public AzureProfiler(ICredentialStorage credentialStorage)
+        public AzureProfiler(IKeyValueStorage<Credential> credentials)
         {
-            this.credentialStorage = credentialStorage;
+            this.credentials = credentials;
             this.queue = new InMemoryQueue<Entry>(AzureClient.TableServiceEntityBufferCount, Flush);
         }
     }

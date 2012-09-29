@@ -14,7 +14,7 @@ namespace Instatus.Integration.Mvc
         {
             get
             {
-                return "AspNetSqlMembershipProvider"; // mimic default provider
+                return "AspNetSqlmembership"; // mimic default provider
             }
         }
 
@@ -157,9 +157,9 @@ namespace Instatus.Integration.Mvc
 
         public override bool ValidateUser(string username, string password)
         {
-            var membershipProvider = DependencyResolver.Current.GetService<IMembershipProvider>();
+            var membership = DependencyResolver.Current.GetService<IMembership>();
 
-            return membershipProvider.ValidateUser(username, password);
+            return membership.ValidateUser(username, password);
         }
     }
 }

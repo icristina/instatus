@@ -14,11 +14,11 @@ namespace Instatus.Integration.Azure
 {
     public class AzureQueue<T> : IQueue<T>
     {
-        private ICredentialStorage credentialStorage;
+        private IKeyValueStorage<Credential> credentials;
 
         public CloudQueue GetQueue()
         {
-            var credential = credentialStorage.GetCredential(WellKnown.Provider.WindowsAzure);
+            var credential = credentials.Get(WellKnown.Provider.WindowsAzure);
             var baseUri = string.Format("http://{0}.queue.core.windows.net", credential.AccountName);
             var storageCredential = new StorageCredentialsAccountAndKey(credential.AccountName, credential.PrivateKey);
             var client = new CloudQueueClient(baseUri, storageCredential);
@@ -73,9 +73,9 @@ namespace Instatus.Integration.Azure
             }
         }
 
-        public AzureQueue(ICredentialStorage credentialStorage)
+        public AzureQueue(IKeyValueStorage<Credential> credentials)
         {
-            this.credentialStorage = credentialStorage;
+            this.credentials = credentials;
         }
     }
 }

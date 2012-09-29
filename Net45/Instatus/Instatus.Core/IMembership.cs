@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Instatus.Core
 {
-    public interface IMembershipProvider
+    public interface IMembership
     {
         bool ValidateUser(string userName, string password);
         bool ValidateExternalUser(string providerName, string providerUserId, IDictionary<string, string> data, out string userName);

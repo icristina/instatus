@@ -26,19 +26,19 @@ namespace Instatus.Sample
             containerBuilder.RegisterControllers(assembly);
             containerBuilder.RegisterSource(new ViewRegistrationSource());
 
-            containerBuilder.RegisterType<AppSettingsCredentialStorage>().As<ICredentialStorage>();
-            containerBuilder.RegisterType<AspNetHostingEnvironment>().As<IHostingEnvironment>();
+            containerBuilder.RegisterType<AppSettingsStorage<Credential>>().As<IKeyValueStorage<Credential>>();
+            containerBuilder.RegisterType<AspNetHosting>().As<IHosting>();
             containerBuilder.RegisterType<AspNetSessionData>().As<ISessionData>();
             containerBuilder.RegisterType<FileSystemBlobStorage>().As<IBlobStorage>();
             containerBuilder.RegisterType<FileSystemLocalStorage>().As<ILocalStorage>();
             containerBuilder.RegisterType<WpfImaging>().As<IImaging>();
-            containerBuilder.RegisterType<MockMembershipProvider>().As<IMembershipProvider>();
+            containerBuilder.RegisterType<MockMembership>().As<IMembership>();
             containerBuilder.RegisterType<InMemoryLocalization>().As<ILocalization>();
-            containerBuilder.RegisterType<LocalStorageContentManager>().As<IContentManager>();
+            containerBuilder.RegisterType<AppDataStorage<Document>>().As<IKeyValueStorage<Document>>();
             containerBuilder.RegisterType<InMemoryTaxonomy>().As<ITaxonomy>();
             containerBuilder.RegisterType<DataFileGeocode>().As<IGeocode>();
             containerBuilder.RegisterType<HtmlDocumentHandler>().As<IHandler<Document>>();
-            containerBuilder.RegisterType<RazorTextTemplating>().As<ITextTemplating>();
+            containerBuilder.RegisterType<RazorTextTemplating>().As<ITemplating>();
             containerBuilder.RegisterType<WordpressService>();
 
             var container = containerBuilder.Build();

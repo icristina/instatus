@@ -15,12 +15,12 @@ namespace Instatus.Tests
             var binDebugFolder = AppDomain.CurrentDomain.BaseDirectory;
             var projectFolder = new DirectoryInfo(binDebugFolder).Parent.Parent.FullName;
             
-            var hostingEnvironment = new InMemoryHostingEnvironment(null)
+            var hosting = new InMemoryHosting(null)
             {
                 RootPath =  projectFolder
             };
 
-            var fileSystemBlobStorage = new FileSystemBlobStorage(hostingEnvironment);
+            var fileSystemBlobStorage = new FileSystemBlobStorage(hosting);
             var files = fileSystemBlobStorage.Query("~/Properties");
 
             Assert.IsTrue(files[0].Contains("AssemblyInfo.cs"));

@@ -9,6 +9,7 @@ using DotNetOpenAuth.AspNet;
 using System.Web;
 using DotNetOpenAuth.AspNet.Clients;
 using System.Web.SessionState;
+using Instatus.Core.Models;
 
 namespace Instatus.Integration.Mvc
 {
@@ -16,8 +17,8 @@ namespace Instatus.Integration.Mvc
     [SessionState(SessionStateBehavior.Disabled)]
     public abstract class AccountController : Controller
     {
-        private IMembershipProvider membershipProvider;
-        private ICredentialStorage credentialStorage;
+        private IMembership membership;
+        private IKeyValueStorage<Credential> credentials;
         
         [AllowAnonymous]
         [HttpGet]
@@ -32,7 +33,7 @@ namespace Instatus.Integration.Mvc
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginModel viewModel)
         {
-            if (ModelState.IsValid && membershipProvider.ValidateUser(viewModel.EmailAddress, viewModel.Password))
+            if (ModelState.IsValid && membership.ValidateUser(viewModel.EmailAddress, viewModel.Password))
             {
                 FormsAuthentication.SetAuthCookie(viewModel.EmailAddress, CreatePersistentCookie);
                 return Redirect(viewModel.ReturnUrl ?? HomeUrl);
@@ -77,7 +78,7 @@ namespace Instatus.Integration.Mvc
             string userName;
 
             if (authenticationResult.IsSuccessful && 
-                membershipProvider.ValidateExternalUser(provider, authenticationResult.ProviderUserId, authenticationResult.ExtraData, out userName))
+                membership.ValidateExternalUser(provider, authenticationResult.ProviderUserId, authenticationResult.ExtraData, out userName))
             {
                 FormsAuthentication.SetAuthCookie(userName, CreatePersistentCookie);                
                 return Redirect(returnUrl ?? HomeUrl);
@@ -90,7 +91,7 @@ namespace Instatus.Integration.Mvc
 
         public virtual IAuthenticationClient GetAuthenticationClient(string provider)
         {
-            var credential = credentialStorage.GetCredential(provider);
+            var credential = credentials.Get(provider);
             
             switch (provider.ToLower())
             {
@@ -134,10 +135,10 @@ namespace Instatus.Integration.Mvc
             }
         }
 
-        public AccountController(IMembershipProvider membershipProvider, ICredentialStorage credentialStorage) 
+        public AccountController(IMembership membership, IKeyValueStorage<Credential> credentials) 
         {
-            this.membershipProvider = membershipProvider;
-            this.credentialStorage = credentialStorage;
+            this.membership = membership;
+            this.credentials = credentials;
         }
     }
 }

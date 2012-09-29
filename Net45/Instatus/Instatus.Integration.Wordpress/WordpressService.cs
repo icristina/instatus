@@ -11,17 +11,17 @@ namespace Instatus.Integration.Wordpress
     // http://codex.wordpress.org/XML-RPC_wp
     public class WordpressService : XmlRpcService
     {
-        private IMembershipProvider membershipProvider;
+        private IMembership membership;
         private ITaxonomy taxonomy;
-        private IContentManager contentManager;
-        private IHostingEnvironment hostingEnvironment;
+        private IKeyValueStorage<Document> documents;
+        private IHosting hosting;
         
         private const string defaultBlogId = "1";
 
         [XmlRpcMethod("wp.getUsersBlogs")]
         public BlogInfo[] GetUsersBlogs(string username, string password)
         {
-            if (!membershipProvider.ValidateUser(username, password)) return null;
+            if (!membership.ValidateUser(username, password)) return null;
             
             return new BlogInfo[] 
             {
@@ -30,8 +30,8 @@ namespace Instatus.Integration.Wordpress
                     blogid = defaultBlogId,
                     blogName = "Blog",
                     isAdmin = true,
-                    url = hostingEnvironment.BaseAddress,
-                    xmlrpc = hostingEnvironment.BaseAddress + "/" + WordpressConfig.XmlRpcUrl
+                    url = hosting.BaseAddress,
+                    xmlrpc = hosting.BaseAddress + "/" + WordpressConfig.XmlRpcUrl
                 }
             };
         }
@@ -45,7 +45,7 @@ namespace Instatus.Integration.Wordpress
         [XmlRpcMethod("wp.getCategories")]
         public WordpressCategory[] GetCategories(string blogId, string username, string password)
         {
-            if (!membershipProvider.ValidateUser(username, password)) return null;            
+            if (!membership.ValidateUser(username, password)) return null;            
             
             return taxonomy.GetTags().Select(tag => new WordpressCategory()
             {
@@ -69,9 +69,9 @@ namespace Instatus.Integration.Wordpress
         [XmlRpcMethod("blogger.deletePost")]
         public bool DeletePost(string appKey, string postid, string username, string password, bool publish)
         {
-            if (!membershipProvider.ValidateUser(username, password)) return false;
+            if (!membership.ValidateUser(username, password)) return false;
 
-            contentManager.Delete(postid);
+            documents.Delete(postid);
 
             return true;
         }
@@ -85,14 +85,14 @@ namespace Instatus.Integration.Wordpress
         [XmlRpcMethod("metaWeblog.newPost")]
         public string NewPost(string blogid, string username, string password, MetaWeblogPost post, bool publish)
         {
-            if (!membershipProvider.ValidateUser(username, password)) return null;
+            if (!membership.ValidateUser(username, password)) return null;
 
             var document = new Document();
 
             document.Title = post.title;
             document.Description = post.description;
 
-            contentManager.AddOrUpdate(post.postid, document);
+            documents.AddOrUpdate(post.postid, document);
 
             return post.postid;
         }
@@ -100,9 +100,9 @@ namespace Instatus.Integration.Wordpress
         [XmlRpcMethod("metaWeblog.getPost")]
         public MetaWeblogPost GetPost(string postid, string username, string password)
         {
-            if (!membershipProvider.ValidateUser(username, password)) return null;
+            if (!membership.ValidateUser(username, password)) return null;
 
-            var document = contentManager.Get(postid);
+            var document = documents.Get(postid);
 
             return new MetaWeblogPost()
             {
@@ -116,9 +116,9 @@ namespace Instatus.Integration.Wordpress
         [XmlRpcMethod("metaWeblog.getRecentPosts")]
         public MetaWeblogPost[] GetRecentPosts(string blogid, string username, string password, int numberOfPosts)
         {
-            if (!membershipProvider.ValidateUser(username, password)) return null;
+            if (!membership.ValidateUser(username, password)) return null;
             
-            return contentManager.Query(null).Select(document => new MetaWeblogPost() 
+            return documents.Query(null).Select(document => new MetaWeblogPost() 
             {
                 title = document.Title,
                 description = document.Description,
@@ -130,28 +130,28 @@ namespace Instatus.Integration.Wordpress
         [XmlRpcMethod("metaWeblog.editPost")]
         public bool EditPost(string postid, string username, string password, MetaWeblogPost post, bool publish)
         {
-            if (!membershipProvider.ValidateUser(username, password)) return false;
+            if (!membership.ValidateUser(username, password)) return false;
 
-            var document = contentManager.Get(postid);
+            var document = documents.Get(postid);
 
             document.Title = post.title;
             document.Description = post.description;
 
-            contentManager.AddOrUpdate(postid, document);
+            documents.AddOrUpdate(postid, document);
 
             return true;
         }
 
         public WordpressService(
-            IMembershipProvider membershipProvider, 
+            IMembership membership, 
             ITaxonomy taxonomy, 
-            IContentManager contentManager,
-            IHostingEnvironment hostingEnvironment)
+            IKeyValueStorage<Document> documents,
+            IHosting hosting)
         {
-            this.membershipProvider = membershipProvider;
+            this.membership = membership;
             this.taxonomy = taxonomy;
-            this.contentManager = contentManager;
-            this.hostingEnvironment = hostingEnvironment;
+            this.documents = documents;
+            this.hosting = hosting;
         }
     }
 

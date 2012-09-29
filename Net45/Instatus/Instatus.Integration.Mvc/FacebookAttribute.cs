@@ -1,4 +1,5 @@
 ﻿using Instatus.Core;
+using Instatus.Core.Models;
 using Instatus.Core.Utils;
 using System;
 using System.Collections.Generic;
@@ -10,18 +11,18 @@ namespace Instatus.Integration.Mvc
 {
     public class FacebookAttribute : ActionFilterAttribute
     {
-        public IHostingEnvironment HostingEnvironment { get; set; }
-        public ICredentialStorage CredentialStorage { get; set; }
+        public IHosting Hosting { get; set; }
+        public IKeyValueStorage<Credential> Credentials { get; set; }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             var viewBag = filterContext.Controller.ViewBag;
-            var credential = CredentialStorage.GetCredential(WellKnown.Provider.Facebook);
+            var credential = Credentials.Get(WellKnown.Provider.Facebook);
 
             viewBag.Facebook = new FacebookConfig
             {
                 AppId = credential.PublicKey,
-                ChannelUrl = new PathBuilder(HostingEnvironment.BaseAddress)
+                ChannelUrl = new PathBuilder(Hosting.BaseAddress)
                                 .Path("channel.html")
                                 .ToProtocolRelativeUri()
             };

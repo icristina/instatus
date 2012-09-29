@@ -1,4 +1,5 @@
 ﻿using Instatus.Core;
+using Instatus.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,12 +10,12 @@ namespace Instatus.Integration.Mvc
 {
     public class GoogleAnalyticsAttribute : ActionFilterAttribute
     {
-        public ICredentialStorage CredentialStorage { get; set; }
+        public IKeyValueStorage<Credential> Credentials { get; set; }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             var viewBag = filterContext.Controller.ViewBag;
-            var credential = CredentialStorage.GetCredential(WellKnown.Provider.GoogleAnalytics);
+            var credential = Credentials.Get(WellKnown.Provider.GoogleAnalytics);
 
             viewBag.GoogleAnalytics = new GoogleAnalyticsConfig
             {

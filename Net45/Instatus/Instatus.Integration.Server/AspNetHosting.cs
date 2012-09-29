@@ -9,7 +9,7 @@ using Instatus.Core;
 
 namespace Instatus.Integration.Server
 {
-    public class AspNetHostingEnvironment : IHostingEnvironment
+    public class AspNetHosting : IHosting
     {
         public string RootPath
         {

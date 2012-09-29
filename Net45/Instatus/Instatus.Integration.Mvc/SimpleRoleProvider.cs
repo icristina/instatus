@@ -57,9 +57,9 @@ namespace Instatus.Integration.Mvc
 
         public override string[] GetRolesForUser(string username)
         {
-            var membershipProvider = DependencyResolver.Current.GetService<IMembershipProvider>();
+            var membership = DependencyResolver.Current.GetService<IMembership>();
 
-            return membershipProvider.GetRoles(username);
+            return membership.GetRoles(username);
         }
 
         public override string[] GetUsersInRole(string roleName)
