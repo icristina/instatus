@@ -34,7 +34,7 @@ namespace Instatus.Core.Impl
             return model;
         }
 
-        public IEnumerable<T> Query(Filter filter)
+        public IEnumerable<T> Query(Criteria criteria)
         {
             return cache.Values;
         }

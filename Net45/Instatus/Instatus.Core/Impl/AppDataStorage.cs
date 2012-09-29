@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Instatus.Core.Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -33,7 +34,7 @@ namespace Instatus.Core.Impl
             return default(T);
         }
 
-        public IEnumerable<T> Query(Models.Filter filter)
+        public IEnumerable<T> Query(Criteria criteria)
         {
             throw new NotImplementedException();
         }

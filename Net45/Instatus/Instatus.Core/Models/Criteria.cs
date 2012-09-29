@@ -5,9 +5,9 @@ using System.Text;
 
 namespace Instatus.Core.Models
 {
-    public class Filter
+    public class Criteria
     {
-        public string Query { get; set; }
+        public string Search { get; set; }
         public string Sort { get; set; }
         public string ContentType { get; set; }
         public string[] Tags { get; set; }
