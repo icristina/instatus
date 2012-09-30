@@ -15,16 +15,11 @@ namespace Instatus.Integration.Server
     {
         private IHosting hosting;
         
-        public void Save(string virtualPath, Stream inputStream)
+        public Stream Save(string virtualPath)
         {
             var absolutePath = MapPath(virtualPath);
 
-            using (var fileStream = new FileStream(absolutePath, FileMode.Create, FileAccess.Write))
-            {
-                inputStream.Flush();
-                inputStream.ResetPosition();
-                inputStream.CopyTo(fileStream);
-            }
+            return new FileStream(absolutePath, FileMode.Create, FileAccess.Write);
         }
 
         public void Stream(string virtualPath, Stream outputStream)

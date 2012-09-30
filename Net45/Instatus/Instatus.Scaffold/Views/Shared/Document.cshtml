@@ -5,7 +5,6 @@
         @Html.Partial("_Metadata", Model.Metadata)
     </head>
 <body>
-    <h1>@Model.Title</h1>
     @Html.Raw(Model.Description)
     @foreach (var sec in Model.Sections)
     {

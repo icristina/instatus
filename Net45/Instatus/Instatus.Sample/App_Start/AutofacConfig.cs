@@ -38,7 +38,7 @@ namespace Instatus.Sample
             containerBuilder.RegisterType<InMemoryTaxonomy>().As<ITaxonomy>();
             containerBuilder.RegisterType<DataFileGeocode>().As<IGeocode>();
             containerBuilder.RegisterType<HtmlDocumentHandler>().As<IHandler<Document>>();
-            containerBuilder.RegisterType<RazorTextTemplating>().As<ITemplating>();
+            containerBuilder.RegisterType<RazorTemplating>().As<ITemplating>();
             containerBuilder.RegisterType<WordpressService>();
 
             var container = containerBuilder.Build();

@@ -19,7 +19,10 @@ namespace Instatus.Integration.Server
         
         public void Upload(string virtualPath, Stream inputStream, Metadata metaData)
         {
-            fileSystemLocalStorage.Save(virtualPath, inputStream);
+            using (var fileStream = fileSystemLocalStorage.Save(virtualPath))
+            {
+                inputStream.CopyTo(fileStream);
+            }
         }
 
         public void Download(string virtualPath, Stream outputStream)

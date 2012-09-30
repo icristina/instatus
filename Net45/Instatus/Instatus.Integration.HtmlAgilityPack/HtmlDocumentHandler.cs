@@ -39,14 +39,14 @@ namespace Instatus.Integration.HtmlAgilityPack
                 document.Sections = sections.Select(section => new Section()
                 {
                     Heading = section.GetText("h1") ?? section.GetText("h2"),
-                    Body = section.RemoveChild(section.FirstChild).InnerHtml
+                    Body = section.RemoveChild(section.FirstChild).InnerHtml.Trim()
                 })
                 .ToArray();
             }
             else
             {
                 // if no sections, currently add all as description
-                document.Description = body.Any() ? body.First().InnerHtml : html.InnerHtml;
+                document.Description = body.Any() ? body.First().InnerHtml.Trim() : html.InnerHtml.Trim();
             }
 
             return document;

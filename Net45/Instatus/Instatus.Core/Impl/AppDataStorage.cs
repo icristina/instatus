@@ -53,10 +53,9 @@ namespace Instatus.Core.Impl
         {
             var virtualPath = ResolveVirtualPaths(key).First();
 
-            using (var inputStream = new MemoryStream())
+            using (var inputStream = localStorage.Save(virtualPath))
             {
                 handler.Write(model, inputStream);
-                localStorage.Save(virtualPath, inputStream);
             }
         }
 
