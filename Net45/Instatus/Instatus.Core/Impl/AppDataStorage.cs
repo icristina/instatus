@@ -20,10 +20,9 @@ namespace Instatus.Core.Impl
             {
                 try
                 {
-                    using (var inputStream = new MemoryStream())
+                    using (var fileStream = localStorage.OpenRead(virtualPath))
                     {
-                        localStorage.Stream(virtualPath, inputStream);
-                        return handler.Read(inputStream);
+                        return handler.Read(fileStream);
                     }
                 }
                 catch
@@ -53,7 +52,7 @@ namespace Instatus.Core.Impl
         {
             var virtualPath = ResolveVirtualPaths(key).First();
 
-            using (var inputStream = localStorage.Save(virtualPath))
+            using (var inputStream = localStorage.OpenWrite(virtualPath))
             {
                 handler.Write(model, inputStream);
             }

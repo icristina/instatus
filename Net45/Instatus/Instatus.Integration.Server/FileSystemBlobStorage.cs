@@ -19,7 +19,7 @@ namespace Instatus.Integration.Server
         
         public void Upload(string virtualPath, Stream inputStream, Metadata metaData)
         {
-            using (var fileStream = fileSystemLocalStorage.Save(virtualPath))
+            using (var fileStream = fileSystemLocalStorage.OpenWrite(virtualPath))
             {
                 inputStream.CopyTo(fileStream);
             }
@@ -27,7 +27,10 @@ namespace Instatus.Integration.Server
 
         public void Download(string virtualPath, Stream outputStream)
         {
-            fileSystemLocalStorage.Stream(virtualPath, outputStream);
+            using (var fileStream = fileSystemLocalStorage.OpenRead(virtualPath))
+            {
+                fileStream.CopyTo(outputStream);
+            }
         }
 
         public async void Copy(string virtualPath, string uri, Metadata metaData)
