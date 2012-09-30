@@ -92,7 +92,6 @@
     <Compile Include="IHosting.cs" />
     <Compile Include="IImaging.cs" />
     <Compile Include="ILocalization.cs" />
-    <Compile Include="ILocalStorage.cs" />
     <Compile Include="ILogger.cs" />
     <Compile Include="IMembership.cs" />
     <Compile Include="IMessageBus.cs" />
@@ -107,7 +106,6 @@
     <Compile Include="ITemplating.cs" />
     <Compile Include="ICreated.cs" />
     <Compile Include="ISessionData.cs" />
-    <Compile Include="IVirtualPathUtility.cs" />
     <Compile Include="Models\Document.cs" />
     <Compile Include="Models\Section.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

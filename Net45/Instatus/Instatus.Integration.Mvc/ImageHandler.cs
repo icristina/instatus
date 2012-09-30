@@ -76,16 +76,12 @@ namespace Instatus.Integration.Mvc
                     return;
                 }
 
-                using (var inputMemoryStream = new MemoryStream())
+                using (var inputMemoryStream = blobStorage.OpenRead(virtualPath))
                 using (var outputMemoryStream = new MemoryStream())
                 using (var gzipStream = new GZipStream(response.OutputStream, CompressionMode.Compress))
                 {
                     try
                     {
-                        blobStorage.Download(virtualPath, inputMemoryStream);
-
-                        inputMemoryStream.ResetPosition();
-                    
                         switch (action)
                         {
                             case ResizeActionName:

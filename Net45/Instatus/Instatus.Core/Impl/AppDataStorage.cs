@@ -10,8 +10,8 @@ namespace Instatus.Core.Impl
 {
     public class AppDataStorage<T> : IKeyValueStorage<T>
     {
+        private IBlobStorage localStorage;
         private IHandler<T> handler;
-        private ILocalStorage localStorage;
         private ISessionData sessionData;        
         
         public T Get(string key)
@@ -52,7 +52,7 @@ namespace Instatus.Core.Impl
         {
             var virtualPath = ResolveVirtualPaths(key).First();
 
-            using (var inputStream = localStorage.OpenWrite(virtualPath))
+            using (var inputStream = localStorage.OpenWrite(virtualPath, null))
             {
                 handler.Write(model, inputStream);
             }
@@ -83,7 +83,7 @@ namespace Instatus.Core.Impl
             };
         }
 
-        public AppDataStorage(IHandler<T> handler, ILocalStorage localStorage, ISessionData sessionData)
+        public AppDataStorage(IHandler<T> handler, IBlobStorage localStorage, ISessionData sessionData)
         {
             this.handler = handler;
             this.localStorage = localStorage;

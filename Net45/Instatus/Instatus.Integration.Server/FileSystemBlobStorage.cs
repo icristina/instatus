@@ -14,42 +14,29 @@ namespace Instatus.Integration.Server
 {
     public class FileSystemBlobStorage : IBlobStorage
     {
-        private FileSystemLocalStorage fileSystemLocalStorage;
         private IHosting hosting;
         
-        public void Upload(string virtualPath, Stream inputStream, Metadata metaData)
+        public Stream OpenWrite(string virtualPath, Metadata metaData)
         {
-            using (var fileStream = fileSystemLocalStorage.OpenWrite(virtualPath))
-            {
-                inputStream.CopyTo(fileStream);
-            }
+            return new FileStream(MapPath(virtualPath), FileMode.Create, FileAccess.Write);
         }
 
-        public void Download(string virtualPath, Stream outputStream)
+        public Stream OpenRead(string virtualPath)
         {
-            using (var fileStream = fileSystemLocalStorage.OpenRead(virtualPath))
-            {
-                fileStream.CopyTo(outputStream);
-            }
+            return new FileStream(MapPath(virtualPath), FileMode.Open, FileAccess.Read);
         }
 
         public async void Copy(string virtualPath, string uri, Metadata metaData)
         {
-            var absolutePath = fileSystemLocalStorage.MapPath(virtualPath);
-
             using (var httpClient = new HttpClient())
+            using (var outputStream = OpenWrite(virtualPath, metaData))
             using (var inputStream = await httpClient.GetStreamAsync(uri))
             {
-                Upload(virtualPath, inputStream, metaData);
+                inputStream.CopyTo(outputStream);
             }
         }
 
-        public string GenerateSignedUrl(string virtualPath, string httpMethod)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string MapPath(string virtualPath)
+        public string GenerateUri(string virtualPath, string httpMethod = "GET")
         {
             var baseUri = new Uri(hosting.BaseAddress);
             var absolutePath = virtualPath.TrimStart(PathBuilder.RelativeChars);
@@ -57,25 +44,36 @@ namespace Instatus.Integration.Server
             return new Uri(baseUri, absolutePath).ToString();
         }
 
-        public string[] Query(string virtualPath)
-        {
-            var outputPath = hosting.RootPath;
-            var directoryPath = Path.Combine(outputPath, virtualPath.TrimStart(PathBuilder.RelativeChars));
-            var files = Directory.GetFiles(directoryPath);
+        public bool EnableSubFolders { get; set; }
 
-            return files.Select(file => {
-                return virtualPath.TrimEnd(PathBuilder.DelimiterChars) + "/" + Path.GetFileName(file);
-            })
-            .ToArray();
+        public string MapPath(string virtualPath)
+        {
+            var subPath = EnableSubFolders ?
+                virtualPath.TrimStart(PathBuilder.RelativeChars) :
+                Path.GetFileName(virtualPath);
+
+            return Path.Combine(hosting.RootPath, subPath);
+        }
+
+        public string[] Query(string virtualPath, string suffix)
+        {
+            var absolutePath = MapPath(virtualPath);
+
+            return Directory.EnumerateFiles(absolutePath)
+                .Where(p => !string.IsNullOrEmpty(suffix) && p.EndsWith(suffix))
+                .Select(p => p.Replace(absolutePath, virtualPath))
+                .ToArray();
+        }
+
+        public void Delete(string virtualPath)
+        {
+            File.Delete(MapPath(virtualPath));
         }
 
         public FileSystemBlobStorage(IHosting hosting)
         {
             this.hosting = hosting;
-            this.fileSystemLocalStorage = new FileSystemLocalStorage(hosting)
-            {
-                EnableSubFolders = true
-            };
+            this.EnableSubFolders = true;
         }
     }
 }

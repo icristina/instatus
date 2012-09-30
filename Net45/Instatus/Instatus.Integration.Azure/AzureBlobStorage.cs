@@ -53,22 +53,20 @@ namespace Instatus.Integration.Azure
             }
         }
 
-        public void Upload(string virtualPath, Stream inputStream, Metadata metaData)
+        public Stream OpenWrite(string virtualPath, Metadata metaData)
         {
             var cloudBlob = GetBlobReference(virtualPath);
 
             SetMetadata(cloudBlob, metaData);
 
-            inputStream.ResetPosition();
-
-            cloudBlob.UploadFromStream(inputStream);
+            return cloudBlob.OpenWrite();
         }
 
-        public void Download(string virtualPath, Stream outputStream)
+        public Stream OpenRead(string virtualPath)
         {
             var blob = GetBlobReference(virtualPath);
 
-            blob.DownloadToStream(outputStream);
+            return blob.OpenRead();
         }
 
         public void Copy(string virtualPath, string uri, Metadata metaData)
@@ -84,12 +82,7 @@ namespace Instatus.Integration.Azure
             }  
         }
 
-        public string GenerateSignedUrl(string virtualPath, string httpMethod)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string MapPath(string virtualPath)
+        public string GenerateUri(string virtualPath, string httpMethod)
         {
             var credential = credentials.Get(WellKnown.Provider.WindowsAzure);
             var baseAddress = GetBaseUri(credential.AccountName);
@@ -99,9 +92,14 @@ namespace Instatus.Integration.Azure
                 .ToProtocolRelativeUri();
         }
 
-        public string[] Query(string virtualPath)
+        public string[] Query(string virtualPath, string suffix)
         {
-            throw new NotImplementedException();
+            return null;
+        }
+
+        public void Delete(string virtualPath)
+        {
+
         }
 
         public AzureBlobStorage(IKeyValueStorage<Credential> credentials)

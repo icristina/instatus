@@ -18,11 +18,11 @@ namespace Instatus.Integration.Mvc
         public ActionResult Index(int take = 50, int skip = 0, string virtualPath = null)
         {
             ViewData.Model = BlobStorage
-                .Query(virtualPath ?? BaseVirtualPath)
+                .Query(virtualPath ?? BaseVirtualPath, null)
                 .OrderBy(s => s)
                 .Skip(skip)
                 .Take(take)
-                .Select(f => BlobStorage.MapPath(f))
+                .Select(f => BlobStorage.GenerateUri(f, "GET"))
                 .ToArray();
             
             return View();
@@ -30,7 +30,7 @@ namespace Instatus.Integration.Mvc
 
         public virtual IQueryable<string> Query(string virtualPath)
         {
-            return BlobStorage.Query(virtualPath).AsQueryable();
+            return BlobStorage.Query(virtualPath, null).AsQueryable();
         }
 
         [HttpGet]
@@ -51,8 +51,11 @@ namespace Instatus.Integration.Mvc
             if (ModelState.IsValid)
             {
                 var virtualPath = MapPath(viewModel.FileName);
-                
-                BlobStorage.Upload(virtualPath, viewModel.InputStream, null);
+
+                using (var outputStream = BlobStorage.OpenWrite(virtualPath, null))
+                {
+                    viewModel.InputStream.CopyTo(outputStream);
+                }
 
                 OnCreated(virtualPath);
 

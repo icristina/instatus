@@ -103,7 +103,6 @@
     <Compile Include="DebugMessaging.cs" />
     <Compile Include="DefaultLinguistics.cs" />
     <Compile Include="FileSystemBlobStorage.cs" />
-    <Compile Include="FileSystemLocalStorage.cs" />
     <Compile Include="HttpCookieCollectionExtensions.cs" />
     <Compile Include="SmtpMessaging.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

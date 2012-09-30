@@ -8,12 +8,13 @@ using System.Threading.Tasks;
 
 namespace Instatus.Core
 {
-    public interface IBlobStorage : IVirtualPathUtility
+    public interface IBlobStorage
     {
-        void Upload(string virtualPath, Stream inputStream, Metadata metaData);
-        void Download(string virtualPath, Stream outputStream);
+        Stream OpenWrite(string virtualPath, Metadata metaData);
+        Stream OpenRead(string virtualPath);
         void Copy(string virtualPath, string uri, Metadata metaData);
-        string GenerateSignedUrl(string virtualPath, string httpMethod);
-        string[] Query(string virtualPath);
+        string[] Query(string virtualPath, string suffix);
+        string GenerateUri(string virtualPath, string httpMethod);
+        void Delete(string virtualPath);
     }
 }

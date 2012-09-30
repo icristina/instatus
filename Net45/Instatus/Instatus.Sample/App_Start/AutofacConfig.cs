@@ -30,7 +30,6 @@ namespace Instatus.Sample
             containerBuilder.RegisterType<AspNetHosting>().As<IHosting>();
             containerBuilder.RegisterType<AspNetSessionData>().As<ISessionData>();
             containerBuilder.RegisterType<FileSystemBlobStorage>().As<IBlobStorage>();
-            containerBuilder.RegisterType<FileSystemLocalStorage>().As<ILocalStorage>();
             containerBuilder.RegisterType<WpfImaging>().As<IImaging>();
             containerBuilder.RegisterType<MockMembership>().As<IMembership>();
             containerBuilder.RegisterType<InMemoryLocalization>().As<ILocalization>();
