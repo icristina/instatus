@@ -24,7 +24,12 @@ namespace Instatus.Integration.Mvc
                 AppId = credential.PublicKey,
                 ChannelUrl = new PathBuilder(Hosting.BaseAddress)
                                 .Path("channel.html")
-                                .ToProtocolRelativeUri()
+                                .ToProtocolRelativeUri(),
+                CanvasOauthUrl = new PathBuilder("https://www.facebook.com/dialog/oauth/")
+                                .Query("client_id", credential.PublicKey)
+                                .Query("redirect_uri", "http://apps.facebook.com/" + credential.AccountName)
+                                .Query("scope", string.Join(",", credential.Claims))
+                                .ToString()
             };
         }
 
@@ -32,6 +37,7 @@ namespace Instatus.Integration.Mvc
         {
             public string AppId { get; set; }
             public string ChannelUrl { get; set; }
+            public string CanvasOauthUrl { get; set; }
         }
     }
 }
