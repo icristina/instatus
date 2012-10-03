@@ -27,8 +27,8 @@ namespace Instatus.Integration.Mvc
                                 .ToProtocolRelativeUri(),
                 CanvasOauthUrl = new PathBuilder("https://www.facebook.com/dialog/oauth/")
                                 .Query("client_id", credential.PublicKey)
-                                .Query("redirect_uri", "http://apps.facebook.com/" + credential.AccountName)
                                 .Query("scope", string.Join(",", credential.Claims))
+                                .Query("redirect_uri", "http://apps.facebook.com/" + credential.AccountName)                                
                                 .ToString()
             };
         }
