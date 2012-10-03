@@ -9,7 +9,7 @@ using Instatus.Core.Models;
 
 namespace Instatus.Integration.Mvc
 {
-    public class PagedViewModel<T> : IPaged
+    public class PagedViewModel<T> : IPaged, IEnumerable<T>
     {
         private IList<T> results;
 
