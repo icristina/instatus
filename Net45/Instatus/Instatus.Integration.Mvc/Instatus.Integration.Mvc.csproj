@@ -119,6 +119,7 @@
     <Compile Include="AccountController.cs" />
     <Compile Include="BaseMvcConfig.cs" />
     <Compile Include="ContentPageController.cs" />
+    <Compile Include="HtmlHelperExtensions.cs" />
     <Compile Include="KeyValueStorageController.cs" />
     <Compile Include="MultipleResponseFormatsAttribute.cs" />
     <Compile Include="ServerNameAttribute.cs" />
