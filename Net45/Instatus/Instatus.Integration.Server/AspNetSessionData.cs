@@ -67,17 +67,19 @@ namespace Instatus.Integration.Server
                 // [2] query string or form param
                 // [3] route data
                 // [4] cookie
-                // [5] accept language from browser
-                // [6] default or thread culture
+                // [5] custom input
+                // [6] accept language from browser
+                // [7] default or thread culture
                 if (locale == null)
                 {
                     var request = HttpContext.Current.Request;
                     var routeData = request.RequestContext.RouteData;
 
-                    this.Locale = GetCustomLocale(request) ??
+                    this.Locale =
                         GetParamsLocale(request) ??
                         GetRouteLocale(routeData) ??                        
                         GetCookieLocale(request) ??
+                        GetCustomLocale(request) ??
                         GetAcceptLanguage(request) ??
                         GetDefaultLocale();
                 }
