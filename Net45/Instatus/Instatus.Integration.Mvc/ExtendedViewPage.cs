@@ -11,6 +11,7 @@ namespace Instatus.Integration.Mvc
     {
         private ILocalization localization;
         private ISessionData sessionData;
+        private IHosting hosting;
         
         // automatic autofac di does not appear to work with razorgenerator
         public ILocalization Localization 
@@ -29,6 +30,14 @@ namespace Instatus.Integration.Mvc
             }
         }
 
+        public IHosting Hosting
+        {
+            get
+            {
+                return hosting ?? (hosting = DependencyResolver.Current.GetService<IHosting>());
+            }
+        }
+
         public string Phrase(string key)
         {
             return Localization.Phrase(SessionData.Locale, key);
@@ -44,6 +53,7 @@ namespace Instatus.Integration.Mvc
     {
         private ILocalization localization;
         private ISessionData sessionData;
+        private IHosting hosting;
 
         public ILocalization Localization
         {
@@ -58,6 +68,14 @@ namespace Instatus.Integration.Mvc
             get
             {
                 return sessionData ?? (sessionData = DependencyResolver.Current.GetService<ISessionData>());
+            }
+        }
+
+        public IHosting Hosting
+        {
+            get
+            {
+                return hosting ?? (hosting = DependencyResolver.Current.GetService<IHosting>());
             }
         }
 

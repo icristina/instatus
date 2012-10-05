@@ -18,6 +18,7 @@ namespace Instatus.Integration.Mvc
         {
             var viewBag = filterContext.Controller.ViewBag;
             var credential = Credentials.Get(WellKnown.Provider.Facebook);
+            var canvasUrl = new PathBuilder("http://apps.facebook.com/").Path(credential.AccountName).ToString();
 
             viewBag.Facebook = new FacebookConfig
             {
@@ -25,10 +26,11 @@ namespace Instatus.Integration.Mvc
                 ChannelUrl = new PathBuilder(Hosting.BaseAddress)
                                 .Path("channel.html")
                                 .ToProtocolRelativeUri(),
+                CanvasUrl = canvasUrl,
                 CanvasOauthUrl = new PathBuilder("https://www.facebook.com/dialog/oauth/")
                                 .Query("client_id", credential.PublicKey)
                                 .Query("scope", string.Join(",", credential.Claims))
-                                .Query("redirect_uri", "http://apps.facebook.com/" + credential.AccountName)                                
+                                .Query("redirect_uri", canvasUrl)                                
                                 .ToString()
             };
         }
@@ -37,6 +39,7 @@ namespace Instatus.Integration.Mvc
         {
             public string AppId { get; set; }
             public string ChannelUrl { get; set; }
+            public string CanvasUrl { get; set; }
             public string CanvasOauthUrl { get; set; }
         }
     }
