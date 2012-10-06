@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace Instatus.Integration.Json
 {
-    public class DefaultJsonSerializer : IJsonSerializer
+    public class JsonNetSerializer : IJsonSerializer
     {
         private JsonSerializerSettings Settings
         {
