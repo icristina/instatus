@@ -1,5 +1,7 @@
 ﻿@inherits Instatus.Integration.Mvc.ExtendedViewPage
 
+@using Instatus.Integration.Mvc
+
 @{
     ViewBag.Title = @Phrase("Login");
 }
@@ -12,15 +14,19 @@
             {
                 @Html.AntiForgeryToken()
                 @Html.EditorForModel()
-                <button type="submit" class="btn btn-primary">@Phrase("Login")</button>
+                @Html.Submit(Phrase("Login"))
             }
         </div>
         <div class="span6">
             @using (Html.BeginForm("ExternalLogin", "Account"))
             {
                 @Html.AntiForgeryToken()
-                <button type="submit" name="provider" value="Facebook" class="btn btn-primary btn-large">Facebook</button>
-                <button type="submit" name="provider" value="Google" class="btn btn-primary btn-large">Google</button>
+                foreach (var provider in AccountController.RegistedProviders)
+                {
+                    <button type="submit" name="provider" value="@provider" class="btn btn-primary btn-large">
+                        @Phrase(provider)
+                    </button>
+                }
             }
         </div>
     </div>

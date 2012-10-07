@@ -40,12 +40,12 @@ namespace Instatus.Integration.Mvc
 
         public string Phrase(string key)
         {
-            return Localization.Phrase(SessionData.Locale, key);
+            return Localization.Phrase(key);
         }
 
         public string Format(string key, params object[] values)
         {
-            return Localization.Format(SessionData.Locale, key, values);
+            return Localization.Format(key, values);
         }
     }
 
@@ -81,12 +81,12 @@ namespace Instatus.Integration.Mvc
 
         public string Phrase(string key)
         {
-            return Localization.Phrase(SessionData.Locale, key);
+            return Localization.Phrase(key);
         }
 
         public string Format(string key, params object[] values)
         {
-            return Localization.Format(SessionData.Locale, key, values);
+            return Localization.Format(key, values);
         }
     }
 }

@@ -89,8 +89,13 @@ namespace Instatus.Integration.Mvc
             }
         }
 
+        public static string[] RegistedProviders = new string[] { "Facebook", "Google" }; 
+
         public virtual IAuthenticationClient GetAuthenticationClient(string provider)
         {
+            if (!RegistedProviders.Contains(provider))
+                return null;
+            
             var credential = credentials.Get(provider);
             
             switch (provider.ToLower())

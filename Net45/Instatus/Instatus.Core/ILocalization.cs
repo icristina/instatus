@@ -9,8 +9,7 @@ namespace Instatus.Core
 {
     public interface ILocalization
     {
-        string Phrase(string locale, string key);
-        string Format(string locale, string key, params object[] values);
-        CultureInfo[] SupportedCultures { get; }
+        string Phrase(string key);
+        string Format(string key, params object[] values);
     }
 }

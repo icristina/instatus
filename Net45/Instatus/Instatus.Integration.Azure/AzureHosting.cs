@@ -7,6 +7,7 @@ using System.Web.Security;
 using Instatus.Core;
 using Microsoft.WindowsAzure.ServiceRuntime;
 using Microsoft.WindowsAzure;
+using System.Globalization;
 
 namespace Instatus.Integration.Azure
 {
@@ -33,12 +34,32 @@ namespace Instatus.Integration.Azure
             return CloudConfigurationManager.GetSetting(key);
         }
 
-
         public string ServerName
         {
             get 
             {
                 return RoleEnvironment.CurrentRoleInstance.Id;
+            }
+        }
+
+        public CultureInfo DefaultCulture
+        {
+            get
+            {
+                return SupportedCultures.FirstOrDefault();
+            }
+        }
+
+        private CultureInfo[] supportedCultures;
+
+        public CultureInfo[] SupportedCultures
+        {
+            get
+            {
+                return supportedCultures ?? (supportedCultures = GetAppSetting(WellKnown.AppSetting.SupportedCultures)
+                        .Split(',')
+                        .Select(c => CultureInfo.GetCultureInfo(c))
+                        .ToArray());
             }
         }
     }

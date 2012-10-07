@@ -28,5 +28,10 @@ namespace Instatus.Core.Extensions
         {
             return ns.ToLower().Trim() + ":"  + key.ToLower().Trim();
         }
+
+        public static string WithLocale(this string key, string locale)
+        {
+            return key + "." + locale;
+        }
     }
 }

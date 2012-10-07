@@ -9,17 +9,7 @@ using System.Web.Mvc.Html;
 namespace Instatus.Scaffold
 {
     public static class HtmlHelperExtensions
-    {
-        public static MvcHtmlString Submit<T>(this HtmlHelper<T> htmlHelper, string label = "Submit")
-        {
-            var tagBuilder = new TagBuilder("button");
-
-            tagBuilder.Attributes.Add("type", "submit");
-            tagBuilder.InnerHtml = label;
-            
-            return new MvcHtmlString(tagBuilder.ToString());
-        }
-        
+    {       
         public static MvcHtmlString Pagination<T>(this HtmlHelper<T> htmlHelper, IPaged paged) 
         {
             return htmlHelper.Partial("_Pagination", paged);

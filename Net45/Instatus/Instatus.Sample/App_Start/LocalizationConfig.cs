@@ -11,7 +11,7 @@ namespace Instatus.Sample
     {
         public static void RegisterPhrases()
         {
-            InMemoryLocalization.Add(new Dictionary<string, string>()
+            InMemoryLocalization.Add(WellKnown.Locale.UnitedStates, new Dictionary<string, string>()
             {
                 { WellKnown.Phrase.AppName, "Instatus US" }
             });

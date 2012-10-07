@@ -8,7 +8,7 @@ namespace Instatus.Core
 {
     public interface ISessionData
     {
-        string SiteName { get; }
         string Locale { get; set; }
+        IHosting Hosting { get; }
     }
 }

@@ -11,21 +11,21 @@ namespace Instatus.Core.Impl
 {
     public class InMemoryLocalization : ILocalization
     {
+        private ISessionData sessionData;
         private static IDictionary<Tuple<string, string>, string> phrases = new ConcurrentDictionary<Tuple<string, string>, string>();
-        private static List<CultureInfo> supportedCultures = new List<CultureInfo>();
         
-        public string Phrase(string locale, string key)
+        public string Phrase(string key)
         {
-            return phrases.GetValue(new Tuple<string, string>(locale, key)) 
-                ?? phrases.GetValue(new Tuple<string, string>(WellKnown.Locale.UnitedStates, key))
+            return phrases.GetValue(new Tuple<string, string>(sessionData.Locale, key)) 
+                ?? phrases.GetValue(new Tuple<string, string>(sessionData.Hosting.DefaultCulture.Name, key))
                 ?? key;
         }
 
-        public string Format(string locale, string key, params object[] values)
+        public string Format(string key, params object[] values)
         {
             try
             {
-                return string.Format(Phrase(locale, key), values);
+                return string.Format(Phrase(key), values);
             }
             catch
             {
@@ -33,27 +33,16 @@ namespace Instatus.Core.Impl
             }
         }
 
-        public CultureInfo[] SupportedCultures
-        {
-            get 
-            {
-                return supportedCultures.ToArray();
-            }
-        }
-
-        public static void Add(IDictionary<string, string> phrases)
-        {
-            Add(WellKnown.Locale.UnitedStates, phrases);
-        }
-
         public static void Add(string locale, IDictionary<string, string> phrases) 
         {
-            if (!supportedCultures.Any(c => c.Name.Equals(locale)))
-                supportedCultures.Add(CultureInfo.CreateSpecificCulture(locale));
-            
             phrases
                 .ToList()
                 .ForEach(x => InMemoryLocalization.phrases[new Tuple<string, string>(locale, x.Key)] = x.Value);
+        }
+
+        public InMemoryLocalization(ISessionData sessionData)
+        {
+            this.sessionData = sessionData;
         }
     }
 }

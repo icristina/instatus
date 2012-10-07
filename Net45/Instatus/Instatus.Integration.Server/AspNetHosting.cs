@@ -6,6 +6,8 @@ using System.Text;
 using System.Web.Hosting;
 using System.Web.Security;
 using Instatus.Core;
+using System.Globalization;
+using System.Threading;
 
 namespace Instatus.Integration.Server
 {
@@ -31,6 +33,27 @@ namespace Instatus.Integration.Server
         public string GetAppSetting(string key)
         {
             return ConfigurationManager.AppSettings[key];
+        }
+
+        public CultureInfo DefaultCulture
+        {
+            get
+            {
+                return SupportedCultures.FirstOrDefault();
+            }
+        }
+
+        private CultureInfo[] supportedCultures;
+
+        public CultureInfo[] SupportedCultures
+        {
+            get
+            {
+                return supportedCultures ?? (supportedCultures = GetAppSetting(WellKnown.AppSetting.SupportedCultures)
+                        .Split(',')
+                        .Select(c => CultureInfo.GetCultureInfo(c))
+                        .ToArray());
+            }
         }
 
         public string ServerName

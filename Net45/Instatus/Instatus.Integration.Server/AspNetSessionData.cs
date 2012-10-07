@@ -14,49 +14,14 @@ namespace Instatus.Integration.Server
 {
     public class AspNetSessionData : ISessionData
     {
-        private ILocalization localization;
+        public IHosting hosting;
         
-        public virtual string SiteName
-        {
-            get
-            {
-                return HttpContext.Current.Request.Url.Host;
-            }
-        }
-
-        private string locale;
-
-        // override, for example if sourced from facebook signed_request, this takes highest priority
         public virtual string GetCustomLocale(HttpRequest request)
         {
             return null;
         }
 
-        public string GetRouteLocale(RouteData routeData)
-        {
-            return routeData.Values.GetValue<string>(WellKnown.RouteValue.Locale);
-        }
-
-        public string GetParamsLocale(HttpRequest request)
-        {
-            return request.Unvalidated(WellKnown.Preference.Locale);
-        }
-
-        public string GetCookieLocale(HttpRequest request)
-        {
-            return request.Cookies.GetValue<string>(WellKnown.Cookie.Preferences, WellKnown.Preference.Locale);
-        }
-
-        public string GetAcceptLanguage(HttpRequest request)
-        {
-            return request.UserLanguages == null ? null 
-                : request.UserLanguages[0];
-        }
-
-        public virtual string GetDefaultLocale() 
-        {
-            return Thread.CurrentThread.CurrentUICulture.Name;
-        }
+        private string locale;
 
         public string Locale
         {
@@ -76,55 +41,67 @@ namespace Instatus.Integration.Server
                     var routeData = request.RequestContext.RouteData;
 
                     this.Locale =
-                        GetParamsLocale(request) ??
-                        GetRouteLocale(routeData) ??                        
-                        GetCookieLocale(request) ??
+                        request.Unvalidated(WellKnown.Preference.Locale) ??
+                        routeData.Values.GetValue<string>(WellKnown.RouteValue.Locale) ??
+                        request.Cookies.GetValue<string>(WellKnown.Cookie.Preferences, WellKnown.Preference.Locale) ??
                         GetCustomLocale(request) ??
-                        GetAcceptLanguage(request) ??
-                        GetDefaultLocale();
+                        (request.UserLanguages == null ? null : request.UserLanguages[0]) ??
+                        hosting.DefaultCulture.Name;
                 }
 
                 return locale;
             }
             set
             {
+                CultureInfo culture;
+
                 try
                 {
-                    var culture = CultureInfo.GetCultureInfo(value);
+                    culture = CultureInfo.GetCultureInfo(value);
 
-                    if (!localization.SupportedCultures.Contains(culture))
+                    if (!hosting.SupportedCultures.Contains(culture))
                     {
-                        culture = localization.SupportedCultures.First();
-                    }
-
-                    var request = HttpContext.Current.Request;
-                    var response = HttpContext.Current.Response;
-
-                    Thread.CurrentThread.CurrentUICulture = culture;
-                    locale = culture.Name;
-                    response.Cookies.SetValue(WellKnown.Cookie.Preferences, WellKnown.Preference.Locale, locale);
-
-                    var routeLocale = GetRouteLocale(request.RequestContext.RouteData);
-
-                    if (routeLocale != null && locale != routeLocale)
-                    {
-                        var redirectRouteData = new RouteValueDictionary(request.RequestContext.RouteData.Values);
-
-                        redirectRouteData[WellKnown.RouteValue.Locale] = locale;
-
-                        response.RedirectToRoute(redirectRouteData);
+                        culture = hosting.DefaultCulture;
                     }
                 }
                 catch
                 {
+                    culture = hosting.DefaultCulture;
+                }
 
+                var request = HttpContext.Current.Request;
+                var response = HttpContext.Current.Response;
+                var routeData = request.RequestContext.RouteData;
+
+                Thread.CurrentThread.CurrentUICulture = culture;
+
+                locale = culture.Name;
+                response.Cookies.SetValue(WellKnown.Cookie.Preferences, WellKnown.Preference.Locale, locale);
+
+                var routeLocale = routeData.Values.GetValue<string>(WellKnown.RouteValue.Locale);
+
+                if (routeLocale != null && locale != routeLocale)
+                {
+                    var redirectRouteData = new RouteValueDictionary(request.RequestContext.RouteData.Values);
+
+                    redirectRouteData[WellKnown.RouteValue.Locale] = locale;
+
+                    response.RedirectToRoute(redirectRouteData);
                 }
             }
         }
 
-        public AspNetSessionData(ILocalization localization)
+        public IHosting Hosting
         {
-            this.localization = localization;
+            get
+            {
+                return hosting;
+            }
+        }
+
+        public AspNetSessionData(IHosting hosting)
+        {
+            this.hosting = hosting;
         }
     }
 }

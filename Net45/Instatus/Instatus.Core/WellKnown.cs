@@ -47,6 +47,7 @@ namespace Instatus.Core
         {
             public const string BaseAddress = "BaseAddress";
             public const string RootPath = "RootPath";
+            public const string SupportedCultures = "SupportedCultures";
         }
 
         public static class VirtualPath
