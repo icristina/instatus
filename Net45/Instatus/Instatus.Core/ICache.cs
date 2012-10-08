@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Text;
 
 namespace Instatus.Core
 {
-    public interface ISessionData
+    public interface ICache
     {
-        string Locale { get; set; }
+        object Get(string key);
+        void AddOrUpdate(string key, object value);
     }
 }

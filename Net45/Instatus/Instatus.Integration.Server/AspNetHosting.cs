@@ -8,6 +8,7 @@ using System.Web.Security;
 using Instatus.Core;
 using System.Globalization;
 using System.Threading;
+using Instatus.Core.Extensions;
 
 namespace Instatus.Integration.Server
 {
@@ -50,7 +51,8 @@ namespace Instatus.Integration.Server
             get
             {
                 return supportedCultures ?? (supportedCultures = GetAppSetting(WellKnown.AppSetting.SupportedCultures)
-                        .Split(',')
+                        .ThrowIfNull("SupportedCultures required in AppSettings")
+                        .Split(',', ';')
                         .Select(c => CultureInfo.GetCultureInfo(c))
                         .ToArray());
             }

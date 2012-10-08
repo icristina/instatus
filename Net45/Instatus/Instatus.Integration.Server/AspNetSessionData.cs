@@ -41,7 +41,7 @@ namespace Instatus.Integration.Server
                     var routeData = request.RequestContext.RouteData;
 
                     this.Locale =
-                        request.Unvalidated(WellKnown.Preference.Locale) ??
+                        request.Unvalidated(WellKnown.RouteValue.Locale) ??
                         routeData.Values.GetValue<string>(WellKnown.RouteValue.Locale) ??
                         request.Cookies.GetValue<string>(WellKnown.Cookie.Preferences, WellKnown.Preference.Locale) ??
                         GetCustomLocale(request) ??
@@ -88,14 +88,6 @@ namespace Instatus.Integration.Server
 
                     response.RedirectToRoute(redirectRouteData);
                 }
-            }
-        }
-
-        public IHosting Hosting
-        {
-            get
-            {
-                return hosting;
             }
         }
 

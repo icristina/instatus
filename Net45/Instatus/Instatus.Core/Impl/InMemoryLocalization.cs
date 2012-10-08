@@ -12,12 +12,13 @@ namespace Instatus.Core.Impl
     public class InMemoryLocalization : ILocalization
     {
         private ISessionData sessionData;
+        private IHosting hosting;
         private static IDictionary<Tuple<string, string>, string> phrases = new ConcurrentDictionary<Tuple<string, string>, string>();
         
         public string Phrase(string key)
         {
             return phrases.GetValue(new Tuple<string, string>(sessionData.Locale, key)) 
-                ?? phrases.GetValue(new Tuple<string, string>(sessionData.Hosting.DefaultCulture.Name, key))
+                ?? phrases.GetValue(new Tuple<string, string>(hosting.DefaultCulture.Name, key))
                 ?? key;
         }
 
@@ -40,9 +41,10 @@ namespace Instatus.Core.Impl
                 .ForEach(x => InMemoryLocalization.phrases[new Tuple<string, string>(locale, x.Key)] = x.Value);
         }
 
-        public InMemoryLocalization(ISessionData sessionData)
+        public InMemoryLocalization(ISessionData sessionData, IHosting hosting)
         {
             this.sessionData = sessionData;
+            this.hosting = hosting;
         }
     }
 }

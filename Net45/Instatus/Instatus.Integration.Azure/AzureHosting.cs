@@ -8,6 +8,7 @@ using Instatus.Core;
 using Microsoft.WindowsAzure.ServiceRuntime;
 using Microsoft.WindowsAzure;
 using System.Globalization;
+using Instatus.Core.Extensions;
 
 namespace Instatus.Integration.Azure
 {
@@ -57,7 +58,8 @@ namespace Instatus.Integration.Azure
             get
             {
                 return supportedCultures ?? (supportedCultures = GetAppSetting(WellKnown.AppSetting.SupportedCultures)
-                        .Split(',')
+                        .ThrowIfNull("SupportedCultures required in AppSettings")
+                        .Split(',', ';')
                         .Select(c => CultureInfo.GetCultureInfo(c))
                         .ToArray());
             }

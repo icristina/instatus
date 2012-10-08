@@ -45,6 +45,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\CacheExtensions.cs" />
+    <Compile Include="Extensions\ObjectExtensions.cs" />
+    <Compile Include="ICache.cs" />
     <Compile Include="IJsonSerializer.cs" />
     <Compile Include="IKeyValueStorage.cs" />
     <Compile Include="Extensions\DictionaryExtensions.cs" />
@@ -89,7 +92,6 @@
     <Compile Include="IBlobStorage.cs" />
     <Compile Include="IEntitySet.cs" />
     <Compile Include="IEntityStorage.cs" />
-    <Compile Include="IExport.cs" />
     <Compile Include="IHosting.cs" />
     <Compile Include="IImaging.cs" />
     <Compile Include="ILocalization.cs" />
