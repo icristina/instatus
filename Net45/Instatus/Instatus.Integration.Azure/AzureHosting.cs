@@ -12,7 +12,7 @@ using Instatus.Core.Extensions;
 
 namespace Instatus.Integration.Azure
 {
-    public class Azurehosting : IHosting
+    public class AzureHosting : IHosting
     {
         public string RootPath
         {
