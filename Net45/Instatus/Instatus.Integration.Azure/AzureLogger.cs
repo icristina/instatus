@@ -7,6 +7,8 @@ using Instatus.Core.Impl;
 using Microsoft.WindowsAzure.StorageClient;
 using Newtonsoft.Json;
 using Instatus.Core.Models;
+using Instatus.Integration.Azure;
+using Instatus.Core.Extensions;
 
 namespace Instatus.Integration.Azure
 {
@@ -70,8 +72,8 @@ namespace Instatus.Integration.Azure
         public AzureLoggerEntity(DateTime created)
         {
             Created = created;
-            PartitionKey = string.Format(WellKnown.FormatString.Date, created);
-            RowKey = string.Format(WellKnown.FormatString.TimestampAndGuid, created, Guid.NewGuid());
+
+            this.SetMonthPartionKey().SetDescendingRowKey();
         }
     }
 }

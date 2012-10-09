@@ -95,6 +95,7 @@
     <Compile Include="AzureQueue.cs" />
     <Compile Include="AzureProfiler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TableServiceEntityExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Instatus.Core\Instatus.Core.csproj">

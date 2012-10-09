@@ -60,8 +60,8 @@ namespace Instatus.Integration.Azure
         {
             Text = text;
             Created = created;
-            PartitionKey = string.Format(WellKnown.FormatString.Date, created);
-            RowKey = string.Format(WellKnown.FormatString.TimestampAndGuid, created, Guid.NewGuid());
+
+            this.SetMonthPartionKey().SetDescendingRowKey();
         }
     }
 

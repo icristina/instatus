@@ -80,6 +80,7 @@ namespace Instatus.Core
         public static class FormatString
         {
             // http://msdn.microsoft.com/en-us/library/8kb3ddd4.aspx
+            public const string Month = "{0:yyyy-MM}";
             public const string Date = "{0:yyyy-MM-dd}";
             public const string Timestamp = "{0:yyyy-MM-dd-HH-mm-ss-F}";
             public const string TimestampAndGuid = "{0:yyyy-MM-dd-HH-mm-ss-F}-{1}";
