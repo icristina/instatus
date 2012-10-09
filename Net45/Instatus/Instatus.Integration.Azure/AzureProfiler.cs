@@ -61,7 +61,7 @@ namespace Instatus.Integration.Azure
             Text = text;
             Created = created;
 
-            this.SetMonthPartionKey().SetDescendingRowKey();
+            this.WithMonthlyPartionKey().WithDescendingRowKey();
         }
     }
 
