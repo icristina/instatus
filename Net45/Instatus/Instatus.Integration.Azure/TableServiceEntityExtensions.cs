@@ -29,7 +29,7 @@ namespace Instatus.Integration.Azure
 
         public static TableServiceEntity SetDescendingRowKey(this TableServiceEntity tableServiceEntity, DateTime? dateTime = null)
         {
-            tableServiceEntity.RowKey = string.Format("{0}-{1}", (DateTime.MaxValue.Ticks - (dateTime ?? DateTime.UtcNow).Ticks), Guid.NewGuid());
+            tableServiceEntity.RowKey = string.Format("{0:10}-{1}", (DateTime.MaxValue.Ticks - (dateTime ?? DateTime.UtcNow).Ticks), Guid.NewGuid());
             return tableServiceEntity;
         }
     }
