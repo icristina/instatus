@@ -108,7 +108,7 @@
     <Compile Include="IQueue.cs" />
     <Compile Include="ITemplating.cs" />
     <Compile Include="ICreated.cs" />
-    <Compile Include="ISessionData.cs" />
+    <Compile Include="IPreferences.cs" />
     <Compile Include="Models\Document.cs" />
     <Compile Include="Models\Section.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

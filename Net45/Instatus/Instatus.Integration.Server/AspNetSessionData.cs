@@ -12,7 +12,7 @@ using System.Web.Helpers;
 
 namespace Instatus.Integration.Server
 {
-    public class AspNetSessionData : ISessionData
+    public class AspNetpreferences : IPreferences
     {
         public IHosting hosting;
         
@@ -91,7 +91,7 @@ namespace Instatus.Integration.Server
             }
         }
 
-        public AspNetSessionData(IHosting hosting)
+        public AspNetpreferences(IHosting hosting)
         {
             this.hosting = hosting;
         }

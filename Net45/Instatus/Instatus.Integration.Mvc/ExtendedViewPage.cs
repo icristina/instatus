@@ -10,7 +10,7 @@ namespace Instatus.Integration.Mvc
     public abstract class ExtendedViewPage : WebViewPage
     {
         private ILocalization localization;
-        private ISessionData sessionData;
+        private IPreferences preferences;
         private IHosting hosting;
         
         // automatic autofac di does not appear to work with razorgenerator
@@ -22,11 +22,11 @@ namespace Instatus.Integration.Mvc
             }
         }
 
-        public ISessionData SessionData 
+        public IPreferences Preferences 
         {
             get
             {
-                return sessionData ?? (sessionData = DependencyResolver.Current.GetService<ISessionData>());
+                return preferences ?? (preferences = DependencyResolver.Current.GetService<IPreferences>());
             }
         }
 
@@ -52,7 +52,7 @@ namespace Instatus.Integration.Mvc
     public abstract class ExtendedViewPage<T> : WebViewPage<T>
     {
         private ILocalization localization;
-        private ISessionData sessionData;
+        private IPreferences preferences;
         private IHosting hosting;
 
         public ILocalization Localization
@@ -63,11 +63,11 @@ namespace Instatus.Integration.Mvc
             }
         }
 
-        public ISessionData SessionData
+        public IPreferences Preferences
         {
             get
             {
-                return sessionData ?? (sessionData = DependencyResolver.Current.GetService<ISessionData>());
+                return preferences ?? (preferences = DependencyResolver.Current.GetService<IPreferences>());
             }
         }
 

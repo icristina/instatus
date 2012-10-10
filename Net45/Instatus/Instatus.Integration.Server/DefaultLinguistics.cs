@@ -10,21 +10,21 @@ namespace Instatus.Integration.Server
 {
     public class DefaultLinguistics : ILinguistics
     {
-        private ISessionData sessionData;
+        private IPreferences preferences;
 
         public string Plural(string text)
         {
-            return PluralizationService.CreateService(new CultureInfo(sessionData.Locale)).Pluralize(text);
+            return PluralizationService.CreateService(new CultureInfo(preferences.Locale)).Pluralize(text);
         }
 
         public string Singular(string text)
         {
-            return PluralizationService.CreateService(new CultureInfo(sessionData.Locale)).Singularize(text);
+            return PluralizationService.CreateService(new CultureInfo(preferences.Locale)).Singularize(text);
         }
 
-        public DefaultLinguistics(ISessionData sessionData)
+        public DefaultLinguistics(IPreferences preferences)
         {
-            this.sessionData = sessionData;
+            this.preferences = preferences;
         }
     }
 }

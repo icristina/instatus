@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Instatus.Core
 {
-    public interface ISessionData
+    public interface IPreferences
     {
         string Locale { get; set; }
     }

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Instatus.Core.Impl
 {
-    public class InMemorySession : ISessionData
+    public class InMemorySession : IPreferences
     {
         public string Locale { get; set; }
         public IHosting Hosting

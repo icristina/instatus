@@ -12,7 +12,8 @@ namespace Instatus.Core.Impl
     {
         private IBlobStorage localStorage;
         private IHandler<T> handler;
-        private ISessionData sessionData;        
+        private IPreferences preferences;
+        private IHosting hosting;
         
         public T Get(string key)
         {
@@ -36,7 +37,7 @@ namespace Instatus.Core.Impl
 
         public IEnumerable<KeyValue<T>> Query(Criteria criteria)
         {
-            return localStorage.Query("~/App_Data/", sessionData.Locale + "." + handler.FileExtension)
+            return localStorage.Query("~/App_Data/", preferences.Locale + "." + handler.FileExtension)
                         .Select(f => {
                             var key = Path.GetFileName(f).Split('.')[0];
                             return new KeyValue<T>()
@@ -77,17 +78,18 @@ namespace Instatus.Core.Impl
         {
             return new string[] 
             {
-                string.Format("~/App_Data/{0}.{1}.{2}", key, sessionData.Locale, handler.FileExtension),
-                string.Format("~/App_Data/{0}.{1}.{2}", key, WellKnown.Locale.UnitedStates, handler.FileExtension),
+                string.Format("~/App_Data/{0}.{1}.{2}", key, preferences.Locale, handler.FileExtension),
+                string.Format("~/App_Data/{0}.{1}.{2}", key, hosting.DefaultCulture.Name, handler.FileExtension),
                 string.Format("~/App_Data/{0}.{1}", key, handler.FileExtension)
             };
         }
 
-        public AppDataStorage(IHandler<T> handler, IBlobStorage localStorage, ISessionData sessionData)
+        public AppDataStorage(IHandler<T> handler, IBlobStorage localStorage, IPreferences preferences, IHosting hosting)
         {
             this.handler = handler;
             this.localStorage = localStorage;
-            this.sessionData = sessionData;
+            this.preferences = preferences;
+            this.hosting = hosting;
         }
     }
 }
