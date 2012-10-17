@@ -2,28 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Instatus.Data;
 
-namespace Instatus.Models
+namespace Instatus.Core.Models
 {
-    public class Entry : ITimestamp
+    public class Entry : ICreated
     {
-        public string Uri { get; set; }
-        public string Kind { get; set; }
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public string Picture { get; set; }
-        public string Caption { get; set; }
-        public string User { get; set; }
-        public string Source { get; set; }
-        public DateTime CreatedTime { get; set; }
-        public string Rel { get; set; }
-        public double Longitude { get; set; }
-        public double Latitude { get; set; }
+        public string Text { get; private set; }
+        public DateTime Created { get; private set; }
 
-        public override string ToString()
+        public Entry(string text)
         {
-            return Description ?? Title ?? Uri;
+            Text = text;
+            Created = DateTime.UtcNow;
         }
     }
 }
