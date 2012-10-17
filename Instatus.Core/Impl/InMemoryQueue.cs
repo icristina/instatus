@@ -9,63 +9,20 @@ using System.Threading.Tasks;
 namespace Instatus.Core.Impl
 {
     public class InMemoryQueue<T> : IQueue<T>
-    {
+    {       
         private int limit;
         private ConcurrentQueue<T> queue = new ConcurrentQueue<T>();
-        private ReaderWriterLockSlim flushLock = new ReaderWriterLockSlim();
-        private Action<List<T>> flushAction;
-
-        public void Trim(int size)
-        {
-            T removedMessage;
-
-            while (queue.Count >= size)
-            {
-                queue.TryDequeue(out removedMessage);
-            }
-        }
-
-        public List<T> TrimAndReturn(int size)
-        {
-            var list = new List<T>();
-            
-            while (queue.Count >= size)
-            {
-                T removedMessage;
-                
-                if (queue.TryDequeue(out removedMessage))
-                {
-                    list.Add(removedMessage);
-                }
-            }
-
-            return list;
-        }
-
-        public void Flush()
-        {
-            flushLock.EnterReadLock();
-            
-            if (flushAction != null)
-            {
-                var flushList = TrimAndReturn(1);
-
-                Task.Factory
-                    .StartNew(() => flushAction(flushList));
-            }
-            else
-            {
-                Trim(limit);
-            }
-
-            flushLock.ExitReadLock();
-        }
 
         public void Enqueue(T message)
         {
-            if (limit > 0 && queue.Count >= limit && !flushLock.IsReadLockHeld)
-            {                
-                Flush();
+            if (limit > 0 && queue.Count >= limit)
+            {
+                T removedMessage;
+
+                while (queue.Count >= limit)
+                {
+                    queue.TryDequeue(out removedMessage);
+                }
             }
 
             queue.Enqueue(message);
@@ -89,10 +46,9 @@ namespace Instatus.Core.Impl
         
         }
 
-        public InMemoryQueue(int limit, Action<List<T>> flushAction = null)
+        public InMemoryQueue(int limit)
         {
             this.limit = limit;
-            this.flushAction = flushAction;
         }
     }
 }

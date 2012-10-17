@@ -8,7 +8,6 @@ namespace Instatus.Core.Impl
 {
     public class InMemoryScheduler
     {
-        private ILogger logger;
         private int delay;
         private IList<Action> actions = new List<Action>();
 
@@ -22,10 +21,9 @@ namespace Instatus.Core.Impl
                     {
                         action.Invoke();
                     }
-                    catch(Exception exception)
+                    catch
                     {
-                        if (logger != null)
-                            logger.Log(exception, null);
+
                     }
                 });
 
@@ -43,11 +41,6 @@ namespace Instatus.Core.Impl
             this.delay = delay;
 
             Task.Factory.StartNew(() => ProcessActionsAsync());
-        }
-
-        public InMemoryScheduler(ILogger logger)
-        {
-            this.logger = logger;
         }
     }
 }

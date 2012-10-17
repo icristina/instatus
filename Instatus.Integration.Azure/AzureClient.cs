@@ -14,12 +14,17 @@ namespace Instatus.Integration.Azure
     {    
         public static int TableServiceEntityBufferCount = 25;
 
-        public static async Task<TableServiceContext> GetTableServiceContext(Credential credential, string tableName)
+        public static async Task<TableServiceContext> GetTableServiceContext(Credential credential, string tableName, bool createTableIfNotExist = true)
         {
             var baseAddress = string.Format("http://{0}.table.core.windows.net", credential.AccountName);
             var storageCredentials = new StorageCredentialsAccountAndKey(credential.AccountName, credential.PrivateKey);
             var tableClient = new CloudTableClient(baseAddress, storageCredentials);
-            var created = await tableClient.CreateTableIfNotExistAsync(tableName);
+
+            if (createTableIfNotExist)
+            {
+                var created = await tableClient.CreateTableIfNotExistAsync(tableName);
+            }
+
             return tableClient.GetDataServiceContext();
         }
     }

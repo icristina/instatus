@@ -9,6 +9,7 @@ using Instatus.Core.Impl;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.StorageClient;
 using Instatus.Core.Models;
+using System.Threading.Tasks.Dataflow;
 
 namespace Instatus.Integration.Azure
 {
@@ -17,28 +18,21 @@ namespace Instatus.Integration.Azure
         public const string TableName = "Profiler";
         
         private IKeyValueStorage<Credential> credentials;
-        private InMemoryQueue<Entry> queue;
+        private BatchBlock<AzureProfilerEntity> buffer;
 
         public IDisposable Step(string label)
         {
-            return new AzureTableProfilerStep(label, queue);
+            return new AzureTableProfilerStep(label, buffer);
         }
 
-        public void Flush()
-        {
-            queue.Flush();
-        }
-
-        public async void Flush(List<Entry> flushed)
+        public async void SaveBatch(AzureProfilerEntity[] flushed)
         {
             var credential = credentials.Get(WellKnown.Provider.WindowsAzure);
-            var dataContext = await AzureClient.GetTableServiceContext(credential, TableName);
+            var dataContext = await AzureClient.GetTableServiceContext(credential, TableName, false);
 
             foreach(var entry in flushed) 
             {
-                var profilerEntry = new AzureProfilerEntity(entry.Text, entry.Created);             
-                
-                dataContext.AddObject(TableName, profilerEntry);
+                dataContext.AddObject(TableName, entry);
             }
 
             await dataContext.SaveChangesWithRetriesAsync();
@@ -47,7 +41,8 @@ namespace Instatus.Integration.Azure
         public AzureProfiler(IKeyValueStorage<Credential> credentials)
         {
             this.credentials = credentials;
-            this.queue = new InMemoryQueue<Entry>(AzureClient.TableServiceEntityBufferCount, Flush);
+            this.buffer = new BatchBlock<AzureProfilerEntity>(AzureClient.TableServiceEntityBufferCount);
+            this.buffer.LinkTo(new ActionBlock<AzureProfilerEntity[]>(batch => SaveBatch(batch)));
         }
     }
 
@@ -56,10 +51,10 @@ namespace Instatus.Integration.Azure
         public string Text { get; set; }
         public DateTime Created { get; set; }
 
-        public AzureProfilerEntity(string text, DateTime created) 
+        public AzureProfilerEntity(string text) 
         {
             Text = text;
-            Created = created;
+            Created = DateTime.UtcNow;
 
             this.WithMonthlyPartionKey().WithDescendingRowKey();
         }
@@ -67,7 +62,7 @@ namespace Instatus.Integration.Azure
 
     internal class AzureTableProfilerStep : AbstractProfilerStep
     {
-        private IQueue<Entry> queue;
+        private BatchBlock<AzureProfilerEntity> buffer;
         
         public override void WriteStart(string message)
         {
@@ -76,13 +71,13 @@ namespace Instatus.Integration.Azure
 
         public override void WriteEnd(string message)
         {
-            queue.Enqueue(new Entry(message));
+            buffer.Post(new AzureProfilerEntity(message));
         }
 
-        public AzureTableProfilerStep(string stepName, IQueue<Entry> queue)
+        public AzureTableProfilerStep(string stepName, BatchBlock<AzureProfilerEntity> buffer)
             : base(stepName)
         {
-            this.queue = queue;
+            this.buffer = buffer;
         }
     }
 }

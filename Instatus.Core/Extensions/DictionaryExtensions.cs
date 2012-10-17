@@ -31,11 +31,24 @@ namespace Instatus.Core.Extensions
                 }
                 catch
                 {
-                    return default(T);
+
                 }
             }
 
             return default(T);
+        }
+
+        public static T GetValue<T>(this IDictionary<string, object> dictionary, string key, Func<T> activator)
+        {
+            var value = dictionary.GetValue<T>(key);
+
+            if (value == null)
+            {
+                value = activator();
+                dictionary[key] = value;
+            }
+            
+            return value;
         }
     }
 }

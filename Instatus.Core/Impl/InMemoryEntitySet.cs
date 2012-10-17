@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Instatus.Core.Impl
@@ -11,6 +12,7 @@ namespace Instatus.Core.Impl
     public class InMemoryEntitySet<T> : IEntitySet<T> where T : class
     {
         private IList<T> list = new List<T>();
+        private int index = 0;
         
         public T Find(object key)
         {
@@ -27,6 +29,8 @@ namespace Instatus.Core.Impl
 
         public void Add(T entity)
         {
+            (entity as dynamic).Id = Interlocked.Increment(ref index);
+            
             list.Add(entity);
         }
 

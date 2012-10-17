@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using Instatus.Core.Models;
 using Instatus.Integration.Azure;
 using Instatus.Core.Extensions;
+using System.Threading.Tasks.Dataflow;
 
 namespace Instatus.Integration.Azure
 {
@@ -17,7 +18,7 @@ namespace Instatus.Integration.Azure
         public const string TableName = "Logger";
         
         private IKeyValueStorage<Credential> credentials;
-        private InMemoryQueue<AzureLoggerEntity> queue;
+        private BatchBlock<AzureLoggerEntity> buffer;
 
         public void Log(Exception exception, IDictionary<string, string> properties)
         {
@@ -33,18 +34,13 @@ namespace Instatus.Integration.Azure
                 azureLoggerEntity.InnerException = exception.InnerException.Message;
             }
             
-            queue.Enqueue(azureLoggerEntity);
+            buffer.Post(azureLoggerEntity);
         }
 
-        public void Flush()
-        {
-            queue.Flush();
-        }
-
-        public async void Flush(List<AzureLoggerEntity> flushed)
+        public async void SaveBatch(AzureLoggerEntity[] flushed)
         {
             var credential = credentials.Get(WellKnown.Provider.WindowsAzure);
-            var dataContext = await AzureClient.GetTableServiceContext(credential, TableName);
+            var dataContext = await AzureClient.GetTableServiceContext(credential, TableName, false);
 
             foreach (var entry in flushed)
             {
@@ -57,7 +53,8 @@ namespace Instatus.Integration.Azure
         public AzureLogger(IKeyValueStorage<Credential> credentials)
         {
             this.credentials = credentials;
-            this.queue = new InMemoryQueue<AzureLoggerEntity>(AzureClient.TableServiceEntityBufferCount, Flush);
+            this.buffer = new BatchBlock<AzureLoggerEntity>(AzureClient.TableServiceEntityBufferCount);
+            this.buffer.LinkTo(new ActionBlock<AzureLoggerEntity[]>(batch => SaveBatch(batch)));
         }
     }
 
@@ -71,7 +68,7 @@ namespace Instatus.Integration.Azure
 
         public AzureLoggerEntity(DateTime created)
         {
-            Created = created;
+            Created = DateTime.UtcNow;
 
             this.WithMonthlyPartionKey().WithDescendingRowKey();
         }
