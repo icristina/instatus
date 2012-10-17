@@ -64,7 +64,7 @@
     <Compile Include="Impl\AppDataStorage.cs" />
     <Compile Include="Impl\AppSettingsStorage.cs" />
     <Compile Include="Impl\InMemoryKeyValueStorage.cs" />
-    <Compile Include="Impl\InMemorySession.cs" />
+    <Compile Include="Impl\InMemoryPreferences.cs" />
     <Compile Include="Impl\SimpleDocumentHandler.cs" />
     <Compile Include="Impl\SimpleTemplating.cs" />
     <Compile Include="ITargeting.cs" />

@@ -27,7 +27,7 @@ namespace Instatus.Sample
 
             containerBuilder.RegisterType<AppSettingsStorage<Credential>>().As<IKeyValueStorage<Credential>>();
             containerBuilder.RegisterType<AspNetHosting>().As<IHosting>();
-            containerBuilder.RegisterType<AspNetpreferences>().As<IPreferences>();
+            containerBuilder.RegisterType<AspNetPreferences>().As<IPreferences>();
             containerBuilder.RegisterType<FileSystemBlobStorage>().As<IBlobStorage>();
             containerBuilder.RegisterType<WpfImaging>().As<IImaging>();
             containerBuilder.RegisterType<MockMembership>().As<IMembership>();

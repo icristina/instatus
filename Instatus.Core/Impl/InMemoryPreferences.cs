@@ -5,12 +5,8 @@ using System.Text;
 
 namespace Instatus.Core.Impl
 {
-    public class InMemorySession : IPreferences
+    public class InMemoryPreferences : IPreferences
     {
         public string Locale { get; set; }
-        public IHosting Hosting
-        {
-            get { throw new NotImplementedException(); }
-        }
     }
 }

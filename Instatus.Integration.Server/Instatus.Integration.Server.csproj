@@ -97,7 +97,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AspNetHosting.cs" />
-    <Compile Include="AspNetSessionData.cs" />
+    <Compile Include="AspNetPreferences.cs" />
     <Compile Include="DebugMessaging.cs" />
     <Compile Include="DefaultLinguistics.cs" />
     <Compile Include="FileSystemBlobStorage.cs" />
