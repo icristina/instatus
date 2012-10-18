@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using Instatus.Core;
 using Instatus.Core.Utils;
 using System.Web.SessionState;
+using System.Net.Http;
 
 namespace Instatus.Integration.Mvc
 {
@@ -22,7 +23,7 @@ namespace Instatus.Integration.Mvc
                 .OrderBy(s => s)
                 .Skip(skip)
                 .Take(take)
-                .Select(f => BlobStorage.GenerateUri(f, "GET"))
+                .Select(f => BlobStorage.GenerateUri(f, HttpMethod.Get))
                 .ToArray();
             
             return View();

@@ -47,6 +47,8 @@ namespace Instatus.Core
         public static class AppSetting
         {
             public const string BaseAddress = "BaseAddress";
+            public const string SecureBaseAddress = "SecureBaseAddress";
+            public const string CdnBaseAddress = "CdnBaseAddress";
             public const string RootPath = "RootPath";
             public const string SupportedCultures = "SupportedCultures";
         }

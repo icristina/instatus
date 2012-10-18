@@ -25,7 +25,7 @@ namespace Instatus.Integration.Mvc
                 AppId = credential.PublicKey,
                 ChannelUrl = new PathBuilder(Hosting.BaseAddress)
                                 .Path("channel.html")
-                                .ToProtocolRelativeUri(),
+                                .ToString(),
                 CanvasUrl = canvasUrl,
                 CanvasOauthUrl = new PathBuilder("https://www.facebook.com/dialog/oauth/")
                                 .Query("client_id", credential.PublicKey)

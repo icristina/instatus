@@ -11,6 +11,7 @@ using Microsoft.WindowsAzure.StorageClient;
 using Instatus.Core.Utils;
 using Instatus.Core.Extensions;
 using Instatus.Core.Models;
+using System.Net.Http;
 
 namespace Instatus.Integration.Azure
 {
@@ -82,7 +83,7 @@ namespace Instatus.Integration.Azure
             }  
         }
 
-        public string GenerateUri(string virtualPath, string httpMethod)
+        public string GenerateUri(string virtualPath, HttpMethod httpMethod)
         {
             var credential = credentials.Get(WellKnown.Provider.WindowsAzure);
             var baseAddress = GetBaseUri(credential.AccountName);

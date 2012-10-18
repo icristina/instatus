@@ -36,7 +36,7 @@ namespace Instatus.Integration.Server
             }
         }
 
-        public string GenerateUri(string virtualPath, string httpMethod = "GET")
+        public string GenerateUri(string virtualPath, HttpMethod httpMethod)
         {
             var baseUri = new Uri(hosting.BaseAddress);
             var absolutePath = virtualPath.TrimStart(PathBuilder.RelativeChars);

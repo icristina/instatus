@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace Instatus.Core.Utils
@@ -55,6 +56,17 @@ namespace Instatus.Core.Utils
                 stringBuilder.AppendFormat("{0}={1}", encodedName, encodedValue);
             }
 
+            return this;
+        }
+
+        private static long Version = DateTime.MaxValue.Ticks - DateTime.UtcNow.Ticks;
+
+        public PathBuilder WithCacheBusting(bool enableCacheBusting = true)
+        {
+            if (enableCacheBusting)
+            {
+                Query("v", Version);
+            }
             return this;
         }
 

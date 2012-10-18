@@ -106,7 +106,7 @@
     <Compile Include="AspNetCache.cs" />
     <Compile Include="SmtpMessaging.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TraceInformationProfiler.cs" />
+    <Compile Include="TraceProfiler.cs" />
     <Compile Include="WebEncryption.cs" />
     <Compile Include="WpfImaging.cs" />
   </ItemGroup>

@@ -9,6 +9,7 @@ using Microsoft.WindowsAzure.ServiceRuntime;
 using Microsoft.WindowsAzure;
 using System.Globalization;
 using Instatus.Core.Extensions;
+using System.Web;
 
 namespace Instatus.Integration.Azure
 {
@@ -26,7 +27,10 @@ namespace Instatus.Integration.Azure
         {
             get
             {
-                return GetAppSetting(WellKnown.AppSetting.BaseAddress);
+                return HttpContext.Current != null &&
+                    HttpContext.Current.Request.IsSecureConnection &&
+                    GetAppSetting(WellKnown.AppSetting.SecureBaseAddress) != null ?
+                    GetAppSetting(WellKnown.AppSetting.SecureBaseAddress) : GetAppSetting(WellKnown.AppSetting.BaseAddress);
             }
         }
 

@@ -9,6 +9,7 @@ using Instatus.Core;
 using System.Globalization;
 using System.Threading;
 using Instatus.Core.Extensions;
+using System.Web;
 
 namespace Instatus.Integration.Server
 {
@@ -27,7 +28,10 @@ namespace Instatus.Integration.Server
         {
             get 
             { 
-                return GetAppSetting(WellKnown.AppSetting.BaseAddress); 
+                return HttpContext.Current != null && 
+                    HttpContext.Current.Request.IsSecureConnection && 
+                    GetAppSetting(WellKnown.AppSetting.SecureBaseAddress) != null ? 
+                    GetAppSetting(WellKnown.AppSetting.SecureBaseAddress) : GetAppSetting(WellKnown.AppSetting.BaseAddress); 
             }
         }
 

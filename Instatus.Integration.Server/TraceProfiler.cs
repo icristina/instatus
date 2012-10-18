@@ -8,15 +8,15 @@ using Instatus.Core.Impl;
 
 namespace Instatus.Integration.Server
 {
-    public class TraceInformationProfiler : IProfiler
+    public class TraceProfiler : IProfiler
     {
         public IDisposable Step(string label)
         {
-            return new TraceInformationProfilerStep(label);
+            return new TraceProfilerStep(label);
         }
     }
 
-    internal class TraceInformationProfilerStep : AbstractProfilerStep
+    internal class TraceProfilerStep : AbstractProfilerStep
     {
         public override void WriteStart(string message)
         {
@@ -28,7 +28,7 @@ namespace Instatus.Integration.Server
             Trace.TraceInformation(message);
         }
 
-        public TraceInformationProfilerStep(string label)
+        public TraceProfilerStep(string label)
             : base(label)
         {
 
