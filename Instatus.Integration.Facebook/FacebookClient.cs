@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Instatus.Core.Utils;
 using Instatus.Integration.Json;
+using Instatus.Core;
 
 namespace Instatus.Integration.Facebook
 {
@@ -37,7 +38,7 @@ namespace Instatus.Integration.Facebook
             return AccessToken;
         }
 
-        public async Task<T> GetGraphApiAsync<T>(string path, int limit = defaultLimit, string[] fields = null)
+        public async Task<T> GetGraphApiAsync<T>(string path, int limit, string[] fields)
         {
             var uri = new PathBuilder(path)
                 .Query("access_token", AccessToken)
@@ -53,10 +54,10 @@ namespace Instatus.Integration.Facebook
             var jsonSerializationSettings = jsonMediaTypeFormatter.CreateDefaultSerializerSettings();
 
             jsonSerializationSettings.ContractResolver = new UnderscoreMappingResolver();
-            
+
             jsonMediaTypeFormatter.SerializerSettings = jsonSerializationSettings;
             jsonMediaTypeFormatter.SupportedMediaTypes.Clear();
-            jsonMediaTypeFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/javascript"));
+            jsonMediaTypeFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue(WellKnown.ContentType.Js));
 
             return await httpResponse.Content.ReadAsAsync<T>(new MediaTypeFormatter[] 
             { 
@@ -64,14 +65,19 @@ namespace Instatus.Integration.Facebook
             });
         }
 
+        public Task<T> GetFqlAsync<T>(string query, int limit)
+        {
+            return GetGraphApiAsync<T>("fql?q=" + query, limit, null);
+        }
+
         public Task<User> Me()
         {
-            return GetGraphApiAsync<User>("me");
+            return GetGraphApiAsync<User>("me", 1, null);
         }
 
         public Task<Response<Connection>> Friends(int limit = defaultLimit)
         {
-            return GetGraphApiAsync<Response<Connection>>("me/friends", limit);
+            return GetGraphApiAsync<Response<Connection>>("me/friends", limit, null);
         }
 
         public Task<Response<Post>> Posts(string connection = "me/posts", int limit = defaultLimit, string[] fields = null)
@@ -91,7 +97,7 @@ namespace Instatus.Integration.Facebook
 
         public Task<Response<Friend>> AppFriends(int limit = defaultLimit)
         {
-            return GetGraphApiAsync<Response<Friend>>("fql?q=SELECT uid, name FROM user WHERE has_added_app=1 and uid IN (SELECT uid2 FROM friend WHERE uid1 = me())", limit);
+            return GetFqlAsync<Response<Friend>>("SELECT uid, name FROM user WHERE has_added_app=1 and uid IN (SELECT uid2 FROM friend WHERE uid1 = me())", limit);
         }
 
         public void Dispose()

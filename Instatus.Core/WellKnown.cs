@@ -41,6 +41,7 @@ namespace Instatus.Core
         {
             public const string Html = "text/html";
             public const string Jpg = "image/jpeg";
+            public const string Js = "text/javascript";
         }
 
         public static class AppSetting

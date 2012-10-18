@@ -28,16 +28,7 @@ namespace Instatus.Integration.Mvc
             );
         }
 
-        public static void RegisterContentPageRoute(RouteCollection routes, string prefix = "page", string controllerName = "ContentPage")
-        {
-            routes.MapRouteLowercase(
-                name: WellKnown.RouteName.ContentPage,
-                url: prefix + "/{key}",
-                defaults: new { controller = controllerName, action = "Details" }
-            );
-        }
-
-        public static void RegisterLocalizedContentPageRoute(RouteCollection routes, string controllerName = "ContentPage", string defaultLocale = "en-US")
+        public static void RegisterContentPageRoute(RouteCollection routes, string controllerName = "ContentPage", string defaultLocale = "en-US")
         {
             routes.MapRoute(
                 name: WellKnown.RouteName.ContentPage,
@@ -102,21 +93,6 @@ namespace Instatus.Integration.Mvc
 
             // [3] remove Server headers
             DynamicModuleUtility.RegisterModule(typeof(FilterResponseHeadersModule));
-        }
-
-        // http://blogs.msdn.com/b/marcinon/archive/2011/08/16/optimizing-mvc-view-lookup-performance.aspx
-        public static void RegisterViewLocation()
-        {
-            // limits view location lookups
-            ViewEngines.Engines.Clear();
-
-            var razorViewEngine = new RazorViewEngine();
-
-            // exclude vbhtml
-            razorViewEngine.ViewLocationCache = new TwoLevelViewCache(razorViewEngine.ViewLocationCache);
-            razorViewEngine.FileExtensions = new string[] { "cshtml" }; 
-
-            ViewEngines.Engines.Add(razorViewEngine);
         }
     }
 }

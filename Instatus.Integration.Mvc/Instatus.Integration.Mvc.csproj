@@ -156,7 +156,6 @@
     <Compile Include="SimpleMembershipProvider.cs" />
     <Compile Include="SimpleRoleProvider.cs" />
     <Compile Include="RssResult.cs" />
-    <Compile Include="TwoLevelViewCache.cs" />
     <Compile Include="UrlHelperExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
