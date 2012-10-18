@@ -101,6 +101,7 @@
     <Compile Include="DebugMessaging.cs" />
     <Compile Include="DefaultLinguistics.cs" />
     <Compile Include="FileSystemBlobStorage.cs" />
+    <Compile Include="FormsAuthenticationMembership.cs" />
     <Compile Include="HttpCookieCollectionExtensions.cs" />
     <Compile Include="AspNetCache.cs" />
     <Compile Include="SmtpMessaging.cs" />
