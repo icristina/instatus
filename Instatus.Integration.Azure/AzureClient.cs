@@ -27,5 +27,15 @@ namespace Instatus.Integration.Azure
 
             return tableClient.GetDataServiceContext();
         }
+
+        public static TableServiceContext GetTableServiceContext(IKeyValueStorage<Credential> credentials)
+        {
+            var credential = credentials.Get(WellKnown.Provider.WindowsAzure);
+            var baseAddress = string.Format("http://{0}.table.core.windows.net", credential.AccountName);
+            var storageCredentials = new StorageCredentialsAccountAndKey(credential.AccountName, credential.PrivateKey);
+            var tableClient = new CloudTableClient(baseAddress, storageCredentials);
+
+            return tableClient.GetDataServiceContext();
+        }
     }
 }

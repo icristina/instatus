@@ -46,6 +46,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instatus.Integration.HtmlAg
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instatus.Integration.AngularJs", "Instatus.Integration.AngularJs\Instatus.Integration.AngularJs.csproj", "{9845ED61-CA22-44E6-94E3-66B50D379655}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instatus.Integration.Elmah", "Instatus.Integration.Elmah\Instatus.Integration.Elmah.csproj", "{AE74EE19-7AE9-4AA1-A162-64AC5AD1DF38}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -128,6 +130,10 @@ Global
 		{9845ED61-CA22-44E6-94E3-66B50D379655}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9845ED61-CA22-44E6-94E3-66B50D379655}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9845ED61-CA22-44E6-94E3-66B50D379655}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE74EE19-7AE9-4AA1-A162-64AC5AD1DF38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE74EE19-7AE9-4AA1-A162-64AC5AD1DF38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE74EE19-7AE9-4AA1-A162-64AC5AD1DF38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE74EE19-7AE9-4AA1-A162-64AC5AD1DF38}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -9,40 +9,46 @@ namespace Instatus.Integration.Azure
 {
     public static class TableServiceEntityExtensions
     {
-        public static TableServiceEntity WithSinglePartitionKey(this TableServiceEntity tableServiceEntity, string partitionKey = null)
+        public static TableServiceEntity WithSinglePartitionKey(this TableServiceEntity entity, string partitionKey = null)
         {
-            tableServiceEntity.PartitionKey = partitionKey ?? tableServiceEntity.GetType().Name;
-            return tableServiceEntity;
+            entity.PartitionKey = partitionKey ?? entity.GetType().Name;
+            return entity;
         }
 
-        public static TableServiceEntity WithAnnualPartionKey(this TableServiceEntity tableServiceEntity, DateTime? dateTime = null)
+        public static TableServiceEntity WithAnnualPartionKey(this TableServiceEntity entity, DateTime? dateTime = null)
         {
-            tableServiceEntity.PartitionKey = string.Format(WellKnown.FormatString.Year, dateTime ?? DateTime.UtcNow);
-            return tableServiceEntity;
+            entity.PartitionKey = string.Format(WellKnown.FormatString.Year, dateTime ?? DateTime.UtcNow);
+            return entity;
         }
 
-        public static TableServiceEntity WithMonthlyPartionKey(this TableServiceEntity tableServiceEntity, DateTime? dateTime = null)
+        public static TableServiceEntity WithMonthlyPartionKey(this TableServiceEntity entity, DateTime? dateTime = null)
         {
-            tableServiceEntity.PartitionKey = string.Format(WellKnown.FormatString.Month, dateTime ?? DateTime.UtcNow);
-            return tableServiceEntity;
+            entity.PartitionKey = string.Format(WellKnown.FormatString.Month, dateTime ?? DateTime.UtcNow);
+            return entity;
         }
 
-        public static TableServiceEntity WithDailyPartionKey(this TableServiceEntity tableServiceEntity, DateTime? dateTime = null)
+        public static TableServiceEntity WithDailyPartionKey(this TableServiceEntity entity, DateTime? dateTime = null)
         {
-            tableServiceEntity.PartitionKey = string.Format(WellKnown.FormatString.Date, dateTime ?? DateTime.UtcNow);
-            return tableServiceEntity;
+            entity.PartitionKey = string.Format(WellKnown.FormatString.Date, dateTime ?? DateTime.UtcNow);
+            return entity;
         }
 
-        public static TableServiceEntity WithAscendingRowKey(this TableServiceEntity tableServiceEntity, DateTime? dateTime = null)
+        public static TableServiceEntity WithEmptyPartionKey(this TableServiceEntity entity)
         {
-            tableServiceEntity.RowKey = string.Format(WellKnown.FormatString.TimestampAndGuid, dateTime ?? DateTime.UtcNow, Guid.NewGuid());
-            return tableServiceEntity;
+            entity.PartitionKey = string.Empty;
+            return entity;
         }
 
-        public static TableServiceEntity WithDescendingRowKey(this TableServiceEntity tableServiceEntity, DateTime? dateTime = null)
+        public static TableServiceEntity WithAscendingRowKey(this TableServiceEntity entity, DateTime? dateTime = null)
         {
-            tableServiceEntity.RowKey = string.Format("{0:10}-{1}", (DateTime.MaxValue.Ticks - (dateTime ?? DateTime.UtcNow).Ticks), Guid.NewGuid());
-            return tableServiceEntity;
+            entity.RowKey = string.Format(WellKnown.FormatString.TimestampAndGuid, dateTime ?? DateTime.UtcNow, Guid.NewGuid());
+            return entity;
+        }
+
+        public static TableServiceEntity WithDescendingRowKey(this TableServiceEntity entity, DateTime? dateTime = null)
+        {
+            entity.RowKey = string.Format("{0:10}-{1}", (DateTime.MaxValue.Ticks - (dateTime ?? DateTime.UtcNow).Ticks), Guid.NewGuid());
+            return entity;
         }
     }
 }
