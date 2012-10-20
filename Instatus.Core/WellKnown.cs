@@ -69,7 +69,7 @@ namespace Instatus.Core
         public static class RouteName
         {
             public const string Default = "Default";
-            public const string ContentPage = "ContentPage";
+            public const string Page = "Page";
         }
 
         public static class RouteValue

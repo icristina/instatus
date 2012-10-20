@@ -11,7 +11,7 @@ namespace Instatus.Integration.Mvc
 {
     [HttpNotFound]
     [SessionState(SessionStateBehavior.Disabled)]
-    public abstract class ContentPageController : Controller
+    public abstract class PageController : Controller
     {
         private IKeyValueStorage<Document> documents;
         
@@ -22,7 +22,7 @@ namespace Instatus.Integration.Mvc
             return View();
         }
 
-        public ContentPageController(IKeyValueStorage<Document> contentManager)
+        public PageController(IKeyValueStorage<Document> contentManager)
         {
             this.documents = contentManager;
         }

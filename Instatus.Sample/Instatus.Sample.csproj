@@ -181,6 +181,10 @@
       <Project>{39c44af6-a1ad-40ee-b1c6-40fda4ac9c83}</Project>
       <Name>Instatus.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Instatus.Integration.Autofac\Instatus.Integration.Autofac.csproj">
+      <Project>{710e3ab1-15fa-4d03-8ac6-0be9bd90e87a}</Project>
+      <Name>Instatus.Integration.Autofac</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Instatus.Integration.HtmlAgilityPack\Instatus.Integration.HtmlAgilityPack.csproj">
       <Project>{fb5a4d3a-b4b3-4550-b24b-41884ac72137}</Project>
       <Name>Instatus.Integration.HtmlAgilityPack</Name>

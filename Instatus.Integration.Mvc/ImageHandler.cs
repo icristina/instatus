@@ -1,6 +1,4 @@
-﻿using Autofac;
-using Autofac.Integration.Mvc;
-using Instatus.Core;
+﻿using Instatus.Core;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -47,7 +45,7 @@ namespace Instatus.Integration.Mvc
             var request = context.Request;
             var response = context.Response;
             
-            using (ILifetimeScope container = AutofacDependencyResolver.Current.ApplicationContainer.BeginLifetimeScope())
+            using (var container = AppContext.CreateContainer())
             {
                 var blobStorage = container.Resolve<IBlobStorage>();
                 var imaging = container.Resolve<IImaging>();

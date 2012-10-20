@@ -53,8 +53,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppContext.cs" />
     <Compile Include="Extensions\CacheExtensions.cs" />
     <Compile Include="Extensions\ObjectExtensions.cs" />
+    <Compile Include="IContainer.cs" />
+    <Compile Include="IGlobalContainer.cs" />
     <Compile Include="IJob.cs" />
     <Compile Include="ICache.cs" />
     <Compile Include="IJsonSerializer.cs" />

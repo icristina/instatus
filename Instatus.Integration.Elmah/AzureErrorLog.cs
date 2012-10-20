@@ -1,6 +1,4 @@
-﻿using Autofac;
-using Autofac.Integration.Mvc;
-using Elmah;
+﻿using Elmah;
 using Instatus.Core;
 using Instatus.Core.Models;
 using Instatus.Integration.Azure;
@@ -20,7 +18,7 @@ namespace Instatus.Integration.Elmah
         
         public override ErrorLogEntry GetError(string id)
         {
-            using (ILifetimeScope container = AutofacDependencyResolver.Current.ApplicationContainer.BeginLifetimeScope())
+            using (var container = AppContext.CreateContainer())
             {
                 var credentials = container.Resolve<IKeyValueStorage<Credential>>();
                 var tableServiceContext = AzureClient.GetTableServiceContext(credentials);
@@ -34,7 +32,7 @@ namespace Instatus.Integration.Elmah
 
         public override int GetErrors(int pageIndex, int pageSize, IList errorEntryList)
         {
-            using (ILifetimeScope container = AutofacDependencyResolver.Current.ApplicationContainer.BeginLifetimeScope())
+            using (var container = AppContext.CreateContainer())
             {
                 var credentials = container.Resolve<IKeyValueStorage<Credential>>();
                 var tableServiceContext = AzureClient.GetTableServiceContext(credentials);
@@ -55,7 +53,7 @@ namespace Instatus.Integration.Elmah
 
         public override string Log(Error error)
         {
-            using (ILifetimeScope container = AutofacDependencyResolver.Current.ApplicationContainer.BeginLifetimeScope())
+            using (var container = AppContext.CreateContainer())
             {
                 var credentials = container.Resolve<IKeyValueStorage<Credential>>();
                 var tableServiceContext = AzureClient.GetTableServiceContext(credentials);

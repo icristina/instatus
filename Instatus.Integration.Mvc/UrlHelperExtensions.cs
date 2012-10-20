@@ -17,7 +17,7 @@ namespace Instatus.Integration.Mvc
         {
             var locale = DependencyResolver.Current.GetService<IPreferences>().Locale;
             
-            return urlHelper.RouteUrl(WellKnown.RouteName.ContentPage, new { locale = locale, key = key });
+            return urlHelper.RouteUrl(WellKnown.RouteName.Page, new { locale = locale, key = key });
         }
 
         public static string CdnContent(this UrlHelper urlHelper, string virtualPath, bool enableCacheBusting = false)

@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace Instatus.Sample.Controllers
 {
-    public class ContentPageController : Instatus.Integration.Mvc.ContentPageController
+    public class ContentPageController : Instatus.Integration.Mvc.PageController
     {
         public ContentPageController(IKeyValueStorage<Document> documents)
             : base(documents)

@@ -1,25 +1,29 @@
-﻿using Autofac;
-using Autofac.Integration.Mvc;
-using Instatus.Core;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Instatus.Integration.Mvc
+namespace Instatus.Core
 {
-    public static class AutofacJobRunner
+    public class AppContext
     {
+        public static IGlobalContainer GlobalContainer { get; set; }
+        
+        public static IContainer CreateContainer()
+        {
+            return GlobalContainer.CreateContainer();
+        }
+
         public static void Run<T>() where T : IJob
         {
-            using (ILifetimeScope container = AutofacDependencyResolver.Current.ApplicationContainer.BeginLifetimeScope())
+            using (var container = CreateContainer())
             {
                 try
                 {
                     container.Resolve<T>().Execute();
                 }
-                catch(Exception exception)
+                catch (Exception exception)
                 {
                     var logger = container.Resolve<ILogger>();
 
