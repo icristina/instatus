@@ -38,7 +38,7 @@ namespace Instatus.Core.Utils
             return this;
         }
 
-        public PathBuilder Path(string formatString, params object[] values)
+        public PathBuilder FormatPath(string formatString, params object[] values)
         {
             Path(string.Format(formatString, values));
             return this;
