@@ -88,7 +88,7 @@
     <Compile Include="Models\User.cs" />
     <Compile Include="Impl\EntityMapper.cs" />
     <Compile Include="IMapper.cs" />
-    <Compile Include="Impl\AbstractProfilerStep.cs" />
+    <Compile Include="Impl\ProfilerStep.cs" />
     <Compile Include="Impl\DebugLogger.cs" />
     <Compile Include="Impl\DebugProfiler.cs" />
     <Compile Include="IEncryption.cs" />

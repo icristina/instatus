@@ -34,7 +34,7 @@ namespace Instatus.Core.Impl
         }
     }
 
-    internal class InMemoryProfilerStep : AbstractProfilerStep
+    internal class InMemoryProfilerStep : ProfilerStep
     {
         private IQueue<Entry> queue;
         

@@ -93,7 +93,7 @@
     <Compile Include="AzureCache.cs" />
     <Compile Include="AzureClient.cs" />
     <Compile Include="AzureExtensions.cs" />
-    <Compile Include="AzureHosting.cs" />
+    <Compile Include="WebRoleHosting.cs" />
     <Compile Include="AzureLogger.cs" />
     <Compile Include="AzureQueue.cs" />
     <Compile Include="AzureProfiler.cs" />

@@ -10,4 +10,9 @@ namespace Instatus.Core
     {
         void Execute();
     }
+
+    public interface IJob<T>
+    {
+        void Execute(T input);
+    }
 }

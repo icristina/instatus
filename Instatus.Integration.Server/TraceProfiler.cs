@@ -16,7 +16,7 @@ namespace Instatus.Integration.Server
         }
     }
 
-    internal class TraceProfilerStep : AbstractProfilerStep
+    internal class TraceProfilerStep : ProfilerStep
     {
         public override void WriteStart(string message)
         {

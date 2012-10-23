@@ -17,11 +17,21 @@ namespace Instatus.Core
 
         public static void Run<T>() where T : IJob
         {
+            RunInternal(c => c.Resolve<T>().Execute());
+        }
+
+        public static void Run<TJob, TInput>(TInput input) where TJob : IJob<TInput>
+        {
+            RunInternal(c => c.Resolve<TJob>().Execute(input));
+        }
+
+        private static void RunInternal(Action<IContainer> action)
+        {
             using (var container = CreateContainer())
             {
                 try
                 {
-                    container.Resolve<T>().Execute();
+                    action(container);
                 }
                 catch (Exception exception)
                 {

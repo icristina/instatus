@@ -29,10 +29,5 @@ namespace Instatus.Core.Impl
         {
             GetBroadcastBlock<T>().Post(message);
         }
-
-        public InMemoryMessageBus()
-        {
-
-        }
     }
 }

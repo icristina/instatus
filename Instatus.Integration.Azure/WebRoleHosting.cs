@@ -13,7 +13,7 @@ using System.Web;
 
 namespace Instatus.Integration.Azure
 {
-    public class AzureHosting : IHosting
+    public class WebRoleHosting : IHosting
     {
         public string RootPath
         {

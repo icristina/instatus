@@ -6,12 +6,12 @@ using System.Text;
 
 namespace Instatus.Core.Impl
 {
-    public abstract class AbstractProfilerStep : IDisposable
+    public abstract class ProfilerStep : IDisposable
     {
         public Stopwatch Stopwatch { get; private set; }
         public string StepName { get; private set; }
 
-        public AbstractProfilerStep(string stepName)
+        public ProfilerStep(string stepName)
         {
             Stopwatch = new Stopwatch();
             StepName = stepName;

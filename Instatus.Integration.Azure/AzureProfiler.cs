@@ -60,7 +60,7 @@ namespace Instatus.Integration.Azure
         }
     }
 
-    internal class AzureTableProfilerStep : AbstractProfilerStep
+    internal class AzureTableProfilerStep : ProfilerStep
     {
         private BatchBlock<AzureProfilerEntity> buffer;
         

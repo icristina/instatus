@@ -14,7 +14,7 @@ namespace Instatus.Core.Impl
         }
     }
 
-    internal class DebugProfilerStep : AbstractProfilerStep
+    internal class DebugProfilerStep : ProfilerStep
     {
         public DebugProfilerStep(string stepName)
             : base(stepName)
