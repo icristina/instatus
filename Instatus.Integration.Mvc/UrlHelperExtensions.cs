@@ -24,7 +24,6 @@ namespace Instatus.Integration.Mvc
         {
             var hosting = DependencyResolver.Current.GetService<IHosting>();
             var cdnBaseAddress = hosting.GetAppSetting(WellKnown.AppSetting.CdnBaseAddress);
-            var applicationAssembly = HttpContext.Current.ApplicationInstance.GetType().Assembly;
             var uri = new PathBuilder(cdnBaseAddress)
                                 .Path(virtualPath)
                                 .WithCacheBusting(enableCacheBusting)

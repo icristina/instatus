@@ -107,7 +107,7 @@ namespace Instatus.Core.Utils
         {
             this.forceLowerCasePath = forceLowerCasePath;
 
-            var queryIndex = baseAddress.LastIndexOf('?');
+            var queryIndex = (baseAddress = baseAddress ?? string.Empty).LastIndexOf('?');
 
             hasQuery = (queryIndex >= 0);
 
