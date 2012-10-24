@@ -28,7 +28,14 @@ namespace Instatus.Integration.WebApi
 
         public static void RegisterExceptionFilters(HttpConfiguration configuration)
         {
-            configuration.Filters.Add(new LogExceptionFilter());
+            configuration.Filters.Add(new LogExceptionAttribute());
+        }
+
+        public static void RegisterValidationFilters(HttpConfiguration configuration)
+        {
+            configuration.Filters.Add(new CheckIdAttribute());
+            configuration.Filters.Add(new CheckModelStateAttribute());
+            configuration.Filters.Add(new CheckModelForNullAttribute());
         }
 
         public static void RegisterMethodOverrides(HttpConfiguration configuration)
@@ -38,11 +45,11 @@ namespace Instatus.Integration.WebApi
             configuration.MessageHandlers.Add(new HttpMethodOverrideHandler(overrideMethods));
         }
 
-        public static void RegisterJsonFormatter(HttpConfiguration configuration) 
+        public static void RegisterJsonFormatter(HttpConfiguration configuration)
         {
-            var jsonFormatter = configuration.Formatters.JsonFormatter;           
+            var jsonFormatter = configuration.Formatters.JsonFormatter;
             var jsonSerializationSettings = jsonFormatter.CreateDefaultSerializerSettings();
-            
+
             jsonSerializationSettings.ContractResolver = new UnderscoreMappingResolver();
             jsonFormatter.SerializerSettings = jsonSerializationSettings;
         }
@@ -50,7 +57,7 @@ namespace Instatus.Integration.WebApi
         public static void RegisterQueryStringMediaTypeMappings(HttpConfiguration configuration)
         {
             var jsonFormatter = configuration.Formatters.JsonFormatter;
-            
+
             jsonFormatter.MediaTypeMappings.Add(new QueryStringMapping("format", "json", "application/json"));
 
             var xmlFormatter = configuration.Formatters.XmlFormatter;

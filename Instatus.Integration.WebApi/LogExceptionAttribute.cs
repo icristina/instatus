@@ -8,7 +8,7 @@ using Instatus.Core;
 
 namespace Instatus.Integration.WebApi
 {
-    public class LogExceptionFilter : ExceptionFilterAttribute
+    public class LogExceptionAttribute : ExceptionFilterAttribute
     {
         public IDictionary<string, string> GenerateProperties(HttpActionExecutedContext context)
         {

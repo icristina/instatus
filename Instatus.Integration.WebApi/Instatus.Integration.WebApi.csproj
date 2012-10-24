@@ -70,9 +70,12 @@
   <ItemGroup>
     <Compile Include="ApiControllerExtensions.cs" />
     <Compile Include="BaseWebApiConfig.cs" />
+    <Compile Include="CheckIdAttribute.cs" />
+    <Compile Include="CheckModelForNullAttribute.cs" />
+    <Compile Include="CheckModelStateAttribute.cs" />
     <Compile Include="EntityStorageApiController.cs" />
     <Compile Include="HttpMethodOverrideHandler.cs" />
-    <Compile Include="LogExceptionFilter.cs" />
+    <Compile Include="LogExceptionAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

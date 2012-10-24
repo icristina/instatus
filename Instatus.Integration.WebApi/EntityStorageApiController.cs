@@ -19,8 +19,8 @@ namespace Instatus.Integration.WebApi
 
         }
     }
-    
-    public class EntityStorageApiController<TEntity, TModel> : ApiController 
+
+    public class EntityStorageApiController<TEntity, TModel> : ApiController
         where TEntity : class
         where TModel : class
     {
@@ -39,10 +39,11 @@ namespace Instatus.Integration.WebApi
             }
         }
 
+        [CheckId]
         public virtual HttpResponseMessage Get(int id)
         {
             var entity = entityStorage.Set<TEntity>().Find(id);
-            
+
             if (entity == null)
             {
                 return Request.CreateResponse(HttpStatusCode.NotFound);
@@ -53,9 +54,10 @@ namespace Instatus.Integration.WebApi
             return Request.CreateResponse(HttpStatusCode.OK, model);
         }
 
+        [CheckId, CheckModelForNull, CheckModelState]
         public virtual HttpResponseMessage Put(int id, TModel model)
         {
-            if (ModelState.IsValid && id == (model as dynamic).Id)
+            if (id == (model as dynamic).Id)
             {
                 var entity = entityStorage.Set<TEntity>().Find(id);
 
@@ -78,31 +80,26 @@ namespace Instatus.Integration.WebApi
             }
         }
 
+        [CheckModelForNull, CheckModelState]
         public virtual HttpResponseMessage Post(TModel model)
         {
-            if (ModelState.IsValid)
-            {
-                var entity = mapper.Map<TEntity>(model);
-                
-                entityStorage.Set<TEntity>().Add(entity);
-                entityStorage.SaveChanges();
+            var entity = mapper.Map<TEntity>(model);
 
-                var response = Request.CreateResponse(HttpStatusCode.Created, model);
-                
-                response.Headers.Location = new Uri(Url.Link("DefaultApi", new { id = (model as dynamic).Id }));
-                
-                return response;
-            }
-            else
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest);
-            }
+            entityStorage.Set<TEntity>().Add(entity);
+            entityStorage.SaveChanges();
+
+            var response = Request.CreateResponse(HttpStatusCode.Created, model);
+
+            response.Headers.Location = new Uri(Url.Link("DefaultApi", new { id = (model as dynamic).Id }));
+
+            return response;
         }
 
+        [CheckId]
         public virtual HttpResponseMessage Delete(int id)
         {
             var entity = entityStorage.Set<TEntity>().Find(id);
-            
+
             if (entity == null)
             {
                 return Request.CreateResponse(HttpStatusCode.NotFound);
