@@ -25,7 +25,7 @@ namespace Instatus.Integration.Azure
             return string.Format("http://{0}.blob.core.windows.net", accountName);
         }
 
-        public ICloudBlob GetBlobReference(string virtualPath)
+        public CloudBlockBlob GetBlockBlob(string virtualPath)
         {
             var containerName = Path.GetDirectoryName(virtualPath).TrimStart(PathBuilder.RelativeChars);
             var blobName = Path.GetFileName(virtualPath);
@@ -35,7 +35,7 @@ namespace Instatus.Integration.Azure
             var client = new CloudBlobClient(new Uri(baseUri), storageCredential);
             var container = client.GetContainerReference(containerName);
 
-            return container.GetBlobReferenceFromServer(blobName); // todo: check if FromServer an expensive operation
+            return container.GetBlockBlobReference(blobName);
         }
 
         public void SetMetadata(ICloudBlob cloudBlob, Metadata metaData)
@@ -48,33 +48,27 @@ namespace Instatus.Integration.Azure
 
         public Stream OpenWrite(string virtualPath, Metadata metaData)
         {
-            var cloudBlob = GetBlobReference(virtualPath);
-            var memoryStream = new MemoryStream();
+            var blockBlob = GetBlockBlob(virtualPath);
 
-            SetMetadata(cloudBlob, metaData);
+            SetMetadata(blockBlob, metaData);
 
-            cloudBlob.UploadFromStream(memoryStream); // todo: check what replacement for OpenWrite is
-
-            return memoryStream;
+            return blockBlob.OpenWrite();
         }
 
         public Stream OpenRead(string virtualPath)
         {
-            var blob = GetBlobReference(virtualPath);
-            var memoryStream = new MemoryStream();
+            var blockBlob = GetBlockBlob(virtualPath);
 
-            blob.DownloadToStream(memoryStream); // todo: check what replacement for OpenRead is
-
-            return memoryStream;
+            return blockBlob.OpenRead();
         }
 
         public void Copy(string virtualPath, string uri, Metadata metaData)
         {
-            var cloudBlob = GetBlobReference(virtualPath);
+            var blockBlob = GetBlockBlob(virtualPath);
 
-            SetMetadata(cloudBlob, metaData);
+            SetMetadata(blockBlob, metaData);
 
-            cloudBlob.StartCopyFromBlob(new Uri(uri));
+            blockBlob.StartCopyFromBlob(new Uri(uri));
         }
 
         public string GenerateUri(string virtualPath, HttpMethod httpMethod)
@@ -94,7 +88,7 @@ namespace Instatus.Integration.Azure
 
         public void Delete(string virtualPath)
         {
-
+            // not implemented, intentionally currently only provider read and write
         }
 
         public AzureBlobStorage(IKeyValueStorage<Credential> credentials)
