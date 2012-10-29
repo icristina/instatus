@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 using Instatus.Core;
 using Instatus.Core.Impl;
 using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.StorageClient;
 using Instatus.Core.Models;
 using System.Threading.Tasks.Dataflow;
+using Microsoft.WindowsAzure.Storage.Table.DataServices;
 
 namespace Instatus.Integration.Azure
 {
@@ -25,17 +25,17 @@ namespace Instatus.Integration.Azure
             return new AzureTableProfilerStep(label, buffer);
         }
 
-        public async void SaveBatch(AzureProfilerEntity[] flushed)
+        public void SaveBatch(AzureProfilerEntity[] flushed)
         {
             var credential = credentials.Get(WellKnown.Provider.WindowsAzure);
-            var dataContext = await AzureClient.GetTableServiceContext(credential, TableName, false);
+            var dataContext = AzureClient.GetTableServiceContext(credential);
 
             foreach(var entry in flushed) 
             {
                 dataContext.AddObject(TableName, entry);
             }
 
-            await dataContext.SaveChangesWithRetriesAsync();
+            dataContext.SaveChangesWithRetries();
         }
 
         public AzureProfiler(IKeyValueStorage<Credential> credentials)

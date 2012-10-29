@@ -5,8 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Instatus.Core;
 using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.StorageClient;
+using Microsoft.WindowsAzure.Storage.Table;
 using Instatus.Core.Models;
+using Microsoft.WindowsAzure.Storage.Table.DataServices;
+using Microsoft.WindowsAzure.Storage.Auth;
 
 namespace Instatus.Integration.Azure
 {
@@ -14,28 +16,20 @@ namespace Instatus.Integration.Azure
     {    
         public static int TableServiceEntityBufferCount = 25;
 
-        public static async Task<TableServiceContext> GetTableServiceContext(Credential credential, string tableName, bool createTableIfNotExist = true)
+        public static TableServiceContext GetTableServiceContext(Credential credential)
         {
             var baseAddress = string.Format("http://{0}.table.core.windows.net", credential.AccountName);
-            var storageCredentials = new StorageCredentialsAccountAndKey(credential.AccountName, credential.PrivateKey);
-            var tableClient = new CloudTableClient(baseAddress, storageCredentials);
+            var storageCredentials = new StorageCredentials(credential.AccountName, credential.PrivateKey);
+            var tableClient = new CloudTableClient(new Uri(baseAddress), storageCredentials);
 
-            if (createTableIfNotExist)
-            {
-                var created = await tableClient.CreateTableIfNotExistAsync(tableName);
-            }
-
-            return tableClient.GetDataServiceContext();
+            return tableClient.GetTableServiceContext();
         }
 
         public static TableServiceContext GetTableServiceContext(IKeyValueStorage<Credential> credentials)
         {
             var credential = credentials.Get(WellKnown.Provider.WindowsAzure);
-            var baseAddress = string.Format("http://{0}.table.core.windows.net", credential.AccountName);
-            var storageCredentials = new StorageCredentialsAccountAndKey(credential.AccountName, credential.PrivateKey);
-            var tableClient = new CloudTableClient(baseAddress, storageCredentials);
 
-            return tableClient.GetDataServiceContext();
+            return GetTableServiceContext(credential);
         }
     }
 }

@@ -7,11 +7,12 @@ using System.Text;
 using System.Threading.Tasks;
 using Instatus.Core;
 using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.StorageClient;
+using Microsoft.WindowsAzure.Storage.Blob;
 using Instatus.Core.Utils;
 using Instatus.Core.Extensions;
 using Instatus.Core.Models;
 using System.Net.Http;
+using Microsoft.WindowsAzure.Storage.Auth;
 
 namespace Instatus.Integration.Azure
 {
@@ -19,34 +20,25 @@ namespace Instatus.Integration.Azure
     {
         private IKeyValueStorage<Credential> credentials;
 
-        public static readonly char[] RelativeChars = new char[] { '~', '/', '\\' };
-
-        public Tuple<string, string> ParseVirtualPath(string virtualPath)
-        {
-            return new Tuple<string, string>(
-                Path.GetDirectoryName(virtualPath).TrimStart(RelativeChars),
-                Path.GetFileName(virtualPath)
-            );
-        }
-
         public string GetBaseUri(string accountName)
         {
             return string.Format("http://{0}.blob.core.windows.net", accountName);
         }
 
-        public CloudBlob GetBlobReference(string virtualPath)
+        public ICloudBlob GetBlobReference(string virtualPath)
         {
-            var resource = ParseVirtualPath(virtualPath);
+            var containerName = Path.GetDirectoryName(virtualPath).TrimStart(PathBuilder.RelativeChars);
+            var blobName = Path.GetFileName(virtualPath);
             var credential = credentials.Get(WellKnown.Provider.WindowsAzure);
             var baseUri = GetBaseUri(credential.AccountName);
-            var storageCredential = new StorageCredentialsAccountAndKey(credential.AccountName, credential.PrivateKey);
-            var client = new CloudBlobClient(baseUri, storageCredential);
-            var container = client.GetContainerReference(resource.Item1);
+            var storageCredential = new StorageCredentials(credential.AccountName, credential.PrivateKey);
+            var client = new CloudBlobClient(new Uri(baseUri), storageCredential);
+            var container = client.GetContainerReference(containerName);
 
-            return container.GetBlobReference(resource.Item2);
+            return container.GetBlobReferenceFromServer(blobName); // todo: check if FromServer an expensive operation
         }
 
-        public void SetMetadata(CloudBlob cloudBlob, Metadata metaData)
+        public void SetMetadata(ICloudBlob cloudBlob, Metadata metaData)
         {
             if (metaData != null)
             {
@@ -57,17 +49,23 @@ namespace Instatus.Integration.Azure
         public Stream OpenWrite(string virtualPath, Metadata metaData)
         {
             var cloudBlob = GetBlobReference(virtualPath);
+            var memoryStream = new MemoryStream();
 
             SetMetadata(cloudBlob, metaData);
 
-            return cloudBlob.OpenWrite();
+            cloudBlob.UploadFromStream(memoryStream); // todo: check what replacement for OpenWrite is
+
+            return memoryStream;
         }
 
         public Stream OpenRead(string virtualPath)
         {
             var blob = GetBlobReference(virtualPath);
+            var memoryStream = new MemoryStream();
 
-            return blob.OpenRead();
+            blob.DownloadToStream(memoryStream); // todo: check what replacement for OpenRead is
+
+            return memoryStream;
         }
 
         public void Copy(string virtualPath, string uri, Metadata metaData)
@@ -76,11 +74,7 @@ namespace Instatus.Integration.Azure
 
             SetMetadata(cloudBlob, metaData);
 
-            using (var webClient = new WebClient())
-            {
-                var byteArray = webClient.DownloadData(uri);
-                cloudBlob.UploadByteArray(byteArray); // TODO: transition to Copy operation in 1.7.1 SDK
-            }  
+            cloudBlob.StartCopyFromBlob(new Uri(uri));
         }
 
         public string GenerateUri(string virtualPath, HttpMethod httpMethod)

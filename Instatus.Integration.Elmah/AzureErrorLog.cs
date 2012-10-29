@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure.StorageClient;
+using Microsoft.WindowsAzure.Storage.Table.DataServices;
 
 namespace Instatus.Integration.Elmah
 {
@@ -39,7 +39,7 @@ namespace Instatus.Integration.Elmah
                 var errors = tableServiceContext.CreateQuery<AzureErrorLogEntity>(TableName)
                                 .Where(e => e.PartitionKey == string.Empty)
                                 .Take(pageSize)
-                                .AsTableServiceQuery()
+                                .AsTableServiceQuery(tableServiceContext)
                                 .Execute();
 
                 foreach (var error in errors)

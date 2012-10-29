@@ -1,5 +1,5 @@
 ﻿using Instatus.Core;
-using Microsoft.WindowsAzure.StorageClient;
+using Microsoft.WindowsAzure.Storage.Table.DataServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using Instatus.Core;
 using Instatus.Core.Impl;
-using Microsoft.WindowsAzure.StorageClient;
 using Newtonsoft.Json;
 using Instatus.Core.Models;
 using Instatus.Integration.Azure;
 using Instatus.Core.Extensions;
 using System.Threading.Tasks.Dataflow;
+using Microsoft.WindowsAzure.Storage.Table.DataServices;
 
 namespace Instatus.Integration.Azure
 {
@@ -37,17 +37,16 @@ namespace Instatus.Integration.Azure
             buffer.Post(azureLoggerEntity);
         }
 
-        public async void SaveBatch(AzureLoggerEntity[] flushed)
+        public void SaveBatch(AzureLoggerEntity[] flushed)
         {
-            var credential = credentials.Get(WellKnown.Provider.WindowsAzure);
-            var dataContext = await AzureClient.GetTableServiceContext(credential, TableName, false);
+            var dataContext = AzureClient.GetTableServiceContext(credentials);
 
             foreach (var entry in flushed)
             {
                 dataContext.AddObject(TableName, entry);
             }
 
-            await dataContext.SaveChangesWithRetriesAsync();
+            dataContext.SaveChangesWithRetries();
         }
 
         public AzureLogger(IKeyValueStorage<Credential> credentials)
