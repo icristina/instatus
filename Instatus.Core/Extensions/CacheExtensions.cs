@@ -18,5 +18,10 @@ namespace Instatus.Core.Extensions
 
             return value;
         }
+
+        public static T Get<T>(this ICache cache, string partitionKey, string rowKey, Func<T> regenerate) where T : class
+        {
+            return cache.Get<T>(string.Format("{0}-{1}", partitionKey, rowKey), regenerate);
+        }
     }
 }

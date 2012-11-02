@@ -5,34 +5,39 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Instatus.Core.Extensions;
 
 namespace Instatus.Core.Impl
 {
-    public class AppDataStorage<T> : IKeyValueStorage<T>
+    public class AppDataStorage<T> : IKeyValueStorage<T> where T : class
     {
         private IBlobStorage localStorage;
         private IHandler<T> handler;
         private IPreferences preferences;
         private IHosting hosting;
+        private ICache cache;
         
         public T Get(string key)
         {
-            foreach (var virtualPath in ResolveVirtualPaths(key))
+            return cache.Get<T>(preferences.Locale, key, () =>
             {
-                try
+                foreach (var virtualPath in ResolveVirtualPaths(key))
                 {
-                    using (var fileStream = localStorage.OpenRead(virtualPath))
+                    try
                     {
-                        return handler.Read(fileStream);
+                        using (var fileStream = localStorage.OpenRead(virtualPath))
+                        {
+                            return handler.Read(fileStream);
+                        }
+                    }
+                    catch
+                    {
+
                     }
                 }
-                catch
-                {
 
-                }
-            }
-
-            return default(T);
+                return default(T);
+            });
         }
 
         public IEnumerable<KeyValue<T>> Query(Criteria criteria)
@@ -84,12 +89,13 @@ namespace Instatus.Core.Impl
             };
         }
 
-        public AppDataStorage(IHandler<T> handler, IBlobStorage localStorage, IPreferences preferences, IHosting hosting)
+        public AppDataStorage(IHandler<T> handler, IBlobStorage localStorage, IPreferences preferences, IHosting hosting, ICache cache)
         {
             this.handler = handler;
             this.localStorage = localStorage;
             this.preferences = preferences;
             this.hosting = hosting;
+            this.cache = cache;
         }
     }
 }
