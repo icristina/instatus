@@ -81,7 +81,6 @@
     <Compile Include="Impl\MockLogger.cs" />
     <Compile Include="Impl\SimpleDocumentHandler.cs" />
     <Compile Include="Impl\SimpleTemplating.cs" />
-    <Compile Include="ITargeting.cs" />
     <Compile Include="ITransform.cs" />
     <Compile Include="ILinguistics.cs" />
     <Compile Include="Models\Campaign.cs" />
