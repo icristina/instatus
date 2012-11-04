@@ -52,7 +52,7 @@ namespace Instatus.Integration.Mvc
             return new MvcHtmlString(sb.ToString());
         }
 
-        public static MvcHtmlString InlineData(string variableName, object graph)
+        public static MvcHtmlString DataSource(string variableName, object graph)
         {
             var jsonSerializer = DependencyResolver.Current.GetService<IJsonSerializer>();
             var html = string.Format("<script>window.{0} = {1};</script>", variableName, jsonSerializer.Stringify(graph));
