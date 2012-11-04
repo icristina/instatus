@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web.Mvc;
+using Instatus.Core.Extensions;
 
 namespace Instatus.Integration.Mvc
 {
@@ -24,6 +25,7 @@ namespace Instatus.Integration.Mvc
         public static MvcHtmlString BrowserCapabilitiesHint<T>(this HtmlHelper<T> htmlHelper)
         {
             var browserCapabilities = htmlHelper.ViewContext.RequestContext.HttpContext.Request.Browser;
+            var userAgent = htmlHelper.ViewContext.HttpContext.Request.UserAgent;
             var sb = new StringBuilder();
 
             sb.Append("no-js ");
@@ -31,6 +33,21 @@ namespace Instatus.Integration.Mvc
             sb.Append(" ");
             sb.Append(browserCapabilities.Browser.ToLower());
             sb.Append(browserCapabilities.MajorVersion);
+            
+            var device = "desktop";
+            var isMobile = userAgent.Contains("Mobile");
+
+            if (userAgent.Contains("iPad") || (userAgent.Contains("Android") && !isMobile))
+            {
+                device = "tablet";
+            }
+            else if (isMobile)
+            {
+                device = "mobile";
+            }
+
+            sb.Append(" ");
+            sb.Append(device);
 
             return new MvcHtmlString(sb.ToString());
         }
