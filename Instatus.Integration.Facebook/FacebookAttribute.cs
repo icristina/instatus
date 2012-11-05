@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Web.Mvc;
 
-namespace Instatus.Integration.Mvc
+namespace Instatus.Integration.Facebook
 {
     public class FacebookAttribute : ActionFilterAttribute
     {
@@ -18,29 +18,24 @@ namespace Instatus.Integration.Mvc
         {
             var viewBag = filterContext.Controller.ViewBag;
             var credential = Credentials.Get(WellKnown.Provider.Facebook);
-            var canvasUrl = new PathBuilder("http://apps.facebook.com/").Path(credential.AccountName).ToString();
 
-            viewBag.Facebook = new FacebookConfig
+            viewBag.Facebook = new FacebookData
             {
                 AppId = credential.PublicKey,
                 ChannelUrl = new PathBuilder(Hosting.BaseAddress)
                                 .Path("channel.html")
                                 .ToString(),
-                CanvasUrl = canvasUrl,
-                CanvasOauthUrl = new PathBuilder("https://www.facebook.com/dialog/oauth/")
-                                .Query("client_id", credential.PublicKey)
-                                .Query("scope", string.Join(",", credential.Claims))
-                                .Query("redirect_uri", canvasUrl)                                
+                CanvasUrl = new PathBuilder("http://apps.facebook.com/")
+                                .Path(credential.AccountName)
                                 .ToString()
             };
         }
 
-        public class FacebookConfig
+        public class FacebookData
         {
             public string AppId { get; set; }
             public string ChannelUrl { get; set; }
             public string CanvasUrl { get; set; }
-            public string CanvasOauthUrl { get; set; }
         }
     }
 }

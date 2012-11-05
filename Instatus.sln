@@ -50,6 +50,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instatus.Integration.Elmah"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instatus.Integration.Autofac", "Instatus.Integration.Autofac\Instatus.Integration.Autofac.csproj", "{710E3AB1-15FA-4D03-8AC6-0BE9BD90E87A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instatus.Integration.GoogleAnalytics", "Instatus.Integration.GoogleAnalytics\Instatus.Integration.GoogleAnalytics.csproj", "{A51783E4-F2B0-4221-9532-549E7DFA3662}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -140,6 +142,10 @@ Global
 		{710E3AB1-15FA-4D03-8AC6-0BE9BD90E87A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{710E3AB1-15FA-4D03-8AC6-0BE9BD90E87A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{710E3AB1-15FA-4D03-8AC6-0BE9BD90E87A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A51783E4-F2B0-4221-9532-549E7DFA3662}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A51783E4-F2B0-4221-9532-549E7DFA3662}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A51783E4-F2B0-4221-9532-549E7DFA3662}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A51783E4-F2B0-4221-9532-549E7DFA3662}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

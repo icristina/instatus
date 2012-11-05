@@ -17,13 +17,13 @@ namespace Instatus.Integration.Mvc
             var viewBag = filterContext.Controller.ViewBag;
             var credential = Credentials.Get(WellKnown.Provider.GoogleAnalytics);
 
-            viewBag.GoogleAnalytics = new GoogleAnalyticsConfig
+            viewBag.GoogleAnalytics = new GoogleAnalyticsData
             {
                 WebPropertyId = credential.PublicKey
             };
         }
 
-        public class GoogleAnalyticsConfig
+        public class GoogleAnalyticsData
         {
             public string WebPropertyId { get; set; }
         }
