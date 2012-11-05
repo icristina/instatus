@@ -93,6 +93,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FacebookAuthentication.cs" />
+    <Compile Include="FacebookAuthDialogResult.cs" />
     <Compile Include="FacebookClient.cs" />
     <Compile Include="FacebookConfig.cs" />
     <Compile Include="FacebookPrincipalExtensions.cs" />

@@ -19,7 +19,7 @@ namespace Instatus.Core.Impl
             if (setting == null)
                 return default(T);
 
-            return ModelBinders.Binders[typeof(T)](setting.AsDictionary()) as T;
+            return AppContext.Binders[typeof(T)](setting.AsDictionary()) as T;
         }
 
         public AppSettingsStorage(IHosting hosting)

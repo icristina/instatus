@@ -19,13 +19,11 @@ namespace Instatus.Integration.Facebook
 
             if (!string.IsNullOrEmpty(signedRequestString))
             {
-                var keyValueStorage = DependencyResolver.Current.GetService<IKeyValueStorage<Credential>>();
-                var facebookCredential = keyValueStorage.Get(WellKnown.Provider.Facebook);
                 var facebookClient = new FB.FacebookClient();
 
                 object signedRequest;
 
-                if (facebookClient.TryParseSignedRequest(facebookCredential.PrivateKey, signedRequestString, out signedRequest)) 
+                if (facebookClient.TryParseSignedRequest(FacebookConfig.AppSecret, signedRequestString, out signedRequest)) 
                 {
                     var jsonNetSerializer = new JsonNetSerializer();
                     var jsonString = jsonNetSerializer.Stringify(signedRequest);

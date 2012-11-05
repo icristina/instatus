@@ -88,7 +88,6 @@
     <Compile Include="Models\Criteria.cs" />
     <Compile Include="Models\KeyValue.cs" />
     <Compile Include="Models\Metadata.cs" />
-    <Compile Include="Models\ModelBinders.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Impl\EntityMapper.cs" />
     <Compile Include="IMapper.cs" />
