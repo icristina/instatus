@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Web.Mvc;
 using Instatus.Core.Extensions;
+using System.Web.WebPages;
 
 namespace Instatus.Integration.Mvc
 {
@@ -25,29 +26,17 @@ namespace Instatus.Integration.Mvc
         public static MvcHtmlString BrowserCapabilitiesHint<T>(this HtmlHelper<T> htmlHelper)
         {
             var browserCapabilities = htmlHelper.ViewContext.RequestContext.HttpContext.Request.Browser;
-            var userAgent = htmlHelper.ViewContext.HttpContext.Request.UserAgent;
+            var browser = browserCapabilities.Browser.ToLower();
+            var displayModeProvider = DisplayModeProvider.Instance;
             var sb = new StringBuilder();
 
             sb.Append("no-js ");
-            sb.Append(browserCapabilities.Browser.ToLower());
+            sb.Append(browser);
             sb.Append(" ");
-            sb.Append(browserCapabilities.Browser.ToLower());
+            sb.Append(browser);
             sb.Append(browserCapabilities.MajorVersion);
-            
-            var device = "desktop";
-            var isMobile = userAgent.Contains("Mobile");
-
-            if (userAgent.Contains("iPad") || (userAgent.Contains("Android") && !isMobile))
-            {
-                device = "tablet";
-            }
-            else if (isMobile)
-            {
-                device = "mobile";
-            }
-
             sb.Append(" ");
-            sb.Append(device);
+            sb.Append(displayModeProvider.GetAvailableDisplayModesForContext(htmlHelper.ViewContext.HttpContext, htmlHelper.ViewContext.DisplayMode).FirstOrDefault().DisplayModeId.ToLower());            
 
             return new MvcHtmlString(sb.ToString());
         }

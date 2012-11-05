@@ -8,6 +8,7 @@ using System.Web.Security;
 using System.Collections.Specialized;
 using Instatus.Core;
 using Microsoft.Web.Infrastructure.DynamicModuleHelper;
+using System.Web.WebPages;
 
 namespace Instatus.Integration.Mvc
 {
@@ -93,6 +94,51 @@ namespace Instatus.Integration.Mvc
 
             // [3] remove Server headers
             DynamicModuleUtility.RegisterModule(typeof(FilterResponseHeadersModule));
+        }
+
+        public static void RegisterDisplayModes(DisplayModeProvider displayModeProvider)
+        {
+            displayModeProvider.Modes.Clear();
+            
+            displayModeProvider.Modes.Insert(0, new DefaultDisplayMode(string.Empty)
+            {
+                ContextCondition = (context =>
+                {
+                    return true;
+                })
+            });            
+            
+            displayModeProvider.Modes.Insert(0, new DefaultDisplayMode("Desktop")
+            {
+                ContextCondition = (context =>
+                {
+                    return true;
+                })
+            });
+
+            displayModeProvider.Modes.Insert(0, new DefaultDisplayMode("Mobile")
+            {
+                ContextCondition = (context =>
+                {
+                    var userAgent = context.Request.UserAgent;
+
+                    return userAgent.IndexOf("Mobile", StringComparison.OrdinalIgnoreCase) > 0;
+                })
+            });
+
+            // https://developers.google.com/chrome/mobile/docs/user-agent
+            // http://blogs.msdn.com/b/ie/archive/2012/07/12/ie10-user-agent-string-update.aspx
+            displayModeProvider.Modes.Insert(0, new DefaultDisplayMode("Tablet")
+            {
+                ContextCondition = (context =>
+                {
+                    var userAgent = context.Request.UserAgent;
+
+                    return userAgent.IndexOf("iPad", StringComparison.OrdinalIgnoreCase) >= 0 
+                        || (userAgent.IndexOf("Android", StringComparison.OrdinalIgnoreCase) > 0 && userAgent.IndexOf("Mobile", StringComparison.OrdinalIgnoreCase) == -1
+                        || (userAgent.IndexOf("MSIE 10.", StringComparison.OrdinalIgnoreCase) > 0 && userAgent.IndexOf("Touch", StringComparison.OrdinalIgnoreCase) > 0));
+                })
+            });
         }
     }
 }

@@ -17,6 +17,7 @@ namespace Instatus.Sample
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             LocalizationConfig.RegisterPhrases();
             AutofacConfig.RegisterContainer();
+            MvcConfig.RegisterDisplayModes();
         }
     }
 }
