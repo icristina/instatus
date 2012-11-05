@@ -26,7 +26,7 @@ namespace Instatus.Core.Extensions
 
         public static string WithNamespace(this string key, string ns)
         {
-            return ns.ToLower().Trim() + ":"  + key.ToLower().Trim();
+            return ns.ToLower().Trim() + ":"  + key.Trim();
         }
 
         public static string WithLocale(this string key, string locale)

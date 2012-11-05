@@ -129,6 +129,7 @@
     <Compile Include="App_Start\MvcConfig.cs" />
     <Compile Include="App_Start\LocalizationConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CanvasController.cs" />
     <Compile Include="Controllers\ContentPageController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PageController.cs" />
@@ -185,6 +186,10 @@
     <ProjectReference Include="..\Instatus.Integration.Autofac\Instatus.Integration.Autofac.csproj">
       <Project>{710e3ab1-15fa-4d03-8ac6-0be9bd90e87a}</Project>
       <Name>Instatus.Integration.Autofac</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Instatus.Integration.Facebook\Instatus.Integration.Facebook.csproj">
+      <Project>{2e1e924a-b0c6-412e-b49a-abad81b3ce2c}</Project>
+      <Name>Instatus.Integration.Facebook</Name>
     </ProjectReference>
     <ProjectReference Include="..\Instatus.Integration.HtmlAgilityPack\Instatus.Integration.HtmlAgilityPack.csproj">
       <Project>{fb5a4d3a-b4b3-4550-b24b-41884ac72137}</Project>

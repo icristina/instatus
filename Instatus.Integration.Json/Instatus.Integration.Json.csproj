@@ -51,6 +51,7 @@
     <Compile Include="JsonNetSerializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnderscoreMappingResolver.cs" />
+    <Compile Include="UnixDateTimeConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Instatus.Core\Instatus.Core.csproj">
