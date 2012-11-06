@@ -15,9 +15,13 @@ namespace Instatus.Scaffold.Entities
         public long FacebookId { get; set; }
         public string TwitterId { get; set; }
         public DateTime Created { get; set; }
+        public Role Role { get; set; }
         public virtual ICollection<Vote> Votes { get; set; }
         public virtual ICollection<Score> Scores { get; set; }
         public virtual ICollection<Marker> Markers { get; set; }
         public virtual ICollection<Entry> Entries { get; set; }
+        public virtual ICollection<Post> Posts { get; set; }
+        public virtual ICollection<Like> Likes { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
     }
 }

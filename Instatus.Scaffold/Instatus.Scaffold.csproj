@@ -122,15 +122,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RazorGeneratorMvcStart.cs" />
+    <Compile Include="Entities\Comment.cs" />
     <Compile Include="Entities\Competition.cs" />
-    <Compile Include="Entities\Article.cs" />
+    <Compile Include="Entities\Like.cs" />
+    <Compile Include="Entities\Post.cs" />
     <Compile Include="Entities\Marker.cs" />
     <Compile Include="Entities\Entry.cs" />
     <Compile Include="Entities\Map.cs" />
     <Compile Include="Entities\Game.cs" />
-    <Compile Include="Entities\IResource.cs" />
+    <Compile Include="Entities\IPage.cs" />
     <Compile Include="Entities\Place.cs" />
     <Compile Include="Entities\Poll.cs" />
+    <Compile Include="Entities\Role.cs" />
     <Compile Include="Entities\Score.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Entities\Vote.cs" />
