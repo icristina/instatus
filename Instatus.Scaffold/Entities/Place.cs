@@ -16,8 +16,10 @@ namespace Instatus.Scaffold.Entities
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
         public string Locale { get; set; }
-        public string Category { get; set; }
+        public string Category { get; set; }        
         public DateTime Created { get; set; }
+        public string Data { get; set; }
         public DbGeography Point { get; set; }
+        public Address Address { get; set; }
     }
 }

@@ -17,6 +17,7 @@ namespace Instatus.Scaffold.Entities
         public string Locale { get; set; }
         public string Category { get; set; }
         public DateTime Created { get; set; }
+        public string Data { get; set; }
         public virtual ICollection<Vote> Votes { get; set; }
     }
 }

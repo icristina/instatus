@@ -18,6 +18,7 @@ namespace Instatus.Scaffold.Entities
         public string Locale { get; set; }
         public string Category { get; set; }
         public DateTime Created { get; set; }
+        public string Data { get; set; }
         public DbGeography CenterPoint { get; set; }
         public int ZoomLevel { get; set; }
         public virtual ICollection<Marker> Markers { get; set; }

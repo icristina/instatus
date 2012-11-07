@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Instatus.Scaffold.Entities
 {
-    public interface IPage : ICreated
+    public interface IPage : ICreated, IPayload
     {
         int Id { get; set; }
         string Name { get; set; }

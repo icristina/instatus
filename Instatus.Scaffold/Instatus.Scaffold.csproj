@@ -124,7 +124,9 @@
     <Compile Include="App_Start\RazorGeneratorMvcStart.cs" />
     <Compile Include="Entities\Comment.cs" />
     <Compile Include="Entities\Competition.cs" />
+    <Compile Include="Entities\IPayload.cs" />
     <Compile Include="Entities\Like.cs" />
+    <Compile Include="Entities\List.cs" />
     <Compile Include="Entities\Post.cs" />
     <Compile Include="Entities\Marker.cs" />
     <Compile Include="Entities\Entry.cs" />
@@ -133,8 +135,12 @@
     <Compile Include="Entities\IPage.cs" />
     <Compile Include="Entities\Place.cs" />
     <Compile Include="Entities\Poll.cs" />
+    <Compile Include="Entities\Address.cs" />
     <Compile Include="Entities\Role.cs" />
     <Compile Include="Entities\Score.cs" />
+    <Compile Include="Entities\Subscription.cs" />
+    <Compile Include="Entities\Tag.cs" />
+    <Compile Include="Entities\Taxonomy.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Entities\Vote.cs" />
     <Compile Include="HtmlHelperExtensions.cs" />
