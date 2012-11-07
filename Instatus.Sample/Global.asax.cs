@@ -16,6 +16,7 @@ namespace Instatus.Sample
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             LocalizationConfig.RegisterPhrases();
+            DbConfig.RegisterProviders();
             AutofacConfig.RegisterContainer();
             MvcConfig.RegisterDisplayModes();
         }

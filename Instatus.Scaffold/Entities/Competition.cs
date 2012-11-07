@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Web;
 
@@ -19,5 +20,13 @@ namespace Instatus.Scaffold.Entities
         public DateTime Created { get; set; }
         public string Data { get; set; }
         public virtual ICollection<Entry> Entries { get; set; }
+
+        public Competition()
+        {
+            Active = SqlDateTime.MinValue.Value;
+            Start = SqlDateTime.MinValue.Value;
+            End = SqlDateTime.MaxValue.Value;
+            Created = DateTime.UtcNow;
+        }
     }
 }

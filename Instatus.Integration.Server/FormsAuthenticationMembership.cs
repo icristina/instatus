@@ -23,7 +23,7 @@ namespace Instatus.Integration.Server
             return FormsAuthentication.Authenticate(userName, password);
         }
 
-        public bool ValidateExternalUser(string providerName, string providerUserId, IDictionary<string, string> data, out string userName)
+        public bool ValidateExternalUser(string providerName, string providerUserId, IDictionary<string, object> data, out string userName)
         {
             userName = string.Empty;
             return false;

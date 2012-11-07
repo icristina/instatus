@@ -32,7 +32,7 @@ namespace Instatus.Core.Impl
             throw new NotImplementedException();
         }
 
-        public bool ValidateExternalUser(string providerName, string providerUserId, IDictionary<string, string> data, out string userName)
+        public bool ValidateExternalUser(string providerName, string providerUserId, IDictionary<string, object> data, out string userName)
         {
             userName = providerUserId;
             return true;

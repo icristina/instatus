@@ -77,8 +77,8 @@ namespace Instatus.Integration.Mvc
 
             string userName;
 
-            if (authenticationResult.IsSuccessful && 
-                membership.ValidateExternalUser(provider, authenticationResult.ProviderUserId, authenticationResult.ExtraData, out userName))
+            if (authenticationResult.IsSuccessful &&
+                membership.ValidateExternalUser(provider, authenticationResult.ProviderUserId, authenticationResult.ExtraData.ToDictionary(k => k.Key, k => k.Value as object), out userName))
             {
                 FormsAuthentication.SetAuthCookie(userName, CreatePersistentCookie);                
                 return Redirect(returnUrl ?? HomeUrl);

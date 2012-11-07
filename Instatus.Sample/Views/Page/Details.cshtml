@@ -1,0 +1,10 @@
+﻿@inherits ExtendedViewPage<Instatus.Core.Models.Document>
+
+@{
+    ViewBag.Title = Model.Title;
+}
+
+<div class="container">
+    @Html.Raw(Model.Description)
+    @Html.SelectLocale()
+</div>

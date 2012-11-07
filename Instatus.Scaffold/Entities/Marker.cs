@@ -18,5 +18,10 @@ namespace Instatus.Scaffold.Entities
         public virtual User User { get; set; }
         public DateTime Created { get; set; }
         public DbGeography Point { get; set; }
+
+        public Marker()
+        {
+            Created = DateTime.UtcNow;
+        }
     }
 }

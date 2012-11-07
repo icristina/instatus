@@ -15,5 +15,10 @@ namespace Instatus.Scaffold.Entities
         public int UserId { get; set; }
         public virtual User User { get; set; }
         public DateTime Created { get; set; }
+
+        public Vote()
+        {
+            Created = DateTime.UtcNow;
+        }
     }
 }

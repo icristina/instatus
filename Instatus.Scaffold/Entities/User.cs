@@ -12,8 +12,9 @@ namespace Instatus.Scaffold.Entities
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string EmailAddress { get; set; }
-        public long FacebookId { get; set; }
+        public string FacebookId { get; set; }
         public string TwitterId { get; set; }
+        public string Locale { get; set; }
         public DateTime Created { get; set; }
         public Role Role { get; set; }
         public virtual ICollection<Vote> Votes { get; set; }
@@ -26,5 +27,12 @@ namespace Instatus.Scaffold.Entities
         public virtual ICollection<Subscription> Subscriptions { get; set; }
         public Address Address { get; set; }
         public bool OptIn { get; set; }
+
+        public User()
+        {
+            Created = DateTime.UtcNow;
+            Address = new Address();
+            Role = Role.Member;
+        }
     }
 }

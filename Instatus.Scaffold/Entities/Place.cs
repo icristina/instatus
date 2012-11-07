@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Spatial;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Web;
 
@@ -21,5 +22,14 @@ namespace Instatus.Scaffold.Entities
         public string Data { get; set; }
         public DbGeography Point { get; set; }
         public Address Address { get; set; }
+
+        public Place()
+        {
+            Active = SqlDateTime.MinValue.Value;
+            Start = SqlDateTime.MinValue.Value;
+            End = SqlDateTime.MaxValue.Value;
+            Created = DateTime.UtcNow;
+            Address = new Address();
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Spatial;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Web;
 
@@ -24,5 +25,13 @@ namespace Instatus.Scaffold.Entities
         public virtual User User { get; set; }
         public virtual ICollection<Like> Likes { get; set; }
         public virtual ICollection<Tag> Tags { get; set; }
+
+        public Post()
+        {
+            Active = SqlDateTime.MinValue.Value;
+            Start = SqlDateTime.MinValue.Value;
+            End = SqlDateTime.MaxValue.Value;
+            Created = DateTime.UtcNow;
+        }
     }
 }

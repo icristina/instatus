@@ -29,7 +29,7 @@ namespace Instatus.Integration.Mvc
             );
         }
 
-        public static void RegisterPageRoute(RouteCollection routes, string controllerName = "ContentPage", string defaultLocale = "en-US")
+        public static void RegisterPageRoute(RouteCollection routes, string controllerName = "Page", string defaultLocale = "en-US")
         {
             routes.MapRoute(
                 name: WellKnown.RouteName.Page,

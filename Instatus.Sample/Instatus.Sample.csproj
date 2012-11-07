@@ -54,6 +54,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Autofac.Mvc4.2.6.3.862-beta\lib\NET40\Autofac.Integration.Mvc.dll</HintPath>
     </Reference>
+    <Reference Include="EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.4.5.10\lib\net40\Newtonsoft.Json.dll</HintPath>
@@ -61,6 +65,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Net.Http.2.0.20710.0\lib\net40\System.Net.Http.dll</HintPath>
@@ -126,13 +131,14 @@
   <ItemGroup>
     <Compile Include="App_Start\AutofacConfig.cs" />
     <Compile Include="App_Start\AuthConfig.cs" />
+    <Compile Include="App_Start\DbConfig.cs" />
     <Compile Include="App_Start\MvcConfig.cs" />
     <Compile Include="App_Start\LocalizationConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CanvasController.cs" />
-    <Compile Include="Controllers\ContentPageController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PageController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -187,6 +193,10 @@
       <Project>{710e3ab1-15fa-4d03-8ac6-0be9bd90e87a}</Project>
       <Name>Instatus.Integration.Autofac</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Instatus.Integration.EntityFramework\Instatus.Integration.EntityFramework.csproj">
+      <Project>{589afb6b-9423-4703-bcce-c1da5ea4bf09}</Project>
+      <Name>Instatus.Integration.EntityFramework</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Instatus.Integration.Facebook\Instatus.Integration.Facebook.csproj">
       <Project>{2e1e924a-b0c6-412e-b49a-abad81b3ce2c}</Project>
       <Name>Instatus.Integration.Facebook</Name>
@@ -228,7 +238,7 @@
     <Content Include="App_Data\GeoIP.dat" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\ContentPage\Details.cshtml" />
+    <Content Include="Views\Page\Details.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

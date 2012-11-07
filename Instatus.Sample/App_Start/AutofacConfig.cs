@@ -12,6 +12,8 @@ using Instatus.Integration.Maxmind;
 using Instatus.Integration.HtmlAgilityPack;
 using Instatus.Integration.Razor;
 using Instatus.Core.Models;
+using Instatus.Scaffold.Entities;
+using Instatus.Integration.EntityFramework;
 
 namespace Instatus.Sample
 {
@@ -32,7 +34,9 @@ namespace Instatus.Sample
             containerBuilder.RegisterType<WpfImaging>().As<IImaging>();
             containerBuilder.RegisterType<MockMembership>().As<IMembership>();
             containerBuilder.RegisterType<InMemoryLocalization>().As<ILocalization>();
-            containerBuilder.RegisterType<AppDataStorage<Document>>().As<IKeyValueStorage<Document>>();
+            //containerBuilder.RegisterType<AppDataStorage<Document>>().As<IKeyValueStorage<Document>>();
+            containerBuilder.Register(c => new EfEntityStorage<InstatusSamplelDb>()).As<IEntityStorage>();
+            containerBuilder.RegisterType<SocialDbStorage>().As<IKeyValueStorage<Document>>();
             containerBuilder.RegisterType<InMemoryTaxonomy>().As<ITaxonomy>();
             containerBuilder.RegisterType<DataFileGeocode>().As<IGeocode>();
             containerBuilder.RegisterType<HtmlDocumentHandler>().As<IHandler<Document>>();

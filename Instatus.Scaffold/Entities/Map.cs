@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Spatial;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Web;
 
@@ -22,5 +23,13 @@ namespace Instatus.Scaffold.Entities
         public DbGeography CenterPoint { get; set; }
         public int ZoomLevel { get; set; }
         public virtual ICollection<Marker> Markers { get; set; }
+
+        public Map()
+        {
+            Active = SqlDateTime.MinValue.Value;
+            Start = SqlDateTime.MinValue.Value;
+            End = SqlDateTime.MaxValue.Value;
+            Created = DateTime.UtcNow;
+        }
     }
 }

@@ -16,5 +16,10 @@ namespace Instatus.Scaffold.Entities
         public virtual User User { get; set; }
         public int GameId { get; set; }
         public virtual Game Game { get; set; }
+
+        public Score()
+        {
+            Created = DateTime.UtcNow;
+        }
     }
 }

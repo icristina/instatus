@@ -16,5 +16,10 @@ namespace Instatus.Scaffold.Entities
         public virtual Post Post { get; set; }
         public int UserId { get; set; }
         public virtual User User { get; set; }
+
+        public Comment()
+        {
+            Created = DateTime.UtcNow;
+        }
     }
 }
