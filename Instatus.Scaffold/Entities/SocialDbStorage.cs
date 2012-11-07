@@ -107,13 +107,21 @@ namespace Instatus.Scaffold.Entities
 
         public void AddOrUpdate(string key, Document value)
         {
-            entityStorage.Set<Post>().Add(new Post()
+            var post = entityStorage.Set<Post>().Where(p => p.Locale == preferences.Locale && p.Slug == key).FirstOrDefault();
+
+            if (post == null)
             {
-                Locale = preferences.Locale,
-                Slug = key,
-                Name = value.Title,
-                Content = value.Description,
-            });
+                post = new Post() 
+                {
+                    Locale = preferences.Locale,
+                    Slug = key                     
+                };
+                entityStorage.Set<Post>().Add(post);
+            }
+
+            post.Name = value.Title;
+            post.Content = value.Description;
+
             entityStorage.SaveChanges();
         }
 
