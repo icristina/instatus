@@ -18,7 +18,7 @@ namespace Instatus.Integration.Mvc
     public abstract class AccountController : Controller
     {
         private IMembership membership;
-        private IKeyValueStorage<Credential> credentials;
+        private ILookup<Credential> credentials;
         
         [AllowAnonymous]
         [HttpGet]
@@ -140,7 +140,7 @@ namespace Instatus.Integration.Mvc
             }
         }
 
-        public AccountController(IMembership membership, IKeyValueStorage<Credential> credentials) 
+        public AccountController(IMembership membership, ILookup<Credential> credentials) 
         {
             this.membership = membership;
             this.credentials = credentials;

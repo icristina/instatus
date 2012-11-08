@@ -18,7 +18,7 @@ namespace Instatus.Integration.Azure
 {
     public class AzureBlobStorage : IBlobStorage
     {
-        private IKeyValueStorage<Credential> credentials;
+        private ILookup<Credential> credentials;
 
         public string GetBaseUri(string accountName)
         {
@@ -91,7 +91,7 @@ namespace Instatus.Integration.Azure
             // not implemented, intentionally currently only provider read and write
         }
 
-        public AzureBlobStorage(IKeyValueStorage<Credential> credentials)
+        public AzureBlobStorage(ILookup<Credential> credentials)
         {
             this.credentials = credentials;
         }

@@ -10,8 +10,8 @@ namespace Instatus.Sample.Controllers
 {
     public class PageController : Instatus.Integration.Mvc.PageController
     {
-        public PageController(IKeyValueStorage<Document> documents)
-            : base(documents)
+        public PageController(IKeyValueStorage<Document> documents, IPreferences preferences)
+            : base(documents, preferences)
         {
 
         }

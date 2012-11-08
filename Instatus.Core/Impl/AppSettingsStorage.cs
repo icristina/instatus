@@ -8,13 +8,18 @@ using Instatus.Core.Extensions;
 
 namespace Instatus.Core.Impl
 {
-    public class AppSettingsStorage<T> : InMemoryKeyValueStorage<T> where T : class
+    public class AppSettingsStorage<T> : InMemoryKeyValueStorage<T>, ILookup<T> where T : class
     {
         private IHosting hosting;
-
-        protected override T Find(string key)
+        
+        public T Get(string key)
         {
-            var setting = hosting.GetAppSetting(typeof(T).Name.WithNamespace(key));
+            return Get(key, typeof(T).Name);
+        }
+        
+        protected override T Find(string partitionKey, string rowKey)
+        {
+            var setting = hosting.GetAppSetting(rowKey.WithNamespace(partitionKey));
 
             if (setting == null)
                 return default(T);

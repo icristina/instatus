@@ -15,7 +15,7 @@ namespace Instatus.Integration.Azure
 {
     public class AzureQueue<T> : IQueue<T>
     {
-        private IKeyValueStorage<Credential> credentials;
+        private ILookup<Credential> credentials;
         private ISerializer serializer;
 
         public CloudQueue GetQueue()
@@ -52,7 +52,7 @@ namespace Instatus.Integration.Azure
             return true;
         }
 
-        public AzureQueue(IKeyValueStorage<Credential> credentials, ISerializer serializer)
+        public AzureQueue(ILookup<Credential> credentials, ISerializer serializer)
         {
             this.credentials = credentials;
             this.serializer = serializer;

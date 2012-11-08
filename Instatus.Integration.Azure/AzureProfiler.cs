@@ -17,7 +17,7 @@ namespace Instatus.Integration.Azure
     {
         public const string TableName = "Profiler";
         
-        private IKeyValueStorage<Credential> credentials;
+        private ILookup<Credential> credentials;
         private BatchBlock<AzureProfilerEntity> buffer;
 
         public IDisposable Step(string label)
@@ -38,7 +38,7 @@ namespace Instatus.Integration.Azure
             dataContext.SaveChangesWithRetries();
         }
 
-        public AzureProfiler(IKeyValueStorage<Credential> credentials)
+        public AzureProfiler(ILookup<Credential> credentials)
         {
             this.credentials = credentials;
             this.buffer = new BatchBlock<AzureProfilerEntity>(AzureClient.TableServiceEntityBufferCount);

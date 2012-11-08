@@ -12,7 +12,7 @@ namespace Instatus.Integration.Facebook
     public class FacebookAttribute : ActionFilterAttribute
     {
         public IHosting Hosting { get; set; }
-        public IKeyValueStorage<Credential> Credentials { get; set; }
+        public ILookup<Credential> Credentials { get; set; }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {

@@ -20,7 +20,7 @@ namespace Instatus.Integration.Elmah
         {
             using (var container = AppContext.CreateContainer())
             {
-                var credentials = container.Resolve<IKeyValueStorage<Credential>>();
+                var credentials = container.Resolve<ILookup<Credential>>();
                 var tableServiceContext = AzureClient.GetTableServiceContext(credentials);
                 var error = tableServiceContext.CreateQuery<AzureErrorLogEntity>(TableName)
                             .Where(e => e.PartitionKey == string.Empty && e.RowKey == id)
@@ -34,7 +34,7 @@ namespace Instatus.Integration.Elmah
         {
             using (var container = AppContext.CreateContainer())
             {
-                var credentials = container.Resolve<IKeyValueStorage<Credential>>();
+                var credentials = container.Resolve<ILookup<Credential>>();
                 var tableServiceContext = AzureClient.GetTableServiceContext(credentials);
                 var errors = tableServiceContext.CreateQuery<AzureErrorLogEntity>(TableName)
                                 .Where(e => e.PartitionKey == string.Empty)
@@ -55,7 +55,7 @@ namespace Instatus.Integration.Elmah
         {
             using (var container = AppContext.CreateContainer())
             {
-                var credentials = container.Resolve<IKeyValueStorage<Credential>>();
+                var credentials = container.Resolve<ILookup<Credential>>();
                 var tableServiceContext = AzureClient.GetTableServiceContext(credentials);
                 var now = DateTime.UtcNow;
                 var errorEntity = new AzureErrorLogEntity()

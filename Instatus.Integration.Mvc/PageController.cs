@@ -14,17 +14,19 @@ namespace Instatus.Integration.Mvc
     public abstract class PageController : Controller
     {
         private IKeyValueStorage<Document> documents;
+        private IPreferences preferences;
         
         public ActionResult Details(string key)
         {
-            ViewData.Model = documents.Get(key);
+            ViewData.Model = documents.Get(preferences.Locale, key) ?? documents.Get(null, key);
 
             return View();
         }
 
-        public PageController(IKeyValueStorage<Document> contentManager)
+        public PageController(IKeyValueStorage<Document> contentManager, IPreferences preferences)
         {
             this.documents = contentManager;
+            this.preferences = preferences;
         }
     }
 }

@@ -11,7 +11,6 @@ namespace Instatus.Scaffold.Entities
     public class SocialDbStorage : ITaxonomy, IMembership, IKeyValueStorage<Document>
     {        
         private IEntityStorage entityStorage;
-        private IPreferences preferences;
         private IEncryption encryption;
         
         // ITaxonomy
@@ -100,9 +99,9 @@ namespace Instatus.Scaffold.Entities
         }
 
         // IKeyValueStorage<Document>
-        public Document Get(string key)
+        public Document Get(string partitionKey, string rowKey)
         {
-            return entityStorage.Set<Post>().Where(p => p.Locale == preferences.Locale && p.Slug == key)
+            return entityStorage.Set<Post>().Where(p => p.Locale == partitionKey && p.Slug == rowKey)
                 .Select(p => new Document()
                 {
                     Title = p.Name,
@@ -111,11 +110,11 @@ namespace Instatus.Scaffold.Entities
                 .FirstOrDefault();
         }
 
-        public IEnumerable<KeyValue<Document>> Query(Criteria criteria)
+        public IEnumerable<KeyValue<Document>> Query(string partitionKey, Criteria criteria)
         {
             return entityStorage
                 .Set<Post>()
-                .Where(p => p.Locale == preferences.Locale)
+                .Where(p => p.Locale == partitionKey)
                 .Select(p => new KeyValue<Document>()
                 {
                     Key = p.Slug,
@@ -128,16 +127,16 @@ namespace Instatus.Scaffold.Entities
                 .ToList();
         }
 
-        public void AddOrUpdate(string key, Document value)
+        public void AddOrUpdate(string partitionKey, string rowKey, Document value)
         {
-            var post = entityStorage.Set<Post>().Where(p => p.Locale == preferences.Locale && p.Slug == key).FirstOrDefault();
+            var post = entityStorage.Set<Post>().Where(p => p.Locale == partitionKey && p.Slug == rowKey).FirstOrDefault();
 
             if (post == null)
             {
                 post = new Post() 
                 {
-                    Locale = preferences.Locale,
-                    Slug = key                     
+                    Locale = partitionKey,
+                    Slug = rowKey                     
                 };
                 entityStorage.Set<Post>().Add(post);
             }
@@ -148,10 +147,10 @@ namespace Instatus.Scaffold.Entities
             entityStorage.SaveChanges();
         }
 
-        public void Delete(string key)
+        public void Delete(string partitionKey, string rowKey)
         {
             var postSet = entityStorage.Set<Post>();
-            var post = postSet.Where(p => p.Locale == preferences.Locale && p.Slug == key).FirstOrDefault();
+            var post = postSet.Where(p => p.Locale == partitionKey && p.Slug == rowKey).FirstOrDefault();
 
             if (post != null)
             {
@@ -160,10 +159,9 @@ namespace Instatus.Scaffold.Entities
             }
         }
 
-        public SocialDbStorage(IEntityStorage entityStorage, IPreferences preferences, IEncryption encryption)
+        public SocialDbStorage(IEntityStorage entityStorage, IEncryption encryption)
         {
             this.entityStorage = entityStorage;
-            this.preferences = preferences;
             this.encryption = encryption;
         }
     }

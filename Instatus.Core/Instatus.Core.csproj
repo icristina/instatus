@@ -58,8 +58,10 @@
     <Compile Include="Extensions\CacheExtensions.cs" />
     <Compile Include="Extensions\ObjectExtensions.cs" />
     <Compile Include="IContainer.cs" />
+    <Compile Include="ILookup.cs" />
     <Compile Include="Impl\DataContractSerializerImpl.cs" />
     <Compile Include="Impl\MockCache.cs" />
+    <Compile Include="Impl\MockEncryption.cs" />
     <Compile Include="ISerializer.cs" />
     <Compile Include="IGlobalContainer.cs" />
     <Compile Include="IJob.cs" />

@@ -13,50 +13,46 @@ namespace Instatus.Core.Impl
     {
         private IBlobStorage localStorage;
         private IHandler<T> handler;
-        private IPreferences preferences;
         private IHosting hosting;
         private ICache cache;
         
-        public T Get(string key)
+        public T Get(string partitionKey, string rowKey)
         {
-            return cache.Get<T>(preferences.Locale, key, () =>
+            return cache.Get<T>(partitionKey, rowKey, () =>
             {
-                foreach (var virtualPath in ResolveVirtualPaths(key))
+                try
                 {
-                    try
+                    var virtualPath = ResolveVirtualPath(partitionKey, rowKey);
+                    
+                    using (var fileStream = localStorage.OpenRead(virtualPath))
                     {
-                        using (var fileStream = localStorage.OpenRead(virtualPath))
-                        {
-                            return handler.Read(fileStream);
-                        }
-                    }
-                    catch
-                    {
-
+                        return handler.Read(fileStream);
                     }
                 }
-
-                return default(T);
+                catch
+                {
+                    return default(T);
+                }
             });
         }
 
-        public IEnumerable<KeyValue<T>> Query(Criteria criteria)
+        public IEnumerable<KeyValue<T>> Query(string partitionKey, Criteria criteria)
         {
-            return localStorage.Query("~/App_Data/", preferences.Locale + "." + handler.FileExtension)
+            return localStorage.Query("~/App_Data/", partitionKey + "." + handler.FileExtension)
                         .Select(f => {
-                            var key = Path.GetFileName(f).Split('.')[0];
+                            var rowKey = Path.GetFileName(f).Split('.')[0];
                             return new KeyValue<T>()
                             {
-                                Key = key,
-                                Value = Get(key)
+                                Key = rowKey,
+                                Value = Get(partitionKey, rowKey)
                             };
                         })
                         .ToList();
         }
 
-        public void AddOrUpdate(string key, T model)
+        public void AddOrUpdate(string partitionKey, string rowKey, T model)
         {
-            var virtualPath = ResolveVirtualPaths(key).First();
+            var virtualPath = ResolveVirtualPath(partitionKey, rowKey);
 
             using (var inputStream = localStorage.OpenWrite(virtualPath, null))
             {
@@ -64,36 +60,29 @@ namespace Instatus.Core.Impl
             }
         }
 
-        public void Delete(string key)
+        public void Delete(string partitionKey, string rowKey)
         {
-            foreach (var path in ResolveVirtualPaths(key))
-            {
-                try
-                {
-                    localStorage.Delete(path);
-                }
-                catch
-                {
+            var virtualPath = ResolveVirtualPath(partitionKey, rowKey);
 
-                }
+            localStorage.Delete(virtualPath);
+        }
+
+        private string ResolveVirtualPath(string partitionKey, string rowKey)
+        {
+            if (string.IsNullOrWhiteSpace(partitionKey))
+            {
+                return string.Format("~/App_Data/{0}.{1}.{2}", rowKey, partitionKey, handler.FileExtension);
+            }
+            else
+            {
+                return string.Format("~/App_Data/{0}.{2}", rowKey, handler.FileExtension);
             }
         }
 
-        private string[] ResolveVirtualPaths(string key)
-        {
-            return new string[] 
-            {
-                string.Format("~/App_Data/{0}.{1}.{2}", key, preferences.Locale, handler.FileExtension),
-                string.Format("~/App_Data/{0}.{1}.{2}", key, hosting.DefaultCulture.Name, handler.FileExtension),
-                string.Format("~/App_Data/{0}.{1}", key, handler.FileExtension)
-            };
-        }
-
-        public AppDataStorage(IHandler<T> handler, IBlobStorage localStorage, IPreferences preferences, IHosting hosting, ICache cache)
+        public AppDataStorage(IHandler<T> handler, IBlobStorage localStorage, IHosting hosting, ICache cache)
         {
             this.handler = handler;
             this.localStorage = localStorage;
-            this.preferences = preferences;
             this.hosting = hosting;
             this.cache = cache;
         }

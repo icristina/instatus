@@ -27,7 +27,7 @@ namespace Instatus.Sample
             containerBuilder.RegisterControllers(assembly);
             containerBuilder.RegisterSource(new ViewRegistrationSource());
 
-            containerBuilder.RegisterType<AppSettingsStorage<Credential>>().As<IKeyValueStorage<Credential>>();
+            containerBuilder.RegisterType<AppSettingsStorage<Credential>>().As<ILookup<Credential>>();
             containerBuilder.RegisterType<AspNetHosting>().As<IHosting>();
             containerBuilder.RegisterType<AspNetPreferences>().As<IPreferences>();
             containerBuilder.RegisterType<FileSystemBlobStorage>().As<IBlobStorage>();
@@ -41,6 +41,7 @@ namespace Instatus.Sample
             containerBuilder.RegisterType<DataFileGeocode>().As<IGeocode>();
             containerBuilder.RegisterType<HtmlDocumentHandler>().As<IHandler<Document>>();
             containerBuilder.RegisterType<RazorTemplating>().As<ITemplating>();
+            containerBuilder.RegisterType<MockEncryption>().As<IEncryption>();
 
             var container = containerBuilder.Build();
 

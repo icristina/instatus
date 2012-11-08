@@ -25,7 +25,7 @@ namespace Instatus.Integration.Azure
             return tableClient.GetTableServiceContext();
         }
 
-        public static TableServiceContext GetTableServiceContext(IKeyValueStorage<Credential> credentials)
+        public static TableServiceContext GetTableServiceContext(ILookup<Credential> credentials)
         {
             var credential = credentials.Get(WellKnown.Provider.WindowsAzure);
 

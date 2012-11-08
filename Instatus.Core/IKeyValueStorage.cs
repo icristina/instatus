@@ -9,9 +9,9 @@ namespace Instatus.Core
 {
     public interface IKeyValueStorage<T>
     {
-        T Get(string key);
-        IEnumerable<KeyValue<T>> Query(Criteria criteria);
-        void AddOrUpdate(string key, T value);
-        void Delete(string key);
+        T Get(string partitionKey, string rowKey);
+        IEnumerable<KeyValue<T>> Query(string partitionKey, Criteria criteria);
+        void AddOrUpdate(string partitionKey, string rowKey, T value);
+        void Delete(string partitionKey, string rowKey);
     }
 }

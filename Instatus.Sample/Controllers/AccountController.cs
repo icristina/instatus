@@ -10,7 +10,7 @@ namespace Instatus.Sample.Controllers
 {
     public class AccountController : Instatus.Integration.Mvc.AccountController
     {
-        public AccountController(IMembership membership, IKeyValueStorage<Credential> credentials)
+        public AccountController(IMembership membership, ILookup<Credential> credentials)
             : base(membership, credentials)
         {
 

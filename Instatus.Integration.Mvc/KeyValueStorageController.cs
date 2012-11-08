@@ -21,17 +21,18 @@ namespace Instatus.Integration.Mvc
         public IMapper Mapper { get; private set; }
 
         public ActionResult Index(
+            string partitionKey,
             int pageIndex = 0, 
             int pageSize = 20)
         {
-            ViewData.Model = KeyValueStorage.Query(null);
+            ViewData.Model = KeyValueStorage.Query(partitionKey, null);
 
             return View();
         }
 
-        public ActionResult Details(string id)
+        public ActionResult Details(string partitionKey, string rowKey)
         {
-            var model = KeyValueStorage.Get(id);
+            var model = KeyValueStorage.Get(partitionKey, rowKey);
 
             if (model == null)
             {
@@ -53,15 +54,15 @@ namespace Instatus.Integration.Mvc
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(string key, TViewModel viewModel)
+        public ActionResult Create(string partitionKey, string rowKey, TViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
                 var model = Mapper.Map<TModel>(viewModel);
 
-                KeyValueStorage.AddOrUpdate(key, model);
+                KeyValueStorage.AddOrUpdate(partitionKey, rowKey, model);
 
-                return RedirectToAction("Details", new { id = key });
+                return RedirectToAction("Details", new { partitionKey = partitionKey, rowKey = rowKey });
             }
             else
             {
@@ -72,9 +73,9 @@ namespace Instatus.Integration.Mvc
         }
 
         [HttpGet]
-        public ActionResult Edit(string id)
+        public ActionResult Edit(string partitionKey, string rowKey)
         {
-            var model = KeyValueStorage.Get(id);
+            var model = KeyValueStorage.Get(partitionKey, rowKey);
 
             if (model == null)
             {
@@ -88,11 +89,11 @@ namespace Instatus.Integration.Mvc
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(string id, TViewModel viewModel)
+        public ActionResult Edit(string partitionKey, string rowKey, TViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                var model = KeyValueStorage.Get(id);
+                var model = KeyValueStorage.Get(partitionKey, rowKey);
 
                 if (model == null)
                 {
@@ -101,9 +102,9 @@ namespace Instatus.Integration.Mvc
 
                 Mapper.Inject(model, viewModel);
 
-                KeyValueStorage.AddOrUpdate(id, model);
+                KeyValueStorage.AddOrUpdate(partitionKey, rowKey, model);
 
-                return RedirectToAction("Details", new { id = id });
+                return RedirectToAction("Details", new { partitionKey = partitionKey, rowKey = rowKey });
             }
             else
             {
@@ -115,9 +116,9 @@ namespace Instatus.Integration.Mvc
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(string id)
+        public ActionResult Delete(string partitionKey, string rowKey)
         {
-            KeyValueStorage.Delete(id);
+            KeyValueStorage.Delete(partitionKey, rowKey);
 
             return RedirectToAction("Index");
         }

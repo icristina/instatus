@@ -22,9 +22,9 @@ namespace Instatus.Integration.Facebook
         {
             get
             {
-                var keyValueStorage = DependencyResolver.Current.GetService<IKeyValueStorage<Credential>>();
+                var lookup = DependencyResolver.Current.GetService<ILookup<Credential>>();
                 
-                return keyValueStorage.Get(WellKnown.Provider.Facebook);
+                return lookup.Get(WellKnown.Provider.Facebook);
             }
         }
 

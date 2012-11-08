@@ -12,7 +12,7 @@ namespace Instatus.Integration.Maxmind
     // http://dev.maxmind.com/geoip/web-services
     public class RemoteGeocode : IGeocode
     {
-        private IKeyValueStorage<Credential> credentials;
+        private ILookup<Credential> credentials;
 
         private const string baseAddress = "http://geoip.maxmind.com";
         
@@ -38,7 +38,7 @@ namespace Instatus.Integration.Maxmind
             }
         }
 
-        public RemoteGeocode(IKeyValueStorage<Credential> credentials)
+        public RemoteGeocode(ILookup<Credential> credentials)
         {
             this.credentials = credentials;
         }

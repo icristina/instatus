@@ -17,7 +17,7 @@ namespace Instatus.Integration.Azure
     {
         public const string TableName = "Logger";
         
-        private IKeyValueStorage<Credential> credentials;
+        private ILookup<Credential> credentials;
         private BatchBlock<AzureLoggerEntity> buffer;
 
         public void Log(Exception exception, IDictionary<string, string> properties)
@@ -49,7 +49,7 @@ namespace Instatus.Integration.Azure
             dataContext.SaveChangesWithRetries();
         }
 
-        public AzureLogger(IKeyValueStorage<Credential> credentials)
+        public AzureLogger(ILookup<Credential> credentials)
         {
             this.credentials = credentials;
             this.buffer = new BatchBlock<AzureLoggerEntity>(AzureClient.TableServiceEntityBufferCount);

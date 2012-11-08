@@ -10,7 +10,7 @@ namespace Instatus.Integration.Mvc
 {
     public class GoogleAnalyticsAttribute : ActionFilterAttribute
     {
-        public IKeyValueStorage<Credential> Credentials { get; set; }
+        public ILookup<Credential> Credentials { get; set; }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {

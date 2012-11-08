@@ -11,48 +11,52 @@ namespace Instatus.Core.Impl
 {
     public abstract class InMemoryKeyValueStorage<T> : IKeyValueStorage<T> where T : class
     {
-        private ConcurrentDictionary<string, T> cache = new ConcurrentDictionary<string, T>();
+        private ConcurrentDictionary<Tuple<string, string>, T> cache = new ConcurrentDictionary<Tuple<string, string>, T>();
 
-        protected virtual T Find(string key)
+        protected virtual T Find(string partitionKey, string rowKey)
         {
             return null;
         }
 
-        public T Get(string key)
+        public T Get(string partitionKey, string rowKey)
         {
             T model;
 
-            if (!cache.TryGetValue(key, out model))
+            var compositeKey = new Tuple<string, string>(partitionKey, rowKey);
+
+            if (!cache.TryGetValue(compositeKey, out model))
             {
-                model = Find(key);
+                model = Find(partitionKey, rowKey);
 
                 if (model != null)
                 {
-                    cache.TryAdd(key, model);
+                    cache.TryAdd(compositeKey, model);
                 }
             }
 
             return model;
         }
 
-        public IEnumerable<KeyValue<T>> Query(Criteria criteria)
+        public IEnumerable<KeyValue<T>> Query(string partitionKey, Criteria criteria)
         {
-            return cache.Select(k => new KeyValue<T>() 
-            {
-                Key = k.Key,
-                Value = k.Value
-            });
+            return cache
+                .Where(k => k.Key.Item1 == partitionKey)
+                .Select(k => new KeyValue<T>() 
+                {
+                    Key = k.Key.Item2,
+                    Value = k.Value
+                });
         }
 
-        public void AddOrUpdate(string key, T model)
+        public void AddOrUpdate(string partitionKey, string rowKey, T model)
         {
-            cache.AddOrUpdate(key, model, (k, v) => model);
+            cache.AddOrUpdate(new Tuple<string, string>(partitionKey, rowKey), model, (k, v) => model);
         }
 
-        public void Delete(string key)
+        public void Delete(string partitionKey, string rowKey)
         {
             T removedModel;
-            cache.TryRemove(key, out removedModel);
+            cache.TryRemove(new Tuple<string, string>(partitionKey, rowKey), out removedModel);
         }
     }
 }
