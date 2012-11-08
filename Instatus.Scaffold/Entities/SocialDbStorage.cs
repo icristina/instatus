@@ -12,6 +12,7 @@ namespace Instatus.Scaffold.Entities
     {        
         private IEntityStorage entityStorage;
         private IPreferences preferences;
+        private IEncryption encryption;
         
         // ITaxonomy
         public string[] GetTags()
@@ -22,7 +23,9 @@ namespace Instatus.Scaffold.Entities
         // IMembership
         public bool ValidateUser(string userName, string password)
         {
-            throw new NotImplementedException();
+            var encryptedPassword = encryption.Encrypt(password);
+
+            return entityStorage.Set<User>().Any(u => u.EmailAddress == userName && u.Password == encryptedPassword);
         }
 
         public bool ValidateExternalUser(string providerName, string providerUserId, IDictionary<string, object> data, out string userName)
@@ -63,17 +66,37 @@ namespace Instatus.Scaffold.Entities
 
         public string GenerateVerificationToken(string userName)
         {
-            throw new NotImplementedException();
+            var user = entityStorage.Set<User>().Where(u => u.EmailAddress == userName).FirstOrDefault();
+            var verificationToken = Guid.NewGuid().ToString();
+
+            user.Token = verificationToken;
+            
+            entityStorage.SaveChanges();
+
+            return verificationToken;
         }
 
         public bool ValidateVerificationToken(string userName, string verificationToken)
         {
-            throw new NotImplementedException();
+            var user = entityStorage.Set<User>().Where(u => u.EmailAddress == userName && u.Token == verificationToken).FirstOrDefault();
+
+            if (user == null)
+                return false;
+
+            user.IsVerified = true;
+            
+            entityStorage.SaveChanges();
+
+            return true;
         }
 
         public void ChangePassword(string userName, string verificationToken, string newPassword)
         {
-            throw new NotImplementedException();
+            var user = entityStorage.Set<User>().Where(u => u.EmailAddress == userName && u.Token == verificationToken).FirstOrDefault();
+
+            user.Password = encryption.Encrypt(newPassword);
+
+            entityStorage.SaveChanges();
         }
 
         // IKeyValueStorage<Document>
@@ -137,10 +160,11 @@ namespace Instatus.Scaffold.Entities
             }
         }
 
-        public SocialDbStorage(IEntityStorage entityStorage, IPreferences preferences)
+        public SocialDbStorage(IEntityStorage entityStorage, IPreferences preferences, IEncryption encryption)
         {
             this.entityStorage = entityStorage;
             this.preferences = preferences;
+            this.encryption = encryption;
         }
     }
 }

@@ -26,7 +26,10 @@ namespace Instatus.Scaffold.Entities
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<Subscription> Subscriptions { get; set; }
         public Address Address { get; set; }
-        public bool OptIn { get; set; }
+        public bool IsOptedIn { get; set; }
+        public bool IsVerified { get; set; }
+        public string Token { get; set; }
+        public string Password { get; set; }
 
         public User()
         {
