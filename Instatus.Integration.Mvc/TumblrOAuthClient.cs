@@ -16,7 +16,7 @@ namespace Instatus.Integration.Mvc
     // https://github.com/DotNetOpenAuth/DotNetOpenAuth/blob/master/src/DotNetOpenAuth.AspNet/Clients/OAuth/TwitterClient.cs
     public class TumblrOAuthClient : OAuthClient 
     {
-        public static readonly ServiceProviderDescription ServiceDescription = new ServiceProviderDescription
+        public static readonly ServiceProviderDescription TumblrServiceDescription = new ServiceProviderDescription
         {
             RequestTokenEndpoint =
                 new MessageReceivingEndpoint(
@@ -37,7 +37,7 @@ namespace Instatus.Integration.Mvc
 			: this(consumerKey, consumerSecret, new AuthenticationOnlyCookieOAuthTokenManager()) { }
 
 		public TumblrOAuthClient(string consumerKey, string consumerSecret, IOAuthTokenManager tokenManager)
-			: base("tumblr", ServiceDescription, new SimpleConsumerTokenManager(consumerKey, consumerSecret, tokenManager)) {
+			: base("tumblr", TumblrServiceDescription, new SimpleConsumerTokenManager(consumerKey, consumerSecret, tokenManager)) {
 		}
 
         protected override AuthenticationResult VerifyAuthenticationCore(AuthorizedTokenResponse response)

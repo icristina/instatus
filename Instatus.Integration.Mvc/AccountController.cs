@@ -59,7 +59,7 @@ namespace Instatus.Integration.Mvc
         [ValidateAntiForgeryToken]
         public ActionResult ExternalLogin(string provider, string returnUrl)
         {
-            var callbackUrl = GenerateCallbackUrl(returnUrl);
+            var callbackUrl = GenerateCallbackUrl(provider, returnUrl);
             var securityManager = GetSecurityManager(provider);
             
             return new DelegateResult(c => {
@@ -68,10 +68,13 @@ namespace Instatus.Integration.Mvc
         }
 
         [AllowAnonymous]
-        public ActionResult ExternalLoginCallback(string returnUrl)
+        public ActionResult ExternalLoginCallback(string provider, string returnUrl)
         {
-            var callbackUrl = GenerateCallbackUrl(returnUrl);
-            var provider = OpenAuthSecurityManager.GetProviderName(ControllerContext.HttpContext);
+            provider = OpenAuthSecurityManager.GetProviderName(ControllerContext.HttpContext) 
+                ?? provider 
+                ?? RegistedProviders.First(p => Request.UrlReferrer.Host.IndexOf(p, StringComparison.OrdinalIgnoreCase) >= 0);
+            
+            var callbackUrl = GenerateCallbackUrl(provider, returnUrl);
             var securityManager = GetSecurityManager(provider);
             var authenticationResult = securityManager.VerifyAuthentication(callbackUrl);
 
@@ -93,7 +96,7 @@ namespace Instatus.Integration.Mvc
 
         public virtual IAuthenticationClient GetAuthenticationClient(string provider)
         {
-            if (!RegistedProviders.Contains(provider))
+            if (!RegistedProviders.Any(p => p.Equals(provider, StringComparison.OrdinalIgnoreCase)))
                 return null;
             
             var credential = credentials.Get(provider);
@@ -118,12 +121,12 @@ namespace Instatus.Integration.Mvc
         private OpenAuthSecurityManager GetSecurityManager(string provider)
         {
             var authenticationClient = GetAuthenticationClient(provider);
-            return new OpenAuthSecurityManager(ControllerContext.HttpContext, authenticationClient, null);
+            return new OpenAuthSecurityManager(ControllerContext.HttpContext, authenticationClient, new MockOpenAuthDataProvider());
         }
 
-        private string GenerateCallbackUrl(string returnUrl)
+        private string GenerateCallbackUrl(string provider, string returnUrl)
         {
-            return Url.Action("ExternalLoginCallback", new { ReturnUrl = returnUrl });
+            return Url.Action("ExternalLoginCallback"); // removed provider and returnUrl query parameters as being ignored by external auth providers on callback
         }
 
         public virtual bool CreatePersistentCookie
@@ -146,6 +149,14 @@ namespace Instatus.Integration.Mvc
         {
             this.membership = membership;
             this.credentials = credentials;
+        }
+    }
+
+    internal class MockOpenAuthDataProvider : IOpenAuthDataProvider
+    {
+        public string GetUserNameFromOpenAuth(string openAuthProvider, string openAuthId)
+        {
+            return openAuthId;
         }
     }
 }
