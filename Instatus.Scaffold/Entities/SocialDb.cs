@@ -28,6 +28,7 @@ namespace Instatus.Scaffold.Entities
         public DbSet<Taxonomy> Taxonomies { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Vote> Votes { get; set; }
+        public DbSet<Activity> Activities { get; set; }
         
         public SocialDb(string connectionName)
             : base(connectionName)

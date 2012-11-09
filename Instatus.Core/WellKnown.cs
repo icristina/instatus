@@ -100,6 +100,7 @@ namespace Instatus.Core
             public const string Microsoft = "Microsoft"; // microsoft account
             public const string Twitter = "Twitter";
             public const string Maxmind = "Maxmind";
+            public const string Tumblr = "Tumblr";
         }
 
         public static class Cookie

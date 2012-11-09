@@ -25,6 +25,7 @@ namespace Instatus.Scaffold.Entities
         public virtual ICollection<Like> Likes { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<Subscription> Subscriptions { get; set; }
+        public virtual ICollection<Activity> Activities { get; set; }
         public Address Address { get; set; }
         public bool IsOptedIn { get; set; }
         public bool IsVerified { get; set; }

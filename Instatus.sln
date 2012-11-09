@@ -52,6 +52,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instatus.Integration.Autofa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instatus.Integration.GoogleAnalytics", "Instatus.Integration.GoogleAnalytics\Instatus.Integration.GoogleAnalytics.csproj", "{A51783E4-F2B0-4221-9532-549E7DFA3662}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instatus.Integration.Tumblr", "Instatus.Integration.Tumblr\Instatus.Integration.Tumblr.csproj", "{690BDFC0-0222-4528-8FE8-5DFC50A27EA0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -146,6 +148,10 @@ Global
 		{A51783E4-F2B0-4221-9532-549E7DFA3662}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A51783E4-F2B0-4221-9532-549E7DFA3662}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A51783E4-F2B0-4221-9532-549E7DFA3662}.Release|Any CPU.Build.0 = Release|Any CPU
+		{690BDFC0-0222-4528-8FE8-5DFC50A27EA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{690BDFC0-0222-4528-8FE8-5DFC50A27EA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{690BDFC0-0222-4528-8FE8-5DFC50A27EA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{690BDFC0-0222-4528-8FE8-5DFC50A27EA0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
