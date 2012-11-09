@@ -129,7 +129,7 @@
     <Compile Include="HttpNotFoundAttribute.cs" />
     <Compile Include="DelegateResult.cs" />
     <Compile Include="ExtendedViewPage.cs" />
-    <Compile Include="FacebookClientExtended.cs" />
+    <Compile Include="FacebookOAuthClient.cs" />
     <Compile Include="FileStorageController.cs" />
     <Compile Include="FileStorageViewModel.cs" />
     <Compile Include="IframeCookieSupportAttribute.cs" />
@@ -144,6 +144,7 @@
     <Compile Include="SimpleMembershipProvider.cs" />
     <Compile Include="SimpleRoleProvider.cs" />
     <Compile Include="RssResult.cs" />
+    <Compile Include="TumblrOAuthClient.cs" />
     <Compile Include="UrlHelperExtensions.cs" />
   </ItemGroup>
   <ItemGroup>

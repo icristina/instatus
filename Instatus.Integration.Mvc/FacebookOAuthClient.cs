@@ -11,7 +11,7 @@ using System.Web;
 namespace Instatus.Integration.Mvc
 {
     // https://github.com/AArnott/dotnetopenid/blob/master/src/DotNetOpenAuth.AspNet/Clients/OAuth2/FacebookClient.cs
-    public class FacebookClientExtended : OAuth2Client
+    public class FacebookOAuthClient : OAuth2Client
     {
         private const string AuthorizationEndpoint = "https://www.facebook.com/dialog/oauth";
         private const string TokenEndpoint = "https://graph.facebook.com/oauth/access_token";
@@ -19,7 +19,7 @@ namespace Instatus.Integration.Mvc
         private readonly string appSecret;
         private readonly string[] claims;
 
-        public FacebookClientExtended(string appId, string appSecret, string[] claims)
+        public FacebookOAuthClient(string appId, string appSecret, string[] claims)
             : base("facebook")
         {
             this.appId = appId;

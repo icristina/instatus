@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Instatus.Core.Utils;
 using Instatus.Integration.Json;
+using Instatus.Integration.SystemNetHttp;
 using Instatus.Core;
 
 namespace Instatus.Integration.Facebook
@@ -21,24 +22,20 @@ namespace Instatus.Integration.Facebook
 
         public async Task<string> GetAppAccessToken(string applicationId, string privateKey)
         {
-            var requestUri = new PathBuilder("https://graph.facebook.com/oauth/access_token")
+            var uri = new PathBuilder("https://graph.facebook.com/oauth/access_token")
                 .Query("grant_type", "client_credentials")
                 .Query("client_id", applicationId)
                 .Query("client_secret", privateKey)
                 .ToString();
 
-            var httpResponse = await httpClient.GetAsync(requestUri);
-
-            httpResponse.EnsureSuccessStatusCode();
-
-            var stringResponse = await httpResponse.Content.ReadAsStringAsync();
+            var stringResponse = await httpClient.GetStringResponse(uri);
 
             AccessToken = stringResponse.Substring(13);
 
             return AccessToken;
         }
 
-        public async Task<T> GetGraphApiAsync<T>(string path, int limit, string[] fields)
+        public Task<T> GetGraphApiAsync<T>(string path, int limit, string[] fields)
         {
             var uri = new PathBuilder(path)
                 .Query("access_token", AccessToken)
@@ -46,23 +43,7 @@ namespace Instatus.Integration.Facebook
                 .Query("fields", fields)
                 .ToString();
 
-            var httpResponse = await httpClient.GetAsync(uri);
-
-            httpResponse.EnsureSuccessStatusCode();
-
-            var jsonMediaTypeFormatter = new JsonMediaTypeFormatter();
-            var jsonSerializationSettings = jsonMediaTypeFormatter.CreateDefaultSerializerSettings();
-
-            jsonSerializationSettings.ContractResolver = new UnderscoreMappingResolver();
-
-            jsonMediaTypeFormatter.SerializerSettings = jsonSerializationSettings;
-            jsonMediaTypeFormatter.SupportedMediaTypes.Clear();
-            jsonMediaTypeFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue(WellKnown.ContentType.Js));
-
-            return await httpResponse.Content.ReadAsAsync<T>(new MediaTypeFormatter[] 
-            { 
-                jsonMediaTypeFormatter 
-            });
+            return httpClient.GetJsonResponse<T>(uri);
         }
 
         public Task<T> GetFqlAsync<T>(string query, int limit)

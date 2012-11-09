@@ -89,7 +89,7 @@ namespace Instatus.Integration.Mvc
             }
         }
 
-        public static string[] RegistedProviders = new string[] { "Facebook", "Google" }; 
+        public static string[] RegistedProviders = new string[] { "Facebook", "Google", "Twitter", "Microsoft", "Tumblr" }; 
 
         public virtual IAuthenticationClient GetAuthenticationClient(string provider)
         {
@@ -101,13 +101,15 @@ namespace Instatus.Integration.Mvc
             switch (provider.ToLower())
             {
                 case "facebook":
-                    return new FacebookClientExtended(credential.PublicKey, credential.PrivateKey, credential.Claims);
+                    return new FacebookOAuthClient(credential.PublicKey, credential.PrivateKey, credential.Claims);
                 case "microsoft":
                     return new MicrosoftClient(credential.PublicKey, credential.PrivateKey);
                 case "twitter":
                     return new TwitterClient(credential.PublicKey, credential.PrivateKey);               
                 case "google":
                     return new GoogleOpenIdClient();
+                case "tumblr":
+                    return new TumblrOAuthClient(credential.PublicKey, credential.PrivateKey);     
                 default:
                     return null;
             }
