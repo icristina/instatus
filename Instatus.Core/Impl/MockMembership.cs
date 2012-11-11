@@ -19,17 +19,17 @@ namespace Instatus.Core.Impl
 
         public string GenerateVerificationToken(string userName)
         {
-            throw new NotImplementedException();
+            return Guid.NewGuid().ToString();
         }
 
         public bool ValidateVerificationToken(string userName, string verificationToken)
         {
-            throw new NotImplementedException();
+            return true;
         }
 
         public void ChangePassword(string userName, string verificationToken, string newPassword)
         {
-            throw new NotImplementedException();
+            // do nothing
         }
 
         public bool ValidateExternalUser(string providerName, string providerUserId, IDictionary<string, object> data, out string userName)

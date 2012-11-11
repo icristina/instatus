@@ -86,6 +86,7 @@
   <ItemGroup>
     <Compile Include="AutofacContainer.cs" />
     <Compile Include="AutofacGlobalContainer.cs" />
+    <Compile Include="ContainerBuilderExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

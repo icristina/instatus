@@ -13,10 +13,8 @@ namespace Instatus.Scaffold.Entities
         string Name { get; set; }
         string Content { get; set; }
         string Picture { get; set; }
-        DateTime Active { get; set; }
-        DateTime Start { get; set; }
-        DateTime End { get; set; }
         string Locale { get; set; }
         string Category { get; set; }
+        DateRange Publish { get; set; }
     }
 }

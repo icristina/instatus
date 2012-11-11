@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Autofac;
 using Autofac.Integration.Mvc;
 using Instatus.Core;
+using Instatus.Integration.Autofac;
 using Instatus.Integration.Server;
 using Instatus.Core.Impl;
 using Instatus.Integration.Maxmind;
@@ -22,10 +23,6 @@ namespace Instatus.Sample
         public static void RegisterContainer()
         {
             var containerBuilder = new ContainerBuilder();
-            var assembly = typeof(AutofacConfig).Assembly;
-
-            containerBuilder.RegisterControllers(assembly);
-            containerBuilder.RegisterSource(new ViewRegistrationSource());
 
             containerBuilder.RegisterType<AppSettingsStorage<Credential>>().As<ILookup<Credential>>();
             containerBuilder.RegisterType<AspNetHosting>().As<IHosting>();
@@ -34,7 +31,6 @@ namespace Instatus.Sample
             containerBuilder.RegisterType<WpfImaging>().As<IImaging>();
             containerBuilder.RegisterType<MockMembership>().As<IMembership>();
             containerBuilder.RegisterType<InMemoryLocalization>().As<ILocalization>();
-            //containerBuilder.RegisterType<AppDataStorage<Document>>().As<IKeyValueStorage<Document>>();
             containerBuilder.Register(c => new EfEntityStorage<InstatusSamplelDb>()).As<IEntityStorage>();
             containerBuilder.RegisterType<SocialDbStorage>().As<IKeyValueStorage<Document>>();
             containerBuilder.RegisterType<InMemoryTaxonomy>().As<ITaxonomy>();
@@ -43,9 +39,7 @@ namespace Instatus.Sample
             containerBuilder.RegisterType<RazorTemplating>().As<ITemplating>();
             containerBuilder.RegisterType<MockEncryption>().As<IEncryption>();
 
-            var container = containerBuilder.Build();
-
-            DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
+            containerBuilder.BootstrapMvcResolver<RouteConfig>();
         }
     }
 }

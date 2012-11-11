@@ -138,6 +138,7 @@
     <Compile Include="Entities\Poll.cs" />
     <Compile Include="Entities\Address.cs" />
     <Compile Include="Entities\Role.cs" />
+    <Compile Include="Entities\DateRange.cs" />
     <Compile Include="Entities\Score.cs" />
     <Compile Include="Entities\SocialDb.cs" />
     <Compile Include="Entities\SocialDbStorage.cs" />

@@ -8,25 +8,30 @@ namespace Instatus.Scaffold.Entities
 {
     public class Competition : IPage
     {
+        // IPage
         public int Id { get; set; }
         public string Name { get; set; }
         public string Content { get; set; }
         public string Picture { get; set; }
-        public DateTime Active { get; set; }
-        public DateTime Start { get; set; }
-        public DateTime End { get; set; }
         public string Locale { get; set; }
         public string Category { get; set; }
+        public DateRange Publish { get; set; }
+        
+        // ICreated
         public DateTime Created { get; set; }
+
+        // IPayload
         public string Data { get; set; }
+
+        public DateRange Valid { get; set; }
+
         public virtual ICollection<Entry> Entries { get; set; }
 
         public Competition()
         {
-            Active = SqlDateTime.MinValue.Value;
-            Start = SqlDateTime.MinValue.Value;
-            End = SqlDateTime.MaxValue.Value;
+            Publish = new DateRange();
             Created = DateTime.UtcNow;
+            Valid = new DateRange();
         }
     }
 }
