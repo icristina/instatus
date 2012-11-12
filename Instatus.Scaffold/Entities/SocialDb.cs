@@ -14,6 +14,7 @@ namespace Instatus.Scaffold.Entities
         public DbSet<Campaign> Campaigns { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Entry> Entries { get; set; }
+        public DbSet<Invite> Invites { get; set; }
         public DbSet<Like> Likes { get; set; }
         public DbSet<List> Lists { get; set; }
         public DbSet<Map> Maps { get; set; }

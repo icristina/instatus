@@ -9,6 +9,8 @@ namespace Instatus.Scaffold.Entities
     {
         public int Id { get; set; }
         public string Name { get; set; }
+
+        // Associations
         public virtual ICollection<Tag> Tags { get; set; }
     }
 }

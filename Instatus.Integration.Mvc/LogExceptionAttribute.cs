@@ -21,7 +21,10 @@ namespace Instatus.Integration.Mvc
         
         public void OnException(ExceptionContext context)
         {
-            Logger.Log(context.Exception, GenerateProperties(context));
+            if (Logger != null)
+            {
+                Logger.Log(context.Exception, GenerateProperties(context));
+            }
         }
     }
 }

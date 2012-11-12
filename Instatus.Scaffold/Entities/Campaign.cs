@@ -44,6 +44,7 @@ namespace Instatus.Scaffold.Entities
         public virtual ICollection<Vote> Votes { get; set; }
         public virtual ICollection<Entry> Entries { get; set; }
         public virtual ICollection<Map> Maps { get; set; }
+        public virtual ICollection<Invite> Invites { get; set; }
 
         public Campaign()
         {

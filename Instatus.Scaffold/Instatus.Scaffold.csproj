@@ -126,6 +126,7 @@
     <Compile Include="Entities\Comment.cs" />
     <Compile Include="Entities\Gate.cs" />
     <Compile Include="Entities\IModerated.cs" />
+    <Compile Include="Entities\Invite.cs" />
     <Compile Include="Entities\IPayload.cs" />
     <Compile Include="Entities\IScheduled.cs" />
     <Compile Include="Entities\Like.cs" />
