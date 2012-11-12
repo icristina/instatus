@@ -10,14 +10,19 @@ namespace Instatus.Scaffold.Entities
 {
     public class Subscription : ICreated, IPayload
     {
+        // ICreated
+        public DateTime Created { get; set; }
+        
+        // IPayload
+        public string Data { get; set; }
+
+        // Associations
         [Key, Column(Order = 0)]
         public int ListId { get; set; }
         public virtual List List { get; set; }
         [Key, Column(Order = 1)]
         public int UserId { get; set; }
         public virtual User User { get; set; }
-        public DateTime Created { get; set; }
-        public string Data { get; set; }
 
         public Subscription()
         {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Instatus.Core;
+using System;
 using System.Collections.Generic;
 using System.Data.Spatial;
 using System.Data.SqlTypes;
@@ -7,16 +8,20 @@ using System.Web;
 
 namespace Instatus.Scaffold.Entities
 {
-    public class Place : IPage
+    public class Place : IPage, ICreated, IPayload
     {
+        public int Id { get; set; }        
+        public DbGeography Point { get; set; }
+        public Address Address { get; set; }       
+        
         // IPage
-        public int Id { get; set; }
+        public string Slug { get; set; }
+        public string Locale { get; set; }
         public string Name { get; set; }
+        public string Description { get; set; }
         public string Content { get; set; }
         public string Picture { get; set; }
-        public string Locale { get; set; }
         public string Category { get; set; }
-        public DateRange Publish { get; set; }
 
         // ICreated
         public DateTime Created { get; set; }
@@ -24,12 +29,8 @@ namespace Instatus.Scaffold.Entities
         // IPayload
         public string Data { get; set; }    
 
-        public DbGeography Point { get; set; }
-        public Address Address { get; set; }
-
         public Place()
         {
-            Publish = new DateRange();
             Created = DateTime.UtcNow;
             Address = new Address();
         }

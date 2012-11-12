@@ -10,11 +10,15 @@ namespace Instatus.Scaffold.Entities
     {
         public int Id { get; set; }
         public int Choice { get; set; }
-        public int PollId { get; set; }
-        public virtual Poll Poll { get; set; }
+
+        // ICreated
+        public DateTime Created { get; set; }
+
+        // Associations
+        public int CampaignId { get; set; }
+        public virtual Campaign Campaign { get; set; }
         public int UserId { get; set; }
         public virtual User User { get; set; }
-        public DateTime Created { get; set; }
 
         public Vote()
         {

@@ -81,6 +81,12 @@ namespace Instatus.Core.Utils
             return this;
         }
 
+        public PathBuilder WithCacheBusting<T>()
+        {
+            Query("v", typeof(T).Assembly.GetName().Version.ToString());
+            return this;
+        }
+
         public string ToProtocolRelativeUri()
         {
             var uri = ToString();

@@ -6,7 +6,7 @@ using System.Web;
 
 namespace Instatus.Scaffold.Entities
 {
-    public class User : ICreated
+    public class User : ICreated, IPayload
     {
         public int Id { get; set; }
         public string FirstName { get; set; }
@@ -15,8 +15,21 @@ namespace Instatus.Scaffold.Entities
         public string FacebookId { get; set; }
         public string TwitterId { get; set; }
         public string Locale { get; set; }
-        public DateTime Created { get; set; }
+        public string Picture { get; set; }
         public Role Role { get; set; }
+        public Address Address { get; set; }
+        public bool IsOptedIn { get; set; }
+        public bool IsVerified { get; set; }
+        public string VerificationToken { get; set; }
+        public string Password { get; set; }
+
+        // ICreated
+        public DateTime Created { get; set; }
+
+        // IPayload
+        public string Data { get; set; }
+
+        // Associations
         public virtual ICollection<Vote> Votes { get; set; }
         public virtual ICollection<Score> Scores { get; set; }
         public virtual ICollection<Marker> Markers { get; set; }
@@ -25,12 +38,6 @@ namespace Instatus.Scaffold.Entities
         public virtual ICollection<Like> Likes { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<Subscription> Subscriptions { get; set; }
-        public virtual ICollection<Activity> Activities { get; set; }
-        public Address Address { get; set; }
-        public bool IsOptedIn { get; set; }
-        public bool IsVerified { get; set; }
-        public string Token { get; set; }
-        public string Password { get; set; }
 
         public User()
         {

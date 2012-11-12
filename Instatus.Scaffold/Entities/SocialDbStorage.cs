@@ -68,7 +68,7 @@ namespace Instatus.Scaffold.Entities
             var user = entityStorage.Set<User>().Where(u => u.EmailAddress == userName).FirstOrDefault();
             var verificationToken = Guid.NewGuid().ToString();
 
-            user.Token = verificationToken;
+            user.VerificationToken = verificationToken;
             
             entityStorage.SaveChanges();
 
@@ -77,7 +77,7 @@ namespace Instatus.Scaffold.Entities
 
         public bool ValidateVerificationToken(string userName, string verificationToken)
         {
-            var user = entityStorage.Set<User>().Where(u => u.EmailAddress == userName && u.Token == verificationToken).FirstOrDefault();
+            var user = entityStorage.Set<User>().Where(u => u.EmailAddress == userName && u.VerificationToken == verificationToken).FirstOrDefault();
 
             if (user == null)
                 return false;
@@ -91,7 +91,7 @@ namespace Instatus.Scaffold.Entities
 
         public void ChangePassword(string userName, string verificationToken, string newPassword)
         {
-            var user = entityStorage.Set<User>().Where(u => u.EmailAddress == userName && u.Token == verificationToken).FirstOrDefault();
+            var user = entityStorage.Set<User>().Where(u => u.EmailAddress == userName && u.VerificationToken == verificationToken).FirstOrDefault();
 
             user.Password = encryption.Encrypt(newPassword);
 
