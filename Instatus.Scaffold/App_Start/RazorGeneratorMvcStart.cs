@@ -3,9 +3,9 @@ using System.Web.Mvc;
 using System.Web.WebPages;
 using RazorGenerator.Mvc;
 
-[assembly: WebActivator.PostApplicationStartMethod(typeof(Instatus.Scaffold.App_Start.RazorGeneratorMvcStart), "Start")]
+[assembly: WebActivator.PostApplicationStartMethod(typeof(Instatus.Scaffold.RazorGeneratorMvcStart), "Start")]
 
-namespace Instatus.Scaffold.App_Start {
+namespace Instatus.Scaffold {
     public static class RazorGeneratorMvcStart {
         public static void Start() {
             var engine = new PrecompiledMvcEngine(typeof(RazorGeneratorMvcStart).Assembly) 

@@ -1,0 +1,9 @@
+﻿@inherits Instatus.Integration.Mvc.ExtendedViewPage<Instatus.Integration.Mvc.PagedViewModel<Instatus.Scaffold.Entities.Post>>
+
+@foreach (var post in Model)
+{
+    <article>
+        <h1>@post.Name</h1>
+        @Html.Raw(post.Content)
+    </article>
+}

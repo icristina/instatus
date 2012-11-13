@@ -11,10 +11,10 @@ using System.Web.Mvc;
 
 namespace Instatus.Sample.Controllers
 {
-    public class AdminController : KeyValueStorageController<Document, PostViewModel>
+    public class AdminController : KeyValueStorageController<Document, PostViewModel2>
     {
         public AdminController(IKeyValueStorage<Document> keyValueStorage)
-            : base(keyValueStorage, new EntityMapper<Document, PostViewModel>(d => new PostViewModel()
+            : base(keyValueStorage, new EntityMapper<Document, PostViewModel2>(d => new PostViewModel2()
             {
                 Title = d.Title,
                 Description = d.Description
@@ -32,7 +32,7 @@ namespace Instatus.Sample.Controllers
         }
     }
 
-    public class PostViewModel
+    public class PostViewModel2
     {
         [HiddenInput(DisplayValue = false)]
         public string Key { get; set; }

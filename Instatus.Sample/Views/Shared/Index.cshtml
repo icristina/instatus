@@ -1,0 +1,29 @@
+﻿<div class="container">
+    @Html.ActionLink("Create", "Create", null, new { target = "_blank" })
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Title</td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { target = "_blank" })
+                        @using (Html.BeginForm("Delete", ViewContext.RouteData.GetRequiredString("controller"), new { id = item.Id }, FormMethod.Post, null))
+                        {
+                            @Html.AntiForgeryToken()
+                            <button type="submit">Delete</button>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

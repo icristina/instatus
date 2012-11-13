@@ -150,6 +150,8 @@
     <Compile Include="App_Start\MvcConfig.cs" />
     <Compile Include="App_Start\LocalizationConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AuthorController.cs" />
+    <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\CanvasController.cs" />
     <Compile Include="Controllers\PageController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -189,10 +191,10 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Content\reset.less" />
+    <Content Include="Views\Blog\Index.cshtml" />
+    <Content Include="Views\Shared\Index.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\Shared\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
