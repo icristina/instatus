@@ -13,7 +13,7 @@ namespace Instatus.Integration.Mvc
 {
     public static class UrlHelperExtensions
     {
-        public static string ContentPage(this UrlHelper urlHelper, string key)
+        public static string Page(this UrlHelper urlHelper, string key)
         {
             var locale = DependencyResolver.Current.GetService<IPreferences>().Locale;
             

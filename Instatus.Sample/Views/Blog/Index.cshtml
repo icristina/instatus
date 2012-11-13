@@ -1,9 +1,32 @@
-﻿@inherits Instatus.Integration.Mvc.ExtendedViewPage<Instatus.Integration.Mvc.PagedViewModel<Instatus.Scaffold.Entities.Post>>
+﻿@inherits Instatus.Integration.Mvc.ExtendedViewPage<Instatus.Scaffold.Models.Blog>
 
-@foreach (var post in Model)
-{
-    <article>
-        <h1>@post.Name</h1>
-        @Html.Raw(post.Content)
-    </article>
-}
+<div class="container">
+    <h1 class="page-header">Blog</h1>
+    <div class="row">
+        <div class="span8">
+            @foreach (var post in Model)
+            {
+                <article>
+                    <a href="@Url.Action("Details", new { slug = post.Slug })">
+                        <h1>@post.Title</h1>
+                        @Html.Raw(post.Body)
+                    </a>
+                </article>
+            }
+        </div>
+        <div class="span4">
+            <section>
+                <h2>Tags</h2>
+                <ul>
+                    @foreach (var tag in Model.TagCloud)
+                    {
+                        <li>
+                            @Html.ActionLink(tag.Key, "Index", new { tag = tag.Key })
+                        </li>
+                    }
+                </ul>
+            </section>
+        </div>
+        @Html.Pagination(Model)
+    </div>
+</div>

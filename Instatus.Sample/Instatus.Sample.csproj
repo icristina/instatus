@@ -193,6 +193,7 @@
     <Content Include="Content\reset.less" />
     <Content Include="Views\Blog\Index.cshtml" />
     <Content Include="Views\Shared\Index.cshtml" />
+    <Content Include="Views\Blog\Details.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

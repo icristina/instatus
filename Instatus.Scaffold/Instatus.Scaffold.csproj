@@ -122,6 +122,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RazorGeneratorMvcStart.cs" />
+    <Compile Include="ScaffoldConfig.cs" />
+    <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Entities\Campaign.cs" />
     <Compile Include="Entities\Comment.cs" />
     <Compile Include="Entities\Gate.cs" />
@@ -150,6 +152,9 @@
     <Compile Include="Entities\User.cs" />
     <Compile Include="Entities\Vote.cs" />
     <Compile Include="HtmlHelperExtensions.cs" />
+    <Compile Include="Models\Blog.cs" />
+    <Compile Include="Models\BlogPost.cs" />
+    <Compile Include="Models\TagCloud.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

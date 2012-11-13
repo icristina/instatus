@@ -1,5 +1,6 @@
 ﻿using Instatus.Integration.Mvc;
 using Instatus.Integration.Server;
+using Instatus.Scaffold;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,7 @@ namespace Instatus.Sample
         {
             BaseMvcConfig.RegisterIgnoreRoutes(routes);
             BaseMvcConfig.RegisterImageHandlerRoute(routes);
+            ScaffoldConfig.RegisterBlogRoutes(routes);
             BaseMvcConfig.RegisterPageRoute(routes);
             BaseMvcConfig.RegisterDefaultRoute(routes);
         }

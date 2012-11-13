@@ -35,6 +35,11 @@ namespace Instatus.Sample
     {
         protected override void Seed(SocialDb context)
         {
+            var taxonomy = new Taxonomy()
+            {
+                Name = "tags"
+            };
+            
             context.Posts.Add(new Post()
             {
                 Locale = WellKnown.Locale.UnitedStates,
@@ -42,6 +47,26 @@ namespace Instatus.Sample
                 Name = "Home",
                 Content = "<p>Homepage</p>"
             });
+
+            for (var i = 1; i < 30; i++)
+            {
+                context.Posts.Add(new Post()
+                {
+                    Locale = WellKnown.Locale.UnitedStates,
+                    Category = WellKnown.Kind.BlogPost,
+                    Slug = "post-" + i,
+                    Name = "Post " + i,
+                    Content = "<p>Post " + i + "</p>",
+                    Tags = new List<Tag>()
+                    {
+                        new Tag() 
+                        {
+                            Name = "tag" + i,
+                            Taxonomy = taxonomy
+                        }
+                    }
+                });
+            }
             
             base.Seed(context);
         }

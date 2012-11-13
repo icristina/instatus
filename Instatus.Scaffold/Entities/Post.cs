@@ -41,6 +41,7 @@ namespace Instatus.Scaffold.Entities
         public Post()
         {
             Created = DateTime.UtcNow;
+            State = State.Approved;
         }
     }
 }

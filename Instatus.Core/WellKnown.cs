@@ -22,6 +22,7 @@ namespace Instatus.Core
             public const string Alias = @"^[a-z0-9-]+$";
             public const string RealName = @"^[A-Za-z-\s]+$";
             public const string Locale = @"^[a-z]{2}(-[A-Z]{2})?$";
+            public const string Number = @"^[0-9]+$";
         }
 
         public static class LocalResources
@@ -71,6 +72,8 @@ namespace Instatus.Core
         {
             public const string Default = "Default";
             public const string Page = "Page";
+            public const string Blog = "Blog";
+            public const string BlogPost = "BlogPost";
         }
 
         public static class RouteValue
@@ -111,6 +114,11 @@ namespace Instatus.Core
         public static class Preference
         {
             public const string Locale = "Locale";
+        }
+
+        public static class Kind
+        {
+            public const string BlogPost = "BlogPost";
         }
     }
 }
