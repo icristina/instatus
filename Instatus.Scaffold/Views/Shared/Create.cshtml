@@ -1,4 +1,8 @@
-﻿@using (Html.BeginForm("Create", ViewContext.RouteData.GetRequiredString("controller"), FormMethod.Post, new { enctype = "multipart/form-data" }))
+﻿@{
+    Layout = "~/Views/Shared/_Bootstrap.cshtml";
+}
+
+@using (Html.BeginForm("Create", ViewContext.RouteData.GetRequiredString("controller"), FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     <div class="container form-horizontal">

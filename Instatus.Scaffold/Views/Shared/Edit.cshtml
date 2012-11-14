@@ -1,4 +1,8 @@
-﻿@using (Html.BeginForm())
+﻿@{
+    Layout = "~/Views/Shared/_Bootstrap.cshtml";
+}
+
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     <div class="container form-horizontal">

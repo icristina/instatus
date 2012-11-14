@@ -3,6 +3,10 @@
 @using Instatus.Core
 @using Instatus.Scaffold
 
+@{
+    Layout = "~/Views/Shared/_Bootstrap.cshtml";
+}
+
 <div class="container">
     <div class="form-actions">
         @Html.ActionLink(Phrase("Create"), "Create", null, new { target = "_blank", @class = "btn btn-primary" })
