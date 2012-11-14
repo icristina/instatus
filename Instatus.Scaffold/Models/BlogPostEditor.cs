@@ -11,7 +11,7 @@ using System.Web.Mvc;
 
 namespace Instatus.Scaffold.Models
 {
-    public class BlogPostEditor : EntityMapper<Post, BlogPostEditor>
+    public class BlogPostEditor
     {
         [HiddenInput(DisplayValue = false)]
         public int Id { get; set; }
@@ -32,35 +32,47 @@ namespace Instatus.Scaffold.Models
         [Required]
         public string Content { get; set; }
 
+        public string Tags { get; set; }
+
         public override string ToString()
         {
             return Title;
         }
 
-        public BlogPostEditor() 
-            : base(p => new BlogPostEditor()
+        public class Mapper : EntityMapper<Post, BlogPostEditor>
+        {
+            private IEntityStorage entityStorage;
+            
+            public Mapper(IEntityStorage entityStorage)
+            {
+                this.entityStorage = entityStorage;
+                
+                ProjectEntityToViewModel = p => new BlogPostEditor()
                 {
                     Id = p.Id,
                     Title = p.Name,
                     Content = p.Content,
                     FriendlyUrl = p.Slug,
                     Published = p.Created
-                }, 
-                p => new Post()
+                };
+
+                MapEntityToViewModel = ProjectEntityToViewModel.Compile(); 
+
+                MapViewModelToEntity = p => new Post()
                 {
                     Name = p.Title,
                     Content = p.Content,
                     Slug = p.FriendlyUrl,
                     Category = WellKnown.Kind.BlogPost
-                }, 
-                (d, p) =>
+                };
+
+                InjectViewModelValuesToEntity = (d, p) =>
                 {
                     d.Name = p.Title;
                     d.Content = p.Content;
                     d.Slug = p.FriendlyUrl;
-                }) 
-        {
-
+                };
+            }
         }
     }
 }

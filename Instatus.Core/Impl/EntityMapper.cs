@@ -10,17 +10,17 @@ namespace Instatus.Core.Impl
         where TEntity : class 
         where TModel : class
     {
-        private Expression<Func<TEntity, TModel>> projectEntityToViewModelForSelect;
-        private Func<TEntity, TModel> mapEntityToViewModelForSingle;
-        private Func<TModel, TEntity> mapViewModelToEntity;
-        private Action<TEntity, TModel> injectViewModelValuesToEntity;
+        public Expression<Func<TEntity, TModel>> ProjectEntityToViewModel { get; protected set; }
+        public Func<TEntity, TModel> MapEntityToViewModel { get; protected set; }
+        public Func<TModel, TEntity> MapViewModelToEntity { get; protected set; }
+        public Action<TEntity, TModel> InjectViewModelValuesToEntity { get; protected set; }
 
         public Expression<Func<T, TOutput>> Projection<T, TOutput>()
             where T : class
             where TOutput : class
         {
             if (typeof(T) == typeof(TEntity) && typeof(TOutput) == typeof(TModel))
-                return projectEntityToViewModelForSelect as Expression<Func<T, TOutput>>;
+                return ProjectEntityToViewModel as Expression<Func<T, TOutput>>;
 
             throw new NotSupportedException("No mapping exists");
         }
@@ -28,10 +28,10 @@ namespace Instatus.Core.Impl
         public T Map<T>(object source) where T : class
         {
             if (source is TEntity)
-                return mapEntityToViewModelForSingle.Invoke((TEntity)source) as T;
+                return MapEntityToViewModel.Invoke((TEntity)source) as T;
 
             if (source is TModel)
-                return mapViewModelToEntity.Invoke((TModel)source) as T;
+                return MapViewModelToEntity.Invoke((TModel)source) as T;
 
             throw new NotSupportedException("No mapping exists");
         }
@@ -41,7 +41,7 @@ namespace Instatus.Core.Impl
             if (target is TEntity && source is TModel)
             {
 
-                injectViewModelValuesToEntity.Invoke(target as TEntity, source as TModel);
+                InjectViewModelValuesToEntity.Invoke(target as TEntity, source as TModel);
             }
             else
             {
@@ -49,16 +49,18 @@ namespace Instatus.Core.Impl
             }
         }
 
+        public EntityMapper() { }
+
         public EntityMapper(
             Expression<Func<TEntity, TModel>> projectEntityToViewModelForQuery, 
             Func<TEntity, TModel> mapEntityToViewModelForSingle,
             Func<TModel, TEntity> mapViewModelToEntity, 
             Action<TEntity, TModel> injectViewModelValuesToEntity)
         {
-            this.projectEntityToViewModelForSelect = projectEntityToViewModelForQuery;
-            this.mapEntityToViewModelForSingle = mapEntityToViewModelForSingle ?? projectEntityToViewModelForQuery.Compile();
-            this.mapViewModelToEntity = mapViewModelToEntity;
-            this.injectViewModelValuesToEntity = injectViewModelValuesToEntity;
+            this.ProjectEntityToViewModel = projectEntityToViewModelForQuery;
+            this.MapEntityToViewModel = mapEntityToViewModelForSingle ?? projectEntityToViewModelForQuery.Compile();
+            this.MapViewModelToEntity = mapViewModelToEntity;
+            this.InjectViewModelValuesToEntity = injectViewModelValuesToEntity;
         }
 
         public EntityMapper(
