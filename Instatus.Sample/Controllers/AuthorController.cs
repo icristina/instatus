@@ -2,6 +2,7 @@
 using Instatus.Core.Impl;
 using Instatus.Integration.Mvc;
 using Instatus.Scaffold.Entities;
+using Instatus.Scaffold.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -11,40 +12,19 @@ using System.Web.Mvc;
 
 namespace Instatus.Sample.Controllers
 {
-    public class AuthorController : EntityStorageController<Post, PostViewModel> 
+    public class AuthorController : EntityStorageController<Post, BlogPostEditor> 
     {
+        public override IOrderedQueryable<BlogPostEditor> Query(string orderBy, string filter)
+        {
+            return EntitySet
+                .Select(Mapper.Projection<Post, BlogPostEditor>())
+                .OrderByDescending(b => b.Published);
+        }
+        
         public AuthorController(IEntityStorage entityStorage)
-            : base(entityStorage, new EntityMapper<Post, PostViewModel>(
-                p => new PostViewModel()
-                {
-                    Id = p.Id,
-                    Title = p.Name,
-                    Content = p.Content
-                }, 
-                p => new Post()
-                {
-                    Name = p.Title,
-                    Content = p.Content
-                }, 
-                (d, p) =>
-                {
-                    d.Name = p.Title;
-                    d.Content = p.Content;
-                }))
+            : base(entityStorage, new BlogPostEditor())
         {
 
         }
-    }
-
-    public class PostViewModel
-    {
-        [HiddenInput(DisplayValue = false)]
-        public int Id { get; set; }
-        
-        public string Title { get; set; }
-
-        [AllowHtml]
-        [DataType(DataType.MultilineText)]
-        public string Content { get; set; }
     }
 }

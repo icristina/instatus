@@ -1,7 +1,7 @@
 ﻿@inherits Instatus.Integration.Mvc.ExtendedViewPage<Instatus.Scaffold.Models.Blog>
 
 <div class="container">
-    <h1 class="page-header">Blog</h1>
+    <h1 class="page-header">@Phrase("Blog")</h1>
     <div class="row">
         <div class="span8">
             @foreach (var post in Model)
@@ -16,17 +16,21 @@
         </div>
         <div class="span4">
             <section>
-                <h2>Tags</h2>
+                <h2>@Phrase("Tags")</h2>
                 <ul>
                     @foreach (var tag in Model.TagCloud)
                     {
                         <li>
-                            @Html.ActionLink(tag.Key, "Index", new { tag = tag.Key })
+                            @Html.ActionLink(string.Format("{0} ({1})", tag.Key, tag.Value), "Index", new { tag = tag.Key, pageIndex = 0 })
                         </li>
                     }
                 </ul>
             </section>
         </div>
-        @Html.Pagination(Model)
+    </div>
+    <div class="row">
+        <div class="span12">
+            @Html.Pagination(Model)
+        </div>
     </div>
 </div>

@@ -8,9 +8,11 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.SessionState;
 
 namespace Instatus.Scaffold.Controllers
 {
+    [SessionState(SessionStateBehavior.Disabled)]
     public abstract class BlogController : Controller
     {
         private IEntityStorage entityStorage;

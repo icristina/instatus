@@ -19,7 +19,7 @@ namespace Instatus.Scaffold
         {
             routes.MapRoute(
                 name: WellKnown.RouteName.Blog,
-                url: "blog/{pageIndex}",
+                url: "blog/{pageIndex}/{tag}",
                 defaults: new { controller = controllerName, action = "Index" },
                 constraints: new { pageIndex = WellKnown.RegularExpression.Number }
             );
