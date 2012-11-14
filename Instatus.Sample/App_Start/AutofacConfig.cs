@@ -15,6 +15,7 @@ using Instatus.Integration.Razor;
 using Instatus.Core.Models;
 using Instatus.Scaffold.Entities;
 using Instatus.Integration.EntityFramework;
+using Instatus.Scaffold.Models;
 
 namespace Instatus.Sample
 {
@@ -31,13 +32,14 @@ namespace Instatus.Sample
             containerBuilder.RegisterType<WpfImaging>().As<IImaging>();
             containerBuilder.RegisterType<MockMembership>().As<IMembership>();
             containerBuilder.RegisterType<InMemoryLocalization>().As<ILocalization>();
-            containerBuilder.Register(c => new EfEntityStorage<InstatusSamplelDb>()).As<IEntityStorage>();
+            containerBuilder.Register(c => new EfEntityStorage<InstatusSamplelDb>()).As<IEntityStorage>().InstancePerLifetimeScope();
             containerBuilder.RegisterType<SocialDbStorage>().As<IKeyValueStorage<Document>>();
             containerBuilder.RegisterType<InMemoryTaxonomy>().As<ITaxonomy>();
             containerBuilder.RegisterType<DataFileGeocode>().As<IGeocode>();
             containerBuilder.RegisterType<HtmlDocumentHandler>().As<IHandler<Document>>();
             containerBuilder.RegisterType<RazorTemplating>().As<ITemplating>();
             containerBuilder.RegisterType<MockEncryption>().As<IEncryption>();
+            containerBuilder.RegisterType<BlogPostEditor>().UsingConstructor(typeof(IEntityStorage));
 
             containerBuilder.BootstrapMvcResolver<RouteConfig>();
         }

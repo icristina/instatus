@@ -11,8 +11,10 @@ using System.Web.Mvc;
 
 namespace Instatus.Scaffold.Models
 {
-    public class BlogPostEditor
+    public class BlogPostEditor : EntityMapper<Post, BlogPostEditor>
     {
+        private IEntityStorage entityStorage;
+        
         [HiddenInput(DisplayValue = false)]
         public int Id { get; set; }
 
@@ -34,45 +36,54 @@ namespace Instatus.Scaffold.Models
 
         public string Tags { get; set; }
 
+        // Friendly name
         public override string ToString()
         {
             return Title;
         }
 
-        public class Mapper : EntityMapper<Post, BlogPostEditor>
+        // Mapper
+        public override Expression<Func<Post, BlogPostEditor>> GetProjection()
         {
-            private IEntityStorage entityStorage;
-            
-            public Mapper(IEntityStorage entityStorage)
+            return p => new BlogPostEditor()
             {
-                this.entityStorage = entityStorage;
-                
-                ProjectEntityToViewModel = p => new BlogPostEditor()
-                {
-                    Id = p.Id,
-                    Title = p.Name,
-                    Content = p.Content,
-                    FriendlyUrl = p.Slug,
-                    Published = p.Created
-                };
+                Id = p.Id,
+                Title = p.Name,
+                Content = p.Content,
+                FriendlyUrl = p.Slug,
+                Published = p.Created
+            };
+        }
 
-                MapEntityToViewModel = ProjectEntityToViewModel.Compile(); 
+        public override Post CreateEntity(BlogPostEditor model)
+        {
+            return new Post()
+            {
+                Name = model.Title,
+                Content = model.Content,
+                Slug = model.FriendlyUrl,
+                Category = WellKnown.Kind.BlogPost
+            };
+        }
 
-                MapViewModelToEntity = p => new Post()
-                {
-                    Name = p.Title,
-                    Content = p.Content,
-                    Slug = p.FriendlyUrl,
-                    Category = WellKnown.Kind.BlogPost
-                };
+        public override BlogPostEditor CreateViewModel(Post entity)
+        {
+            return GetProjection().Compile()(entity);
+        }
 
-                InjectViewModelValuesToEntity = (d, p) =>
-                {
-                    d.Name = p.Title;
-                    d.Content = p.Content;
-                    d.Slug = p.FriendlyUrl;
-                };
-            }
+        public override void FillEntity(Post entity, BlogPostEditor model)
+        {
+            entity.Name = model.Title;
+            entity.Content = model.Content;
+            entity.Slug = model.FriendlyUrl;
+        }
+
+        // Constructors
+        public BlogPostEditor() { }
+
+        public BlogPostEditor(IEntityStorage entityStorage)
+        {
+            this.entityStorage = entityStorage;
         }
     }
 }

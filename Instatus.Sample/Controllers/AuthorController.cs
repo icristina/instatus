@@ -21,8 +21,8 @@ namespace Instatus.Sample.Controllers
                 .OrderByDescending(b => b.Published);
         }
         
-        public AuthorController(IEntityStorage entityStorage)
-            : base(entityStorage, new BlogPostEditor())
+        public AuthorController(IEntityStorage entityStorage, BlogPostEditor mapper)
+            : base(entityStorage, mapper)
         {
 
         }
