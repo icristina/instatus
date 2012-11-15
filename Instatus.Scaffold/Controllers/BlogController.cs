@@ -44,6 +44,7 @@ namespace Instatus.Scaffold.Controllers
 
             var tags = entityStorage
                 .Set<Tag>()
+                .Where(t => t.Posts.Any(p => p.State == State.Approved && p.Category == WellKnown.Kind.BlogPost))
                 .OrderBy(t => t.Name)
                 .Select(t => new 
                 {

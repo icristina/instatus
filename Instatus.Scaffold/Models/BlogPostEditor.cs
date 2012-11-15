@@ -29,6 +29,8 @@ namespace Instatus.Scaffold.Models
         [Required]
         public string Title { get; set; }
 
+        public string Picture { get; set; }
+
         [AllowHtml]
         [DataType(DataType.Html)]
         [Required]
@@ -51,24 +53,34 @@ namespace Instatus.Scaffold.Models
                 Title = p.Name,
                 Content = p.Content,
                 FriendlyUrl = p.Slug,
-                Published = p.Created
+                Published = p.Created,
+                Picture = p.Picture
             };
         }
 
         public override Post CreateEntity(BlogPostEditor model)
         {
-            return new Post()
+            var post = new Post()
             {
                 Name = model.Title,
                 Content = model.Content,
                 Slug = model.FriendlyUrl,
-                Category = WellKnown.Kind.BlogPost
+                Category = WellKnown.Kind.BlogPost,
+                Picture = model.Picture
             };
+
+            SyncTags(post, model.Tags);
+
+            return post;
         }
 
         public override BlogPostEditor CreateViewModel(Post entity)
         {
-            return GetProjection().Compile()(entity);
+            var blogPostEditor = GetProjection().Compile()(entity);
+
+            blogPostEditor.Tags = string.Join(", ", entity.Tags.Select(t => t.Name).ToArray());
+
+            return blogPostEditor;
         }
 
         public override void FillEntity(Post entity, BlogPostEditor model)
@@ -76,6 +88,43 @@ namespace Instatus.Scaffold.Models
             entity.Name = model.Title;
             entity.Content = model.Content;
             entity.Slug = model.FriendlyUrl;
+            entity.Picture = model.Picture;
+
+            SyncTags(entity, model.Tags);
+        }
+
+        private void SyncTags(Post post, string tags)
+        {
+            post.Tags.Clear();
+
+            if (!string.IsNullOrWhiteSpace(tags))
+            {
+                var tagNames = tags
+                    .Split(',', ';')
+                    .Where(t => !string.IsNullOrWhiteSpace(t))
+                    .Select(t => t.Trim())
+                    .Distinct();
+
+                Taxonomy taxonomy = null;
+
+                foreach (var tag in tagNames)
+                {
+                    var existingTag = entityStorage.Set<Tag>().FirstOrDefault(t => t.Name == tag);
+
+                    if (existingTag != null)
+                    {
+                        post.Tags.Add(existingTag);
+                    }
+                    else
+                    {
+                        post.Tags.Add(new Tag()
+                        {
+                            Name = tag,
+                            Taxonomy = taxonomy ?? (taxonomy = entityStorage.Set<Taxonomy>().FirstOrDefault())
+                        });
+                    }
+                }
+            }
         }
 
         // Constructors
