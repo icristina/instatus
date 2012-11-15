@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Web.Mvc;
 
-namespace Instatus.Integration.Mvc
+namespace Instatus.Integration.GoogleAnalytics
 {
     public class GoogleAnalyticsAttribute : ActionFilterAttribute
     {

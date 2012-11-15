@@ -20,7 +20,7 @@ namespace Instatus.Integration.Mvc
             if (viewResult == null)
                 return;
 
-            if (request.IsAjaxRequest())
+            if (request.IsAjaxRequest() || filterContext.IsChildAction)
             {
                 filterContext.Result = new PartialViewResult
                 {
