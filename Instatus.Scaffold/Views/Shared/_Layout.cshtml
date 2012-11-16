@@ -2,4 +2,11 @@
     Layout = "~/Views/Shared/_Bootstrap.cshtml";
 }
 
+@section head {
+    @Html.TryPartial("_Head")
+}
+
+@Html.TryPartial("_Header")
+@Html.TryPartial("_Navigation")
 @RenderBody()
+@Html.TryPartial("_Footer")

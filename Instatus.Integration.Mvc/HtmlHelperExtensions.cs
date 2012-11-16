@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web.Mvc;
+using System.Web.Mvc.Html;
 using Instatus.Core.Extensions;
 using System.Web.WebPages;
 
@@ -47,6 +48,21 @@ namespace Instatus.Integration.Mvc
             var html = string.Format("<script>window.{0} = {1};</script>", variableName, jsonSerializer.Stringify(graph));
 
             return new MvcHtmlString(html);
+        }
+
+        // https://github.com/erichexter/twitter.bootstrap.mvc/blob/master/src/BootstrapSupport/ViewHelperExtensions.cs
+        public static MvcHtmlString TryPartial<T>(this HtmlHelper<T> htmlHelper, string viewName, object model = null)
+        {
+            try
+            {
+                return htmlHelper.Partial(viewName, model);
+            }
+            catch (Exception)
+            {
+                // do nothing
+            }
+
+            return MvcHtmlString.Empty;
         }
     }
 }
