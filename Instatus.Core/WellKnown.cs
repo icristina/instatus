@@ -119,6 +119,9 @@ namespace Instatus.Core
         public static class Kind
         {
             public const string BlogPost = "BlogPost";
+            public const string WebPage = "WebPage";
+            public const string Product = "Product";
+            public const string Catalog = "Catalog";
         }
     }
 }
