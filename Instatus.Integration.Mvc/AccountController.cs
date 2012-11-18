@@ -92,7 +92,7 @@ namespace Instatus.Integration.Mvc
             }
         }
 
-        public static string[] RegistedProviders = new string[] { "Facebook", "Google", "Twitter", "Microsoft", "Tumblr" }; 
+        public static string[] RegistedProviders = new string[] { "Facebook", "Google", "Twitter", "Microsoft" }; 
 
         public virtual IAuthenticationClient GetAuthenticationClient(string provider)
         {
@@ -111,8 +111,6 @@ namespace Instatus.Integration.Mvc
                     return new TwitterClient(credential.PublicKey, credential.PrivateKey);               
                 case "google":
                     return new GoogleOpenIdClient();
-                case "tumblr":
-                    return new TumblrOAuthClient(credential.PublicKey, credential.PrivateKey);     
                 default:
                     return null;
             }
