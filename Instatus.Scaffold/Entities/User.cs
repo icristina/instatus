@@ -39,6 +39,7 @@ namespace Instatus.Scaffold.Entities
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<Subscription> Subscriptions { get; set; }
         public virtual ICollection<Invite> Invites { get; set; }
+        public virtual ICollection<Message> Messages { get; set; }
 
         public User()
         {

@@ -121,6 +121,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RazorGeneratorMvcStart.cs" />
+    <Compile Include="Entities\Message.cs" />
     <Compile Include="Models\BlogPostEditor.cs" />
     <Compile Include="ScaffoldConfig.cs" />
     <Compile Include="Controllers\BlogController.cs" />

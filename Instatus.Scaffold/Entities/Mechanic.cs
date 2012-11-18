@@ -14,6 +14,7 @@ namespace Instatus.Scaffold.Entities
         Poll,
         Game,
         Suggestions,
+        Support,
         Gallery
     }
 }
