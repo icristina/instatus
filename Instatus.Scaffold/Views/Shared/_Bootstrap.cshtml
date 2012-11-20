@@ -8,7 +8,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.1.1/bootstrap.min.js"></script>
     @RenderSection("head", false)
 </head>
-<body>
+<body class="@Html.RouteHint()">
     @RenderBody()
 </body>
 </html>

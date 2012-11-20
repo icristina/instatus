@@ -42,6 +42,15 @@ namespace Instatus.Integration.Mvc
             return new MvcHtmlString(sb.ToString());
         }
 
+        public static MvcHtmlString RouteHint<T>(this HtmlHelper<T> htmlHelper)
+        {
+            var routeData = htmlHelper.ViewContext.RouteData;
+            var controllerName = routeData.GetRequiredString("controller").ToLower();
+            var actionName = routeData.GetRequiredString("action").ToLower();
+
+            return new MvcHtmlString(string.Format("{0} {1}", controllerName, actionName));
+        }
+
         public static MvcHtmlString DataSource(string variableName, object graph)
         {
             var jsonSerializer = DependencyResolver.Current.GetService<IJsonSerializer>();
