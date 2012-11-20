@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Instatus.Core.Extensions
 {
@@ -22,6 +23,25 @@ namespace Instatus.Core.Extensions
             }
 
             return values;
+        }
+
+        public static string[] AsDistinctArray(this string input, char[] seperators = null)
+        {
+            if (string.IsNullOrWhiteSpace(input))
+                return new string[] {};
+
+            return input
+                .Split(seperators ?? new char[] { ',', ';' })
+                .Select(s => s.Trim())
+                .Where(s => !string.IsNullOrWhiteSpace(s))
+                .Distinct()
+                .ToArray();
+        }
+
+        // https://github.com/erichexter/twitter.bootstrap.mvc/blob/master/src/BootstrapSupport/ViewHelperExtensions.cs
+        public static string ToSeparatedWords(this string value)
+        {
+            return Regex.Replace(value, "([A-Z][a-z])", " $1").Trim();
         }
 
         public static string WithNamespace(this string key, string ns)

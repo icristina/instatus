@@ -199,9 +199,6 @@
     <Content Include="Views\Page\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Account\Login.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Instatus.Core\Instatus.Core.csproj">
       <Project>{39c44af6-a1ad-40ee-b1c6-40fda4ac9c83}</Project>
       <Name>Instatus.Core</Name>
@@ -250,7 +247,12 @@
   <ItemGroup>
     <Content Include="Views\Blog\Index.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Views\Shared\_LoginStatus.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Login.cshtml" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

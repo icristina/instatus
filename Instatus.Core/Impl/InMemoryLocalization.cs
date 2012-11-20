@@ -19,7 +19,7 @@ namespace Instatus.Core.Impl
         {
             return phrases.GetValue(new Tuple<string, string>(preferences.Locale, key)) 
                 ?? phrases.GetValue(new Tuple<string, string>(hosting.DefaultCulture.Name, key))
-                ?? key;
+                ?? key.ToSeparatedWords();
         }
 
         public string Format(string key, params object[] values)

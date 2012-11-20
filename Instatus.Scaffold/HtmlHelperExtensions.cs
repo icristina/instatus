@@ -34,5 +34,10 @@ namespace Instatus.Scaffold
         {
             return htmlHelper.Partial("_Metadata", metadata);
         }
+
+        public static MvcHtmlString LoginStatus<T>(this HtmlHelper<T> htmlHelper)
+        {
+            return htmlHelper.Partial("_LoginStatus");
+        }
     }
 }

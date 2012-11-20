@@ -11,7 +11,7 @@ namespace Instatus.Integration.Server
     {
         public string Encrypt(string input)
         {
-            return Crypto.HashPassword(input);
+            return Crypto.Hash(input);
         }
 
         public string Decrypt(string input)

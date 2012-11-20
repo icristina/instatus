@@ -56,7 +56,7 @@ namespace Instatus.Integration.Server
             {
                 return supportedCultures ?? (supportedCultures = GetAppSetting(WellKnown.AppSetting.SupportedCultures)
                         .ThrowIfNull("SupportedCultures required in AppSettings")
-                        .Split(',', ';')
+                        .AsDistinctArray()
                         .Select(c => CultureInfo.GetCultureInfo(c))
                         .ToArray());
             }
