@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using Instatus.Core.Extensions;
 using Instatus.Core.Utils;
 using System.Web;
+using System.Net.Http;
 
 namespace Instatus.Integration.Mvc
 {
@@ -26,6 +27,17 @@ namespace Instatus.Integration.Mvc
             var cdnBaseAddress = hosting.GetAppSetting(WellKnown.AppSetting.CdnBaseAddress);
             var uri = new PathBuilder(cdnBaseAddress)
                                 .Path(virtualPath)
+                                .WithCacheBusting(enableCacheBusting)
+                                .ToProtocolRelativeUri();
+
+            return urlHelper.Content(uri);
+        }
+
+        public static string BlobContent(this UrlHelper urlHelper, string virtualPath, bool enableCacheBusting = false)
+        {
+            var blobStorage = DependencyResolver.Current.GetService<IBlobStorage>();
+            var blobUri = blobStorage.GenerateUri(virtualPath, HttpMethod.Get);
+            var uri = new PathBuilder(blobUri)
                                 .WithCacheBusting(enableCacheBusting)
                                 .ToProtocolRelativeUri();
 

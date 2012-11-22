@@ -12,7 +12,7 @@ using System.Net.Http;
 namespace Instatus.Integration.Mvc
 {
     [SessionState(SessionStateBehavior.Disabled)]
-    public abstract class FileStorageController : Controller
+    public abstract class FileController : Controller
     {
         public IBlobStorage BlobStorage { get; private set; }
 
@@ -37,7 +37,7 @@ namespace Instatus.Integration.Mvc
         [HttpGet]
         public ActionResult Create()
         {
-            ViewData.Model = new FileStorageViewModel();
+            ViewData.Model = new FileModel();
 
             return View();
         }
@@ -45,7 +45,7 @@ namespace Instatus.Integration.Mvc
         [HttpPost]
         public ActionResult Create(FormCollection formCollection)
         {
-            var viewModel = new FileStorageViewModel(AllowedMimeTypes, MaximumContentLength);
+            var viewModel = new FileModel(AllowedMimeTypes, MaximumContentLength);
 
             TryUpdateModel(viewModel, formCollection);
             
@@ -103,7 +103,7 @@ namespace Instatus.Integration.Mvc
 
         }
 
-        public FileStorageController(IBlobStorage blobStorage)
+        public FileController(IBlobStorage blobStorage)
         {
             BlobStorage = blobStorage;
         }

@@ -8,7 +8,7 @@ using System.Web;
 
 namespace Instatus.Integration.Mvc
 {
-    public class FileStorageViewModel : IValidatableObject
+    public class FileModel : IValidatableObject
     {
         private string[] allowedMimeTypes;
         private int maximumContentLength;
@@ -51,12 +51,12 @@ namespace Instatus.Integration.Mvc
             }
         }
 
-        public FileStorageViewModel()
+        public FileModel()
         {
 
         }
 
-        public FileStorageViewModel(string[] allowedMimeTypes, int maximumContentLength)
+        public FileModel(string[] allowedMimeTypes, int maximumContentLength)
         {
             this.allowedMimeTypes = allowedMimeTypes;
             this.maximumContentLength = maximumContentLength;

@@ -75,8 +75,14 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.Net.Http">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Net.Http.2.0.20710.0\lib\net40\System.Net.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Net.Http.2.0.20710.0\lib\net40\System.Net.Http.WebRequest.dll</HintPath>
+    </Reference>
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -130,8 +136,8 @@
     <Compile Include="DelegateResult.cs" />
     <Compile Include="ExtendedViewPage.cs" />
     <Compile Include="FacebookOAuthClient.cs" />
-    <Compile Include="FileStorageController.cs" />
-    <Compile Include="FileStorageViewModel.cs" />
+    <Compile Include="FileController.cs" />
+    <Compile Include="FileModel.cs" />
     <Compile Include="IframeCookieSupportAttribute.cs" />
     <Compile Include="ImageHandler.cs" />
     <Compile Include="LowercaseRoute.cs" />
