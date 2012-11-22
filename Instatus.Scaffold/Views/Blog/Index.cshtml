@@ -6,7 +6,7 @@
         <div class="span8">
             @foreach (var post in Model)
             {
-                <article>
+                <article class="@Html.PositionHint(Model, post)">
                     <a href="@Url.Action("Details", new { slug = post.Slug })">
                         <h1>@post.Title</h1>
                         @Html.Raw(post.Body)

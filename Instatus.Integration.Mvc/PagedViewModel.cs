@@ -9,7 +9,7 @@ using Instatus.Core.Models;
 
 namespace Instatus.Integration.Mvc
 {
-    public class PagedViewModel<T> : IPaged, IEnumerable<T>
+    public class PagedViewModel<T> : IPaged, IList<T>
     {
         private IList<T> results;
 
@@ -43,6 +43,74 @@ namespace Instatus.Integration.Mvc
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
+        }
+
+        public int IndexOf(T item)
+        {
+            return results.IndexOf(item);
+        }
+
+        public void Insert(int index, T item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveAt(int index)
+        {
+            throw new NotImplementedException();
+        }
+
+        public T this[int index]
+        {
+            get
+            {
+                return results[index];
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public void Add(T item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Clear()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Contains(T item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CopyTo(T[] array, int arrayIndex)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int Count
+        {
+            get
+            {
+                return results.Count;
+            }
+        }
+
+        public bool IsReadOnly
+        {
+            get
+            {
+                return true;
+            }
+        }
+
+        public bool Remove(T item)
+        {
+            throw new NotImplementedException();
         }
 
         public PagedViewModel(IOrderedQueryable<T> orderedQueryable, int pageIndex, int pageSize)
