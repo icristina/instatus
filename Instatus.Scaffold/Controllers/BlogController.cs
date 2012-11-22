@@ -20,6 +20,7 @@ namespace Instatus.Scaffold.Controllers
         private Expression<Func<Post, BlogPost>> selectBlogPost = (p) => new BlogPost() 
         {
             Title = p.Name,
+            Abstract = p.Description,
             Body = p.Content,
             Tags = p.Tags.Select(t => t.Name),
             Slug = p.Slug,

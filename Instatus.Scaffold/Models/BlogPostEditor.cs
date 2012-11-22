@@ -29,6 +29,10 @@ namespace Instatus.Scaffold.Models
         [Required]
         public string Title { get; set; }
 
+        [DataType(DataType.MultilineText)]
+        [Required]
+        public string Abstract { get; set; }
+
         public string Picture { get; set; }
 
         [AllowHtml]
@@ -51,6 +55,7 @@ namespace Instatus.Scaffold.Models
             {
                 Id = p.Id,
                 Title = p.Name,
+                Abstract = p.Description,
                 Content = p.Content,
                 FriendlyUrl = p.Slug,
                 Published = p.Created,
@@ -63,6 +68,7 @@ namespace Instatus.Scaffold.Models
             var post = new Post()
             {
                 Name = model.Title,
+                Description = model.Abstract,
                 Content = model.Content,
                 Slug = model.FriendlyUrl,
                 Category = WellKnown.Kind.BlogPost,
@@ -86,6 +92,7 @@ namespace Instatus.Scaffold.Models
         public override void FillEntity(Post entity, BlogPostEditor model)
         {
             entity.Name = model.Title;
+            entity.Description = model.Abstract;
             entity.Content = model.Content;
             entity.Slug = model.FriendlyUrl;
             entity.Picture = model.Picture;

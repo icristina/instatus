@@ -10,6 +10,7 @@ namespace Instatus.Scaffold.Models
         public DateTime Published { get; set; }
         public string Slug { get; set; }
         public string Title { get; set; }
+        public string Abstract { get; set; }
         public string Body { get; set; }
         public string Picture { get; set; }
         public IEnumerable<string> Tags { get; set; }
