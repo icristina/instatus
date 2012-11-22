@@ -8,9 +8,9 @@
 }
 
 <div class="container">
-    <div class="form-actions">
-        
-    </div>    
+    <div class="well">
+        @Html.Action("Create")
+    </div>
     <table class="table table-striped table-bordered table-condensed span12">
         <thead>
             <tr>
@@ -24,15 +24,16 @@
             {
                 <tr>
                     <td>
-                        <img src="@Url.BlobContent(virtualPath)" class="thumbnail" style="max-width: 100px; max-height: 100px;">
+                        <a href="@Url.BlobContent(virtualPath)" class="thumbnail" target="_blank">
+                            <img src="@Url.BlobContent(virtualPath)" style="max-width: 100px; max-height: 100px;">
+                        </a>
                     </td>
-                    <td>@virtualPath</td>
-                    <td></td>
+                    <td>@Path.GetFileName(virtualPath)</td>
+                    <td>
+                        @Html.TextBox(Guid.NewGuid().ToString(), virtualPath, new { @class = "span5" })
+                    </td>
                 </tr>
             }
         </tbody>
     </table>
-    <div class="span12">
-        
-    </div>
 </div>

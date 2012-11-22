@@ -16,14 +16,13 @@ namespace Instatus.Integration.Mvc
     {
         public IBlobStorage BlobStorage { get; private set; }
 
-        public ActionResult Index(int take = 50, int skip = 0, string virtualPath = null)
+        public ActionResult Index(int take = 250, int skip = 0, string virtualPath = null)
         {
             ViewData.Model = BlobStorage
                 .Query(virtualPath ?? BaseVirtualPath, null)
                 .OrderBy(s => s)
                 .Skip(skip)
                 .Take(take)
-                .Select(f => BlobStorage.GenerateUri(f, HttpMethod.Get))
                 .ToArray();
             
             return View();

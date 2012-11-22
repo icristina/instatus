@@ -13,6 +13,7 @@ namespace Instatus.Integration.Mvc
         private string[] allowedMimeTypes;
         private int maximumContentLength;
         
+        [Display(Name = "Upload File")]
         [DataType("Upload")]
         public string FileName { get; set; }
 

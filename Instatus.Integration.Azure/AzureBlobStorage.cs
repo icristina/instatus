@@ -27,15 +27,30 @@ namespace Instatus.Integration.Azure
 
         public CloudBlockBlob GetBlockBlob(string virtualPath)
         {
-            var containerName = Path.GetDirectoryName(virtualPath).TrimStart(PathBuilder.RelativeChars);
+            var container = GetBlobContainer(virtualPath);
             var blobName = Path.GetFileName(virtualPath);
+
+            return container.GetBlockBlobReference(blobName);
+        }
+
+        public CloudBlobContainer GetBlobContainer(string virtualPath)
+        {
+            if (!virtualPath.Contains('.') && !virtualPath.EndsWith("/"))
+            {
+                virtualPath = virtualPath + "/"; // ensure virtualPath for folder still returns container name
+            }
+            
+            var containerName = Path.GetDirectoryName(virtualPath)
+                .TrimStart(PathBuilder.RelativeChars)
+                .TrimEnd(PathBuilder.RelativeChars)
+                .ToLower();
+
             var credential = credentials.Get(WellKnown.Provider.WindowsAzure);
             var baseUri = GetBaseUri(credential.AccountName);
             var storageCredential = new StorageCredentials(credential.AccountName, credential.PrivateKey);
             var client = new CloudBlobClient(new Uri(baseUri), storageCredential);
-            var container = client.GetContainerReference(containerName);
-
-            return container.GetBlockBlobReference(blobName);
+            
+            return client.GetContainerReference(containerName);
         }
 
         public void SetMetadata(ICloudBlob cloudBlob, Metadata metaData)
@@ -83,7 +98,12 @@ namespace Instatus.Integration.Azure
 
         public string[] Query(string virtualPath, string suffix)
         {
-            return null;
+            var container = GetBlobContainer(virtualPath);
+            
+            return container
+                .ListBlobs()
+                .Select(b => string.Format("~/{0}/{1}", container.Name, Path.GetFileName(b.Uri.AbsolutePath)))
+                .ToArray();
         }
 
         public void Delete(string virtualPath)
