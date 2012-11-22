@@ -9,8 +9,7 @@ namespace Instatus.Core
 {
     public interface IPaged : IEnumerable
     {
-        int TotalItemCount { get; }
         int PageIndex { get; }
-        int PageSize { get; }
+        int TotalPageCount { get; }
     }
 }

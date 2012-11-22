@@ -13,19 +13,11 @@ namespace Instatus.Integration.Mvc
     {
         private IList<T> results;
 
-        public int TotalItemCount { get; private set; }
         public int PageIndex { get; private set; }
-        public int PageSize { get; private set; }
+        public int TotalPageCount { get; private set; }
+        public int TotalItemCount { get; private set; }
 
         public Document Document { get; set; }
-
-        public int TotalPageCount
-        {
-            get
-            {
-                return this.TotalPageCount();
-            }
-        }
 
         public bool HasPreviousPage
         {
@@ -39,7 +31,7 @@ namespace Instatus.Integration.Mvc
         {
             get
             {
-                return TotalItemCount > (PageIndex + 1) * PageSize;
+                return PageIndex + 1 < TotalPageCount;
             }
         }
 
@@ -55,11 +47,49 @@ namespace Instatus.Integration.Mvc
 
         public PagedViewModel(IOrderedQueryable<T> orderedQueryable, int pageIndex, int pageSize)
         {
-            this.results = orderedQueryable.Skip(pageSize * pageIndex).Take(pageSize).ToList();
+            results = orderedQueryable.Skip(pageSize * pageIndex).Take(pageSize).ToList();
 
             TotalItemCount = orderedQueryable.Count();
+
+            if (TotalItemCount == 0)
+            {
+                TotalPageCount = 0;
+            }
+            else
+            {
+                TotalPageCount = (int)Math.Ceiling((double)TotalItemCount / pageSize);
+            }
+
             PageIndex = pageIndex;
-            PageSize = pageSize;
+        }
+
+        public PagedViewModel(IOrderedQueryable<T> orderedQueryable, int pageIndex, int firstPageSize, int defaultPageSize)
+        {
+            if (pageIndex == 0)
+            {
+                results = orderedQueryable.Take(firstPageSize).ToList();
+            }
+            else
+            {
+                results = orderedQueryable.Skip(firstPageSize + (defaultPageSize * (pageIndex - 1))).Take(defaultPageSize).ToList();
+            }
+
+            TotalItemCount = orderedQueryable.Count();
+
+            if (TotalItemCount == 0)
+            {
+                TotalPageCount = 0;
+            }
+            else if (TotalItemCount <= firstPageSize)
+            {
+                TotalPageCount = 1;
+            }
+            else
+            {
+                TotalPageCount = (int)Math.Ceiling((double)(TotalItemCount - firstPageSize) / defaultPageSize) + 1;
+            }
+
+            PageIndex = pageIndex;
         }
     }
 }

@@ -16,5 +16,11 @@ namespace Instatus.Scaffold.Models
         {
 
         }
+
+        public Blog(IOrderedQueryable<BlogPost> posts, int pageIndex, int firstPageSize, int defaultPageSize)
+            : base(posts, pageIndex, firstPageSize, defaultPageSize)
+        {
+
+        }
     }
 }

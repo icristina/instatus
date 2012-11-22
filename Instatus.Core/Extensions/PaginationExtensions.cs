@@ -7,11 +7,6 @@ namespace Instatus.Core.Extensions
 {
     public static class PaginationExtensions
     {
-        public static int TotalPageCount(this IPaged paged)
-        {
-            return paged.TotalItemCount == 0 ? 0 : (int)Math.Ceiling((double)paged.TotalItemCount / paged.PageSize);
-        }
-
         public static int IncrementPager(this int i, int currentPage, int totalPages, int maxPagerCount)
         {
             var original = i;

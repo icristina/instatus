@@ -27,39 +27,45 @@ namespace Instatus.Scaffold.Controllers
             Published = p.Created
         };
 
-        public ActionResult Index(int pageIndex = 0, int pageSize = 10, string tag = null)
+        public virtual ActionResult Index(int pageIndex = 0, string tag = null)
         {
-            IQueryable<Post> posts = entityStorage
-                .Set<Post>()
-                .Where(p => p.State == State.Approved && p.Category == WellKnown.Kind.BlogPost);
-
-            if (tag != null)
+            ViewData.Model = new Blog(GetPosts(tag), pageIndex, 10)
             {
-                posts = posts.Where(p => p.Tags.Any(t => t.Name == tag));
-            }
+                TagCloud = new TagCloud(GetTags())
+            };
+            
+            return View();
+        }
 
-            var orderedPosts = posts
-                .Select(selectBlogPost)
-                .OrderByDescending(b => b.Published);
-
-            var tags = entityStorage
+        protected IDictionary<string, int> GetTags()
+        {
+            return entityStorage
                 .Set<Tag>()
                 .Where(t => t.Posts.Any(p => p.State == State.Approved && p.Category == WellKnown.Kind.BlogPost))
                 .OrderBy(t => t.Name)
-                .Select(t => new 
+                .Select(t => new
                 {
                     Name = t.Name,
                     Count = t.Posts.Count()
                 })
                 .ToList()
                 .ToDictionary(t => t.Name, t => t.Count);
+        }
 
-            ViewData.Model = new Blog(orderedPosts, pageIndex, pageSize)
+        protected IOrderedQueryable<BlogPost> GetPosts(string tag)
+        {
+            IQueryable<Post> posts = entityStorage
+                 .Set<Post>()
+                 .Where(p => p.State == State.Approved && p.Category == WellKnown.Kind.BlogPost);
+
+            if (tag != null)
             {
-                TagCloud = new TagCloud(tags)
-            };
-            
-            return View();
+                posts = posts.Where(p => p.Tags.Any(t => t.Name == tag));
+            }
+
+            return posts
+                .Select(selectBlogPost)
+                .OrderByDescending(b => b.Published);
         }
 
         [HttpNotFound]

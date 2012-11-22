@@ -3,10 +3,6 @@
 @using Instatus.Core.Extensions
 
 @{
-    var pageSize = Model.PageSize;
-    var pageIndex = Model.PageIndex;
-    var totalItemCount = Model.TotalItemCount;
-    var totalPageCount = PaginationExtensions.TotalPageCount(Model);
     var actionName = ViewContext.RouteData.GetRequiredString("action");
     var controllerName = ViewContext.RouteData.GetRequiredString("controller");
     var index = 0;
@@ -14,14 +10,14 @@
 
 <div class="pagination pagination-centered">
     <ul>
-        @if (totalPageCount > 1)
+        @if (Model.TotalPageCount > 1)
         {
-            while (index < totalPageCount)
+            while (index < Model.TotalPageCount)
             {
-                <li class="@(index == pageIndex ? "active" : null)">
-                    @Html.ActionLink((index + 1).ToString(), actionName, controllerName, new { pageSize = pageSize, pageIndex = index }, null) 
+                <li class="@(index == Model.PageIndex ? "active" : null)">
+                    @Html.ActionLink((index + 1).ToString(), actionName, controllerName, new { pageIndex = index }, null) 
                 </li>
-                var nextIndex = PaginationExtensions.IncrementPager(index, pageIndex, totalPageCount, 10);
+                var nextIndex = PaginationExtensions.IncrementPager(index, Model.PageIndex, Model.TotalPageCount, 10);
                 if ((nextIndex - index) > 1)
                 {
                     <li class="disabled"><a>&hellip;</a></li>
