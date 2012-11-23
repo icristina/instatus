@@ -9,8 +9,6 @@ namespace Instatus.Integration.Mvc
 {
     public class LogExceptionAttribute : FilterAttribute, IExceptionFilter
     {
-        public ILogger Logger { get; set; }
-        
         public IDictionary<string, string> GenerateProperties(ExceptionContext context)
         {
             return new Dictionary<string, string>()
@@ -21,9 +19,11 @@ namespace Instatus.Integration.Mvc
         
         public void OnException(ExceptionContext context)
         {
-            if (Logger != null)
+            var logger = DependencyResolver.Current.GetService<ILogger>();
+            
+            if (logger != null)
             {
-                Logger.Log(context.Exception, GenerateProperties(context));
+                logger.Log(context.Exception, GenerateProperties(context));
             }
         }
     }
