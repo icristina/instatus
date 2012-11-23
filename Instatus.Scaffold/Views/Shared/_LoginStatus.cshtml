@@ -2,10 +2,10 @@
 
 @if (Request.IsAuthenticated)
 {
-    using(Html.BeginForm("LogOff", "Account"))
+    using (Html.BeginForm("LogOff", "Account"))
     {
         @Html.AntiForgeryToken()
-        @User.Identity.Name
-        <button type="submit" class="btn btn-link">@Phrase("LogOff")</button>                                                                                           
+        <strong>@User.Identity.Name</strong>
+        <button type="submit" class="btn btn-link">@Phrase("LogOff")</button>                                                                        
     }
 }
