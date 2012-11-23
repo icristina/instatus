@@ -90,6 +90,14 @@ namespace Instatus.Integration.Mvc
             return new MvcHtmlString(html);
         }
 
+        public static MvcHtmlString TransformContent<T>(this HtmlHelper<T> htmlHelper, string content)
+        {
+            var transform = DependencyResolver.Current.GetService<ITransform<string>>();
+            var html = transform.Transform(content);
+
+            return new MvcHtmlString(html);
+        }
+
         // https://github.com/erichexter/twitter.bootstrap.mvc/blob/master/src/BootstrapSupport/ViewHelperExtensions.cs
         public static MvcHtmlString TryPartial<T>(this HtmlHelper<T> htmlHelper, string viewName, object model = null)
         {
