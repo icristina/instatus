@@ -7,6 +7,7 @@ namespace Instatus.Scaffold.Models
 {
     public class BlogPost
     {
+        public string Id { get; set; }
         public DateTime Published { get; set; }
         public string Slug { get; set; }
         public string Title { get; set; }

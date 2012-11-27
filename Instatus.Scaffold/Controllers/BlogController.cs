@@ -4,6 +4,7 @@ using Instatus.Scaffold.Entities;
 using Instatus.Scaffold.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Objects.SqlClient;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Web;
@@ -19,6 +20,7 @@ namespace Instatus.Scaffold.Controllers
         
         private Expression<Func<Post, BlogPost>> selectBlogPost = (p) => new BlogPost() 
         {
+            Id = SqlFunctions.StringConvert((double)p.Id),
             Title = p.Name,
             Abstract = p.Description,
             Body = p.Content,

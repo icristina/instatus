@@ -46,6 +46,18 @@ namespace Instatus.Scaffold.Entities
             Created = DateTime.UtcNow;
             Address = new Address();
             Role = Role.Member;
+
+            // initialize collections
+            Votes = new List<Vote>();
+            Scores = new List<Score>();
+            Markers = new List<Marker>();
+            Entries = new List<Entry>();
+            Posts = new List<Post>();
+            Likes = new List<Like>();
+            Comments = new List<Comment>();
+            Subscriptions = new List<Subscription>();
+            Invites = new List<Invite>();
+            Messages = new List<Message>();
         }
     }
 }

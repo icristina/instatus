@@ -18,5 +18,11 @@ namespace Instatus.Scaffold.Entities
         public int? CampaignId { get; set; }
         public virtual Campaign Campaign { get; set; }
         public virtual ICollection<Marker> Markers { get; set; }
+
+        public Map()
+        {
+            // initialize collections
+            Markers = new List<Marker>();
+        }
     }
 }

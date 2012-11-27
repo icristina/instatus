@@ -42,6 +42,10 @@ namespace Instatus.Scaffold.Entities
         {
             Created = DateTime.UtcNow;
             State = State.Approved;
+
+            // initialize collections
+            Likes = new List<Like>();
+            Tags = new List<Tag>();
         }
     }
 }

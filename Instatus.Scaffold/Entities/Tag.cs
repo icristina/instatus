@@ -14,5 +14,11 @@ namespace Instatus.Scaffold.Entities
         public virtual ICollection<Post> Posts { get; set; }
         public int TaxonomyId { get; set; }
         public virtual Taxonomy Taxonomy { get; set; }
+
+        public Tag()
+        {
+            // initialize collections
+            Posts = new List<Post>();
+        }
     }
 }

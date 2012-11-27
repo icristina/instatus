@@ -12,5 +12,11 @@ namespace Instatus.Scaffold.Entities
 
         // Associations
         public virtual ICollection<Tag> Tags { get; set; }
+
+        public Taxonomy()
+        {
+            // initialize collections
+            Tags = new List<Tag>();
+        }
     }
 }
