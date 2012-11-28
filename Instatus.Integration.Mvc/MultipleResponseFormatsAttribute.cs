@@ -29,7 +29,7 @@ namespace Instatus.Integration.Mvc
                     ViewName = viewResult.ViewName,
                 };
             }
-            else if (request.AcceptTypes.Any(a => a.Contains("application/json")))
+            else if (request.AcceptTypes.Any(a => a.Contains(WellKnown.ContentType.Json)))
             {
                 filterContext.Result = new JsonResult
                 {

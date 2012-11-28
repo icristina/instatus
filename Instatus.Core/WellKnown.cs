@@ -46,6 +46,7 @@ namespace Instatus.Core
             public const string Css = "text/css";
             public const string Rss = "application/rss+xml";
             public const string Csv = "text/csv";
+            public const string Json = "application/json";
         }
 
         public static class AppSetting
