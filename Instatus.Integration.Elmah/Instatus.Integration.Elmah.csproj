@@ -108,7 +108,8 @@
   <ItemGroup>
     <Compile Include="AzureErrorLog.cs" />
     <Compile Include="AzureErrorLogEntity.cs" />
-    <Compile Include="ElmahExceptionFilter.cs" />
+    <Compile Include="ElmahLoggerAttribute.cs" />
+    <Compile Include="ElmahLoggerFilterAttribute.cs" />
     <Compile Include="ElmahLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

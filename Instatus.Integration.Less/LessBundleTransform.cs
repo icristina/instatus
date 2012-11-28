@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web.Optimization;
+using Instatus.Core;
 
 namespace Instatus.Integration.Less
 {
@@ -24,7 +25,7 @@ namespace Instatus.Integration.Less
                 Logger = typeof(DiagnosticsLogger)
             };
             
-            response.ContentType = "text/css";
+            response.ContentType = WellKnown.ContentType.Css;
             response.Content = dotless.Core.Less.Parse(response.Content, dotlessConfiguration);
         }
     }

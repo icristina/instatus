@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Instatus.Core;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel.Syndication;
@@ -17,7 +18,7 @@ namespace Instatus.Integration.Mvc
             var formatter = new Rss20FeedFormatter(syndicationFeed);
             var response = context.HttpContext.Response;
             
-            response.ContentType = "application/rss+xml";
+            response.ContentType = WellKnown.ContentType.Rss;
 
             using (var xmlWriter = XmlWriter.Create(response.Output))
             {

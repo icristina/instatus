@@ -9,7 +9,7 @@ using System.Web.Http.Filters;
 
 namespace Instatus.Integration.Elmah
 {
-    public class ElmahExceptionFilter : ExceptionFilterAttribute
+    public class ElmahLoggerFilterAttribute : ExceptionFilterAttribute
     {
         public override void OnException(HttpActionExecutedContext actionExecutedContext)
         {

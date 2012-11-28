@@ -44,6 +44,8 @@ namespace Instatus.Core
             public const string Jpg = "image/jpeg";
             public const string Js = "text/javascript";
             public const string Css = "text/css";
+            public const string Rss = "application/rss+xml";
+            public const string Csv = "text/csv";
         }
 
         public static class AppSetting
