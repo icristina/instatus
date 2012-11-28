@@ -127,6 +127,7 @@
   <ItemGroup>
     <Compile Include="AccountController.cs" />
     <Compile Include="BaseMvcConfig.cs" />
+    <Compile Include="CustomErrorsController.cs" />
     <Compile Include="MvcAuthentication.cs" />
     <Compile Include="PageController.cs" />
     <Compile Include="HtmlHelperExtensions.cs" />

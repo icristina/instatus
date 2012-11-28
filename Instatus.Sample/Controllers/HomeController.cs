@@ -37,6 +37,11 @@ namespace Instatus.Sample.Controllers
             return View();
         }
 
+        public ActionResult NotHere()
+        {           
+            return new HttpNotFoundResult();
+        }
+
         public HomeController(IGeocode geocode)
         {
             this.geocode = geocode;
