@@ -1,34 +1,61 @@
-﻿* {
+﻿/* box sizing */
+
+* {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     background-repeat: no-repeat;
 }
 
+/* font */
+
 body {
-    font-family: sans-serif;  
-    margin: 0;              
+    font-family: sans-serif;               
 }
 
-.small {
-    font-size: 0.8em;
+/* canvas or iframe app */
+
+html.canvas-app, html.canvas-app body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
 }
 
-.shadow {
-    -webkit-box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5); 
-    -moz-box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
-    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);      
+/* layout */
+
+body {
+    margin: 0;
 }
 
-.keyline {
-    border: 1px solid #C0C0C0;
+/* utilities */
+
+.center, .container {
+    margin-left: auto;
+    margin-right: auto;
 }
+
+.middle {
+    vertical-align: middle;
+    text-align: center; 
+}
+
+.hide {
+    display: none;
+}
+
+.show {
+    display: block;
+}
+
+/* links */
 
 a, a:visited {
     color: inherit;
     text-decoration: none;
     cursor: pointer;
 }
+
+/* buttons */
 
 .btn {
     padding: 0;
@@ -41,21 +68,23 @@ a, a:visited {
     vertical-align: middle;
 }
 
-.ar {
+/* aspect ratio */
+
+.aspect-ratio {
     display: inline-block;
     position: relative;
     width: 100%;
 }
 
-.ar-4-3 .ar-inner {
+.aspect-ratio-4-3 .aspect-ratio-inner {
      margin-top: 75%;
 }
 
-.ar-16-9 .ar-inner {
+.aspect-ratio-16-9 .aspect-ratio-inner {
      margin-top: 56.25%;
 }    
 
-.ar-inner > * {
+.aspect-ratio-inner > * {
     position: absolute;
     display: block;
     top: 0;
@@ -64,31 +93,30 @@ a, a:visited {
     height: 100%;
 }
 
-.flex {
+/* image width */
+
+figure img, .tile img {
+    min-width: 100%;
+}
+
+/* hub, section, tile layout */
+
+.hub {
     display: table;
     width: 100%;
     height: 100%;    
 }
 
-.flex-pane {
-    display: table-cell;
-}
-
-.flex-row {
+.hub .row {
     display: table-row;
 }
 
-.flex-center .flex-pane {
-    vertical-align: middle;
-    text-align: center;    
+.hub section, .hub .section {
+    display: table-cell;
 }
 
-.flex-center .flex-pane > * {
+.tile {
     display: inline-block;
-}
-
-.flex-pane img {
-    min-width: 100%;
 }
 
 /* https://github.com/necolas/normalize.css/blob/master/normalize.css */
@@ -128,13 +156,9 @@ figure {
     margin: 0;
 }
 
-figure img {
-    min-width: 100%;
-}
-
 /* http://nicolasgallagher.com/another-css-image-replacement-technique */
 
-.ir {
+.hide-text {
     font: 0/0 a;
     text-shadow: none;
     color: transparent;
@@ -142,17 +166,17 @@ figure img {
 
 /* http://nicolasgallagher.com/micro-clearfix-hack */
 
-.cf:before,
-.cf:after {
+.clear-fix:before,
+.clear-fix:after {
     content: " ";
     display: table;
 }
 
-.cf:after {
+.clear-fix:after {
     clear: both;
 }
 
-.cf {
+.clear-fix {
     *zoom: 1;
 }
 
@@ -160,44 +184,75 @@ figure img {
 
 .span1 {
     width: 8.33%;
+    float: left;
 }
 
 .span2 {
     width: 16.66%;
+    float: left;
 }
 
 .span3 {
     width: 25%;
+    float: left;
 }
 
 .span4 {
     width: 33.33%;
+    float: left;
 }
 
 .span5 {
     width: 41.66%;
+    float: left;
 }
 
 .span6 {
     width: 50%;
+    float: left;
 }
 
 .span8 {
     width: 66.66%;
+    float: left;
+}
+
+.span9 {
+    width: 75%;
+    float: left;
+}
+
+.span10 {
+    width: 83.33%;
+    float: left;
+}
+
+.span11 {
+    width: 91.66%;
+    float: left;
 }
 
 .span12 {
     width: 100%;
-}
-
-.row .span1, .row .span2, .row .span3, .row .span4, .row .span5, .row .span6, .row .span8,
-.thumbnails .span1, .thumbnails .span2, .thumbnails .span3, .thumbnails .span4 {
     float: left;
 }
 
-/* navigation or list-style-none */
+/* rich text content */
 
-nav ul, ul.reset {
+p, ul, ol {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.rich-text p,
+.rich-text ul,
+.rich-text ol {
+    margin-bottom: 1.0em;
+}
+
+/* navigation or lists */
+
+nav ul, ul.unstyled {
     margin: 0;
     padding: 0;
     display: block;
@@ -209,13 +264,13 @@ nav li {
     display: inline-block;
 }
 
-ul.reset li {
+ul.unstyled li {
     display: block;
 }
 
 /* form */
 
-fieldset.reset {
+fieldset {
     padding: 0;
     border: 0;
 }
@@ -245,4 +300,10 @@ input, textarea {
 
 .dropdown-menu.active {
     display: block;
+}
+
+/* angularjs */
+
+.ng-cloak {
+    display: none;
 }
