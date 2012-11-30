@@ -120,9 +120,9 @@ figure img,
     display: table-row;
 }
 
-.hub section, 
-.hub .section {
+.hub .group {
     display: table-cell;
+    vertical-align: top;
 }
 
 .hub .tile {
@@ -248,6 +248,12 @@ figure {
 }
 
 /* rich text content */
+
+h1,
+h2,
+h3 {
+    margin-top: 0;
+}
 
 p, 
 ul, 

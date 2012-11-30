@@ -1,0 +1,105 @@
+﻿body {
+    font-family: "Segoe UI";
+}
+
+/* dark theme */
+
+body {
+    background-color: #1D1D1D;
+    color: white;
+}
+
+/* symbols */
+
+.icon::before {
+   font-family: "Segoe UI Symbol";
+   color: white;
+}
+
+.icon-back::before {
+    content: "\E0D5";
+}
+
+.icon-forward::before {
+    content: "\E0AE";
+}
+
+.icon-toggle::before {
+    content: "\E0E7";
+}
+
+.icon-star::before {
+    content: "\E082";
+}
+
+.icon-minus::before {
+    content: "\E0B8";
+}
+
+.icon-plus::before {
+    content: "\E0B6";
+}
+
+.icon-save::before {
+    content: "\E105";
+}
+
+.icon-camera::before {
+    content: "\E114";
+}
+
+.icon-search::before {
+    content: "\E11A";
+}
+
+.icon-people::before {
+    content: "\E125";
+}
+
+.icon-refresh::before {
+    content: "\E149";
+}
+
+.icon-close::before {
+    content: "\E10A";
+}
+
+/* colors */
+
+.bg-blue {
+    background-color: #2D89EF;
+}
+
+.bg-yellow {
+    background-color: #FFC40D;
+}
+
+.bg-red {
+    background-color: #B91D47;
+}
+
+.bg-purple {
+    background-color: #603CBA;
+}
+
+.bg-green {
+    background-color: #00A300;
+}
+
+.bg-orange {
+    background-color: #E3A21A;
+}
+
+/* text */
+
+h1 {
+    font-family: 'Segoe UI Light';
+    font-size: 42px;
+    font-weight: 200;
+}
+
+h2 {
+    font-family: 'Segoe UI Light';
+    font-size: 20px;
+    font-weight: 200;
+}

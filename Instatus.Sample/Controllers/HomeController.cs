@@ -42,6 +42,11 @@ namespace Instatus.Sample.Controllers
             return new HttpNotFoundResult();
         }
 
+        public ActionResult WindowsApp()
+        {
+            return View();
+        }
+
         public HomeController(IGeocode geocode)
         {
             this.geocode = geocode;
