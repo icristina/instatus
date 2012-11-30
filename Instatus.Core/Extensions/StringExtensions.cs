@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -42,6 +43,13 @@ namespace Instatus.Core.Extensions
         public static string ToSeparatedWords(this string value)
         {
             return Regex.Replace(value, "([A-Z][a-z])", " $1").Trim();
+        }
+
+        private static CultureInfo enUsCulture = new CultureInfo("en-US");
+
+        public static string ToTitleCase(this string value)
+        {
+            return enUsCulture.TextInfo.ToTitleCase(value);
         }
 
         public static string WithNamespace(this string key, string ns)

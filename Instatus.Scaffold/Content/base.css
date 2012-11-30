@@ -4,6 +4,11 @@
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
+}
+
+/* defaults */
+
+* {
     background-repeat: no-repeat;
 }
 
@@ -15,7 +20,8 @@ body {
 
 /* canvas or iframe app */
 
-html.canvas-app, html.canvas-app body {
+html.canvas-app, 
+html.canvas-app body {
     width: 100%;
     height: 100%;
     overflow: hidden;
@@ -29,7 +35,8 @@ body {
 
 /* utilities */
 
-.center, .container {
+.center, 
+.container {
     margin-left: auto;
     margin-right: auto;
 }
@@ -49,7 +56,8 @@ body {
 
 /* links */
 
-a, a:visited {
+a, 
+a:visited {
     color: inherit;
     text-decoration: none;
     cursor: pointer;
@@ -95,7 +103,8 @@ a, a:visited {
 
 /* image width */
 
-figure img, .tile img {
+figure img,
+.tile img {
     min-width: 100%;
 }
 
@@ -111,11 +120,12 @@ figure img, .tile img {
     display: table-row;
 }
 
-.hub section, .hub .section {
+.hub section, 
+.hub .section {
     display: table-cell;
 }
 
-.tile {
+.hub .tile {
     display: inline-block;
 }
 
@@ -166,7 +176,7 @@ figure {
 
 /* http://nicolasgallagher.com/micro-clearfix-hack */
 
-.clear-fix:before,
+.clear-fix:before, 
 .clear-fix:after {
     content: " ";
     display: table;
@@ -239,7 +249,9 @@ figure {
 
 /* rich text content */
 
-p, ul, ol {
+p, 
+ul, 
+ol {
     margin-top: 0;
     margin-bottom: 0;
 }
@@ -250,9 +262,14 @@ p, ul, ol {
     margin-bottom: 1.0em;
 }
 
+.rich-text a {
+    text-decoration: underline;
+}
+
 /* navigation or lists */
 
-nav ul, ul.unstyled {
+nav ul, 
+ul.unstyled {
     margin: 0;
     padding: 0;
     display: block;
@@ -279,7 +296,8 @@ label {
     display: block;
 }
 
-input, textarea {
+input, 
+textarea {
     padding: 0.5em;
 }
 

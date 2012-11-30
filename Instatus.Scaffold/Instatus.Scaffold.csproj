@@ -168,7 +168,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\base.css" />
+    <EmbeddedResource Include="Content\base.css" />
     <Content Include="Scripts\base.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

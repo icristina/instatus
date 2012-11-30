@@ -9,6 +9,7 @@ using System.Collections.Specialized;
 using Instatus.Core;
 using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 using System.Web.WebPages;
+using System.Web.Hosting;
 
 namespace Instatus.Integration.Mvc
 {
@@ -139,6 +140,11 @@ namespace Instatus.Integration.Mvc
                         || (userAgent.IndexOf("MSIE 10.", StringComparison.OrdinalIgnoreCase) > 0 && userAgent.IndexOf("Touch", StringComparison.OrdinalIgnoreCase) > 0));
                 })
             });
+        }
+
+        public static void RegisterEmbeddedResourceVirtualPathProvider<T>()
+        {
+            HostingEnvironment.RegisterVirtualPathProvider(new EmbeddedResourceVirtualPathProvider(typeof(T)));
         }
     }
 }

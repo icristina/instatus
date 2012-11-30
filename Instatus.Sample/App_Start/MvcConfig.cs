@@ -10,6 +10,7 @@ namespace Instatus.Sample
         public static void RegisterDisplayModes()
         {
             BaseMvcConfig.RegisterDisplayModes(DisplayModeProvider.Instance);
+            BaseMvcConfig.RegisterEmbeddedResourceVirtualPathProvider<Instatus.Scaffold.Models.Blog>();
         }
     }
 }
