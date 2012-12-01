@@ -33,10 +33,14 @@ body {
     margin: 0;
 }
 
+.container {
+    margin-left: auto;
+    margin-right: auto;
+}
+
 /* utilities */
 
-.center, 
-.container {
+.center {
     margin-left: auto;
     margin-right: auto;
 }
@@ -92,7 +96,9 @@ a:visited {
      margin-top: 56.25%;
 }    
 
-.aspect-ratio-inner > * {
+.aspect-ratio img,
+.aspect-ratio video,
+.aspect-ratio object {
     position: absolute;
     display: block;
     top: 0;
@@ -145,8 +151,10 @@ summary {
     display: block;
 }
 
-[hidden] {
+[hidden],
+.hidden {
     display: none;
+    visibility: hidden;
 }
 
 button,
@@ -251,7 +259,10 @@ figure {
 
 h1,
 h2,
-h3 {
+h3,
+h4,
+h5,
+h6 {
     margin-top: 0;
 }
 
@@ -298,6 +309,12 @@ fieldset {
     border: 0;
 }
 
+legend {
+    display: block;
+    width: 100%;
+    padding: 0;
+}
+
 label {
     display: block;
 }
@@ -330,4 +347,25 @@ textarea {
 
 .ng-cloak {
     display: none;
+}
+
+/* responsive */
+
+.visible-phone { display: none !important; }
+.visible-tablet { display: none !important; }
+.hidden-desktop { display: none !important; }
+.visible-desktop { display: inherit !important; }
+
+@media (min-width: 768px) and (max-width: 979px) {
+    .hidden-desktop { display: inherit !important; }
+    .visible-desktop { display: none !important; }
+    .visible-tablet { display: inherit !important; }
+    .hidden-tablet { display: none !important; }
+}
+
+@media (max-width: 767px) {
+    .hidden-desktop { display: inherit !important; }
+    .visible-desktop { display: none !important; }
+    .visible-phone { display: inherit !important; }
+    .hidden-phone { display: none !important; }
 }

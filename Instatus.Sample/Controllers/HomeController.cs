@@ -47,6 +47,12 @@ namespace Instatus.Sample.Controllers
             return View();
         }
 
+        [OutputCache(Duration = 60)]
+        public ActionResult CacheMe()
+        {
+            return Content(DateTime.UtcNow.ToLongTimeString());
+        }
+
         public HomeController(IGeocode geocode)
         {
             this.geocode = geocode;

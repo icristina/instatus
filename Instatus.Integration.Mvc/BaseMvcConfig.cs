@@ -117,7 +117,9 @@ namespace Instatus.Integration.Mvc
                 })
             });
 
-            displayModeProvider.Modes.Insert(0, new DefaultDisplayMode("Mobile")
+
+            // using Phone rather than Mobile aligns with Bootstrap
+            displayModeProvider.Modes.Insert(0, new DefaultDisplayMode("Phone")
             {
                 ContextCondition = (context =>
                 {
