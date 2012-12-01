@@ -6,42 +6,37 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using Instatus.Core;
 using Instatus.Core.Models;
-
-[assembly: WebActivator.PreApplicationStartMethod(typeof(Instatus.Integration.Facebook.FacebookConfig), "RegisterModelBinders")]
+using Instatus.Core.Utils;
 
 namespace Instatus.Integration.Facebook
 {
-    public static class FacebookConfig
+    public class FacebookConfig
     {
-        public static void RegisterModelBinders()
+        private IHosting hosting;
+        private ILookup<Credential> credentials;
+
+        public FacebookSettings GetSettings()
         {
-            ModelBinders.Binders.Add(typeof(FacebookSignedRequest), new FacebookSignedRequestBinder());
+            var credential = credentials.Get(WellKnown.Provider.Facebook);
+
+            return new FacebookSettings
+            {
+                AppId = credential.PublicKey,
+                AppSecret = credential.PrivateKey,
+                ChannelUrl = new PathBuilder(hosting.BaseAddress)
+                                .Path("channel.html")
+                                .ToString(),
+                CanvasUrl = new PathBuilder("http://apps.facebook.com/")
+                                .Path(credential.AccountName)
+                                .ToString(),
+                MinimumClaims = credential.Claims
+            };
         }
 
-        public static Credential Credential
+        public FacebookConfig(IHosting hosting, ILookup<Credential> credentials)
         {
-            get
-            {
-                var lookup = DependencyResolver.Current.GetService<ILookup<Credential>>();
-                
-                return lookup.Get(WellKnown.Provider.Facebook);
-            }
-        }
-
-        public static string AppSecret
-        {
-            get 
-            {
-                return Credential.PrivateKey;
-            }
-        }
-
-        public static string Namespace
-        {
-            get
-            {
-                return Credential.AccountName;
-            }
+            this.hosting = hosting;
+            this.credentials = credentials;
         }
     }
 }

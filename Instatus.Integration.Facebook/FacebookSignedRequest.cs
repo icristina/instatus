@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 namespace Instatus.Integration.Facebook
 {
     // http://developers.facebook.com/docs/reference/login/signed-request/
+    [FacebookSignedRequestBinder]
     public class FacebookSignedRequest
     {
         public string Code { get; set; }

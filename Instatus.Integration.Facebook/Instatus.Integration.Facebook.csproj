@@ -98,9 +98,12 @@
     <Compile Include="FacebookClient.cs" />
     <Compile Include="FacebookConfig.cs" />
     <Compile Include="FacebookPrincipalExtensions.cs" />
+    <Compile Include="FacebookSettings.cs" />
     <Compile Include="FacebookSignedRequest.cs" />
     <Compile Include="FacebookSignedRequestBinder.cs" />
+    <Compile Include="FacebookSignedRequestBinderAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="HtmlHelperExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

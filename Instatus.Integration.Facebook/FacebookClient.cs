@@ -81,6 +81,13 @@ namespace Instatus.Integration.Facebook
             return GetFqlAsync<Response<Friend>>("SELECT uid, name FROM user WHERE has_added_app=1 and uid IN (SELECT uid2 FROM friend WHERE uid1 = me())", limit);
         }
 
+        public async Task<string[]> AppPermissions()
+        {
+            var permissions = await GetGraphApiAsync<Response>("me/permissions", defaultLimit, null);
+            
+            return permissions.Data.Select(d => d.Key).ToArray();
+        }
+
         public void Dispose()
         {
             httpClient.Dispose();
@@ -112,6 +119,12 @@ namespace Instatus.Integration.Facebook
         public class Response<T>
         {
             public IList<T> Data { get; set; }
+            public Paging Paging { get; set; }
+        }
+
+        public class Response
+        {
+            public IDictionary<string, int> Data { get; set; }
             public Paging Paging { get; set; }
         }
 

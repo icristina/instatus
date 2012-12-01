@@ -17,25 +17,9 @@ namespace Instatus.Integration.Facebook
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             var viewBag = filterContext.Controller.ViewBag;
-            var credential = Credentials.Get(WellKnown.Provider.Facebook);
+            var facebookConfig = new FacebookConfig(Hosting, Credentials);
 
-            viewBag.Facebook = new FacebookData
-            {
-                AppId = credential.PublicKey,
-                ChannelUrl = new PathBuilder(Hosting.BaseAddress)
-                                .Path("channel.html")
-                                .ToString(),
-                CanvasUrl = new PathBuilder("http://apps.facebook.com/")
-                                .Path(credential.AccountName)
-                                .ToString()
-            };
-        }
-
-        public class FacebookData
-        {
-            public string AppId { get; set; }
-            public string ChannelUrl { get; set; }
-            public string CanvasUrl { get; set; }
+            viewBag.Facebook = facebookConfig.GetSettings();
         }
     }
 }

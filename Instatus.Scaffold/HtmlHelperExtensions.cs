@@ -15,12 +15,12 @@ namespace Instatus.Scaffold
             return htmlHelper.Partial("_Pagination", paged);
         }
 
-        public static MvcHtmlString Facebook<T>(this HtmlHelper<T> htmlHelper)
+        public static MvcHtmlString FacebookScripts<T>(this HtmlHelper<T> htmlHelper)
         {
             return htmlHelper.Partial("_Facebook");
         }
 
-        public static MvcHtmlString GoogleAnalytics<T>(this HtmlHelper<T> htmlHelper)
+        public static MvcHtmlString GoogleAnalyticsScripts<T>(this HtmlHelper<T> htmlHelper)
         {
             return htmlHelper.Partial("_GoogleAnalytics");
         }

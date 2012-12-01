@@ -13,6 +13,8 @@ namespace Instatus.Integration.Facebook
 {
     public class FacebookSignedRequestBinder : IModelBinder
     {
+        private FacebookSettings facebookSettings;
+        
         public object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
         {
             var signedRequestString = controllerContext.HttpContext.Request.Unvalidated["signed_request"];
@@ -23,7 +25,7 @@ namespace Instatus.Integration.Facebook
 
                 object signedRequest;
 
-                if (facebookClient.TryParseSignedRequest(FacebookConfig.AppSecret, signedRequestString, out signedRequest)) 
+                if (facebookClient.TryParseSignedRequest(facebookSettings.AppSecret, signedRequestString, out signedRequest)) 
                 {
                     var jsonNetSerializer = new JsonNetSerializer();
                     var jsonString = jsonNetSerializer.Stringify(signedRequest);
@@ -33,6 +35,11 @@ namespace Instatus.Integration.Facebook
             }
 
             return null;            
+        }
+
+        public FacebookSignedRequestBinder(FacebookSettings facebookSettings)
+        {
+            this.facebookSettings = facebookSettings;
         }
     }
 }
