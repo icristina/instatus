@@ -36,6 +36,8 @@ body {
 .container {
     margin-left: auto;
     margin-right: auto;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
 }
 
 /* utilities */
@@ -338,6 +340,20 @@ figure {
     margin-left: 91.66%;
 }
 
+/* margin at top */
+
+.offset-top1 {
+    margin-top: 1.0em;
+}
+
+.offset-top2 {
+    margin-top: 2.0em;
+}
+
+.offset-top3 {
+    margin-top: 3.0em;
+}
+
 /* rich text content */
 
 h1,
@@ -347,6 +363,12 @@ h4,
 h5,
 h6 {
     margin-top: 0;
+    text-rendering: optimizeLegibility;
+}
+
+h1,
+h2 {
+    font-weight: normal;
 }
 
 p, 
@@ -449,11 +471,18 @@ textarea {
     display: none;
 }
 
-/* inverse color */
+/* dark or light theme */
 
-.inverse {
+.dark,
+.hover-dark:hover {
     background-color: black;
     color: white;
+}
+
+.light,
+.hover-light:hover {
+    background-color: white;
+    color: black;
 }
 
 /* responsive */
