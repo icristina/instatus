@@ -13,6 +13,12 @@
     <style>
         .container {
             padding: 50px;
+            width: auto;
+        }
+
+        .group {
+            min-width: 500px;
+            padding-right: 50px;
         }
 
         .tile div {
@@ -20,9 +26,13 @@
             margin: 5px;
             padding: 20px;
         }
+
+        .icon-back::before {
+            content: "\E0D5";
+        }
     </style>
 </head>
-<body>
+<body class="bg-dark">
     <header class="container">
         <button type="button" class="btn icon icon-back">
             <span class="hide-text">Back</span>
@@ -32,126 +42,31 @@
     <div class="container">
         <div class="hub">
            <div class="row">
-                <section class="group" style="min-width: 500px; padding-right: 50px;">
-                    <div class="tile span6">
-                        <div class="bg-blue">
-                            <h2>Blog Posts</h2>
+                @for (var i = 0; i < 6; i++)
+                {
+                    <section class="group">
+                        <div class="tile span6">
+                            <div class="bg-blue">
+                                <h2>Blog Posts</h2>
+                            </div>
                         </div>
-                    </div>
-                    <div class="tile span6">
-                        <div class="bg-blue">
-                            <h2>Photos</h2>
+                        <div class="tile span6">
+                            <div class="bg-blue">
+                                <h2>Photos</h2>
+                            </div>
                         </div>
-                    </div>
-                    <div class="tile span6">
-                        <div class="bg-green">
+                        <div class="tile span6">
+                            <div class="bg-green">
 
+                            </div>
                         </div>
-                    </div>
-                    <div class="tile span6">
-                        <div class="bg-blue">
+                        <div class="tile span6">
+                            <div class="bg-blue">
 
+                            </div>
                         </div>
-                    </div>
-                </section>
-                <section class="group" style="min-width: 500px; padding-right: 50px;">
-                    <div class="tile span6">
-                        <div class="bg-blue">
-
-                        </div>
-                    </div>
-                    <div class="tile span6">
-                        <div class="bg-blue">
-
-                        </div>
-                    </div>
-                    <div class="tile span6">
-                        <div class="bg-green">
-
-                        </div>
-                    </div>
-                    <div class="tile span6">
-                        <div class="bg-yellow">
-
-                        </div>
-                    </div>
-                    <div class="tile span6">
-                        <div class="bg-green">
-
-                        </div>
-                    </div>
-                    <div class="tile span6">
-                        <div class="bg-blue">
-
-                        </div>
-                    </div>
-                </section>
-                <section class="group" style="min-width: 500px; padding-right: 50px;">
-                    <div class="tile span6">
-                        <div class="bg-blue">
-
-                        </div>
-                    </div>
-                    <div class="tile span6">
-                        <div class="bg-blue">
-
-                        </div>
-                    </div>
-                    <div class="tile span6">
-                        <div class="bg-green">
-
-                        </div>
-                    </div>
-                    <div class="tile span6">
-                        <div class="bg-blue">
-
-                        </div>
-                    </div>
-                </section>
-                <section class="group" style="min-width: 500px; padding-right: 50px;">
-                    <div class="tile span6">
-                        <div class="bg-blue">
-
-                        </div>
-                    </div>
-                    <div class="tile span6">
-                        <div class="bg-blue">
-
-                        </div>
-                    </div>
-                    <div class="tile span6">
-                        <div class="bg-green">
-
-                        </div>
-                    </div>
-                    <div class="tile span6">
-                        <div class="bg-blue">
-
-                        </div>
-                    </div>
-                </section>
-                <section class="group" style="min-width: 500px; padding-right: 50px;">
-                    <div class="tile span6">
-                        <div class="bg-blue">
-
-                        </div>
-                    </div>
-                    <div class="tile span6">
-                        <div class="bg-blue">
-
-                        </div>
-                    </div>
-                    <div class="tile span6">
-                        <div class="bg-green">
-
-                        </div>
-                    </div>
-                    <div class="tile span6">
-                        <div class="bg-blue">
-
-                        </div>
-                    </div>
-                </section>
+                    </section>
+                }
             </div>
         </div>
     </div>

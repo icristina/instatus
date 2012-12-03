@@ -2,13 +2,6 @@
     font-family: "Segoe UI";
 }
 
-/* dark theme */
-
-body {
-    background-color: #1D1D1D;
-    color: white;
-}
-
 /* symbols */
 
 .icon::before {
@@ -66,28 +59,39 @@ body {
 
 /* colors */
 
+.bg-dark {
+    background-color: #1D1D1D;
+    color: white;
+}
+
 .bg-blue {
     background-color: #2D89EF;
+    color: white;
 }
 
 .bg-yellow {
     background-color: #FFC40D;
+    color: white;
 }
 
 .bg-red {
     background-color: #B91D47;
+    color: white;
 }
 
 .bg-purple {
     background-color: #603CBA;
+    color: white;
 }
 
 .bg-green {
     background-color: #00A300;
+    color: white;
 }
 
 .bg-orange {
     background-color: #E3A21A;
+    color: white;
 }
 
 /* text */

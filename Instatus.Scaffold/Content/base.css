@@ -473,14 +473,14 @@ textarea {
 
 /* dark or light theme */
 
-.dark,
-.hover-dark:hover {
+.bg-dark,
+.bg-dark-transition:hover {
     background-color: black;
     color: white;
 }
 
-.light,
-.hover-light:hover {
+.bg-light,
+.bg-light-transition:hover {
     background-color: white;
     color: black;
 }
