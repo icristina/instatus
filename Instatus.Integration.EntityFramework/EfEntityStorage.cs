@@ -10,13 +10,13 @@ namespace Instatus.Integration.EntityFramework
 {
     public class EfEntityStorage<TContext> : IEntityStorage, IDisposable where TContext : DbContext
     {
-        private DbContext dbcontext;
+        private DbContext context;
 
         public DbContext Context
         {
             get
             {
-                return dbcontext ?? (dbcontext = Activator.CreateInstance<TContext>());
+                return context ?? (context = Activator.CreateInstance<TContext>());
             }
         }
         
@@ -32,9 +32,19 @@ namespace Instatus.Integration.EntityFramework
 
         public void Dispose()
         {
-            using(dbcontext) { // try dispose
+            using(context) { // try dispose
 
             }
+        }
+
+        public EfEntityStorage()
+        {
+
+        }
+
+        public EfEntityStorage(TContext context)
+        {
+            this.context = context;
         }
     }
 }

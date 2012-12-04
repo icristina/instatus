@@ -4,6 +4,7 @@ using Instatus.Scaffold.Entities;
 using Instatus.Scaffold.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Objects.SqlClient;
 using System.Linq;
 using System.Linq.Expressions;
@@ -16,19 +17,8 @@ namespace Instatus.Scaffold.Controllers
     [SessionState(SessionStateBehavior.Disabled)]
     public abstract class BlogController : Controller
     {
-        private IEntityStorage entityStorage;
-        
-        private Expression<Func<Post, BlogPost>> selectBlogPost = (p) => new BlogPost() 
-        {
-            Id = SqlFunctions.StringConvert((double)p.Id),
-            Title = p.Name,
-            Abstract = p.Description,
-            Body = p.Content,
-            Tags = p.Tags.Select(t => t.Name),
-            Slug = p.Slug,
-            Picture = p.Picture,
-            Published = p.Created
-        };
+        private IEntityStorage entityStorage;        
+        private Expression<Func<Post, BlogPost>> selectBlogPost;
 
         public virtual ActionResult Index(int pageIndex = 0, string tag = null)
         {
@@ -86,6 +76,35 @@ namespace Instatus.Scaffold.Controllers
         public BlogController(IEntityStorage entityStorage)
         {
             this.entityStorage = entityStorage;
+
+            if (entityStorage is DbContext)
+            {
+                selectBlogPost = (p) => new BlogPost() 
+                {
+                    Id = SqlFunctions.StringConvert((double)p.Id),
+                    Title = p.Name,
+                    Abstract = p.Description,
+                    Body = p.Content,
+                    Tags = p.Tags.Select(t => t.Name),
+                    Slug = p.Slug,
+                    Picture = p.Picture,
+                    Published = p.Created
+                };
+            }
+            else
+            {
+                selectBlogPost = (p) => new BlogPost() 
+                {
+                    Id = p.Id.ToString(),
+                    Title = p.Name,
+                    Abstract = p.Description,
+                    Body = p.Content,
+                    Tags = p.Tags.Select(t => t.Name),
+                    Slug = p.Slug,
+                    Picture = p.Picture,
+                    Published = p.Created
+                };
+            }
         }
     }
 }
