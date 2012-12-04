@@ -1,4 +1,6 @@
 ﻿using Instatus.Core;
+using Instatus.Core.Impl;
+using Instatus.Integration.EntityFramework;
 using Instatus.Integration.Mvc;
 using Instatus.Scaffold.Entities;
 using Instatus.Scaffold.Models;
@@ -77,11 +79,11 @@ namespace Instatus.Scaffold.Controllers
         {
             this.entityStorage = entityStorage;
 
-            if (entityStorage is DbContext)
+            if (entityStorage is InMemoryEntityStorage)
             {
-                selectBlogPost = (p) => new BlogPost() 
+                selectBlogPost = (p) => new BlogPost()
                 {
-                    Id = SqlFunctions.StringConvert((double)p.Id),
+                    Id = p.Id.ToString(),
                     Title = p.Name,
                     Abstract = p.Description,
                     Body = p.Content,
@@ -89,13 +91,13 @@ namespace Instatus.Scaffold.Controllers
                     Slug = p.Slug,
                     Picture = p.Picture,
                     Published = p.Created
-                };
+                };                               
             }
             else
             {
                 selectBlogPost = (p) => new BlogPost() 
                 {
-                    Id = p.Id.ToString(),
+                    Id = SqlFunctions.StringConvert((double)p.Id),
                     Title = p.Name,
                     Abstract = p.Description,
                     Body = p.Content,

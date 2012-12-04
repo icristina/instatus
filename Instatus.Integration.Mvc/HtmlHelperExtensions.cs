@@ -82,6 +82,18 @@ namespace Instatus.Integration.Mvc
             return new MvcHtmlString(sb.ToString().Trim());
         }
 
+        public static MvcHtmlString ActiveHint<T>(this HtmlHelper<T> htmlHelper, string controllerName)
+        {
+            if (htmlHelper.ViewContext.RouteData.GetRequiredString("controller").Equals(controllerName, StringComparison.OrdinalIgnoreCase))
+            {
+                return new MvcHtmlString("active");
+            }
+            else
+            {
+                return MvcHtmlString.Empty;
+            }
+        }
+
         public static MvcHtmlString DataSource<T>(this HtmlHelper<T> htmlHelper, string variableName, object graph)
         {
             var jsonSerializer = DependencyResolver.Current.GetService<IJsonSerializer>();
