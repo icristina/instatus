@@ -7,7 +7,7 @@ using Instatus.Core;
 
 namespace Instatus.Integration.Mvc
 {
-    public class HttpNotFoundAttribute : ActionFilterAttribute
+    public class CheckViewModelForNullAttribute : ActionFilterAttribute
     {
         public override void OnActionExecuted(ActionExecutedContext filterContext)
         {

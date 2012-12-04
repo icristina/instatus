@@ -124,6 +124,7 @@ namespace Instatus.Core
             public const string WebPage = "WebPage";
             public const string Product = "Product";
             public const string Catalog = "Catalog";
+            public const string CaseStudy = "CaseStudy";
         }
     }
 }

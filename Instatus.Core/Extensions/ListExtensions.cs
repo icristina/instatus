@@ -13,5 +13,15 @@ namespace Instatus.Core.Extensions
         {
             return list.ElementAt(random.Next(0, list.Count()));
         }
+
+        // http://stackoverflow.com/questions/419019/split-list-into-sublists-with-linq
+        public static IEnumerable<IEnumerable<T>> Chunk<T>(this IEnumerable<T> source, int chunksize)
+        {
+            while (source.Any())
+            {
+                yield return source.Take(chunksize);
+                source = source.Skip(chunksize);
+            }
+        }
     }
 }

@@ -9,7 +9,7 @@ using System.Web.SessionState;
 
 namespace Instatus.Integration.Mvc
 {
-    [HttpNotFound]
+    [CheckViewModelForNull]
     [SessionState(SessionStateBehavior.Disabled)]
     public abstract class PageController : Controller
     {

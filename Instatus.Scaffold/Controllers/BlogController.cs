@@ -71,7 +71,7 @@ namespace Instatus.Scaffold.Controllers
                 .OrderByDescending(b => b.Published);
         }
 
-        [HttpNotFound]
+        [CheckViewModelForNull]
         public ActionResult Details(string slug)
         {
             ViewData.Model = entityStorage

@@ -135,7 +135,7 @@
     <Compile Include="KeyValueStorageController.cs" />
     <Compile Include="MultipleResponseFormatsAttribute.cs" />
     <Compile Include="ServerNameAttribute.cs" />
-    <Compile Include="HttpNotFoundAttribute.cs" />
+    <Compile Include="CheckViewModelForNullAttribute.cs" />
     <Compile Include="DelegateResult.cs" />
     <Compile Include="ExtendedViewPage.cs" />
     <Compile Include="FacebookOAuthClient.cs" />

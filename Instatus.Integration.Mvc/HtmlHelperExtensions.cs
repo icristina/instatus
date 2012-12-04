@@ -112,5 +112,15 @@ namespace Instatus.Integration.Mvc
 
             return MvcHtmlString.Empty;
         }
+
+        public static MvcHtmlString Title<T>(this HtmlHelper<T> htmlHelper)
+        {
+            var tagBuilder = new TagBuilder("title");
+            var title = htmlHelper.ViewBag.Title ?? htmlHelper.ViewContext.RouteData.GetRequiredString("controller").ToTitleCase();
+
+            tagBuilder.InnerHtml = title;
+
+            return new MvcHtmlString(tagBuilder.ToString());
+        }
     }
 }

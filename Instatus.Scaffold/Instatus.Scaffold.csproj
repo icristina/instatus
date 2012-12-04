@@ -131,6 +131,9 @@
     <Compile Include="App_Start\RazorGeneratorMvcStart.cs" />
     <Compile Include="Entities\Message.cs" />
     <Compile Include="Models\BlogPostEditor.cs" />
+    <Compile Include="Models\Connection.cs" />
+    <Compile Include="Models\Grid.cs" />
+    <Compile Include="Models\Tile.cs" />
     <Compile Include="ScaffoldConfig.cs" />
     <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Entities\Campaign.cs" />

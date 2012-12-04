@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html class="@Html.BrowserCapabilitiesHint()">
 <head>  
-    <title>@ViewBag.Title</title>          
+    @Html.Title()    
     @if (IsSectionDefined("head"))
     {
         @RenderSection("head")
