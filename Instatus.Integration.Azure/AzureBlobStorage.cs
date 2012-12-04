@@ -20,6 +20,19 @@ namespace Instatus.Integration.Azure
     {
         private ILookup<Credential> credentials;
 
+        public string GetBlobName(string virtualPath)
+        {
+            return Path.GetFileName(virtualPath);
+        }
+
+        public string GetContainerName(string virtualPath)
+        {
+            return Path.GetDirectoryName(virtualPath)
+                .TrimStart(PathBuilder.RelativeChars)
+                .TrimEnd(PathBuilder.RelativeChars)
+                .ToLower();
+        }
+
         public string GetBaseUri(string accountName)
         {
             return string.Format("http://{0}.blob.core.windows.net", accountName);
@@ -28,7 +41,7 @@ namespace Instatus.Integration.Azure
         public CloudBlockBlob GetBlockBlob(string virtualPath)
         {
             var container = GetBlobContainer(virtualPath);
-            var blobName = Path.GetFileName(virtualPath);
+            var blobName = GetBlobName(virtualPath);
 
             return container.GetBlockBlobReference(blobName);
         }
@@ -39,12 +52,8 @@ namespace Instatus.Integration.Azure
             {
                 virtualPath = virtualPath + "/"; // ensure virtualPath for folder still returns container name
             }
-            
-            var containerName = Path.GetDirectoryName(virtualPath)
-                .TrimStart(PathBuilder.RelativeChars)
-                .TrimEnd(PathBuilder.RelativeChars)
-                .ToLower();
 
+            var containerName = GetContainerName(virtualPath);
             var credential = credentials.Get(WellKnown.Provider.WindowsAzure);
             var baseUri = GetBaseUri(credential.AccountName);
             var storageCredential = new StorageCredentials(credential.AccountName, credential.PrivateKey);
