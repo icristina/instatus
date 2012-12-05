@@ -47,6 +47,11 @@ namespace Instatus.Sample.Controllers
             return View();
         }
 
+        public ActionResult SocialApp()
+        {
+            return View();
+        }
+
         [OutputCache(Duration = 60)]
         public ActionResult CacheMe()
         {

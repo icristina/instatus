@@ -192,6 +192,7 @@
     <Content Include="Content\reset.less" />
     <Content Include="Views\Home\WindowsApp.cshtml" />
     <Content Include="Views\Canvas\Index.cshtml" />
+    <Content Include="Views\Home\SocialApp.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Shared\" />
