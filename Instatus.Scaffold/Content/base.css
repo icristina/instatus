@@ -564,6 +564,84 @@ ul.unstyled li {
     right: 0;
 }
 
+/* dock */
+
+.dock {  
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.dock-top,
+.dock-left,
+.dock-right,
+.dock-bottom {
+    position: absolute; 
+    -webkit-transition: top 0.5s, left 0.5s;
+    -moz-transition: top 0.5s, left 0.5s;
+    -ms-transition: top 0.5s, left 0.5s;     
+    transition: top 0.5s, left 0.5s;    
+}
+
+.dock-top.hide,
+.dock-left.hide,
+.dock-right.hide,
+.dock-bottom.hide {
+    display: block;
+    border: 0;    
+}
+
+.dock-top,
+.dock-bottom {
+    height: 40%;
+    width: 100%;
+    z-index: 2;    
+}
+
+.dock-top {
+    top: 0;
+    border-bottom: 1px solid black;
+}
+
+.dock-top.hide {
+    top: -40%;
+}
+
+.dock-bottom {
+    top: 60%;
+    border-top: 1px solid black;
+}
+
+.dock-bottom.hide {
+    top: 100%;
+}
+
+.dock-right,
+.dock-left {
+    height: 100%;
+    width: 40%;
+    z-index: 1;    
+}
+
+.dock-left {
+    top: 0;
+    border-right: 1px solid black;
+}
+
+.dock-left.hide {
+    left: -40%;
+}
+
+.dock-right {
+    left: 60%;
+    border-left: 1px solid black;
+}
+
+.dock-right.hide {
+    left: 100%;
+}​
+
 /* form */
 
 fieldset {
