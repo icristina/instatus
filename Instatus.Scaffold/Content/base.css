@@ -98,17 +98,27 @@ a:visited {
     width: 100%;
 }
 
-.aspect-ratio-4-3 .aspect-ratio-inner {
-     margin-top: 75%;
+.aspect-ratio-4-3,
+.aspect-ratio-photo {
+    margin-top: 75%;
 }
 
-.aspect-ratio-16-9 .aspect-ratio-inner {
-     margin-top: 56.25%;
+.aspect-ratio-1280-720,
+.aspect-ratio-1920-1080,
+.aspect-ratio-16-9,
+.aspect-ratio-hd {
+    margin-top: 56.25%;
 }    
+
+.aspect-ratio-1920-800,
+.aspect-ratio-cinema {
+    margin-top: 41.66%;
+}        
 
 .aspect-ratio img,
 .aspect-ratio video,
-.aspect-ratio object {
+.aspect-ratio object,
+.aspect-ratio .item {
     position: absolute;
     display: block;
     top: 0;
@@ -536,14 +546,30 @@ ul.unstyled li {
 
 .carousel {
     position: relative;
+    width: 100%;
+    overflow: hidden;
 }
 
-.carousel .item {
-    display: none;
+.carousel .carousel-inner .item {
+    position: absolute;    
+    width: 100%;  
+    -webkit-transition: left 0.5s;
+    -moz-transition: left 0.5s;
+    -ms-transition: left 0.5s;     
+    transition: left 0.5s;    
 }
 
-.carousel .active {
-    display: block;
+.carousel .carousel-inner .left {
+    left: -100%;    
+}
+
+.carousel .carousel-inner .right {
+    left: 100%;   
+}
+
+.carousel .carousel-inner .active {
+    left: 0; 
+    z-index: 1;  
 }
 
 .carousel-control {
@@ -554,6 +580,12 @@ ul.unstyled li {
     font-size: 3.0em;
     margin-top: -1.0em;
     color: white;
+}
+
+.carousel-control.left,
+.carousel-control.right {
+    cursor: pointer;
+    z-index: 2;        
 }
 
 .carousel-control.left {
@@ -573,74 +605,70 @@ ul.unstyled li {
     overflow: hidden;
 }
 
-.dock-top,
-.dock-left,
-.dock-right,
-.dock-bottom {
+.dock .top,
+.dock .left,
+.dock .right,
+.dock .bottom {
     position: absolute; 
     -webkit-transition: top 0.5s, left 0.5s;
     -moz-transition: top 0.5s, left 0.5s;
     -ms-transition: top 0.5s, left 0.5s;     
     transition: top 0.5s, left 0.5s;    
-}
-
-.dock-top.hide,
-.dock-left.hide,
-.dock-right.hide,
-.dock-bottom.hide {
     display: block;
-    border: 0;    
 }
 
-.dock-top,
-.dock-bottom {
+.dock .top,
+.dock .bottom {
     height: 40%;
     width: 100%;
-    z-index: 2;    
+    z-index: 1;    
 }
 
-.dock-top {
+.dock .top {
     top: 0;
     border-bottom: 1px solid black;
 }
 
-.dock-top.hide {
+.dock .top.hide {
     top: -40%;
 }
 
-.dock-bottom {
+.dock .bottom {
     top: 60%;
     border-top: 1px solid black;
 }
 
-.dock-bottom.hide {
+.dock .bottom.hide {
     top: 100%;
 }
 
-.dock-right,
-.dock-left {
+.dock .right,
+.dock .left {
     height: 100%;
     width: 40%;
-    z-index: 1;    
 }
 
-.dock-left {
+.dock .left {
     top: 0;
     border-right: 1px solid black;
 }
 
-.dock-left.hide {
+.dock .left.hide {
     left: -40%;
 }
 
-.dock-right {
+.dock .right {
     left: 60%;
     border-left: 1px solid black;
 }
 
-.dock-right.hide {
+.dock .right.hide {
     left: 100%;
 }​
+
+.dock .hide {
+    border: 0;    
+}
 
 /* form */
 
