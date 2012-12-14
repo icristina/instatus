@@ -58,6 +58,15 @@ namespace Instatus.Scaffold.Entities
             Created = DateTime.UtcNow;
             Mechanic = Mechanic.Promotion;
             Gate = Gate.None;
+
+            // initialize collections
+            Posts = new List<Post>();
+            Scores = new List<Score>();
+            Votes = new List<Vote>();
+            Entries = new List<Entry>();
+            Maps = new List<Map>();
+            Invites = new List<Invite>();
+            Messages = new List<Message>();
         }
     }
 }
