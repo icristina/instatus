@@ -37,6 +37,7 @@ namespace Instatus.Scaffold.Entities
         public virtual Campaign Campaign { get; set; }
         public virtual ICollection<Like> Likes { get; set; }
         public virtual ICollection<Tag> Tags { get; set; }
+        public virtual ICollection<Entry> Entries { get; set; }
 
         public Post()
         {
@@ -46,6 +47,7 @@ namespace Instatus.Scaffold.Entities
             // initialize collections
             Likes = new List<Like>();
             Tags = new List<Tag>();
+            Entries = new List<Entry>();
         }
     }
 }

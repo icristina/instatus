@@ -10,6 +10,7 @@ namespace Instatus.Scaffold.Entities
         Draft,
         Pending,
         Approved,
+        Archived,
         Deleted
     }
 }
