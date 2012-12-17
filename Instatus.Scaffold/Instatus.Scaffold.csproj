@@ -230,10 +230,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Shared\_GoogleAnalytics.cshtml" />
+    <Content Include="Views\Shared\_GoogleAnalyticsScripts.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Shared\_Facebook.cshtml" />
+    <Content Include="Views\Shared\_FacebookScripts.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\_SelectLocale.cshtml" />

@@ -5,8 +5,11 @@
 
 @foreach (var prop in properties)
 {
+    var hasModelStateError = ViewContext.ViewData.ModelState.Any(m => m.Key == prop.PropertyName) 
+        && ViewContext.ViewData.ModelState[prop.PropertyName].Errors != null
+        && ViewContext.ViewData.ModelState[prop.PropertyName].Errors.Count > 0;  
     <div class="control-group 
-        @(ViewContext.ViewData.ModelState.Any(m => m.Key == prop.PropertyName) ? "error" : "") 
+        @(hasModelStateError ? "error" : string.Empty) 
         @prop.PropertyName.ToLower()">
         @if (prop.IsReadOnly)
         {
@@ -27,7 +30,7 @@
             </label>                     
             <div class="controls">
                 @Html.Editor(prop.PropertyName)             
-                @if (ViewContext.ViewData.ModelState.Any(m => m.Key == prop.PropertyName))
+                @if (hasModelStateError)
                 {
                     <p class="alert alert-block">
                         @Html.ValidationMessage(prop.PropertyName)

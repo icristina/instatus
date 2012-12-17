@@ -18,12 +18,12 @@ namespace Instatus.Scaffold
 
         public static MvcHtmlString FacebookScripts<T>(this HtmlHelper<T> htmlHelper)
         {
-            return htmlHelper.Partial("_Facebook");
+            return htmlHelper.Partial("_FacebookScripts");
         }
 
         public static MvcHtmlString GoogleAnalyticsScripts<T>(this HtmlHelper<T> htmlHelper)
         {
-            return htmlHelper.Partial("_GoogleAnalytics");
+            return htmlHelper.Partial("_GoogleAnalyticsScripts");
         }
 
         public static MvcHtmlString SelectLocale<T>(this HtmlHelper<T> htmlHelper)
