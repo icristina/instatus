@@ -117,7 +117,6 @@ namespace Instatus.Integration.Mvc
                 })
             });
 
-
             // using Phone rather than Mobile aligns with Bootstrap
             displayModeProvider.Modes.Insert(0, new DefaultDisplayMode("Phone")
             {

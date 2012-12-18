@@ -136,6 +136,7 @@
     <Compile Include="AccountController.cs" />
     <Compile Include="BaseMvcConfig.cs" />
     <Compile Include="CustomErrorsController.cs" />
+    <Compile Include="DisplayModeProviderExtensions.cs" />
     <Compile Include="EmbeddedResourceVirtualPathProvider.cs" />
     <Compile Include="MvcAuthentication.cs" />
     <Compile Include="PageController.cs" />

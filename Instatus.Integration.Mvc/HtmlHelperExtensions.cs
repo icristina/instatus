@@ -27,7 +27,8 @@ namespace Instatus.Integration.Mvc
         
         public static MvcHtmlString BrowserCapabilitiesHint<T>(this HtmlHelper<T> htmlHelper)
         {
-            var browserCapabilities = htmlHelper.ViewContext.RequestContext.HttpContext.Request.Browser;
+            var httpContext = htmlHelper.ViewContext.RequestContext.HttpContext;
+            var browserCapabilities = httpContext.Request.Browser;
             var browser = browserCapabilities.Browser.ToLower();
             var displayModeProvider = DisplayModeProvider.Instance;
             var sb = new StringBuilder();
@@ -38,7 +39,7 @@ namespace Instatus.Integration.Mvc
             sb.Append(browser);
             sb.Append(browserCapabilities.MajorVersion);
             sb.Append(" ");
-            sb.Append(displayModeProvider.GetAvailableDisplayModesForContext(htmlHelper.ViewContext.HttpContext, htmlHelper.ViewContext.DisplayMode).FirstOrDefault().DisplayModeId.ToLower());            
+            sb.Append(displayModeProvider.GetDisplayModeId(httpContext).ToLower());            
 
             return new MvcHtmlString(sb.ToString());
         }
