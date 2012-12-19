@@ -14,5 +14,10 @@ namespace Instatus.Core.Extensions
 
             return obj;
         }
+
+        public static string AsString(this object obj)
+        {
+            return obj == null ? string.Empty : obj.ToString();
+        }
     }
 }

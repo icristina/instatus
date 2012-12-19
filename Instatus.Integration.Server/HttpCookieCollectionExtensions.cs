@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web;
+using Instatus.Core.Extensions;
 
 namespace Instatus.Integration.Server
 {
@@ -31,7 +32,7 @@ namespace Instatus.Integration.Server
         {
             var cookie = cookies[cookieName];
             
-            cookie[key] = value.ToString();
+            cookie[key] = value.AsString();
             cookie.Expires = DateTime.Now.AddYears(1);
         }
     }
