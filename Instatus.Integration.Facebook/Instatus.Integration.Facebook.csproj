@@ -115,6 +115,10 @@
       <Project>{39c44af6-a1ad-40ee-b1c6-40fda4ac9c83}</Project>
       <Name>Instatus.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Instatus.Integration.Mvc\Instatus.Integration.Mvc.csproj">
+      <Project>{5ab12e21-db61-4e3f-834f-136302437509}</Project>
+      <Name>Instatus.Integration.Mvc</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Instatus.Integration.SystemNetHttp\Instatus.Integration.SystemNetHttp.csproj">
       <Project>{a28d10e7-d1e5-4981-91ec-8698daeae7ea}</Project>
       <Name>Instatus.Integration.SystemNetHttp</Name>

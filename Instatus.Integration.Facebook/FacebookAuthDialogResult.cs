@@ -1,6 +1,7 @@
 ﻿using Instatus.Core;
 using Instatus.Core.Models;
 using Instatus.Core.Utils;
+using Instatus.Integration.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,10 +23,9 @@ namespace Instatus.Integration.Facebook
                                 .Query("redirect_uri", facebookSettings.CanvasUrl)
                                 .ToString();
 
-            var response = context.RequestContext.HttpContext.Response;
+            var clientRedirectResult = new ClientRedirectResult(canvasOauthUrl);
 
-            response.ContentType = WellKnown.ContentType.Html;
-            response.Write(string.Format("<script>window.top.location = '{0}';</script>", canvasOauthUrl));
+            clientRedirectResult.ExecuteResult(context);
         }
 
         public FacebookAuthDialogResult(IHosting hosting, ILookup<Credential> credentials)
