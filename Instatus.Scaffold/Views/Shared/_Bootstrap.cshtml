@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html class="@Html.BrowserCapabilitiesHint()">
+<html class="@Html.BrowserCapabilitiesHint() @Html.LayoutHint(PageData)">
 <head>  
     @Html.Title()    
     @if (IsSectionDefined("head"))

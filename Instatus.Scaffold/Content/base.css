@@ -18,10 +18,12 @@ body {
     font-family: sans-serif;               
 }
 
-/* canvas or iframe app */
+/* canvas, tab or iframe app */
 
 html.canvas-app, 
-html.canvas-app body {
+html.canvas-app body,
+html.tab-app, 
+html.tab-app body {
     width: 100%;
     height: 100%;
     overflow: hidden;

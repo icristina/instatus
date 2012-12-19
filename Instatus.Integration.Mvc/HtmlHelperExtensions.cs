@@ -95,6 +95,11 @@ namespace Instatus.Integration.Mvc
             }
         }
 
+        public static MvcHtmlString LayoutHint<T>(this HtmlHelper<T> htmlHelper, IDictionary<object, dynamic> pageData)
+        {
+            return new MvcHtmlString(htmlHelper.ViewBag.LayoutHint ?? pageData["LayoutHint"]);
+        }
+
         public static MvcHtmlString DataSource<T>(this HtmlHelper<T> htmlHelper, string variableName, object graph)
         {
             var jsonSerializer = DependencyResolver.Current.GetService<IJsonSerializer>();
