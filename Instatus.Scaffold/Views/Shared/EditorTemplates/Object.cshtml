@@ -24,7 +24,7 @@
         {
             <label class="control-label">
                 @prop.GetDisplayName()
-                @if(prop.IsRequired) {
+                @if(prop.IsRequired && !prop.ModelType.Equals(typeof(bool))) {
                     <span class="required">*</span> 
                 }            
             </label>                     

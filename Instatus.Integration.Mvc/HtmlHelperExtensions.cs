@@ -100,6 +100,18 @@ namespace Instatus.Integration.Mvc
             return new MvcHtmlString(htmlHelper.ViewBag.LayoutHint ?? pageData["LayoutHint"]);
         }
 
+        public static MvcHtmlString ValidationHint<T>(this HtmlHelper<T> htmlHelper)
+        {
+            if (htmlHelper.ViewData.ModelMetadata.IsRequired)
+            {
+                return new MvcHtmlString("required");
+            }
+            else
+            {
+                return MvcHtmlString.Empty;
+            }
+        }
+
         public static MvcHtmlString DataSource<T>(this HtmlHelper<T> htmlHelper, string variableName, object graph)
         {
             var jsonSerializer = DependencyResolver.Current.GetService<IJsonSerializer>();

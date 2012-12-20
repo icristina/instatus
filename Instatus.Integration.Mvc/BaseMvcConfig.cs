@@ -137,8 +137,8 @@ namespace Instatus.Integration.Mvc
                     var userAgent = context.Request.UserAgent;
 
                     return userAgent.IndexOf("iPad", StringComparison.OrdinalIgnoreCase) >= 0 
-                        || (userAgent.IndexOf("Android", StringComparison.OrdinalIgnoreCase) > 0 && userAgent.IndexOf("Mobile", StringComparison.OrdinalIgnoreCase) == -1
-                        || (userAgent.IndexOf("MSIE 10.", StringComparison.OrdinalIgnoreCase) > 0 && userAgent.IndexOf("Touch", StringComparison.OrdinalIgnoreCase) > 0));
+                        || (userAgent.IndexOf("Android", StringComparison.OrdinalIgnoreCase) > 0 && userAgent.IndexOf("Mobile", StringComparison.OrdinalIgnoreCase) == -1)
+                        || (userAgent.IndexOf("Trident", StringComparison.OrdinalIgnoreCase) > 0 && userAgent.IndexOf("Touch", StringComparison.OrdinalIgnoreCase) > 0 && userAgent.IndexOf("IEMobile", StringComparison.OrdinalIgnoreCase) == -1);
                 })
             });
         }
@@ -146,6 +146,11 @@ namespace Instatus.Integration.Mvc
         public static void RegisterEmbeddedResourceVirtualPathProvider<T>()
         {
             HostingEnvironment.RegisterVirtualPathProvider(new EmbeddedResourceVirtualPathProvider(typeof(T)));
+        }
+
+        public static void RegisterModelMetadataConventions()
+        {
+            DataAnnotationsModelValidatorProvider.AddImplicitRequiredAttributeForValueTypes = false;
         }
     }
 }
