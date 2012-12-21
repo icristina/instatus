@@ -152,5 +152,20 @@ namespace Instatus.Integration.Mvc
 
             return new MvcHtmlString(tagBuilder.ToString());
         }
+
+        public static MvcHtmlString RichText<T>(this HtmlHelper<T> htmlHelper, string richText)
+        {
+            if (string.IsNullOrWhiteSpace(richText)) 
+            {
+                return MvcHtmlString.Empty;
+            }
+
+            if (!richText.ContainsIgnoreCase("<p") && !richText.ContainsIgnoreCase("<div"))
+            {
+                richText = string.Format("<p>{0}</p>", richText);
+            }
+
+            return new MvcHtmlString(richText);           
+        }
     }
 }

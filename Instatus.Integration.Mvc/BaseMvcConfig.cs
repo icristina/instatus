@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using System.Web.Security;
 using System.Collections.Specialized;
 using Instatus.Core;
+using Instatus.Core.Extensions;
 using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 using System.Web.WebPages;
 using System.Web.Hosting;
@@ -124,7 +125,7 @@ namespace Instatus.Integration.Mvc
                 {
                     var userAgent = context.Request.UserAgent;
 
-                    return userAgent.IndexOf("Mobile", StringComparison.OrdinalIgnoreCase) > 0;
+                    return userAgent.ContainsIgnoreCase("Mobile");
                 })
             });
 
@@ -136,9 +137,9 @@ namespace Instatus.Integration.Mvc
                 {
                     var userAgent = context.Request.UserAgent;
 
-                    return userAgent.IndexOf("iPad", StringComparison.OrdinalIgnoreCase) >= 0 
-                        || (userAgent.IndexOf("Android", StringComparison.OrdinalIgnoreCase) > 0 && userAgent.IndexOf("Mobile", StringComparison.OrdinalIgnoreCase) == -1)
-                        || (userAgent.IndexOf("Trident", StringComparison.OrdinalIgnoreCase) > 0 && userAgent.IndexOf("Touch", StringComparison.OrdinalIgnoreCase) > 0 && userAgent.IndexOf("IEMobile", StringComparison.OrdinalIgnoreCase) == -1);
+                    return userAgent.ContainsIgnoreCase("iPad")
+                        || (userAgent.ContainsIgnoreCase("Android") && !userAgent.ContainsIgnoreCase("Mobile"))
+                        || (userAgent.ContainsIgnoreCase("Trident") && userAgent.ContainsIgnoreCase("Touch") && !userAgent.ContainsIgnoreCase("IEMobile"));
                 })
             });
         }

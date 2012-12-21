@@ -61,5 +61,10 @@ namespace Instatus.Core.Extensions
         {
             return key + "." + locale;
         }
+
+        public static bool ContainsIgnoreCase(this string text, string value)
+        {
+            return text.IndexOf(value, StringComparison.OrdinalIgnoreCase) != -1;
+        }
     }
 }
