@@ -22,12 +22,22 @@ namespace Instatus.Integration.Mvc
             routes.IgnoreRoute("favicon.ico");
         }
 
-        public static void RegisterDefaultRoute(RouteCollection routes)
+        public static void RegisterDefaultRoute(RouteCollection routes, string[] namespaces = null)
         {
             routes.MapRouteLowercase(
                 name: WellKnown.RouteName.Default,
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional },
+                namespaces: namespaces
+            );
+        }
+
+        public static void RegisterAreaDefaultRoute(AreaRegistrationContext context)
+        {
+            context.MapRouteLowercase(
+                name: context.AreaName + "_default",
+                url: context.AreaName + "/{controller}/{action}/{id}",
+                defaults: new { action = "Index", id = UrlParameter.Optional }             
             );
         }
 

@@ -1,5 +1,6 @@
 ﻿using Instatus.Core;
 using Instatus.Core.Extensions;
+using Instatus.Integration.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,6 +40,21 @@ namespace Instatus.Scaffold
         public static MvcHtmlString LoginStatus<T>(this HtmlHelper<T> htmlHelper)
         {
             return htmlHelper.Partial("_LoginStatus");
+        }
+
+        public static MvcHtmlString Actions<T>(this HtmlHelper<T> htmlHelper, object item)
+        {
+            return htmlHelper.Partial("_Actions", item);
+        }
+
+        public static MvcHtmlString Commands<T>(this HtmlHelper<T> htmlHelper)
+        {
+            return htmlHelper.Partial("_Commands");
+        }
+
+        public static MvcHtmlString AppBar<T>(this HtmlHelper<T> htmlHelper)
+        {
+            return htmlHelper.TryPartial("_AppBar");
         }
     }
 }

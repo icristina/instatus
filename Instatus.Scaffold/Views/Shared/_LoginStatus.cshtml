@@ -2,9 +2,10 @@
 
 @if (Request.IsAuthenticated)
 {
-    using (Html.BeginForm("LogOff", "Account"))
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { @class = "navbar-form pull-left" }))
     {
         @Html.AntiForgeryToken()
+        <i class="icon-user icon-white"></i>
         <strong>@User.Identity.Name</strong>
         <button type="submit" class="btn btn-link">@Phrase("LogOff")</button>                                                                        
     }
