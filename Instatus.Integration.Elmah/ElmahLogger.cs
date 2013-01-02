@@ -14,11 +14,18 @@ namespace Instatus.Integration.Elmah
     {
         public void Log(Exception exception, IDictionary<string, string> properties)
         {
-            var context = HttpContext.Current;
-            var errorLog = elmah.ErrorLog.GetDefault(context);
-            var elmahError = new elmah.Error(exception, context);
+            try
+            {
+                var context = HttpContext.Current;
+                var errorLog = elmah.ErrorLog.GetDefault(context);
+                var elmahError = new elmah.Error(exception, context);
             
-            errorLog.Log(elmahError);
+                errorLog.Log(elmahError);
+            }
+            catch (Exception)
+            {
+
+            }
         }
     }
 }
