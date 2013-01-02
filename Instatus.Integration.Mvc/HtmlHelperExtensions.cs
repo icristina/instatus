@@ -117,6 +117,11 @@ namespace Instatus.Integration.Mvc
             return new MvcHtmlString("table table-striped table-bordered table-condensed span12");
         }
 
+        public static MvcHtmlString NavBarHint<T>(this HtmlHelper<T> htmlHelper)
+        {
+            return new MvcHtmlString("navbar navbar-fixed-top navbar-inverse");
+        }
+
         public static MvcHtmlString DataSource<T>(this HtmlHelper<T> htmlHelper, string variableName, object graph)
         {
             var jsonSerializer = DependencyResolver.Current.GetService<IJsonSerializer>();

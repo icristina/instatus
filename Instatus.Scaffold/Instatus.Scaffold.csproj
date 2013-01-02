@@ -131,6 +131,7 @@
     <Compile Include="Entities\Phase.cs" />
     <Compile Include="Models\BlogPostEditor.cs" />
     <Compile Include="Models\Connection.cs" />
+    <Compile Include="Models\Button.cs" />
     <Compile Include="Models\Grid.cs" />
     <Compile Include="Models\Tile.cs" />
     <Compile Include="ScaffoldConfig.cs" />
@@ -296,6 +297,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\DisplayTemplates\Boolean.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_Button.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

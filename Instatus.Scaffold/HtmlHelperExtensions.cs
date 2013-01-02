@@ -1,9 +1,11 @@
 ﻿using Instatus.Core;
 using Instatus.Core.Extensions;
 using Instatus.Integration.Mvc;
+using Instatus.Scaffold.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
@@ -55,6 +57,20 @@ namespace Instatus.Scaffold
         public static MvcHtmlString AppBar<T>(this HtmlHelper<T> htmlHelper)
         {
             return htmlHelper.TryPartial("_AppBar");
+        }
+
+        public static MvcHtmlString ActionButton<T>(this HtmlHelper<T> htmlHelper, string text, string actionName, string controllerName = null, object routeData = null, string className = "btn btn-primary")
+        {
+            var button = new Button() 
+            {
+                Text = text,
+                ActionName = actionName,
+                ControllerName = controllerName ?? htmlHelper.ViewContext.RouteData.GetRequiredString("controller"),
+                RouteData = routeData,
+                ClassName = className
+            };
+
+            return htmlHelper.Partial("_Button", button);
         }
     }
 }
