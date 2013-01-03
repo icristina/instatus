@@ -99,6 +99,21 @@ namespace Instatus.Integration.Mvc
             }
         }
 
+        public static MvcHtmlString ActiveHint<T>(this HtmlHelper<T> htmlHelper, string paramName, object value, bool isDefault = false)
+        {
+            var routeValue = htmlHelper.ViewContext.RequestContext.HttpContext.Request.Params[paramName].AsString();
+            
+            if (routeValue.Equals(value.AsString(), StringComparison.OrdinalIgnoreCase) 
+                || (isDefault && string.IsNullOrEmpty(routeValue)))
+            {
+                return new MvcHtmlString("active");
+            }
+            else
+            {
+                return MvcHtmlString.Empty;
+            }
+        }
+
         public static MvcHtmlString LayoutHint<T>(this HtmlHelper<T> htmlHelper, IDictionary<object, dynamic> pageData)
         {
             return new MvcHtmlString(htmlHelper.ViewBag.LayoutHint ?? pageData["LayoutHint"]);
