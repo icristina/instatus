@@ -23,13 +23,24 @@ namespace Instatus.Integration.Mvc
 
         public static string CdnContent(this UrlHelper urlHelper, string virtualPath, bool enableCacheBusting = false)
         {
-            var hosting = DependencyResolver.Current.GetService<IHosting>();
-            var cdnBaseAddress = hosting.GetAppSetting(WellKnown.AppSetting.CdnBaseAddress);
-            var uri = new PathBuilder(cdnBaseAddress)
-                                .Path(virtualPath)
-                                .WithCacheBusting(enableCacheBusting)
-                                .ToProtocolRelativeUri();
+            string uri;
 
+            if (Uri.IsWellFormedUriString(virtualPath, UriKind.Absolute))
+            {
+                uri = new PathBuilder(virtualPath)
+                            .WithCacheBusting(enableCacheBusting)
+                            .ToProtocolRelativeUri();
+            }
+            else
+            {
+                var hosting = DependencyResolver.Current.GetService<IHosting>();
+                var cdnBaseAddress = hosting.GetAppSetting(WellKnown.AppSetting.CdnBaseAddress);
+                uri = new PathBuilder(cdnBaseAddress)
+                            .Path(virtualPath)
+                            .WithCacheBusting(enableCacheBusting)
+                            .ToProtocolRelativeUri();
+            }
+            
             return urlHelper.Content(uri);
         }
 
