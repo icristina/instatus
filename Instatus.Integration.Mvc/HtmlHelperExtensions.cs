@@ -47,10 +47,14 @@ namespace Instatus.Integration.Mvc
         public static MvcHtmlString RouteHint<T>(this HtmlHelper<T> htmlHelper)
         {
             var routeData = htmlHelper.ViewContext.RouteData;
-            var controllerName = routeData.GetRequiredString("controller").ToLower();
-            var actionName = routeData.GetRequiredString("action").ToLower();
+            var areaName = routeData.DataTokens["area"];
+            var controllerName = routeData.GetRequiredString("controller");
+            var actionName = routeData.GetRequiredString("action");
+            var className = string.Format("{0} {1} {2}", areaName, controllerName, actionName)
+                .TrimStart()
+                .ToLower();
 
-            return new MvcHtmlString(string.Format("{0} {1}", controllerName, actionName));
+            return new MvcHtmlString(className);
         }
 
         public static MvcHtmlString PositionHint<T>(this HtmlHelper htmlHelper, IList<T> list, T item, string firstHint = "first", string lastHint = "last", string middleHint = "")
