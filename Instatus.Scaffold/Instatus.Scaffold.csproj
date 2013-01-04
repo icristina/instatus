@@ -132,7 +132,9 @@
     <Compile Include="Models\BlogPostEditor.cs" />
     <Compile Include="Models\Connection.cs" />
     <Compile Include="Models\Button.cs" />
+    <Compile Include="Models\Figure.cs" />
     <Compile Include="Models\Grid.cs" />
+    <Compile Include="Models\Pagination.cs" />
     <Compile Include="Models\Tile.cs" />
     <Compile Include="ScaffoldConfig.cs" />
     <Compile Include="Controllers\BlogController.cs" />

@@ -14,9 +14,15 @@ namespace Instatus.Scaffold
 {
     public static class HtmlHelperExtensions
     {       
-        public static MvcHtmlString Pagination<T>(this HtmlHelper<T> htmlHelper, IPaged paged) 
+        public static MvcHtmlString Pagination<T>(this HtmlHelper<T> htmlHelper, IPaged paged, object routeValues = null) 
         {
-            return htmlHelper.Partial("_Pagination", paged);
+            var pagination = new Pagination()
+            {
+                List = paged,
+                RouteValues = routeValues
+            };
+            
+            return htmlHelper.Partial("_Pagination", pagination);
         }
 
         public static MvcHtmlString FacebookScripts<T>(this HtmlHelper<T> htmlHelper)

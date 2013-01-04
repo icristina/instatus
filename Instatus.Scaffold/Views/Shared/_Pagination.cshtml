@@ -1,8 +1,9 @@
-﻿@model Instatus.Core.IPaged
+﻿@model Instatus.Scaffold.Models.Pagination
 
 @using Instatus.Core.Extensions
 
 @{
+    var routeValues = new RouteValueDictionary(Model.RouteValues);
     var actionName = ViewContext.RouteData.GetRequiredString("action");
     var controllerName = ViewContext.RouteData.GetRequiredString("controller");
     var index = 0;
@@ -10,14 +11,16 @@
 
 <div class="pagination pagination-centered">
     <ul>
-        @if (Model.TotalPageCount > 1)
+        @if (Model.List.TotalPageCount > 1)
         {
-            while (index < Model.TotalPageCount)
+            while (index < Model.List.TotalPageCount)
             {
-                <li class="@(index == Model.PageIndex ? "active" : null)">
-                    @Html.ActionLink((index + 1).ToString(), actionName, controllerName, new { pageIndex = index }, null) 
-                </li>
-                var nextIndex = PaginationExtensions.IncrementPager(index, Model.PageIndex, Model.TotalPageCount, 10);
+                var indexRouteValues = new RouteValueDictionary(routeValues);
+                indexRouteValues.Add("pageIndex", index);                
+                <li class="@(index == Model.List.PageIndex ? "active" : null)">
+                    @Html.ActionLink((index + 1).ToString(), actionName, controllerName, indexRouteValues, null) 
+                </li>            
+                var nextIndex = PaginationExtensions.IncrementPager(index, Model.List.PageIndex, Model.List.TotalPageCount, 10);
                 if ((nextIndex - index) > 1)
                 {
                     <li class="disabled"><a>&hellip;</a></li>

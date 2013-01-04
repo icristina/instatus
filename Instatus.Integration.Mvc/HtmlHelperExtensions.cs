@@ -99,12 +99,10 @@ namespace Instatus.Integration.Mvc
             }
         }
 
-        public static MvcHtmlString ActiveHint<T>(this HtmlHelper<T> htmlHelper, string paramName, object value, bool isDefault = false)
-        {
-            var routeValue = htmlHelper.ViewContext.RequestContext.HttpContext.Request.Params[paramName].AsString();
-            
-            if (routeValue.Equals(value.AsString(), StringComparison.OrdinalIgnoreCase) 
-                || (isDefault && string.IsNullOrEmpty(routeValue)))
+        public static MvcHtmlString ActiveHint<T>(this HtmlHelper<T> htmlHelper, object value1, object value2)
+        {           
+            if (value1.Equals(value2)
+                || (value1 is string && value1.AsString().Equals(value2.AsString(), StringComparison.OrdinalIgnoreCase)))
             {
                 return new MvcHtmlString("active");
             }
