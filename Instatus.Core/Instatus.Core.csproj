@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="AppContext.cs" />
     <Compile Include="Extensions\CacheExtensions.cs" />
+    <Compile Include="Extensions\DateTimeExtensions.cs" />
     <Compile Include="Extensions\ObjectExtensions.cs" />
     <Compile Include="IContainer.cs" />
     <Compile Include="ILookup.cs" />

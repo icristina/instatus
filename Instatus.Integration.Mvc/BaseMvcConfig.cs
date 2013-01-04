@@ -163,5 +163,11 @@ namespace Instatus.Integration.Mvc
         {
             DataAnnotationsModelValidatorProvider.AddImplicitRequiredAttributeForValueTypes = false;
         }
+
+        public static void RegisterHtmlHelperConventions()
+        {
+            HtmlHelper.ClientValidationEnabled = false;
+            HtmlHelper.UnobtrusiveJavaScriptEnabled = false;
+        }
     }
 }

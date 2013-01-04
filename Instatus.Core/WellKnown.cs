@@ -13,6 +13,7 @@ namespace Instatus.Core
             public const string GreatBritain = "en-GB";
             public const string Canada = "en-CA";
             public const string Australia = "en-AU";
+            public const string Germany = "de-DE";
         }
 
         public static class RegularExpression
@@ -56,6 +57,9 @@ namespace Instatus.Core
             public const string CdnBaseAddress = "CdnBaseAddress";
             public const string RootPath = "RootPath";
             public const string SupportedCultures = "SupportedCultures";
+            public const string EnableTheme = "EnableTheme";
+            public const string TabUrl = "TabUrl";
+            public const string CanvasUrl = "CanvasUrl";
         }
 
         public static class VirtualPath
@@ -69,6 +73,7 @@ namespace Instatus.Core
         {
             public const string AppName = "AppName";
             public const string CopyrightNotice = "CopyrightNotice";
+            public const string Disclaimer = "Disclaimer";
         }
 
         public static class RouteName
@@ -112,11 +117,14 @@ namespace Instatus.Core
         public static class Cookie
         {
             public const string Preferences = "Preferences";
+            public const string Preview = "Preview";
         }
 
         public static class Preference
         {
             public const string Locale = "Locale";
+            public const string CurrentDate = "CurrentDate";
+            public const string Like = "Like";
         }
 
         public static class Kind
@@ -126,6 +134,17 @@ namespace Instatus.Core
             public const string Product = "Product";
             public const string Catalog = "Catalog";
             public const string CaseStudy = "CaseStudy";
+            public const string Photo = "Photo";
+            public const string Answer = "Answer";
+        }
+
+        public static class Recurrence
+        {
+            public const string Daily = "Daily";
+            public const string Weekly = "Weekly";
+            public const string Monthly = "Monthly";
+            public const string Quarterly = "Quarterly";
+            public const string Annual = "Annual";
         }
     }
 }
