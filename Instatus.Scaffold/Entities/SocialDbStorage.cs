@@ -58,9 +58,27 @@ namespace Instatus.Scaffold.Entities
 
         public string[] GetRoles(string userName)
         {
-            return new string[] { 
-                entityStorage.Set<User>().Where(u => u.EmailAddress == userName).Select(u => u.Role).FirstOrDefault().ToString()
-            };
+            var role = entityStorage
+                .Set<User>()
+                .Where(u => u.EmailAddress == userName)
+                .Select(u => u.Role)
+                .FirstOrDefault();
+            
+            if (role == Role.Administrator) 
+            {
+                return WellKnown.Role.All; 
+            }
+            else if (role != null)
+            {
+                return new string[]
+                { 
+                    role.ToString()
+                };
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public string GenerateVerificationToken(string userName)

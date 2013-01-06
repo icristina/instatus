@@ -18,8 +18,7 @@ namespace Instatus.Integration.Mvc
 
         public ActionResult Index(int take = 250, int skip = 0, string virtualPath = null)
         {
-            ViewData.Model = BlobStorage
-                .Query(virtualPath ?? BaseVirtualPath, null)
+            ViewData.Model = Query(virtualPath)
                 .OrderBy(s => s)
                 .Skip(skip)
                 .Take(take)
@@ -30,7 +29,9 @@ namespace Instatus.Integration.Mvc
 
         public virtual IQueryable<string> Query(string virtualPath)
         {
-            return BlobStorage.Query(virtualPath, null).AsQueryable();
+            return BlobStorage
+                .Query(virtualPath ?? BaseVirtualPath, null)
+                .AsQueryable();
         }
 
         [HttpGet]
@@ -44,7 +45,7 @@ namespace Instatus.Integration.Mvc
         [HttpPost]
         public ActionResult Create(FormCollection formCollection)
         {
-            var viewModel = new FileModel(AllowedMimeTypes, MaximumContentLength);
+            var viewModel = new FileModel(AllowedContentTypes, MaximumContentLength);
 
             TryUpdateModel(viewModel, formCollection);
             
@@ -69,15 +70,15 @@ namespace Instatus.Integration.Mvc
         {
             get
             {
-                return "~/Media";
+                return WellKnown.VirtualPath.Media;
             }
         }
 
-        public virtual string[] AllowedMimeTypes
+        public virtual string[] AllowedContentTypes
         {
             get
             {
-                return new string[] { "image/jpeg", "image/pjpeg" };
+                return WellKnown.Whitelist.JpgContentType;
             }
         }
 
@@ -85,7 +86,7 @@ namespace Instatus.Integration.Mvc
         {
             get
             {
-                return 5 * 1048576; // 5Mb
+                return 5 * WellKnown.Conversion.BytesPerMegabyte;
             }
         }
 

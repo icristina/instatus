@@ -1,8 +1,10 @@
 ﻿@inherits Instatus.Integration.Mvc.ExtendedViewPage<Instatus.Scaffold.Models.Button>
 
+@using Instatus.Core
+
 @using (Html.BeginForm(Model.ActionName, Model.ControllerName, Model.RouteData, FormMethod.Post, new { @class = "form-inline", style = "display: inline;" }))
 {
-    @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
+    @Html.Hidden(WellKnown.RouteValue.ReturnUrl, Request.Url.PathAndQuery)
     @Html.AntiForgeryToken()
     @Html.Submit(Phrase(Model.Text), Model.ClassName)
 }

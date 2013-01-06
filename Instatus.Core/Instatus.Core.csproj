@@ -61,6 +61,7 @@
     <Compile Include="Extensions\CacheExtensions.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />
     <Compile Include="Extensions\ObjectExtensions.cs" />
+    <Compile Include="Extensions\StorageExtensions.cs" />
     <Compile Include="IContainer.cs" />
     <Compile Include="ILookup.cs" />
     <Compile Include="Impl\DataContractSerializerImpl.cs" />

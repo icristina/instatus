@@ -60,7 +60,7 @@ namespace Instatus.Integration.Server
             var absolutePath = MapPath(virtualPath);
 
             return Directory.EnumerateFiles(absolutePath)
-                .Where(p => !string.IsNullOrEmpty(suffix) && p.EndsWith(suffix))
+                .Where(p => string.IsNullOrEmpty(suffix) || p.EndsWith(suffix))
                 .Select(p => p.Replace(absolutePath, virtualPath))
                 .ToArray();
         }

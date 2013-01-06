@@ -45,7 +45,7 @@ namespace Instatus.Core.Extensions
             return Regex.Replace(value, "([A-Z][a-z])", " $1").Trim();
         }
 
-        private static CultureInfo enUsCulture = new CultureInfo("en-US");
+        private static CultureInfo enUsCulture = new CultureInfo(WellKnown.Locale.UnitedStates);
 
         public static string ToTitleCase(this string value)
         {

@@ -10,6 +10,7 @@ namespace Instatus.Scaffold.Entities
         Member,
         Editor,
         Moderator,
+        Marketer,
         Administrator
     }
 }

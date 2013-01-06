@@ -50,6 +50,12 @@ namespace Instatus.Core
             public const string Json = "application/json";
         }
 
+        public static class Whitelist
+        {
+            public static readonly string[] JpgContentType = new string[] { WellKnown.ContentType.Jpg, "image/pjpeg" };
+            public static readonly string[] JpgExtension = new string[] { ".jpeg", ".jpg" };
+        }
+
         public static class AppSetting
         {
             public const string BaseAddress = "BaseAddress";
@@ -67,6 +73,7 @@ namespace Instatus.Core
             public const string AppRoot = "~/";
             public const string AppData = "~/App_Data/";
             public const string Media = "~/Media/";
+            public const string UserGenerated = "~/UserGenerated/";
         }
 
         public static class Phrase
@@ -90,6 +97,7 @@ namespace Instatus.Core
             public const string Action = "action";
             public const string Id = "id";
             public const string Locale = "locale";
+            public const string ReturnUrl = "returnUrl";
         }
 
         public static class FormatString
@@ -145,6 +153,29 @@ namespace Instatus.Core
             public const string Monthly = "Monthly";
             public const string Quarterly = "Quarterly";
             public const string Annual = "Annual";
+        }
+
+        public static class Role
+        {
+            public const string Member = "Member";
+            public const string Editor = "Editor";
+            public const string Moderator = "Moderator";
+            public const string Marketer = "Marketer";
+            public const string Administrator = "Administrator";
+
+            public static string[] All = new string[] 
+            {
+                Member,
+                Editor,
+                Moderator,
+                Marketer,
+                Administrator
+            };
+        }
+
+        public static class Conversion
+        {
+            public static int BytesPerMegabyte = 1048576;
         }
     }
 }

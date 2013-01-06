@@ -10,6 +10,7 @@ using System.Web;
 using DotNetOpenAuth.AspNet.Clients;
 using System.Web.SessionState;
 using Instatus.Core.Models;
+using Instatus.Core.Extensions;
 
 namespace Instatus.Integration.Mvc
 {
@@ -72,7 +73,7 @@ namespace Instatus.Integration.Mvc
         {
             provider = OpenAuthSecurityManager.GetProviderName(ControllerContext.HttpContext) 
                 ?? provider 
-                ?? RegistedProviders.First(p => Request.UrlReferrer.Host.IndexOf(p, StringComparison.OrdinalIgnoreCase) >= 0);
+                ?? GetProviderNameByHostname(Request.UrlReferrer.Host);
             
             var callbackUrl = GenerateCallbackUrl(provider, returnUrl);
             var securityManager = GetSecurityManager(provider);
@@ -92,11 +93,36 @@ namespace Instatus.Integration.Mvc
             }
         }
 
-        public static string[] RegistedProviders = new string[] { "Facebook", "Google", "Twitter", "Microsoft" }; 
+        private static string[] registeredProviders = new string[] { "Facebook", "Google", "Twitter", "Microsoft" };
+
+        public static string[] RegisteredProviders
+        {
+            get
+            {
+                return registeredProviders;
+            }
+            set
+            {
+                registeredProviders = value ?? new string[] { };
+            }
+        }
+
+        public string GetProviderNameByHostname(string hostname)
+        {
+            if (string.IsNullOrEmpty(hostname)) 
+                return null;
+
+            return RegisteredProviders.First(p => hostname.ContainsIgnoreCase(p));
+        }
+
+        public bool IsProviderSupported(string provider)
+        {
+            return RegisteredProviders.Any(p => p.ContainsIgnoreCase(provider));
+        }
 
         public virtual IAuthenticationClient GetAuthenticationClient(string provider)
         {
-            if (!RegistedProviders.Any(p => p.Equals(provider, StringComparison.OrdinalIgnoreCase)))
+            if (!IsProviderSupported(provider))
                 return null;
             
             var credential = credentials.Get(provider);
