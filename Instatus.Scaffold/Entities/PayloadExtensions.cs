@@ -9,14 +9,21 @@ namespace Instatus.Scaffold.Entities
 {
     public static class PayloadExtensions
     {
+        private static IJsonSerializer GetSerializer(IJsonSerializer jsonSerializer)
+        {
+            return jsonSerializer ?? DependencyResolver.Current.GetService<IJsonSerializer>();
+        }
+        
         public static void SetPayload<T>(this IPayload entity, T obj, IJsonSerializer jsonSerializer = null)
         {
-            entity.Data = (jsonSerializer ?? DependencyResolver.Current.GetService<IJsonSerializer>()).Stringify(obj);
+            entity.Data = GetSerializer(jsonSerializer).Stringify(obj);
         }
 
         public static T GetPayload<T>(this IPayload entity, IJsonSerializer jsonSerializer = null)
         {
-            return (jsonSerializer ?? DependencyResolver.Current.GetService<IJsonSerializer>()).Parse<T>(entity.Data);
+            var payload = GetSerializer(jsonSerializer).Parse<T>(entity.Data);
+
+            return payload == null ? Activator.CreateInstance<T>() : payload;
         }
     }
 }

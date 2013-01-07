@@ -33,6 +33,7 @@ namespace Instatus.Scaffold.Models
         [Required]
         public string Abstract { get; set; }
 
+        [DataType("Picture")]
         public string Picture { get; set; }
 
         [AllowHtml]
@@ -42,13 +43,11 @@ namespace Instatus.Scaffold.Models
 
         public string Tags { get; set; }
 
-        // Friendly name
         public override string ToString()
         {
             return Title;
         }
 
-        // Mapper
         public override Expression<Func<Post, BlogPostEditor>> GetProjection()
         {
             return p => new BlogPostEditor()
@@ -134,8 +133,10 @@ namespace Instatus.Scaffold.Models
             }
         }
 
-        // Constructors
-        public BlogPostEditor() { }
+        public BlogPostEditor() 
+        {
+        
+        }
 
         public BlogPostEditor(IEntityStorage entityStorage)
         {

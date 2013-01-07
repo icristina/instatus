@@ -1,16 +1,9 @@
-﻿@{
-    var properties = ViewData.ModelMetadata.Properties
-                        .Where(prop => prop.ShowForEdit && !ViewData.TemplateInfo.Visited(prop));    
-}
+﻿@using Instatus.Integration.Mvc
 
-@foreach (var prop in properties)
+@foreach (var prop in ViewData.GetEditableProperties())
 {
-    var hasModelStateError = ViewContext.ViewData.ModelState.Any(m => m.Key == prop.PropertyName) 
-        && ViewContext.ViewData.ModelState[prop.PropertyName].Errors != null
-        && ViewContext.ViewData.ModelState[prop.PropertyName].Errors.Count > 0;  
-    <div class="control-group 
-        @(hasModelStateError ? "error" : string.Empty) 
-        @prop.PropertyName.ToLower()">
+    var hasModelStateError = ViewContext.ViewData.ModelState.HasError(prop.PropertyName);  
+    <div class="@Html.ControlGroupHint(prop.PropertyName, hasModelStateError)">
         @if (prop.IsReadOnly)
         {
             <b>@prop.GetDisplayName()</b>
@@ -22,14 +15,28 @@
         }
         else
         {
-            <label class="control-label">
-                @prop.GetDisplayName()
-                @if(prop.IsRequired && !prop.ModelType.Equals(typeof(bool))) {
-                    <span class="required">*</span> 
-                }            
-            </label>                     
+            if (!prop.IsCheckbox()) 
+            {
+                <label class="control-label">
+                    @prop.GetDisplayName()
+                    @if(prop.IsRequired) 
+                    {
+                        <span class="required">*</span> 
+                    }            
+                </label>
+            }                     
             <div class="controls">
-                @Html.Editor(prop.PropertyName)             
+                @if (prop.IsCheckbox()) 
+                {
+                    <label class="checkbox">
+                        @prop.GetDisplayName()
+                        @Html.Editor(prop.PropertyName) 
+                    </label>                    
+                } 
+                else 
+                {
+                    @Html.Editor(prop.PropertyName)                        
+                }
                 @if (hasModelStateError)
                 {
                     <p class="alert alert-block">

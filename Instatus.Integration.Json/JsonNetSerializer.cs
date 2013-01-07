@@ -22,6 +22,11 @@ namespace Instatus.Integration.Json
         
         public T Parse<T>(string json)
         {
+            if (string.IsNullOrEmpty(json))
+            {
+                return default(T);
+            }
+            
             return JsonConvert.DeserializeObject<T>(json, Settings);
         }
 

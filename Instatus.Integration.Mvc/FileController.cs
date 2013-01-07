@@ -16,22 +16,24 @@ namespace Instatus.Integration.Mvc
     {
         public IBlobStorage BlobStorage { get; private set; }
 
-        public ActionResult Index(int take = 250, int skip = 0, string virtualPath = null)
+        public ActionResult Index(int pageIndex = 0, string virtualPath = null, string inputId = null, string thumbnailId = null)
         {
-            ViewData.Model = Query(virtualPath)
-                .OrderBy(s => s)
-                .Skip(skip)
-                .Take(take)
-                .ToArray();
-            
+            ViewData.Model = new FileList(Query(virtualPath), pageIndex, 50) 
+            {
+                VirtualPath = virtualPath,
+                InputId = inputId,
+                ThumbnailId = thumbnailId
+            };
+
             return View();
         }
 
-        public virtual IQueryable<string> Query(string virtualPath)
+        public virtual IOrderedQueryable<string> Query(string virtualPath)
         {
             return BlobStorage
                 .Query(virtualPath ?? BaseVirtualPath, null)
-                .AsQueryable();
+                .AsQueryable()
+                .OrderBy(s => s);
         }
 
         [HttpGet]

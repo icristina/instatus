@@ -139,6 +139,16 @@ namespace Instatus.Integration.Mvc
             return new MvcHtmlString("navbar navbar-fixed-top navbar-inverse");
         }
 
+        public static MvcHtmlString ControlGroupHint<T>(this HtmlHelper<T> htmlHelper, string propertyName, bool hasModelStateError = false)
+        {
+            var errorHint = hasModelStateError || htmlHelper.ViewData.ModelState.HasError(propertyName) 
+                ? "error" : string.Empty;
+
+            var className = string.Format("control-group input-{0} {1}", propertyName.ToLower(), errorHint);
+
+            return new MvcHtmlString(className.Trim());
+        }
+
         public static MvcHtmlString DataSource<T>(this HtmlHelper<T> htmlHelper, string variableName, object graph)
         {
             var jsonSerializer = DependencyResolver.Current.GetService<IJsonSerializer>();

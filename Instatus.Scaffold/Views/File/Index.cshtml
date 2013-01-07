@@ -1,4 +1,4 @@
-﻿@inherits Instatus.Integration.Mvc.ExtendedViewPage
+﻿@inherits Instatus.Integration.Mvc.ExtendedViewPage<Instatus.Integration.Mvc.FileList>
 
 @using Instatus.Core
 @using Instatus.Scaffold
@@ -24,18 +24,51 @@
         <tbody>
             @foreach (string virtualPath in Model as IEnumerable<string>)
             {
+                var absolutePath = Url.BlobContent(virtualPath);
                 <tr>
                     <td>
-                        <a href="@Url.BlobContent(virtualPath)" class="thumbnail" target="_blank">
-                            <img src="@Url.BlobContent(virtualPath)" style="max-width: 100px; max-height: 100px;">
+                        <a href="@absolutePath" class="thumbnail" target="_blank">
+                            <img src="@absolutePath" style="max-width: 100px; max-height: 100px;">
                         </a>
                     </td>
                     <td>@Path.GetFileName(virtualPath)</td>
                     <td>
                         @Html.TextBox(Guid.NewGuid().ToString(), virtualPath, new { @class = "span5" })
+                        @if (Model.IsPickList)
+                        {
+                            <button type="button" 
+                                value="@virtualPath" 
+                                data-absolute-path="@absolutePath"
+                                data-input-id="@Model.InputId" 
+                                data-thumbnail-id="@Model.ThumbnailId"
+                                onclick="pick(this)"
+                                class="btn">@Phrase("Pick")</button>
+                        }
                     </td>
                 </tr>
             }
         </tbody>
     </table>
+    <div class="span12">
+        @Html.Pagination(Model as IPaged, new { inputId = Model.InputId, thumbnailId = Model.ThumbnailId })
+    </div>
 </div>
+
+<script>
+    function pick(el) {
+        var button = $(el);
+        var inputId = button.data('inputId');
+        var thumbnailId = button.data('thumbnailId');
+        var absolutePath = button.data('absolutePath');
+        var virtualPath = button.val();
+        var parentDocument = window.opener.document;
+        var input = $(parentDocument.getElementById(inputId));
+        var thumbnail = $(parentDocument.getElementById(thumbnailId));
+
+        input.val(virtualPath);
+        thumbnail.attr('src', absolutePath);
+        thumbnail.show();
+
+        window.close();
+    }
+</script>

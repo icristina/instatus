@@ -139,6 +139,9 @@
     <Compile Include="CustomErrorsController.cs" />
     <Compile Include="DisplayModeProviderExtensions.cs" />
     <Compile Include="EmbeddedResourceVirtualPathProvider.cs" />
+    <Compile Include="FileList.cs" />
+    <Compile Include="ModelMetadataExtensions.cs" />
+    <Compile Include="ModelStateExtensions.cs" />
     <Compile Include="MvcAuthentication.cs" />
     <Compile Include="PageController.cs" />
     <Compile Include="HtmlHelperExtensions.cs" />

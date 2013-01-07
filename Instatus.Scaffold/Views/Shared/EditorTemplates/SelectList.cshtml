@@ -1,0 +1,13 @@
+﻿@model System.Web.Mvc.SelectList
+
+@foreach (var item in Model)
+{
+    <label>
+        <input type="radio" name="@ViewData.TemplateInfo.HtmlFieldPrefix" value="@item.Value"
+            @if (item.Selected) {
+                 @:checked   
+            }
+            /> 
+        @item.Value
+    </label>
+}

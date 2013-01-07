@@ -136,6 +136,7 @@
     <Compile Include="Models\Grid.cs" />
     <Compile Include="Models\Pagination.cs" />
     <Compile Include="Models\Tile.cs" />
+    <Compile Include="Models\WebPageEditor.cs" />
     <Compile Include="ScaffoldConfig.cs" />
     <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Entities\Campaign.cs" />
@@ -302,6 +303,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\_Button.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\EditorTemplates\Picture.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\EditorTemplates\SelectList.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -52,7 +52,7 @@ namespace Instatus.Integration.Mvc
             return queryable.OrderBy(b => true);
         }
 
-        public ActionResult Index(
+        public virtual ActionResult Index(
             string orderBy, 
             string filter, 
             int pageIndex = 0, 
