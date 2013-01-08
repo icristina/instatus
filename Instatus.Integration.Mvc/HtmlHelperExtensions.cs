@@ -204,5 +204,15 @@ namespace Instatus.Integration.Mvc
 
             return new MvcHtmlString(richText);           
         }
+
+        public static MvcHtmlString BackgroundImage<T>(this HtmlHelper<T> htmlHelper, string picture)
+        {
+            if (string.IsNullOrWhiteSpace(picture))
+            {
+                return MvcHtmlString.Empty;
+            }
+
+            return new MvcHtmlString(string.Format("background-image: url({0})", picture));
+        }
     }
 }

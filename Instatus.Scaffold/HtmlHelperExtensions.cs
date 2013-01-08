@@ -78,5 +78,30 @@ namespace Instatus.Scaffold
 
             return htmlHelper.Partial("_Button", button);
         }
+
+        public static MvcHtmlString Page<T>(this HtmlHelper<T> htmlHelper, string slug = "", string viewName = "Details", object variant = null)
+        {
+            var routeData = htmlHelper.ViewContext.RouteData;
+            var segments = new List<string>();
+
+            if (string.IsNullOrEmpty(slug))
+            {
+                segments.Add(routeData.DataTokens["area"].AsString());
+                segments.Add(routeData.GetRequiredString("controller"));
+            }
+            else
+            {
+                segments.Add(slug);
+            }
+
+            if (variant != null)
+            {
+                segments.Add(variant.AsString());
+            }
+
+            slug = string.Join("-", segments.Where(s => !string.IsNullOrEmpty(s)).ToArray()).ToLower();
+
+            return htmlHelper.Action("Details", "Page", new { slug = slug, area = string.Empty, viewName = viewName });
+        }
     }
 }
