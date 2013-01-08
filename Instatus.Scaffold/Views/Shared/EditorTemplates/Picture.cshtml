@@ -20,17 +20,21 @@ else
 @Html.ActionLink("Select", "Index", "File", new { inputId = inputName, thumbnailId = thumbnailId }, new { @class = "btn", target = "_blank" })
 @if (!ViewData.ModelMetadata.IsRequired)
 {
-    <button type="button" data-input-id="@inputName" data-thumbnail-id="@thumbnailId" onclick="removeMedia(this)">Remove</button>
+    <button type="button" class="btn"
+        data-input-id="@inputName" 
+        data-thumbnail-id="@thumbnailId" 
+        onclick="removeMedia(this)">
+        Remove
+    </button>
 }
 
 <script>
     function removeMedia(el) {
-        var id = document.getElementById;
         var button = $(el);
         var inputId = button.data('inputId');
         var thumbnailId = button.data('thumbnailId');
 
-        $(id(inputId)).val('');
-        $(id(thumbnailId)).hide();
+        $(document.getElementById(inputId)).val('');
+        $(document.getElementById(thumbnailId)).hide();
     }
 </script>
