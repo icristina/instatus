@@ -25,7 +25,11 @@ namespace Instatus.Integration.Mvc
         {
             string uri;
 
-            if (Uri.IsWellFormedUriString(virtualPath, UriKind.Absolute))
+            if (string.IsNullOrEmpty(virtualPath))
+            {
+                return string.Empty;
+            }
+            else if (Uri.IsWellFormedUriString(virtualPath, UriKind.Absolute))
             {
                 uri = new PathBuilder(virtualPath)
                             .WithCacheBusting(enableCacheBusting)
@@ -46,6 +50,11 @@ namespace Instatus.Integration.Mvc
 
         public static string BlobContent(this UrlHelper urlHelper, string virtualPath, bool enableCacheBusting = false)
         {
+            if (string.IsNullOrEmpty(virtualPath))
+            {
+                return string.Empty;
+            }
+            
             var blobStorage = DependencyResolver.Current.GetService<IBlobStorage>();
             var blobUri = blobStorage.GenerateUri(virtualPath, HttpMethod.Get);
             var uri = new PathBuilder(blobUri)
