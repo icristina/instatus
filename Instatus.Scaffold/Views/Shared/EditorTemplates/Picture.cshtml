@@ -18,23 +18,10 @@ else
 
 <input id="@inputName" name="@inputName" class="span3 @Html.ValidationHint()" value="@Model" type="text" readonly />
 @Html.ActionLink("Select", "Index", "File", new { inputId = inputName, thumbnailId = thumbnailId }, new { @class = "btn", target = "_blank" })
+
 @if (!ViewData.ModelMetadata.IsRequired)
 {
-    <button type="button" class="btn"
-        data-input-id="@inputName" 
-        data-thumbnail-id="@thumbnailId" 
-        onclick="removeMedia(this)">
+    <button type="button" class="btn" onclick="$('#@inputName').val(''); $('#@thumbnailId').hide()">
         Remove
     </button>
 }
-
-<script>
-    function removeMedia(el) {
-        var button = $(el);
-        var inputId = button.data('inputId');
-        var thumbnailId = button.data('thumbnailId');
-
-        $(document.getElementById(inputId)).val('');
-        $(document.getElementById(thumbnailId)).hide();
-    }
-</script>
