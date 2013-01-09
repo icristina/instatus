@@ -13,7 +13,18 @@ using System.Web.Mvc.Html;
 namespace Instatus.Scaffold
 {
     public static class HtmlHelperExtensions
-    {       
+    {
+        public static MvcHtmlString RadioList<T>(this HtmlHelper<T> htmlHelper, string name, SelectList selectList)
+        {
+            var radioList = new RadioList()
+            {
+                Name = string.IsNullOrWhiteSpace(name) ? htmlHelper.ViewData.TemplateInfo.HtmlFieldPrefix : name,
+                SelectList = selectList
+            };
+            
+            return htmlHelper.Partial("_RadioList", radioList);
+        }
+        
         public static MvcHtmlString Pagination<T>(this HtmlHelper<T> htmlHelper, IPaged paged, object routeValues = null) 
         {
             var pagination = new Pagination()

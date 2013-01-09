@@ -135,6 +135,7 @@
     <Compile Include="Models\Figure.cs" />
     <Compile Include="Models\Grid.cs" />
     <Compile Include="Models\Pagination.cs" />
+    <Compile Include="Models\RadioList.cs" />
     <Compile Include="Models\Tile.cs" />
     <Compile Include="Models\WebPageEditor.cs" />
     <Compile Include="ScaffoldConfig.cs" />
@@ -308,7 +309,7 @@
     <Content Include="Views\Shared\EditorTemplates\Picture.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Shared\EditorTemplates\SelectList.cshtml" />
+    <Content Include="Views\Shared\_RadioList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\_Modal.cshtml" />

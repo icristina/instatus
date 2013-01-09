@@ -1,0 +1,13 @@
+﻿@model Instatus.Scaffold.Models.RadioList
+
+@foreach (var item in Model.SelectList)
+{
+    <label>
+        <input type="radio" name="@Model.Name" value="@item.Value"
+            @if (item.Selected) {
+                 @:checked   
+            }
+            /> 
+        @item.Text
+    </label>
+}
