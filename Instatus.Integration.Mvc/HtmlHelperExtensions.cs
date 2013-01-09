@@ -214,5 +214,10 @@ namespace Instatus.Integration.Mvc
 
             return new MvcHtmlString(string.Format("background-image: url({0})", picture));
         }
+
+        public static MvcHtmlString ErrorMessageFor<T>(this HtmlHelper<T> htmlHelper, string propertyName)
+        {
+            return new MvcHtmlString(htmlHelper.ViewData.ModelMetadata.GetErrorMessage(propertyName, htmlHelper.ViewContext));
+        }
     }
 }
