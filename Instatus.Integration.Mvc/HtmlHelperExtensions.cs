@@ -217,7 +217,16 @@ namespace Instatus.Integration.Mvc
 
         public static MvcHtmlString ErrorMessageFor<T>(this HtmlHelper<T> htmlHelper, string propertyName)
         {
-            return new MvcHtmlString(htmlHelper.ViewData.ModelMetadata.GetErrorMessage(propertyName, htmlHelper.ViewContext));
+            var property = htmlHelper.ViewData.ModelMetadata.GetProperty(propertyName);
+
+            if (property == null)
+            {
+                return MvcHtmlString.Empty;
+            }
+            else
+            {
+                return new MvcHtmlString(property.GetErrorMessage(htmlHelper.ViewContext));
+            }
         }
     }
 }

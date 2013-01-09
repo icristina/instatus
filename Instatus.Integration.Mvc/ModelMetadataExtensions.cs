@@ -22,22 +22,13 @@ namespace Instatus.Integration.Mvc
                 .FirstOrDefault();
         }
 
-        public static string GetErrorMessage(this ModelMetadata modelMetadata, string propertyName, ControllerContext controllerContext)
+        public static string GetErrorMessage(this ModelMetadata modelMetadata, ControllerContext controllerContext)
         {
-            var property = modelMetadata.GetProperty(propertyName);
-
-            if (property == null)
-            {
-                return string.Empty;
-            }
-            else
-            {
-                return property
-                    .GetValidators(controllerContext)
-                    .SelectMany(v => v.GetClientValidationRules())
-                    .Select(v => v.ErrorMessage)
-                    .FirstOrDefault();
-            }
+            return modelMetadata
+                .GetValidators(controllerContext)
+                .SelectMany(v => v.GetClientValidationRules())
+                .Select(v => v.ErrorMessage)
+                .FirstOrDefault();
         }
 
         public static IEnumerable<ModelMetadata> GetEditableProperties<T>(this ViewDataDictionary<T> viewData)
