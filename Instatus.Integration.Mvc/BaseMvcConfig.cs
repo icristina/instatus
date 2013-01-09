@@ -41,12 +41,16 @@ namespace Instatus.Integration.Mvc
             );
         }
 
+        public static string PageControllerName { get; set; }
+
         public static void RegisterPageRoute(RouteCollection routes, string controllerName = "Page", string defaultLocale = "en-US")
         {
+            PageControllerName = controllerName;
+            
             routes.MapRoute(
                 name: WellKnown.RouteName.Page,
                 url: "{locale}/{key}",
-                defaults: new { controller = controllerName, action = "Details", locale = defaultLocale },
+                defaults: new { controller = controllerName, action = "Details", locale = defaultLocale, area = string.Empty },
                 constraints: new { locale = WellKnown.RegularExpression.Locale }
             );
         }

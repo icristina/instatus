@@ -60,6 +60,11 @@ namespace Instatus.Scaffold
             return htmlHelper.Partial("_Commands");
         }
 
+        public static MvcHtmlString Modal<T>(this HtmlHelper<T> htmlHelper)
+        {
+            return htmlHelper.Partial("_Modal");
+        }
+
         public static MvcHtmlString AppBar<T>(this HtmlHelper<T> htmlHelper)
         {
             return htmlHelper.TryPartial("_AppBar");
@@ -79,19 +84,19 @@ namespace Instatus.Scaffold
             return htmlHelper.Partial("_Button", button);
         }
 
-        public static MvcHtmlString Page<T>(this HtmlHelper<T> htmlHelper, string slug = "", string viewName = "Details", object variant = null)
+        public static MvcHtmlString Page<T>(this HtmlHelper<T> htmlHelper, string key = "", string viewName = "Details", object variant = null)
         {
             var routeData = htmlHelper.ViewContext.RouteData;
             var segments = new List<string>();
 
-            if (string.IsNullOrEmpty(slug))
+            if (string.IsNullOrEmpty(key))
             {
                 segments.Add(routeData.DataTokens["area"].AsString());
                 segments.Add(routeData.GetRequiredString("controller"));
             }
             else
             {
-                segments.Add(slug);
+                segments.Add(key);
             }
 
             if (variant != null)
@@ -99,9 +104,14 @@ namespace Instatus.Scaffold
                 segments.Add(variant.AsString());
             }
 
-            slug = string.Join("-", segments.Where(s => !string.IsNullOrEmpty(s)).ToArray()).ToLower();
+            key = string.Join("-", segments.Where(s => !string.IsNullOrEmpty(s)).ToArray()).ToLower();
 
-            return htmlHelper.Action("Details", "Page", new { slug = slug, area = string.Empty, viewName = viewName });
+            return htmlHelper.Action("Details", BaseMvcConfig.PageControllerName, new { key = key, area = string.Empty, viewName = viewName });
+        }
+
+        public static MvcHtmlString PageLink<T>(this HtmlHelper<T> htmlHelper, string linkText, string key, object htmlAttributes = null)
+        {
+            return htmlHelper.RouteLink(linkText, WellKnown.RouteName.Page, new { key = key }, htmlAttributes);
         }
     }
 }
