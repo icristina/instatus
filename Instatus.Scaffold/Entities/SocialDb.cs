@@ -11,6 +11,7 @@ namespace Instatus.Scaffold.Entities
 {
     public class SocialDb : DbContext
     {
+        public DbSet<Audit> Audits { get; set; }
         public DbSet<Campaign> Campaigns { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Entry> Entries { get; set; }

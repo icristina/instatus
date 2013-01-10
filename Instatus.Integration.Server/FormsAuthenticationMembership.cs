@@ -44,9 +44,9 @@ namespace Instatus.Integration.Server
             return false;
         }
 
-        public void ChangePassword(string userName, string verificationToken, string newPassword)
+        public bool ChangePassword(string userName, string verificationToken, string newPassword)
         {
-
+            return false;
         }
     }
 }

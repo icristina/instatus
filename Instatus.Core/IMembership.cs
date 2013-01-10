@@ -13,6 +13,6 @@ namespace Instatus.Core
         string[] GetRoles(string userName);
         string GenerateVerificationToken(string userName);
         bool ValidateVerificationToken(string userName, string verificationToken);
-        void ChangePassword(string userName, string verificationToken, string newPassword);
+        bool ChangePassword(string userName, string verificationToken, string newPassword);
     }
 }

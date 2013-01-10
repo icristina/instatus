@@ -27,9 +27,9 @@ namespace Instatus.Core.Impl
             return true;
         }
 
-        public void ChangePassword(string userName, string verificationToken, string newPassword)
+        public bool ChangePassword(string userName, string verificationToken, string newPassword)
         {
-            // do nothing
+            return true;
         }
 
         public bool ValidateExternalUser(string providerName, string providerUserId, IDictionary<string, object> data, out string userName)

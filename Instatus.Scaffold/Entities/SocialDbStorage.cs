@@ -5,26 +5,81 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Instatus.Core.Extensions;
+using System.Security.Principal;
 
 namespace Instatus.Scaffold.Entities
 {
-    public class SocialDbStorage : ITaxonomy, IMembership, IKeyValueStorage<Document>
+    public class SocialDbStorage : ITaxonomy, IMembership, IKeyValueStorage<Document>, IAuditing
     {        
         private IEntityStorage entityStorage;
         private IEncryption encryption;
         
+        // Private
+        private User GetUserByUserName(string userName)
+        {
+            return entityStorage.Set<User>()
+                .Where(u => u.EmailAddress == userName)
+                .FirstOrDefault();
+        }
+
+        private string GenerateVerificationToken(User user)
+        {
+            user.VerificationToken = Guid.NewGuid().ToString();
+
+            return user.VerificationToken;
+        }
+
+        private User GetUserByVerificationToken(string userName, string verificationToken)
+        {
+            if (!ValidateVerificationToken(verificationToken))
+            {
+                return null;
+            }
+
+            return entityStorage.Set<User>()
+                .Where(u => u.EmailAddress == userName && u.VerificationToken == verificationToken)
+                .FirstOrDefault();
+        }
+
+        private bool ValidatePassword(string password)
+        {
+            return !string.IsNullOrWhiteSpace(password);
+        }
+
+        private bool ValidateVerificationToken(string verificationToken)
+        {
+            Guid guid;
+
+            return Guid.TryParse(verificationToken, out guid);
+        }
+
+        private Post GetPostByLocaleAndSlug(string locale, string slug)
+        {
+            return entityStorage.Set<Post>()
+                .Where(p => p.Locale == locale && p.Slug == slug)
+                .FirstOrDefault();
+        }
+
         // ITaxonomy
         public string[] GetTags()
         {
-            return entityStorage.Set<Tag>().Select(t => t.Name).ToArray();
+            return entityStorage.Set<Tag>()
+                .Select(t => t.Name)
+                .ToArray();
         }
 
         // IMembership
         public bool ValidateUser(string userName, string password)
         {
+            if (!ValidatePassword(password))
+            {
+                return false;
+            }
+            
             var encryptedPassword = encryption.Encrypt(password);
 
-            return entityStorage.Set<User>().Any(u => u.EmailAddress == userName && u.Password == encryptedPassword);
+            return entityStorage.Set<User>()
+                .Any(u => u.EmailAddress == userName && u.Password == encryptedPassword);
         }
 
         public bool ValidateExternalUser(string providerName, string providerUserId, IDictionary<string, object> data, out string userName)
@@ -83,11 +138,9 @@ namespace Instatus.Scaffold.Entities
 
         public string GenerateVerificationToken(string userName)
         {
-            var user = entityStorage.Set<User>().Where(u => u.EmailAddress == userName).FirstOrDefault();
-            var verificationToken = Guid.NewGuid().ToString();
+            var user = GetUserByUserName(userName);
+            var verificationToken = GenerateVerificationToken(user);
 
-            user.VerificationToken = verificationToken;
-            
             entityStorage.SaveChanges();
 
             return verificationToken;
@@ -95,31 +148,45 @@ namespace Instatus.Scaffold.Entities
 
         public bool ValidateVerificationToken(string userName, string verificationToken)
         {
-            var user = entityStorage.Set<User>().Where(u => u.EmailAddress == userName && u.VerificationToken == verificationToken).FirstOrDefault();
+            var user = GetUserByVerificationToken(userName, verificationToken);
 
             if (user == null)
+            {
                 return false;
+            }
 
             user.IsVerified = true;
-            
+
+            GenerateVerificationToken(user);
+
             entityStorage.SaveChanges();
 
             return true;
         }
 
-        public void ChangePassword(string userName, string verificationToken, string newPassword)
+        public bool ChangePassword(string userName, string verificationToken, string newPassword)
         {
-            var user = entityStorage.Set<User>().Where(u => u.EmailAddress == userName && u.VerificationToken == verificationToken).FirstOrDefault();
+            var user = GetUserByVerificationToken(userName, verificationToken);
+
+            if (user == null || !ValidatePassword(newPassword))
+            {
+                return false;
+            }
 
             user.Password = encryption.Encrypt(newPassword);
 
+            GenerateVerificationToken(user);
+
             entityStorage.SaveChanges();
+
+            return true;
         }
 
         // IKeyValueStorage<Document>
         public Document Get(string partitionKey, string rowKey)
         {
-            return entityStorage.Set<Post>().Where(p => p.Locale == partitionKey && p.Slug == rowKey)
+            return entityStorage.Set<Post>()
+                .Where(p => p.Locale == partitionKey && p.Slug == rowKey)
                 .Select(p => new Document()
                 {
                     Title = p.Name,
@@ -147,7 +214,7 @@ namespace Instatus.Scaffold.Entities
 
         public void AddOrUpdate(string partitionKey, string rowKey, Document value)
         {
-            var post = entityStorage.Set<Post>().Where(p => p.Locale == partitionKey && p.Slug == rowKey).FirstOrDefault();
+            var post = GetPostByLocaleAndSlug(partitionKey, rowKey);
 
             if (post == null)
             {
@@ -156,6 +223,7 @@ namespace Instatus.Scaffold.Entities
                     Locale = partitionKey,
                     Slug = rowKey                     
                 };
+
                 entityStorage.Set<Post>().Add(post);
             }
 
@@ -167,14 +235,37 @@ namespace Instatus.Scaffold.Entities
 
         public void Delete(string partitionKey, string rowKey)
         {
-            var postSet = entityStorage.Set<Post>();
-            var post = postSet.Where(p => p.Locale == partitionKey && p.Slug == rowKey).FirstOrDefault();
+            var post = GetPostByLocaleAndSlug(partitionKey, rowKey);
 
             if (post != null)
             {
-                postSet.Delete(post.Id);
+                entityStorage.Set<Post>().Delete(post.Id);
                 entityStorage.SaveChanges();
             }
+        }
+
+        // IAuditing
+        public void Log(IPrincipal principal, string category, string uri, IDictionary<string, string> properties)
+        {
+            var userName = principal.Identity.Name;
+            var user = GetUserByUserName(userName);
+
+            if (user == null) 
+            {
+                return;
+            }
+
+            var audit = new Audit()
+            {
+                User = user,
+                Category = category,
+                Uri = uri
+            };
+
+            audit.SetPayload(properties);
+
+            entityStorage.Set<Audit>().Add(audit);
+            entityStorage.SaveChanges();
         }
 
         public SocialDbStorage(IEntityStorage entityStorage, IEncryption encryption)

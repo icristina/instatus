@@ -62,9 +62,11 @@
     <Compile Include="Extensions\DateTimeExtensions.cs" />
     <Compile Include="Extensions\ObjectExtensions.cs" />
     <Compile Include="Extensions\StorageExtensions.cs" />
+    <Compile Include="IAuditing.cs" />
     <Compile Include="IContainer.cs" />
     <Compile Include="ILookup.cs" />
     <Compile Include="Impl\DataContractSerializerImpl.cs" />
+    <Compile Include="Impl\MockAuditing.cs" />
     <Compile Include="Impl\MockCache.cs" />
     <Compile Include="Impl\MockEncryption.cs" />
     <Compile Include="Impl\MockProfiler.cs" />
