@@ -274,34 +274,6 @@ figure object {
     width: 100%;
 }
 
-/* hub */
-
-.hub {
-    display: table;
-    width: 100%;
-    height: 100%;    
-}
-
-.hub .row {
-    display: table-row;
-}
-
-.hub .group {
-    display: table-cell;
-    vertical-align: top;
-}
-
-/* tile */
-
-.tile {
-    display: inline-block;
-    padding: 0.25em;
-}
-
-.tile-inner {
-    padding: 1.0em;
-}
-
 /* https://github.com/necolas/normalize.css/blob/master/normalize.css */
 
 article,
@@ -365,7 +337,7 @@ figure {
     *zoom: 1;
 }
 
-/* apply clearfix to rows */
+/* apply clearfix to row */
 
 .row:before, 
 .row:after {
@@ -409,6 +381,12 @@ ol {
 .rich-text ul,
 .rich-text ol {
     margin-bottom: 1.0em;
+}
+
+.rich-text p:last-child,
+.rich-text ul:last-child,
+.rich-text ol:last-child {
+    margin-bottom: 0;
 }
 
 .rich-text a {

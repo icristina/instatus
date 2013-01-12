@@ -32,8 +32,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instatus.Integration.FileHe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instatus.Scaffold", "Instatus.Scaffold\Instatus.Scaffold.csproj", "{C8CC3179-CEE1-473F-AB55-3DADA05D523F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instatus.Sample", "Instatus.Sample\Instatus.Sample.csproj", "{C827E0C7-79DC-401B-BBE1-CA06736EF07D}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instatus.Integration.Markdown", "Instatus.Integration.Markdown\Instatus.Integration.Markdown.csproj", "{AC5368FC-BEB5-4621-831E-CC3473284677}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instatus.Integration.Razor", "Instatus.Integration.Razor\Instatus.Integration.Razor.csproj", "{E0E98D9E-03A7-4342-BF4F-B48BF41E0BC5}"
@@ -110,10 +108,6 @@ Global
 		{C8CC3179-CEE1-473F-AB55-3DADA05D523F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C8CC3179-CEE1-473F-AB55-3DADA05D523F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C8CC3179-CEE1-473F-AB55-3DADA05D523F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C827E0C7-79DC-401B-BBE1-CA06736EF07D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C827E0C7-79DC-401B-BBE1-CA06736EF07D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C827E0C7-79DC-401B-BBE1-CA06736EF07D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C827E0C7-79DC-401B-BBE1-CA06736EF07D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AC5368FC-BEB5-4621-831E-CC3473284677}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AC5368FC-BEB5-4621-831E-CC3473284677}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC5368FC-BEB5-4621-831E-CC3473284677}.Release|Any CPU.ActiveCfg = Release|Any CPU
