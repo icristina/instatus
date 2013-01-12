@@ -166,13 +166,13 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Content Include="App_Data\about.en-US.html" />
     <Content Include="App_Data\about.en-GB.html" />
-    <None Include="Content\app.less" />
     <Content Include="Content\bootstrap-responsive.css" />
     <Content Include="Content\bootstrap-responsive.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\images\glyphicons-halflings-white.png" />
     <Content Include="Content\images\glyphicons-halflings.png" />
+    <EmbeddedResource Include="Content\windows.css" />
     <Content Include="Global.asax" />
     <Content Include="Media\Lighthouse.jpg" />
     <Content Include="Media\Penguins.jpg" />
@@ -190,10 +190,10 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\Web.config" />
-    <Content Include="Content\reset.less" />
     <Content Include="Views\Home\WindowsApp.cshtml" />
     <Content Include="Views\Canvas\Index.cshtml" />
     <Content Include="Views\Home\SocialApp.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Shared\" />
@@ -259,9 +259,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Page\Details.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Content\mixins.less" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

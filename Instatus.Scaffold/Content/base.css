@@ -42,211 +42,6 @@ body {
     padding-bottom: 0.5em;
 }
 
-/* utilities */
-
-.center {
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.middle {
-    vertical-align: middle;
-    text-align: center; 
-}
-
-.hide {
-    display: none;
-}
-
-.show {
-    display: block;
-}
-
-.pull-right {
-    float: right;
-}
-
-.pull-left {
-    float: left;
-}
-
-/* links */
-
-a, 
-a:visited {
-    color: inherit;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-/* buttons */
-
-.btn {
-    padding: 0;
-    background-color: transparent;
-    border: 0;
-    cursor: pointer;
-}
-
-.btn img {
-    vertical-align: middle;
-}
-
-/* aspect ratio */
-
-.aspect-ratio {
-    display: inline-block;
-    position: relative;
-    width: 100%;
-}
-
-.aspect-ratio-4-3,
-.aspect-ratio-photo {
-    margin-top: 75%;
-}
-
-.aspect-ratio-1280-720,
-.aspect-ratio-1920-1080,
-.aspect-ratio-16-9,
-.aspect-ratio-hd {
-    margin-top: 56.25%;
-}    
-
-.aspect-ratio-1920-800,
-.aspect-ratio-cinema {
-    margin-top: 41.66%;
-}        
-
-.aspect-ratio img,
-.aspect-ratio video,
-.aspect-ratio object,
-.aspect-ratio .item {
-    position: absolute;
-    display: block;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-
-/* image width */
-
-img,
-video,
-object {
-    max-width: 100%;
-}
-
-figure {
-    width: 100%;
-}
-
-figure img,
-figure video,
-figure object {
-    width: 100%;
-}
-
-/* hub, section, tile layout */
-
-.hub {
-    display: table;
-    width: 100%;
-    height: 100%;    
-}
-
-.hub .row {
-    display: table-row;
-}
-
-.hub .group {
-    display: table-cell;
-    vertical-align: top;
-}
-
-.hub .tile {
-    display: inline-block;
-}
-
-/* https://github.com/necolas/normalize.css/blob/master/normalize.css */
-
-article,
-aside,
-details,
-figcaption,
-figure,
-footer,
-header,
-hgroup,
-nav,
-section,
-summary {
-    display: block;
-}
-
-[hidden],
-.hidden {
-    display: none;
-    visibility: hidden;
-}
-
-button,
-input,
-select,
-textarea {
-    font-family: inherit;
-    font-size: inherit;
-    color: inherit;
-}
-
-img {
-    border: 0;
-}
-
-figure {
-    margin: 0;
-}
-
-/* http://nicolasgallagher.com/another-css-image-replacement-technique */
-
-.hide-text {
-    font: 0/0 a;
-    text-shadow: none;
-    color: transparent;
-}
-
-/* http://nicolasgallagher.com/micro-clearfix-hack */
-
-.clear-fix:before, 
-.clear-fix:after {
-    content: " ";
-    display: table;
-}
-
-.clear-fix:after {
-    clear: both;
-}
-
-.clear-fix {
-    *zoom: 1;
-}
-
-/* apply clearfix to rows */
-
-.row:before, 
-.row:after {
-    content: " ";
-    display: table;
-}
-
-.row:after {
-    clear: both;
-}
-
-.row {
-    *zoom: 1;
-}
-
 /* 12 column grid */
 
 .span1 {
@@ -374,7 +169,219 @@ figure {
     margin-top: 3.0em;
 }
 
-/* rich text content */
+/* utilities */
+
+.center {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.middle {
+    vertical-align: middle;
+    text-align: center; 
+}
+
+.hide {
+    display: none;
+}
+
+.show {
+    display: block;
+}
+
+.pull-right {
+    float: right;
+}
+
+.pull-left {
+    float: left;
+}
+
+/* links */
+
+a, 
+a:visited {
+    color: inherit;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* buttons */
+
+.btn {
+    padding: 0;
+    background-color: transparent;
+    border: 0;
+    cursor: pointer;
+}
+
+.btn img {
+    vertical-align: middle;
+}
+
+/* aspect ratio */
+
+.aspect-ratio {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+}
+
+.aspect-ratio-4-3,
+.aspect-ratio-photo {
+    margin-top: 75%;
+}
+
+.aspect-ratio-1280-720,
+.aspect-ratio-1920-1080,
+.aspect-ratio-16-9,
+.aspect-ratio-hd {
+    margin-top: 56.25%;
+}    
+
+.aspect-ratio-1920-800,
+.aspect-ratio-cinema {
+    margin-top: 41.66%;
+}        
+
+.aspect-ratio img,
+.aspect-ratio video,
+.aspect-ratio object,
+.aspect-ratio .item {
+    position: absolute;
+    display: block;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* image width */
+
+img,
+video,
+object {
+    max-width: 100%;
+}
+
+figure {
+    width: 100%;
+}
+
+figure img,
+figure video,
+figure object {
+    width: 100%;
+}
+
+/* hub */
+
+.hub {
+    display: table;
+    width: 100%;
+    height: 100%;    
+}
+
+.hub .row {
+    display: table-row;
+}
+
+.hub .group {
+    display: table-cell;
+    vertical-align: top;
+}
+
+/* tile */
+
+.tile {
+    display: inline-block;
+    padding: 0.25em;
+}
+
+.tile-inner {
+    padding: 1.0em;
+}
+
+/* https://github.com/necolas/normalize.css/blob/master/normalize.css */
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+nav,
+section,
+summary {
+    display: block;
+}
+
+[hidden],
+.hidden {
+    display: none;
+    visibility: hidden;
+}
+
+button,
+input,
+select,
+textarea {
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+}
+
+img {
+    border: 0;
+}
+
+figure {
+    margin: 0;
+}
+
+/* http://nicolasgallagher.com/another-css-image-replacement-technique */
+
+.hide-text {
+    font: 0/0 a;
+    text-shadow: none;
+    color: transparent;
+}
+
+/* http://nicolasgallagher.com/micro-clearfix-hack */
+
+.clear-fix:before, 
+.clear-fix:after {
+    content: " ";
+    display: table;
+}
+
+.clear-fix:after {
+    clear: both;
+}
+
+.clear-fix {
+    *zoom: 1;
+}
+
+/* apply clearfix to rows */
+
+.row:before, 
+.row:after {
+    content: " ";
+    display: table;
+}
+
+.row:after {
+    clear: both;
+}
+
+.row {
+    *zoom: 1;
+}
+
+/* rich text */
 
 h1,
 h2,

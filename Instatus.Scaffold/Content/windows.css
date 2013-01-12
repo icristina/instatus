@@ -1,5 +1,20 @@
-﻿body {
+﻿/* font */
+
+body {
     font-family: "Segoe UI";
+}
+
+/* layout */
+
+.container {
+    padding: 2.0em;
+    width: auto;
+}
+
+/* hub */
+
+.hub .group {
+    padding-right: 2.0em;
 }
 
 /* symbols */
@@ -64,46 +79,124 @@
     color: white;
 }
 
-.bg-blue {
-    background-color: #2D89EF;
-    color: white;
-}
-
-.bg-yellow {
-    background-color: #FFC40D;
-    color: white;
-}
-
-.bg-red {
-    background-color: #B91D47;
-    color: white;
-}
-
-.bg-purple {
-    background-color: #603CBA;
+.bg-lime {
+    background-color: #A4C400;
     color: white;
 }
 
 .bg-green {
-    background-color: #00A300;
+    background-color: #60A917;
+    color: white;
+}
+
+.bg-emerald {
+    background-color: #008A00;
+    color: white;
+}
+
+.bg-teal {
+    background-color: #00ABA9;
+    color: white;
+}
+
+.bg-cyan {
+    background-color: #1BA1E2;
+    color: white;
+}
+
+.bg-cobalt {
+    background-color: #0050EF;
+    color: white;
+}
+
+.bg-indigo {
+    background-color: #6A00FF;
+    color: white;
+}
+
+.bg-violet {
+    background-color: #AA00FF;
+    color: white;
+}
+
+.bg-pink {
+    background-color: #F472D0;
+    color: white;
+}
+
+.bg-magenta {
+    background-color: #D80073;
+    color: white;
+}
+
+.bg-crimson {
+    background-color: #A20025;
+    color: white;
+}
+
+.bg-red {
+    background-color: #E51400;
     color: white;
 }
 
 .bg-orange {
-    background-color: #E3A21A;
+    background-color: #FA6800;
     color: white;
 }
 
-/* text */
+.bg-amber {
+    background-color: #F0A30A;
+    color: white;
+}
+
+.bg-yellow {
+    background-color: #E3C800;
+    color: white;
+}
+
+.bg-brown {
+    background-color: #825A2C;
+    color: white;
+}
+
+.bg-olive {
+    background-color: #6D8764;
+    color: white;
+}
+
+.bg-steel {
+    background-color: #647687;
+    color: white;
+}
+
+.bg-mauve {
+    background-color: #76608A;
+    color: white;
+}
+
+.bg-taupe {
+    background-color: #87794E;
+    color: white;
+}
+
+/* rich text */
 
 h1 {
     font-family: 'Segoe UI Light';
-    font-size: 42px;
+    font-size: 3.0em;
     font-weight: 200;
 }
 
 h2 {
     font-family: 'Segoe UI Light';
-    font-size: 20px;
+    font-size: 2.0em;
     font-weight: 200;
+}
+
+h3 {
+    font-family: 'Segoe UI Light';
+    font-size: 1.0em;
+    font-weight: 200;
+    text-transform: uppercase;
+    margin-bottom: 0;
 }

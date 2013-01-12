@@ -1,4 +1,6 @@
-﻿@{
+﻿@using Instatus.Core.Utils
+
+@{
     Layout = null;
 }
 
@@ -11,32 +13,17 @@
     <link rel="stylesheet" href="~/Content/base.css" />
     <link rel="stylesheet" href="~/Content/windows.css" />
     <style>
-        .container {
-            padding: 50px;
-            width: auto;
-        }
-
         .group {
             min-width: 500px;
-            padding-right: 50px;
         }
 
-        .tile div {
-            height: 100px;
-            margin: 5px;
-            padding: 20px;
-        }
-
-        .icon-back::before {
-            content: "\E0D5";
+        .tile-inner {
+            min-height: 150px;
         }
     </style>
 </head>
 <body class="bg-dark">
     <header class="container">
-        <button type="button" class="btn icon icon-back">
-            <span class="hide-text">Back</span>
-        </button>
         <h1>Windows App</h1>
     </header>
     <div class="container">
@@ -45,24 +32,32 @@
                 @for (var i = 0; i < 6; i++)
                 {
                     <section class="group">
-                        <div class="tile span6">
-                            <div class="bg-blue">
-                                <h2>Blog Posts</h2>
+                        <div class="tile span12">
+                            <div class="tile-inner bg-cyan">
+                                <h3>Blog</h3>
+                                <h2>Post title</h2>
                             </div>
                         </div>
                         <div class="tile span6">
-                            <div class="bg-blue">
+                            <div class="tile-inner bg-pink">
                                 <h2>Photos</h2>
                             </div>
                         </div>
                         <div class="tile span6">
-                            <div class="bg-green">
+                            <div class="tile-inner bg-green">
 
                             </div>
                         </div>
-                        <div class="tile span6">
-                            <div class="bg-blue">
-
+                    </section>
+                    <section class="group">
+                        <div class="tile span12">
+                            <div class="tile-inner bg-light">
+                                <div class="rich-text">
+                                    <h3>Blog</h3>
+                                    <h2>@DataBuilder.CreateMockSentence(3)</h2>
+                                    <p>@DataBuilder.CreateMockSentence(50)</p>
+                                    <p>@DataBuilder.CreateMockSentence(50)</p>
+                                </div>
                             </div>
                         </div>
                     </section>
