@@ -251,6 +251,10 @@ h3 {
 /* responsive */
 
 @media (max-width: 767px) {
+    .container {
+        padding: 1.0em;
+    }
+
     .hub,
     .hub .row,
     .hub .group {
