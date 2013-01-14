@@ -96,6 +96,8 @@ namespace Instatus.Integration.Mvc
                 EntitySet.Add(entity);
                 EntityStorage.SaveChanges();
 
+                OnCreated(entity);
+
                 return RedirectToAction("Details", new { id = (entity as dynamic).Id });
             }
             else
@@ -104,6 +106,11 @@ namespace Instatus.Integration.Mvc
 
                 return View();
             }
+        }
+
+        public virtual void OnCreated(TEntity entity)
+        {
+
         }
 
         [HttpGet]
@@ -139,6 +146,8 @@ namespace Instatus.Integration.Mvc
                 try
                 {
                     EntityStorage.SaveChanges();
+
+                    OnEdited(entity);
                 }
                 catch
                 {
@@ -153,6 +162,11 @@ namespace Instatus.Integration.Mvc
 
                 return View();
             }
+        }
+
+        public virtual void OnEdited(TEntity entity)
+        {
+
         }
 
         [HttpPost]
@@ -171,6 +185,8 @@ namespace Instatus.Integration.Mvc
             try
             {
                 EntityStorage.SaveChanges();
+
+                OnDeleted(entity);
             }
             catch
             {
@@ -178,6 +194,11 @@ namespace Instatus.Integration.Mvc
             }
 
             return RedirectToAction("Index");
+        }
+
+        public virtual void OnDeleted(TEntity entity)
+        {
+
         }
 
         public EntityStorageController(IEntityStorage entityStorage, IMapper mapper)

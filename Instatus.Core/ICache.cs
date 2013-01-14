@@ -9,5 +9,6 @@ namespace Instatus.Core
     {
         object Get(string key);
         void AddOrUpdate(string key, object value);
+        void Remove(string key);
     }
 }

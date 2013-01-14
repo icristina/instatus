@@ -13,7 +13,7 @@ namespace Instatus.Core.Impl
     {
         private IPreferences preferences;
         private IHosting hosting;
-        private static IDictionary<Tuple<string, string>, string> phrases = new ConcurrentDictionary<Tuple<string, string>, string>();
+        private IDictionary<Tuple<string, string>, string> phrases;
         
         public string Phrase(string key)
         {
@@ -34,17 +34,25 @@ namespace Instatus.Core.Impl
             }
         }
 
-        public static void Add(string locale, IDictionary<string, string> phrases) 
+        public void Add(string locale, IDictionary<string, string> phrases) 
         {
             phrases
                 .ToList()
-                .ForEach(x => InMemoryLocalization.phrases[new Tuple<string, string>(locale, x.Key)] = x.Value);
+                .ForEach(x => this.phrases[new Tuple<string, string>(locale, x.Key)] = x.Value);
         }
 
         public InMemoryLocalization(IPreferences preferences, IHosting hosting)
         {
             this.preferences = preferences;
             this.hosting = hosting;
+            this.phrases = new ConcurrentDictionary<Tuple<string, string>, string>();
+        }
+
+        public InMemoryLocalization(IPreferences preferences, IHosting hosting, IDictionary<Tuple<string, string>, string> phrases)
+        {
+            this.preferences = preferences;
+            this.hosting = hosting;
+            this.phrases = phrases;
         }
     }
 }

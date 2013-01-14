@@ -6,19 +6,30 @@ using System.Linq;
 using System.Web;
 using Instatus.Core.Extensions;
 using System.Security.Principal;
+using Instatus.Core.Impl;
 
 namespace Instatus.Scaffold.Entities
 {
-    public class SocialDbStorage : ITaxonomy, IMembership, IKeyValueStorage<Document>, IAuditing
+    public class SocialDbStorage : ITaxonomy, IMembership, IKeyValueStorage<Document>, IAuditing, ILocalization
     {        
         private IEntityStorage entityStorage;
         private IEncryption encryption;
+        private ICache cache;
+        private IPreferences preferences;
+        private IHosting hosting;
         
         // Private
         private User GetUserByUserName(string userName)
         {
+            var normalizedUserName = userName.ToNormalizedLower();
+
+            if (!ValidateUserName(normalizedUserName))
+            {
+                return null;
+            }
+
             return entityStorage.Set<User>()
-                .Where(u => u.EmailAddress == userName)
+                .Where(u => u.EmailAddress == normalizedUserName)
                 .FirstOrDefault();
         }
 
@@ -31,14 +42,21 @@ namespace Instatus.Scaffold.Entities
 
         private User GetUserByVerificationToken(string userName, string verificationToken)
         {
-            if (!ValidateVerificationToken(verificationToken))
+            var normalizedUserName = userName.ToNormalizedLower();
+            
+            if (!ValidateVerificationToken(verificationToken) || !ValidateUserName(normalizedUserName))
             {
                 return null;
             }
 
             return entityStorage.Set<User>()
-                .Where(u => u.EmailAddress == userName && u.VerificationToken == verificationToken)
+                .Where(u => u.EmailAddress == normalizedUserName && u.VerificationToken == verificationToken)
                 .FirstOrDefault();
+        }
+
+        private bool ValidateUserName(string userName)
+        {
+            return !string.IsNullOrWhiteSpace(userName) && userName.Contains('@');
         }
 
         private bool ValidatePassword(string password)
@@ -71,7 +89,9 @@ namespace Instatus.Scaffold.Entities
         // IMembership
         public bool ValidateUser(string userName, string password)
         {
-            if (!ValidatePassword(password))
+            var normalizedUserName = userName.ToNormalizedLower();
+            
+            if (!ValidatePassword(password) || !ValidateUserName(normalizedUserName))
             {
                 return false;
             }
@@ -79,7 +99,7 @@ namespace Instatus.Scaffold.Entities
             var encryptedPassword = encryption.Encrypt(password);
 
             return entityStorage.Set<User>()
-                .Any(u => u.EmailAddress == userName && u.Password == encryptedPassword);
+                .Any(u => u.EmailAddress == normalizedUserName && u.Password == encryptedPassword);
         }
 
         public bool ValidateExternalUser(string providerName, string providerUserId, IDictionary<string, object> data, out string userName)
@@ -104,18 +124,27 @@ namespace Instatus.Scaffold.Entities
                 }
 
                 userName = providerUserId;
+
                 return true;
             }
 
             userName = null;
+
             return false;
         }
 
         public string[] GetRoles(string userName)
         {
+            var normalizedUserName = userName.ToNormalizedLower();
+
+            if (!ValidateUserName(normalizedUserName))
+            {
+                return null;
+            }
+            
             var role = entityStorage
                 .Set<User>()
-                .Where(u => u.EmailAddress == userName)
+                .Where(u => u.EmailAddress == normalizedUserName)
                 .Select(u => u.Role)
                 .FirstOrDefault();
             
@@ -268,10 +297,42 @@ namespace Instatus.Scaffold.Entities
             entityStorage.SaveChanges();
         }
 
-        public SocialDbStorage(IEntityStorage entityStorage, IEncryption encryption)
+        // ILocalization
+        private IDictionary<Tuple<string, string>, string> phrases;
+
+        private IDictionary<Tuple<string, string>, string> Phrases
+        {
+            get 
+            {
+                return phrases ?? (phrases = cache.Get<IDictionary<Tuple<string, string>, string>>("phrases", () => 
+                {
+                    return entityStorage.Set<Phrase>()
+                        .ToList()
+                        .ToDictionary(p => new Tuple<string, string>(p.Locale, p.Key), p => p.Text);
+                    }
+                ));
+            }
+        }
+
+        public string Phrase(string key)
+        {
+            return new InMemoryLocalization(preferences, hosting, Phrases)
+                .Phrase(key);
+        }
+
+        public string Format(string key, params object[] values)
+        {
+            return new InMemoryLocalization(preferences, hosting, Phrases)
+                .Format(key, values);
+        }
+
+        public SocialDbStorage(IEntityStorage entityStorage, IEncryption encryption, ICache cache, IPreferences preferences, IHosting hosting)
         {
             this.entityStorage = entityStorage;
             this.encryption = encryption;
+            this.cache = cache;
+            this.preferences = preferences;
+            this.hosting = hosting;
         }
     }
 }

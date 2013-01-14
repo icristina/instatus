@@ -17,5 +17,10 @@ namespace Instatus.Core.Impl
         {
             // do nothing
         }
+
+        public void Remove(string key)
+        {
+            // do nothing
+        }
     }
 }

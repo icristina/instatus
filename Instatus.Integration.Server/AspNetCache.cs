@@ -18,5 +18,10 @@ namespace Instatus.Integration.Server
         {
             HttpRuntime.Cache[key] = value;
         }
+
+        public void Remove(string key)
+        {
+            HttpRuntime.Cache.Remove(key);
+        }
     }
 }

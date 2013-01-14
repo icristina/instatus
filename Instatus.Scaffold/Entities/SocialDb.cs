@@ -21,6 +21,7 @@ namespace Instatus.Scaffold.Entities
         public DbSet<Map> Maps { get; set; }
         public DbSet<Marker> Markers { get; set; }
         public DbSet<Message> Messages { get; set; }
+        public DbSet<Phrase> Phrases { get; set; }
         public DbSet<Place> Places { get; set; }
         public DbSet<Post> Posts { get; set; }
         public DbSet<Score> Scores { get; set; }

@@ -130,6 +130,7 @@
     <Compile Include="Entities\Message.cs" />
     <Compile Include="Entities\PayloadExtensions.cs" />
     <Compile Include="Entities\Phase.cs" />
+    <Compile Include="Entities\Phrase.cs" />
     <Compile Include="Models\BlogPostEditor.cs" />
     <Compile Include="Models\Connection.cs" />
     <Compile Include="Models\Button.cs" />
