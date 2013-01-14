@@ -87,6 +87,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConverterConfig.cs" />
     <Compile Include="CsvResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
