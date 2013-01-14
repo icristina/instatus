@@ -66,5 +66,19 @@ namespace Instatus.Core.Extensions
         {
             return text.IndexOf(value, StringComparison.OrdinalIgnoreCase) != -1;
         }
+
+        public static string ToNormalizedLower(this string text)
+        {
+            if (string.IsNullOrWhiteSpace(text))
+            {
+                return null;
+            }
+            else
+            {
+                return text
+                    .Trim()
+                    .ToLower();
+            }
+        }
     }
 }

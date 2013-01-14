@@ -1,4 +1,5 @@
 ﻿using Instatus.Core;
+using Instatus.Core.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,6 @@ namespace Instatus.Scaffold.Entities
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string EmailAddress { get; set; }
         public string FacebookId { get; set; }
         public string TwitterId { get; set; }
         public string Locale { get; set; }
@@ -22,6 +22,21 @@ namespace Instatus.Scaffold.Entities
         public bool IsVerified { get; set; }
         public string VerificationToken { get; set; }
         public string Password { get; set; }
+
+        // normalize strings
+        private string emailAddress;
+
+        public string EmailAddress
+        {
+            get
+            {
+                return emailAddress;
+            }
+            set
+            {
+                emailAddress = value.ToNormalizedLower();
+            }
+        }
 
         // ICreated
         public DateTime Created { get; set; }
