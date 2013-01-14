@@ -44,14 +44,16 @@ namespace Instatus.Integration.Mvc
             return new MvcHtmlString(sb.ToString());
         }
 
-        public static MvcHtmlString RouteHint<T>(this HtmlHelper<T> htmlHelper)
+        public static MvcHtmlString RouteHint<T>(this HtmlHelper<T> htmlHelper, string additionalRouteDataName = "key")
         {
             var routeData = htmlHelper.ViewContext.RouteData;
             var areaName = routeData.DataTokens["area"];
             var controllerName = routeData.GetRequiredString("controller");
             var actionName = routeData.GetRequiredString("action");
-            var className = string.Format("{0} {1} {2}", areaName, controllerName, actionName)
+            var additionalValue = routeData.Values[additionalRouteDataName];
+            var className = string.Format("{0} {1} {2} {3}", areaName, controllerName, actionName, additionalValue)
                 .TrimStart()
+                .TrimEnd()
                 .ToLower();
 
             return new MvcHtmlString(className);
