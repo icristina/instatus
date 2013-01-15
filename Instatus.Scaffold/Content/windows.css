@@ -248,13 +248,27 @@ h3 {
     margin-bottom: 0;
 }
 
+/* button */
+
+.btn {
+    border: 2px solid white;
+    padding: 0.5em;    
+}
+
+/* form */
+
+input {
+    border: 2px solid white;
+    background-color: transparent;
+}
+
 /* responsive */
 
 @media (max-width: 767px) {
     .container {
         padding: 1.0em;
-    }
-
+    }    
+    
     .hub,
     .hub .row,
     .hub .group {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 
@@ -49,6 +50,13 @@ namespace Instatus.Core.Extensions
             }
             
             return value;
+        }
+
+        public static IDictionary<string, object> AsDictionary(this NameValueCollection nameValueCollection)
+        {
+            return nameValueCollection
+                .AllKeys
+                .ToDictionary(k => k, v => nameValueCollection[v] as object);
         }
     }
 }
