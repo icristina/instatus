@@ -17,6 +17,7 @@ namespace Instatus.Scaffold.Entities
         private ICache cache;
         private IPreferences preferences;
         private IHosting hosting;
+        private IGlobalization globalization;
         
         // Private
         private User GetUserByUserName(string userName)
@@ -316,23 +317,24 @@ namespace Instatus.Scaffold.Entities
 
         public string Phrase(string key)
         {
-            return new InMemoryLocalization(preferences, hosting, Phrases)
+            return new InMemoryLocalization(preferences, hosting, globalization, Phrases)
                 .Phrase(key);
         }
 
         public string Format(string key, params object[] values)
         {
-            return new InMemoryLocalization(preferences, hosting, Phrases)
+            return new InMemoryLocalization(preferences, hosting, globalization, Phrases)
                 .Format(key, values);
         }
 
-        public SocialDbStorage(IEntityStorage entityStorage, IEncryption encryption, ICache cache, IPreferences preferences, IHosting hosting)
+        public SocialDbStorage(IEntityStorage entityStorage, IEncryption encryption, ICache cache, IPreferences preferences, IHosting hosting, IGlobalization globalization)
         {
             this.entityStorage = entityStorage;
             this.encryption = encryption;
             this.cache = cache;
             this.preferences = preferences;
             this.hosting = hosting;
+            this.globalization = globalization;
         }
     }
 }

@@ -7,11 +7,10 @@ using System.Threading.Tasks;
 
 namespace Instatus.Core
 {
-    public interface IHosting
+    public interface IGlobalization
     {
-        string RootPath { get; }
-        string BaseAddress { get; }
-        string GetAppSetting(string key);
-        string ServerName { get; }
+        DateTime Now { get; }
+        CultureInfo[] Cultures { get; }
+        CultureInfo DefaultCulture { get; }
     }
 }

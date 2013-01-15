@@ -11,6 +11,7 @@ namespace Instatus.Core.Impl
 {
     public class InMemoryLocalization : ILocalization
     {
+        private IGlobalization globalization;
         private IPreferences preferences;
         private IHosting hosting;
         private IDictionary<Tuple<string, string>, string> phrases;
@@ -18,7 +19,7 @@ namespace Instatus.Core.Impl
         public string Phrase(string key)
         {
             return phrases.GetValue(new Tuple<string, string>(preferences.Locale, key)) 
-                ?? phrases.GetValue(new Tuple<string, string>(hosting.DefaultCulture.Name, key))
+                ?? phrases.GetValue(new Tuple<string, string>(globalization.DefaultCulture.Name, key))
                 ?? key.ToSeparatedWords();
         }
 
@@ -41,18 +42,20 @@ namespace Instatus.Core.Impl
                 .ForEach(x => this.phrases[new Tuple<string, string>(locale, x.Key)] = x.Value);
         }
 
-        public InMemoryLocalization(IPreferences preferences, IHosting hosting)
+        public InMemoryLocalization(IPreferences preferences, IHosting hosting, IGlobalization globalization)
         {
             this.preferences = preferences;
             this.hosting = hosting;
+            this.globalization = globalization;
             this.phrases = new ConcurrentDictionary<Tuple<string, string>, string>();
         }
 
-        public InMemoryLocalization(IPreferences preferences, IHosting hosting, IDictionary<Tuple<string, string>, string> phrases)
+        public InMemoryLocalization(IPreferences preferences, IHosting hosting, IGlobalization globalization, IDictionary<Tuple<string, string>, string> phrases)
         {
             this.preferences = preferences;
             this.hosting = hosting;
             this.phrases = phrases;
+            this.globalization = globalization;
         }
     }
 }

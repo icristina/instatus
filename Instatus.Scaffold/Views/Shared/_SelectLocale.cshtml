@@ -5,6 +5,6 @@
 
 @using (Html.BeginForm())
 {
-    @Html.DropDownList(WellKnown.RouteValue.Locale, new SelectList(Hosting.SupportedCultures, "Name", "DisplayName", Preferences.Locale))
+    @Html.DropDownList(WellKnown.RouteValue.Locale, new SelectList(Globalization.Cultures, "Name", "DisplayName", Preferences.Locale))
     @Html.Submit("Change")
 }

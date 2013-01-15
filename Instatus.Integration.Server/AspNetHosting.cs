@@ -40,28 +40,6 @@ namespace Instatus.Integration.Server
             return ConfigurationManager.AppSettings[key];
         }
 
-        public CultureInfo DefaultCulture
-        {
-            get
-            {
-                return SupportedCultures.FirstOrDefault();
-            }
-        }
-
-        private CultureInfo[] supportedCultures;
-
-        public CultureInfo[] SupportedCultures
-        {
-            get
-            {
-                return supportedCultures ?? (supportedCultures = GetAppSetting(WellKnown.AppSetting.SupportedCultures)
-                        .ThrowIfNull("SupportedCultures required in AppSettings")
-                        .AsDistinctArray()
-                        .Select(c => CultureInfo.GetCultureInfo(c))
-                        .ToArray());
-            }
-        }
-
         public string ServerName
         {
             get 

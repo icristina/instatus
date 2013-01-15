@@ -20,7 +20,7 @@ namespace Instatus.Core.Impl
         }
 
         public CultureInfo DefaultCulture { get; set; }
-        public CultureInfo[] SupportedCultures { get; set; }
+        public CultureInfo[] Cultures { get; set; }
 
         public InMemoryHosting(IDictionary<string, string> appSettings)
         {

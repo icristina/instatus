@@ -9,11 +9,20 @@ namespace Instatus.Integration.Mvc
 {
     public abstract class ExtendedViewPage : WebViewPage
     {
+        private IGlobalization globalization;
         private ILocalization localization;
         private IPreferences preferences;
         private IHosting hosting;
         
         // automatic autofac di does not appear to work with razorgenerator
+        public IGlobalization Globalization
+        {
+            get
+            {
+                return globalization ?? (globalization = DependencyResolver.Current.GetService<IGlobalization>());
+            }
+        }
+
         public ILocalization Localization 
         {
             get
@@ -51,9 +60,18 @@ namespace Instatus.Integration.Mvc
 
     public abstract class ExtendedViewPage<T> : WebViewPage<T>
     {
+        private IGlobalization globalization;
         private ILocalization localization;
         private IPreferences preferences;
         private IHosting hosting;
+
+        public IGlobalization Globalization
+        {
+            get
+            {
+                return globalization ?? (globalization = DependencyResolver.Current.GetService<IGlobalization>());
+            }
+        }
 
         public ILocalization Localization
         {

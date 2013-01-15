@@ -14,7 +14,7 @@ namespace Instatus.Integration.Server
 {
     public class AspNetPreferences : IPreferences
     {
-        public IHosting hosting;
+        public IGlobalization globalization;
         
         public virtual string GetCustomLocale(HttpRequest request)
         {
@@ -46,7 +46,7 @@ namespace Instatus.Integration.Server
                         request.Cookies.GetValue<string>(WellKnown.Cookie.Preferences, WellKnown.Preference.Locale) ??
                         GetCustomLocale(request) ??
                         (request.UserLanguages == null ? null : request.UserLanguages[0]) ??
-                        hosting.DefaultCulture.Name;
+                        globalization.DefaultCulture.Name;
                 }
 
                 return locale;
@@ -59,14 +59,14 @@ namespace Instatus.Integration.Server
                 {
                     culture = CultureInfo.GetCultureInfo(value);
 
-                    if (!hosting.SupportedCultures.Contains(culture))
+                    if (!globalization.Cultures.Contains(culture))
                     {
-                        culture = hosting.DefaultCulture;
+                        culture = globalization.DefaultCulture;
                     }
                 }
                 catch
                 {
-                    culture = hosting.DefaultCulture;
+                    culture = globalization.DefaultCulture;
                 }
 
                 var request = HttpContext.Current.Request;
@@ -91,9 +91,9 @@ namespace Instatus.Integration.Server
             }
         }
 
-        public AspNetPreferences(IHosting hosting)
+        public AspNetPreferences(IGlobalization globalization)
         {
-            this.hosting = hosting;
+            this.globalization = globalization;
         }
     }
 }

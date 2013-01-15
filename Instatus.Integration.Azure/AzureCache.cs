@@ -20,5 +20,10 @@ namespace Instatus.Integration.Azure
         {
             cache.Put(key, value);
         }
+
+        public void Remove(string key)
+        {
+            cache.Remove(key);
+        }
     }
 }
