@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Media.Imaging;
 using Instatus.Core;
 using Instatus.Core.Extensions;
+using System.Windows.Media;
 
 namespace Instatus.Integration.Server
 {
@@ -83,7 +84,7 @@ namespace Instatus.Integration.Server
 
             inputStream.ResetPosition();
 
-            return new Tuple<int, int>((int)bitmapImage.Width, (int)bitmapImage.Height);
+            return new Tuple<int, int>((int)bitmapImage.PixelWidth, (int)bitmapImage.PixelHeight);
         }
 
         private Tuple<int, int> CalculateResizeDimensions(Tuple<int, int> originalDimensions, Tuple<int, int> newDimensions, bool preserveAspectRatio, bool preventEnlarge)
