@@ -131,7 +131,6 @@ namespace Instatus.Core
         public static class Preference
         {
             public const string Locale = "Locale";
-            public const string CurrentDate = "CurrentDate";
             public const string Like = "Like";
         }
 
