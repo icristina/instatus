@@ -10,70 +10,114 @@ using System.Text;
 using Aws = Amazon;
 using Amazon.S3;
 using Amazon.S3.Model;
+using Amazon.S3.Transfer;
+using System.Threading.Tasks;
 
 namespace Instatus.Integration.Amazon
 {
     public class AmazonS3BlobStorage : IBlobStorage
-    {
+    {        
         private ILookup<Credential> credentials;
+        private Credential credential;
+        private bool forceLowerCase = true;
 
-        public string GetKeyName(string virtualPath)
+        private Credential Credential
         {
-            return Path.GetFileName(virtualPath);
+            get 
+            {
+                return credential ?? (credential = credentials.Get(WellKnown.Provider.Amazon));
+            }
         }
 
-        public string GetBucketName(string virtualPath)
+        private string BucketName
         {
-            return Path.GetDirectoryName(virtualPath)
+            get 
+            {
+                return Credential.AccountName;
+            }
+        }
+
+        private string BaseAddress
+        {
+            get
+            {
+                return string.Format("http://{0}.s3.amazonaws.com", BucketName);
+            }
+        }
+
+        private string GetKeyName(string virtualPath)
+        {          
+            virtualPath = virtualPath
+                .Trim()
                 .TrimStart(PathBuilder.RelativeChars)
                 .TrimEnd(PathBuilder.RelativeChars)
-                .ToLower();
+                .Replace("//", "/"); // s3 folder structure breaks with double character
+
+            if (string.IsNullOrEmpty(virtualPath))
+            {
+                throw new Exception("Key required");
+            }
+
+            return forceLowerCase ? virtualPath.ToLower() : virtualPath;
         }
 
-        public string GetBaseUri(string accountName)
+        private AmazonS3 GetAmazonS3Client()
         {
-            return string.Format("http://{0}.s3.amazonaws.com", accountName);
-        }
-
-        public AmazonS3 GetAmazonS3Client()
-        {
-            var credential = credentials.Get(WellKnown.Provider.Amazon);
-            return Aws.AWSClientFactory.CreateAmazonS3Client(credential.PublicKey, credential.PrivateKey);
+            return Aws.AWSClientFactory.CreateAmazonS3Client(Credential.PublicKey, Credential.PrivateKey);
         }
 
         public Stream OpenWrite(string virtualPath, Metadata metaData)
-        {
-            var bucketName = GetBucketName(virtualPath);
-            var keyName = GetKeyName(virtualPath);
-            var amazonS3 = GetAmazonS3Client();
-            var memoryStream = new MemoryStream();
+        {     
+            var keyName = GetKeyName(virtualPath);            
             var putRequest = new PutObjectRequest();
-                
+            var amazonS3 = GetAmazonS3Client();
+
             putRequest
-                .WithBucketName(bucketName)
-                .WithKey(keyName)
-                .WithInputStream(memoryStream);
+                .WithBucketName(BucketName)
+                .WithKey(keyName);
 
-            var putResponse = amazonS3.PutObject(putRequest);
+            SetMetadata(putRequest, metaData);            
+            
+            return new AmazonS3WriteStream(amazonS3, putRequest);
+        }
 
-            return memoryStream;
+        private void SetMetadata(PutObjectRequest putRequest, Metadata metaData)
+        {
+            if (metaData == null)
+            {
+                return;
+            }
+
+            if (metaData.PublicRead)
+            {
+                putRequest.WithCannedACL(S3CannedACL.PublicRead);
+            }
+
+            if (!string.IsNullOrEmpty(metaData.ContentType))
+            {
+                putRequest.WithContentType(metaData.ContentType);
+            }
+
+            foreach (var header in metaData.Headers)
+            {
+                putRequest.AddHeader(header.Key, header.Value);
+            }
         }
 
         public Stream OpenRead(string virtualPath)
         {
-            var bucketName = GetBucketName(virtualPath);
-            var keyName = GetKeyName(virtualPath);
-            var amazonS3 = GetAmazonS3Client();
-            var memoryStream = new MemoryStream();
+            var keyName = GetKeyName(virtualPath);            
             var getRequest = new GetObjectRequest();
 
             getRequest
-                .WithBucketName(bucketName)
+                .WithBucketName(BucketName)
                 .WithKey(keyName);
 
-            var getResponse = amazonS3.GetObject(getRequest);
-
-            return getResponse.ResponseStream;
+            using (var amazonS3 = GetAmazonS3Client())
+            using (var getResponse = amazonS3.GetObject(getRequest))
+            {
+                return getResponse.ResponseStream;
+            }
         }
 
         public void Copy(string virtualPath, string uri, Metadata metaData)
@@ -88,10 +132,7 @@ namespace Instatus.Integration.Amazon
 
         public string GenerateUri(string virtualPath, HttpMethod httpMethod)
         {
-            var credential = credentials.Get(WellKnown.Provider.Amazon);
-            var baseAddress = GetBaseUri(credential.AccountName);
-
-            return new PathBuilder(baseAddress)
+            return new PathBuilder(BaseAddress, forceLowerCase)
                 .Path(virtualPath)
                 .ToProtocolRelativeUri();
         }
@@ -104,6 +145,33 @@ namespace Instatus.Integration.Amazon
         public AmazonS3BlobStorage(ILookup<Credential> credentials)
         {
             this.credentials = credentials;
+        }
+    }
+
+    public class AmazonS3WriteStream : MemoryStream
+    {
+        private AmazonS3 amazonS3;
+        private PutObjectRequest putRequest;
+
+        protected override void Dispose(bool disposing)
+        {          
+            Position = 0;
+
+            putRequest.WithInputStream(this);
+
+            using (amazonS3)
+            using (var putObjectResponse = amazonS3.PutObject(putRequest))
+            {
+
+            }
+            
+            base.Dispose(disposing);
+        }
+
+        public AmazonS3WriteStream(AmazonS3 amazonS3, PutObjectRequest putRequest) 
+        {
+            this.amazonS3 = amazonS3;
+            this.putRequest = putRequest;
         }
     }
 }

@@ -50,16 +50,27 @@ namespace Instatus.Integration.Mvc
 
         public static string BlobContent(this UrlHelper urlHelper, string virtualPath, bool enableCacheBusting = false)
         {
+            string uri;
+            
             if (string.IsNullOrEmpty(virtualPath))
             {
                 return string.Empty;
             }
+            else if (Uri.IsWellFormedUriString(virtualPath, UriKind.Absolute))
+            {
+                uri = new PathBuilder(virtualPath)
+                            .WithCacheBusting(enableCacheBusting)
+                            .ToString(); // not protocol relative; for placeholder images
+            }
+            else
+            {
+                var blobStorage = DependencyResolver.Current.GetService<IBlobStorage>();
+                var blobUri = blobStorage.GenerateUri(virtualPath, HttpMethod.Get);
             
-            var blobStorage = DependencyResolver.Current.GetService<IBlobStorage>();
-            var blobUri = blobStorage.GenerateUri(virtualPath, HttpMethod.Get);
-            var uri = new PathBuilder(blobUri)
-                                .WithCacheBusting(enableCacheBusting)
-                                .ToProtocolRelativeUri();
+                uri = new PathBuilder(blobUri)
+                            .WithCacheBusting(enableCacheBusting)
+                            .ToProtocolRelativeUri();
+            }
 
             return urlHelper.Content(uri);
         }
