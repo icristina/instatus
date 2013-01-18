@@ -16,39 +16,44 @@ namespace Instatus.Integration.Mvc
         [Display(Name = "Upload File")]
         [DataType("Upload")]
         public string FileName { get; set; }
-
+       
         [ScaffoldColumn(false)]
-        public Stream InputStream
+        public HttpPostedFile File
         {
-            get 
+            get
             {
-                return HttpContext.Current.Request.Files[0].InputStream;
-            }            
+                var files = HttpContext.Current.Request.Files;
+
+                if (files == null || files.Count < 1 || files[0].ContentLength == 0)
+                {
+                    return null;
+                }
+                else
+                {
+                    return files[0];
+                }
+            }
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            var files = HttpContext.Current.Request.Files;
-
-            if (files == null || files.Count != 1 || files[0].ContentLength == 0)
+            if (File == null)
             {
                 yield return new ValidationResult("File required", new string[] { "FileName" });
             }
             else
             {
-                var file = files[0];
-
-                if (file.ContentLength > maximumContentLength)
+                if (File.ContentLength > maximumContentLength)
                 {
                     yield return new ValidationResult("File too large", new string[] { "FileName" });
                 }
 
-                if (!allowedMimeTypes.Contains(file.ContentType, StringComparer.OrdinalIgnoreCase))
+                if (!allowedMimeTypes.Contains(File.ContentType, StringComparer.OrdinalIgnoreCase))
                 {
                     yield return new ValidationResult("File type not allowed", new string[] { "FileName" });
                 }
 
-                FileName = file.FileName;
+                FileName = File.FileName;
             }
         }
 

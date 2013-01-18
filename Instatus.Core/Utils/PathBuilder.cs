@@ -12,6 +12,7 @@ namespace Instatus.Core.Utils
         private bool forceLowerCasePath = false;
         private bool hasQuery = false;
         private StringBuilder stringBuilder;
+        private string rootSegment;
 
         public static readonly char[] RelativeChars = new char[] { '~', '/', '\\' };
         public static readonly char[] DelimiterChars = new char[] { '/', '\\' };
@@ -30,7 +31,8 @@ namespace Instatus.Core.Utils
             path = path
                 .TrimStart(RelativeChars)
                 .TrimStart(DelimiterChars)
-                .TrimEnd(DelimiterChars);
+                .TrimEnd(DelimiterChars)
+                .Replace("//", "/");
 
             stringBuilder.Append(DefaultDelimiter);
             stringBuilder.Append(path);
@@ -87,6 +89,20 @@ namespace Instatus.Core.Utils
             return this;
         }
 
+        public string ToRelativePath()
+        {
+            var path = ToString();
+
+            if (!string.IsNullOrEmpty(rootSegment))
+            {
+                path = path
+                    .Replace(rootSegment, "");
+            }
+
+            return path
+                .TrimStart(RelativeChars);
+        }
+
         public string ToProtocolRelativeUri()
         {
             var uri = ToString();
@@ -132,6 +148,8 @@ namespace Instatus.Core.Utils
 
             if (forceLowerCasePath)
                 pathSegment = pathSegment.ToLower();
+
+            rootSegment = pathSegment;
 
             stringBuilder = new StringBuilder(pathSegment)
                 .Append(querySegment);

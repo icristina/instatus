@@ -8,6 +8,7 @@ using Instatus.Core;
 using Instatus.Core.Utils;
 using System.Web.SessionState;
 using System.Net.Http;
+using Instatus.Core.Models;
 
 namespace Instatus.Integration.Mvc
 {
@@ -54,10 +55,15 @@ namespace Instatus.Integration.Mvc
             if (ModelState.IsValid)
             {
                 var virtualPath = MapPath(viewModel.FileName);
-
-                using (var outputStream = BlobStorage.OpenWrite(virtualPath, null))
+                var metaData = new Metadata()
                 {
-                    viewModel.InputStream.CopyTo(outputStream);
+                    ContentType = viewModel.File.ContentType,
+                    PublicRead = true
+                };
+
+                using (var outputStream = BlobStorage.OpenWrite(virtualPath, metaData))
+                {
+                    viewModel.File.InputStream.CopyTo(outputStream);
                 }
 
                 OnCreated(virtualPath);
@@ -65,7 +71,7 @@ namespace Instatus.Integration.Mvc
                 return RedirectToAction("Index");
             }
 
-            return View();
+            return RedirectToAction("Index");
         }
 
         public virtual string BaseVirtualPath

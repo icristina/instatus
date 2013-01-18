@@ -46,19 +46,17 @@ namespace Instatus.Integration.Amazon
         }
 
         private string GetKeyName(string virtualPath)
-        {          
-            virtualPath = virtualPath
-                .Trim()
-                .TrimStart(PathBuilder.RelativeChars)
-                .TrimEnd(PathBuilder.RelativeChars)
-                .Replace("//", "/"); // s3 folder structure breaks with double character
+        {
+            virtualPath = new PathBuilder(null, forceLowerCase)
+                .Path(virtualPath)
+                .ToRelativePath();
 
             if (string.IsNullOrEmpty(virtualPath))
             {
                 throw new Exception("Key required");
             }
 
-            return forceLowerCase ? virtualPath.ToLower() : virtualPath;
+            return virtualPath;
         }
 
         private AmazonS3 GetAmazonS3Client()
@@ -113,10 +111,14 @@ namespace Instatus.Integration.Amazon
                 .WithBucketName(BucketName)
                 .WithKey(keyName);
 
+            var memoryStream = new MemoryStream();
+
             using (var amazonS3 = GetAmazonS3Client())
             using (var getResponse = amazonS3.GetObject(getRequest))
             {
-                return getResponse.ResponseStream;
+                getResponse.ResponseStream.CopyTo(memoryStream);
+
+                return memoryStream;
             }
         }
 
@@ -127,7 +129,23 @@ namespace Instatus.Integration.Amazon
 
         public string[] Query(string virtualPath, string suffix)
         {
-            throw new NotImplementedException();
+            var listRequest = new ListObjectsRequest();
+            var prefix = GetKeyName(virtualPath);
+
+            listRequest
+                .WithBucketName(BucketName)
+                .WithPrefix(prefix);
+            
+            using (var amazonS3 = GetAmazonS3Client())
+            using (var listResponse = amazonS3.ListObjects(listRequest))
+            {
+                return listResponse.S3Objects
+                    .Where(o => !o.Key.EndsWith("/")) // ignore s3 folders
+                    .Select(o => o.Key
+                        .Replace(prefix, virtualPath) // original virtualPath prefix
+                        .Replace("//", "/")) // double slash
+                    .ToArray();
+            }
         }
 
         public string GenerateUri(string virtualPath, HttpMethod httpMethod)
@@ -148,7 +166,7 @@ namespace Instatus.Integration.Amazon
         }
     }
 
-    public class AmazonS3WriteStream : MemoryStream
+    internal class AmazonS3WriteStream : MemoryStream
     {
         private AmazonS3 amazonS3;
         private PutObjectRequest putRequest;
@@ -157,12 +175,14 @@ namespace Instatus.Integration.Amazon
         {          
             Position = 0;
 
-            putRequest.WithInputStream(this);
+            putRequest
+                .WithAutoCloseStream(false)
+                .WithInputStream(this);
 
             using (amazonS3)
             using (var putObjectResponse = amazonS3.PutObject(putRequest))
             {
-
+                // dispose of all s3 resources
             }
             
             base.Dispose(disposing);

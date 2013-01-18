@@ -43,17 +43,21 @@ namespace Instatus.Core
         {
             public const string Html = "text/html";
             public const string Jpg = "image/jpeg";
+            public const string Png = "image/png";
             public const string Js = "text/javascript";
             public const string Css = "text/css";
             public const string Rss = "application/rss+xml";
             public const string Csv = "text/csv";
             public const string Json = "application/json";
+            public const string Xml = "text/xml";
         }
 
         public static class Whitelist
         {
             public static readonly string[] JpgContentType = new string[] { WellKnown.ContentType.Jpg, "image/pjpeg" };
             public static readonly string[] JpgExtension = new string[] { ".jpeg", ".jpg" };
+            public static readonly string[] PngContentType = new string[] { WellKnown.ContentType.Png };
+            public static readonly string[] PngExtension = new string[] { ".png" };
         }
 
         public static class AppSetting
@@ -125,7 +129,6 @@ namespace Instatus.Core
         public static class Cookie
         {
             public const string Preferences = "Preferences";
-            public const string Preview = "Preview";
         }
 
         public static class Preference
