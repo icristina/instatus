@@ -8,6 +8,13 @@ namespace Instatus.Core.Extensions
 {
     public static class DateTimeExtensions
     {
+        public static DateTime GetDayEndDateTime(this DateTime dateTime) 
+        {
+            return dateTime.Date
+                .AddDays(1)
+                .AddMilliseconds(-1);
+        }
+        
         public static DateTime GetWeekStartDate(this DateTime dateTime)
         {
             return dateTime

@@ -66,6 +66,7 @@
     <Compile Include="IContainer.cs" />
     <Compile Include="IGlobalization.cs" />
     <Compile Include="ILookup.cs" />
+    <Compile Include="IPicture.cs" />
     <Compile Include="Impl\AppSettingsGlobalization.cs" />
     <Compile Include="Impl\DataContractSerializerImpl.cs" />
     <Compile Include="Impl\MockAuditing.cs" />
