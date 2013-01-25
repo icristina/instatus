@@ -230,5 +230,19 @@ namespace Instatus.Integration.Mvc
                 return new MvcHtmlString(property.GetErrorMessage(htmlHelper.ViewContext));
             }
         }
+
+        public static MvcHtmlString ErrorMessageFor<T>(this HtmlHelper<T> htmlHelper, string propertyName, Type modelClientValidatorType)
+        {
+            var property = htmlHelper.ViewData.ModelMetadata.GetProperty(propertyName);
+
+            if (property == null)
+            {
+                return MvcHtmlString.Empty;
+            }
+            else
+            {
+                return new MvcHtmlString(property.GetErrorMessage(htmlHelper.ViewContext, modelClientValidatorType));
+            }
+        }
     }
 }

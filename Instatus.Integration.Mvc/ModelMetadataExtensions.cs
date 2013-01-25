@@ -31,6 +31,36 @@ namespace Instatus.Integration.Mvc
                 .FirstOrDefault();
         }
 
+        public static string GetErrorMessage(this ModelMetadata modelMetadata, ControllerContext controllerContext, Type type)
+        {
+            return modelMetadata
+                .GetValidators(controllerContext)
+                .SelectMany(v => v.GetClientValidationRules())
+                .Where(v => v.GetType() == type)
+                .Select(v => v.ErrorMessage)
+                .FirstOrDefault();
+        }
+
+        public static string GetRequiredErrorMessage(this ModelMetadata modelMetadata, ControllerContext controllerContext)
+        {
+            return modelMetadata.GetErrorMessage(controllerContext, typeof(ModelClientValidationRequiredRule));
+        }
+
+        public static string GetStringLengthErrorMessage(this ModelMetadata modelMetadata, ControllerContext controllerContext)
+        {
+            return modelMetadata.GetErrorMessage(controllerContext, typeof(ModelClientValidationStringLengthRule));
+        }
+
+        public static string GetRegexErrorMessage(this ModelMetadata modelMetadata, ControllerContext controllerContext)
+        {
+            return modelMetadata.GetErrorMessage(controllerContext, typeof(ModelClientValidationRegexRule));
+        }
+
+        public static string GetRangeErrorMessage(this ModelMetadata modelMetadata, ControllerContext controllerContext)
+        {
+            return modelMetadata.GetErrorMessage(controllerContext, typeof(ModelClientValidationRangeRule));
+        }
+
         public static IEnumerable<ModelMetadata> GetEditableProperties<T>(this ViewDataDictionary<T> viewData)
         {
             return viewData
