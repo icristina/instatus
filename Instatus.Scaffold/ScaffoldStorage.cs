@@ -1,5 +1,4 @@
 ﻿using Instatus.Core;
-using Instatus.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,10 +6,11 @@ using System.Web;
 using Instatus.Core.Extensions;
 using System.Security.Principal;
 using Instatus.Core.Impl;
+using Instatus.Scaffold.Entities;
 
-namespace Instatus.Scaffold.Entities
+namespace Instatus.Scaffold
 {
-    public class SocialDbStorage : ITaxonomy, IMembership, IKeyValueStorage<Document>, IAuditing, ILocalization
+    public class ScaffoldStorage : ITaxonomy, IMembership, IKeyValueStorage<Instatus.Core.Models.Document>, IAuditing, ILocalization
     {        
         private IEntityStorage entityStorage;
         private IEncryption encryption;
@@ -213,11 +213,11 @@ namespace Instatus.Scaffold.Entities
         }
 
         // IKeyValueStorage<Document>
-        public Document Get(string partitionKey, string rowKey)
+        public Instatus.Core.Models.Document Get(string partitionKey, string rowKey)
         {
             return entityStorage.Set<Post>()
                 .Where(p => p.Locale == partitionKey && p.Slug == rowKey)
-                .Select(p => new Document()
+                .Select(p => new Instatus.Core.Models.Document()
                 {
                     Title = p.Name,
                     Description = p.Content
@@ -225,15 +225,15 @@ namespace Instatus.Scaffold.Entities
                 .FirstOrDefault();
         }
 
-        public IEnumerable<KeyValue<Document>> Query(string partitionKey, Criteria criteria)
+        public IEnumerable<Instatus.Core.Models.KeyValue<Instatus.Core.Models.Document>> Query(string partitionKey, Instatus.Core.Models.Criteria criteria)
         {
             return entityStorage
                 .Set<Post>()
                 .Where(p => p.Locale == partitionKey)
-                .Select(p => new KeyValue<Document>()
+                .Select(p => new Instatus.Core.Models.KeyValue<Instatus.Core.Models.Document>()
                 {
                     Key = p.Slug,
-                    Value = new Document()
+                    Value = new Instatus.Core.Models.Document()
                     {
                         Title = p.Name,
                         Description = p.Content
@@ -242,7 +242,7 @@ namespace Instatus.Scaffold.Entities
                 .ToList();
         }
 
-        public void AddOrUpdate(string partitionKey, string rowKey, Document value)
+        public void AddOrUpdate(string partitionKey, string rowKey, Instatus.Core.Models.Document value)
         {
             var post = GetPostByLocaleAndSlug(partitionKey, rowKey);
 
@@ -327,7 +327,7 @@ namespace Instatus.Scaffold.Entities
                 .Format(key, values);
         }
 
-        public SocialDbStorage(IEntityStorage entityStorage, IEncryption encryption, ICache cache, IPreferences preferences, IHosting hosting, IGlobalization globalization)
+        public ScaffoldStorage(IEntityStorage entityStorage, IEncryption encryption, ICache cache, IPreferences preferences, IHosting hosting, IGlobalization globalization)
         {
             this.entityStorage = entityStorage;
             this.encryption = encryption;

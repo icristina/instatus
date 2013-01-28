@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Instatus.Scaffold.Entities
+namespace Instatus.Scaffold.Models
 {
     public enum Phase
     {

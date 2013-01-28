@@ -1,5 +1,5 @@
 ﻿using Instatus.Core;
-using Instatus.Core.Models;
+using Instatus.Scaffold.Entities;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -7,9 +7,9 @@ using System.Linq;
 using System.Web;
 using Instatus.Core.Extensions;
 
-namespace Instatus.Scaffold.Entities
+namespace Instatus.Scaffold
 {
-    public class SocialDb : DbContext
+    public class ScaffoldDb : DbContext
     {
         public DbSet<Audit> Audits { get; set; }
         public DbSet<Campaign> Campaigns { get; set; }
@@ -18,6 +18,7 @@ namespace Instatus.Scaffold.Entities
         public DbSet<Invite> Invites { get; set; }
         public DbSet<Like> Likes { get; set; }
         public DbSet<List> Lists { get; set; }
+        public DbSet<Log> Logs { get; set; }
         public DbSet<Map> Maps { get; set; }
         public DbSet<Marker> Markers { get; set; }
         public DbSet<Message> Messages { get; set; }
@@ -31,7 +32,7 @@ namespace Instatus.Scaffold.Entities
         public DbSet<User> Users { get; set; }
         public DbSet<Vote> Votes { get; set; }
         
-        public SocialDb(string connectionName)
+        public ScaffoldDb(string connectionName)
             : base(connectionName)
         {
 
