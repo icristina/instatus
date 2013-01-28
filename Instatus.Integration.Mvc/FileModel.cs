@@ -16,6 +16,9 @@ namespace Instatus.Integration.Mvc
         [Display(Name = "Upload File")]
         [DataType("Upload")]
         public string FileName { get; set; }
+
+        [Display(Name = "Enable Conversion")]
+        public bool EnableConversion { get; set; }
        
         [ScaffoldColumn(false)]
         public HttpPostedFile File

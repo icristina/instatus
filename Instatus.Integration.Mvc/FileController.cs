@@ -66,7 +66,7 @@ namespace Instatus.Integration.Mvc
                     viewModel.File.InputStream.CopyTo(outputStream);
                 }
 
-                OnCreated(virtualPath);
+                OnCreated(virtualPath, viewModel);
 
                 return RedirectToAction("Index");
             }
@@ -106,7 +106,7 @@ namespace Instatus.Integration.Mvc
                 + ".jpg";
         }
 
-        public virtual void OnCreated(string virtualPath)
+        public virtual void OnCreated(string virtualPath, FileModel fileModel)
         {
 
         }
