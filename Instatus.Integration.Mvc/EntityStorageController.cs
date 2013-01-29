@@ -10,23 +10,13 @@ using System.Web.SessionState;
 
 namespace Instatus.Integration.Mvc
 {
-    public abstract class EntityStorageController<TEntity> : EntityStorageController<TEntity, TEntity>
-        where TEntity : class
-    {
-        public EntityStorageController(IEntityStorage entityStorage, IMapper mapper)
-            : base(entityStorage, mapper)
-        {
-
-        }
-    }
-
     [SessionState(SessionStateBehavior.Disabled)]
     public abstract class EntityStorageController<TEntity, TViewModel> : Controller
         where TEntity : class
         where TViewModel : class
     {
         public IEntityStorage EntityStorage { get; private set; }
-        public IMapper Mapper { get; private set; }
+        public IMapper<TEntity, TViewModel> Mapper { get; private set; }
 
         public IEntitySet<TEntity> EntitySet
         {
@@ -38,18 +28,9 @@ namespace Instatus.Integration.Mvc
 
         public virtual IOrderedQueryable<TViewModel> Query(string orderBy, string filter) 
         {
-            IQueryable<TViewModel> queryable;
-
-            if (typeof(TEntity) == typeof(TViewModel))
-            {
-                queryable = EntitySet.Cast<TViewModel>();
-            }
-            else
-            {
-                queryable = EntitySet.Select(Mapper.Projection<TEntity, TViewModel>());
-            }
-
-            return queryable.OrderBy(b => true);
+            return EntitySet
+                .Select(Mapper.GetProjection())
+                .OrderBy(b => true);
         }
 
         public virtual ActionResult Index(
@@ -72,7 +53,7 @@ namespace Instatus.Integration.Mvc
                 return HttpNotFound();
             }
 
-            ViewData.Model = Mapper.Map<TViewModel>(entity);
+            ViewData.Model = Mapper.CreateViewModel(entity);
 
             return View();
         }
@@ -91,7 +72,7 @@ namespace Instatus.Integration.Mvc
         {
             if (ModelState.IsValid)
             {
-                var entity = Mapper.Map<TEntity>(model);
+                var entity = Mapper.CreateEntity(model);
 
                 EntitySet.Add(entity);
                 EntityStorage.SaveChanges();
@@ -123,7 +104,7 @@ namespace Instatus.Integration.Mvc
                 return HttpNotFound();
             }
 
-            ViewData.Model = Mapper.Map<TViewModel>(entity);
+            ViewData.Model = Mapper.CreateViewModel(entity);
 
             return View();
         }
@@ -141,7 +122,7 @@ namespace Instatus.Integration.Mvc
                     return HttpNotFound();
                 }
 
-                Mapper.Inject(entity, model);
+                Mapper.FillEntity(entity, model);
 
                 try
                 {
@@ -201,7 +182,7 @@ namespace Instatus.Integration.Mvc
 
         }
 
-        public EntityStorageController(IEntityStorage entityStorage, IMapper mapper)
+        public EntityStorageController(IEntityStorage entityStorage, IMapper<TEntity, TViewModel> mapper)
         {
             EntityStorage = entityStorage;
             Mapper = mapper;

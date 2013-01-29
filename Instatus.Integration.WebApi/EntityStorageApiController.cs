@@ -10,33 +10,18 @@ using System.Linq.Expressions;
 
 namespace Instatus.Integration.WebApi
 {
-    public class EntityStorageApiController<TEntity> : EntityStorageApiController<TEntity, TEntity>
-        where TEntity : class
-    {
-        public EntityStorageApiController(IEntityStorage entityStorage, IMapper mapper)
-            : base(entityStorage, mapper)
-        {
-
-        }
-    }
-
     public class EntityStorageApiController<TEntity, TModel> : ApiController
         where TEntity : class
         where TModel : class
     {
         private IEntityStorage entityStorage;
-        private IMapper mapper;
+        private IMapper<TEntity, TModel> mapper;
 
         public virtual IQueryable<TModel> Get()
         {
-            if (typeof(TEntity) == typeof(TModel))
-            {
-                return entityStorage.Set<TEntity>() as IQueryable<TModel>;
-            }
-            else
-            {
-                return entityStorage.Set<TEntity>().Select(mapper.Projection<TEntity, TModel>());
-            }
+            return entityStorage
+                .Set<TEntity>()
+                .Select(mapper.GetProjection());
         }
 
         [CheckId]
@@ -49,7 +34,7 @@ namespace Instatus.Integration.WebApi
                 return Request.CreateResponse(HttpStatusCode.NotFound);
             }
 
-            var model = mapper.Map<TModel>(entity);
+            var model = mapper.CreateViewModel(entity);
 
             return Request.CreateResponse(HttpStatusCode.OK, model);
         }
@@ -61,7 +46,7 @@ namespace Instatus.Integration.WebApi
             {
                 var entity = entityStorage.Set<TEntity>().Find(id);
 
-                mapper.Inject(entity, model);
+                mapper.FillEntity(entity, model);
 
                 try
                 {
@@ -83,7 +68,7 @@ namespace Instatus.Integration.WebApi
         [CheckModelForNull, CheckModelState]
         public virtual HttpResponseMessage Post(TModel model)
         {
-            var entity = mapper.Map<TEntity>(model);
+            var entity = mapper.CreateEntity(model);
 
             entityStorage.Set<TEntity>().Add(entity);
             entityStorage.SaveChanges();
@@ -116,12 +101,12 @@ namespace Instatus.Integration.WebApi
                 return Request.CreateResponse(HttpStatusCode.NotFound);
             }
 
-            var model = mapper.Map<TModel>(entity);
+            var model = mapper.CreateViewModel(entity);
 
             return Request.CreateResponse(HttpStatusCode.OK, model);
         }
 
-        public EntityStorageApiController(IEntityStorage entityStorage, IMapper mapper)
+        public EntityStorageApiController(IEntityStorage entityStorage, IMapper<TEntity, TModel> mapper)
         {
             this.entityStorage = entityStorage;
             this.mapper = mapper;

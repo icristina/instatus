@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.WindowsAzure.Storage.Table.DataServices;
 
-namespace Instatus.Integration.Elmah
+namespace Instatus.Integration.Azure
 {
     public class AzureErrorLog : ErrorLog
     {

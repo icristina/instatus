@@ -22,10 +22,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instatus.Integration.WebApi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instatus.Integration.Mvc", "Instatus.Integration.Mvc\Instatus.Integration.Mvc.csproj", "{5AB12E21-DB61-4E3F-834F-136302437509}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instatus.Integration.AutoMapper", "Instatus.Integration.AutoMapper\Instatus.Integration.AutoMapper.csproj", "{66E81E1B-0C7C-47E4-9D1A-514B54E2430E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instatus.Integration.ValueInjecter", "Instatus.Integration.ValueInjecter\Instatus.Integration.ValueInjecter.csproj", "{5D273851-C7EF-4C97-A955-EE6DE51232C6}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instatus.Integration.Less", "Instatus.Integration.Less\Instatus.Integration.Less.csproj", "{0DF442DB-C176-4141-849A-C90E998E4FAF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instatus.Integration.FileHelper", "Instatus.Integration.FileHelper\Instatus.Integration.FileHelper.csproj", "{4C01BD4F-7A27-4D39-B980-D2317FCE8722}"
@@ -88,14 +84,6 @@ Global
 		{5AB12E21-DB61-4E3F-834F-136302437509}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5AB12E21-DB61-4E3F-834F-136302437509}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5AB12E21-DB61-4E3F-834F-136302437509}.Release|Any CPU.Build.0 = Release|Any CPU
-		{66E81E1B-0C7C-47E4-9D1A-514B54E2430E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{66E81E1B-0C7C-47E4-9D1A-514B54E2430E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{66E81E1B-0C7C-47E4-9D1A-514B54E2430E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{66E81E1B-0C7C-47E4-9D1A-514B54E2430E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5D273851-C7EF-4C97-A955-EE6DE51232C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5D273851-C7EF-4C97-A955-EE6DE51232C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5D273851-C7EF-4C97-A955-EE6DE51232C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5D273851-C7EF-4C97-A955-EE6DE51232C6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0DF442DB-C176-4141-849A-C90E998E4FAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0DF442DB-C176-4141-849A-C90E998E4FAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0DF442DB-C176-4141-849A-C90E998E4FAF}.Release|Any CPU.ActiveCfg = Release|Any CPU

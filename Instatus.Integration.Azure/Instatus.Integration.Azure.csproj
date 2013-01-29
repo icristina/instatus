@@ -35,6 +35,9 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Elmah">
+      <HintPath>..\packages\elmah.corelibrary.1.2.2\lib\Elmah.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.ApplicationServer.Caching.AzureClientHelper, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.WindowsAzure.Caching.1.8.1.0\lib\net35-full\Microsoft.ApplicationServer.Caching.AzureClientHelper.dll</HintPath>
     </Reference>
@@ -107,6 +110,8 @@
     <Compile Include="AzureBlobStorage.cs" />
     <Compile Include="AzureCache.cs" />
     <Compile Include="AzureClient.cs" />
+    <Compile Include="AzureErrorLog.cs" />
+    <Compile Include="AzureErrorLogEntity.cs" />
     <Compile Include="WebRoleHosting.cs" />
     <Compile Include="AzureLogger.cs" />
     <Compile Include="AzureQueue.cs" />

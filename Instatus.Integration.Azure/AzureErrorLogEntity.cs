@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Instatus.Integration.Elmah
+namespace Instatus.Integration.Azure
 {
     public class AzureErrorLogEntity : TableServiceEntity, ICreated
     {

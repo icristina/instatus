@@ -18,7 +18,7 @@ namespace Instatus.Integration.Mvc
         where TViewModel : class
     {
         public IKeyValueStorage<TModel> KeyValueStorage { get; private set; }
-        public IMapper Mapper { get; private set; }
+        public IMapper<TModel, TViewModel> Mapper { get; private set; }
 
         public ActionResult Index(
             string partitionKey,
@@ -39,7 +39,7 @@ namespace Instatus.Integration.Mvc
                 return HttpNotFound();
             }
 
-            ViewData.Model = Mapper.Map<TViewModel>(model);
+            ViewData.Model = Mapper.CreateViewModel(model);
 
             return View();
         }
@@ -58,7 +58,7 @@ namespace Instatus.Integration.Mvc
         {
             if (ModelState.IsValid)
             {
-                var model = Mapper.Map<TModel>(viewModel);
+                var model = Mapper.CreateEntity(viewModel);
 
                 KeyValueStorage.AddOrUpdate(partitionKey, rowKey, model);
 
@@ -82,7 +82,7 @@ namespace Instatus.Integration.Mvc
                 return HttpNotFound();
             }
 
-            ViewData.Model = Mapper.Map<TViewModel>(model);
+            ViewData.Model = Mapper.CreateViewModel(model);
 
             return View();
         }
@@ -100,7 +100,7 @@ namespace Instatus.Integration.Mvc
                     return HttpNotFound();
                 }
 
-                Mapper.Inject(model, viewModel);
+                Mapper.FillEntity(model, viewModel);
 
                 KeyValueStorage.AddOrUpdate(partitionKey, rowKey, model);
 
@@ -123,7 +123,7 @@ namespace Instatus.Integration.Mvc
             return RedirectToAction("Index");
         }
 
-        public KeyValueStorageController(IKeyValueStorage<TModel> keyValueStorage, IMapper mapper)
+        public KeyValueStorageController(IKeyValueStorage<TModel> keyValueStorage, IMapper<TModel, TViewModel> mapper)
         {
             KeyValueStorage = keyValueStorage;
             Mapper = mapper;

@@ -6,15 +6,11 @@ using System.Text;
 
 namespace Instatus.Core
 {
-    public interface IMapper
+    public interface IMapper<TEntity, TViewModel>
     {
-        Expression<Func<T, TOutput>> Projection<T, TOutput>() 
-            where T : class 
-            where TOutput : class;
-        
-        T Map<T>(object source) 
-            where T : class;
-        
-        void Inject(object target, object source);
+        Expression<Func<TEntity, TViewModel>> GetProjection();
+        TEntity CreateEntity(TViewModel model);
+        TViewModel CreateViewModel(TEntity entity);
+        void FillEntity(TEntity entity, TViewModel model);
     }
 }

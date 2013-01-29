@@ -78,35 +78,17 @@ namespace Instatus.Scaffold.Controllers
         public BlogController(IEntityStorage entityStorage)
         {
             this.entityStorage = entityStorage;
-
-            if (entityStorage is InMemoryEntityStorage)
+            this.selectBlogPost = (p) => new BlogPost()
             {
-                selectBlogPost = (p) => new BlogPost()
-                {
-                    Id = p.Id.ToString(),
-                    Title = p.Name,
-                    Abstract = p.Description,
-                    Body = p.Content,
-                    Tags = p.Tags.Select(t => t.Name),
-                    Slug = p.Slug,
-                    Picture = p.Picture,
-                    Published = p.Created
-                };                               
-            }
-            else
-            {
-                selectBlogPost = (p) => new BlogPost() 
-                {
-                    Id = SqlFunctions.StringConvert((double)p.Id),
-                    Title = p.Name,
-                    Abstract = p.Description,
-                    Body = p.Content,
-                    Tags = p.Tags.Select(t => t.Name),
-                    Slug = p.Slug,
-                    Picture = p.Picture,
-                    Published = p.Created
-                };
-            }
+                Id = p.Id,
+                Title = p.Name,
+                Abstract = p.Description,
+                Body = p.Content,
+                Tags = p.Tags.Select(t => t.Name),
+                Slug = p.Slug,
+                Picture = p.Picture,
+                Published = p.Created
+            };  
         }
     }
 }

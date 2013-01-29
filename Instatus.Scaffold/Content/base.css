@@ -352,6 +352,22 @@ figure {
     *zoom: 1;
 }
 
+/* apply clearfix to thumbnails */
+
+.thumbnails:before, 
+.thumbnails:after {
+    content: " ";
+    display: table;
+}
+
+.thumbnails:after {
+    clear: both;
+}
+
+.thumbnails {
+    *zoom: 1;
+}
+
 /* rich text */
 
 h1,
