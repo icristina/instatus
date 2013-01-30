@@ -412,7 +412,7 @@ ol {
     color: #999;
 }
 
-/* lists */
+/* unstyled lists */
 
 ul.unstyled {
     margin: 0;
@@ -422,6 +422,19 @@ ul.unstyled {
 }
 
 ul.unstyled li {
+    display: block;
+}
+
+/* apply unstyled lists to thumbnails */
+
+ul.thumbnails {
+    margin: 0;
+    padding: 0;
+    display: block;
+    list-style-type: none;
+}
+
+ul.thumbnails li {
     display: block;
 }
 
