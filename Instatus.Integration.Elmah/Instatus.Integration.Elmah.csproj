@@ -106,10 +106,6 @@
       <Project>{39c44af6-a1ad-40ee-b1c6-40fda4ac9c83}</Project>
       <Name>Instatus.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Instatus.Integration.Azure\Instatus.Integration.Azure.csproj">
-      <Project>{74ae4acf-8e3f-4112-894a-6b706ef85a66}</Project>
-      <Name>Instatus.Integration.Azure</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
