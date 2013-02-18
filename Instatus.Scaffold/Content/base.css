@@ -174,7 +174,7 @@ body {
     margin-top: 3.0em;
 }
 
-/* utilities */
+/* center */
 
 .center {
     margin-left: auto;
@@ -186,6 +186,8 @@ body {
     text-align: center; 
 }
 
+/* visibility */
+
 .hide {
     display: none;
 }
@@ -193,6 +195,8 @@ body {
 .show {
     display: block;
 }
+
+/* float */
 
 .pull-right {
     float: right;
@@ -734,7 +738,7 @@ textarea {
     display: none;
 }
 
-/* dark or light theme */
+/* dark, light, highlight theme */
 
 .bg-dark,
 .bg-dark-transition:hover {
@@ -746,6 +750,12 @@ textarea {
 .bg-light-transition:hover {
     background-color: white;
     color: black;
+}
+
+.bg-highlight,
+.bg-highlight-transition:hover {
+    background-color: #999;
+    color: white;
 }
 
 /* badge */
