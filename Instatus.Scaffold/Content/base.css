@@ -12,6 +12,12 @@
     background-repeat: no-repeat;
 }
 
+/* reset */
+
+* {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);  
+} 
+
 /* font */
 
 body {
@@ -290,7 +296,8 @@ summary {
 }
 
 [hidden],
-.hidden {
+.hidden,
+.hide {
     display: none;
     visibility: hidden;
 }
