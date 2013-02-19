@@ -79,6 +79,11 @@ body {
     float: left;
 }
 
+.span7 {
+    width: 58.33%;
+    float: left;
+}
+
 .span8 {
     width: 66.66%;
     float: left;
@@ -142,6 +147,10 @@ body {
 
 .offset6 {
     margin-left: 50%;
+}
+
+.offset7 {
+    margin-left: 58.33%;
 }
 
 .offset8 {
