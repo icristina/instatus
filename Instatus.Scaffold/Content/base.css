@@ -231,7 +231,9 @@ a:visited {
 
 /* buttons */
 
-.btn {
+.btn,
+button.unstyled,
+button.icon {
     padding: 0;
     background-color: transparent;
     border: 0;
