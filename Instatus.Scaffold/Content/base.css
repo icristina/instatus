@@ -183,16 +183,26 @@ body {
     margin-top: 3.0em;
 }
 
-/* center */
+/* align */
 
-.center {
+.align-center {
     margin-left: auto;
     margin-right: auto;
 }
 
-.middle {
+.align-middle {
     vertical-align: middle;
-    text-align: center; 
+}
+
+/* flex */
+
+.flex {
+    display: table;
+    height: 100%;
+}
+
+.flex-column {
+    display: table-cell;
 }
 
 /* visibility */
@@ -244,6 +254,7 @@ a:visited {
 button.unstyled,
 button.icon {
     padding: 0;
+    margin: 0;
     background-color: transparent;
     border: 0;
     cursor: pointer;
