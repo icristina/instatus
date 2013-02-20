@@ -780,6 +780,10 @@ label {
     display: block;
 }
 
+p label {
+    display: inline-block;    
+}
+
 input, 
 textarea {
     padding: 0.5em;
