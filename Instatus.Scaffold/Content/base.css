@@ -732,9 +732,40 @@ ul.thumbnails li {
     border: 0;    
 }
 
+ /* modal */
+
+.modal {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 300px;
+    margin-top: -150px;
+    width: 500px;
+    margin-left: -250px;
+    z-index: 51;
+    padding: 0.25em;
+    border: 1px solid #999; 
+    background-color: white;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+.modal-backdrop {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);    
+    z-index: 50;
+}
+
 /* form */
 
 fieldset {
+    margin: 0;
     padding: 0;
     border: 0;
 }
