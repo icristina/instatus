@@ -6,6 +6,13 @@
     box-sizing: border-box;
 }
 
+.content-box,
+.content-box * {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+
 /* backgrounds */
 
 * {
@@ -14,9 +21,9 @@
 
 /* reset */
 
-* {
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);  
-} 
+:focus {
+    outline: none;
+}
 
 /* font */
 
@@ -192,6 +199,14 @@ body {
 
 .align-middle {
     vertical-align: middle;
+}
+
+/* absolute position */
+
+.absolute-middle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
 }
 
 /* flex */
@@ -604,6 +619,80 @@ ul.thumbnails li {
     display: block;
 }
 
+/* animations */
+
+@keyframes centerToLeft {
+    from {
+        left: 0;
+    }
+    to {
+        left: -100%;
+    }
+}
+
+@keyframes centerToRight {
+    from {
+        left: 0;
+    }
+    to {
+        left: 100%;
+    }
+}
+
+@keyframes leftToCenter {
+    from {
+        left: -100%;
+    }
+    to {
+        left: 0;
+    }
+}
+
+@keyframes rightToCenter {
+    from {
+        left: 100%;
+    }
+    to {
+        left: 0;
+    }
+}
+
+@-webkit-keyframes centerToLeft {
+    from {
+        left: 0;
+    }
+    to {
+        left: -100%;
+    }
+}
+
+@-webkit-keyframes centerToRight {
+    from {
+        left: 0;
+    }
+    to {
+        left: 100%;
+    }
+}
+
+@-webkit-keyframes leftToCenter {
+    from {
+        left: -100%;
+    }
+    to {
+        left: 0;
+    }
+}
+
+@-webkit-keyframes rightToCenter {
+    from {
+        left: 100%;
+    }
+    to {
+        left: 0;
+    }
+}
+
 /* carousel */
 
 .carousel {
@@ -614,23 +703,36 @@ ul.thumbnails li {
 
 .carousel .carousel-inner .item {
     position: absolute;    
-    width: 100%;  
-    -webkit-transition: left 0.5s;
-    -moz-transition: left 0.5s;
-    -ms-transition: left 0.5s;     
-    transition: left 0.5s;    
+    width: 100%;    
+    -webkit-animation-duration: 1.0s;
+    -webkit-animation-fill-mode: forwards;
+    animation-duration: 1.0s;
+    animation-fill-mode: forwards;
 }
 
 .carousel .carousel-inner .left {
-    left: -100%;    
+    left: -100%;
+    -webkit-animation-name: centerToLeft; 
+    animation-name: centerToLeft;    
 }
 
 .carousel .carousel-inner .right {
-    left: 100%;   
+    left: 100%;
+    -webkit-animation-name: centerToRight; 
+    animation-name: centerToRight;    
 }
 
-.carousel .carousel-inner .active {
-    left: 0; 
+.carousel .carousel-inner .left.active {
+    left: 0;
+    -webkit-animation-name: leftToCenter; 
+    animation-name: leftToCenter;  
+    z-index: 1;  
+}
+
+.carousel .carousel-inner .right.active {
+    left: 0;
+    -webkit-animation-name: rightToCenter; 
+    animation-name: rightToCenter;  
     z-index: 1;  
 }
 
