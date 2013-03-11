@@ -56,64 +56,64 @@ body {
 
 /* 12 column grid */
 
-.span1 {
+.span1,
+.columns .span1 {
     width: 8.33%;
-    float: left;
 }
 
-.span2 {
+.span2,
+.columns .span2 {
     width: 16.66%;
-    float: left;
 }
 
-.span3 {
+.span3,
+.columns .span3 {
     width: 25%;
-    float: left;
 }
 
-.span4 {
+.span4,
+.columns .span4 {
     width: 33.33%;
-    float: left;
 }
 
-.span5 {
+.span5,
+.columns .span5 {
     width: 41.66%;
-    float: left;
 }
 
-.span6 {
+.span6,
+.columns .span6 {
     width: 50%;
-    float: left;
 }
 
-.span7 {
+.span7,
+.columns .span7 {
     width: 58.33%;
-    float: left;
 }
 
-.span8 {
+.span8,
+.columns .span8 {
     width: 66.66%;
-    float: left;
 }
 
-.span9 {
+.span9,
+.columns .span9 {
     width: 75%;
-    float: left;
 }
 
-.span10 {
+.span10,
+.columns .span10 {
     width: 83.33%;
-    float: left;
 }
 
-.span11 {
+.span11,
+.columns .span11 {
     width: 91.66%;
-    float: left;
 }
 
-.span12 {
+.span12,
+.columns .span12 {
     width: 100%;
-    float: left;
 }
 
 .span1,
@@ -126,8 +126,11 @@ body {
 .span8,
 .span9,
 .span10,
-.span11 {
+.span11,
+.span12 {
+    float: left;
     padding: 0.25em;
+    display: block;
 }
 
 /* offset */
