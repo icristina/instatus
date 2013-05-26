@@ -13,7 +13,28 @@ namespace Instatus.Scaffold.Entities
         public int Id { get; set; }
         public Mechanic Mechanic { get; set; }
         public Gate Gate { get; set; }
-        
+
+        // competition and recurrence
+        public Recurrence Recurrence { get; set; }
+        public DateTime Draw { get; set; }
+        public bool EnableMultipleEntries { get; set; }
+
+        // social
+        public string GoogleAnalyticsProfileId { get; set; }
+        public string FacebookUri { get; set; }
+        public string FacebookAppId { get; set; }
+        public string YouTubeUri { get; set; }
+        public string TwitterUri { get; set; }
+        public string TwitterHashTag { get; set; }
+
+        // target
+        public string GeographicRestriction { get; set; }
+        public int AgeRestriction { get; set; }
+
+        // legal
+        public string TermsUri { get; set; }
+        public string PrivacyUri { get; set; }
+
         // IPage
         public string Slug { get; set; }
         public string Locale { get; set; }
@@ -49,7 +70,10 @@ namespace Instatus.Scaffold.Entities
 
         public Campaign()
         {
-            
+            Draw = SqlDateTime.MaxValue.Value;
+            Recurrence = Recurrence.Single;
+            EnableMultipleEntries = true;
+
             Publish = SqlDateTime.MinValue.Value;
             Open = SqlDateTime.MinValue.Value;
             Close = SqlDateTime.MaxValue.Value;

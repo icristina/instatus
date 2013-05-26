@@ -132,6 +132,7 @@
     <Compile Include="Entities\Audit.cs" />
     <Compile Include="Entities\Log.cs" />
     <Compile Include="Entities\Message.cs" />
+    <Compile Include="Entities\Recurrence.cs" />
     <Compile Include="PayloadExtensions.cs" />
     <Compile Include="PrincipalExtensions.cs" />
     <Compile Include="ScaffoldErrorLog.cs" />

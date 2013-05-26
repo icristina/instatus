@@ -9,8 +9,16 @@ namespace Instatus.Scaffold.Entities
     public class Entry : ICreated, IPayload
     {
         public int Id { get; set; }
+
+        // competition
         public bool IsVoid { get; set; }
         public bool IsWinner { get; set; }
+
+        // entry details
+        public string ProofOfPurchase { get; set; }
+        public string Text { get; set; }
+        public int? Answer { get; set; }
+        public int? Score { get; set; }
 
         // ICreated
         public DateTime Created { get; set; }

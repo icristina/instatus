@@ -105,6 +105,7 @@
   <ItemGroup>
     <Compile Include="AspNetHosting.cs" />
     <Compile Include="AspNetPreferences.cs" />
+    <Compile Include="BasicAuthHttpModule.cs" />
     <Compile Include="DebugMessaging.cs" />
     <Compile Include="DefaultLinguistics.cs" />
     <Compile Include="FileSystemBlobStorage.cs" />

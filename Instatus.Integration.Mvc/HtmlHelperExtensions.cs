@@ -151,6 +151,18 @@ namespace Instatus.Integration.Mvc
             return new MvcHtmlString(className.Trim());
         }
 
+        public static MvcHtmlString RotationHint<T>(this HtmlHelper<T> htmlHelper, int rotation)
+        {
+            if (rotation == 90 || rotation == 180 || rotation == 270)
+            {
+                return new MvcHtmlString("rotate" + rotation);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         public static MvcHtmlString DataSource<T>(this HtmlHelper<T> htmlHelper, string variableName, object graph)
         {
             var jsonSerializer = DependencyResolver.Current.GetService<IJsonSerializer>();
