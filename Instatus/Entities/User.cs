@@ -14,6 +14,10 @@ namespace Instatus.Entities
         public Address Address { get; set; }
         public DateTime Created { get; set; }
 
+        // associations
+        public virtual ICollection<Entry> Entries { get; set; }
+        public virtual ICollection<Post> Posts { get; set; }
+
         public User()
         {
             Created = DateTime.UtcNow;
