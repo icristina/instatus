@@ -8,7 +8,8 @@ namespace Instatus
 {
     public interface IEditor
     {
-        bool IsSupported(string uri);
+        bool CanEdit(string uri);
+        bool CanDelete(string uri);
         Task<object> GetEditorAsync(string uri);
         Task PutAsync(string uri, object model);
         Task DeleteAsync(string uri);

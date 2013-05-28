@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Instatus
+namespace Instatus.Entities
 {
-    public interface IFavorites
+    public class Campaign
     {
-        Task<Dictionary<Uri, string>> GetFavoritesAsync();
+        public int Id { get; set; }
     }
 }

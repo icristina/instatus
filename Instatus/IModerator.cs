@@ -8,7 +8,7 @@ namespace Instatus
 {
     public interface IModerator
     {
-        bool IsSupported(string uri);
+        bool CanModerate(string uri);
         Task MarkApprovedAsync(string uri);
         Task MarkArchivedAsync(string uri);
         Task MarkSpamAsync(string uri);

@@ -8,7 +8,7 @@ namespace Instatus
 {
     public interface IPreview
     {
-        bool IsSupported(string uri);
+        bool CanPreview(string uri);
         Task<object> GetPreviewAsync(string uri, object model);
     }
 }

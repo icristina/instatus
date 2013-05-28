@@ -9,7 +9,7 @@ namespace Instatus
 {
     public interface IReader
     {
-        bool IsSupported(string uri);
+        bool CanRead(string uri);
         Task<IList> GetListAsync(string uri);
     }
 }

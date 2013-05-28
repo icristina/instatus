@@ -8,7 +8,7 @@ namespace Instatus
 {
     public interface IAuthor
     {
-        bool IsSupported(string uri);
+        bool CanCreate(string uri);
         object CreateInstance();
         Task<string> PostAsync(object model);
     }

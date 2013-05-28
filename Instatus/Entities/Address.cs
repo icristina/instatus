@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using System.Web;
 
 namespace Instatus.Entities
 {
-    [ComplexType]
     public class Address
     {
         public string FormattedAddress { get; set; }
