@@ -10,6 +10,7 @@ namespace Instatus.Entities
         public string EmailAddress { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public string Locale { get; set; }
         public Role Role { get; set; }
         public Address Address { get; set; }
         public DateTime Created { get; set; }
@@ -23,6 +24,10 @@ namespace Instatus.Entities
             Created = DateTime.UtcNow;
             Address = new Address();
             Role = Role.Member;
+
+            // initialize collections
+            Entries = new List<Entry>();
+            Posts = new List<Post>();
         }
     }
 }

@@ -16,11 +16,24 @@ namespace Instatus.Entities
         public string Video { get; set; }
         public string Text { get; set; }
         public State State { get; set; }
+        public string Locale { get; set; }
+        public DateTime Created { get; set; }
 
         // associations
         public int? UserId { get; set; }
         public virtual User User { get; set; }
         public int? CampaignId { get; set; }
         public virtual Campaign Campaign { get; set; }
+        public int? PlaceId { get; set; }
+        public virtual Place Place { get; set; }
+        public virtual ICollection<Tag> Tags { get; set; }
+
+        public Post()
+        {
+            Created = DateTime.UtcNow;
+            
+            // initialize collections
+            Tags = new List<Tag>();
+        }
     }
 }

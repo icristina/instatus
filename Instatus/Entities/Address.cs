@@ -4,6 +4,7 @@ using System.Linq;
 
 namespace Instatus.Entities
 {
+    // [ComplexType]
     public class Address
     {
         public string StreetAddress { get; set; }

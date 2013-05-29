@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
-namespace Instatus.Entities
+namespace Instatus.Scaffold.Entities
 {
     [ComplexType]
     public class Address

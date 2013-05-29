@@ -44,10 +44,12 @@
     <Compile Include="Entities\Entry.cs" />
     <Compile Include="Entities\Gate.cs" />
     <Compile Include="Entities\Mechanic.cs" />
+    <Compile Include="Entities\Place.cs" />
     <Compile Include="Entities\Post.cs" />
     <Compile Include="Entities\Recurrence.cs" />
     <Compile Include="Entities\Role.cs" />
     <Compile Include="Entities\State.cs" />
+    <Compile Include="Entities\Tag.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="IAuthor.cs" />
     <Compile Include="IEditor.cs" />
