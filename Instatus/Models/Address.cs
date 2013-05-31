@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Instatus.Entities
+namespace Instatus.Models
 {
-    // [ComplexType]
     public class Address
     {
         public string StreetAddress { get; set; }

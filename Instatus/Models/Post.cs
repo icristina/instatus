@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Instatus.Entities
+namespace Instatus.Models
 {
     public class Post
     {

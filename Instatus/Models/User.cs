@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Instatus.Entities
+namespace Instatus.Models
 {
     public class User
     {
@@ -14,6 +14,10 @@ namespace Instatus.Entities
         public Role Role { get; set; }
         public Address Address { get; set; }
         public DateTime Created { get; set; }
+        public string Password { get; set; }
+
+        // preferences
+        public bool IsOptedIn { get; set; }
 
         // associations
         public virtual ICollection<Entry> Entries { get; set; }

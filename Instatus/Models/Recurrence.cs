@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Instatus.Entities
+namespace Instatus.Models
 {
     public enum Recurrence
     {
