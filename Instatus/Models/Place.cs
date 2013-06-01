@@ -9,9 +9,13 @@ namespace Instatus.Models
     public class Place
     {
         public int Id { get; set; }
+
+        // content
+        public string Title { get; set; }
+
+        // geospatial
         public Point Point { get; set; }
         public Address Address { get; set; }
-        public string Title { get; set; }
 
         // social
         public string FacebookUri { get; set; }

@@ -10,13 +10,17 @@ namespace Instatus.Models
     {
         public int Id { get; set; }
 
+        // content
         public string Title { get; set; }
         public string Description { get; set; }
         public string Image { get; set; }
         public string Video { get; set; }
         public string Text { get; set; }
-        public State State { get; set; }
+        public string Category { get; set; }
+
+        // publishing
         public string Locale { get; set; }
+        public State State { get; set; }
         public DateTime Created { get; set; }
 
         // associations

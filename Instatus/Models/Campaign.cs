@@ -10,7 +10,13 @@ namespace Instatus.Models
     {
         public int Id { get; set; }
 
+        // content
         public string Title { get; set; }
+
+        // publishing
+        public string Locale { get; set; }
+        public State State { get; set; }
+        public DateTime Created { get; set; }
 
         // features
         public Mechanic Mechanic { get; set; }
@@ -47,12 +53,14 @@ namespace Instatus.Models
         // associations
         public virtual ICollection<Post> Posts { get; set; }
         public virtual ICollection<Entry> Entries { get; set; }
+        public virtual ICollection<Product> Products { get; set; }
 
         public Campaign()
         {
             var now = DateTime.UtcNow;
             var twelveMonths = now.AddYears(1);
 
+            Created = now;
             Publish = now;
             Open = now;
             Draw = twelveMonths;

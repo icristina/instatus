@@ -6,32 +6,32 @@ using System.Threading.Tasks;
 
 namespace Instatus.Models
 {
-    public class Entry
+    public class Product
     {
         public int Id { get; set; }
 
-        // offer
-        public bool IsVoid { get; set; }
-        public bool IsWinner { get; set; }
-        public string ProofOfPurchase { get; set; }
-
         // content
+        public string Title { get; set; }
+        public string Description { get; set; }
         public string Image { get; set; }
+        public string Video { get; set; }
         public string Text { get; set; }
-        public int? Answer { get; set; }
-        public int? Score { get; set; }
+        public string Category { get; set; }
 
         // publishing
-        public DateTime Created { get; set; }
+        public string Locale { get; set; }
         public State State { get; set; }
+        public DateTime Created { get; set; }
+
+        // commerce
+        public double Price { get; set; }
+        public string Currency { get; set; }
 
         // associations
-        public int CampaignId { get; set; }
         public virtual Campaign Campaign { get; set; }
-        public int UserId { get; set; }
-        public virtual User User { get; set; }
+        public int? CampaignId { get; set; }
 
-        public Entry()
+        public Product()
         {
             Created = DateTime.UtcNow;
         }
