@@ -25,5 +25,11 @@ namespace Instatus.Server
             
             base.OnModelCreating(modelBuilder);
         }
+
+        public InstatusDb(string nameOrConnectionString)
+            : base(nameOrConnectionString)
+        {
+
+        }
     }
 }

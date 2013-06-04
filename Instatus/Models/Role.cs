@@ -6,7 +6,8 @@ namespace Instatus.Models
 {
     public enum Role
     {
-        Member,
+        Reader,
+        Author,
         Editor,
         Moderator,
         Marketer,

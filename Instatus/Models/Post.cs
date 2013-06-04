@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -25,11 +26,15 @@ namespace Instatus.Models
 
         // associations
         public int? UserId { get; set; }
+        [IgnoreDataMember]
         public virtual User User { get; set; }
         public int? CampaignId { get; set; }
+        [IgnoreDataMember]
         public virtual Campaign Campaign { get; set; }
         public int? PlaceId { get; set; }
+        [IgnoreDataMember]
         public virtual Place Place { get; set; }
+        [IgnoreDataMember]
         public virtual ICollection<Tag> Tags { get; set; }
 
         public Post()

@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace Instatus
+namespace Instatus.Syndication
 {
     public class RssReader : IReader
     {

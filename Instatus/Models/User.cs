@@ -35,7 +35,7 @@ namespace Instatus.Models
         {
             Created = DateTime.UtcNow;
             Address = new Address();
-            Role = Role.Member;
+            Role = Role.Reader;
 
             // initialize collections
             Entries = new List<Entry>();
