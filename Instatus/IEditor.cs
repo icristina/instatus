@@ -11,7 +11,7 @@ namespace Instatus
         bool CanEdit(string uri);
         bool CanDelete(string uri);
         Task<object> GetEditorAsync(string uri);
-        Task PutAsync(string uri, object model);
+        Task PatchAsync(string uri, object model);
         Task DeleteAsync(string uri);
     }
 }

@@ -52,7 +52,7 @@ namespace Instatus.ViewModels
                 return;
             }
 
-            await editor.PutAsync(uri, Item);
+            await editor.PatchAsync(uri, Item);
         }
 
         public void Cancel()

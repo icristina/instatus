@@ -1,6 +1,7 @@
 ﻿using Instatus.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -42,6 +43,22 @@ namespace Instatus.Server
             Context.SaveChanges();
             
             return entity;
+        }
+
+        protected override TEntity UpdateEntity(int key, TEntity update)
+        {
+            var existingEntity = GetEntityByKey(key);
+            
+            if (existingEntity == null)
+            {
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+            }
+
+            Context.Set<TEntity>().Attach(update);
+            Context.Entry(update).State = EntityState.Modified;
+            Context.SaveChanges();
+
+            return update;
         }
 
         protected override TEntity PatchEntity(int key, Delta<TEntity> patch)

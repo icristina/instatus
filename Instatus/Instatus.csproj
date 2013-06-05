@@ -63,6 +63,8 @@
     <Compile Include="IModerator.cs" />
     <Compile Include="IPreview.cs" />
     <Compile Include="IReader.cs" />
+    <Compile Include="OData\ODataAuthor.cs" />
+    <Compile Include="OData\ODataEditor.cs" />
     <Compile Include="OData\ODataReader.cs" />
     <Compile Include="OData\ODataResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
