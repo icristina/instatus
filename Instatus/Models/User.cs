@@ -29,7 +29,7 @@ namespace Instatus.Models
 
         // associations
         public virtual ICollection<Entry> Entries { get; set; }
-        public virtual ICollection<Post> Posts { get; set; }
+        public virtual ICollection<Page> Posts { get; set; }
 
         public User()
         {
@@ -39,7 +39,7 @@ namespace Instatus.Models
 
             // initialize collections
             Entries = new List<Entry>();
-            Posts = new List<Post>();
+            Posts = new List<Page>();
         }
     }
 }

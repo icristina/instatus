@@ -6,18 +6,15 @@ using System.Threading.Tasks;
 
 namespace Instatus.Models
 {
-    public class Tag
+    public class Phrase
     {
         public int Id { get; set; }
+        public string Locale { get; set; }
         public string Name { get; set; }
+        public string Text { get; set; }
 
         // associations
-        public virtual ICollection<Page> Posts { get; set; }
-
-        public Tag()
-        {
-            // initialize collections
-            Posts = new List<Page>();
-        }
+        public int CampaignId { get; set; }
+        public virtual Campaign Campaign { get; set; }
     }
 }

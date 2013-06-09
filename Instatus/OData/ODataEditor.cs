@@ -40,7 +40,7 @@ namespace Instatus.OData
         {
             using (var httpClient = new HttpClient())
             {
-                var updates = GetDelta(model);
+                var updates = GetChanges(model);
 
                 // http://msdn.microsoft.com/en-us/library/ff478141.aspx
                 XNamespace atom = "http://www.w3.org/2005/Atom";
@@ -70,7 +70,7 @@ namespace Instatus.OData
             }
         }
 
-        protected abstract IDictionary<string, object> GetDelta(dynamic viewModel);
+        protected abstract IDictionary<string, object> GetChanges(dynamic viewModel);
 
         public async Task DeleteAsync(string uri)
         {
@@ -78,6 +78,11 @@ namespace Instatus.OData
             {
                 await httpClient.DeleteAsync(uri);
             }
+        }
+
+        public ODataEditor()
+        {
+            this.entitySetName = typeof(T).Name + "s";
         }
 
         public ODataEditor(string entitySetName)

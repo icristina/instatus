@@ -38,12 +38,7 @@ namespace Instatus.Models
         public string PrivacyUri { get; set; }
 
         // schedule
-        public DateTime Publish { get; set; }
-        public DateTime Open { get; set; }
-        public DateTime Draw { get; set; }
-        public Recurrence Recurrence { get; set; }
-        public DateTime Close { get; set; }
-        public DateTime Archive { get; set; }
+        public Schedule Schedule { get; set; }
 
         // restrictions
         public string LocaleRestriction { get; set; }
@@ -51,25 +46,17 @@ namespace Instatus.Models
         public bool EnableMultipleEntries { get; set; }
 
         // associations
-        public virtual ICollection<Post> Posts { get; set; }
+        public virtual ICollection<Page> Pages { get; set; }
         public virtual ICollection<Entry> Entries { get; set; }
         public virtual ICollection<Product> Products { get; set; }
 
         public Campaign()
         {
-            var now = DateTime.UtcNow;
-            var twelveMonths = now.AddYears(1);
-
-            Created = now;
-            Publish = now;
-            Open = now;
-            Draw = twelveMonths;
-            Recurrence = Recurrence.Single;
-            Close = twelveMonths;
-            Archive = twelveMonths;
+            Created = DateTime.UtcNow;
+            Schedule = new Schedule();
 
             // initialize collections
-            Posts = new List<Post>();
+            Pages = new List<Page>();
             Entries = new List<Entry>();
         }
     }

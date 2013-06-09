@@ -25,7 +25,7 @@ namespace Instatus.Models
         public string HomeUri { get; set; }
 
         // associations
-        public virtual ICollection<Post> Posts { get; set; }
+        public virtual ICollection<Page> Pages { get; set; }
 
         public Place()
         {
@@ -33,7 +33,7 @@ namespace Instatus.Models
             Address = new Address();
 
             // initialize collections
-            Posts = new List<Post>();
+            Pages = new List<Page>();
         }
     }
 }

@@ -11,17 +11,21 @@ namespace Instatus.Server
     public class InstatusDb : DbContext
     {
         public IDbSet<Campaign> Campaigns { get; set; }
+        public IDbSet<Comment> Comments { get; set; }
         public IDbSet<Entry> Entries { get; set; }
+        public IDbSet<Log> Logs { get; set; }
+        public IDbSet<Page> Pages { get; set; }
+        public IDbSet<Phrase> Phrases { get; set; }
         public IDbSet<Place> Places { get; set; }
-        public IDbSet<Post> Posts { get; set; }
+        public IDbSet<Product> Products { get; set; }
         public IDbSet<Tag> Tags { get; set; }
         public IDbSet<User> Users { get; set; }
-        public IDbSet<Product> Products { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.ComplexType<Address>();
             modelBuilder.ComplexType<Point>();
+            modelBuilder.ComplexType<Schedule>();
             
             base.OnModelCreating(modelBuilder);
         }

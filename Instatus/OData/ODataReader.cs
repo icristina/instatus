@@ -27,8 +27,11 @@ namespace Instatus.OData
 
                 return odataResponse.Value;
             }
-            
-            throw new NotImplementedException();
+        }
+
+        public ODataReader()
+        {
+            this.entitySetName = typeof(T).Name + "s";
         }
 
         public ODataReader(string entitySetName)

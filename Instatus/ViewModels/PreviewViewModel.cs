@@ -36,12 +36,12 @@ namespace Instatus.ViewModels
             Item = await preview.GetPreviewAsync(uri, model);
         }
 
-        public PreviewViewModel(string uri, object model, IEnumerable<IPreview> previews)
+        public PreviewViewModel(StatusViewModel status, string uri, object model, IEnumerable<IPreview> previews)
         {
             this.uri = uri;
             this.model = model;
             this.previews = previews;
-            this.LoadCommand = new AsyncCommand(Load);
+            this.LoadCommand = new StatusCommand(status, Load, "Failed to preview");
         }
     }
 }

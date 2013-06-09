@@ -102,6 +102,7 @@
   <ItemGroup>
     <Compile Include="EfEntitySetController.cs" />
     <Compile Include="InstatusDb.cs" />
+    <Compile Include="MethodOverrideHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

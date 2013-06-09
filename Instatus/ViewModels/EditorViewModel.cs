@@ -31,7 +31,7 @@ namespace Instatus.ViewModels
             }
         }
 
-        public async Task Edit()
+        private async Task Edit()
         {
             var editor = editors.FirstOrDefault(e => e.CanEdit(uri));
 
@@ -43,7 +43,7 @@ namespace Instatus.ViewModels
             Item = await editor.GetEditorAsync(uri);
         }
 
-        public async Task Save()
+        private async Task Save()
         {
             var editor = editors.FirstOrDefault(e => e.CanEdit(uri));
 
@@ -55,12 +55,12 @@ namespace Instatus.ViewModels
             await editor.PatchAsync(uri, Item);
         }
 
-        public void Cancel()
+        private void Cancel()
         {
             Item = null;
         }
 
-        public async Task Delete()
+        private async Task Delete()
         {
             var editor = editors.FirstOrDefault(e => e.CanDelete(uri));
 
@@ -72,14 +72,14 @@ namespace Instatus.ViewModels
             await editor.DeleteAsync(uri);
         }
 
-        public EditorViewModel(string uri, IEnumerable<IEditor> editors)
+        public EditorViewModel(StatusViewModel status, string uri, IEnumerable<IEditor> editors)
         {
             this.uri = uri;
             this.editors = editors;
-            this.EditCommand = new AsyncCommand(Edit);
-            this.SaveCommand = new AsyncCommand(Save);
+            this.EditCommand = new StatusCommand(status, Edit, "Failed to edit");
+            this.SaveCommand = new StatusCommand(status, Save, "Failed to save");
             this.CancelCommand = new RelayCommand(Cancel);
-            this.DeleteCommand = new AsyncCommand(Delete);
+            this.DeleteCommand = new StatusCommand(status, Delete, "Failed to delete");
         }
     }
 }

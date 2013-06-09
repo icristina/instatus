@@ -14,7 +14,7 @@ namespace Instatus.Models
         Competition,
         Poll,
         Game,
-        Suggestions,
+        Ideas,
         Support
     }
 }

@@ -41,17 +41,23 @@
   <ItemGroup>
     <Compile Include="AsyncCommand.cs" />
     <Compile Include="BindableBase.cs" />
+    <Compile Include="IInlineCount.cs" />
     <Compile Include="Models\Address.cs" />
     <Compile Include="Models\Campaign.cs" />
+    <Compile Include="Models\Comment.cs" />
+    <Compile Include="Models\Kind.cs" />
+    <Compile Include="Models\Log.cs" />
+    <Compile Include="Models\Phrase.cs" />
     <Compile Include="Models\Point.cs" />
     <Compile Include="Models\Entry.cs" />
     <Compile Include="Models\Gate.cs" />
     <Compile Include="Models\Mechanic.cs" />
     <Compile Include="Models\Place.cs" />
-    <Compile Include="Models\Post.cs" />
+    <Compile Include="Models\Page.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\Recurrence.cs" />
     <Compile Include="Models\Role.cs" />
+    <Compile Include="Models\Schedule.cs" />
     <Compile Include="Models\State.cs" />
     <Compile Include="Models\Tag.cs" />
     <Compile Include="Models\User.cs" />
@@ -76,9 +82,12 @@
     <Compile Include="ViewModels\EditorViewModel.cs" />
     <Compile Include="ViewModels\FavoritesViewModel.cs" />
     <Compile Include="ViewModels\LinkViewModel.cs" />
+    <Compile Include="ViewModels\MasterDetailsViewModel.cs" />
     <Compile Include="ViewModels\ModeratorViewModel.cs" />
     <Compile Include="ViewModels\PreviewViewModel.cs" />
     <Compile Include="ViewModels\ReaderViewModel.cs" />
+    <Compile Include="ViewModels\StatusCommand.cs" />
+    <Compile Include="ViewModels\StatusViewModel.cs" />
     <Compile Include="ViewModels\TileViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

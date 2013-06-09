@@ -35,6 +35,11 @@ namespace Instatus.OData
 
         protected abstract T CreateModel(object viewModel);
 
+        public ODataAuthor()
+        {
+            this.entitySetName = typeof(T).Name + "s";
+        }
+
         public ODataAuthor(string entitySetName)
         {
             this.entitySetName = entitySetName;

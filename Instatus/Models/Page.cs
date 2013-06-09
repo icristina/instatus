@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 
 namespace Instatus.Models
 {
-    public class Post
+    public class Page
     {
         public int Id { get; set; }
+        public Kind Kind { get; set; }
 
         // content
         public string Title { get; set; }
@@ -17,12 +18,14 @@ namespace Instatus.Models
         public string Image { get; set; }
         public string Video { get; set; }
         public string Text { get; set; }
-        public string Category { get; set; }
 
         // publishing
         public string Locale { get; set; }
         public State State { get; set; }
         public DateTime Created { get; set; }
+
+        // schedule
+        public Schedule Schedule { get; set; }
 
         // associations
         public int? UserId { get; set; }
@@ -36,13 +39,17 @@ namespace Instatus.Models
         public virtual Place Place { get; set; }
         [IgnoreDataMember]
         public virtual ICollection<Tag> Tags { get; set; }
+        [IgnoreDataMember]
+        public virtual ICollection<Comment> Comments { get; set; }
 
-        public Post()
+        public Page()
         {
             Created = DateTime.UtcNow;
+            Schedule = new Schedule();
             
             // initialize collections
             Tags = new List<Tag>();
+            Comments = new List<Comment>();
         }
     }
 }

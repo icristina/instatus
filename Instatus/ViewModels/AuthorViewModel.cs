@@ -59,11 +59,12 @@ namespace Instatus.ViewModels
             Item = null;
         }
 
-        public AuthorViewModel(IEnumerable<IAuthor> authors)
+        public AuthorViewModel(StatusViewModel status, string uri, IEnumerable<IAuthor> authors)
         {
+            this.uri = uri;
             this.authors = authors;
             this.CreateCommand = new RelayCommand(Create);
-            this.SaveCommand = new AsyncCommand(Save);
+            this.SaveCommand = new StatusCommand(status, Save, "Failed to save");
             this.CancelCommand = new RelayCommand(Cancel);
         }
     }

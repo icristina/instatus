@@ -17,7 +17,7 @@ namespace Instatus.ViewModels
         public ICommand ArchiveCommand { get; set; }
         public ICommand SpamCommand { get; set; }
 
-        public async Task Approve()
+        private async Task Approve()
         {
             var moderator = moderators.FirstOrDefault(m => m.CanModerate(uri));
 
@@ -29,7 +29,7 @@ namespace Instatus.ViewModels
             await moderator.MarkApprovedAsync(uri);
         }
 
-        public async Task Archive()
+        private async Task Archive()
         {
             var moderator = moderators.FirstOrDefault(m => m.CanModerate(uri));
 
@@ -41,7 +41,7 @@ namespace Instatus.ViewModels
             await moderator.MarkArchivedAsync(uri);
         }
 
-        public async Task Spam()
+        private async Task Spam()
         {
             var moderator = moderators.FirstOrDefault(m => m.CanModerate(uri));
 
@@ -53,10 +53,13 @@ namespace Instatus.ViewModels
             await moderator.MarkSpamAsync(uri);
         }
 
-        public ModeratorViewModel(string uri, IEnumerable<IModerator> moderators)
+        public ModeratorViewModel(StatusViewModel status, string uri, IEnumerable<IModerator> moderators)
         {
             this.uri = uri;
             this.moderators = moderators;
+            this.ApproveCommand = new StatusCommand(status, Approve, "Failed to approve");
+            this.ArchiveCommand = new StatusCommand(status, Archive, "Failed to archive");
+            this.SpamCommand = new StatusCommand(status, Spam, "Failed to mark as spam");
         }
     }
 }
