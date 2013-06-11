@@ -79,11 +79,13 @@
     <Compile Include="ValidateableViewModel.cs" />
     <Compile Include="ValidationResult.cs" />
     <Compile Include="ViewModels\AuthorViewModel.cs" />
+    <Compile Include="ViewModels\DateViewModel.cs" />
     <Compile Include="ViewModels\EditorViewModel.cs" />
     <Compile Include="ViewModels\FavoritesViewModel.cs" />
     <Compile Include="ViewModels\LinkViewModel.cs" />
     <Compile Include="ViewModels\MasterDetailsViewModel.cs" />
     <Compile Include="ViewModels\ModeratorViewModel.cs" />
+    <Compile Include="ViewModels\NumberViewModel.cs" />
     <Compile Include="ViewModels\PreviewViewModel.cs" />
     <Compile Include="ViewModels\ReaderViewModel.cs" />
     <Compile Include="ViewModels\StatusCommand.cs" />

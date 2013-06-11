@@ -11,10 +11,62 @@ namespace Instatus.ViewModels
         public StatusViewModel Status { get; private set; }
         public FavoritesViewModel Favorites { get; private set; }
         public ReaderViewModel Reader { get; private set; }
-        public PreviewViewModel Preview { get; private set; }
-        public AuthorViewModel Author { get; private set; }
-        public EditorViewModel Editor { get; private set; }
-        public ModeratorViewModel Moderator { get; private set; }
+
+        private PreviewViewModel preview;
+
+        public PreviewViewModel Preview
+        {
+            get
+            {
+                return preview;
+            }
+            set
+            {
+                SetProperty(ref preview, value);
+            }
+        }
+
+        private AuthorViewModel author;
+
+        public AuthorViewModel Author
+        {
+            get
+            {
+                return author;
+            }
+            set
+            {
+                SetProperty(ref author, value);
+            }
+        }
+
+        private EditorViewModel editor;
+
+        public EditorViewModel Editor
+        {
+            get
+            {
+                return editor;
+            }
+            set
+            {
+                SetProperty(ref editor, value);
+            }
+        }
+
+        private ModeratorViewModel moderator;
+
+        public ModeratorViewModel Moderator
+        {
+            get
+            {
+                return moderator;
+            }
+            set
+            {
+                SetProperty(ref moderator, value);
+            }
+        }
 
         public MasterDetailsViewModel(
             IFavorites favorites, 
@@ -38,7 +90,6 @@ namespace Instatus.ViewModels
                     
                     Reader.Uri = uri;
                     Reader.LoadCommand.Execute(null);
-                    Author = new AuthorViewModel(Status, uri, authors);
                     Preview = null;
                     Editor = null;
                     Moderator = null;
@@ -60,30 +111,47 @@ namespace Instatus.ViewModels
             {
                 var selectedItem = Reader.SelectedItem;
 
-                if (e.PropertyName == "SelectedItem" && selectedItem != null)
+                if (e.PropertyName == "SelectedItem")
                 {
-                    var uri = (string)((dynamic)selectedItem).Uri;
-
-                    Preview = new PreviewViewModel(Status, uri, selectedItem, previews);
-                    Editor = new EditorViewModel(Status, uri, editors);
-                    Moderator = new ModeratorViewModel(Status, uri, moderators);
-
-                    var saveCommand = Editor.SaveCommand as StatusCommand;
-
-                    if (saveCommand != null)
+                    if (selectedItem != null)
                     {
-                        saveCommand.Success += (f, g) =>
+                        var uri = (string)((dynamic)selectedItem).Uri;
+
+                        Preview = new PreviewViewModel(Status, uri, selectedItem, previews);
+                        Editor = new EditorViewModel(Status, uri, editors);
+                        Moderator = new ModeratorViewModel(Status, uri, moderators);
+
+                        var saveCommand = Editor.SaveCommand as StatusCommand;
+
+                        if (saveCommand != null)
                         {
-                            Editor.Item = null;
-                            Reader.LoadCommand.Execute(null);
-                        };
+                            saveCommand.Success += (f, g) =>
+                            {
+                                Editor.Item = null;
+                                Reader.LoadCommand.Execute(null);
+                            };
+                        }
+                    }
+                    else
+                    {
+                        Preview = null;
+                        Author = null;
+                        Editor = null;
                     }
                 }
-                else
+
+                if (e.PropertyName == "Uri")
                 {
-                    Preview = null;
-                    Author = null;
-                    Editor = null;
+                    var uri = Reader.Uri;
+
+                    if (!string.IsNullOrEmpty(uri))
+                    {
+                        Author = new AuthorViewModel(Status, uri, authors);
+                    }
+                    else
+                    {
+                        Author = null;
+                    }
                 }
             };
         }
