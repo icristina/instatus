@@ -142,7 +142,6 @@ namespace Instatus.ViewModels
             
             AddYears();
             AddMonths();
-            SetDate(date);
 
             PropertyChanged += (c, e) =>
             {
@@ -152,7 +151,9 @@ namespace Instatus.ViewModels
                     
                     SetDate(validDate);
                 }
-            };
+            };            
+            
+            SetDate(date);
         }
 
         public DateViewModel() : this(DateTime.UtcNow)
