@@ -42,6 +42,7 @@
     <Compile Include="AsyncCommand.cs" />
     <Compile Include="BindableBase.cs" />
     <Compile Include="IInlineCount.cs" />
+    <Compile Include="DataType.cs" />
     <Compile Include="Models\Address.cs" />
     <Compile Include="Models\Campaign.cs" />
     <Compile Include="Models\Comment.cs" />
@@ -83,6 +84,7 @@
     <Compile Include="ViewModels\DateViewModel.cs" />
     <Compile Include="ViewModels\EditorViewModel.cs" />
     <Compile Include="ViewModels\FavoritesViewModel.cs" />
+    <Compile Include="ViewModels\FieldViewModel.cs" />
     <Compile Include="ViewModels\LinkViewModel.cs" />
     <Compile Include="ViewModels\MasterDetailsViewModel.cs" />
     <Compile Include="ViewModels\ModeratorViewModel.cs" />

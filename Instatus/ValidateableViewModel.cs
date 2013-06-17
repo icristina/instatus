@@ -71,32 +71,32 @@ namespace Instatus
             }
         }
 
-        protected void Required(string propertyName, Func<string> accessor, string errorMessage = "Required") 
+        protected void AddRequiredValidator(string propertyName, Func<string> accessor, string errorMessage = "Required") 
         {
             AddValidator<string>(propertyName, accessor, value => !string.IsNullOrWhiteSpace(value), errorMessage);
         }
 
-        protected void MinLength(string propertyName, Func<string> accessor, int length, string errorMessage = "Min length {0} characters")
+        protected void AddMinLengthValidator(string propertyName, Func<string> accessor, int length, string errorMessage = "Min length {0} characters")
         {
             AddValidator<string>(propertyName, accessor, value => !string.IsNullOrWhiteSpace(value) && value.Length >= length, string.Format(errorMessage, length));
         }
 
-        protected void MaxLength(string propertyName, Func<string> accessor, int length, string errorMessage = "Max length {0} characters")
+        protected void AddMaxLengthValidator(string propertyName, Func<string> accessor, int length, string errorMessage = "Max length {0} characters")
         {
             AddValidator<string>(propertyName, accessor, value => string.IsNullOrWhiteSpace(value) || value.Length <= length, string.Format(errorMessage, length));
         }
 
-        protected void Min(string propertyName, Func<int> accessor, int min, string errorMessage = "Min {0}")
+        protected void AddMinValidator(string propertyName, Func<int> accessor, int min, string errorMessage = "Min {0}")
         {
             AddValidator<int>(propertyName, accessor, value => value >= min, string.Format(errorMessage, min));
         }
 
-        protected void Max(string propertyName, Func<int> accessor, int max, string errorMessage = "Max {0}")
+        protected void AddMaxValidator(string propertyName, Func<int> accessor, int max, string errorMessage = "Max {0}")
         {
             AddValidator<int>(propertyName, accessor, value => value <= max, string.Format(errorMessage, max));
         }
 
-        protected void Regex(string propertyName, Func<string> accessor, string pattern, string errorMessage = "Invalid")
+        protected void AddRegexValidator(string propertyName, Func<string> accessor, string pattern, string errorMessage = "Invalid")
         {
             var regex = new Regex(pattern);
             

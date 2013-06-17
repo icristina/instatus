@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Instatus.ViewModels
 {
-    public class FieldViewModel : BindableBase
+    public class FieldViewModel : ValidateableViewModel
     {
         private string title;
 
@@ -50,17 +50,17 @@ namespace Instatus.ViewModels
             }
         }
 
-        private bool required;
+        private bool isRequired;
 
-        public bool Required
+        public bool IsRequired
         {
             get
             {
-                return required;
+                return isRequired;
             }
             set
             {
-                SetProperty(ref required, value);
+                SetProperty(ref isRequired, value);
             }
         }
 
@@ -106,7 +106,7 @@ namespace Instatus.ViewModels
             }
         }
 
-        private int min = 0;
+        private int min = int.MinValue;
 
         public int Min
         {
@@ -132,6 +132,39 @@ namespace Instatus.ViewModels
             {
                 SetProperty(ref max, value);
             }
+        }
+
+        public void StartValidation()
+        {
+            if (IsRequired)
+            {
+                AddRequiredValidator("Value", () => Value as string);
+            }
+
+            if (MinLength > 0) 
+            {
+                AddMinLengthValidator("Value", () => Value as string, MinLength);
+            }
+
+            if (MaxLength < int.MaxValue)
+            {
+                AddMaxLengthValidator("Value", () => Value as string, MaxLength);
+            }
+
+            if (Min > int.MinValue)
+            {
+                AddMinValidator("Value", () => (int)Value, Min);
+            }
+
+            if (Max < int.MaxValue)
+            {
+                AddMaxValidator("Value", () => (int)Value, Max);
+            }
+
+            if (string.IsNullOrEmpty(Pattern))
+            {
+                AddRegexValidator("Value", () => Value as string, Pattern);
+            }       
         }
     }
 }
