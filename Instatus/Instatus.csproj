@@ -82,9 +82,10 @@
     <Compile Include="ViewModels\AuthorViewModel.cs" />
     <Compile Include="ViewModels\DateTimeViewModel.cs" />
     <Compile Include="ViewModels\DateViewModel.cs" />
+    <Compile Include="ViewModels\DynamicObjectViewModel.cs" />
     <Compile Include="ViewModels\EditorViewModel.cs" />
     <Compile Include="ViewModels\FavoritesViewModel.cs" />
-    <Compile Include="ViewModels\FieldViewModel.cs" />
+    <Compile Include="ViewModels\DynamicPropertyViewModel.cs" />
     <Compile Include="ViewModels\LinkViewModel.cs" />
     <Compile Include="ViewModels\MasterDetailsViewModel.cs" />
     <Compile Include="ViewModels\ModeratorViewModel.cs" />

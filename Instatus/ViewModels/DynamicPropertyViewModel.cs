@@ -6,8 +6,22 @@ using System.Threading.Tasks;
 
 namespace Instatus.ViewModels
 {
-    public class FieldViewModel : ValidateableViewModel
+    public class DynamicPropertyViewModel : ValidateableViewModel
     {
+        private string name;
+
+        public string Name
+        {
+            get
+            {
+                return name;
+            }
+            set
+            {
+                SetProperty(ref name, value);
+            }
+        }
+        
         private string title;
 
         public string Title
@@ -134,8 +148,15 @@ namespace Instatus.ViewModels
             }
         }
 
+        private bool startedValidation = false;
+
         public void StartValidation()
         {
+            if (startedValidation)
+            {
+                return;
+            }
+            
             if (IsRequired)
             {
                 AddRequiredValidator("Value", () => Value as string);
@@ -153,18 +174,25 @@ namespace Instatus.ViewModels
 
             if (Min > int.MinValue)
             {
-                AddMinValidator("Value", () => (int)Value, Min);
+                AddMinValidator("Value", () => Value is string ? int.Parse((string)Value) : (int)Value, Min);
             }
 
             if (Max < int.MaxValue)
             {
-                AddMaxValidator("Value", () => (int)Value, Max);
+                AddMaxValidator("Value", () => Value is string ? int.Parse((string)Value) : (int)Value, Max);
             }
 
-            if (string.IsNullOrEmpty(Pattern))
+            if (!string.IsNullOrEmpty(Pattern))
             {
                 AddRegexValidator("Value", () => Value as string, Pattern);
-            }       
+            }
+
+            startedValidation = true;
+        }
+
+        public DynamicPropertyViewModel()
+        {
+            ValidatableProperty("Value");
         }
     }
 }

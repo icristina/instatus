@@ -50,16 +50,21 @@ namespace Instatus
 
         private void AddValidator<T>(string propertyName, Func<T> accessor, Func<T, bool> evaluate, string errorMessage)
         {
-            if (!validators.ContainsKey(propertyName))
-            {
-                validators[propertyName] = new List<Func<string>>();
-            }
+            ValidatableProperty(propertyName);
 
             validators[propertyName].Add(() =>
             {
                 return evaluate(accessor()) ? null : errorMessage;
             });
+        }
 
+        protected void ValidatableProperty(string propertyName)
+        {
+            if (!validators.ContainsKey(propertyName))
+            {
+                validators[propertyName] = new List<Func<string>>();
+            }           
+            
             if (!validationResults.ContainsKey(propertyName))
             {
                 validationResults.Add(propertyName, new ValidationResult());
@@ -103,7 +108,7 @@ namespace Instatus
             AddValidator<string>(propertyName, accessor, value => string.IsNullOrWhiteSpace(value) || regex.IsMatch(value), errorMessage);
         }
 
-        private bool ValidateProperty(string propertyName)
+        public bool ValidateProperty(string propertyName)
         {
             List<Func<string>> propertyValidators;
 
