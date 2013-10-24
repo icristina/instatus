@@ -1,0 +1,18 @@
+﻿@using Instatus.Server
+@using System.Collections
+
+@{
+    var propertyName = ViewData.ModelMetadata.PropertyName;
+    var list = new List<object>();
+
+    list.AddRange(ViewData[propertyName + "Datasource"] as IEnumerable<object>);
+    
+    if (!ViewData.ModelMetadata.IsRequired) 
+    {
+        list.Insert(0, new { Text = "", Value = "" });    
+    }
+    
+    var selectList = new SelectList(list as IEnumerable, "Value", "Text", Model);
+}
+
+@Html.DropDownList("", selectList, new { @class = "form-control" })

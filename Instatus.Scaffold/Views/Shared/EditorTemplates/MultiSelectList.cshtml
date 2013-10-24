@@ -1,0 +1,24 @@
+﻿@using Instatus.Server
+@using System.Collections
+
+@{
+    var propertyName = ViewData.ModelMetadata.PropertyName;
+    var list = ViewData[propertyName + "Datasource"];
+    var multiSelectList = new MultiSelectList(list as IEnumerable, "Value", "Text", Model);
+}
+
+@foreach (var selectListItem in multiSelectList)
+{
+    <label class="checkbox-inline">
+        @if (selectListItem.Selected)
+        {
+            <input type="checkbox" name="@propertyName" value="@selectListItem.Value" checked />
+        }
+        else
+        {
+            <input type="checkbox" name="@propertyName" value="@selectListItem.Value" />
+        }
+        @selectListItem.Text
+        &nbsp;
+    </label>  
+}

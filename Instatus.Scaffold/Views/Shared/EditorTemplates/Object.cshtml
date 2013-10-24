@@ -1,0 +1,72 @@
+﻿@using Instatus.Server
+@using System.Collections
+
+@foreach (var prop in ViewData.GetEditableProperties())
+{
+    if (prop.AdditionalValues.ContainsKey("Heading"))
+    {
+        <h3>@prop.AdditionalValues["Heading"]</h3>
+    }
+    var hasModelStateError = ViewContext.ViewData.ModelState.HasError(ViewContext.ViewData.TemplateInfo, prop.PropertyName);  
+    <div class="@Html.ControlGroupHint(prop.PropertyName, hasModelStateError)">
+        @if (prop.IsReadOnly)
+        {
+            <div class="col-md-3" style="text-align: right;">
+                <b>@prop.GetDisplayName()</b>
+            </div>
+            <div class="col-md-9">
+                @Html.Display(prop.PropertyName)
+            </div>
+        }
+        else if (prop.HideSurroundingHtml)
+        {
+            @Html.Editor(prop.PropertyName)                    
+        }
+        else
+        {
+            if (prop.IsCheckbox()) 
+            {
+                <div class="col-md-3"></div>                  
+            }   
+            else 
+            { 
+                <label class="control-label col-md-3">
+                    @prop.GetDisplayName()
+                    @if(prop.IsRequired) 
+                    {
+                        <span class="required">*</span> 
+                    }            
+                </label> 
+            }                  
+            <div class="col-md-9">
+                @if (prop.IsCheckbox()) 
+                {
+                    <label class="checkbox">
+                        @prop.GetDisplayName()
+                        @Html.Editor(prop.PropertyName) 
+                    </label>                    
+                } 
+                else 
+                {
+                    @Html.Editor(prop.PropertyName)                    
+                }
+                @if (hasModelStateError)
+                {
+                    <p class="alert alert-danger">
+                        @Html.ValidationMessage(prop.PropertyName)
+                    </p>
+                }
+                @if (!string.IsNullOrWhiteSpace(prop.Description))
+                {
+                    <p class="help-block">
+                        @prop.Description
+                    </p>              
+                }                    
+            </div>
+        }            
+    </div>     
+}
+@if (ViewData.TemplateInfo.TemplateDepth > 1)
+{
+    <hr />
+}
