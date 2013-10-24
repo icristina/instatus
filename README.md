@@ -8,6 +8,6 @@ Technology
 
 * C#, Javascript, CSS3
 * .NET 4.5
-* ASP.NET MVC 4
-* Entity Framework 5 Code First
+* ASP.NET MVC 5
+* Entity Framework 6
 * Twitter Bootstrap
