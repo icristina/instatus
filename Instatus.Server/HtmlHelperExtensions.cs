@@ -12,7 +12,7 @@ namespace Instatus.Server
     {
         public static string ActiveHint(this HtmlHelper htmlHelper, string path)
         {
-            return htmlHelper.ActiveHint(HttpContext.Current.Request.Url.AbsolutePath.Contains(path, StringComparison.OrdinalIgnoreCase));
+            return htmlHelper.ActiveHint(HttpContext.Current.Request.Url.AbsolutePath.Contains(path));
         }
 
         public static string ActiveHint(this HtmlHelper htmlHelper, bool condition)
@@ -20,9 +20,9 @@ namespace Instatus.Server
             return condition ? "active" : string.Empty;
         }
 
-        public static bool Contains(this string source, string toCheck, StringComparison comp)
+        private static bool Contains(this string source, string match, StringComparison stringComparison = StringComparison.OrdinalIgnoreCase)
         {
-            return source.IndexOf(toCheck, comp) >= 0;
+            return source.IndexOf(match, stringComparison) >= 0;
         }
 
         public static MvcHtmlString ControlGroupHint(this HtmlHelper htmlHelper, string propertyName, bool hasModelStateError = false)
