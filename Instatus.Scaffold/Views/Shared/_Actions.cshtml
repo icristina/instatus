@@ -1,7 +1,0 @@
-﻿@inherits Instatus.Integration.Mvc.ExtendedViewPage<dynamic>
-
-@using Instatus.Scaffold
-
-@Html.ActionLink(Phrase("Details"), "Details", new { id = Model.Id }, new { target = "_blank", @class = "btn" })
-@Html.ActionLink(Phrase("Edit"), "Edit", new { id = Model.Id }, new { target = "_blank", @class = "btn" })
-@Html.ActionButton("Delete", "Delete", routeData: new { id = Model.Id }, className: "btn")
