@@ -144,6 +144,7 @@
     <Compile Include="ChallengeResult.cs" />
     <Compile Include="CsvImport.cs" />
     <Compile Include="CsvResult.cs" />
+    <Compile Include="EntityUserStore.cs" />
     <Compile Include="EntityController.cs" />
     <Compile Include="GoogleAccountController.cs" />
     <Compile Include="HtmlHelperExtensions.cs" />
@@ -157,7 +158,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Instatus.Server.nuspec" />
+    <None Include="Instatus.Server.nuspec">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
