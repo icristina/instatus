@@ -12,7 +12,7 @@ namespace Instatus.Server
 {
     public static class CsvImport
     {
-        private static void SeedFromFile<TRow, TEntity>(DbContext context, string relativePath, Action<DbContext, TRow, TEntity> update = null) where TEntity : class
+        public static void SeedFromFile<TRow, TEntity>(DbContext context, string relativePath, Action<DbContext, TRow, TEntity> update = null) where TEntity : class
         {
             var fileHelper = new FileHelperEngine<TRow>();
             var absolutePath = HttpContext.Current.Server.MapPath(relativePath);
