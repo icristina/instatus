@@ -17,6 +17,13 @@ namespace Instatus.Server
             routes.MapMvcAttributeRoutes();
 
             routes.MapRoute(
+                name: "Account",
+                url: "{action}",
+                defaults: new { controller = "Account", action = "Login" },
+                constraints: new { action = "login|logout|authenticate" }
+            );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }

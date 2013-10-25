@@ -144,6 +144,7 @@
     <Compile Include="ChallengeResult.cs" />
     <Compile Include="CsvImport.cs" />
     <Compile Include="CsvResult.cs" />
+    <Compile Include="DefaultDbConfiguration.cs" />
     <Compile Include="EntityUserStore.cs" />
     <Compile Include="EntityController.cs" />
     <Compile Include="GoogleAccountController.cs" />
