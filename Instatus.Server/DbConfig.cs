@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace Instatus.Server
 {
-    public class DefaultDbConfiguration : DbConfiguration
+    public class DbConfig : DbConfiguration
     {
-        public DefaultDbConfiguration()
+        public DbConfig()
         {
             SetExecutionStrategy("System.Data.SqlClient", () => new SqlAzureExecutionStrategy());
             SetDefaultConnectionFactory(new LocalDbConnectionFactory("v11.0"));
