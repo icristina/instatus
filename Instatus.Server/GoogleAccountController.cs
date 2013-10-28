@@ -78,8 +78,8 @@ namespace Instatus.Server
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Route("logoff")]
-        public ActionResult LogOff(string returnUrl)
+        [Route("logout")]
+        public ActionResult Logout(string returnUrl)
         {
             AuthenticationManager.SignOut();
 

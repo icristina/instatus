@@ -19,8 +19,8 @@ namespace Instatus.Server
             routes.MapRoute(
                 name: "Account",
                 url: "{action}",
-                defaults: new { controller = "Account", action = "Login" },
-                constraints: new { action = "login|logout|authenticate" }
+                defaults: new { controller = "Account" },
+                constraints: new { action = @"(login|logout|authenticate)" }
             );
 
             routes.MapRoute(
