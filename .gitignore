@@ -174,3 +174,7 @@ pip-log.txt
 # Nuget
 NuGet.exe
 *.nupkg
+
+# Databases
+*.ldf
+*.mdf
