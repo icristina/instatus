@@ -14,7 +14,7 @@ namespace Instatus.Server
     [Authorize]
     public abstract class GoogleAccountController<TUser> : Controller where TUser : Microsoft.AspNet.Identity.IUser
     {
-        private IAuthenticationManager AuthenticationManager
+        public IAuthenticationManager AuthenticationManager
         {
             get
             {

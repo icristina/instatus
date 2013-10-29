@@ -157,6 +157,7 @@
     <Compile Include="MvcConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RouteConfig.cs" />
+    <Compile Include="SelectListItemModel.cs" />
     <Compile Include="SpatialHelper.cs" />
     <Compile Include="WebApiConfig.cs" />
   </ItemGroup>

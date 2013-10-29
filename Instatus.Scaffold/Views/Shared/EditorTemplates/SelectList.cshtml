@@ -4,14 +4,18 @@
 @{
     var propertyName = ViewData.ModelMetadata.PropertyName;
     var list = new List<object>();
+    var datasource = ViewData[propertyName + "Datasource"] as IEnumerable;
 
-    list.AddRange(ViewData[propertyName + "Datasource"] as IEnumerable<object>);
-    
-    if (!ViewData.ModelMetadata.IsRequired) 
+    foreach (var item in datasource)
     {
-        list.Insert(0, new { Text = "", Value = "" });    
+        list.Add(item);
     }
-    
+
+    if (!ViewData.ModelMetadata.IsRequired)
+    {
+        list.Insert(0, new { Text = "", Value = "" });
+    }
+
     var selectList = new SelectList(list as IEnumerable, "Value", "Text", Model);
 }
 

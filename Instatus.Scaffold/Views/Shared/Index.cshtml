@@ -8,7 +8,7 @@
     <div class="navbar-inner">
         <div class="container">
             @Html.Partial("_Nav")
-            @using (Html.BeginForm("LogOff", "Account", new { area = string.Empty }, FormMethod.Post, new { @class = "navbar-form pull-left", style = "color: white;" }))
+            @using (Html.BeginForm("LogOut", "Account", new { area = string.Empty }, FormMethod.Post, new { @class = "navbar-form pull-left", style = "color: white;" }))
             {
                 @Html.AntiForgeryToken()
                 <span class="glyphicon glyphicon-user"></span>
