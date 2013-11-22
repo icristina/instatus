@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>Instatus.Server</id>
-    <version>1.0.7</version>
+    <version>1.0.8</version>
     <title>Instatus Server</title>
     <authors>andybooth</authors>
     <owners>andybooth</owners>
@@ -42,5 +42,7 @@
     <file src="bin\release\Instatus.Server.dll" target="lib" />
     <file src="..\Instatus.Scaffold\Views\Shared\*.*" target="content\Views\Shared" />
     <file src="..\Instatus.Scaffold\Views\Shared\EditorTemplates\*.*" target="content\Views\Shared\EditorTemplates" />
+    <file src="..\Instatus.Scaffold\Areas\Admin\Views\*.*" target="content\Areas\Admin\Views\" />
+    <file src="..\Instatus.Scaffold\Areas\Admin\Views\Shared\*.*" target="content\Areas\Admin\Views\Shared" />
   </files>
 </package>

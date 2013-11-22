@@ -96,22 +96,22 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Shared\Create.cshtml">
+    <Content Include="Areas\Admin\Views\Shared\Create.cshtml">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="Views\Shared\Details.cshtml">
+    <Content Include="Areas\Admin\Views\Shared\Details.cshtml">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="Views\Shared\Edit.cshtml">
+    <Content Include="Areas\Admin\Views\Shared\Edit.cshtml">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="Views\Shared\Index.cshtml">
+    <Content Include="Areas\Admin\Views\Shared\Index.cshtml">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="Views\Shared\_Nav.cshtml">
+    <Content Include="Areas\Admin\Views\Shared\_Nav.cshtml">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="Views\Shared\_Scripts.cshtml">
+    <Content Include="Areas\Admin\Views\Shared\_Scripts.cshtml">
       <SubType>Code</SubType>
     </Content>
     <Content Include="Web.config" />
@@ -148,6 +148,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Admin\Views\Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
