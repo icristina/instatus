@@ -11,7 +11,7 @@ namespace Instatus.Server
     {
         public static DbGeography FromLatLong(double latitude, double longitude)
         {
-            return DbGeography.FromText(string.Format("POINT({0} {1})", longitude, latitude));
+            return DbGeography.FromText(string.Format("POINT({0} {1})", latitude, longitude));
         }
     }
 }

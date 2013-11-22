@@ -151,6 +151,7 @@
     <Compile Include="EntityController.cs" />
     <Compile Include="GoogleAccountController.cs" />
     <Compile Include="HtmlHelperExtensions.cs" />
+    <Compile Include="ListExtensions.cs" />
     <Compile Include="LoginModel.cs" />
     <Compile Include="ModelMetadataExtensions.cs" />
     <Compile Include="ModelStateExtensions.cs" />
