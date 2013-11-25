@@ -69,7 +69,7 @@ namespace Instatus.Server
         }
 
         [HttpGet]
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
             if (!CanCreate())
             {
@@ -78,14 +78,14 @@ namespace Instatus.Server
 
             ViewData.Model = CreateModel();
 
-            OnCreating();
+            await OnCreating();
 
             return View();
         }
 
-        protected virtual void OnCreating()
+        protected virtual Task OnCreating()
         {
-
+            return Task.FromResult(true);
         }
 
         [HttpPost]
@@ -111,7 +111,7 @@ namespace Instatus.Server
             {
                 ViewData.Model = model;
 
-                OnCreating();
+                await OnCreating();
 
                 return View();
             }
@@ -139,14 +139,14 @@ namespace Instatus.Server
 
             ViewData.Model = MapToModel(entity);
 
-            OnEditing();
+            await OnEditing();
 
             return View();
         }
 
-        protected virtual void OnEditing()
+        protected virtual Task OnEditing()
         {
-
+            return Task.FromResult(true);
         }
 
         [HttpPost]
@@ -172,7 +172,7 @@ namespace Instatus.Server
             {
                 ViewData.Model = model;
 
-                OnEditing();
+                await OnEditing();
 
                 return View();
             }
@@ -241,7 +241,7 @@ namespace Instatus.Server
             return (int)((dynamic)entity).Id;
         }
 
-        protected async Task<TEntity> GetEntityByKey(int id)
+        protected virtual async Task<TEntity> GetEntityByKey(int id)
         {
             return await Context.Set<TEntity>().FindAsync(id);
         }

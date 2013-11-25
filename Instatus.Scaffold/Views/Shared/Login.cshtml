@@ -7,20 +7,24 @@
 }
 
 <div class="container">
-    <h1 class="page-header">Login</h1>
-    @if (!string.IsNullOrEmpty(Model.Message))
-    {
-        <p class="alert alert-warning">@Model.Message</p>
-    }
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-        @Html.Hidden("returnUrl", Model.ReturnUrl)
-        foreach (var provider in Model.Providers)
-        {
-            <button type="submit" class="btn btn-default" name="provider" value="@provider.AuthenticationType">
-                @provider.AuthenticationType
-            </button>
-        }
-    }
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="page-header">Login</h1>
+            @if (!string.IsNullOrEmpty(Model.Message))
+            {
+                <p class="alert alert-warning">@Model.Message</p>
+            }
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.Hidden("returnUrl", Model.ReturnUrl)
+                foreach (var provider in Model.Providers)
+                {
+                    <button type="submit" class="btn btn-default" name="provider" value="@provider.AuthenticationType">
+                        @provider.AuthenticationType
+                    </button>
+                }
+            }
+        </div>
+    </div>
 </div>
