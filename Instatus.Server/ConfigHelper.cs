@@ -19,5 +19,10 @@ namespace Instatus.Server
         {
             return bool.Parse(ConfigurationManager.AppSettings[key]);
         }
+
+        public static int AppSettingAsInteger([CallerMemberName] string key = null)
+        {
+            return int.Parse(ConfigurationManager.AppSettings[key]);
+        }
     }
 }
